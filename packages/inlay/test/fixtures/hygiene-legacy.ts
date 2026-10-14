@@ -2,17 +2,17 @@
 // Each cut is taken from the original file by line, checked against the
 // first and last line it must hold, and run unchanged. The originals are
 // hash-checked against lineage.json (the COLLAR copy against
-// designs/collar/legacy/sha256.txt through legacyHtml). Also loads the
-// browser captures that scripts/hygiene-fixtures.mjs wrote.
+// designs/collar/legacy/sha256.txt through legacyHtml). Re-exports the
+// browser captures of hygiene-captures.ts.
 
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
-import { gunzipSync } from "node:zlib";
+import { localOriginal } from "../../../../tools/test-support/originals-root.js";
 import { legacyHtml } from "./collar-legacy.js";
+import type { CollarArt, SprueMask } from "./hygiene-captures.js";
 
 const root = fileURLToPath(new URL("../../../../", import.meta.url));
-const FIX = fileURLToPath(new URL("./", import.meta.url));
 
 interface Row { id: string; source: string; sha256: string }
 const rows = JSON.parse(readFileSync(root + "lineage.json", "utf8")) as Row[];
@@ -20,7 +20,8 @@ const rows = JSON.parse(readFileSync(root + "lineage.json", "utf8")) as Row[];
 function original(id: string): string[] {
   const row = rows.find((r) => r.id === id);
   if (row === undefined) throw new Error(`lineage.json has no row ${id}`);
-  const path = row.source.startsWith("/") ? row.source : root + row.source;
+  // an absolute source is an originals-of-record path; HBF_ORIGINALS relocates it
+  const path = row.source.startsWith("/") ? localOriginal(row.source) : root + row.source;
   const bytes = readFileSync(path);
   const got = createHash("sha256").update(bytes).digest("hex");
   if (got !== row.sha256) throw new Error(`${path} sha256 ${got}, lineage ${id} records ${row.sha256}`);
@@ -33,7 +34,6 @@ function cut(lines: string[], first: number, last: number, head: string, tail: s
   return lines.slice(first - 1, last).join("\n");
 }
 
-export interface CollarArt { boost: number; gap: number; minF: number; despeck: boolean }
 
 /**
  * COLLAR buildFace's hygiene and art clip (collar.html:1149 to 1192) with
@@ -85,7 +85,6 @@ export function inlayLegacyHygiene(): (labels: Uint8Array, W: number, H: number,
   return (labels, W, H, res, print, n, bodyS) => f(labels.slice(), W, H, res, { print, colour: { n } }, bodyS, RM);
 }
 
-export interface SprueMask { w: number; h: number; d: Uint8Array }
 export interface SprueLegacy {
   dilate(m: SprueMask, r: number): SprueMask;
   erode(m: SprueMask, r: number): SprueMask;
@@ -108,53 +107,4 @@ export function sprueLegacyClean(): (m: SprueMask, ST: { minF: number; minGap: n
   return new Function("S", "m", "ST", "g", "subset", `${body}\nreturn m;`).bind(null, S) as never;
 }
 
-// ---- browser captures (scripts/hygiene-fixtures.mjs)
-
-/** sha256 per fixture file name, from collar-back-512.sha256. */
-export function fixtureHashes(): Map<string, string> {
-  const m = new Map<string, string>();
-  for (const line of readFileSync(FIX + "collar-back-512.sha256", "utf8").split("\n")) {
-    const [h, name] = line.trim().split(/\s+/);
-    if (h && name) m.set(name, h);
-  }
-  return m;
-}
-
-export const fixtureBytes = (name: string): Buffer => readFileSync(FIX + name);
-
-const unb64 = (s: string): Uint8Array => new Uint8Array(Buffer.from(s, "base64"));
-
-export interface CollarCapture {
-  res: number;
-  dia: number;
-  art: CollarArt & { keep: number };
-  rArt: number;
-  faces: Record<"front" | "back", { pre: Uint8Array; post: Uint8Array; islandsPre: Record<string, number[]>; islandsPost: Record<string, number[]> }>;
-}
-
-export function collarCapture(): CollarCapture {
-  const j = JSON.parse(gunzipSync(fixtureBytes("collar-512.legacy.json.gz")).toString("utf8"));
-  for (const f of ["front", "back"]) { j.faces[f].pre = unb64(j.faces[f].pre); j.faces[f].post = unb64(j.faces[f].post); }
-  return j as CollarCapture;
-}
-
-export interface SprueLayerCapture { text: string | null; thin: "gone" | "weak" | null; raw: SprueMask; clean: SprueMask }
-export interface SprueCapture {
-  st: { kind: string; ring: boolean; minF: number; minGap: number; ppm: number };
-  ring: SprueMask;
-  zone: SprueMask;
-  faces: Record<"front" | "back", { raw: SprueMask; clean: SprueMask; layers: SprueLayerCapture[] }>;
-}
-
-export function sprueCapture(): SprueCapture {
-  const j = JSON.parse(gunzipSync(fixtureBytes("sprue-phx.legacy.json.gz")).toString("utf8"));
-  const m = (x: { w: number; h: number; d: string }): SprueMask => ({ w: x.w, h: x.h, d: unb64(x.d) });
-  j.ring = m(j.ring);
-  j.zone = m(j.zone);
-  for (const f of ["front", "back"]) {
-    j.faces[f].raw = m(j.faces[f].raw);
-    j.faces[f].clean = m(j.faces[f].clean);
-    for (const L of j.faces[f].layers) { L.raw = m(L.raw); L.clean = m(L.clean); }
-  }
-  return j as SprueCapture;
-}
+export * from "./hygiene-captures.js";

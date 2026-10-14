@@ -72,3 +72,22 @@ test("hosted vitest runs exclude the owner files; the owner-files job runs them 
   assert.deepEqual(job["runs-on"], ["self-hosted", "macOS"]);
   assert.ok(job.steps.some((s) => (s.run ?? "").includes("$(node .github/scripts/owner-files.mjs list)")));
 });
+
+// BR-03: a job whose steps reach uv sets it up first. Direct `uv run` steps
+// are found by text; the jobs below reach uv through the code they run: the
+// 3mf agreement, board generator and split tests (unit, exit-a), the board
+// references of the cold rebuild (cold), the sprue parity test and the
+// reference loop (parity), the board builds (exit-m06-m08).
+const SPAWNS_UV = { unit: "npm test", "exit-a": "npx vitest", cold: "node tools/cold-rebuild.mjs", parity: "npx vitest run tools/parity", "exit-m06-m08": "hbf part.build reference/boards" };
+
+test("every job that reaches uv sets up uv before the first step that does", () => {
+  const isSetup = (s) => /^astral-sh\/setup-uv@/.test(s.uses ?? "");
+  for (const [name, job] of Object.entries(ci.jobs)) {
+    const marker = SPAWNS_UV[name];
+    const first = job.steps.findIndex((s) => /(^|[\s;&|(])uv run /.test(s.run ?? "") || (marker !== undefined && (s.run ?? "").includes(marker)));
+    if (marker !== undefined) assert.ok(first >= 0, `${name} still runs ${marker}`);
+    if (first < 0) continue;
+    const setup = job.steps.findIndex(isSetup);
+    assert.ok(setup >= 0 && setup < first, `${name}: setup-uv at step ${setup}, first uv step at ${first}`);
+  }
+});

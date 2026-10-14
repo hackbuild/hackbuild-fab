@@ -14,7 +14,7 @@ import {
   SPRUE_INK_ALPHA, composeSprue, layoutSprueText, sprueGeo, sprueRaw, sprueThin,
   type RasterGrid, type SprueBlank, type SprueTextLayer, type Surface,
 } from "../src/index.js";
-import { sprueCapture } from "./fixtures/hygiene-legacy.js";
+import { sprueCapture } from "./fixtures/hygiene-captures.js";
 
 const root = fileURLToPath(new URL("../../../", import.meta.url));
 
