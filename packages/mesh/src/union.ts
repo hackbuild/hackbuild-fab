@@ -143,8 +143,19 @@ function describe(v: Verdict): string {
   return `open edges ${a.openEdges}, winding errors ${a.windingErrors}, degenerate ${a.degenerate}, non-manifold vertices ${a.nonManifoldVertices}, volume ${a.signedVolumeMm3} mm3 (computed)`;
 }
 
-/** Union with the route it took; throws E_KERNEL when both the batch and the fold fail verification. */
-export function unionReport(list: readonly Manifold[]): UnionReport {
+/** Where a union sits in the build, so a refusal names it: a JSON pointer and the ids of its operands in list order. */
+export interface UnionSite {
+  readonly path: string;
+  readonly members?: readonly string[];
+}
+
+/**
+ * Union with the route it took; throws E_KERNEL when both the batch and the
+ * fold fail verification. With `at`, the refusal carries its path and names
+ * the operands, so a coincident-face failure points at the bodies or
+ * features that meet instead of at no one.
+ */
+export function unionReport(list: readonly Manifold[], at?: UnionSite): UnionReport {
   const first = list[0];
   if (first === undefined) {
     throw meshError({ code: "E_KERNEL", got: 0, expected: "at least one solid", hint: "declare at least one solid to union", record: "mesh-kernel" });
@@ -170,11 +181,13 @@ export function unionReport(list: readonly Manifold[]): UnionReport {
     if (capped !== undefined) return { solid: capped, via: "capped", welded: which, batchRefused: describe(batchVerdict) };
   }
 
+  const members = at?.members !== undefined && at.members.length > 0 ? ` of ${at.members.join(", ")}` : "";
   throw meshError({
     code: "E_KERNEL",
+    ...(at === undefined ? {} : { path: at.path }),
     got: { batch: describe(batchVerdict), fold: describe(foldVerdict) },
     expected: "a closed positive volume with a clean audit",
-    hint: "separate solids that touch at an edge or a corner, or overlap them",
+    hint: `${at === undefined ? "" : `the union at ${at.path}${members} is refused; `}separate solids that touch at an edge or a corner, or overlap them`,
     record: "mesh-kernel",
   });
 }

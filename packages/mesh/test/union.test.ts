@@ -64,6 +64,26 @@ describe("union", () => {
     expect(liveCount()).toBe(0);
   });
 
+  it("names the union site and its operands in the refusal when the caller gives them", async () => {
+    // Finding K-03: a conductor T joint failed with E_KERNEL and no path, so
+    // the failing traces took eight builds to bisect.
+    const wasm = await loadManifold();
+    let caught: unknown;
+    try {
+      scope(() => unionReport([wasm.Manifold.cube([10, 10, 10]), wasm.Manifold.cube([10, 10, 10]).translate([10, 10, 0])],
+        { path: "/bodies", members: ["conductor.gndRow", "conductor.gndLoop"] }));
+    } catch (e) {
+      caught = e;
+    }
+    expect(isThrownCommandError(caught)).toBe(true);
+    if (isThrownCommandError(caught)) {
+      expect(caught.hbf.code).toBe("E_KERNEL");
+      expect(caught.hbf.path).toBe("/bodies");
+      expect(caught.hbf.hint).toContain("the union at /bodies of conductor.gndRow, conductor.gndLoop is refused");
+    }
+    expect(liveCount()).toBe(0);
+  });
+
   it("takes a candidate whose only zero-area triangles are snap collisions, once it welds clean", async () => {
     // A sloped edge crosses x = 2 at y = 2 - 0.0002 mm, beside the box corner
     // (2, 2): the two vertices are 0.0002 mm apart, under half a grid step,

@@ -295,9 +295,9 @@ const ROUTES: readonly RouteEntry[] = [
       const none: RouteCtx["inset"] = { d: 0, kind: "none" };
       const [first, ...rest] = s.of.map((x, i) => operand(x, i, s.op === "difference" && i > 0 ? none : ctx.inset));
       let solid: Manifold;
-      if (s.op === "union") solid = rest.length === 0 ? first! : ctx.scope.own(unionReport([first!, ...rest]).solid);
+      if (s.op === "union") solid = rest.length === 0 ? first! : ctx.scope.own(unionReport([first!, ...rest], { path: `${ctx.path}/of`, members: s.of.map((_, i) => `${body.id} of/${i}`) }).solid);
       else if (s.op === "intersection") solid = rest.reduce((a, b) => ctx.scope.own(a.intersect(b)), first!);
-      else solid = rest.length === 0 ? first! : ctx.scope.own(first!.subtract(ctx.scope.own(unionReport(rest).solid)));
+      else solid = rest.length === 0 ? first! : ctx.scope.own(first!.subtract(ctx.scope.own(unionReport(rest, { path: `${ctx.path}/of`, members: rest.map((_, i) => `${body.id} of/${i + 1}`) }).solid)));
       return { shells: [], solid, warnings };
     },
   },
@@ -425,17 +425,17 @@ function cutAndJoin(scope: Scope, base: BaseShape, extra: BodyCutters, ctx: Rout
     (list ?? []).map((s, i) => solidOfBase(ctx, baseShape(s, body, { ...ctx, path: `${at}/${i}`, inset: { d: 0, kind: "none" } }), `${at}/${i}`));
   const pre = solidsOf(extra.preUnionCutters, `/cutters/${body.id}/preUnionCutters`);
   if (pre.length > 0) {
-    solid = scope.own(solid.subtract(scope.own(unionReport(pre).solid)));
+    solid = scope.own(solid.subtract(scope.own(unionReport(pre, { path: `/cutters/${body.id}/preUnionCutters` }).solid)));
     touched = true;
   }
   const pos = solidsOf(extra.unionPositives, `/cutters/${body.id}/unionPositives`);
   if (pos.length > 0) {
-    solid = scope.own(unionReport([solid, ...pos]).solid);
+    solid = scope.own(unionReport([solid, ...pos], { path: `/cutters/${body.id}/unionPositives`, members: [body.id, ...pos.map((_, i) => `unionPositives/${i}`)] }).solid);
     touched = true;
   }
   const post = solidsOf(extra.postUnionCutters, `/cutters/${body.id}/postUnionCutters`);
   if (post.length > 0) {
-    solid = scope.own(solid.subtract(scope.own(unionReport(post).solid)));
+    solid = scope.own(solid.subtract(scope.own(unionReport(post, { path: `/cutters/${body.id}/postUnionCutters` }).solid)));
     touched = true;
   }
   return { solid, touched };
@@ -568,7 +568,7 @@ export async function runStages(input: StageInput): Promise<StageOutput> {
 
     // stage 8: body meshes are hashed by the caller through meshRef; the solid is their verified union
     const solids = emitted.map((m, i) => toManifold(wasm, scope, m, pathOf(i)));
-    const united = solids.length === 1 ? solids[0]! : scope.own(unionReport(solids).solid);
+    const united = solids.length === 1 ? solids[0]! : scope.own(unionReport(solids, { path: "/bodies", members: work.map((w) => w.draft.id) }).solid);
     // Where a face of one body crosses a face of another, the union holds vertices off the grid;
     // the snap below moves them and so the solid's volume, while the bodies are already on the
     // grid. The kernel's own volume is the measure of overlap CHK-PRT-03 reads.
