@@ -16,8 +16,9 @@ command line runs locally, and `hbf mcp` serves its commands over MCP on
 stdio (`docs/how-to/connect-an-mcp-host.md`). The HTTP server comes at
 M12 and is not built. Browser benches bake to single files. The flex-pair bench
 builds, checks and exports 3mf, stl and card in the page from file://,
-and its 3mf bytes equal the `hbf` writer's for the same values (D-264);
-its coupon export has no writer yet. The milestone table is
+and its 3mf bytes equal the `hbf` writer's for the same values (D-264).
+flex-pair declares 3mf, stl, card and json; its coupon export waits on a
+coupon reference (D-271). The milestone table is
 `docs/plan/MILESTONES.md`.
 
 CI first ran as run 38499440880 on 08fc356, 2026-10-14 02:08 UTC. 10 jobs
@@ -31,6 +32,17 @@ parity and cold jobs; no SOURCE_DATE_EPOCH in unit; the corpus input
 adjacency; the SLUG trials end differently on x64 linux than on arm64
 macOS. Fixes for the uv, epoch and corpus input rows are committed after
 08fc356 and have not run on a hosted runner.
+
+On 2026-10-14 the board writers snap geometry to the 1 nm grid, so
+spindle-r1 and shunt-art write the same bytes on macOS and Linux (a CI
+branch run passed their parity on ubuntu-24.04, computed); the
+flex-pair coupon row and the `flex-pair-two.json` corpus input are fixed
+locally and have not run on a hosted runner. Still red locally:
+pip-buried-route (D-251), and the project graph fixture
+`packages/project/test/fixtures/graph.jsonl`, stale for shunt-art,
+spindle-r1, coin-inlay and flex-pair and missing midi-pad until D-251 is
+ruled. The CI parity job also reads an owner path in a vitest test, and
+the SPINDLE 5V to GND short stays (D-249).
 
 ## What you can do today
 

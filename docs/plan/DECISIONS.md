@@ -324,6 +324,9 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-268 | Absolute owner paths in provenance stay as written | decided | Repos, packaging, toolchain, licensing |
 | D-269 | vtracer corpus input 07 leaves the public trees | decided | Licensing additions |
 | D-270 | Report goldens accepted for print check scope and the CHK-NET-29 solve capacitance | decided | Testing, docs, milestones, registry |
+| D-271 | A design declares a coupon export only once a coupon reference exists | decided | Testing, docs, milestones, registry |
+| D-272 | Seat pins are net taps, proved by CHK-NET-46; keys/midi-pad enters as a reference | decided | Electrical |
+| D-273 | Goldens re-accepted for platform-stable board writers, the flex-pair coupon drop and coin initials | decided | Testing, docs, milestones, registry |
 
 ## House rules and process
 
@@ -3342,6 +3345,39 @@ Recorded by the M09 close of 2026-10-12 from the builder, verifier, gold and fix
 | Rationale | The two fixes change what a check reports, never a solid; a golden whose geometry is equal records only the corrected report. The owner delegated the call on 2026-10-13. |
 | Evidence | `fab-knowledge:evals/2026-10-13/commit-plan.md` (commits 4 and 5); `fab-knowledge:evals/2026-10-13/personas/okafor.md` (OK-07); `fab-knowledge:evals/2026-10-13/personas/devon.md` (D-04); `packages/checks/test/print-scope.test.ts`; `packages/checks/test/skeleton-cap.test.ts`; `core/test/project-graph.test.ts` |
 | Supersedes | applies D-152 and D-227; leaves D-251 in force for pip-buried-route; at the flex-pair defaults reportHash 4704229c becomes 41d6ef7c (computed; 71 results, CHK-NET-29 K1 still warn), every mesh hash and volume unchanged |
+| Milestone | none |
+
+### D-271 A design declares a coupon export only once a coupon reference exists
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-14. flex-pair declares the exports 3mf, stl, card and json; `coupon` leaves its chase. The coupon export returns when `reference/coupons/resistivity` (bar geometry set in a card from PROFILE.md 6.1 stack rows) or `reference/coupons/pip-electrical` (M10-T13, the port of PIP `src/coupon.js` lines 45 to 246) exists and the pipeline exports it through the gate. The same rule holds for any design: no coupon export is declared before its coupon reference builds. |
+| Rationale | An export with no writer fails smoke and hook conformance, and a writer now would invent bar geometry no card sets (D-222). PROFILE.md 11 and 11.1 and UI.md 6.3 define a design's coupon export as the export of a separate coupon reference, and none exists. |
+| Evidence | PROFILE.md 11.1 and 11.2; UI.md 6.3; M10-chase.md M10-T13; `packages/archetypes/src/defs/originals/electrical-coupon.ts`; `tools/hook/errors.spec.ts` ("unknown export kind: coupon"); `fab-knowledge:evals/2026-10-14/task-b/notes.txt` |
+| Supersedes | refines D-177; at the flex-pair defaults buildHash e00fb015 becomes b22ba364 (computed, defHash hashes the parsed chase), every mesh hash and volume unchanged |
+| Milestone | M09, revisit at M10-T13 |
+
+### D-272 Seat pins are net taps, proved by CHK-NET-46; keys/midi-pad enters as a reference
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-14. A used castellation port on a seat carries an optional `PortTap` (spec/features.ts): the bump the pin presses on, the catalog pin centre placed by the seat frame on the bump top, the board, the MCU, the pin and the clamp. path1d, solveKeys and net extraction end a tapped net's read path at the bump, so a seated net needs no lead to the body outline. CHK-NET-46 proves the landing: pin on contact at least `seat.pinOnContactMin` 0.11 mm (inferred, from the catalog inset conflict 1.38 vs 1.27), press over `seat.bumpPress` 0 to 0.5 mm (PIP model.js line 576) or a socket pin of at least `seat.socketPinMin` 2.0 mm (line 595). `reference/keys/midi-pad` enters with its first goldens at build dc7800..a1 (epoch 315532800). Its report golden was re-accepted once on 2026-10-14 after the CHK-NET-29 message fix: K2 now reads "at 11.0 pF" (cPf 10.9996, computed), the only field that moved; build.json, edit.json, artifacts.json and query-solve.json came back equal. |
+| Rationale | PIP seats the board on bumps under a clamp (model.js lines 313 to 319); a lead to the outline modelled a wire the part does not have. A new reference's first goldens need no prior golden to match. |
+| Evidence | `packages/circuit/test/seat-tap.test.ts`; `packages/archetypes/test/seat-tap.test.ts`; `packages/checks/test/net46.test.ts`; `packages/checks/test/fmt-whole.test.ts`; `reference/keys/midi-pad/test/reference.test.ts`; `fab-knowledge:evals/2026-10-14/verify.md` |
+| Supersedes | new; the midi-pad open items (fader wiper over the ADC line, no bezel clamp, whole bus leg pricing) stay listed in its README |
+| Milestone | M09 |
+
+### D-273 Goldens re-accepted for platform-stable board writers, the flex-pair coupon drop and coin initials
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-14, on the rule of D-270: accept a golden move if and only if its geometry did not move. spindle-r1: the gerber writer snaps region vertices to the 1 nm grid with half-to-even rounding and sorts draw order on an exact integer area, so macOS arm64 and Linux amd64 write the same bytes (computed, docker and CI run 38530766459). buildHash dd60cfc6 becomes c1e4e60e, zip sha256 465431..10; build.json moves defHash and buildHash only, report.json worstSymdiffMm2 only, reparse symmetric differences 0.000000 mm2; every layer folds to 0.0 mm2 symmetric difference and 0.0 Hausdorff distance against the old zip (computed). shunt-art: buildHash 976f6a5d becomes 05c147f5, defHash and buildHash only. flex-pair: buildHash e00fb015 becomes b22ba364 (D-271); the print card 3MF moves from 65703 bytes sha256 4419e5df to 65702 bytes f20da97e because its metadata carries the build hash, resliced on 2026-10-14 with G-code equal apart from its generated-at line (computed). coin-inlay: the `initials` and `textSize` params move buildHash bb1aa7c2 to 2cf47f04, defHash, paramsHash and the 3mf hash; an empty `initials` adds no layer. Every mesh hash and volume in these goldens is unchanged (computed). |
+| Rationale | Each move records a hash of source or params, or a byte order, never a solid. The owner delegated the call on 2026-10-14. |
+| Evidence | `tools/py/board/test/test_direct.py`; `tools/py/board/test/test_reparse.py`; `packages/inlay/test/text-coin.test.ts`; `fab-knowledge:evals/2026-10-14/verify.md`; `fab-knowledge:evals/2026-10-14/flex-pair-slice/`; `fab-knowledge:evals/2026-10-14/text-coin/` |
+| Supersedes | applies D-152 and D-270; leaves D-251 in force for pip-buried-route; packages/project/test/fixtures/graph.jsonl is not rerecorded until D-251 is ruled |
 | Milestone | none |
 
 ## Owner queue

@@ -31,30 +31,30 @@
       "sheet": 6,
       "source": 7
     },
-    "entered": 83,
+    "entered": 84,
     "enteredAndSeeded": [
       "CHK-NET-29"
     ],
-    "enteredWithSeeded": 168,
+    "enteredWithSeeded": 169,
     "registered": {
-      "block": 144,
-      "total": 157,
+      "block": 145,
+      "total": 158,
       "warn": 13
     },
     "total": 86,
     "warn": 9
   },
   "decisions": {
-    "decided": 210,
+    "decided": 213,
     "first": 1,
-    "last": 270,
+    "last": 273,
     "neverIssued": [
       176
     ],
     "owner": 51,
     "ownerQueue": 51,
     "superseded": 8,
-    "total": 269
+    "total": 272
   },
   "external": {
     "bench.catalogue": "157 tools, 16 groups, 153 placeable",
