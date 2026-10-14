@@ -1,0 +1,7 @@
+{
+  "queries": [
+    { "golden": "expected/query-pip.json", "input": { "dim": "spring.Q", "material": "petg", "facts": { "l": 24, "t": 0.55, "w": 1.6, "E": 1900, "sw": 3, "bend": "inPlane" } } },
+    { "golden": "expected/query-l22.json", "input": { "dim": "spring.Q", "material": "petg", "facts": { "l": 22, "t": 0.5, "w": 1.6, "E": 1900, "sw": 3, "bend": "inPlane" } } },
+    { "golden": "expected/query-across.json", "input": { "dim": "spring.Q", "material": "petg", "facts": { "l": 24, "t": 0.55, "w": 1.6, "E": 1900, "sw": 3, "bend": "acrossLayers" } } }
+  ]
+}

@@ -1,0 +1,28 @@
+# source: /Users/obsidian/Projects/hackbuild/fab-work-directory/benches/ogee16/outputs/ogee16-source.zip
+# zip sha256: 47d6077e0596eb4e9722a0a9f687cb82ec472c7bc031d8d2f61a98266aa94dd5
+# member source/fits.py with one edit, line 46 FIT_SLIDE_ = 0.75 set to 0.55 (the M01-T09 parity edit)
+# run: as fits.stdout.txt; python 3.14.8, exit 1, 2026-10-06. Lines after the blank line are the stdout, unedited,
+# through the summary line; the five detail lines fits.py prints after it, each led by an exclamation mark,
+# are left out (RULES.md, Language) and repeat the OUT OF BAND rows above.
+
+fit                                      drawn  after 0.25 loss  class   verdict
+crank shaft in its wall bore              0.55             0.30  SLIDE   OUT OF BAND (0.70-0.90)
+knob on the shaft D                       0.10            -0.15  PRESS   ok
+crank drive pin in the yoke slot          0.55             0.30  SLIDE   OUT OF BAND (0.70-0.90)
+crank drive pin in the crank bore         0.00            -0.25  PRESS   ok
+link turning on its pivot                 0.55             0.30  SLIDE   OUT OF BAND (0.70-0.90)
+pivot shank in the lug bore               0.05            -0.20  LOCATE  OUT OF BAND (0.25-0.40)
+pivot barb forced through the lug        -1.15            -1.15  SNAP    ok
+printed lug in the cut deck slot          0.55             0.55  PSLIDE  ok
+printed lug, along the deck slot          0.55             0.55  PSLIDE  ok
+printed rod in the cut face slot          0.55             0.55  PSLIDE  ok
+printed rod in the cut latch slot         0.55             0.55  PSLIDE  ok
+printed cap in the cut face pocket        0.50             0.50  PSLIDE  ok
+cap pressed on the rod tenon              0.15            -0.10  PRESS   ok
+latch plate in its rail groove            0.55             0.30  SLIDE   OUT OF BAND (0.70-0.90)
+pull knob on the latch tab                0.10            -0.15  PRESS   ok
+deck tab in its wall slot                 0.35             0.10  LOCATE  ok
+frame tab in its frame slot               0.35             0.10  LOCATE  ok
+servo bracket tab in the base             0.35             0.10  LOCATE  ok
+
+5 OUT OF BAND

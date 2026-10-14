@@ -1,0 +1,148 @@
+{
+  "note": "Per-MCU pin rows (D-076, PROFILE.md 5, CHECKS.md 7.5), values as of 2026-10-04. Provenance per D-099; machine and coupon are null because no row here was measured. A row with inherits takes every GPIO field of the row it names and keeps its own provenance. vilMaxV and vihMinV are absent on a row with legacy: both read as legacy.single x vddV, the one BOSS threshold. The boss-legacy row reproduces BOSS only (M05-T07) and is refused everywhere else.",
+  "rows": [
+    {
+      "id": "rp2040",
+      "name": "Raspberry Pi RP2040",
+      "vddV": 3.3,
+      "pullup": {
+        "kind": "range",
+        "minOhm": 50000,
+        "maxOhm": 80000
+      },
+      "vilMaxV": 0.8,
+      "vihMinV": 2,
+      "inputCap": {
+        "value": 7,
+        "unit": "pF",
+        "tier": "inferred",
+        "source": "pip-controller src/layout.js:46 cpin; docs/electrical.md:121 assumed 7 pF"
+      },
+      "leakage": {
+        "value": 1,
+        "unit": "nA",
+        "tier": "inferred",
+        "source": "pip-controller src/layout.js:46 leak; docs/electrical.md:65 to 67, rp2040 maximum unconfirmed"
+      },
+      "provenance": {
+        "tier": "vendor",
+        "method": "datasheet",
+        "date": "2026-10-04",
+        "machine": null,
+        "coupon": null,
+        "source": "RP2040 datasheet pp. 616 to 617"
+      }
+    },
+    {
+      "id": "pico",
+      "name": "Raspberry Pi Pico",
+      "inherits": "rp2040",
+      "provenance": {
+        "tier": "vendor",
+        "method": "datasheet",
+        "date": "2026-10-04",
+        "machine": null,
+        "coupon": null,
+        "source": "inherits rp2040 GPIO, RP2040 datasheet pp. 616 to 617; not checked against the Pico datasheet (D-076, verified-claims.md C5)"
+      }
+    },
+    {
+      "id": "esp32-c3",
+      "name": "Espressif ESP32-C3",
+      "vddV": 3.3,
+      "pullup": {
+        "kind": "typical",
+        "typOhm": 45000
+      },
+      "vilMaxV": 0.825,
+      "vihMinV": 2.475,
+      "inputCap": {
+        "value": 7,
+        "unit": "pF",
+        "tier": "inferred",
+        "source": "pip-controller src/layout.js:46 cpin, assumed 7 pF for an RP2040 pin; no ESP32-C3 figure recorded"
+      },
+      "leakage": {
+        "value": 1,
+        "unit": "nA",
+        "tier": "inferred",
+        "source": "pip-controller src/layout.js:46 leak, assumed for an RP2040 pin; no ESP32-C3 figure recorded"
+      },
+      "provenance": {
+        "tier": "vendor",
+        "method": "datasheet",
+        "date": "2026-10-04",
+        "machine": null,
+        "coupon": null,
+        "source": "ESP32-C3 datasheet v2.4 p. 55: VIL max 0.25 VDD, VIH min 0.75 VDD, pullup 45 kohm typical"
+      }
+    },
+    {
+      "id": "esp32-s3",
+      "name": "Espressif ESP32-S3",
+      "vddV": 3.3,
+      "pullup": {
+        "kind": "typical",
+        "typOhm": 45000
+      },
+      "vilMaxV": 0.825,
+      "vihMinV": 2.475,
+      "inputCap": {
+        "value": 2,
+        "unit": "pF",
+        "tier": "vendor",
+        "source": "Espressif ESP32-S3 Series Datasheet v2.2 (espressif.com esp32-s3_datasheet_en.pdf, sha256 2d5a7cb7fd559d8d972bd88db32669c0196d23f22d7afaafb0f63d099b589a3f, read 2026-10-09) Table 5-4 p. 65, CIN 2 pF typical"
+      },
+      "leakage": {
+        "value": 50,
+        "unit": "nA",
+        "tier": "vendor",
+        "source": "Espressif ESP32-S3 Series Datasheet v2.2 (espressif.com esp32-s3_datasheet_en.pdf, sha256 2d5a7cb7fd559d8d972bd88db32669c0196d23f22d7afaafb0f63d099b589a3f, read 2026-10-09) Table 5-4 p. 65, IIH and IIL 50 nA maximum"
+      },
+      "provenance": {
+        "tier": "vendor",
+        "method": "datasheet",
+        "date": "2026-10-09",
+        "machine": null,
+        "coupon": null,
+        "source": "ESP32-S3 datasheet v2.2 p. 65 (Table 5-4, 3.3 V, 25 C): VIL max 0.25 VDD, VIH min 0.75 VDD, pullup 45 kohm typical"
+      }
+    },
+    {
+      "id": "boss-legacy",
+      "name": "BOSS sim board pin, legacy constants",
+      "vddV": 3.3,
+      "pullup": {
+        "kind": "typical",
+        "typOhm": 50000
+      },
+      "legacy": {
+        "single": 0.5,
+        "hintBand": [
+          0.3,
+          0.7
+        ]
+      },
+      "inputCap": {
+        "value": 7,
+        "unit": "pF",
+        "tier": "inferred",
+        "source": "pip-controller src/layout.js:46 cpin, assumed 7 pF; the BOSS sim is DC and models no pin capacitance"
+      },
+      "leakage": {
+        "value": 1,
+        "unit": "nA",
+        "tier": "inferred",
+        "source": "pip-controller src/layout.js:46 leak; the BOSS sim models a 1e9 ohm input instead (src/sim.js:92)"
+      },
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-04",
+        "machine": null,
+        "coupon": null,
+        "source": "benches/blocks/outputs/boss/boss-src.zip src/sim.js:91 (PULLUP 50e3 to vio) and :135 (digital HIGH above vio x 0.5); src/parts.js:17 (c3mini vio 3.3); src/app2.js:236 and handoff/hbf/designs/blocks/legacy/blocks.html:3779 (undefined hint 0.3 to 0.7 vio)"
+      }
+    }
+  ]
+}

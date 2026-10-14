@@ -1,0 +1,331 @@
+{
+ "model": "ogee16-fits-v1",
+ "loss": 0.25,
+ "edgeTolerance": 1e-09,
+ "rows": [
+  {
+   "name": "crank shaft in its wall bore",
+   "hole": 8.75,
+   "shaft": 8.0,
+   "drawn": 0.75,
+   "class": "SLIDE",
+   "legacyClass": "SLIDE",
+   "band": [
+    0.7,
+    0.9
+   ],
+   "holeBand": [
+    8.7,
+    8.9
+   ],
+   "real": 0.5,
+   "verdict": "pass"
+  },
+  {
+   "name": "knob on the shaft D",
+   "hole": 8.1,
+   "shaft": 8.0,
+   "drawn": 0.09999999999999964,
+   "class": "PRESS",
+   "legacyClass": "PRESS",
+   "band": [
+    0.0,
+    0.16
+   ],
+   "holeBand": [
+    8.0,
+    8.16
+   ],
+   "real": -0.15000000000000036,
+   "verdict": "pass"
+  },
+  {
+   "name": "crank drive pin in the yoke slot",
+   "hole": 3.4,
+   "shaft": 2.65,
+   "drawn": 0.75,
+   "class": "SLIDE",
+   "legacyClass": "SLIDE",
+   "band": [
+    0.7,
+    0.9
+   ],
+   "holeBand": [
+    3.3499999999999996,
+    3.55
+   ],
+   "real": 0.5,
+   "verdict": "pass"
+  },
+  {
+   "name": "crank drive pin in the crank bore",
+   "hole": 3.4,
+   "shaft": 3.4,
+   "drawn": 0.0,
+   "class": "PRESS",
+   "legacyClass": "PRESS",
+   "band": [
+    0.0,
+    0.16
+   ],
+   "holeBand": [
+    3.4,
+    3.56
+   ],
+   "real": -0.25,
+   "verdict": "pass"
+  },
+  {
+   "name": "link turning on its pivot",
+   "hole": 3.4,
+   "shaft": 2.65,
+   "drawn": 0.75,
+   "class": "SLIDE",
+   "legacyClass": "SLIDE",
+   "band": [
+    0.7,
+    0.9
+   ],
+   "holeBand": [
+    3.3499999999999996,
+    3.55
+   ],
+   "real": 0.5,
+   "verdict": "pass"
+  },
+  {
+   "name": "pivot shank in the lug bore",
+   "hole": 2.9,
+   "shaft": 2.65,
+   "drawn": 0.25,
+   "class": "LOCATE",
+   "legacyClass": "LOCATE",
+   "band": [
+    0.25,
+    0.4
+   ],
+   "holeBand": [
+    2.9,
+    3.05
+   ],
+   "real": 0.0,
+   "verdict": "pass"
+  },
+  {
+   "name": "pivot barb forced through the lug",
+   "hole": 2.75,
+   "shaft": 3.9,
+   "drawn": -1.15,
+   "class": "SNAP",
+   "legacyClass": "SNAP",
+   "band": [
+    -1.3,
+    -0.15
+   ],
+   "holeBand": [
+    2.5999999999999996,
+    3.75
+   ],
+   "real": -1.15,
+   "verdict": "pass"
+  },
+  {
+   "name": "printed lug in the cut deck slot",
+   "hole": 3.7,
+   "shaft": 3.15,
+   "drawn": 0.5500000000000003,
+   "class": "PSLIP",
+   "legacyClass": "PSLIDE",
+   "band": [
+    0.45,
+    0.7
+   ],
+   "holeBand": [
+    3.6,
+    3.8499999999999996
+   ],
+   "real": 0.5500000000000003,
+   "verdict": "pass"
+  },
+  {
+   "name": "printed lug, along the deck slot",
+   "hole": 12.7,
+   "shaft": 12.15,
+   "drawn": 0.5499999999999989,
+   "class": "PSLIP",
+   "legacyClass": "PSLIDE",
+   "band": [
+    0.45,
+    0.7
+   ],
+   "holeBand": [
+    12.6,
+    12.85
+   ],
+   "real": 0.5499999999999989,
+   "verdict": "pass"
+  },
+  {
+   "name": "printed rod in the cut face slot",
+   "hole": 3.7,
+   "shaft": 3.15,
+   "drawn": 0.5500000000000003,
+   "class": "PSLIP",
+   "legacyClass": "PSLIDE",
+   "band": [
+    0.45,
+    0.7
+   ],
+   "holeBand": [
+    3.6,
+    3.8499999999999996
+   ],
+   "real": 0.5500000000000003,
+   "verdict": "pass"
+  },
+  {
+   "name": "printed rod in the cut latch slot",
+   "hole": 3.7,
+   "shaft": 3.15,
+   "drawn": 0.5500000000000003,
+   "class": "PSLIP",
+   "legacyClass": "PSLIDE",
+   "band": [
+    0.45,
+    0.7
+   ],
+   "holeBand": [
+    3.6,
+    3.8499999999999996
+   ],
+   "real": 0.5500000000000003,
+   "verdict": "pass"
+  },
+  {
+   "name": "printed cap in the cut face pocket",
+   "hole": 17.575,
+   "shaft": 17.075,
+   "drawn": 0.5,
+   "class": "PSLIP",
+   "legacyClass": "PSLIDE",
+   "band": [
+    0.45,
+    0.7
+   ],
+   "holeBand": [
+    17.525,
+    17.775
+   ],
+   "real": 0.5,
+   "verdict": "pass"
+  },
+  {
+   "name": "cap pressed on the rod tenon",
+   "hole": 3.15,
+   "shaft": 3.0,
+   "drawn": 0.1499999999999999,
+   "class": "PRESS",
+   "legacyClass": "PRESS",
+   "band": [
+    0.0,
+    0.16
+   ],
+   "holeBand": [
+    3.0,
+    3.16
+   ],
+   "real": -0.10000000000000009,
+   "verdict": "pass"
+  },
+  {
+   "name": "latch plate in its rail groove",
+   "hole": 3.65,
+   "shaft": 2.9,
+   "drawn": 0.75,
+   "class": "SLIDE",
+   "legacyClass": "SLIDE",
+   "band": [
+    0.7,
+    0.9
+   ],
+   "holeBand": [
+    3.5999999999999996,
+    3.8
+   ],
+   "real": 0.5,
+   "verdict": "pass"
+  },
+  {
+   "name": "pull knob on the latch tab",
+   "hole": 8.1,
+   "shaft": 8.0,
+   "drawn": 0.09999999999999964,
+   "class": "PRESS",
+   "legacyClass": "PRESS",
+   "band": [
+    0.0,
+    0.16
+   ],
+   "holeBand": [
+    8.0,
+    8.16
+   ],
+   "real": -0.15000000000000036,
+   "verdict": "pass"
+  },
+  {
+   "name": "deck tab in its wall slot",
+   "hole": 10.25,
+   "shaft": 9.9,
+   "drawn": 0.34999999999999964,
+   "class": "LOCATE",
+   "legacyClass": "LOCATE",
+   "band": [
+    0.25,
+    0.4
+   ],
+   "holeBand": [
+    10.15,
+    10.3
+   ],
+   "real": 0.09999999999999964,
+   "verdict": "pass"
+  },
+  {
+   "name": "frame tab in its frame slot",
+   "hole": 10.25,
+   "shaft": 9.9,
+   "drawn": 0.34999999999999964,
+   "class": "LOCATE",
+   "legacyClass": "LOCATE",
+   "band": [
+    0.25,
+    0.4
+   ],
+   "holeBand": [
+    10.15,
+    10.3
+   ],
+   "real": 0.09999999999999964,
+   "verdict": "pass"
+  },
+  {
+   "name": "servo bracket tab in the base",
+   "hole": 3.25,
+   "shaft": 2.9,
+   "drawn": 0.3500000000000001,
+   "class": "LOCATE",
+   "legacyClass": "LOCATE",
+   "band": [
+    0.25,
+    0.4
+   ],
+   "holeBand": [
+    3.15,
+    3.3
+   ],
+   "real": 0.10000000000000009,
+   "verdict": "pass"
+  }
+ ]
+}

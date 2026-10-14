@@ -1,0 +1,27 @@
+# source: /Users/obsidian/Projects/hackbuild/fab-work-directory/benches/ogee16/outputs/ogee16-source.zip
+# zip sha256: 47d6077e0596eb4e9722a0a9f687cb82ec472c7bc031d8d2f61a98266aa94dd5 (byte equal to fab-knowledge/originals/ogee16/files/ogee16-source.zip)
+# member source/fits.py sha256: b127b99ecef2d5b6b9256507c206e79975b418d91e2dce5921cefbd9595f082c
+# run: unzip -o -q ogee16-source.zip -d <tmp> && cd <tmp>/source && uv run --project tools/py python fits.py
+# python 3.14.8, exit 0, 2026-10-06. Lines after the blank line are the stdout, unedited.
+
+fit                                      drawn  after 0.25 loss  class   verdict
+crank shaft in its wall bore              0.75             0.50  SLIDE   ok
+knob on the shaft D                       0.10            -0.15  PRESS   ok
+crank drive pin in the yoke slot          0.75             0.50  SLIDE   ok
+crank drive pin in the crank bore         0.00            -0.25  PRESS   ok
+link turning on its pivot                 0.75             0.50  SLIDE   ok
+pivot shank in the lug bore               0.25             0.00  LOCATE  ok
+pivot barb forced through the lug        -1.15            -1.15  SNAP    ok
+printed lug in the cut deck slot          0.55             0.55  PSLIDE  ok
+printed lug, along the deck slot          0.55             0.55  PSLIDE  ok
+printed rod in the cut face slot          0.55             0.55  PSLIDE  ok
+printed rod in the cut latch slot         0.55             0.55  PSLIDE  ok
+printed cap in the cut face pocket        0.50             0.50  PSLIDE  ok
+cap pressed on the rod tenon              0.15            -0.10  PRESS   ok
+latch plate in its rail groove            0.75             0.50  SLIDE   ok
+pull knob on the latch tab                0.10            -0.15  PRESS   ok
+deck tab in its wall slot                 0.35             0.10  LOCATE  ok
+frame tab in its frame slot               0.35             0.10  LOCATE  ok
+servo bracket tab in the base             0.35             0.10  LOCATE  ok
+
+ALL FITS IN BAND
