@@ -1,9 +1,9 @@
 // Plan drift found by the third audit (2026-10-11, honesty-drift lens): plan text, milestone
 // reports and the decision log that kept numbers or open questions the M06 and M08 builds had
 // already moved. Each test reads the plan text and the thing it describes (counts.json, the
-// reference tree, the staged goldens, the HANDOFF environment table) and fails when they disagree.
-// The notes directory is gitignored and HANDOFF.md and the proposed goldens live in the sibling
-// fab-knowledge folder, so a test that needs one of them skips where it is absent.
+// reference tree, the HANDOFF environment table) and fails when they disagree. The notes
+// directory is gitignored and HANDOFF.md lives in the sibling fab-knowledge folder, so a test
+// that needs one of them skips where it is absent.
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
@@ -23,9 +23,7 @@ const M10 = read("docs/plan/milestones/M10-chase.md");
 const counts = json("docs/plan/counts.json");
 
 const HANDOFF_PATH = join(kb, "HANDOFF.md");
-const M06_REPORT = join(root, ".hbf-notes", "m06-report.md");
 const M08_REPORT = join(root, ".hbf-notes", "m08-report.md");
-const PROPOSED = join(kb, "evidence", "m06-m08-integration", "pip-buried-route-proposed-goldens", "build.json");
 
 /** The `### D-NNN` entry of the living log, heading to the next heading. */
 function decision(id) {
@@ -118,37 +116,6 @@ test("the wiring parity target M08 built is a recorded decision, not an open own
   }
   const step4 = M08.split("\n").find((l) => /^4\. Parity: three candidates/.test(l)) ?? "";
   assert.match(step4, new RegExp(id), `M08-T13 step 4 cites ${id}`);
-});
-
-const staged = json("reference/electrical/pip-buried-route/expected/build.json");
-const proposed = existsSync(PROPOSED) ? JSON.parse(readFileSync(PROPOSED, "utf8")) : undefined;
-const unaccepted = proposed !== undefined && proposed.buildHash !== staged.buildHash;
-
-test("while pip-buried-route is unaccepted, every record names the five rows that fail on it", { skip: !unaccepted && "proposed goldens absent or accepted" }, () => {
-  const five = ["project-graph.test.ts", "message-numbers.test.ts", "determinism-queries.test.mjs", "reference.test.ts", "hbf parity"];
-  const texts = [["D-251", decision("D-251")]];
-  if (existsSync(HANDOFF_PATH)) {
-    const h = readFileSync(HANDOFF_PATH, "utf8").split("\n");
-    texts.push(["HANDOFF M06 row", h.find((l) => l.startsWith("| M06 |")) ?? ""]);
-    texts.push(["HANDOFF 7.3 row", h.find((l) => l.startsWith("| accept the pip-buried-route goldens")) ?? ""]);
-  }
-  if (existsSync(M06_REPORT)) {
-    const r = readFileSync(M06_REPORT, "utf8");
-    for (const m of r.matchAll(/[^\n]*(?:\n[^\n]+){0,4}project-graph\.test\.ts[^\n]*(?:\n[^\n]+){0,4}/g)) texts.push(["m06-report", m[0]]);
-  }
-  for (const [where, t] of texts) for (const f of five) assert.ok(t.includes(f), `${where} names ${f}`);
-});
-
-test("while pip-buried-route is unaccepted, D-251 and HANDOFF say the staged goldens also predate the registry bumps", { skip: !unaccepted && "proposed goldens absent or accepted" }, () => {
-  if (staged.inputs.registryHash === proposed.inputs.registryHash) return;
-  const old = staged.inputs.registryHash.slice(0, 8);
-  const now = proposed.inputs.registryHash.slice(0, 8);
-  const d251 = decision("D-251");
-  assert.ok(d251.includes(old) && d251.includes(now), `D-251 names the staged registryHash ${old} and the proposed ${now}`);
-  if (existsSync(HANDOFF_PATH)) {
-    const row = readFileSync(HANDOFF_PATH, "utf8").split("\n").find((l) => l.startsWith("| accept the pip-buried-route goldens")) ?? "";
-    assert.ok(row.includes(old) && row.includes(now), `HANDOFF 7.3 row names registryHash ${old} and ${now}`);
-  }
 });
 
 test("the M08 report and card give the Playwright reason HANDOFF section 5 records", { skip: !existsSync(HANDOFF_PATH) && "HANDOFF absent" }, () => {

@@ -52,7 +52,7 @@ All computed; none measured.
 | nets, each one piece | 12 (GND, 3V3, UP, DOWN, LEFT, RIGHT, X, B, Y, A, SELECT, START) | CHK-NET-01, `query-solve.json` |
 | route at the default cap | conflicts 0, unrouted 0, converges at iteration 2 | `route.data.ts` |
 | route at cap 1 | 22 conflicted cells, GND shorted to LEFT; CHK-NET-01, -02 and -12 fail, exit 1 | `test/reference.test.ts` |
-| closest pairs, built | B/Y 0.716, 3V3/UP 0.717, Y/A 0.726, LEFT/RIGHT 0.727 mm | `query-solve.json` gaps |
+| closest pairs, built | B/Y 0.716, 3V3/UP 0.718, Y/A 0.726, LEFT/RIGHT 0.727 mm | `query-solve.json` gaps |
 | the same pairs on PIP's model | 0.714, 0.716, 0.724, 0.725 mm | PIP b137deb model.js lines 216 to 223 |
 | z stack | L1 0.72 to 1.44, L2 2.40 to 3.12, pads 4.08 to 4.80, floor 4.80 mm | stack metrics, PIP layout.js lines 166 to 171 |
 | posts and vias | every terminal post radius 0.6 moves to 0.82 mm (within 0.12 of half the 1.4 mm trace) | CHK-NET-11, PIP model.js line 27 |
@@ -65,7 +65,27 @@ each side.
 
 ### Verified on this machine
 
-- 2026-10-11 (M06 and M08 integration), not accepted: `npx --no-install
+- 2026-10-14, accepted under the owner's delegation: the off-grid emit
+  goldens were judged against the original and accepted with
+  `SOURCE_DATE_EPOCH=315532800 npx --no-install hbf parity
+  reference/electrical/pip-buried-route --accept`; a second run exits 0
+  at build 1adfb9..b0, and the written goldens equal the proposed set of
+  2026-10-11 byte for byte. Against pip-controller b137deb run in place on
+  manifold-3d 3.5.3 (its conductor solids, model.js lines 29 to 51), the
+  31 moved trace regions as emitted have a symmetric difference of at
+  most 1e-6 mm3 from the original's, where the previous grid-snapped emit
+  read up to 0.034828 mm3 (computed). Built, the 37 moved bodies differ
+  from the previous build by at most 0.000302 mm of mean wall travel,
+  under half a 1/1024 mm grid step; against the original as built they
+  read slightly smaller, because the stage 6 coincidence inset (0.001 mm,
+  inferred) is no longer offset by the old emit's outward snap (computed).
+  The report's verdict tallies and the `circuit.solve` counts are
+  unchanged (pass 91, skip 25); 3V3/UP moves from 0.717 to 0.718 mm. The
+  moved bodies were rendered and looked at by an agent, not a person. The
+  evidence and renders are in
+  fab-knowledge:evals/2026-10-14/calls/pip-buried-route/.
+
+- 2026-10-11 (M06 and M08 integration), not accepted then: `npx --no-install
   hbf parity reference/electrical/pip-buried-route` exits 1. The build is
   now 1adfb9..b0 against the golden 078773..bd, because packages/copper
   emitTraceLayers computes PIP's regions off the 1/1024 mm grid (M06

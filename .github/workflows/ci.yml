@@ -264,7 +264,6 @@ jobs:
             fi
           done
           test -z "$failed" || echo "failing references:$failed"
-          case "$failed" in *reference/electrical/pip-buried-route*) echo "known red, recorded under D-251: reference/electrical/pip-buried-route waits on a person's accept";; esac
           exit $status
       - name: the OGEE R16-P fits table (M01 exit row, M01-T09)
         if: ${{ !cancelled() }}
@@ -508,7 +507,7 @@ jobs:
       - run: npm ci
       - run: npx tsc -b
       - run: node --test tools/test/cold-rebuild.test.mjs
-      - name: cold and warm rebuild of every reference (pip-buried-route is known red under D-251)
+      - name: cold and warm rebuild of every reference
         run: node tools/cold-rebuild.mjs
   bake:
     # M09-T13 (D-129): every bake.json bakes; the PIP legacy manifest
