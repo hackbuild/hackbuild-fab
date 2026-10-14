@@ -29,7 +29,8 @@ import { hygiene } from "./hygiene/recipes.js";
 import { splitBodies, type SplitBodies } from "./split.js";
 import type { RasterGrid } from "./surface.js";
 
-export const INLAY_KIND_VERSION = "1.0.0";
+/** Semver of the kind (spec/registry.ts RegistryEntry.version): major when the same declaration can build differently or be refused. */
+export const INLAY_KIND_VERSION = "2.0.0";
 /** The reference the kind is proved by (D-105). */
 export const INLAY_REFERENCE = "cosmetic/coin-inlay";
 export const INLAY_CHECK_IDS = ["CHK-INL-01", "CHK-INL-02", "CHK-INL-03", "CHK-INL-04"] as const satisfies NonEmpty<CheckId>;

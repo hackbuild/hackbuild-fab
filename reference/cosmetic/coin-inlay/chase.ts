@@ -49,8 +49,10 @@ export const chase = defineChase({
       { id: "ringDuty", type: "number", unit: "percent", label: "duty", range: [10, 100], step: 5, default: 60 },
       { id: "initials", type: "text", label: "initials", default: "", max: 12,
         help: "set in IBM Plex Mono bold, pink, centred inside the ring; empty leaves the ring alone" },
-      { id: "textSize", type: "mm", label: "text size", range: [3, 20], step: 0.5, default: 10,
-        help: "the em size; a capital stands about 0.7 of it" },
+      // COLLAR's text size control: 1 to 30 mm in 0.1 steps (collar.html
+      // line 2542); its back face text is size 9 (line 2891).
+      { id: "textSize", type: "mm", label: "text size", range: [1, 30], step: 0.1, default: 9,
+        help: "the em size; a capital stands 0.698 of it (computed, plex mono cap height 698 of 1000 units)" },
     ] },
   ],
   build: { module: "./build.ts", fn: "build" },
