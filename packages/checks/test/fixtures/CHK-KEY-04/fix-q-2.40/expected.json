@@ -1,0 +1,8 @@
+{
+  "source": "M04-T04 step 5 golden row CHK-KEY-04; window 1.72 to 2.19 x t from M01-T07 (reference/keys/click-spring-window/expected/query-pip.json), computed by snapfe",
+  "measured": 2.4,
+  "legal": [1.72, 2.19],
+  "nearest": 2.19,
+  "fix": { "param": "/Q", "set": 2.19, "paramLegal": [1.72, 2.19] },
+  "predicts": { "measured": 2.19, "verdict": "pass", "strainLimitPct": 2.5, "drop": 0.91 }
+}

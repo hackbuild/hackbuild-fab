@@ -1,0 +1,30 @@
+{
+ "note": "a closed block, no vertex on another face",
+ "meshes": {
+  "b": {
+   "solids": [
+    {
+     "box": [
+      0,
+      0,
+      0,
+      10,
+      10,
+      10
+     ]
+    }
+   ]
+  }
+ },
+ "parts": [
+  {
+   "id": "keys",
+   "bodies": [
+    {
+     "id": "b",
+     "mesh": "@b"
+    }
+   ]
+  }
+ ]
+}

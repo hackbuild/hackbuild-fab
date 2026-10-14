@@ -1,0 +1,56 @@
+{
+ "note": "an M3 head seat with 20 mm clear above it",
+ "meshes": {
+  "b": {
+   "solids": [
+    {
+     "box": [
+      0,
+      0,
+      0,
+      20,
+      20,
+      5
+     ]
+    }
+   ]
+  }
+ },
+ "parts": [
+  {
+   "id": "wrist",
+   "bodies": [
+    {
+     "id": "b",
+     "mesh": "@b"
+    }
+   ],
+   "features": [
+    {
+     "kind": "screw",
+     "id": "screw.horn",
+     "thread": "M3",
+     "axis": {
+      "origin": [
+       10,
+       10,
+       5
+      ],
+      "dir": [
+       0,
+       0,
+       -1
+      ]
+     },
+     "driverAxis": [
+      0,
+      0,
+      1
+     ],
+     "reachLen": 20,
+     "engagementLen": 6
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,62 @@
+--- rotor drops into the stator, no fastener ---
+  rotor lifted 0 mm vs stator                               0.00 mm3   want clear   ok
+  rotor lifted 1 mm vs stator                               0.00 mm3   want clear   ok
+  rotor lifted 3 mm vs stator                               0.00 mm3   want clear   ok
+  rotor lifted 8 mm vs stator                               0.00 mm3   want clear   ok
+  rotor lifted 16 mm vs stator                              0.00 mm3   want clear   ok
+
+--- retainer: drop through the 3 slots, twist 46 deg, detent clicks, hard stop ---
+  retainer at drop angle, seated                            0.00 mm3   want clear   ok
+  retainer at drop angle, lifted 1.2 mm                     0.00 mm3   want clear   ok
+  retainer twisted to locked, seated                        0.00 mm3   want clear   ok
+  retainer locked, lifted 1.2 mm                           75.04 mm3   want traps   ok
+  retainer locked, holds the rotor down                   135.14 mm3   want traps   ok
+
+--- belly cover snaps in and clamps the servo, no screws ---
+  belly seated in the recess                                0.00 mm3   want clear   ok
+  belly pulled down 0.5 mm                                  6.50 mm3   want traps   ok
+
+--- servo horn: arms on top of the hub, cross pocket drives them ---
+  horn hub 25.70 to 28.30, arm plate 28.30 to 30.50, spline top 28.30
+  horn seated in the rotor cross pocket                     0.00 mm3   want clear   ok
+  horn turned 8 deg against the rotor                      28.23 mm3   want traps   ok
+  horn turned 8 deg against the servo                       0.15 mm3   want clear   ok
+
+--- output interface: dovetail rail plus one lock screw, same idea as the flank ---
+  bracket seated on the rail                                0.00 mm3   want clear   ok
+  bracket slid 4 mm along the rail                          0.00 mm3   want clear   ok
+  bracket slid 10 mm along the rail                         0.00 mm3   want clear   ok
+  bracket slid 20 mm along the rail                         0.00 mm3   want clear   ok
+  bracket slid 34 mm along the rail                         0.00 mm3   want clear   ok
+  bracket lifted 1.5 mm off the face                       33.44 mm3   want traps   ok
+  bracket pushed 1.0 mm across the rail                    37.27 mm3   want traps   ok
+  lock screw path through the bracket                       0.00 mm3   want clear   ok
+
+--- retainer detent and hard stop ---
+  retainer over twisted 8 deg past locked                  26.75 mm3   want traps   ok
+  ledge over the twist channel is now 3.20 mm thick, was 1.60
+  retainer ring is 4.10 mm wide radially, so it carries no hole or slot at all now
+
+--- stock horn screw reaches the spline through the stepped bore ---
+  driver bore Ø5.0 from 38.75 down to the shoulder at 31.80, then Ø2.8 to the pocket roof at 30.90
+  shank under the head must be at least 6.0 mm for 2.5 mm of thread in the spline
+  driver path down to the shoulder, through the rotor       0.00 mm3   want clear   ok
+  screw shank path from the spline up and out               0.00 mm3   want clear   ok
+  same path through the tool plate on top                   0.00 mm3   want clear   ok
+  head cannot fall past the shoulder                        8.25 mm3   want traps   ok
+
+--- lock screw also reaches through a hinge cheek ---
+  lock screw path through the hinge cheek                   0.00 mm3   want clear   ok
+  hinge seated on the rotor face                            0.00 mm3   want clear   ok
+
+--- cradle slides on along the tail, rib in groove, one stop screw ---
+  cradle seated on the module                               0.00 mm3   want clear   ok
+  cradle drawn back 3 mm along +x                           0.00 mm3   want clear   ok
+  cradle drawn back 8 mm along +x                           0.00 mm3   want clear   ok
+  cradle drawn back 16 mm along +x                          0.00 mm3   want clear   ok
+  cradle drawn back 30 mm along +x                          0.00 mm3   want clear   ok
+  module lifted 1.0 mm inside the cradle                   57.56 mm3   want traps   ok
+  module pushed 1.0 mm sideways in the cradle             228.50 mm3   want traps   ok
+
+FAILURES: 0
+$V snap_check.py  5.37s user 0.75s system 252% cpu 2.429 total

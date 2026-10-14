@@ -1,0 +1,58 @@
+{
+ "note": "a link whose pivot bore axis runs through the mesh origin (F1)",
+ "meshes": {
+  "b": {
+   "solids": [
+    {
+     "box": [
+      -5,
+      -5,
+      -1.5,
+      60,
+      5,
+      1.5
+     ]
+    }
+   ]
+  }
+ },
+ "parts": [
+  {
+   "id": "link",
+   "bodies": [
+    {
+     "id": "b",
+     "mesh": "@b"
+    }
+   ],
+   "frame": {
+    "originOnAxis": true
+   },
+   "features": [
+    {
+     "kind": "bore",
+     "id": "bore.pivot",
+     "axis": {
+      "origin": [
+       0,
+       0,
+       0
+      ],
+      "dir": [
+       0,
+       1,
+       0
+      ]
+     },
+     "d": 3,
+     "depth": "through",
+     "fit": {
+      "class": "SLIDE",
+      "drawnPerSide": 0.375,
+      "basis": "perSide"
+     }
+    }
+   ]
+  }
+ ]
+}

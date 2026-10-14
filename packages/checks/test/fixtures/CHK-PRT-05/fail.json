@@ -1,0 +1,30 @@
+{
+ "note": "a 2.0 mm plate, 0.07 over the layer top at 1.93 (LOCKET rev C quantization audit)",
+ "meshes": {
+  "b": {
+   "solids": [
+    {
+     "box": [
+      0,
+      0,
+      0,
+      20,
+      20,
+      2
+     ]
+    }
+   ]
+  }
+ },
+ "parts": [
+  {
+   "id": "plate",
+   "bodies": [
+    {
+     "id": "b",
+     "mesh": "@b"
+    }
+   ]
+  }
+ ]
+}

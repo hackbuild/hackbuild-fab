@@ -1,0 +1,7 @@
+{
+ "note": "one assignment per line",
+ "source": {
+  "path": "params.scad",
+  "text": "ROW_Y = -1.5;\nDRIVE_Y = 3.2;\n"
+ }
+}

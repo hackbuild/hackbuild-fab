@@ -1,0 +1,338 @@
+{
+ "note": "Connectivity of SPINDLE R1 ported from pcb.py (sha256 650351218717462917332d02c7cfb70883ad3a66ffad24b0e2756b90ce8a3176): U1 pads from COL_R, COL_L and MOD_NET (lines 61 to 74), J1 and J2 from hdr (lines 95 to 104), J6 (lines 117 to 121), the rest from the literal pad() calls (lines 126 to 150), Q1 pins named by the dict keys G, S, D (lines 142 to 144). Stands in for the M08-T06 record until reference/boards/spindle-r1 writes one; only refs, pins, nets and catalog ids.",
+ "parts": [
+  {
+   "ref": "U1",
+   "catalogId": "esp32c3-supermini"
+  },
+  {
+   "ref": "J1",
+   "catalogId": "spindle-r1-j1"
+  },
+  {
+   "ref": "J2",
+   "catalogId": "spindle-r1-j2"
+  },
+  {
+   "ref": "J6",
+   "catalogId": "spindle-r1-j6"
+  },
+  {
+   "ref": "R4",
+   "catalogId": "spindle-r1-r4"
+  },
+  {
+   "ref": "J3",
+   "catalogId": "spindle-r1-j3"
+  },
+  {
+   "ref": "J4",
+   "catalogId": "spindle-r1-j4"
+  },
+  {
+   "ref": "C2",
+   "catalogId": "spindle-r1-c2"
+  },
+  {
+   "ref": "C1",
+   "catalogId": "spindle-r1-c1"
+  },
+  {
+   "ref": "R2",
+   "catalogId": "spindle-r1-r2"
+  },
+  {
+   "ref": "Q1",
+   "catalogId": "spindle-r1-q1"
+  },
+  {
+   "ref": "R3",
+   "catalogId": "spindle-r1-r3"
+  },
+  {
+   "ref": "J5",
+   "catalogId": "spindle-r1-j5"
+  },
+  {
+   "ref": "JP1",
+   "catalogId": "spindle-r1-jp1"
+  }
+ ],
+ "pads": [
+  {
+   "ref": "U1",
+   "pin": "5V",
+   "net": "5V_MOD"
+  },
+  {
+   "ref": "U1",
+   "pin": "GND",
+   "net": "GND"
+  },
+  {
+   "ref": "U1",
+   "pin": "3V3",
+   "net": "3V3"
+  },
+  {
+   "ref": "U1",
+   "pin": "GPIO4",
+   "net": "GPIO4"
+  },
+  {
+   "ref": "U1",
+   "pin": "GPIO3",
+   "net": "GPIO3"
+  },
+  {
+   "ref": "U1",
+   "pin": "GPIO2",
+   "net": "GPIO2"
+  },
+  {
+   "ref": "U1",
+   "pin": "GPIO1",
+   "net": "GPIO1"
+  },
+  {
+   "ref": "U1",
+   "pin": "GPIO0",
+   "net": "GPIO0"
+  },
+  {
+   "ref": "U1",
+   "pin": "GPIO5",
+   "net": "GPIO5"
+  },
+  {
+   "ref": "U1",
+   "pin": "GPIO6",
+   "net": "GPIO6"
+  },
+  {
+   "ref": "U1",
+   "pin": "GPIO7",
+   "net": "GPIO7"
+  },
+  {
+   "ref": "U1",
+   "pin": "GPIO8",
+   "net": "GPIO8"
+  },
+  {
+   "ref": "U1",
+   "pin": "GPIO9",
+   "net": "GPIO9"
+  },
+  {
+   "ref": "U1",
+   "pin": "GPIO10",
+   "net": "GPIO10"
+  },
+  {
+   "ref": "U1",
+   "pin": "GPIO20",
+   "net": "GPIO20"
+  },
+  {
+   "ref": "U1",
+   "pin": "GPIO21",
+   "net": "GPIO21"
+  },
+  {
+   "ref": "J1",
+   "pin": "1",
+   "net": "5V"
+  },
+  {
+   "ref": "J1",
+   "pin": "2",
+   "net": "GND"
+  },
+  {
+   "ref": "J1",
+   "pin": "3",
+   "net": "GPIO4"
+  },
+  {
+   "ref": "J1",
+   "pin": "4",
+   "net": "GPIO3"
+  },
+  {
+   "ref": "J1",
+   "pin": "5",
+   "net": "GPIO1"
+  },
+  {
+   "ref": "J1",
+   "pin": "6",
+   "net": "GPIO0"
+  },
+  {
+   "ref": "J2",
+   "pin": "1",
+   "net": "GPIO5"
+  },
+  {
+   "ref": "J2",
+   "pin": "2",
+   "net": "GPIO6"
+  },
+  {
+   "ref": "J2",
+   "pin": "3",
+   "net": "GPIO7"
+  },
+  {
+   "ref": "J2",
+   "pin": "4",
+   "net": "GPIO10"
+  },
+  {
+   "ref": "J2",
+   "pin": "5",
+   "net": "GND"
+  },
+  {
+   "ref": "J2",
+   "pin": "6",
+   "net": "5V"
+  },
+  {
+   "ref": "J6",
+   "pin": "1",
+   "net": "GPIO21"
+  },
+  {
+   "ref": "J6",
+   "pin": "2",
+   "net": "GND"
+  },
+  {
+   "ref": "J6",
+   "pin": "3",
+   "net": "GND"
+  },
+  {
+   "ref": "J6",
+   "pin": "4",
+   "net": "3V3"
+  },
+  {
+   "ref": "J6",
+   "pin": "5",
+   "net": "GPIO2"
+  },
+  {
+   "ref": "J6",
+   "pin": "6",
+   "net": "GND"
+  },
+  {
+   "ref": "R4",
+   "pin": "1",
+   "net": "3V3"
+  },
+  {
+   "ref": "R4",
+   "pin": "2",
+   "net": "GPIO2"
+  },
+  {
+   "ref": "J3",
+   "pin": "1",
+   "net": "5V"
+  },
+  {
+   "ref": "J3",
+   "pin": "2",
+   "net": "GND"
+  },
+  {
+   "ref": "J4",
+   "pin": "1",
+   "net": "5V"
+  },
+  {
+   "ref": "J4",
+   "pin": "2",
+   "net": "GND"
+  },
+  {
+   "ref": "C2",
+   "pin": "1",
+   "net": "5V"
+  },
+  {
+   "ref": "C2",
+   "pin": "2",
+   "net": "GND"
+  },
+  {
+   "ref": "C1",
+   "pin": "1",
+   "net": "5V"
+  },
+  {
+   "ref": "C1",
+   "pin": "2",
+   "net": "GND"
+  },
+  {
+   "ref": "R2",
+   "pin": "1",
+   "net": "GPIO20"
+  },
+  {
+   "ref": "R2",
+   "pin": "2",
+   "net": "LGATE"
+  },
+  {
+   "ref": "Q1",
+   "pin": "G",
+   "net": "LGATE"
+  },
+  {
+   "ref": "Q1",
+   "pin": "S",
+   "net": "GND"
+  },
+  {
+   "ref": "Q1",
+   "pin": "D",
+   "net": "LSW"
+  },
+  {
+   "ref": "R3",
+   "pin": "1",
+   "net": "LGATE"
+  },
+  {
+   "ref": "R3",
+   "pin": "2",
+   "net": "GND"
+  },
+  {
+   "ref": "J5",
+   "pin": "1",
+   "net": "5V"
+  },
+  {
+   "ref": "J5",
+   "pin": "2",
+   "net": "LSW"
+  },
+  {
+   "ref": "JP1",
+   "pin": "1",
+   "net": "5V_MOD"
+  },
+  {
+   "ref": "JP1",
+   "pin": "2",
+   "net": "5V"
+  }
+ ]
+}

@@ -1,0 +1,109 @@
+{
+ "note": "COTTER verify-1, hook for a 6.35 hole in a 6.35 board: the search clears after 106 poses at tilt 57 deg",
+ "meshes": {
+  "b": {
+   "solids": [
+    {
+     "box": [
+      0,
+      0,
+      0,
+      10,
+      10,
+      6.35
+     ]
+    }
+   ]
+  }
+ },
+ "assembly": {
+  "id": "cotter",
+  "parts": [
+   {
+    "id": "hook",
+    "bodies": [
+     {
+      "id": "b",
+      "mesh": "@b"
+     }
+    ]
+   },
+   {
+    "id": "board",
+    "bodies": [
+     {
+      "id": "b",
+      "mesh": "@b"
+     }
+    ]
+   }
+  ],
+  "instances": [
+   {
+    "id": "hook1",
+    "part": "hook",
+    "pose": {
+     "frame": "assembly",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "rot": [
+      0,
+      0,
+      0,
+      1
+     ]
+    }
+   },
+   {
+    "id": "board1",
+    "part": "board",
+    "pose": {
+     "frame": "assembly",
+     "pos": [
+      20,
+      0,
+      0
+     ],
+     "rot": [
+      0,
+      0,
+      0,
+      1
+     ]
+    }
+   }
+  ],
+  "assertions": [
+   {
+    "type": "insertable",
+    "part": "hook1",
+    "into": "board1"
+   }
+  ]
+ },
+ "sim": {
+  "insert": [
+   {
+    "part": "hook1",
+    "into": "board1",
+    "verdict": "INSERTS",
+    "stop": "clear",
+    "poses": 106,
+    "maxTiltDeg": 57,
+    "clearing": {
+     "state": [
+      57,
+      88,
+      46
+     ],
+     "tiltDeg": 57,
+     "xMm": 17.6,
+     "yMm": 9.2
+    }
+   }
+  ]
+ }
+}

@@ -1,0 +1,66 @@
+{
+ "note": "a bar 5 mm over the screw head blocks the driver (DAVIT R4: horn screws behind a D2.8 waist)",
+ "meshes": {
+  "b": {
+   "solids": [
+    {
+     "box": [
+      0,
+      0,
+      0,
+      20,
+      20,
+      5
+     ]
+    },
+    {
+     "box": [
+      8,
+      -5,
+      10,
+      12,
+      25,
+      12
+     ]
+    }
+   ]
+  }
+ },
+ "parts": [
+  {
+   "id": "wrist",
+   "bodies": [
+    {
+     "id": "b",
+     "mesh": "@b"
+    }
+   ],
+   "features": [
+    {
+     "kind": "screw",
+     "id": "screw.horn",
+     "thread": "M3",
+     "axis": {
+      "origin": [
+       10,
+       10,
+       5
+      ],
+      "dir": [
+       0,
+       0,
+       -1
+      ]
+     },
+     "driverAxis": [
+      0,
+      0,
+      1
+     ],
+     "reachLen": 20,
+     "engagementLen": 6
+    }
+   ]
+  }
+ ]
+}

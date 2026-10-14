@@ -1,0 +1,49 @@
+{
+ "note": "the print pose shrunk 0.05 all round against its twin (OGEE R16-P: four parts shrunk in one pose only)",
+ "meshes": {
+  "print": {
+   "solids": [
+    {
+     "box": [
+      0.05,
+      0.05,
+      0.05,
+      19.95,
+      9.95,
+      4.95
+     ]
+    }
+   ]
+  },
+  "twin": {
+   "solids": [
+    {
+     "box": [
+      0,
+      0,
+      0,
+      20,
+      5,
+      10
+     ]
+    }
+   ]
+  }
+ },
+ "parts": [
+  {
+   "id": "latchpull",
+   "bodies": [
+    {
+     "id": "b",
+     "mesh": "@print"
+    }
+   ],
+   "solid": "@print",
+   "frame": {
+    "pose": "print",
+    "assemblyTwin": "@twin"
+   }
+  }
+ ]
+}

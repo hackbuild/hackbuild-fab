@@ -1,0 +1,7 @@
+{
+ "note": "the same checker reading every constant from P",
+ "source": {
+  "path": "fits.py",
+  "text": "from kin import P\n\nFIT_SLIDE_ = P[\"FIT_SLIDE\"]\nPR = dict(PRINT_GAP=FIT_SLIDE_/2, PRINT_SHRINK=P[\"PRINT_SHRINK\"], FIT_LOCATE=P[\"FIT_LOCATE\"])\n"
+ }
+}

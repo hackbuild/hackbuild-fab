@@ -1,0 +1,43 @@
+{
+ "note": "PIP defaults: l 24, t 0.55, w 1.6, sw 3, petg in plane, Q 2.0 inside 1.72 to 2.19",
+ "meshes": {
+  "b": {
+   "solids": [
+    {
+     "box": [
+      -12,
+      -2,
+      0,
+      12,
+      2,
+      1.6
+     ]
+    }
+   ]
+  }
+ },
+ "parts": [
+  {
+   "id": "clicky",
+   "bodies": [
+    {
+     "id": "b",
+     "mesh": "@b"
+    }
+   ],
+   "features": [
+    {
+     "kind": "spring",
+     "id": "spring.click1",
+     "l": 24,
+     "t": 0.55,
+     "w": 1.6,
+     "riseQ": 2,
+     "ends": "clamped",
+     "bend": "inPlane",
+     "sw": 3
+    }
+   ]
+  }
+ ]
+}

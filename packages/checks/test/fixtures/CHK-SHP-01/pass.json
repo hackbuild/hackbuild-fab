@@ -1,0 +1,60 @@
+{
+ "note": "a chamfer naming the sub-solid it cuts before the union",
+ "meshes": {
+  "b": {
+   "solids": [
+    {
+     "box": [
+      0,
+      0,
+      0,
+      20,
+      20,
+      5
+     ]
+    }
+   ]
+  },
+  "c": {
+   "solids": [
+    {
+     "box": [
+      25,
+      0,
+      0,
+      45,
+      20,
+      5
+     ]
+    }
+   ]
+  }
+ },
+ "parts": [
+  {
+   "id": "chassis",
+   "bodies": [
+    {
+     "id": "floor",
+     "mesh": "@b"
+    },
+    {
+     "id": "wall",
+     "mesh": "@c"
+    }
+   ],
+   "features": [
+    {
+     "kind": "chamfer",
+     "id": "chamfer.top",
+     "body": "floor",
+     "edges": {
+      "where": "top"
+     },
+     "size": 1,
+     "angleDeg": 45
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,21 @@
+audit_print.py thresholds: tol 0.5 mm3, touch ceiling 120.0 mm3, box margin 1e-06 mm; STROKE 9.0 mm, LP_SLIDE 3.0 mm (computed from params.scad)
+[rest                ] bodies 75  box-test pairs 198  overlaps above 0 mm3 64  above 0.01 mm3 64  boolean exceptions 0  non-watertight 0  clashes 0
+    largest touch-pair overlap rowbar0 link03 82.21 mm3
+[full select 0,0     ] bodies 75  box-test pairs 183  overlaps above 0 mm3 57  above 0.01 mm3 57  boolean exceptions 0  non-watertight 0  clashes 0
+    largest touch-pair overlap rowbar1 link13 82.21 mm3
+[all bars up         ] bodies 75  box-test pairs 183  overlaps above 0 mm3 48  above 0.01 mm3 48  boolean exceptions 0  non-watertight 0  clashes 0
+    largest touch-pair overlap rowbar0 link03 82.21 mm3
+[clear pull          ] bodies 75  box-test pairs 198  overlaps above 0 mm3 64  above 0.01 mm3 64  boolean exceptions 0  non-watertight 0  clashes 0
+    largest touch-pair overlap rowbar0 link03 82.21 mm3
+TOTAL: 0
+[row bar 0 at stroke plus 3] bodies 75  box-test pairs 190  overlaps above 0 mm3 64  above 0.01 mm3 64  boolean exceptions 0  non-watertight 0  clashes 4
+    largest touch-pair overlap rowbar1 link13 82.21 mm3
+    clash rowbar0 colbar3 144.00 mm3
+    clash rowbar0 colbar2 144.00 mm3
+    clash rowbar0 colbar1 144.00 mm3
+    clash rowbar0 colbar0 144.00 mm3
+[column bar 1 at stroke plus 3] bodies 75  box-test pairs 184  overlaps above 0 mm3 61  above 0.01 mm3 61  boolean exceptions 0  non-watertight 0  clashes 1
+    largest touch-pair overlap deck colbar1 1525.80 mm3
+    clash deck* colbar1* 1525.80 mm3
+wrote designs/ogee16/legacy/poses/printed-4.json: 4 poses, 75 bodies each, 821 touch pairs
+wrote designs/ogee16/legacy/poses/printed-negatives.json: 2 poses, 75 bodies each, 821 touch pairs

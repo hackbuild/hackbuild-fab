@@ -1,0 +1,134 @@
+{
+ "note": "the rod drops into an open tray installed before it",
+ "meshes": {
+  "tray": {
+   "solids": [
+    {
+     "box": [
+      0,
+      0,
+      0,
+      20,
+      20,
+      2
+     ]
+    },
+    {
+     "box": [
+      0,
+      0,
+      0,
+      2,
+      20,
+      20
+     ]
+    },
+    {
+     "box": [
+      18,
+      0,
+      0,
+      20,
+      20,
+      20
+     ]
+    },
+    {
+     "box": [
+      0,
+      0,
+      0,
+      20,
+      2,
+      20
+     ]
+    },
+    {
+     "box": [
+      0,
+      18,
+      0,
+      20,
+      20,
+      20
+     ]
+    }
+   ]
+  },
+  "rod": {
+   "solids": [
+    {
+     "box": [
+      8,
+      8,
+      4,
+      12,
+      12,
+      14
+     ]
+    }
+   ]
+  }
+ },
+ "assembly": {
+  "id": "face",
+  "parts": [
+   {
+    "id": "tray",
+    "bodies": [
+     {
+      "id": "b",
+      "mesh": "@tray"
+     }
+    ]
+   },
+   {
+    "id": "rod",
+    "bodies": [
+     {
+      "id": "b",
+      "mesh": "@rod"
+     }
+    ]
+   }
+  ],
+  "instances": [
+   {
+    "id": "tray1",
+    "part": "tray",
+    "pose": {
+     "frame": "assembly",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "rot": [
+      0,
+      0,
+      0,
+      1
+     ]
+    }
+   },
+   {
+    "id": "rod1",
+    "part": "rod",
+    "pose": {
+     "frame": "assembly",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "rot": [
+      0,
+      0,
+      0,
+      1
+     ]
+    }
+   }
+  ]
+ }
+}

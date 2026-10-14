@@ -1,0 +1,51 @@
+{
+ "note": "the same floating plug, an island at both 0.24 and 0.20 layers (islands.py)",
+ "meshes": {
+  "base": {
+   "solids": [
+    {
+     "box": [
+      0,
+      0,
+      0,
+      10,
+      10,
+      2
+     ]
+    }
+   ]
+  },
+  "plug": {
+   "solids": [
+    {
+     "box": [
+      3,
+      3,
+      2.5,
+      7,
+      7,
+      4
+     ]
+    }
+   ]
+  }
+ },
+ "parts": [
+  {
+   "id": "plug",
+   "bodies": [
+    {
+     "id": "base",
+     "mesh": "@base"
+    },
+    {
+     "id": "plug",
+     "mesh": "@plug",
+     "role": "conductor",
+     "material": "ctpu",
+     "slot": 2
+    }
+   ]
+  }
+ ]
+}

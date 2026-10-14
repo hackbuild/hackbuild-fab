@@ -1,0 +1,55 @@
+{
+ "note": "a 3 mm plate bearing on an 8 mm shaft, L/D 0.375 (OGEE R16-P: the shaft walked 29 mm)",
+ "meshes": {
+  "b": {
+   "solids": [
+    {
+     "box": [
+      0,
+      0,
+      0,
+      16,
+      16,
+      3
+     ]
+    }
+   ]
+  }
+ },
+ "parts": [
+  {
+   "id": "hub",
+   "bodies": [
+    {
+     "id": "b",
+     "mesh": "@b"
+    }
+   ],
+   "features": [
+    {
+     "kind": "bore",
+     "id": "bore.shaft",
+     "axis": {
+      "origin": [
+       8,
+       8,
+       0
+      ],
+      "dir": [
+       0,
+       0,
+       1
+      ]
+     },
+     "d": 8,
+     "depth": 3,
+     "fit": {
+      "class": "SLIDE",
+      "drawnPerSide": 0.375,
+      "basis": "perSide"
+     }
+    }
+   ]
+  }
+ ]
+}

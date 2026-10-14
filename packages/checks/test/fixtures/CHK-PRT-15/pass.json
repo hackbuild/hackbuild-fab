@@ -1,0 +1,104 @@
+{
+ "note": "an NFC pocket paused at 2.17 mm, the top of layer 8 on ffc5p_20260819: first layer 0.25 plus 8 layers of 0.24",
+ "meshes": {
+  "b": {
+   "solids": [
+    {
+     "box": [
+      -22,
+      -22,
+      0,
+      22,
+      22,
+      4
+     ]
+    }
+   ]
+  }
+ },
+ "parts": [
+  {
+   "id": "coin",
+   "bodies": [
+    {
+     "id": "b",
+     "mesh": "@b",
+     "outline": [
+      [
+       [
+        -22,
+        -22
+       ],
+       [
+        22,
+        -22
+       ],
+       [
+        22,
+        22
+       ],
+       [
+        -22,
+        22
+       ]
+      ]
+     ]
+    }
+   ],
+   "features": [
+    {
+     "kind": "pocket",
+     "id": "pocket.nfc",
+     "body": "b",
+     "outline": [
+      [
+       -13,
+       -13
+      ],
+      [
+       13,
+       -13
+      ],
+      [
+       13,
+       13
+      ],
+      [
+       -13,
+       13
+      ]
+     ],
+     "face": {
+      "origin": [
+       0,
+       0,
+       2.17
+      ],
+      "normal": [
+       0,
+       0,
+       1
+      ],
+      "u": [
+       1,
+       0,
+       0
+      ]
+     },
+     "depth": 0.6,
+     "floor": "flat",
+     "fit": {
+      "class": "LOCATE",
+      "drawnPerSide": 0.1,
+      "basis": "perSide"
+     },
+     "sealed": {
+      "pauseBefore": {
+       "z": 2.17
+      }
+     }
+    }
+   ]
+  }
+ ]
+}

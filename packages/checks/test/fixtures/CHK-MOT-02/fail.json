@@ -1,0 +1,208 @@
+{
+ "meshes": {
+  "frame": {
+   "solids": [
+    {
+     "box": [
+      0,
+      0,
+      0,
+      30,
+      10,
+      3
+     ]
+    }
+   ]
+  },
+  "pin": {
+   "solids": [
+    {
+     "box": [
+      5,
+      3,
+      3,
+      8,
+      6,
+      9
+     ]
+    }
+   ]
+  }
+ },
+ "assembly": {
+  "id": "ogee",
+  "parts": [
+   {
+    "id": "frame",
+    "bodies": [
+     {
+      "id": "b",
+      "mesh": "@frame"
+     }
+    ],
+    "features": [
+     {
+      "kind": "pocket",
+      "id": "pocket.slot",
+      "body": "b",
+      "outline": [
+       [
+        4,
+        2
+       ],
+       [
+        26,
+        2
+       ],
+       [
+        26,
+        7
+       ],
+       [
+        4,
+        7
+       ]
+      ],
+      "face": {
+       "origin": [
+        0,
+        0,
+        3
+       ],
+       "normal": [
+        0,
+        0,
+        1
+       ],
+       "u": [
+        1,
+        0,
+        0
+       ]
+      },
+      "depth": 3,
+      "floor": "flat",
+      "fit": {
+       "class": "SLIDE",
+       "drawnPerSide": 0.375,
+       "basis": "perSide"
+      }
+     }
+    ]
+   },
+   {
+    "id": "crank",
+    "bodies": [
+     {
+      "id": "b",
+      "mesh": "@pin"
+     }
+    ],
+    "features": [
+     {
+      "kind": "boss",
+      "id": "boss.pin",
+      "axis": {
+       "origin": [
+        6.5,
+        4.5,
+        3
+       ],
+       "dir": [
+        0,
+        0,
+        1
+       ]
+      },
+      "d": 3,
+      "h": 6
+     }
+    ]
+   }
+  ],
+  "instances": [
+   {
+    "id": "frame1",
+    "part": "frame",
+    "pose": {
+     "frame": "assembly",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "rot": [
+      0,
+      0,
+      0,
+      1
+     ]
+    }
+   },
+   {
+    "id": "crank1",
+    "part": "crank",
+    "pose": {
+     "frame": "assembly",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "rot": [
+      0,
+      0,
+      0,
+      1
+     ]
+    }
+   }
+  ],
+  "joints": [
+   {
+    "id": "j.slot",
+    "kind": "prismatic",
+    "a": "frame1",
+    "b": "crank1",
+    "axis": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "dir": [
+      1,
+      0,
+      0
+     ]
+    },
+    "range": {
+     "min": 0,
+     "max": 18
+    },
+    "via": {
+     "featureA": "pocket.slot",
+     "featureB": "boss.pin"
+    }
+   }
+  ]
+ },
+ "note": "the left arm's mirrored hub contact the right-arm-only mask missed (DAVIT)",
+ "sim": {
+  "sweep": [
+   {
+    "part": "crank1",
+    "joint": "j.slot",
+    "sweptHash": "0000000000000000000000000000000000000000000000000000000000000000",
+    "poses": 25,
+    "clashes": [
+     {
+      "with": "hubL",
+      "mm3": 14.2,
+      "masked": false
+     }
+    ]
+   }
+  ]
+ }
+}

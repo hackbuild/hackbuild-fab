@@ -1,0 +1,92 @@
+{
+ "note": "PIP START touch, path 910897 ohm plus the 20 Mohm bench skin, 8.494 pF, waited 200 us as pip.ino ships",
+ "meshes": {
+  "pad": {
+   "solids": [
+    {
+     "box": [
+      0,
+      0,
+      0,
+      10,
+      10,
+      2
+     ]
+    }
+   ]
+  }
+ },
+ "parts": [
+  {
+   "id": "pip",
+   "bodies": [
+    {
+     "id": "pad",
+     "mesh": "@pad"
+    }
+   ],
+   "features": [
+    {
+     "kind": "port",
+     "id": "port.START",
+     "body": "pad",
+     "net": "START",
+     "type": "signal",
+     "interface": "touch"
+    }
+   ]
+  }
+ ],
+ "nets": [
+  {
+   "id": "START",
+   "conductors": [],
+   "bodies": [],
+   "terminals": [
+    "port.START"
+   ],
+   "resistance": [],
+   "bulkOhm": 910897,
+   "contacts": [],
+   "totalOhm": [
+    910897,
+    910897
+   ],
+   "unpricedContacts": [],
+   "capToGndPf": 8.494,
+   "couplingPf": {},
+   "capMethod": "pip-per-mm",
+   "tier": "inferred",
+   "qualifier": "computed"
+  }
+ ],
+ "hookup": [
+  {
+   "port": "port.START",
+   "mcu": "rp2040",
+   "pin": "GP4",
+   "read": {
+    "model": "charge-release",
+    "drive": "low",
+    "driveUs": 30,
+    "waitUs": 200,
+    "waitSource": "default"
+   }
+  }
+ ],
+ "charges": [
+  {
+   "port": "port.START",
+   "path": {
+    "net": "START",
+    "returnNet": "3V3",
+    "contact": "switch.START",
+    "pathOhm": 910897,
+    "returnType": "power",
+    "tier": "inferred",
+    "unpriced": [],
+    "traceMm": 24.7
+   }
+  }
+ ]
+}

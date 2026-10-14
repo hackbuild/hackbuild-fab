@@ -1,0 +1,12 @@
+{
+  "note": "labelled fixture, not a recording: the DETENT rev C overhang area reported with neither a gate nor informational (D-075, sources/benches/benches-machines.md line 175); no value is recorded",
+  "builds": [
+    {
+      "build": "reference/fixture/detent-rev-c",
+      "part": "detent",
+      "metrics": [
+        { "id": "overhang.areaMm2" }
+      ]
+    }
+  ]
+}

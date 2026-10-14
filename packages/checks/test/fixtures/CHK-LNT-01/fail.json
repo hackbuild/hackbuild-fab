@@ -1,0 +1,7 @@
+{
+ "note": "a range written with an en dash",
+ "source": {
+  "path": "notes.md",
+  "text": "travel 1.2{U+2013}1.6 mm, set by the cone.\n"
+ }
+}

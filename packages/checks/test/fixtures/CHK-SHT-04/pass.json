@@ -1,0 +1,7 @@
+{
+ "note": "kerf read from the machine profile row",
+ "source": {
+  "path": "deck.ts",
+  "text": "const kerf = profile.machine(\"laser1220\").kerf;\nexport const slot = 3 + 2 * kerf;\n"
+ }
+}

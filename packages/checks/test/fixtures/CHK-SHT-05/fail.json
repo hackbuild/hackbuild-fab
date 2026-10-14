@@ -1,0 +1,43 @@
+{
+ "note": "a 3 mm petg strip cantilevered 172 mm sags 0.96 against the 0.775 one-bar margin (OGEE R13: a single strip drooped 0.95)",
+ "meshes": {
+  "b": {
+   "solids": [
+    {
+     "box": [
+      0,
+      0,
+      0,
+      172,
+      10,
+      3
+     ]
+    }
+   ]
+  }
+ },
+ "parts": [
+  {
+   "id": "rowbar",
+   "bodies": [
+    {
+     "id": "b",
+     "mesh": "@b"
+    }
+   ],
+   "thickness": 3,
+   "plane": "XY",
+   "metrics": [
+    {
+     "id": "latch.margin",
+     "value": 0.775,
+     "unit": "mm",
+     "qualifier": "computed",
+     "basis": null,
+     "note": "one-bar half-select margin",
+     "gate": "CHK-SHT-05"
+    }
+   ]
+  }
+ ]
+}

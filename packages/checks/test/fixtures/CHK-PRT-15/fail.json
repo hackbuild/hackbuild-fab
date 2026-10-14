@@ -1,0 +1,104 @@
+{
+ "note": "COLLAR NFC card (1) case b: ceiling and pause at 2.28 mm on a 0.24 grid from the bed; on ffc5p_20260819 the tops around it are 2.17 and 2.41",
+ "meshes": {
+  "b": {
+   "solids": [
+    {
+     "box": [
+      -22,
+      -22,
+      0,
+      22,
+      22,
+      4
+     ]
+    }
+   ]
+  }
+ },
+ "parts": [
+  {
+   "id": "coin",
+   "bodies": [
+    {
+     "id": "b",
+     "mesh": "@b",
+     "outline": [
+      [
+       [
+        -22,
+        -22
+       ],
+       [
+        22,
+        -22
+       ],
+       [
+        22,
+        22
+       ],
+       [
+        -22,
+        22
+       ]
+      ]
+     ]
+    }
+   ],
+   "features": [
+    {
+     "kind": "pocket",
+     "id": "pocket.nfc",
+     "body": "b",
+     "outline": [
+      [
+       -13,
+       -13
+      ],
+      [
+       13,
+       -13
+      ],
+      [
+       13,
+       13
+      ],
+      [
+       -13,
+       13
+      ]
+     ],
+     "face": {
+      "origin": [
+       0,
+       0,
+       2.28
+      ],
+      "normal": [
+       0,
+       0,
+       1
+      ],
+      "u": [
+       1,
+       0,
+       0
+      ]
+     },
+     "depth": 0.6,
+     "floor": "flat",
+     "fit": {
+      "class": "LOCATE",
+      "drawnPerSide": 0.1,
+      "basis": "perSide"
+     },
+     "sealed": {
+      "pauseBefore": {
+       "z": 2.28
+      }
+     }
+    }
+   ]
+  }
+ ]
+}

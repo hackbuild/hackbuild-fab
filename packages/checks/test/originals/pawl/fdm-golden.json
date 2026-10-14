@@ -1,0 +1,39 @@
+{
+  "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pawl/files/src/fdm.py",
+  "sourceSha256": "a37ad7d868ef4e353409eb43e4e2aa8e7c034638e0636bfccdd5af6d321dfc0e",
+  "parts": {
+    "foot": {
+      "stlSha256": "e5d308f9019bd9960fec71749939ac2857add3dc77a388a9a2091e20fcb452b2",
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "fdmPyPct": 1.9741,
+      "pastLimitPct": 1.4284,
+      "totalMm2": 8162.92
+    },
+    "thigh": {
+      "stlSha256": "4b1829410eae8c764467dd5ff852ef0860b354b96e6e221694a7460dc4e541d0",
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "fdmPyPct": 2.963,
+      "pastLimitPct": 2.5394,
+      "totalMm2": 12314.35
+    },
+    "ankle_yoke": {
+      "stlSha256": "5398ed305f7f9d3c2c8893c4f991e67d2639d78bf216e95b22770e44dedbaf18",
+      "up": [
+        0,
+        0,
+        -1
+      ],
+      "fdmPyPct": 2.5748,
+      "pastLimitPct": 2.1049,
+      "totalMm2": 8152.16
+    }
+  }
+}

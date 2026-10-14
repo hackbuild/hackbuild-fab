@@ -1,0 +1,98 @@
+{
+ "note": "a collector inside its 20 mm host body",
+ "meshes": {
+  "b": {
+   "solids": [
+    {
+     "box": [
+      -10,
+      -10,
+      0,
+      10,
+      10,
+      4
+     ]
+    }
+   ]
+  }
+ },
+ "parts": [
+  {
+   "id": "keys",
+   "bodies": [
+    {
+     "id": "pad",
+     "mesh": "@b",
+     "outline": [
+      [
+       [
+        -10,
+        -10
+       ],
+       [
+        10,
+        -10
+       ],
+       [
+        10,
+        10
+       ],
+       [
+        -10,
+        10
+       ]
+      ]
+     ]
+    }
+   ],
+   "features": [
+    {
+     "kind": "conductor",
+     "id": "conductor.collector",
+     "body": "pad",
+     "material": "cpla",
+     "net": "OUT",
+     "region": {
+      "path": [
+       [
+        -3,
+        -3
+       ],
+       [
+        3,
+        -3
+       ],
+       [
+        3,
+        3
+       ],
+       [
+        -3,
+        3
+       ]
+      ],
+      "face": {
+       "origin": [
+        0,
+        0,
+        1
+       ],
+       "normal": [
+        0,
+        0,
+        1
+       ],
+       "u": [
+        1,
+        0,
+        0
+       ]
+      }
+     },
+     "width": 6,
+     "t": 1
+    }
+   ]
+  }
+ ]
+}

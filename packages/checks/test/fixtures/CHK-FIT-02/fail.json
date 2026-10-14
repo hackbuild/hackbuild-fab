@@ -1,0 +1,46 @@
+{
+ "note": "the OGEE barb: 0.7 a side means closing 1.4 to pass a 1.0 slit",
+ "meshes": {
+  "b": {
+   "solids": [
+    {
+     "box": [
+      0,
+      0,
+      0,
+      10,
+      4,
+      6
+     ]
+    }
+   ]
+  }
+ },
+ "parts": [
+  {
+   "id": "pivot",
+   "bodies": [
+    {
+     "id": "b",
+     "mesh": "@b"
+    }
+   ],
+   "features": [
+    {
+     "kind": "snap",
+     "id": "snap.barb",
+     "catch": {
+      "interferencePerSide": 0.7,
+      "leadInAngleDeg": 20
+     },
+     "closure": {
+      "legWidth": 0.73,
+      "slotWidth": 1,
+      "mustCloseBy": 1
+     },
+     "bend": "inPlane"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,63 @@
+{
+ "note": "the inner line falls 0.4 mm against the outer 1 mm: the wall thins from 1.0 to 0.4 (STYLUS)",
+ "meshes": {
+  "b": {
+   "solids": [
+    {
+     "revolve": {
+      "profile": [
+       [
+        2,
+        0
+       ],
+       [
+        3,
+        0
+       ],
+       [
+        2,
+        5
+       ],
+       [
+        1.6,
+        5
+       ]
+      ],
+      "segments": 64
+     }
+    }
+   ]
+  }
+ },
+ "parts": [
+  {
+   "id": "knob",
+   "bodies": [
+    {
+     "id": "b",
+     "mesh": "@b"
+    }
+   ],
+   "features": [
+    {
+     "kind": "boss",
+     "id": "boss.cone",
+     "axis": {
+      "origin": [
+       0,
+       0,
+       0
+      ],
+      "dir": [
+       0,
+       0,
+       1
+      ]
+     },
+     "d": 6,
+     "h": 5
+    }
+   ]
+  }
+ ]
+}

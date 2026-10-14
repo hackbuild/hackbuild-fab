@@ -1,0 +1,59 @@
+{
+ "note": "a chamfer on a two-body part naming no body: the whole-part half-space DETENT rev D let take a wall",
+ "meshes": {
+  "b": {
+   "solids": [
+    {
+     "box": [
+      0,
+      0,
+      0,
+      20,
+      20,
+      5
+     ]
+    }
+   ]
+  },
+  "c": {
+   "solids": [
+    {
+     "box": [
+      25,
+      0,
+      0,
+      45,
+      20,
+      5
+     ]
+    }
+   ]
+  }
+ },
+ "parts": [
+  {
+   "id": "chassis",
+   "bodies": [
+    {
+     "id": "floor",
+     "mesh": "@b"
+    },
+    {
+     "id": "wall",
+     "mesh": "@c"
+    }
+   ],
+   "features": [
+    {
+     "kind": "chamfer",
+     "id": "chamfer.top",
+     "edges": {
+      "where": "top"
+     },
+     "size": 1,
+     "angleDeg": 45
+    }
+   ]
+  }
+ ]
+}

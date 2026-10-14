@@ -1,0 +1,104 @@
+{
+ "note": "the SG90 flange 0.6 mm into the wall over the joint range (OGEE R16-P: servos invisible to a part-only audit)",
+ "meshes": {
+  "wall": {
+   "solids": [
+    {
+     "box": [
+      0,
+      0,
+      0,
+      40,
+      3,
+      30
+     ]
+    }
+   ]
+  },
+  "servo": {
+   "solids": [
+    {
+     "box": [
+      5,
+      3,
+      5,
+      28,
+      15,
+      27
+     ]
+    }
+   ]
+  }
+ },
+ "assembly": {
+  "id": "ogee",
+  "parts": [
+   {
+    "id": "wall",
+    "bodies": [
+     {
+      "id": "b",
+      "mesh": "@wall"
+     }
+    ]
+   }
+  ],
+  "instances": [
+   {
+    "id": "wall1",
+    "part": "wall",
+    "pose": {
+     "frame": "assembly",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "rot": [
+      0,
+      0,
+      0,
+      1
+     ]
+    }
+   }
+  ],
+  "bought": [
+   {
+    "id": "servo1",
+    "catalogId": "sg90",
+    "tier": "vendor",
+    "envelope": "@servo",
+    "pose": {
+     "frame": "assembly",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "rot": [
+      0,
+      0,
+      0,
+      1
+     ]
+    }
+   }
+  ]
+ },
+ "sim": {
+  "closest": [
+   {
+    "a": "servo1",
+    "b": "wall1",
+    "mm": -0.6,
+    "at": [
+     10,
+     3,
+     10
+    ],
+    "state": "u 0.4"
+   }
+  ]
+ }
+}

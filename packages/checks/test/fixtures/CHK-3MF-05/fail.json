@@ -1,0 +1,107 @@
+{
+ "note": "a full band over a holed band, running down into it (the band order reversed)",
+ "meshes": {
+  "b": {
+   "solids": [
+    {
+     "box": [
+      0,
+      0,
+      0,
+      10,
+      10,
+      4
+     ]
+    }
+   ]
+  }
+ },
+ "parts": [
+  {
+   "id": "sheath",
+   "bodies": [
+    {
+     "id": "b",
+     "mesh": "@b"
+    }
+   ]
+  }
+ ],
+ "shapes": {
+  "sheath/b": {
+   "route": "stack",
+   "bands": [
+    {
+     "outline": [
+      [
+       [
+        0,
+        0
+       ],
+       [
+        10,
+        0
+       ],
+       [
+        10,
+        10
+       ],
+       [
+        0,
+        10
+       ]
+      ],
+      [
+       [
+        4,
+        6
+       ],
+       [
+        6,
+        6
+       ],
+       [
+        6,
+        4
+       ],
+       [
+        4,
+        4
+       ]
+      ]
+     ],
+     "z": [
+      0,
+      2
+     ]
+    },
+    {
+     "outline": [
+      [
+       [
+        0,
+        0
+       ],
+       [
+        10,
+        0
+       ],
+       [
+        10,
+        10
+       ],
+       [
+        0,
+        10
+       ]
+      ]
+     ],
+     "z": [
+      1.985,
+      4
+     ]
+    }
+   ]
+  }
+ }
+}

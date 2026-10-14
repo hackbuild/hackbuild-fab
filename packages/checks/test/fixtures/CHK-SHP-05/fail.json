@@ -1,0 +1,36 @@
+{
+ "note": "an imported STL with inferred provenance",
+ "meshes": {
+  "b": {
+   "solids": [
+    {
+     "box": [
+      0,
+      0,
+      0,
+      10,
+      10,
+      10
+     ]
+    }
+   ]
+  }
+ },
+ "parts": [
+  {
+   "id": "bracket",
+   "bodies": [
+    {
+     "id": "b",
+     "mesh": "@b"
+    }
+   ],
+   "source": {
+    "kind": "imported",
+    "format": "stl",
+    "tier": "inferred",
+    "uri": "hbf://import/bracket"
+   }
+  }
+ ]
+}

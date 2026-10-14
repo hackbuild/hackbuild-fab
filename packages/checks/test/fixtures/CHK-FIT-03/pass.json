@@ -1,0 +1,46 @@
+{
+ "note": "the printed lug declared PSLIP",
+ "meshes": {
+  "b": {
+   "solids": [
+    {
+     "box": [
+      0,
+      0,
+      0,
+      8,
+      3,
+      3
+     ]
+    }
+   ]
+  }
+ },
+ "parts": [
+  {
+   "id": "lug",
+   "bodies": [
+    {
+     "id": "b",
+     "mesh": "@b"
+    }
+   ],
+   "features": [
+    {
+     "kind": "tabSlot",
+     "id": "tabSlot.lug",
+     "role": "tab",
+     "w": 8,
+     "t": 3,
+     "process": "fdm",
+     "fit": {
+      "class": "PSLIP",
+      "drawnPerSide": 0.2,
+      "basis": "perSide"
+     },
+     "mate": "tabSlot.deck"
+    }
+   ]
+  }
+ ]
+}

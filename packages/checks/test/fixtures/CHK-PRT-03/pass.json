@@ -1,0 +1,76 @@
+{
+ "note": "bodies of 100 and 50 mm3 in a 150 mm3 solid",
+ "assembly": {
+  "id": "coin",
+  "parts": [
+   {
+    "id": "coin",
+    "bodies": [
+     {
+      "id": "base",
+      "mesh": {
+       "uri": "hbf://mesh/a1",
+       "hash": "a100000000000000000000000000000000000000000000000000000000000000",
+       "triangles": 12,
+       "bbox": [
+        [
+         0,
+         0,
+         0
+        ],
+        [
+         10,
+         10,
+         10
+        ]
+       ],
+       "volumeMm3": 100,
+       "watertight": true
+      }
+     },
+     {
+      "id": "art",
+      "mesh": {
+       "uri": "hbf://mesh/b1",
+       "hash": "b100000000000000000000000000000000000000000000000000000000000000",
+       "triangles": 12,
+       "bbox": [
+        [
+         0,
+         0,
+         0
+        ],
+        [
+         10,
+         10,
+         10
+        ]
+       ],
+       "volumeMm3": 50,
+       "watertight": true
+      }
+     }
+    ],
+    "solid": {
+     "uri": "hbf://mesh/c1",
+     "hash": "c100000000000000000000000000000000000000000000000000000000000000",
+     "triangles": 12,
+     "bbox": [
+      [
+       0,
+       0,
+       0
+      ],
+      [
+       10,
+       10,
+       10
+      ]
+     ],
+     "volumeMm3": 150,
+     "watertight": true
+    }
+   }
+  ]
+ }
+}

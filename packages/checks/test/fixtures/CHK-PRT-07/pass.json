@@ -1,0 +1,30 @@
+{
+ "note": "a 3 mm block on the bed",
+ "meshes": {
+  "b": {
+   "solids": [
+    {
+     "box": [
+      0,
+      0,
+      0,
+      10,
+      10,
+      3
+     ]
+    }
+   ]
+  }
+ },
+ "parts": [
+  {
+   "id": "plug",
+   "bodies": [
+    {
+     "id": "b",
+     "mesh": "@b"
+    }
+   ]
+  }
+ ]
+}

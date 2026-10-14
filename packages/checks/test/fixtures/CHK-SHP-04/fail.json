@@ -1,0 +1,95 @@
+{
+ "note": "a weld ending on the neighbour's edge, a tangency (OGEE R16-M: six bodies after the print shrink)",
+ "meshes": {
+  "b": {
+   "solids": [
+    {
+     "box": [
+      0,
+      0,
+      0,
+      20,
+      10,
+      3
+     ]
+    },
+    {
+     "box": [
+      0,
+      15,
+      0,
+      20,
+      25,
+      3
+     ]
+    }
+   ]
+  }
+ },
+ "parts": [
+  {
+   "id": "deck",
+   "bodies": [
+    {
+     "id": "b",
+     "mesh": "@b",
+     "outline": [
+      [
+       [
+        0,
+        0
+       ],
+       [
+        20,
+        0
+       ],
+       [
+        20,
+        10
+       ],
+       [
+        0,
+        10
+       ]
+      ],
+      [
+       [
+        0,
+        15
+       ],
+       [
+        20,
+        15
+       ],
+       [
+        20,
+        25
+       ],
+       [
+        0,
+        25
+       ]
+      ]
+     ]
+    }
+   ],
+   "features": [
+    {
+     "kind": "web",
+     "id": "web.weld",
+     "body": "b",
+     "from": [
+      10,
+      9
+     ],
+     "to": [
+      10,
+      15
+     ],
+     "thickness": 2,
+     "clipToProfile": true
+    }
+   ]
+  }
+ ]
+}

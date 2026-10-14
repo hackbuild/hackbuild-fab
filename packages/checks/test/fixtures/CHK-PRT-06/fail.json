@@ -1,0 +1,51 @@
+{
+ "note": "a conductive plug body starting 0.5 mm above the base body, nothing under it (STYLUS: the cTPU plug printed disconnected)",
+ "meshes": {
+  "base": {
+   "solids": [
+    {
+     "box": [
+      0,
+      0,
+      0,
+      10,
+      10,
+      2
+     ]
+    }
+   ]
+  },
+  "plug": {
+   "solids": [
+    {
+     "box": [
+      3,
+      3,
+      2.5,
+      7,
+      7,
+      4
+     ]
+    }
+   ]
+  }
+ },
+ "parts": [
+  {
+   "id": "plug",
+   "bodies": [
+    {
+     "id": "base",
+     "mesh": "@base"
+    },
+    {
+     "id": "plug",
+     "mesh": "@plug",
+     "role": "conductor",
+     "material": "ctpu",
+     "slot": 2
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,63 @@
+{
+ "note": "a cone shell 5 mm tall, inner and outer lines both falling 1 mm: horizontal wall 1.0 throughout",
+ "meshes": {
+  "b": {
+   "solids": [
+    {
+     "revolve": {
+      "profile": [
+       [
+        2,
+        0
+       ],
+       [
+        3,
+        0
+       ],
+       [
+        2,
+        5
+       ],
+       [
+        1,
+        5
+       ]
+      ],
+      "segments": 64
+     }
+    }
+   ]
+  }
+ },
+ "parts": [
+  {
+   "id": "knob",
+   "bodies": [
+    {
+     "id": "b",
+     "mesh": "@b"
+    }
+   ],
+   "features": [
+    {
+     "kind": "boss",
+     "id": "boss.cone",
+     "axis": {
+      "origin": [
+       0,
+       0,
+       0
+      ],
+      "dir": [
+       0,
+       0,
+       1
+      ]
+     },
+     "d": 6,
+     "h": 5
+    }
+   ]
+  }
+ ]
+}

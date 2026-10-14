@@ -1,0 +1,92 @@
+{
+ "note": "PIP A key, path 1687980 ohm, 9.200 pF, waited 3500 us as pip_stick emits",
+ "meshes": {
+  "pad": {
+   "solids": [
+    {
+     "box": [
+      0,
+      0,
+      0,
+      10,
+      10,
+      2
+     ]
+    }
+   ]
+  }
+ },
+ "parts": [
+  {
+   "id": "pip",
+   "bodies": [
+    {
+     "id": "pad",
+     "mesh": "@pad"
+    }
+   ],
+   "features": [
+    {
+     "kind": "port",
+     "id": "port.A",
+     "body": "pad",
+     "net": "A",
+     "type": "signal",
+     "interface": "digital"
+    }
+   ]
+  }
+ ],
+ "nets": [
+  {
+   "id": "A",
+   "conductors": [],
+   "bodies": [],
+   "terminals": [
+    "port.A"
+   ],
+   "resistance": [],
+   "bulkOhm": 1687980,
+   "contacts": [],
+   "totalOhm": [
+    1687980,
+    1687980
+   ],
+   "unpricedContacts": [],
+   "capToGndPf": 9.2,
+   "couplingPf": {},
+   "capMethod": "pip-per-mm",
+   "tier": "inferred",
+   "qualifier": "computed"
+  }
+ ],
+ "hookup": [
+  {
+   "port": "port.A",
+   "mcu": "rp2040",
+   "pin": "GP4",
+   "read": {
+    "model": "charge-release",
+    "drive": "high",
+    "driveUs": 30,
+    "waitUs": 3500,
+    "waitSource": "default"
+   }
+  }
+ ],
+ "charges": [
+  {
+   "port": "port.A",
+   "path": {
+    "net": "A",
+    "returnNet": "GND",
+    "contact": "switch.A",
+    "pathOhm": 1687980,
+    "returnType": "gnd",
+    "tier": "inferred",
+    "unpriced": [],
+    "traceMm": 60
+   }
+  }
+ ]
+}

@@ -1,0 +1,1388 @@
+{
+  "note": "recorded by core/test/metric-record.test.ts from part metrics at default params; read by metric-gates.test.ts",
+  "builds": [
+    {
+      "build": "designs/collar",
+      "part": "coin",
+      "metrics": []
+    },
+    {
+      "build": "designs/sprue",
+      "part": "pick",
+      "metrics": [
+        {
+          "id": "sprue.thickness",
+          "gate": "informational"
+        },
+        {
+          "id": "sprue.layers",
+          "gate": "informational"
+        },
+        {
+          "id": "sprue.inlayDepth",
+          "gate": "informational"
+        }
+      ]
+    },
+    {
+      "build": "reference/boards/shunt-art",
+      "part": "shunt-art",
+      "metrics": [
+        {
+          "id": "board.nets",
+          "gate": "informational"
+        },
+        {
+          "id": "board.pads",
+          "gate": "informational"
+        },
+        {
+          "id": "board.holes",
+          "gate": "informational"
+        },
+        {
+          "id": "board.vias",
+          "gate": "informational"
+        },
+        {
+          "id": "board.npth",
+          "gate": "informational"
+        }
+      ]
+    },
+    {
+      "build": "reference/boards/spindle-r1",
+      "part": "spindle-r1",
+      "metrics": [
+        {
+          "id": "board.nets",
+          "gate": "informational"
+        },
+        {
+          "id": "board.pads",
+          "gate": "informational"
+        },
+        {
+          "id": "board.holes",
+          "gate": "informational"
+        },
+        {
+          "id": "board.vias",
+          "gate": "informational"
+        },
+        {
+          "id": "board.npth",
+          "gate": "informational"
+        },
+        {
+          "id": "board.tightest",
+          "gate": "informational"
+        }
+      ]
+    },
+    {
+      "build": "reference/boards/wiring-supermini",
+      "part": "wiring-supermini",
+      "metrics": []
+    },
+    {
+      "build": "reference/boards/wiring-tang-r5",
+      "part": "wiring-tang-r5",
+      "metrics": []
+    },
+    {
+      "build": "reference/buttons/click-spring",
+      "part": "body",
+      "metrics": [
+        {
+          "id": "click-spring-key.0.host.top",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.0.spring.peakN",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.spring.drop",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.spring.cg",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.spring.eStop",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.spring.bistable",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.key.R.switch",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.0.key.fits.slot-at-the-end-blocks",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.0.key.fits.slot-over-the-arch",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.0.key.fits.slot-length-over-spring",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.0.key.fits.rib-in-the-block-groove",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.0.key.fits.under-the-bezel",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.0.key.fits.cap-through-bezel-hole",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.0.key.fits.cap-flange-in-its-well",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.0.key.fits.travel-to-contact",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.0.key.fits.tip-over-each-pad",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.0.key.fits.beam-thickness",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.0.key.fits.strain-at-the-stop",
+          "gate": "informational"
+        }
+      ]
+    },
+    {
+      "build": "reference/buttons/flex-cone",
+      "part": "body",
+      "metrics": [
+        {
+          "id": "flex-cone-key.0.host.top",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.0.key.travel",
+          "gate": "CHK-KEY-01"
+        },
+        {
+          "id": "flex-cone-key.0.key.height",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.0.key.rsb",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.0.key.wallH",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.0.key.feel",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.0.key.R.switch",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.0.key.fits.contact-gap",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.0.key.fits.cap-bridge",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.0.key.fits.split-between-halves",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.0.key.fits.column-to-cone-wall",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.0.key.fits.face-through-bezel-hole",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.0.key.fits.stands-proud-of-the-bezel",
+          "gate": "informational"
+        }
+      ]
+    },
+    {
+      "build": "reference/buttons/touch-comb",
+      "part": "body",
+      "metrics": [
+        {
+          "id": "touch-comb-key.0.host.top",
+          "gate": "informational"
+        },
+        {
+          "id": "touch-comb-key.0.key.fingers",
+          "gate": "informational"
+        },
+        {
+          "id": "touch-comb-key.0.key.R.post",
+          "gate": "informational"
+        },
+        {
+          "id": "touch-comb-key.0.key.fits.comb-gap",
+          "gate": "informational"
+        },
+        {
+          "id": "touch-comb-key.0.key.fits.finger-width",
+          "gate": "informational"
+        },
+        {
+          "id": "touch-comb-key.0.key.fits.boss-through-the-bezel",
+          "gate": "informational"
+        }
+      ]
+    },
+    {
+      "build": "reference/conductors/blocks-stud",
+      "part": "body",
+      "metrics": [
+        {
+          "id": "blocks-stud.0.stud.R.post",
+          "gate": "informational"
+        },
+        {
+          "id": "blocks-stud.0.stud.postTop",
+          "gate": "informational"
+        },
+        {
+          "id": "blocks-stud.0.stud.standard",
+          "gate": "informational"
+        },
+        {
+          "id": "blocks-stud.0.stud.tap.S",
+          "gate": "informational"
+        },
+        {
+          "id": "blocks-stud.0.stud.tap.S-sock",
+          "gate": "informational"
+        }
+      ]
+    },
+    {
+      "build": "reference/conductors/blocks-stud-applied",
+      "part": "body",
+      "metrics": []
+    },
+    {
+      "build": "reference/conductors/blocks-wire",
+      "part": "wire",
+      "metrics": [
+        {
+          "id": "blocks-wire.0.wire.len",
+          "gate": "informational"
+        },
+        {
+          "id": "blocks-wire.0.wire.chord",
+          "gate": "informational"
+        },
+        {
+          "id": "blocks-wire.0.wire.R",
+          "gate": "informational"
+        },
+        {
+          "id": "blocks-wire.0.wire.fits.sheath-wall-each-side",
+          "gate": "informational"
+        }
+      ]
+    },
+    {
+      "build": "reference/cosmetic/coin-inlay",
+      "part": "coin",
+      "metrics": []
+    },
+    {
+      "build": "reference/electrical/blocks-pullup-band",
+      "part": "wires",
+      "metrics": []
+    },
+    {
+      "build": "reference/electrical/capricate-touch",
+      "part": "touch",
+      "metrics": []
+    },
+    {
+      "build": "reference/electrical/pip-buried-route",
+      "part": "stack",
+      "metrics": [
+        {
+          "id": "route.conflicts",
+          "gate": "CHK-NET-12"
+        },
+        {
+          "id": "route.unrouted",
+          "gate": "CHK-NET-12"
+        },
+        {
+          "id": "route.iters",
+          "gate": "informational"
+        },
+        {
+          "id": "route.net.GND.fails",
+          "gate": "CHK-NET-12"
+        },
+        {
+          "id": "route.net.GND.hot",
+          "gate": "CHK-NET-12"
+        },
+        {
+          "id": "route.net.GND.length",
+          "gate": "informational"
+        },
+        {
+          "id": "route.net.3V3.fails",
+          "gate": "CHK-NET-12"
+        },
+        {
+          "id": "route.net.3V3.hot",
+          "gate": "CHK-NET-12"
+        },
+        {
+          "id": "route.net.3V3.length",
+          "gate": "informational"
+        },
+        {
+          "id": "route.net.UP.fails",
+          "gate": "CHK-NET-12"
+        },
+        {
+          "id": "route.net.UP.hot",
+          "gate": "CHK-NET-12"
+        },
+        {
+          "id": "route.net.UP.length",
+          "gate": "informational"
+        },
+        {
+          "id": "route.net.DOWN.fails",
+          "gate": "CHK-NET-12"
+        },
+        {
+          "id": "route.net.DOWN.hot",
+          "gate": "CHK-NET-12"
+        },
+        {
+          "id": "route.net.DOWN.length",
+          "gate": "informational"
+        },
+        {
+          "id": "route.net.LEFT.fails",
+          "gate": "CHK-NET-12"
+        },
+        {
+          "id": "route.net.LEFT.hot",
+          "gate": "CHK-NET-12"
+        },
+        {
+          "id": "route.net.LEFT.length",
+          "gate": "informational"
+        },
+        {
+          "id": "route.net.RIGHT.fails",
+          "gate": "CHK-NET-12"
+        },
+        {
+          "id": "route.net.RIGHT.hot",
+          "gate": "CHK-NET-12"
+        },
+        {
+          "id": "route.net.RIGHT.length",
+          "gate": "informational"
+        },
+        {
+          "id": "route.net.X.fails",
+          "gate": "CHK-NET-12"
+        },
+        {
+          "id": "route.net.X.hot",
+          "gate": "CHK-NET-12"
+        },
+        {
+          "id": "route.net.X.length",
+          "gate": "informational"
+        },
+        {
+          "id": "route.net.B.fails",
+          "gate": "CHK-NET-12"
+        },
+        {
+          "id": "route.net.B.hot",
+          "gate": "CHK-NET-12"
+        },
+        {
+          "id": "route.net.B.length",
+          "gate": "informational"
+        },
+        {
+          "id": "route.net.Y.fails",
+          "gate": "CHK-NET-12"
+        },
+        {
+          "id": "route.net.Y.hot",
+          "gate": "CHK-NET-12"
+        },
+        {
+          "id": "route.net.Y.length",
+          "gate": "informational"
+        },
+        {
+          "id": "route.net.A.fails",
+          "gate": "CHK-NET-12"
+        },
+        {
+          "id": "route.net.A.hot",
+          "gate": "CHK-NET-12"
+        },
+        {
+          "id": "route.net.A.length",
+          "gate": "informational"
+        },
+        {
+          "id": "route.net.SELECT.fails",
+          "gate": "CHK-NET-12"
+        },
+        {
+          "id": "route.net.SELECT.hot",
+          "gate": "CHK-NET-12"
+        },
+        {
+          "id": "route.net.SELECT.length",
+          "gate": "informational"
+        },
+        {
+          "id": "route.net.START.fails",
+          "gate": "CHK-NET-12"
+        },
+        {
+          "id": "route.net.START.hot",
+          "gate": "CHK-NET-12"
+        },
+        {
+          "id": "route.net.START.length",
+          "gate": "informational"
+        },
+        {
+          "id": "stack.l1.bottom",
+          "gate": "informational"
+        },
+        {
+          "id": "stack.l1.top",
+          "gate": "informational"
+        },
+        {
+          "id": "stack.l2.bottom",
+          "gate": "informational"
+        },
+        {
+          "id": "stack.l2.top",
+          "gate": "informational"
+        },
+        {
+          "id": "stack.pads.bottom",
+          "gate": "informational"
+        },
+        {
+          "id": "stack.floor",
+          "gate": "informational"
+        },
+        {
+          "id": "stack.iso",
+          "gate": "informational"
+        },
+        {
+          "id": "stack.overL2",
+          "gate": "informational"
+        },
+        {
+          "id": "stack.traceWidth",
+          "gate": "informational"
+        }
+      ]
+    },
+    {
+      "build": "reference/electrical/pip-drive",
+      "part": "drive",
+      "metrics": []
+    },
+    {
+      "build": "reference/electrical/trace-width-budget",
+      "part": "trace",
+      "metrics": []
+    },
+    {
+      "build": "reference/exports/orca-3mf-roundtrip",
+      "part": "coin",
+      "metrics": []
+    },
+    {
+      "build": "reference/fit/ogee16-r16p",
+      "part": "fits",
+      "metrics": [
+        {
+          "id": "fits.model",
+          "gate": "informational"
+        },
+        {
+          "id": "fits.01.hole",
+          "gate": "informational"
+        },
+        {
+          "id": "fits.01.shaft",
+          "gate": "informational"
+        },
+        {
+          "id": "fits.01.drawn",
+          "gate": "CHK-FIT-01"
+        },
+        {
+          "id": "fits.01.class",
+          "gate": "informational"
+        },
+        {
+          "id": "fits.02.hole",
+          "gate": "informational"
+        },
+        {
+          "id": "fits.02.shaft",
+          "gate": "informational"
+        },
+        {
+          "id": "fits.02.drawn",
+          "gate": "CHK-FIT-01"
+        },
+        {
+          "id": "fits.02.class",
+          "gate": "informational"
+        },
+        {
+          "id": "fits.03.hole",
+          "gate": "informational"
+        },
+        {
+          "id": "fits.03.shaft",
+          "gate": "informational"
+        },
+        {
+          "id": "fits.03.drawn",
+          "gate": "CHK-FIT-01"
+        },
+        {
+          "id": "fits.03.class",
+          "gate": "informational"
+        },
+        {
+          "id": "fits.04.hole",
+          "gate": "informational"
+        },
+        {
+          "id": "fits.04.shaft",
+          "gate": "informational"
+        },
+        {
+          "id": "fits.04.drawn",
+          "gate": "CHK-FIT-01"
+        },
+        {
+          "id": "fits.04.class",
+          "gate": "informational"
+        },
+        {
+          "id": "fits.05.hole",
+          "gate": "informational"
+        },
+        {
+          "id": "fits.05.shaft",
+          "gate": "informational"
+        },
+        {
+          "id": "fits.05.drawn",
+          "gate": "CHK-FIT-01"
+        },
+        {
+          "id": "fits.05.class",
+          "gate": "informational"
+        },
+        {
+          "id": "fits.06.hole",
+          "gate": "informational"
+        },
+        {
+          "id": "fits.06.shaft",
+          "gate": "informational"
+        },
+        {
+          "id": "fits.06.drawn",
+          "gate": "CHK-FIT-01"
+        },
+        {
+          "id": "fits.06.class",
+          "gate": "informational"
+        },
+        {
+          "id": "fits.07.hole",
+          "gate": "informational"
+        },
+        {
+          "id": "fits.07.shaft",
+          "gate": "informational"
+        },
+        {
+          "id": "fits.07.drawn",
+          "gate": "CHK-FIT-01"
+        },
+        {
+          "id": "fits.07.class",
+          "gate": "informational"
+        },
+        {
+          "id": "fits.08.hole",
+          "gate": "informational"
+        },
+        {
+          "id": "fits.08.shaft",
+          "gate": "informational"
+        },
+        {
+          "id": "fits.08.drawn",
+          "gate": "CHK-FIT-01"
+        },
+        {
+          "id": "fits.08.class",
+          "gate": "informational"
+        },
+        {
+          "id": "fits.09.hole",
+          "gate": "informational"
+        },
+        {
+          "id": "fits.09.shaft",
+          "gate": "informational"
+        },
+        {
+          "id": "fits.09.drawn",
+          "gate": "CHK-FIT-01"
+        },
+        {
+          "id": "fits.09.class",
+          "gate": "informational"
+        },
+        {
+          "id": "fits.10.hole",
+          "gate": "informational"
+        },
+        {
+          "id": "fits.10.shaft",
+          "gate": "informational"
+        },
+        {
+          "id": "fits.10.drawn",
+          "gate": "CHK-FIT-01"
+        },
+        {
+          "id": "fits.10.class",
+          "gate": "informational"
+        },
+        {
+          "id": "fits.11.hole",
+          "gate": "informational"
+        },
+        {
+          "id": "fits.11.shaft",
+          "gate": "informational"
+        },
+        {
+          "id": "fits.11.drawn",
+          "gate": "CHK-FIT-01"
+        },
+        {
+          "id": "fits.11.class",
+          "gate": "informational"
+        },
+        {
+          "id": "fits.12.hole",
+          "gate": "informational"
+        },
+        {
+          "id": "fits.12.shaft",
+          "gate": "informational"
+        },
+        {
+          "id": "fits.12.drawn",
+          "gate": "CHK-FIT-01"
+        },
+        {
+          "id": "fits.12.class",
+          "gate": "informational"
+        },
+        {
+          "id": "fits.13.hole",
+          "gate": "informational"
+        },
+        {
+          "id": "fits.13.shaft",
+          "gate": "informational"
+        },
+        {
+          "id": "fits.13.drawn",
+          "gate": "CHK-FIT-01"
+        },
+        {
+          "id": "fits.13.class",
+          "gate": "informational"
+        },
+        {
+          "id": "fits.14.hole",
+          "gate": "informational"
+        },
+        {
+          "id": "fits.14.shaft",
+          "gate": "informational"
+        },
+        {
+          "id": "fits.14.drawn",
+          "gate": "CHK-FIT-01"
+        },
+        {
+          "id": "fits.14.class",
+          "gate": "informational"
+        },
+        {
+          "id": "fits.15.hole",
+          "gate": "informational"
+        },
+        {
+          "id": "fits.15.shaft",
+          "gate": "informational"
+        },
+        {
+          "id": "fits.15.drawn",
+          "gate": "CHK-FIT-01"
+        },
+        {
+          "id": "fits.15.class",
+          "gate": "informational"
+        },
+        {
+          "id": "fits.16.hole",
+          "gate": "informational"
+        },
+        {
+          "id": "fits.16.shaft",
+          "gate": "informational"
+        },
+        {
+          "id": "fits.16.drawn",
+          "gate": "CHK-FIT-01"
+        },
+        {
+          "id": "fits.16.class",
+          "gate": "informational"
+        },
+        {
+          "id": "fits.17.hole",
+          "gate": "informational"
+        },
+        {
+          "id": "fits.17.shaft",
+          "gate": "informational"
+        },
+        {
+          "id": "fits.17.drawn",
+          "gate": "CHK-FIT-01"
+        },
+        {
+          "id": "fits.17.class",
+          "gate": "informational"
+        },
+        {
+          "id": "fits.18.hole",
+          "gate": "informational"
+        },
+        {
+          "id": "fits.18.shaft",
+          "gate": "informational"
+        },
+        {
+          "id": "fits.18.drawn",
+          "gate": "CHK-FIT-01"
+        },
+        {
+          "id": "fits.18.class",
+          "gate": "informational"
+        },
+        {
+          "id": "derived.BOSS_D",
+          "gate": "informational"
+        },
+        {
+          "id": "derived.CAM",
+          "gate": "informational"
+        },
+        {
+          "id": "derived.CAP_FIT",
+          "gate": "informational"
+        },
+        {
+          "id": "derived.CRANK_BORE",
+          "gate": "informational"
+        },
+        {
+          "id": "derived.FIT_PSLIP",
+          "gate": "informational"
+        },
+        {
+          "id": "derived.LINK_BORE",
+          "gate": "informational"
+        },
+        {
+          "id": "derived.LUG_BORE",
+          "gate": "informational"
+        },
+        {
+          "id": "derived.PIN_PLAY",
+          "gate": "informational"
+        },
+        {
+          "id": "derived.PIN_SH_D",
+          "gate": "informational"
+        },
+        {
+          "id": "derived.PRINT_GAP",
+          "gate": "informational"
+        },
+        {
+          "id": "derived.SLOT_X",
+          "gate": "informational"
+        }
+      ]
+    },
+    {
+      "build": "reference/joints/balance-beam",
+      "part": "balance-beam",
+      "metrics": []
+    },
+    {
+      "build": "reference/joints/finger",
+      "part": "finger",
+      "metrics": [
+        {
+          "id": "finger-joint.0.finger.tab",
+          "gate": "CHK-SHT-11"
+        },
+        {
+          "id": "finger-joint.0.finger.slot",
+          "gate": "CHK-SHT-11"
+        }
+      ]
+    },
+    {
+      "build": "reference/keys/click-spring-window",
+      "part": "spring",
+      "metrics": [
+        {
+          "id": "spring.riseMm",
+          "gate": "informational"
+        }
+      ]
+    },
+    {
+      "build": "reference/keys/flex-pair",
+      "part": "pad",
+      "metrics": [
+        {
+          "id": "keys.1.travel",
+          "gate": "CHK-KEY-01"
+        },
+        {
+          "id": "keys.1.printedTravel",
+          "gate": "informational"
+        },
+        {
+          "id": "keys.1.feel",
+          "gate": "informational"
+        },
+        {
+          "id": "keys.1.capBridge",
+          "gate": "informational"
+        },
+        {
+          "id": "keys.1.split",
+          "gate": "informational"
+        },
+        {
+          "id": "keys.1.columnToWall",
+          "gate": "informational"
+        },
+        {
+          "id": "keys.1.proud",
+          "gate": "informational"
+        },
+        {
+          "id": "print.smallestFeature",
+          "gate": "informational"
+        },
+        {
+          "id": "derived.T",
+          "gate": "informational"
+        }
+      ]
+    },
+    {
+      "build": "reference/mechanisms/coanda-gate",
+      "part": "coanda-gate",
+      "metrics": []
+    },
+    {
+      "build": "reference/mechanisms/coincidence-and",
+      "part": "coincidence-and",
+      "metrics": []
+    },
+    {
+      "build": "reference/mechanisms/detent-latch",
+      "part": "detent-latch",
+      "metrics": []
+    },
+    {
+      "build": "reference/mechanisms/differential-xor",
+      "part": "differential-xor",
+      "metrics": []
+    },
+    {
+      "build": "reference/mechanisms/inhibit",
+      "part": "inhibit",
+      "metrics": []
+    },
+    {
+      "build": "reference/mechanisms/living-hinge",
+      "part": "living-hinge",
+      "metrics": [
+        {
+          "id": "living-hinge.0.hinge.degPerRow",
+          "gate": "CHK-SHT-06"
+        }
+      ]
+    },
+    {
+      "build": "reference/mechanisms/membrane-valve",
+      "part": "membrane-valve",
+      "metrics": []
+    },
+    {
+      "build": "reference/mechanisms/ratchet-pawl",
+      "part": "ratchet-pawl",
+      "metrics": []
+    },
+    {
+      "build": "reference/mechanisms/shift-drum",
+      "part": "shift-drum",
+      "metrics": []
+    },
+    {
+      "build": "reference/mechanisms/snap-flexure",
+      "part": "snap-flexure",
+      "metrics": []
+    },
+    {
+      "build": "reference/mechanisms/spur-pair",
+      "part": "spur-pair",
+      "metrics": []
+    },
+    {
+      "build": "reference/mechanisms/teeter-not",
+      "part": "teeter-not",
+      "metrics": []
+    },
+    {
+      "build": "reference/mechanisms/tesla-valve",
+      "part": "tesla-valve",
+      "metrics": []
+    },
+    {
+      "build": "reference/mechanisms/tumbler-coded-and",
+      "part": "tumbler-coded-and",
+      "metrics": []
+    },
+    {
+      "build": "reference/mechanisms/wedge-or",
+      "part": "wedge-or",
+      "metrics": []
+    },
+    {
+      "build": "reference/mechanisms/whiffletree",
+      "part": "whiffletree",
+      "metrics": []
+    },
+    {
+      "build": "reference/seats/rp2040-zero-pressfit",
+      "part": "body",
+      "metrics": [
+        {
+          "id": "rp2040-zero-seat.0.host.top",
+          "gate": "informational"
+        },
+        {
+          "id": "rp2040-zero-seat.0.seat.boardZ",
+          "gate": "informational"
+        },
+        {
+          "id": "rp2040-zero-seat.0.seat.boardTop",
+          "gate": "informational"
+        },
+        {
+          "id": "rp2040-zero-seat.0.seat.cableEdge",
+          "gate": "informational"
+        },
+        {
+          "id": "rp2040-zero-seat.0.seat.fits.pocket-around-the-board",
+          "gate": "informational"
+        },
+        {
+          "id": "rp2040-zero-seat.0.seat.fits.bump-height",
+          "gate": "informational"
+        },
+        {
+          "id": "rp2040-zero-seat.0.seat.fits.bezel-squeeze-on-the-board",
+          "gate": "informational"
+        },
+        {
+          "id": "rp2040-zero-seat.0.seat.fits.bump-to-bump",
+          "gate": "informational"
+        },
+        {
+          "id": "rp2040-zero-seat.0.seat.fits.clearance-under-the-board",
+          "gate": "informational"
+        },
+        {
+          "id": "rp2040-zero-seat.0.seat.fits.opening",
+          "gate": "informational"
+        },
+        {
+          "id": "rp2040-zero-seat.0.seat.fits.opening-height",
+          "gate": "informational"
+        },
+        {
+          "id": "rp2040-zero-seat.0.seat.fits.datum-corner",
+          "gate": "informational"
+        }
+      ]
+    },
+    {
+      "build": "reference/sensors/finger-pot",
+      "part": "slider",
+      "metrics": [
+        {
+          "id": "finger-pot.0.gib.say.travel",
+          "gate": "informational"
+        },
+        {
+          "id": "finger-pot.0.gib.say.track-R",
+          "gate": "informational"
+        },
+        {
+          "id": "finger-pot.0.gib.say.return-R",
+          "gate": "informational"
+        },
+        {
+          "id": "finger-pot.0.gib.say.bus-R",
+          "gate": "informational"
+        },
+        {
+          "id": "finger-pot.0.gib.say.skin-R",
+          "gate": "informational"
+        },
+        {
+          "id": "finger-pot.0.gib.say.wiper-source-R",
+          "gate": "informational"
+        },
+        {
+          "id": "finger-pot.0.gib.say.across",
+          "gate": "informational"
+        },
+        {
+          "id": "finger-pot.0.gib.say.cap-at-W",
+          "gate": "informational"
+        },
+        {
+          "id": "finger-pot.0.gib.say.divider-current",
+          "gate": "informational"
+        },
+        {
+          "id": "finger-pot.0.gib.Rtrack",
+          "gate": "informational"
+        },
+        {
+          "id": "finger-pot.0.gib.Rret",
+          "gate": "informational"
+        },
+        {
+          "id": "finger-pot.0.gib.Rdead",
+          "gate": "informational"
+        },
+        {
+          "id": "finger-pot.0.gib.Rbus",
+          "gate": "informational"
+        },
+        {
+          "id": "finger-pot.0.gib.Rsrc",
+          "gate": "informational"
+        },
+        {
+          "id": "finger-pot.0.gib.capVal",
+          "gate": "informational"
+        },
+        {
+          "id": "finger-pot.0.gib.settle",
+          "gate": "informational"
+        },
+        {
+          "id": "finger-pot.0.gib.trackL",
+          "gate": "informational"
+        },
+        {
+          "id": "finger-pot.0.gib.span",
+          "gate": "informational"
+        }
+      ]
+    },
+    {
+      "build": "reference/sensors/membrane-slider",
+      "part": "neck",
+      "metrics": [
+        {
+          "id": "membrane-slider-wall.0.neck.trackLen",
+          "gate": "informational"
+        },
+        {
+          "id": "membrane-slider-wall.0.neck.R.track",
+          "gate": "informational"
+        },
+        {
+          "id": "membrane-slider-wall.0.neck.R.leadA",
+          "gate": "informational"
+        },
+        {
+          "id": "membrane-slider-wall.0.neck.R.leadB",
+          "gate": "informational"
+        },
+        {
+          "id": "membrane-slider-wall.0.neck.R.wiper",
+          "gate": "informational"
+        },
+        {
+          "id": "membrane-slider-wall.0.neck.pressForce",
+          "gate": "informational"
+        },
+        {
+          "id": "membrane-slider-wall.0.neck.memT",
+          "gate": "informational"
+        }
+      ]
+    },
+    {
+      "build": "reference/sensors/membrane-slider-gib",
+      "part": "slider",
+      "metrics": [
+        {
+          "id": "membrane-slider-gib.0.gib.say.travel",
+          "gate": "informational"
+        },
+        {
+          "id": "membrane-slider-gib.0.gib.say.track-R",
+          "gate": "informational"
+        },
+        {
+          "id": "membrane-slider-gib.0.gib.say.end-resistance",
+          "gate": "informational"
+        },
+        {
+          "id": "membrane-slider-gib.0.gib.say.wiper-source-R",
+          "gate": "informational"
+        },
+        {
+          "id": "membrane-slider-gib.0.gib.say.gap",
+          "gate": "informational"
+        },
+        {
+          "id": "membrane-slider-gib.0.gib.say.press-to-close",
+          "gate": "informational"
+        },
+        {
+          "id": "membrane-slider-gib.0.gib.say.divider-current",
+          "gate": "informational"
+        },
+        {
+          "id": "membrane-slider-gib.0.gib.Rtrack",
+          "gate": "informational"
+        },
+        {
+          "id": "membrane-slider-gib.0.gib.RdeadA",
+          "gate": "informational"
+        },
+        {
+          "id": "membrane-slider-gib.0.gib.Rret",
+          "gate": "informational"
+        },
+        {
+          "id": "membrane-slider-gib.0.gib.Rdead",
+          "gate": "informational"
+        },
+        {
+          "id": "membrane-slider-gib.0.gib.Rsrc",
+          "gate": "informational"
+        },
+        {
+          "id": "membrane-slider-gib.0.gib.F",
+          "gate": "informational"
+        },
+        {
+          "id": "membrane-slider-gib.0.gib.trackL",
+          "gate": "informational"
+        },
+        {
+          "id": "membrane-slider-gib.0.gib.gap",
+          "gate": "informational"
+        }
+      ]
+    },
+    {
+      "build": "reference/sensors/membrane-slider-thinpot",
+      "part": "thinpot",
+      "metrics": [
+        {
+          "id": "membrane-slider-thinpot.0.thinpot.R.track",
+          "gate": "informational"
+        },
+        {
+          "id": "membrane-slider-thinpot.0.thinpot.R.contact",
+          "gate": "informational"
+        },
+        {
+          "id": "membrane-slider-thinpot.0.thinpot.say.outline",
+          "gate": "informational"
+        },
+        {
+          "id": "membrane-slider-thinpot.0.thinpot.say.track",
+          "gate": "informational"
+        },
+        {
+          "id": "membrane-slider-thinpot.0.thinpot.say.R-end-to-end",
+          "gate": "informational"
+        },
+        {
+          "id": "membrane-slider-thinpot.0.thinpot.say.R-per-mm",
+          "gate": "informational"
+        },
+        {
+          "id": "membrane-slider-thinpot.0.thinpot.say.R-at-25-50-75",
+          "gate": "informational"
+        },
+        {
+          "id": "membrane-slider-thinpot.0.thinpot.say.taper",
+          "gate": "informational"
+        },
+        {
+          "id": "membrane-slider-thinpot.0.thinpot.say.air-gap",
+          "gate": "informational"
+        },
+        {
+          "id": "membrane-slider-thinpot.0.thinpot.say.contact-R-at-2-N",
+          "gate": "informational"
+        },
+        {
+          "id": "membrane-slider-thinpot.0.thinpot.say.gap-in-layers",
+          "gate": "informational"
+        },
+        {
+          "id": "membrane-slider-thinpot.0.thinpot.say.wires-out",
+          "gate": "informational"
+        },
+        {
+          "id": "membrane-slider-thinpot.0.thinpot.fits.membrane-travel",
+          "gate": "informational"
+        },
+        {
+          "id": "membrane-slider-thinpot.0.thinpot.fits.tail-over-the-boss",
+          "gate": "informational"
+        }
+      ]
+    },
+    {
+      "build": "reference/sensors/rotary-pot",
+      "part": "plate",
+      "metrics": [
+        {
+          "id": "printed-rotary-pot.0.pot.R.arc",
+          "gate": "informational"
+        },
+        {
+          "id": "printed-rotary-pot.0.pot.preload",
+          "gate": "informational"
+        },
+        {
+          "id": "printed-rotary-pot.0.pot.leafForce",
+          "gate": "informational"
+        },
+        {
+          "id": "printed-rotary-pot.0.pot.marginArc",
+          "gate": "informational"
+        },
+        {
+          "id": "printed-rotary-pot.0.pot.marginCol",
+          "gate": "informational"
+        },
+        {
+          "id": "printed-rotary-pot.0.pot.hubClear",
+          "gate": "informational"
+        },
+        {
+          "id": "printed-rotary-pot.0.pot.arcColGap",
+          "gate": "informational"
+        },
+        {
+          "id": "printed-rotary-pot.0.pot.stopClear",
+          "gate": "informational"
+        },
+        {
+          "id": "printed-rotary-pot.0.pot.terminal.v33",
+          "gate": "informational"
+        },
+        {
+          "id": "printed-rotary-pot.0.pot.terminal.gnd",
+          "gate": "informational"
+        },
+        {
+          "id": "printed-rotary-pot.0.pot.terminal.wiper",
+          "gate": "informational"
+        }
+      ]
+    },
+    {
+      "build": "reference/sheet/capsule-rotor-cage",
+      "part": "capsule-rotor-cage",
+      "metrics": []
+    }
+  ]
+}

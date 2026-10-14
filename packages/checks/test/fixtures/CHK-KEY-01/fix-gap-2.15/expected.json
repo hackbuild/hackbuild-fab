@@ -1,0 +1,8 @@
+{
+  "source": "M04-T04 step 5 golden row CHK-KEY-01, computed from the CHK-KEY-01 rule (35 to 50 percent of cone height 3.20, so 1.12 to 1.60, floor key.flexGapFloor 1.2 mm, inferred; D-241)",
+  "measured": 2.15,
+  "legal": [1.2, 1.6],
+  "nearest": 1.6,
+  "fix": { "param": "/keys/0/gap", "set": 1.6, "paramLegal": [1.2, 1.6] },
+  "predicts": { "measured": 1.6, "verdict": "pass", "percentOfCone": 50 }
+}

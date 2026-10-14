@@ -1,0 +1,168 @@
+{
+ "note": "a 60 mm track 1.0 mm wide over two 40 mm leads 1.4 mm wide, one material",
+ "meshes": {
+  "pad": {
+   "solids": [
+    {
+     "box": [
+      -50,
+      -10,
+      0,
+      50,
+      10,
+      2
+     ]
+    }
+   ]
+  }
+ },
+ "parts": [
+  {
+   "id": "slider",
+   "bodies": [
+    {
+     "id": "pad",
+     "mesh": "@pad"
+    }
+   ],
+   "features": [
+    {
+     "kind": "conductor",
+     "id": "conductor.track",
+     "body": "pad",
+     "material": "cpla",
+     "net": "SLD",
+     "region": {
+      "centreline": [
+       [
+        -30,
+        0
+       ],
+       [
+        30,
+        0
+       ]
+      ],
+      "face": {
+       "origin": [
+        0,
+        0,
+        0.73
+       ],
+       "normal": [
+        0,
+        0,
+        1
+       ],
+       "u": [
+        1,
+        0,
+        0
+       ]
+      }
+     },
+     "width": 1,
+     "t": 0.72,
+     "role": "element"
+    },
+    {
+     "kind": "conductor",
+     "id": "conductor.leadA",
+     "body": "pad",
+     "material": "cpla",
+     "net": "SLD",
+     "region": {
+      "centreline": [
+       [
+        -30,
+        0
+       ],
+       [
+        -30,
+        -40
+       ]
+      ],
+      "face": {
+       "origin": [
+        0,
+        0,
+        0.73
+       ],
+       "normal": [
+        0,
+        0,
+        1
+       ],
+       "u": [
+        1,
+        0,
+        0
+       ]
+      }
+     },
+     "width": 1.4,
+     "t": 0.72
+    },
+    {
+     "kind": "conductor",
+     "id": "conductor.leadB",
+     "body": "pad",
+     "material": "cpla",
+     "net": "SLD",
+     "region": {
+      "centreline": [
+       [
+        30,
+        0
+       ],
+       [
+        30,
+        -40
+       ]
+      ],
+      "face": {
+       "origin": [
+        0,
+        0,
+        0.73
+       ],
+       "normal": [
+        0,
+        0,
+        1
+       ],
+       "u": [
+        1,
+        0,
+        0
+       ]
+      }
+     },
+     "width": 1.4,
+     "t": 0.72
+    }
+   ]
+  }
+ ],
+ "nets": [
+  {
+   "id": "SLD",
+   "conductors": [],
+   "bodies": [],
+   "terminals": [],
+   "resistance": [],
+   "bulkOhm": 0,
+   "contacts": [],
+   "totalOhm": [
+    0,
+    0
+   ],
+   "unpricedContacts": [],
+   "capToGndPf": 0,
+   "couplingPf": {},
+   "capMethod": "pip-per-mm",
+   "tier": "inferred",
+   "qualifier": "unknown"
+  }
+ ]
+}

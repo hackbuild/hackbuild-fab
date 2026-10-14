@@ -1,0 +1,55 @@
+{
+ "note": "64 reeds 0.3 mm deep, under one 0.42 line (KNURL: 0.5 deep printed practically round)",
+ "meshes": {
+  "b": {
+   "solids": [
+    {
+     "revolve": {
+      "profile": [
+       [
+        5,
+        0
+       ],
+       [
+        15,
+        0
+       ],
+       [
+        15,
+        10
+       ],
+       [
+        5,
+        10
+       ]
+      ],
+      "segments": 64
+     }
+    }
+   ]
+  }
+ },
+ "parts": [
+  {
+   "id": "knob",
+   "bodies": [
+    {
+     "id": "b",
+     "mesh": "@b"
+    }
+   ],
+   "features": [
+    {
+     "kind": "edgeProfile",
+     "id": "edgeProfile.reeds",
+     "style": "reeded",
+     "params": {
+      "count": 64,
+      "depth": 0.3
+     },
+     "zDependent": false
+    }
+   ]
+  }
+ ]
+}

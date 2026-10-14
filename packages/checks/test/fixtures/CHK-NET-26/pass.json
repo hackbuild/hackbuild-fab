@@ -1,0 +1,450 @@
+{
+ "note": "flex key, cap1 the cut: pressed it joins K1 to GND, removed they fall apart; bus at y 3",
+ "meshes": {
+  "pad": {
+   "solids": [
+    {
+     "box": [
+      -20,
+      -15,
+      0,
+      20,
+      15,
+      0.73
+     ]
+    }
+   ]
+  },
+  "k1col": {
+   "solids": [
+    {
+     "box": [
+      0.4,
+      -1.5,
+      0.73,
+      1.6,
+      1.5,
+      3
+     ]
+    }
+   ]
+  },
+  "g1col": {
+   "solids": [
+    {
+     "box": [
+      -1.6,
+      -1.5,
+      0.73,
+      -0.4,
+      1.5,
+      3
+     ]
+    }
+   ]
+  },
+  "k1": {
+   "solids": [
+    {
+     "box": [
+      0.4,
+      -15,
+      0.73,
+      1.8,
+      0,
+      1.45
+     ]
+    }
+   ]
+  },
+  "g1stub": {
+   "solids": [
+    {
+     "box": [
+      -1.8,
+      0,
+      0.73,
+      -0.4,
+      3,
+      1.45
+     ]
+    }
+   ]
+  },
+  "gbus": {
+   "solids": [
+    {
+     "box": [
+      -1.8,
+      2.3,
+      0.73,
+      20,
+      3.7,
+      1.45
+     ]
+    }
+   ]
+  },
+  "cap1": {
+   "solids": [
+    {
+     "box": [
+      -2.5,
+      -2.5,
+      4.4399999999999995,
+      2.5,
+      2.5,
+      5.159999999999999
+     ]
+    }
+   ]
+  }
+ },
+ "parts": [
+  {
+   "id": "pad",
+   "bodies": [
+    {
+     "id": "pad",
+     "mesh": "@pad"
+    },
+    {
+     "id": "conductor.key1col",
+     "mesh": "@k1col",
+     "material": "cpla",
+     "slot": 2,
+     "role": "conductor"
+    },
+    {
+     "id": "conductor.gnd1col",
+     "mesh": "@g1col",
+     "material": "cpla",
+     "slot": 2,
+     "role": "conductor"
+    },
+    {
+     "id": "conductor.key1",
+     "mesh": "@k1",
+     "material": "cpla",
+     "slot": 2,
+     "role": "conductor"
+    },
+    {
+     "id": "conductor.gnd1stub",
+     "mesh": "@g1stub",
+     "material": "cpla",
+     "slot": 2,
+     "role": "conductor"
+    },
+    {
+     "id": "conductor.gnd",
+     "mesh": "@gbus",
+     "material": "cpla",
+     "slot": 2,
+     "role": "conductor"
+    },
+    {
+     "id": "cap1",
+     "mesh": "@cap1",
+     "material": "ctpu",
+     "slot": 4,
+     "role": "flex-conductor"
+    }
+   ],
+   "features": [
+    {
+     "kind": "conductor",
+     "id": "conductor.key1col",
+     "body": "pad",
+     "material": "cpla",
+     "net": "K1",
+     "region": {
+      "path": [
+       [
+        0.4,
+        -1.5
+       ],
+       [
+        1.6,
+        -1.5
+       ],
+       [
+        1.6,
+        1.5
+       ],
+       [
+        0.4,
+        1.5
+       ]
+      ],
+      "face": {
+       "origin": [
+        0,
+        0,
+        0.73
+       ],
+       "normal": [
+        0,
+        0,
+        1
+       ],
+       "u": [
+        1,
+        0,
+        0
+       ]
+      }
+     },
+     "width": 1.4,
+     "t": 2.27
+    },
+    {
+     "kind": "conductor",
+     "id": "conductor.gnd1col",
+     "body": "pad",
+     "material": "cpla",
+     "net": "GND",
+     "region": {
+      "path": [
+       [
+        -1.6,
+        -1.5
+       ],
+       [
+        -0.4,
+        -1.5
+       ],
+       [
+        -0.4,
+        1.5
+       ],
+       [
+        -1.6,
+        1.5
+       ]
+      ],
+      "face": {
+       "origin": [
+        0,
+        0,
+        0.73
+       ],
+       "normal": [
+        0,
+        0,
+        1
+       ],
+       "u": [
+        1,
+        0,
+        0
+       ]
+      }
+     },
+     "width": 1.4,
+     "t": 2.27
+    },
+    {
+     "kind": "conductor",
+     "id": "conductor.key1",
+     "body": "pad",
+     "material": "cpla",
+     "net": "K1",
+     "region": {
+      "centreline": [
+       [
+        1.1,
+        0
+       ],
+       [
+        1.1,
+        -15
+       ]
+      ],
+      "face": {
+       "origin": [
+        0,
+        0,
+        0.73
+       ],
+       "normal": [
+        0,
+        0,
+        1
+       ],
+       "u": [
+        1,
+        0,
+        0
+       ]
+      }
+     },
+     "width": 1.4,
+     "t": 0.72
+    },
+    {
+     "kind": "conductor",
+     "id": "conductor.gnd1stub",
+     "body": "pad",
+     "material": "cpla",
+     "net": "GND",
+     "region": {
+      "centreline": [
+       [
+        -1.1,
+        0
+       ],
+       [
+        -1.1,
+        3
+       ]
+      ],
+      "face": {
+       "origin": [
+        0,
+        0,
+        0.73
+       ],
+       "normal": [
+        0,
+        0,
+        1
+       ],
+       "u": [
+        1,
+        0,
+        0
+       ]
+      }
+     },
+     "width": 1.4,
+     "t": 0.72
+    },
+    {
+     "kind": "conductor",
+     "id": "conductor.gnd",
+     "body": "pad",
+     "material": "cpla",
+     "net": "GND",
+     "region": {
+      "centreline": [
+       [
+        -1.1,
+        3
+       ],
+       [
+        20,
+        3
+       ]
+      ],
+      "face": {
+       "origin": [
+        0,
+        0,
+        0.73
+       ],
+       "normal": [
+        0,
+        0,
+        1
+       ],
+       "u": [
+        1,
+        0,
+        0
+       ]
+      }
+     },
+     "width": 1.4,
+     "t": 0.72
+    },
+    {
+     "kind": "contact",
+     "id": "contact.key1",
+     "a": "conductor.key1col",
+     "b": "conductor.gnd1col",
+     "forceMinN": 0.5,
+     "maxOhm": 2000000,
+     "gap": 1.44,
+     "coneH": 4.08,
+     "actuator": "cap1",
+     "axis": [
+      0,
+      0,
+      -1
+     ]
+    },
+    {
+     "kind": "port",
+     "id": "port.key1",
+     "body": "pad",
+     "net": "K1",
+     "type": "signal",
+     "interface": "digital"
+    },
+    {
+     "kind": "port",
+     "id": "port.gnd",
+     "body": "pad",
+     "net": "GND",
+     "type": "gnd",
+     "interface": "digital"
+    }
+   ],
+   "assertions": [
+    {
+     "type": "apartExcept",
+     "nets": [
+      "K1",
+      "GND"
+     ],
+     "cut": "cap1"
+    }
+   ]
+  }
+ ],
+ "nets": [
+  {
+   "id": "K1",
+   "conductors": [],
+   "bodies": [],
+   "terminals": [
+    "port.key1"
+   ],
+   "resistance": [],
+   "bulkOhm": 0,
+   "contacts": [],
+   "totalOhm": [
+    0,
+    0
+   ],
+   "unpricedContacts": [],
+   "capToGndPf": 0,
+   "couplingPf": {},
+   "capMethod": "pip-per-mm",
+   "tier": "inferred",
+   "qualifier": "unknown"
+  },
+  {
+   "id": "GND",
+   "conductors": [],
+   "bodies": [],
+   "terminals": [
+    "port.gnd"
+   ],
+   "resistance": [],
+   "bulkOhm": 0,
+   "contacts": [],
+   "totalOhm": [
+    0,
+    0
+   ],
+   "unpricedContacts": [],
+   "capToGndPf": 0,
+   "couplingPf": {},
+   "capMethod": "pip-per-mm",
+   "tier": "inferred",
+   "qualifier": "unknown"
+  }
+ ]
+}

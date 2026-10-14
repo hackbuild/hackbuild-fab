@@ -1,0 +1,30 @@
+{
+ "note": "a 300 x 20 x 10 rail, 44 mm past the 256 mm ffc5p bed on x (COTTER platePlan lists such a print apart)",
+ "meshes": {
+  "b": {
+   "solids": [
+    {
+     "box": [
+      0,
+      0,
+      0,
+      300,
+      20,
+      10
+     ]
+    }
+   ]
+  }
+ },
+ "parts": [
+  {
+   "id": "rail",
+   "bodies": [
+    {
+     "id": "b",
+     "mesh": "@b"
+    }
+   ]
+  }
+ ]
+}

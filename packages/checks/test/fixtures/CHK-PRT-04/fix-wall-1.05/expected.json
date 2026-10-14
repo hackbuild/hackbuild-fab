@@ -1,0 +1,10 @@
+{
+  "source": "M04-T04 step 5 golden row CHK-PRT-04 at the ffc5p line width 0.42 mm (vendor) in place of the card's 0.40, which no profile preset carries: computed",
+  "measured": 1.05,
+  "lineWidth": 0.42,
+  "nearest": [0.84, 1.26],
+  "tieMm": 0.21,
+  "fix": { "param": "/wall", "set": 1.26, "paramLegal": [0.4, 1.6] },
+  "predicts": { "measured": 1.26, "verdict": "pass" },
+  "below": { "set": 0.84, "verdict": "pass" }
+}

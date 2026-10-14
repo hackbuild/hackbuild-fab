@@ -1,0 +1,41 @@
+{
+ "note": "the same cover reporting 41.67 percent overhang: its bed face counted (PAWL: a flat cover read 41.7 percent)",
+ "meshes": {
+  "b": {
+   "solids": [
+    {
+     "box": [
+      0,
+      0,
+      0,
+      40,
+      40,
+      4
+     ]
+    }
+   ]
+  }
+ },
+ "parts": [
+  {
+   "id": "cover",
+   "bodies": [
+    {
+     "id": "b",
+     "mesh": "@b"
+    }
+   ],
+   "metrics": [
+    {
+     "id": "print.overhangPct",
+     "value": 41.67,
+     "unit": "percent",
+     "qualifier": "computed",
+     "basis": null,
+     "note": "overhang share of the surface",
+     "gate": "CHK-PRT-12"
+    }
+   ]
+  }
+ ]
+}

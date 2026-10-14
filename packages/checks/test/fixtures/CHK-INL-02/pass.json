@@ -1,0 +1,104 @@
+{
+ "note": "despeckle at 0.35 removes the one-cell speck",
+ "meshes": {
+  "b": {
+   "solids": [
+    {
+     "box": [
+      -22,
+      -22,
+      0,
+      22,
+      22,
+      3.6
+     ]
+    }
+   ]
+  }
+ },
+ "parts": [
+  {
+   "id": "coin",
+   "bodies": [
+    {
+     "id": "coin",
+     "mesh": "@b"
+    }
+   ],
+   "features": [
+    {
+     "kind": "inlay",
+     "id": "inlay.s2",
+     "body": "coin",
+     "art": "hbf://art/6d121b1262ad9baf690ea8b461288c840a6c82face77a7d36a83b1fd296693f7",
+     "face": {
+      "origin": [
+       0,
+       0,
+       3.6
+      ],
+      "normal": [
+       0,
+       0,
+       1
+      ],
+      "u": [
+       1,
+       0,
+       0
+      ]
+     },
+     "slot": 2,
+     "depthLayers": 5,
+     "minFeature": 0.6,
+     "despeckle": 0.35,
+     "grid": {
+      "w": 176,
+      "h": 176,
+      "res": 4
+     },
+     "layers": {
+      "top": [
+       {
+        "kind": "path",
+        "d": "M -3 -3 H 3 V 3 H -3 Z",
+        "transform": [
+         1,
+         0,
+         0,
+         1,
+         0,
+         0
+        ],
+        "slot": 2
+       },
+       {
+        "kind": "path",
+        "d": "M 5 5 H 5.25 V 5.25 H 5 Z",
+        "transform": [
+         1,
+         0,
+         0,
+         1,
+         0,
+         0
+        ],
+        "slot": 3
+       }
+      ],
+      "bed": []
+     },
+     "recipe": "collar-v5",
+     "boost": 0,
+     "gap": 0,
+     "palette": [
+      "#1A1A1A",
+      "#FE0386",
+      "#F5F0E6"
+     ],
+     "material": "petg"
+    }
+   ]
+  }
+ ]
+}

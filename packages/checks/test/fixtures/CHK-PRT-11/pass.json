@@ -1,0 +1,49 @@
+{
+ "note": "a 20 x 10 x 5 print pose of a 20 x 5 x 10 assembly twin: the same 1000 mm3",
+ "meshes": {
+  "print": {
+   "solids": [
+    {
+     "box": [
+      0,
+      0,
+      0,
+      20,
+      10,
+      5
+     ]
+    }
+   ]
+  },
+  "twin": {
+   "solids": [
+    {
+     "box": [
+      0,
+      0,
+      0,
+      20,
+      5,
+      10
+     ]
+    }
+   ]
+  }
+ },
+ "parts": [
+  {
+   "id": "latchpull",
+   "bodies": [
+    {
+     "id": "b",
+     "mesh": "@print"
+    }
+   ],
+   "solid": "@print",
+   "frame": {
+    "pose": "print",
+    "assemblyTwin": "@twin"
+   }
+  }
+ ]
+}

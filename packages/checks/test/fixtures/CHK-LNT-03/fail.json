@@ -1,0 +1,7 @@
+{
+ "note": "OGEE build-it 2026-08-18: PARTS_TBL gives 99 pieces, the scene places 124, a check row says 115 (ogee_buildit_run.json)",
+ "source": {
+  "path": "build-it.html",
+  "text": "PARTS_TBL lists 99 pieces.\nThe scene places 124 pieces and the blurb says 124 pieces.\nThe check row counts 115 pieces.\n"
+ }
+}

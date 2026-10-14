@@ -1,0 +1,99 @@
+{
+ "note": "a 0.3 mm wall, under one 0.42 line (STYLUS: a sub-line-width wall read as empty layers)",
+ "meshes": {
+  "b": {
+   "solids": [
+    {
+     "box": [
+      0,
+      0,
+      0,
+      10,
+      10,
+      5
+     ]
+    }
+   ]
+  }
+ },
+ "parts": [
+  {
+   "id": "stylus",
+   "bodies": [
+    {
+     "id": "b",
+     "mesh": "@b",
+     "outline": [
+      [
+       [
+        0,
+        0
+       ],
+       [
+        10,
+        0
+       ],
+       [
+        10,
+        10
+       ],
+       [
+        0,
+        10
+       ]
+      ]
+     ]
+    }
+   ],
+   "features": [
+    {
+     "kind": "pocket",
+     "id": "pocket.well",
+     "body": "b",
+     "outline": [
+      [
+       0.3,
+       0.3
+      ],
+      [
+       9.7,
+       0.3
+      ],
+      [
+       9.7,
+       9.7
+      ],
+      [
+       0.3,
+       9.7
+      ]
+     ],
+     "face": {
+      "origin": [
+       0,
+       0,
+       5
+      ],
+      "normal": [
+       0,
+       0,
+       1
+      ],
+      "u": [
+       1,
+       0,
+       0
+      ]
+     },
+     "depth": 3,
+     "floor": "flat",
+     "fit": {
+      "class": "LOCATE",
+      "drawnPerSide": 0.1,
+      "basis": "perSide"
+     }
+    }
+   ]
+  }
+ ]
+}

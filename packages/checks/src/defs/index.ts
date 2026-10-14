@@ -1,0 +1,185 @@
+// Every check module, one per seeded check id. registerChecks joins this
+// list with the seed and refuses a seed row without a module or a module
+// without a row (registry.test.ts), so the list cannot drift from the seed.
+
+import type { AnyCheckModule } from "../registry.js";
+import { check as c3mf01 } from "./3mf/CHK-3MF-01.js";
+import { check as c3mf02 } from "./3mf/CHK-3MF-02.js";
+import { check as c3mf03 } from "./3mf/CHK-3MF-03.js";
+import { check as c3mf04 } from "./3mf/CHK-3MF-04.js";
+import { check as c3mf05 } from "./3mf/CHK-3MF-05.js";
+import { check as c3mf06 } from "./3mf/CHK-3MF-06.js";
+import { check as c3mf07 } from "./3mf/CHK-3MF-07.js";
+import { check as c3mf08 } from "./3mf/CHK-3MF-08.js";
+import { check as c3mf10 } from "./3mf/CHK-3MF-10.js";
+import { check as cart01 } from "./art/CHK-ART-01.js";
+import { check as cart02 } from "./art/CHK-ART-02.js";
+import { check as cart03 } from "./art/CHK-ART-03.js";
+import { check as cart04 } from "./art/CHK-ART-04.js";
+import { check as cart05 } from "./art/CHK-ART-05.js";
+import { check as cart06 } from "./art/CHK-ART-06.js";
+import { check as cart07 } from "./art/CHK-ART-07.js";
+import { check as casm01 } from "./asm/CHK-ASM-01.js";
+import { check as casm02 } from "./asm/CHK-ASM-02.js";
+import { check as casm03 } from "./asm/CHK-ASM-03.js";
+import { check as casm04 } from "./asm/CHK-ASM-04.js";
+import { check as casm05 } from "./asm/CHK-ASM-05.js";
+import { check as casm06 } from "./asm/CHK-ASM-06.js";
+import { check as casm07 } from "./asm/CHK-ASM-07.js";
+import { check as casm08 } from "./asm/CHK-ASM-08.js";
+import { check as casm09 } from "./asm/CHK-ASM-09.js";
+import { check as casm10 } from "./asm/CHK-ASM-10.js";
+import { check as casm11 } from "./asm/CHK-ASM-11.js";
+import { check as cbrd01 } from "./brd/CHK-BRD-01.js";
+import { check as cbrd02 } from "./brd/CHK-BRD-02.js";
+import { check as cbrd03 } from "./brd/CHK-BRD-03.js";
+import { check as cbrd04 } from "./brd/CHK-BRD-04.js";
+import { check as cbrd05 } from "./brd/CHK-BRD-05.js";
+import { check as cbrd06 } from "./brd/CHK-BRD-06.js";
+import { check as cbrd07 } from "./brd/CHK-BRD-07.js";
+import { check as cbrd08 } from "./brd/CHK-BRD-08.js";
+import { check as cbrd09 } from "./brd/CHK-BRD-09.js";
+import { check as cbrd10 } from "./brd/CHK-BRD-10.js";
+import { check as cbrd11 } from "./brd/CHK-BRD-11.js";
+import { check as cbrd12 } from "./brd/CHK-BRD-12.js";
+import { check as cbrd13 } from "./brd/CHK-BRD-13.js";
+import { check as cbrd14 } from "./brd/CHK-BRD-14.js";
+import { check as cbrd15 } from "./brd/CHK-BRD-15.js";
+import { check as cbrd16 } from "./brd/CHK-BRD-16.js";
+import { check as cbrd17 } from "./brd/CHK-BRD-17.js";
+import { check as cbrd18 } from "./brd/CHK-BRD-18.js";
+import { check as cbrd19 } from "./brd/CHK-BRD-19.js";
+import { check as cbrd20 } from "./brd/CHK-BRD-20.js";
+import { check as cbrd21 } from "./brd/CHK-BRD-21.js";
+import { check as cbrd22 } from "./brd/CHK-BRD-22.js";
+import { check as cdev01 } from "./dev/CHK-DEV-01.js";
+import { check as cdev02 } from "./dev/CHK-DEV-02.js";
+import { check as cdev03 } from "./dev/CHK-DEV-03.js";
+import { check as cfit01 } from "./fit/CHK-FIT-01.js";
+import { check as cfit02 } from "./fit/CHK-FIT-02.js";
+import { check as cfit03 } from "./fit/CHK-FIT-03.js";
+import { check as cfit04 } from "./fit/CHK-FIT-04.js";
+import { check as cfit05 } from "./fit/CHK-FIT-05.js";
+import { check as cfit06 } from "./fit/CHK-FIT-06.js";
+import { check as cfit07 } from "./fit/CHK-FIT-07.js";
+import { check as cinl01 } from "./inl/CHK-INL-01.js";
+import { check as cinl02 } from "./inl/CHK-INL-02.js";
+import { check as cinl03 } from "./inl/CHK-INL-03.js";
+import { check as cinl04 } from "./inl/CHK-INL-04.js";
+import { check as ckey01 } from "./key/CHK-KEY-01.js";
+import { check as ckey02 } from "./key/CHK-KEY-02.js";
+import { check as ckey03 } from "./key/CHK-KEY-03.js";
+import { check as ckey04 } from "./key/CHK-KEY-04.js";
+import { check as ckey05 } from "./key/CHK-KEY-05.js";
+import { check as ckey06 } from "./key/CHK-KEY-06.js";
+import { check as clnt01 } from "./lnt/CHK-LNT-01.js";
+import { check as clnt02 } from "./lnt/CHK-LNT-02.js";
+import { check as clnt03 } from "./lnt/CHK-LNT-03.js";
+import { check as clnt04 } from "./lnt/CHK-LNT-04.js";
+import { check as cmot01 } from "./mot/CHK-MOT-01.js";
+import { check as cmot02 } from "./mot/CHK-MOT-02.js";
+import { check as cmot03 } from "./mot/CHK-MOT-03.js";
+import { check as cmot04 } from "./mot/CHK-MOT-04.js";
+import { check as cmot05 } from "./mot/CHK-MOT-05.js";
+import { check as cmot06 } from "./mot/CHK-MOT-06.js";
+import { check as cnet01 } from "./net/CHK-NET-01.js";
+import { check as cnet02 } from "./net/CHK-NET-02.js";
+import { check as cnet03 } from "./net/CHK-NET-03.js";
+import { check as cnet04 } from "./net/CHK-NET-04.js";
+import { check as cnet05 } from "./net/CHK-NET-05.js";
+import { check as cnet06 } from "./net/CHK-NET-06.js";
+import { check as cnet07 } from "./net/CHK-NET-07.js";
+import { check as cnet08 } from "./net/CHK-NET-08.js";
+import { check as cnet09 } from "./net/CHK-NET-09.js";
+import { check as cnet10 } from "./net/CHK-NET-10.js";
+import { check as cnet11 } from "./net/CHK-NET-11.js";
+import { check as cnet12 } from "./net/CHK-NET-12.js";
+import { check as cnet13 } from "./net/CHK-NET-13.js";
+import { check as cnet14 } from "./net/CHK-NET-14.js";
+import { check as cnet15 } from "./net/CHK-NET-15.js";
+import { check as cnet16 } from "./net/CHK-NET-16.js";
+import { check as cnet17 } from "./net/CHK-NET-17.js";
+import { check as cnet18 } from "./net/CHK-NET-18.js";
+import { check as cnet19 } from "./net/CHK-NET-19.js";
+import { check as cnet20 } from "./net/CHK-NET-20.js";
+import { check as cnet21 } from "./net/CHK-NET-21.js";
+import { check as cnet22 } from "./net/CHK-NET-22.js";
+import { check as cnet23 } from "./net/CHK-NET-23.js";
+import { check as cnet24 } from "./net/CHK-NET-24.js";
+import { check as cnet25 } from "./net/CHK-NET-25.js";
+import { check as cnet26 } from "./net/CHK-NET-26.js";
+import { check as cnet27 } from "./net/CHK-NET-27.js";
+import { check as cnet28 } from "./net/CHK-NET-28.js";
+import { check as cnet29 } from "./net/CHK-NET-29.js";
+import { check as cnet30 } from "./net/CHK-NET-30.js";
+import { check as cnet31 } from "./net/CHK-NET-31.js";
+import { check as cnet32 } from "./net/CHK-NET-32.js";
+import { check as cnet33 } from "./net/CHK-NET-33.js";
+import { check as cnet34 } from "./net/CHK-NET-34.js";
+import { check as cnet35 } from "./net/CHK-NET-35.js";
+import { check as cnet36 } from "./net/CHK-NET-36.js";
+import { check as cnet37 } from "./net/CHK-NET-37.js";
+import { check as cnet38 } from "./net/CHK-NET-38.js";
+import { check as cnet40 } from "./net/CHK-NET-40.js";
+import { check as cnet41 } from "./net/CHK-NET-41.js";
+import { check as cnet42 } from "./net/CHK-NET-42.js";
+import { check as cnet43 } from "./net/CHK-NET-43.js";
+import { check as cnet44 } from "./net/CHK-NET-44.js";
+import { check as cnet45 } from "./net/CHK-NET-45.js";
+import { check as cprt01 } from "./prt/CHK-PRT-01.js";
+import { check as cprt02 } from "./prt/CHK-PRT-02.js";
+import { check as cprt03 } from "./prt/CHK-PRT-03.js";
+import { check as cprt04 } from "./prt/CHK-PRT-04.js";
+import { check as cprt05 } from "./prt/CHK-PRT-05.js";
+import { check as cprt06 } from "./prt/CHK-PRT-06.js";
+import { check as cprt07 } from "./prt/CHK-PRT-07.js";
+import { check as cprt08 } from "./prt/CHK-PRT-08.js";
+import { check as cprt09 } from "./prt/CHK-PRT-09.js";
+import { check as cprt10 } from "./prt/CHK-PRT-10.js";
+import { check as cprt11 } from "./prt/CHK-PRT-11.js";
+import { check as cprt12 } from "./prt/CHK-PRT-12.js";
+import { check as cprt13 } from "./prt/CHK-PRT-13.js";
+import { check as cprt14 } from "./prt/CHK-PRT-14.js";
+import { check as cprt15 } from "./prt/CHK-PRT-15.js";
+import { check as cprt16 } from "./prt/CHK-PRT-16.js";
+import { check as cshp01 } from "./shp/CHK-SHP-01.js";
+import { check as cshp02 } from "./shp/CHK-SHP-02.js";
+import { check as cshp03 } from "./shp/CHK-SHP-03.js";
+import { check as cshp04 } from "./shp/CHK-SHP-04.js";
+import { check as cshp05 } from "./shp/CHK-SHP-05.js";
+import { check as csht01 } from "./sht/CHK-SHT-01.js";
+import { check as csht02 } from "./sht/CHK-SHT-02.js";
+import { check as csht03 } from "./sht/CHK-SHT-03.js";
+import { check as csht04 } from "./sht/CHK-SHT-04.js";
+import { check as csht05 } from "./sht/CHK-SHT-05.js";
+import { check as csht06 } from "./sht/CHK-SHT-06.js";
+import { check as csht07 } from "./sht/CHK-SHT-07.js";
+import { check as csht08 } from "./sht/CHK-SHT-08.js";
+import { check as csht09 } from "./sht/CHK-SHT-09.js";
+import { check as csht10 } from "./sht/CHK-SHT-10.js";
+import { check as csht11 } from "./sht/CHK-SHT-11.js";
+import { check as cui01 } from "./ui/CHK-UI-01.js";
+import { check as cui02 } from "./ui/CHK-UI-02.js";
+
+export const CHECK_MODULES: readonly AnyCheckModule[] = [
+  c3mf01, c3mf02, c3mf03, c3mf04, c3mf05, c3mf06, c3mf07, c3mf08, c3mf10,
+  cart01, cart02, cart03, cart04, cart05, cart06, cart07, casm01,
+  casm02, casm03, casm04, casm05, casm06, casm07, casm08, casm09,
+  casm10, casm11, cbrd01, cbrd02, cbrd03, cbrd04, cbrd05, cbrd06,
+  cbrd07, cbrd08, cbrd09, cbrd10, cbrd11, cbrd12, cbrd13, cbrd14,
+  cbrd15, cbrd16, cbrd17, cbrd18, cbrd19, cbrd20, cbrd21, cbrd22, cdev01, cdev02, cdev03,
+  cfit01, cfit02, cfit03, cfit04, cfit05, cfit06, cfit07, cinl01,
+  cinl02, cinl03, cinl04, ckey01, ckey02, ckey03, ckey04, ckey05,
+  ckey06, clnt01, clnt02, clnt03, clnt04, cmot01, cmot02, cmot03,
+  cmot04, cmot05, cmot06, cnet01, cnet02, cnet03, cnet04, cnet05,
+  cnet06, cnet07, cnet08, cnet09, cnet10, cnet11, cnet12, cnet13,
+  cnet14, cnet15, cnet16, cnet17, cnet18, cnet19, cnet20, cnet21,
+  cnet22, cnet23, cnet24, cnet25, cnet26, cnet27, cnet28, cnet29,
+  cnet30, cnet31, cnet32, cnet33, cnet34, cnet35, cnet36, cnet37, cnet38,
+  cnet40, cnet41, cnet42, cnet43, cnet44, cnet45,
+  cprt01, cprt02, cprt03, cprt04, cprt05, cprt06, cprt07,
+  cprt08, cprt09, cprt10, cprt11, cprt12, cprt13, cprt14, cprt15,
+  cprt16, cshp01, cshp02, cshp03, cshp04, cshp05, csht01, csht02,
+  csht03, csht04, csht05, csht06, csht07, csht08, csht09, csht10, csht11,
+  cui01, cui02,
+];

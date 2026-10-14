@@ -1,0 +1,7 @@
+{
+ "note": "kerf typed beside the parts, a second copy of the coupon row",
+ "source": {
+  "path": "deck.ts",
+  "text": "const KERF = 0.15;\nexport const slot = 3 + 2 * KERF;\n"
+ }
+}

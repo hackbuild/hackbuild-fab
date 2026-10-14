@@ -1,0 +1,510 @@
+{
+ "source": "PINTLE R6 snap_check.py (lineage pintle.snap-check/r6), bodies from pintle_parts.py r6 and DERRICK R3 arm_parts.py",
+ "sources": {
+  "pintle_parts.py": "5280a22350a488e721d411504a562dec2007f421129e5f7462e055cb2b45a6b1",
+  "snap_check.py": "9b7c9c9f0de47b0da552cb924fe59e8c8175b8ed3104e9e251f3acf974f30aa3",
+  "arm_parts.py": "ab2e4acd8283f43b78d64a9bc653afe4b79fd1de5c993a5cf3ff2a7d30821fc3"
+ },
+ "floorMm3": 1.0,
+ "floorSource": "snap_check.py line 25: ok = (v < 1.0) if want_clear else (v > 1.0)",
+ "moveRule": "move applies to a: rotate about z through the origin by rotZDeg, then translate by dx, dy, dz (mm)",
+ "bodies": [
+  "belly",
+  "cradle",
+  "driver_path",
+  "hinge_on_rotor",
+  "horn",
+  "lock_path",
+  "retainer",
+  "retainer_locked",
+  "rotor",
+  "screw_head",
+  "servo",
+  "shank_path",
+  "stator",
+  "tool_plate"
+ ],
+ "tests": [
+  {
+   "label": "rotor lifted 0 mm vs stator",
+   "a": "rotor",
+   "b": "stator",
+   "move": {
+    "dxMm": 0.0,
+    "dyMm": 0.0,
+    "dzMm": 0.0,
+    "rotZDeg": 0.0
+   },
+   "want": "clear",
+   "line": 32
+  },
+  {
+   "label": "rotor lifted 1 mm vs stator",
+   "a": "rotor",
+   "b": "stator",
+   "move": {
+    "dxMm": 0.0,
+    "dyMm": 0.0,
+    "dzMm": 1.0,
+    "rotZDeg": 0.0
+   },
+   "want": "clear",
+   "line": 32
+  },
+  {
+   "label": "rotor lifted 3 mm vs stator",
+   "a": "rotor",
+   "b": "stator",
+   "move": {
+    "dxMm": 0.0,
+    "dyMm": 0.0,
+    "dzMm": 3.0,
+    "rotZDeg": 0.0
+   },
+   "want": "clear",
+   "line": 32
+  },
+  {
+   "label": "rotor lifted 8 mm vs stator",
+   "a": "rotor",
+   "b": "stator",
+   "move": {
+    "dxMm": 0.0,
+    "dyMm": 0.0,
+    "dzMm": 8.0,
+    "rotZDeg": 0.0
+   },
+   "want": "clear",
+   "line": 32
+  },
+  {
+   "label": "rotor lifted 16 mm vs stator",
+   "a": "rotor",
+   "b": "stator",
+   "move": {
+    "dxMm": 0.0,
+    "dyMm": 0.0,
+    "dzMm": 16.0,
+    "rotZDeg": 0.0
+   },
+   "want": "clear",
+   "line": 32
+  },
+  {
+   "label": "retainer at drop angle, seated",
+   "a": "retainer",
+   "b": "stator",
+   "move": {
+    "dxMm": 0.0,
+    "dyMm": 0.0,
+    "dzMm": 0.0,
+    "rotZDeg": 0.0
+   },
+   "want": "clear",
+   "line": 35
+  },
+  {
+   "label": "retainer at drop angle, lifted 1.2 mm",
+   "a": "retainer",
+   "b": "stator",
+   "move": {
+    "dxMm": 0.0,
+    "dyMm": 0.0,
+    "dzMm": 1.2,
+    "rotZDeg": 0.0
+   },
+   "want": "clear",
+   "line": 36
+  },
+  {
+   "label": "retainer twisted to locked, seated",
+   "a": "retainer_locked",
+   "b": "stator",
+   "move": {
+    "dxMm": 0.0,
+    "dyMm": 0.0,
+    "dzMm": 0.0,
+    "rotZDeg": 0.0
+   },
+   "want": "clear",
+   "line": 37
+  },
+  {
+   "label": "retainer locked, lifted 1.2 mm",
+   "a": "retainer_locked",
+   "b": "stator",
+   "move": {
+    "dxMm": 0.0,
+    "dyMm": 0.0,
+    "dzMm": 1.2,
+    "rotZDeg": 0.0
+   },
+   "want": "traps",
+   "line": 38
+  },
+  {
+   "label": "retainer locked, holds the rotor down",
+   "a": "rotor",
+   "b": "retainer_locked",
+   "move": {
+    "dxMm": 0.0,
+    "dyMm": 0.0,
+    "dzMm": 1.2,
+    "rotZDeg": 0.0
+   },
+   "want": "traps",
+   "line": 39
+  },
+  {
+   "label": "belly seated in the recess",
+   "a": "belly",
+   "b": "stator",
+   "move": {
+    "dxMm": 0.0,
+    "dyMm": 0.0,
+    "dzMm": 0.0,
+    "rotZDeg": 0.0
+   },
+   "want": "clear",
+   "line": 42
+  },
+  {
+   "label": "belly pulled down 0.5 mm",
+   "a": "belly",
+   "b": "stator",
+   "move": {
+    "dxMm": 0.0,
+    "dyMm": 0.0,
+    "dzMm": -0.5,
+    "rotZDeg": 0.0
+   },
+   "want": "traps",
+   "line": 43
+  },
+  {
+   "label": "horn seated in the rotor cross pocket",
+   "a": "horn",
+   "b": "rotor",
+   "move": {
+    "dxMm": 0.0,
+    "dyMm": 0.0,
+    "dzMm": 0.0,
+    "rotZDeg": 0.0
+   },
+   "want": "clear",
+   "line": 48
+  },
+  {
+   "label": "horn turned 8 deg against the rotor",
+   "a": "horn",
+   "b": "rotor",
+   "move": {
+    "dxMm": 0.0,
+    "dyMm": 0.0,
+    "dzMm": 0.0,
+    "rotZDeg": 8.0
+   },
+   "want": "traps",
+   "line": 49
+  },
+  {
+   "label": "horn turned 8 deg against the servo",
+   "a": "horn",
+   "b": "servo",
+   "move": {
+    "dxMm": 0.0,
+    "dyMm": 0.0,
+    "dzMm": 0.0,
+    "rotZDeg": 8.0
+   },
+   "want": "clear",
+   "line": 50
+  },
+  {
+   "label": "bracket seated on the rail",
+   "a": "tool_plate",
+   "b": "rotor",
+   "move": {
+    "dxMm": 0.0,
+    "dyMm": 0.0,
+    "dzMm": 0.0,
+    "rotZDeg": 0.0
+   },
+   "want": "clear",
+   "line": 55
+  },
+  {
+   "label": "bracket slid 4 mm along the rail",
+   "a": "tool_plate",
+   "b": "rotor",
+   "move": {
+    "dxMm": 4.0,
+    "dyMm": 0.0,
+    "dzMm": 0.0,
+    "rotZDeg": 0.0
+   },
+   "want": "clear",
+   "line": 57
+  },
+  {
+   "label": "bracket slid 10 mm along the rail",
+   "a": "tool_plate",
+   "b": "rotor",
+   "move": {
+    "dxMm": 10.0,
+    "dyMm": 0.0,
+    "dzMm": 0.0,
+    "rotZDeg": 0.0
+   },
+   "want": "clear",
+   "line": 57
+  },
+  {
+   "label": "bracket slid 20 mm along the rail",
+   "a": "tool_plate",
+   "b": "rotor",
+   "move": {
+    "dxMm": 20.0,
+    "dyMm": 0.0,
+    "dzMm": 0.0,
+    "rotZDeg": 0.0
+   },
+   "want": "clear",
+   "line": 57
+  },
+  {
+   "label": "bracket slid 34 mm along the rail",
+   "a": "tool_plate",
+   "b": "rotor",
+   "move": {
+    "dxMm": 34.0,
+    "dyMm": 0.0,
+    "dzMm": 0.0,
+    "rotZDeg": 0.0
+   },
+   "want": "clear",
+   "line": 57
+  },
+  {
+   "label": "bracket lifted 1.5 mm off the face",
+   "a": "tool_plate",
+   "b": "rotor",
+   "move": {
+    "dxMm": 0.0,
+    "dyMm": 0.0,
+    "dzMm": 1.5,
+    "rotZDeg": 0.0
+   },
+   "want": "traps",
+   "line": 58
+  },
+  {
+   "label": "bracket pushed 1.0 mm across the rail",
+   "a": "tool_plate",
+   "b": "rotor",
+   "move": {
+    "dxMm": 0.0,
+    "dyMm": 1.0,
+    "dzMm": 0.0,
+    "rotZDeg": 0.0
+   },
+   "want": "traps",
+   "line": 59
+  },
+  {
+   "label": "lock screw path through the bracket",
+   "a": "lock_path",
+   "b": "tool_plate",
+   "move": {
+    "dxMm": 0.0,
+    "dyMm": 0.0,
+    "dzMm": 0.0,
+    "rotZDeg": 0.0
+   },
+   "want": "clear",
+   "line": 62
+  },
+  {
+   "label": "retainer over twisted 8 deg past locked",
+   "a": "retainer",
+   "b": "stator",
+   "move": {
+    "dxMm": 0.0,
+    "dyMm": 0.0,
+    "dzMm": 0.0,
+    "rotZDeg": 54.0
+   },
+   "want": "traps",
+   "line": 65
+  },
+  {
+   "label": "driver path down to the shoulder, through the rotor",
+   "a": "driver_path",
+   "b": "rotor",
+   "move": {
+    "dxMm": 0.0,
+    "dyMm": 0.0,
+    "dzMm": 0.0,
+    "rotZDeg": 0.0
+   },
+   "want": "clear",
+   "line": 76
+  },
+  {
+   "label": "screw shank path from the spline up and out",
+   "a": "shank_path",
+   "b": "rotor",
+   "move": {
+    "dxMm": 0.0,
+    "dyMm": 0.0,
+    "dzMm": 0.0,
+    "rotZDeg": 0.0
+   },
+   "want": "clear",
+   "line": 78
+  },
+  {
+   "label": "same path through the tool plate on top",
+   "a": "shank_path",
+   "b": "tool_plate",
+   "move": {
+    "dxMm": 0.0,
+    "dyMm": 0.0,
+    "dzMm": 0.0,
+    "rotZDeg": 0.0
+   },
+   "want": "clear",
+   "line": 79
+  },
+  {
+   "label": "head cannot fall past the shoulder",
+   "a": "screw_head",
+   "b": "rotor",
+   "move": {
+    "dxMm": 0.0,
+    "dyMm": 0.0,
+    "dzMm": 0.0,
+    "rotZDeg": 0.0
+   },
+   "want": "traps",
+   "line": 81
+  },
+  {
+   "label": "lock screw path through the hinge cheek",
+   "a": "lock_path",
+   "b": "hinge_on_rotor",
+   "move": {
+    "dxMm": 0.0,
+    "dyMm": 0.0,
+    "dzMm": 0.0,
+    "rotZDeg": 0.0
+   },
+   "want": "clear",
+   "line": 91
+  },
+  {
+   "label": "hinge seated on the rotor face",
+   "a": "hinge_on_rotor",
+   "b": "rotor",
+   "move": {
+    "dxMm": 0.0,
+    "dyMm": 0.0,
+    "dzMm": 0.0,
+    "rotZDeg": 0.0
+   },
+   "want": "clear",
+   "line": 92
+  },
+  {
+   "label": "cradle seated on the module",
+   "a": "cradle",
+   "b": "stator",
+   "move": {
+    "dxMm": 0.0,
+    "dyMm": 0.0,
+    "dzMm": 0.0,
+    "rotZDeg": 0.0
+   },
+   "want": "clear",
+   "line": 96
+  },
+  {
+   "label": "cradle drawn back 3 mm along +x",
+   "a": "cradle",
+   "b": "stator",
+   "move": {
+    "dxMm": 3.0,
+    "dyMm": 0.0,
+    "dzMm": 0.0,
+    "rotZDeg": 0.0
+   },
+   "want": "clear",
+   "line": 98
+  },
+  {
+   "label": "cradle drawn back 8 mm along +x",
+   "a": "cradle",
+   "b": "stator",
+   "move": {
+    "dxMm": 8.0,
+    "dyMm": 0.0,
+    "dzMm": 0.0,
+    "rotZDeg": 0.0
+   },
+   "want": "clear",
+   "line": 98
+  },
+  {
+   "label": "cradle drawn back 16 mm along +x",
+   "a": "cradle",
+   "b": "stator",
+   "move": {
+    "dxMm": 16.0,
+    "dyMm": 0.0,
+    "dzMm": 0.0,
+    "rotZDeg": 0.0
+   },
+   "want": "clear",
+   "line": 98
+  },
+  {
+   "label": "cradle drawn back 30 mm along +x",
+   "a": "cradle",
+   "b": "stator",
+   "move": {
+    "dxMm": 30.0,
+    "dyMm": 0.0,
+    "dzMm": 0.0,
+    "rotZDeg": 0.0
+   },
+   "want": "clear",
+   "line": 98
+  },
+  {
+   "label": "module lifted 1.0 mm inside the cradle",
+   "a": "stator",
+   "b": "cradle",
+   "move": {
+    "dxMm": 0.0,
+    "dyMm": 0.0,
+    "dzMm": 1.0,
+    "rotZDeg": 0.0
+   },
+   "want": "traps",
+   "line": 99
+  },
+  {
+   "label": "module pushed 1.0 mm sideways in the cradle",
+   "a": "stator",
+   "b": "cradle",
+   "move": {
+    "dxMm": 0.0,
+    "dyMm": 1.0,
+    "dzMm": 0.0,
+    "rotZDeg": 0.0
+   },
+   "want": "traps",
+   "line": 100
+  }
+ ]
+}

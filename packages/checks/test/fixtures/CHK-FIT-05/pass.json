@@ -1,0 +1,55 @@
+{
+ "note": "the OGEE16 hub, 8 mm of land on 8 mm, L/D 1.0",
+ "meshes": {
+  "b": {
+   "solids": [
+    {
+     "box": [
+      0,
+      0,
+      0,
+      16,
+      16,
+      8
+     ]
+    }
+   ]
+  }
+ },
+ "parts": [
+  {
+   "id": "hub",
+   "bodies": [
+    {
+     "id": "b",
+     "mesh": "@b"
+    }
+   ],
+   "features": [
+    {
+     "kind": "bore",
+     "id": "bore.shaft",
+     "axis": {
+      "origin": [
+       8,
+       8,
+       0
+      ],
+      "dir": [
+       0,
+       0,
+       1
+      ]
+     },
+     "d": 8,
+     "depth": 8,
+     "fit": {
+      "class": "SLIDE",
+      "drawnPerSide": 0.375,
+      "basis": "perSide"
+     }
+    }
+   ]
+  }
+ ]
+}

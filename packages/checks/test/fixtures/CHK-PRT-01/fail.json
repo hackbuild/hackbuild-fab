@@ -1,0 +1,40 @@
+{
+ "note": "two cubes sharing one vertical edge: the four-face edges CRESSET shipped (40 + 16 + 1 in cresset-132mm.3mf)",
+ "meshes": {
+  "b": {
+   "solids": [
+    {
+     "box": [
+      0,
+      0,
+      0,
+      10,
+      10,
+      10
+     ]
+    },
+    {
+     "box": [
+      10,
+      10,
+      0,
+      20,
+      20,
+      10
+     ]
+    }
+   ]
+  }
+ },
+ "parts": [
+  {
+   "id": "cubes",
+   "bodies": [
+    {
+     "id": "b",
+     "mesh": "@b"
+    }
+   ]
+  }
+ ]
+}

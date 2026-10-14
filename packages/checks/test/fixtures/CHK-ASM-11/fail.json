@@ -1,0 +1,87 @@
+{
+ "note": "OGEE R16-P row bar 0 driven 3 mm past its stroke: 144 mm3 into column bar 0, not a touch pair (audit_print.py)",
+ "meshes": {
+  "bar": {
+   "solids": [
+    {
+     "box": [
+      0,
+      0,
+      0,
+      12,
+      12,
+      3
+     ]
+    }
+   ]
+  }
+ },
+ "assembly": {
+  "id": "ogee16-printed-fixture",
+  "parts": [
+   {
+    "id": "rowbar",
+    "bodies": [
+     {
+      "id": "b",
+      "mesh": "@bar"
+     }
+    ]
+   },
+   {
+    "id": "colbar",
+    "bodies": [
+     {
+      "id": "b",
+      "mesh": "@bar"
+     }
+    ]
+   }
+  ],
+  "instances": [
+   {
+    "id": "rowbar0",
+    "part": "rowbar",
+    "pose": {
+     "frame": "assembly",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "rot": [
+      0,
+      0,
+      0,
+      1
+     ]
+    }
+   },
+   {
+    "id": "colbar0",
+    "part": "colbar",
+    "pose": {
+     "frame": "assembly",
+     "pos": [
+      0,
+      0,
+      2
+     ],
+     "rot": [
+      0,
+      0,
+      0,
+      1
+     ]
+    }
+   }
+  ],
+  "assertions": []
+ },
+ "interference": {
+  "tolMm3": 0.5,
+  "touchCeilingMm3": 120,
+  "boxMarginMm": 0.000001,
+  "origin": "designs/ogee16/legacy/source/audit_print.py audit()"
+ }
+}

@@ -1,0 +1,106 @@
+{
+ "note": "two cut sheets turning on a cut peg (OGEE R12: a square peg's contact radius ran 1.500 to 2.121)",
+ "meshes": {
+  "a": {
+   "solids": [
+    {
+     "box": [
+      0,
+      0,
+      0,
+      40,
+      10,
+      3
+     ]
+    }
+   ]
+  },
+  "c": {
+   "solids": [
+    {
+     "box": [
+      0,
+      0,
+      3,
+      40,
+      10,
+      6
+     ]
+    }
+   ]
+  }
+ },
+ "assembly": {
+  "id": "ogee",
+  "parts": [
+   {
+    "id": "deck",
+    "process": "laser",
+    "bodies": [
+     {
+      "id": "b",
+      "mesh": "@a",
+      "material": "acrylic3"
+     }
+    ]
+   },
+   {
+    "id": "arm",
+    "process": "laser",
+    "bodies": [
+     {
+      "id": "b",
+      "mesh": "@c",
+      "material": "acrylic3"
+     }
+    ]
+   }
+  ],
+  "instances": [
+   {
+    "id": "deck1",
+    "part": "deck",
+    "pose": {
+     "frame": "assembly",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "rot": [
+      0,
+      0,
+      0,
+      1
+     ]
+    }
+   },
+   {
+    "id": "arm1",
+    "part": "arm",
+    "pose": {
+     "frame": "assembly",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "rot": [
+      0,
+      0,
+      0,
+      1
+     ]
+    }
+   }
+  ],
+  "joints": [
+   {
+    "id": "j.pivot",
+    "kind": "revolute",
+    "a": "deck1",
+    "b": "arm1"
+   }
+  ]
+ }
+}

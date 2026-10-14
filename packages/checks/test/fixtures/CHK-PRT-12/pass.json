@@ -1,0 +1,41 @@
+{
+ "note": "a 40 x 40 x 4 flat cover whose overhang metric leaves the bed face out: 0 percent",
+ "meshes": {
+  "b": {
+   "solids": [
+    {
+     "box": [
+      0,
+      0,
+      0,
+      40,
+      40,
+      4
+     ]
+    }
+   ]
+  }
+ },
+ "parts": [
+  {
+   "id": "cover",
+   "bodies": [
+    {
+     "id": "b",
+     "mesh": "@b"
+    }
+   ],
+   "metrics": [
+    {
+     "id": "print.overhangPct",
+     "value": 0,
+     "unit": "percent",
+     "qualifier": "computed",
+     "basis": null,
+     "note": "overhang share of the surface",
+     "gate": "CHK-PRT-12"
+    }
+   ]
+  }
+ ]
+}

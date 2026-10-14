@@ -1,0 +1,7 @@
+{
+ "note": "fits.py lines 21 to 23 and 41 to 47 as shipped (originals/ogee16/files/src/source/fits.py): a checker that imports P and still copies FIT_SLIDE_",
+ "source": {
+  "path": "fits.py",
+  "text": "import math, os, sys\nimport kin\nfrom kin import P\n\nLOSS = 0.25\n# these mirror printed.scad. HARDCODING THEM MEANT THE TABLE REPORTED 0.55 AFTER\nFIT_SLIDE_ = 0.75\nPR = dict(PRINT_GAP=FIT_SLIDE_/2, PRINT_SHRINK=0.05, FIT_SLIDE=FIT_SLIDE_, FIT_LOCATE=0.30,\n          FIT_PRESS=0.10, SHAFT_D=8.0, SHAFT_FLAT=6.4, LTAB_W=8.0)\n"
+ }
+}

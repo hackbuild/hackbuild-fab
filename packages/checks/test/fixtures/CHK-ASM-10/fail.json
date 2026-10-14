@@ -1,0 +1,100 @@
+{
+ "note": "COTTER sharp-bend case, rod 5.40 and bend 6.0 in the same board: trapped after 381 poses, max tilt 12 deg",
+ "meshes": {
+  "b": {
+   "solids": [
+    {
+     "box": [
+      0,
+      0,
+      0,
+      10,
+      10,
+      6.35
+     ]
+    }
+   ]
+  }
+ },
+ "assembly": {
+  "id": "cotter",
+  "parts": [
+   {
+    "id": "hook",
+    "bodies": [
+     {
+      "id": "b",
+      "mesh": "@b"
+     }
+    ]
+   },
+   {
+    "id": "board",
+    "bodies": [
+     {
+      "id": "b",
+      "mesh": "@b"
+     }
+    ]
+   }
+  ],
+  "instances": [
+   {
+    "id": "hook1",
+    "part": "hook",
+    "pose": {
+     "frame": "assembly",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "rot": [
+      0,
+      0,
+      0,
+      1
+     ]
+    }
+   },
+   {
+    "id": "board1",
+    "part": "board",
+    "pose": {
+     "frame": "assembly",
+     "pos": [
+      20,
+      0,
+      0
+     ],
+     "rot": [
+      0,
+      0,
+      0,
+      1
+     ]
+    }
+   }
+  ],
+  "assertions": [
+   {
+    "type": "insertable",
+    "part": "hook1",
+    "into": "board1"
+   }
+  ]
+ },
+ "sim": {
+  "insert": [
+   {
+    "part": "hook1",
+    "into": "board1",
+    "verdict": "TRAPPED",
+    "stop": "exhausted",
+    "poses": 381,
+    "maxTiltDeg": 12,
+    "clearing": null
+   }
+  ]
+ }
+}

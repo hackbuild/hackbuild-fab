@@ -1,0 +1,41 @@
+{
+ "note": "rows at 12 deg each",
+ "meshes": {
+  "b": {
+   "solids": [
+    {
+     "box": [
+      0,
+      0,
+      0,
+      60,
+      30,
+      3
+     ]
+    }
+   ]
+  }
+ },
+ "parts": [
+  {
+   "id": "tumbler",
+   "bodies": [
+    {
+     "id": "b",
+     "mesh": "@b"
+    }
+   ],
+   "features": [
+    {
+     "kind": "flexCut",
+     "id": "flexCut.spine",
+     "rows": 7,
+     "degPerRow": 12,
+     "slotLen": 20,
+     "landLen": 3,
+     "pitch": 1.5
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,89 @@
+{
+ "note": "two stacked bands overlapping 0.015 mm, inside stack.bandOverlap 0.01 to 0.02",
+ "meshes": {
+  "b": {
+   "solids": [
+    {
+     "box": [
+      0,
+      0,
+      0,
+      10,
+      10,
+      4
+     ]
+    }
+   ]
+  }
+ },
+ "parts": [
+  {
+   "id": "lid",
+   "bodies": [
+    {
+     "id": "b",
+     "mesh": "@b"
+    }
+   ]
+  }
+ ],
+ "shapes": {
+  "lid/b": {
+   "route": "stack",
+   "bands": [
+    {
+     "outline": [
+      [
+       [
+        0,
+        0
+       ],
+       [
+        10,
+        0
+       ],
+       [
+        10,
+        10
+       ],
+       [
+        0,
+        10
+       ]
+      ]
+     ],
+     "z": [
+      0,
+      2
+     ]
+    },
+    {
+     "outline": [
+      [
+       [
+        0,
+        0
+       ],
+       [
+        10,
+        0
+       ],
+       [
+        10,
+        10
+       ],
+       [
+        0,
+        10
+       ]
+      ]
+     ],
+     "z": [
+      1.985,
+      4
+     ]
+    }
+   ]
+  }
+ }
+}

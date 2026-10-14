@@ -1,0 +1,34 @@
+{
+  "card": "M04-T14",
+  "note": "Files another tool made, imported for audit by part.build --import. sha256 computed 2026-10-07; each equals SHA256SUMS and the bench source. units is the length unit the file was authored in, inferred from its bounds against the design record; the cli imports at the format default (glb m, stl mm), so a glb here reads 1000 times large unless units mm is passed.",
+  "files": [
+    {
+      "file": "board-rp2040-pizero-standin.stl",
+      "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/cresset-plinth/outputs/board-rp2040-pizero-standin.stl",
+      "sha256": "bcb1a5f1639589d69ccbb11e7a590253aba1471ff1bd77694aef3e65d9d6e028",
+      "format": "stl",
+      "units": "mm",
+      "outcome": "refused: E_KERNEL, inverted winding, signed volume -6506.3 mm3 as read (computed), D-102; synthesis/patterns-and-lineage.md 4.6 PLINTH stand-in row"
+    },
+    {
+      "file": "locket-r2.glb",
+      "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/coaming/outputs/locket-r2/locket-r2.glb",
+      "sha256": "c25fbaf4c6639e3a1396fa003824a468edb92362054104def4d78a31b3d7a401",
+      "format": "glb",
+      "units": "mm",
+      "outcome": "builds: 16 closed parts (computed, trimesh agrees), positive volume; their union is refused because parts touch or overlap, so CHK-PRT-03 skips; exit 0 at the default units"
+    },
+    {
+      "file": "lug.glb",
+      "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/round-pi-board/outputs/lug.glb",
+      "sha256": "15f3ea44045856ccead71b934b56f4b49b2f5d89940950b89287311568746b9e",
+      "format": "glb",
+      "units": "mm",
+      "outcome": "builds with positive volume; 25 of 26 node parts are open (computed; trimesh finds 0 of 53 geometries watertight), so CHK-PRT-01 fails and the cli exits 1"
+    }
+  ],
+  "scad": [
+    { "file": "scad/ok.scad", "format": "scad", "units": "mm", "outcome": "a 10 mm cube, 1000 mm3; runs only where openscad is on PATH" },
+    { "file": "scad/unknown-module.scad", "format": "scad", "units": "mm", "outcome": "E_KERNEL quoting the Ignoring unknown line (D-146); runs only where openscad is on PATH" }
+  ]
+}

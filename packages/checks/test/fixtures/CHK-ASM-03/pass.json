@@ -1,0 +1,79 @@
+{
+ "note": "the servo pocket open at the top so the servo drops in (STANCHION)",
+ "meshes": {
+  "b": {
+   "solids": [
+    {
+     "box": [
+      0,
+      0,
+      0,
+      20,
+      20,
+      2
+     ]
+    },
+    {
+     "box": [
+      0,
+      0,
+      0,
+      2,
+      20,
+      20
+     ]
+    },
+    {
+     "box": [
+      18,
+      0,
+      0,
+      20,
+      20,
+      20
+     ]
+    },
+    {
+     "box": [
+      0,
+      0,
+      0,
+      20,
+      2,
+      20
+     ]
+    },
+    {
+     "box": [
+      0,
+      18,
+      0,
+      20,
+      20,
+      20
+     ]
+    }
+   ]
+  }
+ },
+ "parts": [
+  {
+   "id": "yaw",
+   "bodies": [
+    {
+     "id": "b",
+     "mesh": "@b"
+    }
+   ],
+   "features": [
+    {
+     "kind": "horn",
+     "id": "horn.yaw",
+     "servo": "sg90",
+     "keyed": true,
+     "recessDepth": 2
+    }
+   ]
+  }
+ ]
+}

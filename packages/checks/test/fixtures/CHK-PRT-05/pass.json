@@ -1,0 +1,30 @@
+{
+ "note": "a 2.17 mm plate: first layer 0.25 plus 8 layers of 0.24",
+ "meshes": {
+  "b": {
+   "solids": [
+    {
+     "box": [
+      0,
+      0,
+      0,
+      20,
+      20,
+      2.17
+     ]
+    }
+   ]
+  }
+ },
+ "parts": [
+  {
+   "id": "plate",
+   "bodies": [
+    {
+     "id": "b",
+     "mesh": "@b"
+    }
+   ]
+  }
+ ]
+}

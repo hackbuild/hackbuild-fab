@@ -1,0 +1,43 @@
+{
+ "note": "the strip at 150 mm sags 0.55, under the 0.775 margin",
+ "meshes": {
+  "b": {
+   "solids": [
+    {
+     "box": [
+      0,
+      0,
+      0,
+      150,
+      10,
+      3
+     ]
+    }
+   ]
+  }
+ },
+ "parts": [
+  {
+   "id": "rowbar",
+   "bodies": [
+    {
+     "id": "b",
+     "mesh": "@b"
+    }
+   ],
+   "thickness": 3,
+   "plane": "XY",
+   "metrics": [
+    {
+     "id": "latch.margin",
+     "value": 0.775,
+     "unit": "mm",
+     "qualifier": "computed",
+     "basis": null,
+     "note": "one-bar half-select margin",
+     "gate": "CHK-SHT-05"
+    }
+   ]
+  }
+ ]
+}

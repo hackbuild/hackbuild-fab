@@ -1,0 +1,40 @@
+{
+ "note": "a block with a second block resting on its top: the upper block's corners sit on the lower top face (PIP: a cone kink on a cavity face)",
+ "meshes": {
+  "b": {
+   "solids": [
+    {
+     "box": [
+      0,
+      0,
+      0,
+      10,
+      10,
+      10
+     ]
+    },
+    {
+     "box": [
+      3,
+      3,
+      10,
+      7,
+      7,
+      14
+     ]
+    }
+   ]
+  }
+ },
+ "parts": [
+  {
+   "id": "keys",
+   "bodies": [
+    {
+     "id": "b",
+     "mesh": "@b"
+    }
+   ]
+  }
+ ]
+}

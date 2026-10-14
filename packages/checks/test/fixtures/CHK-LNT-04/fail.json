@@ -1,0 +1,7 @@
+{
+ "note": "DRIVE_Y hidden in a comment after another assignment (OGEE R15: four parts parked at -1.5)",
+ "source": {
+  "path": "params.scad",
+  "text": "ROW_Y = -1.5; // DRIVE_Y = 3.2;\n"
+ }
+}

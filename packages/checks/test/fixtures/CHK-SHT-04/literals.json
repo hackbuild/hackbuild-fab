@@ -1,0 +1,31 @@
+{
+ "note": "a number scaling a named quantity derives the kerf; a bare number is a copy (2.0.1)",
+ "cases": [
+  {
+   "text": "const kerf = 2 * f.burn;\n",
+   "literals": []
+  },
+  {
+   "text": "const kerf = 2*burn;\n",
+   "literals": []
+  },
+  {
+   "text": "const kerf = 0.2;\n",
+   "literals": [
+    "kerf = 0.2"
+   ]
+  },
+  {
+   "text": "const kerf = 0.2 + burn;\n",
+   "literals": [
+    "kerf = 0.2"
+   ]
+  },
+  {
+   "text": "{ kerf_mm: 0.15, k: 2 }\n",
+   "literals": [
+    "kerf_mm: 0.15"
+   ]
+  }
+ ]
+}

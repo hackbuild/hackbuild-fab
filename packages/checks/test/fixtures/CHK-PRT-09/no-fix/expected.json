@@ -1,0 +1,7 @@
+{
+  "source": "M04-T04 step 5 golden row CHK-PRT-09: span 9.5 mm against under 9 mm, two driving params, no fix",
+  "measured": 9.5,
+  "legal": [0, 9],
+  "fix": null,
+  "next": [{ "command": "constraints.query", "pointers": ["/post", "/span"] }]
+}

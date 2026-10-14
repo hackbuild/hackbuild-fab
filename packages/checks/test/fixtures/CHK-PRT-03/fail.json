@@ -1,0 +1,76 @@
+{
+ "note": "bodies of 100 and 50 mm3 in a 140 mm3 solid: 10 mm3 counted twice, the COLLAR overlap validate_3mf --overlap found",
+ "assembly": {
+  "id": "coin",
+  "parts": [
+   {
+    "id": "coin",
+    "bodies": [
+     {
+      "id": "base",
+      "mesh": {
+       "uri": "hbf://mesh/a2",
+       "hash": "a200000000000000000000000000000000000000000000000000000000000000",
+       "triangles": 12,
+       "bbox": [
+        [
+         0,
+         0,
+         0
+        ],
+        [
+         10,
+         10,
+         10
+        ]
+       ],
+       "volumeMm3": 100,
+       "watertight": true
+      }
+     },
+     {
+      "id": "art",
+      "mesh": {
+       "uri": "hbf://mesh/b2",
+       "hash": "b200000000000000000000000000000000000000000000000000000000000000",
+       "triangles": 12,
+       "bbox": [
+        [
+         0,
+         0,
+         0
+        ],
+        [
+         10,
+         10,
+         10
+        ]
+       ],
+       "volumeMm3": 50,
+       "watertight": true
+      }
+     }
+    ],
+    "solid": {
+     "uri": "hbf://mesh/c2",
+     "hash": "c200000000000000000000000000000000000000000000000000000000000000",
+     "triangles": 12,
+     "bbox": [
+      [
+       0,
+       0,
+       0
+      ],
+      [
+       10,
+       10,
+       10
+      ]
+     ],
+     "volumeMm3": 140,
+     "watertight": true
+    }
+   }
+  ]
+ }
+}

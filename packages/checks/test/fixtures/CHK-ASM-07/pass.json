@@ -1,0 +1,109 @@
+{
+ "note": "the crank 3.4 mm clear of the servo",
+ "meshes": {
+  "a": {
+   "solids": [
+    {
+     "box": [
+      0,
+      0,
+      0,
+      10,
+      10,
+      10
+     ]
+    }
+   ]
+  },
+  "c": {
+   "solids": [
+    {
+     "box": [
+      20,
+      0,
+      0,
+      30,
+      10,
+      10
+     ]
+    }
+   ]
+  }
+ },
+ "assembly": {
+  "id": "ogee",
+  "parts": [
+   {
+    "id": "crank",
+    "bodies": [
+     {
+      "id": "b",
+      "mesh": "@a"
+     }
+    ]
+   },
+   {
+    "id": "servo",
+    "bodies": [
+     {
+      "id": "b",
+      "mesh": "@c"
+     }
+    ]
+   }
+  ],
+  "instances": [
+   {
+    "id": "crank1",
+    "part": "crank",
+    "pose": {
+     "frame": "assembly",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "rot": [
+      0,
+      0,
+      0,
+      1
+     ]
+    }
+   },
+   {
+    "id": "servo1",
+    "part": "servo",
+    "pose": {
+     "frame": "assembly",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "rot": [
+      0,
+      0,
+      0,
+      1
+     ]
+    }
+   }
+  ]
+ },
+ "sim": {
+  "closest": [
+   {
+    "a": "crank1",
+    "b": "servo1",
+    "mm": 3.4,
+    "at": [
+     15,
+     5,
+     5
+    ],
+    "state": "u 0.7"
+   }
+  ]
+ }
+}

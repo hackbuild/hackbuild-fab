@@ -1,0 +1,83 @@
+{
+ "note": "the OGEE16 crank shaft row at FIT_SLIDE 0.75 drawn, SLIDE band 0.70 to 0.90",
+ "meshes": {
+  "b": {
+   "solids": [
+    {
+     "box": [
+      0,
+      0,
+      0,
+      20,
+      20,
+      3
+     ]
+    }
+   ]
+  }
+ },
+ "assembly": {
+  "id": "ogee",
+  "parts": [
+   {
+    "id": "wall",
+    "bodies": [
+     {
+      "id": "b",
+      "mesh": "@b"
+     }
+    ],
+    "metrics": [
+     {
+      "id": "fits.model",
+      "value": "ogee16-fits-v1",
+      "qualifier": "computed",
+      "basis": null,
+      "note": "fit model the rows are banded by",
+      "gate": "informational",
+      "group": "fits"
+     },
+     {
+      "id": "fits.01.hole",
+      "value": 8.75,
+      "unit": "mm",
+      "qualifier": "computed",
+      "basis": null,
+      "note": "crank shaft in its wall bore: hole",
+      "gate": "informational",
+      "group": "fits"
+     },
+     {
+      "id": "fits.01.shaft",
+      "value": 8,
+      "unit": "mm",
+      "qualifier": "computed",
+      "basis": null,
+      "note": "crank shaft in its wall bore: shaft",
+      "gate": "informational",
+      "group": "fits"
+     },
+     {
+      "id": "fits.01.drawn",
+      "value": 0.75,
+      "unit": "mm",
+      "qualifier": "computed",
+      "basis": null,
+      "note": "crank shaft in its wall bore",
+      "gate": "CHK-FIT-01",
+      "group": "fits"
+     },
+     {
+      "id": "fits.01.class",
+      "value": "SLIDE",
+      "qualifier": "computed",
+      "basis": null,
+      "note": "crank shaft in its wall bore: fit class",
+      "gate": "informational",
+      "group": "fits"
+     }
+    ]
+   }
+  ]
+ }
+}

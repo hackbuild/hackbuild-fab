@@ -1,0 +1,152 @@
+{
+ "note": "a wiper contact declared with no fit and no travel (STYLUS: the wiper arms sat beside the tracks)",
+ "meshes": {
+  "b": {
+   "solids": [
+    {
+     "box": [
+      -10,
+      -10,
+      0,
+      10,
+      10,
+      4
+     ]
+    }
+   ]
+  }
+ },
+ "parts": [
+  {
+   "id": "keys",
+   "bodies": [
+    {
+     "id": "pad",
+     "mesh": "@b",
+     "outline": [
+      [
+       [
+        -10,
+        -10
+       ],
+       [
+        10,
+        -10
+       ],
+       [
+        10,
+        10
+       ],
+       [
+        -10,
+        10
+       ]
+      ]
+     ]
+    }
+   ],
+   "features": [
+    {
+     "kind": "conductor",
+     "id": "conductor.key",
+     "body": "pad",
+     "material": "cpla",
+     "net": "K1",
+     "region": {
+      "path": [
+       [
+        0.4,
+        -1.5
+       ],
+       [
+        1.6,
+        -1.5
+       ],
+       [
+        1.6,
+        1.5
+       ],
+       [
+        0.4,
+        1.5
+       ]
+      ],
+      "face": {
+       "origin": [
+        0,
+        0,
+        1
+       ],
+       "normal": [
+        0,
+        0,
+        1
+       ],
+       "u": [
+        1,
+        0,
+        0
+       ]
+      }
+     },
+     "width": 1.2,
+     "t": 2
+    },
+    {
+     "kind": "conductor",
+     "id": "conductor.gnd",
+     "body": "pad",
+     "material": "cpla",
+     "net": "GND",
+     "region": {
+      "path": [
+       [
+        -1.6,
+        -1.5
+       ],
+       [
+        -0.4,
+        -1.5
+       ],
+       [
+        -0.4,
+        1.5
+       ],
+       [
+        -1.6,
+        1.5
+       ]
+      ],
+      "face": {
+       "origin": [
+        0,
+        0,
+        1
+       ],
+       "normal": [
+        0,
+        0,
+        1
+       ],
+       "u": [
+        1,
+        0,
+        0
+       ]
+      }
+     },
+     "width": 1.2,
+     "t": 2
+    },
+    {
+     "kind": "contact",
+     "id": "contact.wiper",
+     "a": "conductor.key",
+     "b": "conductor.gnd",
+     "forceMinN": 0.3,
+     "maxOhm": 100000
+    }
+   ]
+  }
+ ]
+}

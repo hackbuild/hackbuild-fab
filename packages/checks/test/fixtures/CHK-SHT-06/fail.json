@@ -1,0 +1,41 @@
+{
+ "note": "living hinge rows at 15 deg each, over the TUMBLER 13 deg rule",
+ "meshes": {
+  "b": {
+   "solids": [
+    {
+     "box": [
+      0,
+      0,
+      0,
+      60,
+      30,
+      3
+     ]
+    }
+   ]
+  }
+ },
+ "parts": [
+  {
+   "id": "tumbler",
+   "bodies": [
+    {
+     "id": "b",
+     "mesh": "@b"
+    }
+   ],
+   "features": [
+    {
+     "kind": "flexCut",
+     "id": "flexCut.spine",
+     "rows": 7,
+     "degPerRow": 15,
+     "slotLen": 20,
+     "landLen": 3,
+     "pitch": 1.5
+    }
+   ]
+  }
+ ]
+}
