@@ -23,3 +23,7 @@ export { pointSegmentDistance } from "./segment.js";
 export { SVG_DROPPED_ELEMENTS, sanitiseSvgDocument } from "./svg-doc.js";
 export { FACE_FRAME_TOL, cross, faceBasis, horizontalFrame, placeOnFace } from "./face-frame.js";
 export type { FaceBasis, HorizontalFrame, HorizontalOptions } from "./face-frame.js";
+export { parseWoff2 } from "./text/woff2.js";
+export type { BrotliDecompress, Font, FontPoint, Glyph } from "./text/woff2.js";
+export { GLYPH_QUAD_POINTS, TEXT_FACES, contourRing, measureText, textFace, textRings } from "./text/outline.js";
+export type { FaceTable, TextPlacement } from "./text/outline.js";

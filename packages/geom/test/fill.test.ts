@@ -142,10 +142,10 @@ describe("vector surface", () => {
     expect(() => s.fillPath("M0 0A2 2 0 0 1 4 0Z", m)).toThrow(/E_SCHEMA \/svgPath/);
   });
 
-  test("text and images refuse in node; a foreign grid is E_SCHEMA", () => {
+  test("a face node does not carry and images refuse; a foreign grid is E_SCHEMA", () => {
     const s = vectorSurface(g);
-    expect(() => s.measure("a", "Permanent Marker")).toThrow(/E_KERNEL/);
-    expect(() => s.fillText("a", "Permanent Marker")).toThrow(/E_KERNEL.*font outline/);
+    expect(() => s.measure("a", "Permanent Marker", 5)).toThrow(/E_KERNEL \/font/);
+    expect(() => s.fillText("a", "Permanent Marker", 5, 0, 0, 0)).toThrow(/E_KERNEL \/font/);
     expect(() => s.drawImage({ width: 2, height: 2 })).toThrow(/E_KERNEL.*resampler/);
     expect(() => s.readAlpha({ w: 20, h: 20, res: 3 })).toThrow(/E_SCHEMA \/grid/);
   });

@@ -1,13 +1,16 @@
 // The node painter for the inlay Surface (M03-T04 step 5). It fills SVG
 // paths exactly at cell centres and reads them back on the grid it was made
 // for. Ring and shape layers never reach a surface, so they render the same
-// in node and in the browser. Text and images need a font outline route and
-// a resampler that node does not have; those calls refuse with E_KERNEL
-// instead of painting something the browser would paint differently.
+// in node and in the browser. Text is set from the vendored Plex Mono glyph
+// table (src/text/outline.ts) and fills cell centres like a path; another
+// family refuses with E_KERNEL. Images need a resampler that node does not
+// have; that call refuses instead of painting something the browser would
+// paint differently.
 
 import { commandError, type Ring } from "@hackbuild/spec";
 import { fillPolygonEvenOdd, type RasterGrid } from "./fill.js";
 import { flattenSvgPath, type Affine } from "./svgpath.js";
+import { measureText, textRings, type TextPlacement } from "../text/outline.js";
 
 /**
  * Points per curve segment for a filled path layer: the KEYWAY family's
@@ -17,12 +20,12 @@ import { flattenSvgPath, type Affine } from "./svgpath.js";
  */
 export const PATH_CURVE_POINTS = { cubic: 12, quad: 10 } as const;
 
-function noRoute(what: string, got: unknown): Error {
+function noResampler(got: unknown): Error {
   return commandError({
     code: "E_KERNEL",
     got,
     record: "kernels/art-inlay",
-    hint: `${what} needs the browser canvas surface (ui-core canvasSurface); node has no ${what === "text" ? "font outline route" : "image resampler"}`,
+    hint: "image needs the browser canvas surface (ui-core canvasSurface); node has no image resampler",
   });
 }
 
@@ -35,12 +38,14 @@ export class VectorSurface {
     this.grid = grid;
   }
 
-  measure(text: string, font: string): number {
-    throw noRoute("text", `${font}: ${text}`);
+  /** Advance width in mm of `text` in `font` (CSS weight and family) at `sizeMm`, as canvas measureText with no letter spacing. */
+  measure(text: string, font: string, sizeMm: number): number {
+    return measureText(text, font, sizeMm);
   }
 
-  fillText(text: string, font: string): void {
-    throw noRoute("text", `${font}: ${text}`);
+  /** Glyph outlines at the canvas placement of the same call; each glyph fills even-odd on its own. */
+  fillText(text: string, font: string, sizeMm: number, x: number, y: number, rot: number, opts?: TextPlacement): void {
+    for (const rings of textRings(text, font, sizeMm, x, y, rot, opts)) this.#paths.push(rings);
   }
 
   /** Path units map to model mm, y up, through `transform`; each path fills even-odd on its own. */
@@ -49,7 +54,7 @@ export class VectorSurface {
   }
 
   drawImage(img: { readonly width: number; readonly height: number }): void {
-    throw noRoute("image", `${img.width} x ${img.height}`);
+    throw noResampler(`${img.width} x ${img.height}`);
   }
 
   /** Row 0 at the bottom (y up), the inlay label grid order. */
