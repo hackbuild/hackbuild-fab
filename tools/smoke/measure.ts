@@ -10,7 +10,7 @@ import { existsSync, mkdirSync, readdirSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import type { Locator, Page } from "@playwright/test";
-import { useHostBuild, type Host } from "./host-build.ts";
+import { pageBuilds } from "./page-build.ts";
 
 export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
 export const OUT = path.join(ROOT, "out/smoke");
@@ -29,20 +29,18 @@ export interface Bake {
   id: string;
   file: string;
   kind: "bench" | "kit";
-  /** The node build host that stands in for an in-page build, by bake id; null when none exists. */
-  host: "flex-pair" | null;
+  /** The page build global the bake carries (bake.json `build`, D-264); null when it carries none. */
+  build: string | null;
 }
 
-/** The build hosts tools/smoke/host-build.ts can start, keyed by bake id. */
-const HOSTS: Readonly<Record<string, "flex-pair">> = { "flex-pair": "flex-pair" };
-
 export function bakes(): Bake[] {
+  const builds = pageBuilds();
   const out: Bake[] = [];
   for (const file of htmlIn(path.join(ROOT, "dist/bench"))) {
     const id = path.basename(file, ".html");
-    out.push({ id, file, kind: "bench", host: HOSTS[id] ?? null });
+    out.push({ id, file, kind: "bench", build: builds.get(id) ?? null });
   }
-  for (const file of htmlIn(path.join(ROOT, "dist/kit"))) out.push({ id: path.basename(file, ".html"), file, kind: "kit", host: null });
+  for (const file of htmlIn(path.join(ROOT, "dist/kit"))) out.push({ id: path.basename(file, ".html"), file, kind: "kit", build: null });
   return out;
 }
 
@@ -67,10 +65,9 @@ export async function settled(page: Page, after = -1): Promise<void> {
   }, after, { timeout: SETTLE_MS });
 }
 
-/** Opens a bake; a bench waits for ready and the first settled build, a kit for its root. */
-export async function open(page: Page, bake: Bake, host: Host | null): Promise<number> {
+/** Opens a bake as shipped; a bench waits for ready and the first settled build, a kit for its root. */
+export async function open(page: Page, bake: Bake): Promise<number> {
   const t0 = Date.now();
-  if (bake.kind === "bench" && host !== null) await useHostBuild(page, host);
   await page.goto(pathToFileURL(bake.file).href);
   if (bake.kind === "kit") {
     await page.waitForSelector("body *", { timeout: READY_MS });

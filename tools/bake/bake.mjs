@@ -10,6 +10,7 @@
 // The output carries no timestamp and no absolute path, uses LF line endings, and is
 // written in manifest order, so two runs on the same inputs give the same sha256.
 
+import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { basename, dirname, join, relative, resolve, sep } from 'node:path';
@@ -146,8 +147,19 @@ export function classicScript(spec, base) {
   return `(function(){\n${src}\nglobalThis.${spec.global}=${spec.exportDefault};\n})();`;
 }
 
+/**
+ * NODE_ENV production before the first vite or vue compiler load. The vue
+ * compiler picks its dev or prod build by NODE_ENV when first loaded and a
+ * vite build sets NODE_ENV, so without this the bytes of a bake would
+ * depend on which bundle ran first in the process.
+ */
+function productionEnv() {
+  process.env.NODE_ENV = 'production';
+}
+
 /** Bundle a ui entry with vite into one ES module, no code splitting. */
 export async function bundleEntry(entry) {
+  productionEnv();
   const { build } = await import('vite');
   // Single-file components of packages/ui compile here; they carry no <style>,
   // so the bundle stays one chunk with no CSS asset.
@@ -187,6 +199,102 @@ export async function bundleEntry(entry) {
   // The installed packages the bundle inlines, for the licence manifest (LICENSING.md 3).
   const inlined = chunks[0].moduleIds.filter((id) => id.includes(`${sep}node_modules${sep}`)).map((id) => packageOf(id.replace(/\?.*$/, '').replace(/^\0/, ''))).filter((p) => p !== null);
   return { code: chunks[0].code.replace(/\s+$/, ''), own, inlined };
+}
+
+/** The PageFacts of the design in `dir`, computed by core in a child process (tools/bake/design-facts.mjs). */
+export function designFacts(dir) {
+  try {
+    const out = execFileSync(process.execPath, [join(REPO, 'tools/bake/design-facts.mjs'), dir], { cwd: REPO, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024, stdio: ['ignore', 'pipe', 'pipe'] });
+    return JSON.parse(out);
+  } catch (e) {
+    const why = String(e.stderr ?? e.message ?? e).trim().split('\n').slice(-3).join(' ');
+    fail(`design facts for ${rel(dir)} failed: ${why}. run npx tsc -b first.`);
+  }
+}
+
+// Packages a page build reaches only on paths a bake never runs: the LGPL
+// spice engine and the rapier physics engine load lazily (D-043), and a
+// bench that needs one does not bake. The stub refuses every use by name.
+const ABSENT = ['eecircuit-engine', '@dimforge/rapier3d-deterministic-compat'];
+const absentStub = (name) =>
+  `const refuse = () => { throw new Error(${JSON.stringify(`${name} is not in this bake`)}); };\n` +
+  'const stub = new Proxy(function absent() {}, { get: (_t, k) => (k === "then" ? undefined : refuse()), apply: refuse, construct: refuse });\n' +
+  'export default stub;\nexport const Simulation = stub;\n';
+
+/**
+ * The virtual modules a page build bundle reads: its PageFacts, and the
+ * page's own classic globals standing in for manifold-3d and jszip, so the
+ * bundle carries neither twice and fetches no wasm by URL under file://.
+ */
+export function pageModules(m, facts) {
+  const manifold = (m.classic ?? []).find((c) => c.from.startsWith('npm:manifold-3d/'));
+  if (manifold === undefined || m.wasm === undefined) fail('a page build needs the manifold-3d classic script and its wasm in the manifest');
+  const jszip = (m.blocks ?? []).some((b) => b.from.startsWith('npm:jszip/'));
+  if (!jszip) fail('a page build needs the jszip block in the manifest');
+  const order = Object.keys(m);
+  if (!['wasm', 'classic', 'blocks'].every((k) => order.indexOf(k) < order.indexOf('build'))) fail('list build after wasm, classic and blocks in the manifest; its bundle reads their globals');
+  const mods = {
+    'hbf:facts': `export const facts = ${JSON.stringify(facts)};\n`,
+    'manifold-3d':
+      'function decode(b64) { const bin = atob(b64); const out = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i += 1) out[i] = bin.charCodeAt(i); return out; }\n' +
+      'export default function Module(opts) {\n' +
+      `  const factory = globalThis[${JSON.stringify(manifold.global)}];\n` +
+      `  const b64 = globalThis[${JSON.stringify(m.wasm.global)}];\n` +
+      `  if (typeof factory !== "function") throw new Error(${JSON.stringify(`manifold factory ${manifold.global} missing from the page`)});\n` +
+      `  if (typeof b64 !== "string") throw new Error(${JSON.stringify(`manifold wasm ${m.wasm.global} missing from the page`)});\n` +
+      '  return factory({ ...(opts ?? {}), wasmBinary: decode(b64) });\n}\n',
+    jszip: 'const Z = globalThis.JSZip;\nif (typeof Z !== "function") throw new Error("jszip missing from the page");\nexport default Z;\n',
+  };
+  for (const name of ABSENT) mods[name] = absentStub(name);
+  return mods;
+}
+
+/** Bundle a page build entry with vite into one classic script that assigns its exports to `global`. */
+export async function bundleBuild(spec, base, m) {
+  productionEnv();
+  const { build } = await import('vite');
+  const entry = resolve(base, spec.from);
+  pageModules(m, null);
+  const mods = pageModules(m, designFacts(base));
+  const PREFIX = '\0hbf-page:';
+  const plugin = {
+    name: 'hbf-page-modules',
+    enforce: 'pre',
+    resolveId(id) {
+      return Object.hasOwn(mods, id) ? PREFIX + id : null;
+    },
+    load(id) {
+      return id.startsWith(PREFIX) ? mods[id.slice(PREFIX.length)] : null;
+    },
+  };
+  const out = await build({
+    configFile: false,
+    plugins: [plugin],
+    logLevel: 'silent',
+    root: REPO,
+    mode: 'production',
+    define: { 'process.env.NODE_ENV': '"production"' },
+    build: {
+      write: false,
+      target: 'es2022',
+      minify: true,
+      sourcemap: false,
+      modulePreload: false,
+      copyPublicDir: false,
+      reportCompressedSize: false,
+      lib: { entry, formats: ['iife'], name: spec.global, fileName: 'page-build' },
+      rollupOptions: { output: { codeSplitting: false } },
+    },
+  });
+  const outputs = (Array.isArray(out) ? out : [out]).flatMap((o) => o.output);
+  const chunks = outputs.filter((o) => o.type === 'chunk');
+  if (chunks.length !== 1 || outputs.length !== 1) fail(`build ${rel(entry)} bundled to ${outputs.length} files, legal 1`);
+  const ids = chunks[0].moduleIds.map((id) => id.replace(/\?.*$/, ''));
+  const own = ids.filter((id) => !id.startsWith('\0') && !id.includes(`${sep}node_modules${sep}`) && existsSync(id));
+  const inlined = ids.filter((id) => id.includes(`${sep}node_modules${sep}`)).map((id) => packageOf(id)).filter((p) => p !== null);
+  const code = chunks[0].code.replace(/\s+$/, '');
+  if (/\bimport\(|\bnew Worker\(|\bimportScripts\(/.test(code)) fail(`build ${rel(entry)} keeps a dynamic import or a worker; a page build runs inline under file://`);
+  return { code, own, inlined };
 }
 
 const UI_SHELL = (title) =>
@@ -252,6 +360,12 @@ export async function bake(manifestPath, opts = {}) {
         noScriptClose(src, b.label);
         blocks.push(block(b.label, src));
       }
+    } else if (key === 'build') {
+      const { code, own, inlined: bundled } = await bundleBuild(m.build, base, m);
+      inlined.push(...bundled);
+      for (const id of own) noDash(readText(id), rel(id));
+      noScriptClose(code, `build ${m.build.label}`);
+      blocks.push(block(m.build.label, code));
     } else if (key === 'entry') {
       const entry = resolve(base, m.entry);
       const { code, own, inlined: bundled } = await bundleEntry(entry);

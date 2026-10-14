@@ -72,8 +72,8 @@ async function threeMfItems(b64: string): Promise<Part[][]> {
   return [];
 }
 
-rule("G-14", "the 3MF's triangles and bounds equal the stage model's", async ({ page, bench, host }) => {
-  await openGold(page, bench, host);
+rule("G-14", "the 3MF's triangles and bounds equal the stage model's", async ({ page, bench }) => {
+  await openGold(page, bench);
   if (bench.origin === "legacy") {
     const stage = await legacyRead<StageObject[]>(page, bench, "stageObjects");
     const b64 = await page.evaluate(() => (globalThis as unknown as { __hbfHook: { exportBytes(k: string): Promise<string> } }).__hbfHook.exportBytes("3mf"));
@@ -118,8 +118,8 @@ rule("G-14", "the 3MF's triangles and bounds equal the stage model's", async ({ 
   }
 });
 
-rule("G-15", "after each liveness edit the model lies inside the stage; a double click fits", async ({ page, bench, host }) => {
-  await openGold(page, bench, host);
+rule("G-15", "after each liveness edit the model lies inside the stage; a double click fits", async ({ page, bench }) => {
+  await openGold(page, bench);
   if (bench.origin === "legacy") notRun(`${bench.id}: the legacy stage exposes no projected bounds`);
   const off: string[] = [];
   const inside = async (where: string): Promise<void> => {
@@ -141,8 +141,8 @@ rule("G-15", "after each liveness edit the model lies inside the stage; a double
   expect(off, off.join("\n")).toEqual([]);
 }, { timeout: 300_000 });
 
-rule("G-16", "ghost and xray fade structural bodies only", async ({ page, bench, host }) => {
-  await openGold(page, bench, host);
+rule("G-16", "ghost and xray fade structural bodies only", async ({ page, bench }) => {
+  await openGold(page, bench);
   if (bench.origin === "legacy") notRun(`${bench.id}: the legacy viewer exposes no per-body opacity`);
   await page.evaluate(() => {
     (document.querySelector("hb-viewer") as unknown as { xray: boolean }).xray = true;
@@ -153,15 +153,15 @@ rule("G-16", "ghost and xray fade structural bodies only", async ({ page, bench,
   expect(bad.map((b) => `${b.id} ${b.role} opacity ${b.opacity}`)).toEqual([]);
 });
 
-rule("G-17", "view toggles combine and the strip's pressed state equals viewer state after orbit and focus", async ({ page, bench, host }) => {
-  await openGold(page, bench, host);
+rule("G-17", "view toggles combine and the strip's pressed state equals viewer state after orbit and focus", async ({ page, bench }) => {
+  await openGold(page, bench);
   if (bench.origin === "legacy") notRun(`${bench.id}: the legacy viewer state is not readable through the adapter`);
   const modes = await page.locator('[data-hb="mode"]').evaluateAll((els) => els.map((e) => e.getAttribute("data-mode") ?? ""));
   const stale: string[] = [];
   const compare = async (where: string): Promise<void> => {
     const r = await page.evaluate(() => {
-      const v = document.querySelector("hb-viewer") as unknown as { explode: boolean; xray: boolean; section: number | null; plate: boolean; viewState(): { cam: { name: string | null } } };
-      const state: Record<string, boolean> = { exploded: v.explode, xray: v.xray, section: v.section !== null, plate: v.plate };
+      const v = document.querySelector("hb-viewer") as unknown as { explode: boolean; layers: boolean; xray: boolean; section: number | null; plate: boolean; viewState(): { cam: { name: string | null } } };
+      const state: Record<string, boolean> = { exploded: v.explode, layers: v.layers, xray: v.xray, section: v.section !== null, plate: v.plate };
       const out: string[] = [];
       for (const b of Array.from(document.querySelectorAll<HTMLElement>('[data-hb="mode"]'))) {
         const m = b.dataset["mode"] ?? "";
@@ -199,8 +199,8 @@ rule("G-17", "view toggles combine and the strip's pressed state equals viewer s
   expect(stale, stale.join("\n")).toEqual([]);
 });
 
-rule("G-18", "in plate view the bed chip agrees with CHK-PRT-16 and every plate object", async ({ page, bench, host }) => {
-  await openGold(page, bench, host);
+rule("G-18", "in plate view the bed chip agrees with CHK-PRT-16 and every plate object", async ({ page, bench }) => {
+  await openGold(page, bench);
   if (bench.origin === "legacy") notRun(`${bench.id}: the legacy page runs no CHK-PRT-16`);
   const plate = page.locator('[data-hb="mode"][data-mode="plate"]');
   if ((await plate.getAttribute("aria-pressed")) !== "true") await plate.click();
@@ -215,8 +215,8 @@ rule("G-18", "in plate view the bed chip agrees with CHK-PRT-16 and every plate 
 chaseBound("G-19", "the pad's regions come from built geometry and move with it");
 chaseBound("G-20", "pad, pose, readout and drive agree within 0.01 over 16 samples");
 
-rule("G-21", "touch-only: the pad captures the pointer, has touch-action none, releases on pointercancel within 400 ms", async ({ page, bench, host }) => {
-  await openGold(page, bench, host);
+rule("G-21", "touch-only: the pad captures the pointer, has touch-action none, releases on pointercancel within 400 ms", async ({ page, bench }) => {
+  await openGold(page, bench);
   const key = page.locator(bench.dom.padKey).first();
   if ((await key.count()) === 0) notRun(`${bench.id}: no drive pad key on screen`);
   const read = page.locator(bench.dom.padRead);

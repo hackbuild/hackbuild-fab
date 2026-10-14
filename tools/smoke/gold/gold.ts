@@ -1,6 +1,6 @@
 // The gold suite's benches, applicability and opener (TESTING.md 8.5,
-// D-212). The benches are derived: every fab bake in dist/bench that has a
-// build (an in-page build or a node build host) and every legacy bake in
+// D-212). The benches are derived: every fab bake in dist/bench whose
+// bake.json carries an in-page build (D-264) and every legacy bake in
 // dist/legacy with a BenchHook adapter (PIP at M09). Each gold test is
 // titled `<G id> <rule> [<bench>] @gold` and carries the bench id as an
 // annotation, which tools/gold/report.mjs reads.
@@ -23,7 +23,8 @@ import { pathToFileURL } from "node:url";
 import { test as base, type Page, type TestInfo } from "@playwright/test";
 import type { BenchHook } from "@hackbuild/spec";
 import { listBenches, type BenchUnderTest } from "../../hook/benches.ts";
-import { startHost, useHostBuild, type Host } from "../host-build.ts";
+import { startHost, type Host } from "../host-build.ts";
+import { armFaults, pageBuilds } from "../page-build.ts";
 import { closeWelcome, ROOT, settled } from "../measure.ts";
 import { watch, type Watch } from "../network.ts";
 
@@ -31,7 +32,8 @@ export interface GoldBench {
   id: string;
   under: BenchUnderTest;
   origin: "fab" | "legacy";
-  host: boolean;
+  /** The page build global of a fab bake (bake.json `build.global`); null on a legacy page. */
+  build: string | null;
   /** Rule id to the predicate that was false; absent rules apply. */
   na: Record<string, string>;
   /** Selectors the DOM rules read; legacy pages name their own. */
@@ -82,7 +84,6 @@ const LEGACY_NA: Record<string, Record<string, string>> = {
     "G-53": "legacy steps declare no focal derived value",
   },
 };
-const HOSTS = new Set(["flex-pair"]);
 
 interface Decl {
   chase: { meta: { kind: string }; exports: readonly { kind: string }[]; presets?: readonly unknown[]; params: readonly { fields?: readonly { commit?: string }[] }[] };
@@ -128,16 +129,18 @@ let cache: GoldBench[] | null = null;
 export async function goldBenches(): Promise<GoldBench[]> {
   if (cache !== null) return cache;
   const { benches } = await listBenches();
+  const builds = pageBuilds();
   const out: GoldBench[] = [];
   for (const b of benches) {
     if (b.problem !== null) continue;
     if (b.origin === "fab" && b.rel.startsWith(`dist${path.sep}bench`)) {
       const id = path.basename(b.file, ".html");
-      if (!HOSTS.has(id)) continue;
+      const build = builds.get(id);
+      if (build === undefined) continue;
       const d = await declOf(b);
-      out.push({ id, under: b, origin: "fab", host: true, na: naOf(d), dom: FAB_DOM, focus: (d.bench?.rail ?? []).map((r) => r.focus ?? null) });
+      out.push({ id, under: b, origin: "fab", build, na: naOf(d), dom: FAB_DOM, focus: (d.bench?.rail ?? []).map((r) => r.focus ?? null) });
     } else if (b.origin === "legacy" && b.rel.startsWith(`dist${path.sep}legacy`) && b.adapter !== null && LEGACY_DOM[b.adapter] !== undefined) {
-      out.push({ id: b.adapter, under: b, origin: "legacy", host: false, na: { ...(LEGACY_NA[b.adapter] ?? {}) }, dom: LEGACY_DOM[b.adapter] as Dom, focus: [] });
+      out.push({ id: b.adapter, under: b, origin: "legacy", build: null, na: { ...(LEGACY_NA[b.adapter] ?? {}) }, dom: LEGACY_DOM[b.adapter] as Dom, focus: [] });
     }
   }
   cache = out;
@@ -191,13 +194,14 @@ export interface Opened {
 }
 
 /**
- * Opens a gold bench: the build host behind a fab bake, the adapter onto a
- * legacy page as `__hbfHook`, the welcome closed (PIP: its worked example,
- * as smoke.py drives it). Every rule reads the hook as `__hbfHook`.
+ * Opens a gold bench as shipped: a fab bake builds in its page with the
+ * fault switches armed (tools/smoke/page-build.ts), a legacy page gets its
+ * adapter as `__hbfHook`, the welcome closed (PIP: its worked example, as
+ * smoke.py drives it). Every rule reads the hook as `__hbfHook`.
  */
-export async function openGold(page: Page, b: GoldBench, host: Host | null, opts: { welcome?: boolean } = {}): Promise<Opened> {
+export async function openGold(page: Page, b: GoldBench, opts: { welcome?: boolean } = {}): Promise<Opened> {
   const w = await watch(page);
-  if (b.host && host !== null) await useHostBuild(page, host);
+  if (b.build !== null) await armFaults(page, b.build);
   const t0 = Date.now();
   await page.goto(pathToFileURL(b.under.file).href);
   await page.waitForFunction(() => (globalThis as unknown as Hooked).BENCH?.ready === true, undefined, { timeout: 120_000 });
@@ -235,7 +239,6 @@ export function notRun(reason: string): never {
 
 interface GoldFixtures {
   bench: GoldBench;
-  host: Host | null;
 }
 
 interface GoldWorker {
@@ -249,11 +252,6 @@ export const test = base.extend<GoldFixtures, GoldWorker>({
     await use(benches);
   }, { scope: "worker", auto: true }],
   bench: [undefined as unknown as GoldBench, { option: true }],
-  host: async ({ bench }, use) => {
-    const h = bench !== undefined && bench.host ? await startHost() : null;
-    await use(h);
-    h?.close();
-  },
 });
 
 /**
@@ -264,21 +262,28 @@ export const test = base.extend<GoldFixtures, GoldWorker>({
 export function rule(
   id: string,
   title: string,
-  body: (args: { page: Page; bench: GoldBench; host: Host | null; info: TestInfo }) => Promise<void>,
+  body: (args: { page: Page; bench: GoldBench; oracle: () => Promise<Host>; info: TestInfo }) => Promise<void>,
   opts: { touch?: boolean; timeout?: number } = {},
 ): void {
   const benches = goldBenchesSync();
   for (const b of benches) {
     test.describe(() => {
       test.use({ bench: b });
-      test(`${id} ${title} [${b.id}] @gold${opts.touch === true ? " @touch" : ""}`, { annotation: { type: "bench", description: b.id } }, async ({ page, host }, info) => {
+      test(`${id} ${title} [${b.id}] @gold${opts.touch === true ? " @touch" : ""}`, { annotation: { type: "bench", description: b.id } }, async ({ page }, info) => {
         info.setTimeout(opts.timeout ?? 240_000);
         const na = b.na[id];
         if (na !== undefined) {
           test.skip(true, `n/a: ${na}`);
           return;
         }
-        await body({ page, bench: b, host, info });
+        // The node build host is the oracle a rule reads check rows from, started on first use.
+        let host: Host | null = null;
+        const oracle = async (): Promise<Host> => (host ??= await startHost());
+        try {
+          await body({ page, bench: b, oracle, info });
+        } finally {
+          host?.close();
+        }
       });
     });
   }

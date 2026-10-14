@@ -1,13 +1,12 @@
-// Puts the node flex-pair build host (flex-pair-host.mjs) behind a page as
-// `hbfHostBuild`, the build the ui bench entry takes when a page carries
-// none (packages/ui/src/bench/entry.ts). The host runs the library build
-// and every check per commit, so a smoke drives real Part IR and meshes.
+// The node flex-pair build host (flex-pair-host.mjs): core's buildPart and
+// runAllChecks in one node process. A baked bench builds in its own page
+// (D-264); the gold specs read check rows from this host for the page's
+// state as an oracle that never reads the page.
 
 import { spawn, type ChildProcess } from "node:child_process";
 import path from "node:path";
 import readline from "node:readline";
 import { fileURLToPath } from "node:url";
-import type { Page } from "@playwright/test";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
 
@@ -69,9 +68,4 @@ export async function startHost(): Promise<Host> {
       child.kill();
     },
   };
-}
-
-/** Exposes the host build before the page's scripts run. */
-export async function useHostBuild(page: Page, host: Host): Promise<void> {
-  await page.exposeFunction("hbfHostBuild", (state: unknown) => host.build(state));
 }

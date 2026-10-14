@@ -18,8 +18,8 @@ async function models(b64: string): Promise<string> {
 const export3mf = (page: import("@playwright/test").Page): Promise<string> =>
   page.evaluate(() => (globalThis as unknown as { __hbfHook: { exportBytes(k: string): Promise<string> } }).__hbfHook.exportBytes("3mf"));
 
-rule("G-46", "commit then export 3mf with no wait gives the new rev's bytes", async ({ page, bench, host }) => {
-  await openGold(page, bench, host);
+rule("G-46", "commit then export 3mf with no wait gives the new rev's bytes", async ({ page, bench }) => {
+  await openGold(page, bench);
   const f = (await numericFields(page, bench))[0];
   if (f === undefined) notRun("no numeric field");
   const v0 = Number(await readField(page, f.path));
@@ -59,8 +59,8 @@ chaseBound("G-47", "two exports of each kind give equal artifact hashes");
 chaseBound("G-48", "the card holds each declared section for every preset");
 chaseBound("G-49", "the export row lists each finding; a block fail refuses with no gate");
 
-rule("G-51", "an unknown export kind rejects with unknown export kind: bogus", async ({ page, bench, host }) => {
-  await openGold(page, bench, host);
+rule("G-51", "an unknown export kind rejects with unknown export kind: bogus", async ({ page, bench }) => {
+  await openGold(page, bench);
   const r = await page.evaluate(async () => {
     try {
       await (globalThis as unknown as { __hbfHook: { exportBytes(k: string): Promise<string> } }).__hbfHook.exportBytes("bogus");

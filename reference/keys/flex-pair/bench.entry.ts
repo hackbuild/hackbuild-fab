@@ -5,10 +5,12 @@
 // it imports single-file components, which only the ui package's vue shim
 // declares (packages/ui/src/vue-shim.d.ts).
 
-import { mountBench } from "../../../packages/ui/src/bench/entry";
+import { mountBench, pageBench, pageOf } from "../../../packages/ui/src/bench/entry";
 import { bench } from "./bench";
 import { chase } from "./chase";
 import { contact } from "./build";
 
 // The drive pad and BENCH.drive call the ContactFn bench.ts names (G-20).
-mountBench({ chase, bench, contact });
+// The library build, its checks and the 3mf, stl and card writers come
+// from the page build classic script (bake.json `build`, D-264).
+mountBench({ chase, bench, contact, ...pageBench(pageOf("HbfPageBuild")) });

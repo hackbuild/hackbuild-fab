@@ -1,10 +1,8 @@
-// The flex-pair build host for the M09-T05 and M09-T06 smokes. It runs the
-// library build and check run behind `hbf part.build` (core
-// buildPart and runAllChecks) in one node process, so a page under test gets
-// real Part IR, real meshes and real CheckResults for each commit instead of
-// a stand-in. The bench core takes its build injected (M09-T03), and these
-// specs inject this host through page.exposeBinding until the flex-pair bake
-// carries the in-page build (M09-T07).
+// The flex-pair build host: the library build and check run behind `hbf
+// part.build` (core buildPart and runAllChecks) in one node process. The
+// flex-pair bake builds in its own page (D-264); the gold specs ask this
+// host for the check rows of the page's state, an oracle that never reads
+// the page (tools/smoke/host-build.ts).
 //
 // Protocol: one JSON request per stdin line, one JSON reply per stdout line.
 // request  { "id": n, "blank": true }

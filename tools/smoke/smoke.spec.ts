@@ -20,7 +20,6 @@ import path from "node:path";
 import { pathToFileURL } from "node:url";
 import { expect, test, type Page } from "@playwright/test";
 import { listBenches } from "../hook/benches.ts";
-import { startHost, type Host } from "./host-build.ts";
 import {
   bakes, closeWelcome, HEIGHT, hookView, open, overflow, overflowMessage, ROOT, settled, shot, stepButtons, voice, WIDTHS, writeReport,
 } from "./measure.ts";
@@ -62,17 +61,11 @@ const corpus = await listBenches();
 
 for (const bake of bakes()) {
   test.describe(`${bake.kind} ${bake.id}`, () => {
-    let host: Host | null = null;
-    test.beforeAll(async () => {
-      if (bake.host !== null) host = await startHost();
-    });
-    test.afterAll(() => host?.close());
-
     test(`laws on ${bake.id}: overflow, pink, voice, network, workers, console`, async ({ page }) => {
-      test.skip(bake.kind === "bench" && bake.host === null, `not run: ${bake.id} has no in-page build and no build host`);
+      test.skip(bake.kind === "bench" && bake.build === null, `not run: ${bake.id} carries no in-page build`);
       const w = await watch(page);
       await page.setViewportSize({ width: 1280, height: HEIGHT });
-      await open(page, bake, host);
+      await open(page, bake);
       const rows: ViewRow[] = [];
       const fails: string[] = [];
       if (bake.kind === "kit") {
@@ -103,10 +96,10 @@ for (const bake of bakes()) {
 
     test(`edits, exports and round trip on ${bake.id}`, async ({ page }) => {
       test.skip(bake.kind === "kit", "a kit page has no build and no hook");
-      test.skip(bake.host === null, `not run: ${bake.id} has no in-page build and no build host`);
+      test.skip(bake.build === null, `not run: ${bake.id} carries no in-page build`);
       const w = await watch(page);
       await page.setViewportSize({ width: 1280, height: HEIGHT });
-      await open(page, bake, host);
+      await open(page, bake);
       await closeWelcome(page);
       await stepButtons(page).first().click();
 

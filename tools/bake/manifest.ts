@@ -3,8 +3,8 @@
 // Paths in `from` resolve against the manifest's folder. A path starting
 // `npm:` names a file inside an installed package, found by walking up from
 // the manifest folder to the first node_modules that holds the package.
-// Script-producing fields (`wasm`, `classic`, `blocks`, `entry`) are emitted
-// in the order their keys appear in the manifest.
+// Script-producing fields (`wasm`, `classic`, `blocks`, `build`, `entry`) are
+// emitted in the order their keys appear in the manifest.
 
 /** One inline script block, written as `<script>/* label *\/` plus source plus `</script>`. */
 export interface BakeBlock {
@@ -57,6 +57,19 @@ export interface BakeCss {
   from: string;
 }
 
+/**
+ * A page build (D-264): a TypeScript entry bundled by vite into one classic
+ * script whose exports land on `globalThis.<global>`. The bake gives it the
+ * virtual module `hbf:facts` (tools/bake/design-facts.mjs) and stands the
+ * page's manifold-3d classic script and jszip block in for those packages,
+ * so `build` follows `wasm`, `classic` and `blocks`.
+ */
+export interface BakeBuild {
+  from: string;
+  global: string;
+  label: string;
+}
+
 export interface BakeManifest {
   /** Output name: dist/<out>/<id>.html. */
   id: string;
@@ -76,6 +89,7 @@ export interface BakeManifest {
   fonts?: BakeFont[];
   css?: BakeCss[];
   blocks?: BakeBlock[];
+  build?: BakeBuild;
   /** Size ceiling in bytes; default 16777216 (16 MB, D-129). */
   budget?: number;
 }

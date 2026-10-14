@@ -8,7 +8,6 @@
 // Run: npx playwright test -c tools/smoke/playwright.config.ts --project touch-390
 
 import { expect, test, type CDPSession, type Locator, type Page } from "@playwright/test";
-import { startHost, type Host } from "./host-build.ts";
 import { bakes, closeWelcome, hookView, open, settled, shot, stepButtons } from "./measure.ts";
 import { badWorkers, watch } from "./network.ts";
 
@@ -47,12 +46,11 @@ const cam = (page: Page): Promise<Cam> =>
 for (const bake of bakes().filter((b) => b.kind === "bench")) {
   test(`touch-only pass on ${bake.id}`, async ({ page, browserName }) => {
     test.skip(browserName !== "chromium", "CDP touch events need chromium");
-    test.skip(bake.host === null, `not run: ${bake.id} has no in-page build and no build host`);
-    const host: Host = await startHost();
+    test.skip(bake.build === null, `not run: ${bake.id} carries no in-page build`);
     const done: string[] = [];
     try {
       const w = await watch(page);
-      await open(page, bake, host);
+      await open(page, bake);
       const cdp = await page.context().newCDPSession(page);
       await closeWelcome(page, true);
 
@@ -137,7 +135,6 @@ for (const bake of bakes().filter((b) => b.kind === "bench")) {
       expect(badWorkers(await w.workers())).toEqual([]);
     } finally {
       test.info().annotations.push({ type: "completed", description: done.join("; ") });
-      host.close();
     }
   });
 }

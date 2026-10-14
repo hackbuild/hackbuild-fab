@@ -94,5 +94,10 @@
       "vendored": true
     }
   ],
+  "build": {
+    "from": "./page-build.ts",
+    "global": "HbfPageBuild",
+    "label": "flex-pair page build: chase, build.ts and the build and check pipeline"
+  },
   "entry": "./bench.entry.ts"
 }

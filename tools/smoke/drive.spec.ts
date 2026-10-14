@@ -1,8 +1,8 @@
 // M09-T10 acceptance in a real browser (D-076, D-078, D-079).
 //
 // The flex-pair bake (dist/bench/flex-pair.html, `node tools/bake/bake.mjs
-// reference/keys/flex-pair/bake.json`) with the node build host as its
-// build (tools/smoke/host-build.ts): BENCH.drive(<first key target>, true)
+// reference/keys/flex-pair/bake.json`), opened as shipped with its in-page
+// build (D-264): BENCH.drive(<first key target>, true)
 // resolves with the logic of the solve golden and the path of the report
 // golden (reference/keys/flex-pair/expected); a touch hold on that pad key
 // shows the same line; release returns the pad to the idle text.
@@ -23,7 +23,6 @@ import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { expect, test, type Page } from "@playwright/test";
 import { SHOTS } from "./measure.ts";
-import { startHost, useHostBuild, type Host } from "./host-build.ts";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
 const BAKE = path.resolve(ROOT, process.env["DRIVE_BENCH"] ?? "dist/bench/flex-pair.html");
@@ -52,11 +51,6 @@ function shotsDir(): string {
 }
 
 test.describe("flex-pair bake", () => {
-  let host: Host | null = null;
-  test.beforeAll(async () => {
-    if (existsSync(BAKE)) host = await startHost();
-  });
-  test.afterAll(() => host?.close());
   test.beforeEach(() => {
     test.skip(!existsSync(BAKE), `not run: ${path.relative(ROOT, BAKE)} is absent; bake it first`);
   });
@@ -67,7 +61,6 @@ test.describe("flex-pair bake", () => {
       if (m.type() === "error") errors.push(m.text());
     });
     page.on("pageerror", (e) => errors.push(String(e)));
-    await useHostBuild(page, host as Host);
     await page.goto(pathToFileURL(BAKE).href);
     await settled(page);
     const dismiss = page.locator('[data-hb="welcome-dismiss"]');

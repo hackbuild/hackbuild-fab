@@ -5,10 +5,11 @@
 // Run: npx playwright test -c tools/smoke/playwright.config.ts --grep @gold
 
 import { expect } from "@playwright/test";
+import { setFault } from "../page-build.ts";
 import { chaseBound, hook, hookSettled, notRun, numericFields, openGold, readField, rule, writeField } from "./gold.ts";
 
-rule("G-01", "boot builds behind the welcome; 3mf exports before any edit", async ({ page, bench, host }) => {
-  await openGold(page, bench, host, { welcome: true });
+rule("G-01", "boot builds behind the welcome; 3mf exports before any edit", async ({ page, bench }) => {
+  await openGold(page, bench, { welcome: true });
   // spec/hook.ts: built is the rev of the last completed build, so a boot
   // build at rev 0 reads built 0; the rule's "built at least 1" is read as
   // a completed build with a model behind the welcome.
@@ -21,8 +22,8 @@ rule("G-01", "boot builds behind the welcome; 3mf exports before any edit", asyn
 
 chaseBound("G-02", "boot design is blank or the declared default part");
 
-rule("G-03", "range input marks the mesh stale until the build lands", async ({ page, bench, host }) => {
-  await openGold(page, bench, host);
+rule("G-03", "range input marks the mesh stale until the build lands", async ({ page, bench }) => {
+  await openGold(page, bench);
   const range = page.locator(bench.dom.params).and(page.locator("input[type=range]:visible")).first();
   if ((await range.count()) === 0) notRun("no range on the first step");
   const chip = page.locator(bench.dom.meshChip).filter({ hasText: /^mesh (current|stale)$/ });
@@ -37,8 +38,8 @@ rule("G-03", "range input marks the mesh stale until the build lands", async ({ 
   await expect(chip, "chip after the build lands").toHaveText("mesh current");
 });
 
-rule("G-04", "five commits on one field inside 320 ms raise built by at most 2", async ({ page, bench, host }) => {
-  await openGold(page, bench, host);
+rule("G-04", "five commits on one field inside 320 ms raise built by at most 2", async ({ page, bench }) => {
+  await openGold(page, bench);
   const f = (await numericFields(page, bench))[0];
   if (f === undefined) notRun("no numeric field with a declared range");
   const v0 = Number(await readField(page, f.path));
@@ -77,10 +78,10 @@ rule("G-04", "five commits on one field inside 320 ms raise built by at most 2",
   expect(builds, "builds for a burst of 5 commits (measured)").toBeLessThanOrEqual(2);
 });
 
-rule("G-05", "colour, name and slot edits never build", async ({ page, bench, host }) => {
+rule("G-05", "colour, name and slot edits never build", async ({ page, bench }) => {
   const row = bench.dom.slotRow;
   if (row === undefined) notRun(`${bench.id}: the hook offers no light commit path to a colour, name or slot edit`);
-  await openGold(page, bench, host);
+  await openGold(page, bench);
   const before = await hook(page, (h) => ({ built: h.built, rev: h.rev, buildHash: h.buildHash }));
   const bad: string[] = [];
   // Each edit as a person makes it: colour fires input then change, the name and slot select fire change.
@@ -119,8 +120,8 @@ rule("G-05", "colour, name and slot edits never build", async ({ page, bench, ho
   expect(bad, bad.join("\n")).toEqual([]);
 });
 
-rule("G-06", "every rail input equals state after a hook write and commit()", async ({ page, bench, host }) => {
-  await openGold(page, bench, host);
+rule("G-06", "every rail input equals state after a hook write and commit()", async ({ page, bench }) => {
+  await openGold(page, bench);
   const f = (await numericFields(page, bench))[0];
   if (f === undefined) notRun("no numeric field with a declared range");
   const v0 = Number(await readField(page, f.path));
@@ -155,8 +156,8 @@ rule("G-06", "every rail input equals state after a hook write and commit()", as
 
 const HANG_MS = 10_000;
 
-rule("G-10", "an out-of-range write is clamped or refused with a log line within 100 ms", async ({ page, bench, host, info }) => {
-  await openGold(page, bench, host);
+rule("G-10", "an out-of-range write is clamped or refused with a log line within 100 ms", async ({ page, bench, info }) => {
+  await openGold(page, bench);
   // PIP hung over 20 minutes on a 40 x 30 body (gold-standard.md 7.2); HANG_MS per write records it as a fail, not a timeout.
   const fields = await numericFields(page, bench);
   if (fields.length === 0) notRun("no numeric field with a declared range");
@@ -204,10 +205,10 @@ rule("G-10", "an out-of-range write is clamped or refused with a log line within
   expect(silent, silent.join("\n")).toEqual([]);
 }, { timeout: 180_000 });
 
-rule("G-11", "a thrown build clears busy, keeps the mesh, shows the error, and a valid commit recovers", async ({ page, bench, host }) => {
+rule("G-11", "a thrown build clears busy, keeps the mesh, shows the error, and a valid commit recovers", async ({ page, bench }) => {
   if (bench.origin === "legacy") {
     // PIP's own crash fixture: stack.layer = 0 (gold-standard.md 7.2).
-    await openGold(page, bench, host);
+    await openGold(page, bench);
     const before = await hook(page, (h) => h.built);
     await page.evaluate(() => {
       const h = (globalThis as unknown as { __hbfHook: { designJson(): string; loadDesign(s: string): void } }).__hbfHook;
@@ -223,26 +224,14 @@ rule("G-11", "a thrown build clears busy, keeps the mesh, shows the error, and a
     return;
   }
   // No designs/<id>/test/faults/throw.json exists for a reference bake yet;
-  // the build host throws once instead, which the bench sees as the same
-  // thrown build (decision recorded in the M09-T14 result).
-  let failNext = false;
-  await page.exposeFunction("hbfFailNext", () => {
-    failNext = true;
-  });
-  await page.exposeFunction("hbfHostBuild", async (state: unknown) => {
-    if (failNext) {
-      failNext = false;
-      throw new Error("forced throw");
-    }
-    return host?.build(state);
-  });
-  const b2 = { ...bench, host: false };
-  await openGold(page, b2, null);
+  // the fault switch makes the page build throw once instead, which the
+  // bench sees as the same thrown build (tools/smoke/page-build.ts).
+  await openGold(page, bench);
   const f = (await numericFields(page, bench))[0];
   if (f === undefined) notRun("no numeric field");
   const v0 = Number(await readField(page, f.path));
   const tris0 = await page.locator('[data-hb="tris"]').innerText();
-  await page.evaluate(() => (globalThis as unknown as { hbfFailNext(): Promise<void> }).hbfFailNext());
+  await setFault(page, { throwNext: true });
   await writeField(page, f.path, v0 + f.step <= f.max ? v0 + f.step : v0 - f.step);
   await page.waitForFunction(() => (globalThis as unknown as { __hbfHook: { error: string | null; busy: boolean } }).__hbfHook.error !== null, undefined, { timeout: 1000 });
   const s = await hook(page, (h) => ({ busy: h.busy, error: h.error }));

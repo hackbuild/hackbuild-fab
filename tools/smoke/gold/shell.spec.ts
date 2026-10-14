@@ -4,13 +4,12 @@
 // Run: npx playwright test -c tools/smoke/playwright.config.ts --grep @gold
 
 import { expect } from "@playwright/test";
-import type { Host } from "../host-build.ts";
 import { HEIGHT, WIDTHS } from "../measure.ts";
 import { pinkMessage, pinkView } from "../pink.ts";
 import { hook, hookSettled, notRun, openGold, rule } from "./gold.ts";
 
-rule("G-40", "four strips; the last step is print or make; done means no failing check; visited is separate", async ({ page, bench, host }) => {
-  await openGold(page, bench, host);
+rule("G-40", "four strips; the last step is print or make; done means no failing check; visited is separate", async ({ page, bench, oracle }) => {
+  await openGold(page, bench);
   const d = bench.dom;
   for (const [name, sel] of [["header", d.header], ["steps", d.stepsNav], ["guide", d.guide], ["status", d.status]] as const) {
     await expect(page.locator(sel).first(), `${name} strip`).toBeVisible();
@@ -21,9 +20,9 @@ rule("G-40", "four strips; the last step is print or make; done means no failing
   const last = (await steps.nth(n - 1).innerText()).toLowerCase().replace(/^\s*\d+\s*/, "");
   expect(last, "the last step").toMatch(/\b(print|make)\b/);
   if (bench.origin === "legacy") notRun(`${bench.id}: done badges are read against CHECKS.md 2.7 step scope, which the legacy page lacks`);
-  // Each step's checks: the host report, with no fail anywhere every step is complete from boot (CHECKS.md 2.7).
+  // Each step's checks: the node oracle's report, with no fail anywhere every step is complete from boot (CHECKS.md 2.7).
   const state = await hook(page, (h) => h.state);
-  const results = ((await (host as Host).build(state)) as { report: { results: { verdict: string }[] } }).report.results;
+  const results = ((await (await oracle()).build(state)) as { report: { results: { verdict: string }[] } }).report.results;
   const anyFail = results.some((r) => r.verdict === "fail");
   const done = await steps.evaluateAll((els) => els.map((e) => e.classList.contains("is-done") || /\bdone\b/.test(e.getAttribute("aria-label") ?? e.textContent ?? "")));
   const wrong = anyFail ? [] : done.map((x, i) => (x ? null : `step ${i + 1} shows no done badge with no failing check`)).filter((x): x is string => x !== null);
@@ -34,8 +33,8 @@ rule("G-40", "four strips; the last step is print or make; done means no failing
   expect(wrong, wrong.join("\n")).toEqual([]);
 });
 
-rule("G-42", "at most one note per panel and no free paragraph in the rail", async ({ page, bench, host }) => {
-  await openGold(page, bench, host);
+rule("G-42", "at most one note per panel and no free paragraph in the rail", async ({ page, bench }) => {
+  await openGold(page, bench);
   const steps = page.locator(bench.dom.steps);
   const off: string[] = [];
   for (let i = 0; i < (await steps.count()); i += 1) {
@@ -62,8 +61,8 @@ rule("G-42", "at most one note per panel and no free paragraph in the rail", asy
   expect(off, off.join("\n")).toEqual([]);
 });
 
-rule("G-43", "one focal pink per view at 390, 768 and 1280, welcome included", async ({ page, bench, host, info }) => {
-  await openGold(page, bench, host, { welcome: bench.origin === "fab" });
+rule("G-43", "one focal pink per view at 390, 768 and 1280, welcome included", async ({ page, bench, info }) => {
+  await openGold(page, bench, { welcome: bench.origin === "fab" });
   const fails: string[] = [];
   const counts: string[] = [];
   const at = async (view: string): Promise<void> => {
@@ -94,8 +93,8 @@ rule("G-44", "a step with a declared cam or view leaves the viewer on it", async
   notRun(`${bench.id}: no step of this page declares a cam or view the hook can read`);
 });
 
-rule("G-45", "on each step the status strip's scope equals the view on screen", async ({ page, bench, host }) => {
-  await openGold(page, bench, host);
+rule("G-45", "on each step the status strip's scope equals the view on screen", async ({ page, bench }) => {
+  await openGold(page, bench);
   if (bench.origin === "legacy") notRun(`${bench.id}: the legacy status strip carries no scope mark`);
   const steps = page.locator(bench.dom.steps);
   const off: string[] = [];

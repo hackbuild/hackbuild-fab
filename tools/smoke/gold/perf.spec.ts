@@ -4,23 +4,24 @@
 // budgets test writes out/smoke/runtime.json, the `runtime` input of
 // tools/gold/report.mjs (G-55) and the M09 Exit runtime row: first load,
 // first build, commit to settled p90 over the liveness edits, export 3MF,
-// the busy indicator and the slow-build line. A fab bake's build runs in
-// the node build host here (tools/smoke/host-build.ts), so the build
-// times are the host's, measured through the page. Each row carries the
+// the busy indicator and the slow-build line. A fab bake builds in its own
+// page (D-264), so the times are the page build's, measured through the
+// hook. Each row carries the
 // grade of tools/gold/report.mjs runtimeGrade: over target between the
 // D-213 target and fail bound, fail past the bound; only fail fails the
 // test. G-56 runs the same slow-build probe: until M10-T17 adds a heavy.json
-// per design, the host holds one build 2.7 s, past build.slowMs 2500 (P-29).
+// per design, the fault switch holds one page build 2.7 s, past
+// build.slowMs 2500 (P-29).
 // Run: npx playwright test -c tools/smoke/playwright.config.ts --grep @gold
 
 import { mkdirSync, readFileSync, writeFileSync, existsSync } from "node:fs";
 import path from "node:path";
 import { expect, test, type Page } from "@playwright/test";
 import { runtimeGrade } from "../../gold/report.mjs";
-import type { Host } from "../host-build.ts";
+import { setFault } from "../page-build.ts";
 import { ROOT } from "../measure.ts";
 import { badWorkers } from "../network.ts";
-import { hook, hookSettled, notRun, numericFields, openGold, readField, rule, writeField, type GoldBench, type Opened } from "./gold.ts";
+import { hook, hookSettled, notRun, numericFields, openGold, readField, rule, writeField, type GoldBench } from "./gold.ts";
 
 interface Row { measure: string; value: number | null; unit: string; target: string; failBound: string; failed: boolean; grade?: string; rules: string[]; qualifier: string; note?: string }
 
@@ -38,8 +39,8 @@ const p90 = (xs: number[]): number => {
   return s[Math.min(s.length - 1, Math.ceil(0.9 * s.length) - 1)] as number;
 };
 
-rule("G-57", "zero console errors and zero external requests across the drive", async ({ page, bench, host }) => {
-  const { watch } = await openGold(page, bench, host);
+rule("G-57", "zero console errors and zero external requests across the drive", async ({ page, bench }) => {
+  const { watch } = await openGold(page, bench);
   const steps = page.locator(bench.dom.steps);
   for (let i = 0; i < (await steps.count()); i += 1) {
     await steps.nth(i).click({ force: true });
@@ -54,27 +55,11 @@ rule("G-57", "zero console errors and zero external requests across the drive", 
   expect(badWorkers(await watch.workers()), "blob or module workers").toEqual([]);
 });
 
-/** Opens a fab bake on the node build host with a switch that holds the next build 2.7 s. */
-async function openHeld(page: Page, bench: GoldBench, host: Host | null, opts: { welcome?: boolean } = {}): Promise<Opened> {
-  let slowNext = false;
-  await page.exposeFunction("hbfSlowNext", () => {
-    slowNext = true;
-  });
-  await page.exposeFunction("hbfHostBuild", async (state: unknown) => {
-    if (slowNext) {
-      slowNext = false;
-      await new Promise((r) => setTimeout(r, 2700));
-    }
-    return host?.build(state);
-  });
-  return openGold(page, { ...bench, host: false }, null, opts);
-}
-
 /** A build over 1 s shows building and takes a step click; over 2.5 s logs the param to lower. */
 async function slowBuildRows(page: Page, bench: GoldBench): Promise<Row[]> {
   const f = (await numericFields(page, bench))[0];
   if (f === undefined) return [];
-  await page.evaluate(() => (globalThis as unknown as { hbfSlowNext(): Promise<void> }).hbfSlowNext());
+  await setFault(page, { holdNextMs: 2700 });
   const n0 = (await hook(page, (h) => h.log.length));
   const v0 = Number(await readField(page, f.path));
   await writeField(page, f.path, v0 + f.step <= f.max ? v0 + f.step : v0 - f.step);
@@ -84,7 +69,7 @@ async function slowBuildRows(page: Page, bench: GoldBench): Promise<Row[]> {
   await steps.nth(1).click({ timeout: 1000 }).catch(() => undefined);
   const moved = await steps.nth(1).getAttribute("aria-selected");
   const rows: Row[] = [];
-  rows.push({ measure: "busy indicator", value: shown, unit: "ms", target: "1000", failBound: "no indicator or blocked input", failed: shown === null || moved !== "true", rules: ["G-56"], qualifier: "measured; build held 2.7 s in the host", note: `step click during the build ${moved === "true" ? "changed the step" : "did not change the step"}` });
+  rows.push({ measure: "busy indicator", value: shown, unit: "ms", target: "1000", failBound: "no indicator or blocked input", failed: shown === null || moved !== "true", rules: ["G-56"], qualifier: "measured; page build held 2.7 s by the fault switch", note: `step click during the build ${moved === "true" ? "changed the step" : "did not change the step"}` });
   await hookSettled(page);
   const lines = (await hook(page, (h) => h.log)).slice(n0);
   const text = await page.locator("body").innerText();
@@ -95,21 +80,21 @@ async function slowBuildRows(page: Page, bench: GoldBench): Promise<Row[]> {
 
 const failures = (rows: Row[]): string[] => rows.filter((r) => r.failed).map((r) => `${r.measure}: ${r.value ?? "none"} ${r.unit} ${r.note ?? ""}`);
 
-rule("G-56", "a build over 1 s shows building, takes a step click, logs the param to lower", async ({ page, bench, host }) => {
-  if (bench.origin === "legacy") notRun(`${bench.id}: the slow-build probe holds a build in the node build host, which a legacy bake does not call; heavy.json arrives with M10-T17`);
-  await openHeld(page, bench, host);
+rule("G-56", "a build over 1 s shows building, takes a step click, logs the param to lower", async ({ page, bench }) => {
+  if (bench.origin === "legacy") notRun(`${bench.id}: the slow-build probe holds a fab page build, which a legacy bake does not carry; heavy.json arrives with M10-T17`);
+  await openGold(page, bench);
   const rows = await slowBuildRows(page, bench);
   if (rows.length === 0) notRun(`${bench.id}: no numeric rail field to commit`);
   const failed = failures(rows);
   expect(failed, failed.join("\n")).toEqual([]);
 });
 
-rule("runtime budgets", "TESTING.md 8.3 rows into out/smoke/runtime.json", async ({ page, bench, host }) => {
+rule("runtime budgets", "TESTING.md 8.3 rows into out/smoke/runtime.json", async ({ page, bench }) => {
   if (bench.origin === "legacy") notRun(`${bench.id}: runtime rows are recorded for fab bakes; the legacy timings are in out/smoke/legacy-report.json`);
   const rows: Row[] = [];
-  const q = "measured; build in the node build host";
+  const q = "measured; build in the page";
   const t0 = Date.now();
-  const opened = await openHeld(page, bench, host, { welcome: true });
+  const opened = await openGold(page, bench, { welcome: true });
   const firstBuild = Date.now() - t0 - opened.readyMs;
   rows.push({ measure: "first load", value: opened.readyMs, unit: "ms", target: "4000", failBound: "over 15000", failed: opened.readyMs > 15000, rules: ["G-55"], qualifier: q });
   rows.push({ measure: "first build", value: firstBuild, unit: "ms", target: "600", failBound: "over 2000", failed: firstBuild > 2000, rules: ["G-55"], qualifier: q, note: "ready to the first settled build" });

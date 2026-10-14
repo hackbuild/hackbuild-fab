@@ -24,7 +24,7 @@ export default defineConfig({
   projects: [
     {
       name: "desktop",
-      testMatch: gold ? ["gold/*.spec.ts"] : ["smoke.spec.ts", "legacy-report.spec.ts", "targets.spec.ts", "welcome.spec.ts", "rail.spec.ts", "drive.spec.ts"],
+      testMatch: gold ? ["gold/*.spec.ts"] : ["smoke.spec.ts", "legacy-report.spec.ts", "targets.spec.ts", "welcome.spec.ts", "rail.spec.ts", "drive.spec.ts", "page-build.spec.ts"],
       grepInvert: /@touch/,
       use: { viewport: { width: 1280, height: 844 } },
     },

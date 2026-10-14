@@ -70,8 +70,8 @@ export const useShell = defineStore("hbf-shell", () => {
   const current = computed(() => !stale.value && built.value === rev.value && result.value !== null);
   const report = computed<BenchReport>(() => result.value?.report ?? {});
   const metrics = computed<ReadonlyMap<string, Metric>>(() => new Map((report.value.metrics ?? []).map((m) => [m.id, m])));
-  const findings = computed(() => (report.value.results ?? []).filter((r) => r.verdict === "fail" || r.verdict === "warn").length
-    + (result.value?.warnings.length ?? 0));
+  // The chip counts the findings the checks panel lists (G-36); build warnings (Part.warnings) are not rail findings.
+  const findings = computed(() => (report.value.results ?? []).filter((r) => r.verdict === "fail" || r.verdict === "warn").length);
 
   return { step, visited, cam, modes, welcomeOpen, held, values, rev, built, busy, building, stale, error, log, result, mirror, goto, current, report, metrics, findings };
 });

@@ -8,7 +8,7 @@ import { spawnSync } from 'node:child_process';
 import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { REPO, bake, BakeError, sha256, styleTag } from '../bake.mjs';
+import { REPO, bake, BakeError, pageModules, sha256, styleTag } from '../bake.mjs';
 import { checkBaked, checkInstalled } from '../check-ui-css.mjs';
 import { licenceManifest } from '../licence-manifest.mjs';
 
@@ -271,4 +271,21 @@ test('licence manifest: a package with no row and each LGPL row are problems', (
   assert.equal(bad.problems.length, 2);
   assert.match(bad.problems.join('\n'), /b@2\.0\.0 is inlined and has no row/);
   assert.match(bad.problems.join('\n'), /occt-import-js@0\.0\.23 audited LGPL-2\.1-only is inlined/);
+});
+
+test('a page build reads the manifold and jszip globals the manifest lists before it (D-264)', () => {
+  const manifold = { from: 'npm:manifold-3d/manifold.js', label: 'm', exportDefault: 'Module', global: 'ManifoldModule', replace: [] };
+  const wasm = { from: 'npm:manifold-3d/manifold.wasm', global: 'MANIFOLD_WASM_B64', label: 'w' };
+  const blocks = [{ from: 'npm:jszip/dist/jszip.min.js', label: 'j', vendored: true }];
+  const build = { from: './page-build.ts', global: 'HbfPageBuild', label: 'b' };
+  const mods = pageModules({ id: 'fx', shell: 'ui', wasm, classic: [manifold], blocks, build }, { name: 'fx' });
+  assert.match(mods['manifold-3d'], /globalThis\["ManifoldModule"\]/);
+  assert.match(mods['manifold-3d'], /globalThis\["MANIFOLD_WASM_B64"\]/);
+  assert.match(mods.jszip, /globalThis\.JSZip/);
+  assert.equal(mods['hbf:facts'], 'export const facts = {"name":"fx"};\n');
+  assert.match(mods['eecircuit-engine'], /eecircuit-engine is not in this bake/);
+  assert.match(mods['@dimforge/rapier3d-deterministic-compat'], /rapier3d-deterministic-compat is not in this bake/);
+  assert.throws(() => pageModules({ id: 'fx', shell: 'ui', build, wasm, classic: [manifold], blocks }, null), /list build after wasm, classic and blocks/);
+  assert.throws(() => pageModules({ id: 'fx', shell: 'ui', wasm, classic: [manifold], build }, null), /needs the jszip block/);
+  assert.throws(() => pageModules({ id: 'fx', shell: 'ui', blocks, build }, null), /needs the manifold-3d classic script/);
 });

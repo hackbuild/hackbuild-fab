@@ -1,8 +1,7 @@
 // M09-T08 acceptance in a real browser, on the flex-pair bake
 // (dist/bench/flex-pair.html, `node tools/bake/bake.mjs
-// reference/keys/flex-pair/bake.json`). The page takes the node build host
-// as its build (tools/smoke/host-build.ts), so every commit runs the library
-// build and checks: a range drag touches on input and commits once on
+// reference/keys/flex-pair/bake.json`), opened as shipped: every commit
+// runs the library build and checks in the page (D-264): a range drag touches on input and commits once on
 // release (BENCH.rev rises by 1); adding a second key rebuilds with two
 // caps; the reset mark on a changed row restores the default in one commit.
 //
@@ -15,7 +14,6 @@ import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { expect, test, type Page } from "@playwright/test";
 import { SHOTS } from "./measure.ts";
-import { startHost, useHostBuild, type Host } from "./host-build.ts";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
 const BAKE = path.resolve(ROOT, process.env["RAIL_BENCH"] ?? "dist/bench/flex-pair.html");
@@ -25,11 +23,6 @@ test.describe.configure({ mode: "serial", timeout: 120_000 });
 
 interface Hook { ready: boolean; rev: number; built: number; busy: boolean; state: Record<string, unknown>; model: { part: { bodies: { id: string }[] } } | null }
 
-let host: Host | null = null;
-test.beforeAll(async () => {
-  if (existsSync(BAKE)) host = await startHost();
-});
-test.afterAll(() => host?.close());
 test.beforeEach(() => {
   test.skip(!existsSync(BAKE), `not run: ${path.relative(ROOT, BAKE)} is absent; bake it first`);
 });
@@ -54,7 +47,6 @@ async function open(page: Page): Promise<string[]> {
     if (m.type() === "error") errors.push(m.text());
   });
   page.on("pageerror", (e) => errors.push(String(e)));
-  await useHostBuild(page, host as Host);
   await page.goto(pathToFileURL(BAKE).href);
   await settled(page);
   const dismiss = page.locator('[data-hb="welcome-dismiss"]');
@@ -91,7 +83,7 @@ test("adding a second key rebuilds with two caps", async ({ page }) => {
   expect(caps(before)).toBe(1);
   await page.locator(".hb-steps .hb-tab").nth(1).click();
   // A new key lands at the item defaults, x 0; key 1 moves off centre first,
-  // as the chase's two-key preset places them (x -14 and 14), or the host
+  // as the chase's two-key preset places them (x -14 and 14), or the
   // build refuses cap2 as covered by cap1.
   const x1 = page.locator('[data-path="keys.0.x"] input[type="number"]');
   await x1.fill("-14");

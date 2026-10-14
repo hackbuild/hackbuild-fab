@@ -3,7 +3,8 @@
 // is tools/gold/static.mjs). G-34, G-35 and G-38 are chase-bound rows
 // M10-T17 adds; G-32 is a contract row and G-39 a check row.
 // The check report a fab bench shows is read independently from the node
-// build host for the same state, never from the page.
+// build host (tools/smoke/host-build.ts) for the same state, never from the
+// page, which builds itself (D-264).
 // Run: npx playwright test -c tools/smoke/playwright.config.ts --grep @gold
 
 import { mkdirSync, writeFileSync } from "node:fs";
@@ -15,8 +16,8 @@ import { chaseBound, hook, hookSettled, legacyRead, notRun, openGold, rule } fro
 
 interface Result { id: string; verdict: string }
 
-async function report(page: Page, host: Host | null): Promise<Result[]> {
-  if (host === null) throw new Error("no build host");
+async function report(page: Page, oracle: () => Promise<Host>): Promise<Result[]> {
+  const host = await oracle();
   const state = await hook(page, (h) => h.state);
   const out = (await host.build(state)) as { report: { results: Result[] } };
   return out.report.results;
@@ -30,21 +31,21 @@ async function lastStep(page: Page, steps: string): Promise<void> {
 // The `check` input of tools/gold/report.mjs (G-28, G-39, G-50): the boot
 // design's check rows from the build host, one file per bench. A legacy
 // page runs no CHK ids, so none is written and those rows grade not run.
-rule("check report", "boot check rows into out/checks/<bench>.json", async ({ page, bench, host }) => {
+rule("check report", "boot check rows into out/checks/<bench>.json", async ({ page, bench, oracle }) => {
   if (bench.origin === "legacy") notRun(`${bench.id}: the legacy page runs no CHK ids`);
-  await openGold(page, bench, host);
-  const results = await report(page, host);
+  await openGold(page, bench);
+  const results = await report(page, oracle);
   expect(results.length, "check rows from the build host").toBeGreaterThan(0);
   const file = path.join(ROOT, "out/checks", `${bench.id}.json`);
   mkdirSync(path.dirname(file), { recursive: true });
   writeFileSync(file, `${JSON.stringify({ bench: bench.id, source: "node build host, boot design", results: results.map((r) => ({ id: r.id, verdict: r.verdict })) }, null, 1)}\n`);
 });
 
-rule("G-33", "the checks panel counts the checks that ran, zero reads zero", async ({ page, bench, host }) => {
-  await openGold(page, bench, host);
+rule("G-33", "the checks panel counts the checks that ran, zero reads zero", async ({ page, bench, oracle }) => {
+  await openGold(page, bench);
   if (bench.origin === "legacy") notRun(`${bench.id}: the legacy page has no checks panel`);
   await lastStep(page, bench.dom.steps);
-  const results = await report(page, host);
+  const results = await report(page, oracle);
   const ran = results.filter((r) => r.verdict !== "skip").length;
   const text = await page.locator('[data-hb="checks"]').innerText();
   if (ran === 0) {
@@ -56,12 +57,12 @@ rule("G-33", "the checks panel counts the checks that ran, zero reads zero", asy
   expect(Number(m?.[1])).toBe(ran);
 });
 
-rule("G-36", "on every step the status chip count equals the fail and warn findings", async ({ page, bench, host }) => {
-  await openGold(page, bench, host);
+rule("G-36", "on every step the status chip count equals the fail and warn findings", async ({ page, bench, oracle }) => {
+  await openGold(page, bench);
   // A legacy page keeps its own warning list and no step scope; the chip is held to that list on every step.
   const want = bench.origin === "legacy"
     ? await legacyRead<number>(page, bench, "warnings")
-    : (await report(page, host)).filter((r) => r.verdict === "fail" || r.verdict === "warn").length;
+    : (await report(page, oracle)).filter((r) => r.verdict === "fail" || r.verdict === "warn").length;
   const steps = page.locator(bench.dom.steps);
   const off: string[] = [];
   for (let i = 0; i < (await steps.count()); i += 1) {
@@ -74,8 +75,8 @@ rule("G-36", "on every step the status chip count equals the fail and warn findi
   expect(off, off.join("\n")).toEqual([]);
 });
 
-rule("G-37", "garbage and a schema failure leave the design, show an error chip, raise no dialog", async ({ page, bench, host }) => {
-  await openGold(page, bench, host);
+rule("G-37", "garbage and a schema failure leave the design, show an error chip, raise no dialog", async ({ page, bench }) => {
+  await openGold(page, bench);
   const dialogs: string[] = [];
   page.on("dialog", (d) => {
     dialogs.push(`${d.type()}: ${d.message()}`);

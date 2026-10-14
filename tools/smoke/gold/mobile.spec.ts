@@ -16,9 +16,9 @@ async function boxes(page: Page, sel: string): Promise<Box[]> {
   }))).filter((b) => b.width > 0 && b.height > 0);
 }
 
-rule("G-52", "touch-only: at 390 the pad is at most a quarter of the stage and every key is 44 x 44", async ({ page, bench, host }) => {
+rule("G-52", "touch-only: at 390 the pad is at most a quarter of the stage and every key is 44 x 44", async ({ page, bench }) => {
   await page.setViewportSize({ width: 390, height: HEIGHT });
-  await openGold(page, bench, host);
+  await openGold(page, bench);
   const pad = (await boxes(page, bench.dom.pad))[0];
   const stage = (await boxes(page, bench.dom.stage))[0];
   if (pad === undefined) notRun(`${bench.id}: no drive pad on screen at 390`);
@@ -30,9 +30,9 @@ rule("G-52", "touch-only: at 390 the pad is at most a quarter of the stage and e
   expect(small, "drive keys under 44 x 44 px").toEqual([]);
 }, { touch: true });
 
-rule("G-53", "at 390 the step's focal derived value is on screen", async ({ page, bench, host }) => {
+rule("G-53", "at 390 the step's focal derived value is on screen", async ({ page, bench }) => {
   await page.setViewportSize({ width: 390, height: HEIGHT });
-  await openGold(page, bench, host);
+  await openGold(page, bench);
   if (bench.origin === "legacy") notRun(`${bench.id}: the legacy page declares no step focus`);
   if (bench.focus.every((f) => f === null)) notRun(`${bench.id}: no step declares a focus`);
   const steps = page.locator(bench.dom.steps);
@@ -48,9 +48,9 @@ rule("G-53", "at 390 the step's focal derived value is on screen", async ({ page
   expect(off, off.join("\n")).toEqual([]);
 });
 
-rule("G-54", "at 390 no sideways scroll, 44 px targets, welcome clear of the header, legend clear of the cams", async ({ page, bench, host }) => {
+rule("G-54", "at 390 no sideways scroll, 44 px targets, welcome clear of the header, legend clear of the cams", async ({ page, bench }) => {
   await page.setViewportSize({ width: 390, height: HEIGHT });
-  await openGold(page, bench, host, { welcome: true });
+  await openGold(page, bench, { welcome: true });
   const bad: string[] = [];
   const o = await overflow(page);
   if (o.scrollWidth > 390) bad.push(`scrollWidth ${o.scrollWidth} at 390: ${o.offenders.join(", ")}`);

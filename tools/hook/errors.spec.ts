@@ -1,8 +1,8 @@
 // BenchHook error state, export refusals and range clamps in a real
 // browser (M09-T11, D-214, gold-standard.md G-10, G-11, G-51). The
-// flex-pair bake (dist/bench/flex-pair.html) runs with the node build host
-// as its build (tools/smoke/host-build.ts), wrapped here so one build can
-// be made to throw. The wording checked below is typed from spec/hook.ts,
+// flex-pair bake (dist/bench/flex-pair.html) runs as shipped with its
+// in-page build (D-264); tools/smoke/page-build.ts armFaults wraps that
+// build so one build can be made to throw. The wording checked below is typed from spec/hook.ts,
 // never read from the bench: `build failed: <error>`, `unknown export
 // kind: <k>`, `clamp <field>: <value> outside <lo> to <hi>, set <v>`.
 //
@@ -16,7 +16,7 @@ import { pathToFileURL } from "node:url";
 import { expect, test, type Page } from "@playwright/test";
 import { SHOTS } from "../smoke/measure.ts";
 import type { BenchHook } from "@hackbuild/spec";
-import { startHost, type Host } from "../smoke/host-build.ts";
+import { armFaults, setFault } from "../smoke/page-build.ts";
 import { ROOT } from "./benches.ts";
 
 const BAKE = path.join(ROOT, "dist/bench/flex-pair.html");
@@ -27,13 +27,6 @@ type G = { BENCH: BenchHook };
 
 test.describe.configure({ mode: "serial", timeout: 240_000 });
 
-let host: Host | null = null;
-let failNext = false;
-
-test.beforeAll(async () => {
-  if (existsSync(BAKE)) host = await startHost();
-});
-test.afterAll(() => host?.close());
 test.beforeEach(() => {
   test.skip(!existsSync(BAKE), "not run: dist/bench/flex-pair.html is absent; run node tools/bake/bake.mjs reference/keys/flex-pair/bake.json");
 });
@@ -41,13 +34,7 @@ test.beforeEach(() => {
 async function open(page: Page): Promise<string[]> {
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
-  await page.exposeFunction("hbfHostBuild", async (state: unknown) => {
-    if (failNext) {
-      failNext = false;
-      throw new Error("forced throw");
-    }
-    return (host as Host).build(state);
-  });
+  await armFaults(page, "HbfPageBuild");
   await page.goto(pathToFileURL(BAKE).href);
   await page.waitForFunction(() => (globalThis as unknown as G).BENCH?.ready === true, undefined, { timeout: 120_000 });
   await page.evaluate(() => (globalThis as unknown as G).BENCH.settled(120_000));
@@ -71,7 +58,7 @@ for (const width of [1280, 390]) {
       const hash = await page.evaluate(() => (globalThis as unknown as G).BENCH.buildHash);
       expect(hash).toMatch(/^[0-9a-f]{8,}/);
 
-      failNext = true;
+      await setFault(page, { throwNext: true });
       await setW(page, 61);
       const failed = await page.evaluate(() => (globalThis as unknown as G).BENCH.settled(120_000).then(() => "resolved", (e: unknown) => (e instanceof Error ? e.message : String(e))));
       expect(failed).toMatch(/^build failed: .*forced throw/);
@@ -151,7 +138,7 @@ test("out-of-range state writes clamp and log within 100 ms; loadDesign clamps t
   }
 });
 
-test("exportBytes: unknown kind message, aliases, and kinds this bake cannot write", async ({ browser }) => {
+test("exportBytes: unknown kind message, aliases to the page writers, and a kind this bake cannot write", async ({ browser }) => {
   const ctx = await browser.newContext({ viewport: { width: 1280, height: 800 } });
   const page = await ctx.newPage();
   try {
@@ -163,15 +150,18 @@ test("exportBytes: unknown kind message, aliases, and kinds this bake cannot wri
         unknown: await msg(B.exportBytes("no-such-kind")),
         design: atob(await B.exportBytes("design")),
         json: B.designJson(),
-        card: await msg(B.exportBytes("print-card")),
-        stl: await msg(B.exportBytes("stlzip")),
+        card: atob(await B.exportBytes("print-card")),
+        stl: atob(await B.exportBytes("stlzip")).slice(0, 2),
+        coupon: await msg(B.exportBytes("coupon")),
       };
     });
     expect(r.unknown).toBe("unknown export kind: no-such-kind");
     expect(r.design).toBe(r.json);
-    // card, stl and 3mf are declared by the chase; no in-page writer exists yet, and the refusal says so.
-    expect(r.card).toBe("card export is not in this bake yet");
-    expect(r.stl).toBe("stl export is not in this bake yet");
+    // The aliases reach the page build's writers (D-264): the print card text and the stl fallback zip.
+    expect(r.card.startsWith("print card")).toBe(true);
+    expect(r.stl).toBe("PK");
+    // coupon is declared by the chase and has no writer in core or the page; the refusal says so.
+    expect(r.coupon).toBe("coupon export is not in this bake yet");
   } finally {
     await ctx.close();
   }
