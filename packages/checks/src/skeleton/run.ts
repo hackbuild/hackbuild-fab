@@ -8,7 +8,7 @@ import type {
   AnyCheckDef, ArtifactBytes, BuildWarning, CheckCtx, CheckResult, CheckTarget, ContactElement, Finding, HookupDecl,
   KernelId, McuPinSpec, Net, ParamGroup, Part, PartDraft, PortFeature, ProfileLookup, Ring, ShapeDecl,
 } from "@hackbuild/spec";
-import { conductorGraph, solveKeys } from "@hackbuild/circuit";
+import { conductorGraph, nodeCapPf, solveKeys, traceCapRule } from "@hackbuild/circuit";
 import { MEASURES_PARAM } from "./defs.js";
 import { type NumericField } from "../driven-by.js";
 import { proposeFix } from "../fix.js";
@@ -83,9 +83,10 @@ export interface SkeletonReport {
 /**
  * One Net per declared net id, with the charge-release path where a hookup
  * entry reads it. Nets with no read path carry an empty resistance list and
- * a zero total; capacitance is the receiving pin's inputCap alone (trace
- * capacitance arrives at M05), so capMethod has no exact variant yet and
- * names the PIP model it is the first term of.
+ * a zero total. Capacitance is the PIP trace rule circuit.solve's chargePort
+ * uses (pin inputCap plus the along legs of the read path at the profile
+ * pF per mm plus the fixed pF, model.js:418), so CHK-NET-29 from part.build
+ * and from circuit.solve read one C for one net.
  */
 export function skeletonNets(
   draft: PartDraft, hookup: readonly HookupDecl[], profile: ProfileLookup, mcu: (id: string) => McuPinSpec,
@@ -104,10 +105,13 @@ export function skeletonNets(
       };
     }
     const bulk = pt.path.preview.ohm;
+    const rule = traceCapRule(profile);
+    const traceMm = pt.path.preview.segments.filter((x) => x.direction === "along").reduce((a, x) => a + x.lengthMm, 0);
+    const capPf = nodeCapPf(pt.pinPf.value, traceMm, { perMmPf: rule.perMmPf.value, fixedPf: rule.fixedPf.value });
     return {
       id, conductors, bodies: [], terminals, resistance: [pt.path], bulkOhm: bulk, contacts: pt.contacts,
       totalOhm: [bulk + sum(pt.contacts, 0), bulk + sum(pt.contacts, 1)],
-      unpricedContacts: pt.unpricedContacts, capToGndPf: pt.pinPf.value, couplingPf: {}, capMethod: "pip-per-mm",
+      unpricedContacts: pt.unpricedContacts, capToGndPf: capPf, couplingPf: {}, capMethod: "pip-per-mm",
       tier: pt.pathOhm.basis ?? "inferred",
       qualifier: pt.read.qualifier,
     };

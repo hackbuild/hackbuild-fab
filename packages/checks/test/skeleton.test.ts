@@ -257,16 +257,23 @@ describe("keys flex-pair at defaults", async () => {
     expect([r.extra?.["a"], r.extra?.["b"]].sort()).toEqual(["conductor.gnd", "conductor.key1col"]);
   });
 
-  test("CHK-NET-29: path at least 74.4 + 148.8 kohm, legal 0 to 100 Mohm, a pass reported as warn (computed, inferred rows and wait)", () => {
+  test("CHK-NET-29: path at least 74.4 + 148.8 kohm, legal 0 to wait / (5 tau x C) with C the PIP trace rule, a pass reported as warn (computed, inferred rows and wait)", () => {
+    // C is cpin 7 pF + 0.02 pF per mm of the read path's along legs + 1 pF
+    // (pip-controller src/model.js:418), the C circuit.solve reads (D-04).
     const r = one(rs, "CHK-NET-29");
     expect(r.verdict).toBe("warn");
     expect(r.measured as number).toBeGreaterThan(74_400 + 148_800);
+    const net = report.nets.find((n) => n.id === "K1")!;
+    const alongMm = net.resistance[0]!.preview.segments.filter((s) => s.direction === "along").reduce((a, s) => a + s.lengthMm, 0);
+    const cPf = 7 + 0.02 * alongMm + 1;
+    expect(net.capToGndPf).toBeCloseTo(cPf, 9);
     expect(r.legal).toMatchObject({ kind: "interval", lo: 0, unit: "ohm" });
-    expect(r.legal.kind === "interval" ? r.legal.hi : 0).toBeCloseTo(100e6, 0);
-    expect(r.constraint).toMatch(/^charge-release path \d+ ohm, legal 0 to 100000000 ohm, set by wait 3500 us over 5 tau at 7 pF \(key; wait inferred; path rows inferred; 4 contacts unpriced, path a lower bound\)$/);
+    expect(r.legal.kind === "interval" ? r.legal.hi : 0).toBeCloseTo(3500e-6 / (5 * cPf * 1e-12), 0);
+    expect(r.legal.kind === "interval" ? r.legal.hi : Infinity).toBeLessThan(100e6);
+    expect(r.constraint).toMatch(/^charge-release path \d+ ohm, legal 0 to \d+ ohm, set by wait 3500 us over 5 tau at \d+(\.\d+)? pF \(key; wait inferred; path rows inferred; 4 contacts unpriced, path a lower bound\)$/);
     expect(r.extra).toMatchObject({ readFrom: "net", waitSource: "default", waitQualifier: "inferred" });
-    const net = report.nets.find((n) => n.id === "K1");
-    expect(r.measured).toBe(net?.totalOhm[1]);
+    expect(r.extra?.["cPf"] as number).toBeCloseTo(cPf, 9);
+    expect(r.measured).toBe(net.totalOhm[1]);
   });
 
   test("CHK-KEY-01: gap 1.84 mm inside 1.428 to 2.040 mm (35 and 50 percent of the snapped cone 4.08, computed, D-241)", () => {
