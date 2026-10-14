@@ -126,6 +126,7 @@ import { check as cnet42 } from "./net/CHK-NET-42.js";
 import { check as cnet43 } from "./net/CHK-NET-43.js";
 import { check as cnet44 } from "./net/CHK-NET-44.js";
 import { check as cnet45 } from "./net/CHK-NET-45.js";
+import { check as cnet46 } from "./net/CHK-NET-46.js";
 import { check as cprt01 } from "./prt/CHK-PRT-01.js";
 import { check as cprt02 } from "./prt/CHK-PRT-02.js";
 import { check as cprt03 } from "./prt/CHK-PRT-03.js";
@@ -176,7 +177,7 @@ export const CHECK_MODULES: readonly AnyCheckModule[] = [
   cnet14, cnet15, cnet16, cnet17, cnet18, cnet19, cnet20, cnet21,
   cnet22, cnet23, cnet24, cnet25, cnet26, cnet27, cnet28, cnet29,
   cnet30, cnet31, cnet32, cnet33, cnet34, cnet35, cnet36, cnet37, cnet38,
-  cnet40, cnet41, cnet42, cnet43, cnet44, cnet45,
+  cnet40, cnet41, cnet42, cnet43, cnet44, cnet45, cnet46,
   cprt01, cprt02, cprt03, cprt04, cprt05, cprt06, cprt07,
   cprt08, cprt09, cprt10, cprt11, cprt12, cprt13, cprt14, cprt15,
   cprt16, cshp01, cshp02, cshp03, cshp04, cshp05, csht01, csht02,

@@ -1633,6 +1633,16 @@
     "dest": "packages/circuit/src/read/ladder.ts"
   },
   {
+    "id": "feeler.bench/thinpot-16-midi-pad",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/thinpot/files/feeler_thinpot.html",
+    "sha256": "35467f4b022178334c6aba422985854b6bc298927f5f552bc38e79465219b222",
+    "fixes": [
+      "the three terminal pads at the near end of the THINPOT track (archetype thinpot, lines 4022 to 4210, ported to packages/archetypes/src/thinpot/strip.ts) located from the applied archetype's track prisms and landed on one post per pad by reference/keys/midi-pad/build.ts, since the archetype emits no terminal features (gap G5)"
+    ],
+    "dest": "reference/keys/midi-pad/build.ts"
+  },
+  {
     "id": "feeler.bench/thinpot-16-port-strip",
     "kind": "copy",
     "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/thinpot/files/feeler_thinpot.html",
@@ -1687,6 +1697,16 @@
     "dest": "reference/copper/_inputs/ibm-plex-mono-latin-400-normal.woff2"
   },
   {
+    "id": "font.plex-mono-400/geom-text",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/keyway/files/inputs/ibm-plex-mono-latin-400-normal.woff2",
+    "sha256": "08949f728dc52d528e69b1667d15c89a5686a4ee9a296ff90983985f99c380f7",
+    "fixes": [
+      "equal to the fontsource 5.3.0 file; packages/geom/scripts/fonts.mjs reads it into the node text route's glyph table (OK-01, 2026-10-14)"
+    ],
+    "dest": "packages/geom/assets/fonts/ibm-plex-mono-latin-400-normal.woff2"
+  },
+  {
     "id": "font.plex-mono-600/board-fonts",
     "kind": "copy",
     "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/shunt/files/fonts/ibm-plex-mono-latin-600-normal.woff2",
@@ -1725,6 +1745,16 @@
       "equal to files/ibm-plex-mono-latin-700-normal.woff2 of the npm tarball @fontsource/ibm-plex-mono 5.3.0 (OFL-1.1), checked 2026-10-08"
     ],
     "dest": "reference/copper/_inputs/ibm-plex-mono-latin-700-normal.woff2"
+  },
+  {
+    "id": "font.plex-mono-700/geom-text",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/keyway/files/inputs/ibm-plex-mono-latin-700-normal.woff2",
+    "sha256": "4f84d86cfd060f4ded334358ff8a4c81d4db2ed5addd568359d693f44a87765a",
+    "fixes": [
+      "equal to the fontsource 5.3.0 file; packages/geom/scripts/fonts.mjs reads it into the node text route's glyph table (OK-01, 2026-10-14)"
+    ],
+    "dest": "packages/geom/assets/fonts/ibm-plex-mono-latin-700-normal.woff2"
   },
   {
     "id": "font.special-elite/board-fonts",
@@ -3486,6 +3516,26 @@
     "dest": "reference/keys/click-spring-window/chase.ts"
   },
   {
+    "id": "pip.layout/haft-9-midi-pad",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft-src/src/layout.js",
+    "sha256": "2d1c6c10554b5c7d8dc333496529abee82e937d2d3fe85c41a8d7ee22bb2468c",
+    "fixes": [
+      "PIP's four material slots (layout.js lines 47 to 52) declared by reference/keys/midi-pad/chase.ts, the slots its three PIP and THINPOT archetypes share (K-04 promotion of flagship 1)"
+    ],
+    "dest": "reference/keys/midi-pad/chase.ts"
+  },
+  {
+    "id": "pip.layout/haft-9-midi-pad-stack",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft-src/src/layout.js",
+    "sha256": "2d1c6c10554b5c7d8dc333496529abee82e937d2d3fe85c41a8d7ee22bb2468c",
+    "fixes": [
+      "the buried stack (layout.js line 27: skin 0.72, trace 0.72, iso 0.96; z bands lines 168 to 171) read through the profile stack rows for the two lead layers and the seat floor of reference/keys/midi-pad/build.ts"
+    ],
+    "dest": "reference/keys/midi-pad/build.ts"
+  },
+  {
     "id": "pip.layout/haft-9-port-click",
     "kind": "copy",
     "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft-src/src/layout.js",
@@ -3572,6 +3622,16 @@
     "dest": null
   },
   {
+    "id": "pip.model/haft-9-chk-net-46",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft-src/src/model.js",
+    "sha256": "95a996433e54d586cdaa970a844ee8f8f02196f80b23ba36983c95ed456d1f34",
+    "fixes": [
+      "the board fits 'bezel squeeze on the board' (line 576: press > 0 and at most 0.5) and 'pin length into the socket' (line 595: at least 2.0) as the press depth legal of CHK-NET-46, read through profile rows seat.bumpPress.lo, seat.bumpPress.hi and seat.socketPinMin (K-04)"
+    ],
+    "dest": "packages/checks/src/net/net46.ts"
+  },
+  {
     "id": "pip.model/haft-9-click-spring-window",
     "kind": "copy",
     "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft-src/src/model.js",
@@ -3588,6 +3648,16 @@
     "sha256": "95a996433e54d586cdaa970a844ee8f8f02196f80b23ba36983c95ed456d1f34",
     "fixes": [],
     "dest": "packages/archetypes/src/pip/flex.ts"
+  },
+  {
+    "id": "pip.model/haft-9-port-seat-tap",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft-src/src/model.js",
+    "sha256": "95a996433e54d586cdaa970a844ee8f8f02196f80b23ba36983c95ed456d1f34",
+    "fixes": [
+      "the bump under each used castellation (model.js line 209: a cylinder (bumpW + 0.2 - bleed) / 2 from floor - EZ to floor + bumpH) and the bezel ribs reaching boardTop - press (lines 313 to 319) carried into each seat port as its net tap by packages/archetypes/src/pip/seat.ts: the tapped bump, the catalog pin centre on the bump top, and press as the clamp depth (K-04)"
+    ],
+    "dest": "packages/archetypes/src/pip/seat.ts"
   },
   {
     "id": "pip.model/haft-9-port-touch",

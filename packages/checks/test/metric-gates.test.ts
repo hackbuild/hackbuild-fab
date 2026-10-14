@@ -98,6 +98,7 @@ const INFORMATIONAL: readonly { readonly pattern: RegExp; readonly why: string }
   { pattern: /^[a-z0-9-]+\.\d+\.neck\.(trackLen|memT|pressForce)$/, why: "TANG membrane slider readouts (05_design.js line 296): track length, membrane depth, press force; no failure on record sets a bound" },
   { pattern: /^[a-z0-9-]+\.\d+\.pot\.(preload|leafForce|marginArc|marginCol|hubClear|arcColGap|stopClear|terminal\.[a-z0-9]+)$/, why: "TANG printed rotary pot readouts (05_design.js lines 120 and 262 to 301); a clearance under zero warns FIT at build" },
   { pattern: /^[a-z0-9-]+\.\d+\.gib\.(F|capVal|gap|settle|span|trackL|R[A-Za-z]*)$/, why: "GIB part2.js physics values as the bench computes them (packages/archetypes gib.ts); no failure on record sets a bound" },
+  { pattern: /^layout\.(width|depth|faderOverhang|top)$/, why: "keys/midi-pad body extents and top as build.ts lays the archetypes out; the top is the seat's host.top and no failure on record sets a bound on the others" },
 ];
 
 /** The builds a recording must hold: reference/<area>/<id> and designs/<id> with a chase.ts. */

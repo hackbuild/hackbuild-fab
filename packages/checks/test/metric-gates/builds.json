@@ -951,6 +951,340 @@
       ]
     },
     {
+      "build": "reference/keys/midi-pad",
+      "part": "pad",
+      "metrics": [
+        {
+          "id": "rp2040-zero-seat.0.host.top",
+          "gate": "informational"
+        },
+        {
+          "id": "rp2040-zero-seat.0.seat.boardZ",
+          "gate": "informational"
+        },
+        {
+          "id": "rp2040-zero-seat.0.seat.boardTop",
+          "gate": "informational"
+        },
+        {
+          "id": "rp2040-zero-seat.0.seat.cableEdge",
+          "gate": "informational"
+        },
+        {
+          "id": "rp2040-zero-seat.0.seat.fits.pocket-around-the-board",
+          "gate": "informational"
+        },
+        {
+          "id": "rp2040-zero-seat.0.seat.fits.bump-height",
+          "gate": "informational"
+        },
+        {
+          "id": "rp2040-zero-seat.0.seat.fits.bezel-squeeze-on-the-board",
+          "gate": "informational"
+        },
+        {
+          "id": "rp2040-zero-seat.0.seat.fits.bump-to-bump",
+          "gate": "informational"
+        },
+        {
+          "id": "rp2040-zero-seat.0.seat.fits.clearance-under-the-board",
+          "gate": "informational"
+        },
+        {
+          "id": "rp2040-zero-seat.0.seat.fits.opening",
+          "gate": "informational"
+        },
+        {
+          "id": "rp2040-zero-seat.0.seat.fits.opening-height",
+          "gate": "informational"
+        },
+        {
+          "id": "rp2040-zero-seat.0.seat.fits.datum-corner",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.0.host.top",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.0.key.travel",
+          "gate": "CHK-KEY-01"
+        },
+        {
+          "id": "flex-cone-key.0.key.height",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.0.key.rsb",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.0.key.wallH",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.0.key.feel",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.0.key.R.switch",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.0.key.fits.contact-gap",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.0.key.fits.cap-bridge",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.0.key.fits.split-between-halves",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.0.key.fits.column-to-cone-wall",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.0.key.fits.face-through-bezel-hole",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.0.key.fits.stands-proud-of-the-bezel",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.1.host.top",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.1.key.travel",
+          "gate": "CHK-KEY-01"
+        },
+        {
+          "id": "flex-cone-key.1.key.height",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.1.key.rsb",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.1.key.wallH",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.1.key.feel",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.1.key.R.switch",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.1.key.fits.contact-gap",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.1.key.fits.cap-bridge",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.1.key.fits.split-between-halves",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.1.key.fits.column-to-cone-wall",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.1.key.fits.face-through-bezel-hole",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.1.key.fits.stands-proud-of-the-bezel",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.2.host.top",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.2.key.travel",
+          "gate": "CHK-KEY-01"
+        },
+        {
+          "id": "flex-cone-key.2.key.height",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.2.key.rsb",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.2.key.wallH",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.2.key.feel",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.2.key.R.switch",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.2.key.fits.contact-gap",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.2.key.fits.cap-bridge",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.2.key.fits.split-between-halves",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.2.key.fits.column-to-cone-wall",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.2.key.fits.face-through-bezel-hole",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.2.key.fits.stands-proud-of-the-bezel",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.3.host.top",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.3.key.travel",
+          "gate": "CHK-KEY-01"
+        },
+        {
+          "id": "flex-cone-key.3.key.height",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.3.key.rsb",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.3.key.wallH",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.3.key.feel",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.3.key.R.switch",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.3.key.fits.contact-gap",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.3.key.fits.cap-bridge",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.3.key.fits.split-between-halves",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.3.key.fits.column-to-cone-wall",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.3.key.fits.face-through-bezel-hole",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.3.key.fits.stands-proud-of-the-bezel",
+          "gate": "informational"
+        },
+        {
+          "id": "membrane-slider-thinpot.0.thinpot.R.track",
+          "gate": "informational"
+        },
+        {
+          "id": "membrane-slider-thinpot.0.thinpot.R.contact",
+          "gate": "informational"
+        },
+        {
+          "id": "membrane-slider-thinpot.0.thinpot.say.outline",
+          "gate": "informational"
+        },
+        {
+          "id": "membrane-slider-thinpot.0.thinpot.say.track",
+          "gate": "informational"
+        },
+        {
+          "id": "membrane-slider-thinpot.0.thinpot.say.R-end-to-end",
+          "gate": "informational"
+        },
+        {
+          "id": "membrane-slider-thinpot.0.thinpot.say.R-per-mm",
+          "gate": "informational"
+        },
+        {
+          "id": "membrane-slider-thinpot.0.thinpot.say.R-at-25-50-75",
+          "gate": "informational"
+        },
+        {
+          "id": "membrane-slider-thinpot.0.thinpot.say.taper",
+          "gate": "informational"
+        },
+        {
+          "id": "membrane-slider-thinpot.0.thinpot.say.air-gap",
+          "gate": "informational"
+        },
+        {
+          "id": "membrane-slider-thinpot.0.thinpot.say.contact-R-at-2-N",
+          "gate": "informational"
+        },
+        {
+          "id": "membrane-slider-thinpot.0.thinpot.say.gap-in-layers",
+          "gate": "informational"
+        },
+        {
+          "id": "membrane-slider-thinpot.0.thinpot.say.wires-out",
+          "gate": "informational"
+        },
+        {
+          "id": "membrane-slider-thinpot.0.thinpot.fits.membrane-travel",
+          "gate": "informational"
+        },
+        {
+          "id": "membrane-slider-thinpot.0.thinpot.fits.tail-over-the-boss",
+          "gate": "informational"
+        },
+        {
+          "id": "layout.width",
+          "gate": "informational"
+        },
+        {
+          "id": "layout.depth",
+          "gate": "informational"
+        },
+        {
+          "id": "layout.faderOverhang",
+          "gate": "informational"
+        },
+        {
+          "id": "layout.top",
+          "gate": "informational"
+        }
+      ]
+    },
+    {
       "build": "reference/mechanisms/coanda-gate",
       "part": "coanda-gate",
       "metrics": []

@@ -15,9 +15,8 @@ import { join } from "node:path";
 const root = join(import.meta.dirname, "..", "..");
 const read = (p) => readFileSync(join(root, p), "utf8");
 
-const GAPS = {
-  "CHK-NET-06": "no reference declares an adc port, so every circuit.solve golden records CHK-NET-06 as a skip (M05-T17 card defects)",
-};
+// CHK-NET-06 closed with reference/keys/midi-pad, whose GP26 wiper is read by adc (K-04).
+const GAPS = {};
 
 /** CHK ids the M05-T17 step 3 text names, "CHK-NET-01, -02" short forms expanded. */
 export function stepIds(card) {

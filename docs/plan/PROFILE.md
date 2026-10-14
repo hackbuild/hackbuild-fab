@@ -1226,6 +1226,10 @@ catalog.
 | `route.regionClose` | 0.01 | mm | inferred | derived | PIP model.js line 43: each trace layer per net closed by +this then -this Miter; read by packages/copper/src/emit/trace-layer.ts and CHK-NET-11 (M05-T10) |
 | `route.postOverlap` | 0.02 | mm | inferred | derived | PIP model.js lines 8 and 48 (EZ): a terminal post runs this past the pad plane; read by reference/electrical/pip-buried-route/build.ts (M05-T10) |
 | `route.gapSearch` | 1 | mm | inferred | derived | PIP model.js line 221: net-to-net minGap search distance; read by packages/circuit/src/extract/nets.ts (M05-T10) |
+| `seat.pinOnContactMin` | 0.11 | mm | inferred | derived | the catalog rp2040-zero dims.inset conflict, PIP layout.js line 39 (1.38) against GUDGEON 05_part2d_circuit.js lines 7 to 18 (1.27): a pin centre this far inside its contact lands at either inset; read by CHK-NET-46 (K-04) |
+| `seat.bumpPress.lo` | 0 | mm | inferred | derived | PIP model.js line 576, bezel squeeze ok when press > 0; lo end, exclusive; read by CHK-NET-46 (K-04) |
+| `seat.bumpPress.hi` | 0.5 | mm | inferred | derived | PIP model.js line 576, bezel squeeze ok when press <= 0.5; hi end; read by CHK-NET-46 (K-04) |
+| `seat.socketPinMin` | 2 | mm | inferred | derived | PIP model.js line 595, pin length into the socket at least 2.0; read by CHK-NET-46 (K-04) |
 | `route.stick.grid` | 0.2 | mm | inferred | derived | TOGGLE part2d.js line 171: tilt stick floor route grid; read by packages/copper/src/route/search.ts (M05-T09) |
 | `route.stick.edgePad` | 0.6 | mm | inferred | derived | TOGGLE part2d.js line 176: keep-in past half a trace from the outline; read by packages/copper/src/route/search.ts (M05-T09) |
 | `route.stick.leadR` | 0.65 | mm | inferred | derived | TOGGLE part2d.js line 197: direction lead foot radius before clr + w/2; read by packages/copper/src/route/search.ts (M05-T09) |

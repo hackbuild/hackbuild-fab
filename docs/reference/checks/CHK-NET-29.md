@@ -33,6 +33,7 @@ Numbers from the failure story:
 
 - `reference/electrical/pip-drive`
 - `reference/keys/flex-pair`
+- `reference/keys/midi-pad`
 
 ## Version history
 

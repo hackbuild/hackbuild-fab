@@ -438,7 +438,7 @@ it is a section 9 row, and M-S-T06 seeded it.
 | FIT | fit | fit class bands on real gaps, snaps, mixed-process classes, bearings, snap strain, flexure stress | 5 | 3 | checks (profile, mesh) | M01 to M06 |
 | ASM | assembly | driver reach, assembly order, insertion, bought bodies, swept volumes, closest approach, poses, printed wire reach | 9 | 3 | checks (sim, mesh) | M02 to M04 |
 | SHT | sheet | connected profiles, rings, DXF reload, kerf, sag, living hinges, collision budget, corner fill | 7 | 4 | checks (geom, nest) | M07 |
-| NET | net | printed and copper nets: islands, clearance, contact, pullup and charge-release readability, ADC impedance, copper gates | 13 | 32 | checks (circuit, copper, geom) | M05 |
+| NET | net | printed and copper nets: islands, clearance, contact, pullup and charge-release readability, ADC impedance, copper gates, seat pin landing | 13 | 33 | checks (circuit, copper, geom) | M05 |
 | BRD | board | gerber reparse, drills, chirality, boot pins, BOM and CPL, provenance, netlist and silk lints | 6 | 16 | board | M08 |
 | MOT | motion | joint limits, path sweeps, rule tables, addressing, latch identity, command-time commits | 6 | 0 | motion | M07 |
 | 3MF | 3MF dialect | Application tag, per-filament vectors, scoped keys, insets, band order, p:path, per-slot types, interlocking beams, toolheads, pressure advance line breaks | 7 | 3 | 3mf | M00 |
@@ -449,7 +449,7 @@ it is a section 9 row, and M-S-T06 seeded it.
 | UI | page | sideways overflow at 390, 768, 1280; plate and section cameras | 2 | 0 | checks (page) | M09 |
 | ART | artifact | export completeness, source-to-artifact rebuild, derived artifacts, parameter echo, QR legibility, placeholder text, firmware read coverage, unresolved values, card against build | 0 | 10 | checks (artifact) | M00 to M09 |
 | DEV | device | CLASP payload, one-shot signals, heartbeat cadence, laser safety block | 0 | 4 | link | M13 |
-| total | | | 86 | 83 | | |
+| total | | | 86 | 84 | | |
 
 Seeded counts are computed from `packages/checks/seed/checks.seed.json`
 (86 rows: 77 block, 9 warn; counts.json wins; 85 and 76 before M-S-T06
@@ -1168,6 +1168,7 @@ and keeps "implementation absent". The hinge rule waits in section 9.9.
 | CHK-NET-43 | channel count equals the controller budget (one MPR121 is 12, two are 24) | sheet; geom | boolean | block | VERNIER 2026-08: exactly 12 terminals and nets (`gen_vernier.py` line 268); SPLINE, TESSERA and FRET 18, 18 and 21 of two MPR121 (knowledge/kernels/copper-routing.md "Channel budgets"); no failure recorded | M05 |
 | CHK-NET-44 | isomorphic key lattice: one interval set per physical move, no duplicate notes, range and diatonic coverage | sheet; geom | interval, semitones and degrees (intervals {2}, {7}, {5}; range at least 24; at least 6 of 7 degrees) | block | FRET 2026-08: every physically adjacent key pair walked (`gen_fret.py` lines 318 to 339), the best verification in the family (benches-conductive-b.md A.10); no failure recorded | M05 |
 | CHK-NET-45 | board width fits the stock width with margin | sheet; geom | interval, mm (width at most stock less margin) | block | STAVE 2026-08: the tape gate runs first so a wider board fails loudly, 96 mm in 101.6 mm tape (`gen_stave.py` lines 201 to 203); no failure recorded | M05 |
+| CHK-NET-46 | a seated board pin lands on its printed contact: pin centre on the contact, press depth in range | net; circuit, profile | interval, mm (pin centre at least seat.pinOnContactMin inside the tapped contact; bump press over seat.bumpPress.lo to seat.bumpPress.hi, socket pin at least seat.socketPinMin) | block | PIP 2026-09: the seat presses each used castellation onto a cPLA bump under bezel ribs 0.3 mm deep (`model.js` lines 209 and 313 to 319) and only its fits rows claim the contact; the flagship MIDI pad (2026-10-13, K-04) could not end a read path at the seat and ran four test leads to the body edge | M05 |
 
 CHK-NET-31 to CHK-NET-38 were entered by M05-T14 for the KEYWAY gates no
 earlier row covered (`reference/copper/keyway/legacy/gen_keyway.py`); with
@@ -1187,6 +1188,16 @@ candidate names until M05-T17 entered them in one batch as CHK-NET-40 to
 conductor dissipation candidate's reserved CHK-NET-39 (section 9.9). Like
 CHK-NET-31 to -38 they stay pending in the registry and run through
 `runVinyl`.
+
+CHK-NET-46 was entered for finding K-04 with its run body. A seat tap
+(`PortFeature.tap`) ends a net's read path at a seated board pin, so
+circuit.solve reads the pin on the board's MCU with no lead to the body
+edge. Per tapped port it measures the board pin centre (the catalog row's
+pin placed by the seat frame) in from the edge of the tapped contact, and
+the press depth: the declared clamp interference less the height of the
+pin face over the contact top. A bump pressed by a clamp the part does not
+carry (PIP's bezel ribs) passes as warn and names the clamp. It runs from
+circuit.solve on a part with a seat tap.
 
 CHK-NET-30 default is 30 percent because BAFFLE R3 states it in source; the
 GUDGEON reader proposed an inferred 25 percent and the BAFFLE reader 30.

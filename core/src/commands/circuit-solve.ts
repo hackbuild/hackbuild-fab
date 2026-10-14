@@ -62,6 +62,12 @@ export const ROUTE_CHECKS = ["CHK-NET-01", "CHK-NET-02", "CHK-NET-11", "CHK-NET-
  */
 export const BUTTON_CHECKS = ["CHK-NET-13", "CHK-NET-26", "CHK-NET-27", "CHK-NET-29", "CHK-NET-30"] as const;
 
+/** The check circuit.solve adds on a part with a seat tap (K-04): each seated board pin lands on its contact. */
+export const TAP_CHECKS = ["CHK-NET-46"] as const;
+
+/** True when a port of the part is a seat tap (PortFeature.tap). */
+export const hasSeatTap = (part: Part): boolean => part.features.some((f) => f.kind === "port" && f.tap !== undefined);
+
 /** The charge-release check a declared drive scene adds (M05-T19 step 6). */
 export const DRIVE_CHECKS = ["CHK-NET-29"] as const;
 
@@ -165,7 +171,9 @@ export async function solveBuilt(built: Built, input: CircuitSolveInput, ctx: Co
     ...solved.pullups.map((p) => [p.port, p] as const), ...solved.adcs.map((a) => [a.port, a] as const), ...solved.charges.map((c) => [c.port, c] as const),
   ]);
   const button = hasButtonPath(part, effective);
-  const ids: readonly string[] = [...CIRCUIT_SOLVE_CHECKS, ...(route === null ? [] : ROUTE_CHECKS), ...(button ? BUTTON_CHECKS : [])];
+  const ids: readonly string[] = [
+    ...CIRCUIT_SOLVE_CHECKS, ...(route === null ? [] : ROUTE_CHECKS), ...(button ? BUTTON_CHECKS : []), ...(hasSeatTap(part) ? TAP_CHECKS : []),
+  ];
   const defs = registerChecks({ seed: design.ws.checksSeed, filamentTemplate: design.ws.template }, CHECK_MODULES)
     .filter((d) => ids.includes(d.id));
   const report = await runRegistry(defs, {
