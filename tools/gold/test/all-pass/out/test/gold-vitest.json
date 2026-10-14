@@ -1,0 +1,51 @@
+{
+ "testResults": [
+  {
+   "name": "fixture.test.ts",
+   "assertionResults": [
+    {
+     "title": "G-07 fixture rule",
+     "fullName": "G-07 fixture rule [bench:fx]",
+     "status": "passed",
+     "failureMessages": []
+    },
+    {
+     "title": "G-08 fixture rule",
+     "fullName": "G-08 fixture rule [bench:fx]",
+     "status": "passed",
+     "failureMessages": []
+    },
+    {
+     "title": "G-09 fixture rule",
+     "fullName": "G-09 fixture rule [bench:fx]",
+     "status": "passed",
+     "failureMessages": []
+    },
+    {
+     "title": "G-13 fixture rule",
+     "fullName": "G-13 fixture rule [bench:fx]",
+     "status": "passed",
+     "failureMessages": []
+    },
+    {
+     "title": "G-31 fixture rule",
+     "fullName": "G-31 fixture rule [bench:fx]",
+     "status": "passed",
+     "failureMessages": []
+    },
+    {
+     "title": "G-32 fixture rule",
+     "fullName": "G-32 fixture rule [bench:fx]",
+     "status": "passed",
+     "failureMessages": []
+    },
+    {
+     "title": "G-41 fixture rule",
+     "fullName": "G-41 fixture rule [bench:fx]",
+     "status": "passed",
+     "failureMessages": []
+    }
+   ]
+  }
+ ]
+}

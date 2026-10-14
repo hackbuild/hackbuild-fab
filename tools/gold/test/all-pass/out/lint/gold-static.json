@@ -1,0 +1,11 @@
+{
+ "benches": {
+  "fx": [
+   {
+    "id": "G-37",
+    "check": "CHK-LNT-06",
+    "result": "pass"
+   }
+  ]
+ }
+}

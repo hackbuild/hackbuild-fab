@@ -1,0 +1,12 @@
+{
+  "package": "@virgilvox/hackbuild-ui",
+  "version": "0.3.0",
+  "tarball": "tools/vendor/hackbuild-ui-0.3.0-b3962ab.tgz",
+  "files": {
+    "dist/styles/hackbuild.css": "ab4317de12b43cf7081b661c4aa88bd9bf35842c33d749410ad8e2bc4628991a",
+    "dist/styles/tokens.css": "16f6d9a66f187062ad2e44e4e136191ac28c0c2cb126269969cb8d282668394a"
+  },
+  "inlined": {
+    "dist/styles/hackbuild.css": "c44665e1cd7233d68e859d42bd723800adf8fa07f07821858605eeba8d497804"
+  }
+}

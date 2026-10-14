@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>welcome fixture</title>
+<style>
+  /* Tokens of record (RULES.md design law); the fixture has no hackbuild-ui install. */
+  :root {
+    --hb-pink: #FE0386;
+    --hb-paper: #f5f0e6;
+    --hb-ink: #1a1a1a;
+    --fx-gap: 16px;
+  }
+  * { box-sizing: border-box; border-radius: 0; }
+  html, body { margin: 0; background: var(--hb-paper); color: var(--hb-ink); font-family: "IBM Plex Mono", monospace; }
+  main { display: grid; gap: var(--fx-gap); padding: var(--fx-gap); max-width: 720px; }
+  h1 { margin: 0; font: 400 22px "Permanent Marker", "IBM Plex Mono", monospace; }
+  header { display: flex; justify-content: space-between; align-items: center; gap: var(--fx-gap); }
+  button { font: inherit; font-size: 13px; padding: 6px 12px; border: 2px solid var(--hb-ink); background: var(--hb-paper); color: var(--hb-ink); box-shadow: 3px 3px 0 var(--hb-ink); cursor: pointer; }
+  button.primary { background: var(--hb-pink); color: var(--hb-ink); }
+  section[data-hb="welcome"] { border: 2px solid var(--hb-ink); box-shadow: 5px 5px 0 var(--hb-ink); padding: var(--fx-gap); display: grid; gap: 12px; }
+  section[data-hb="welcome"][hidden] { display: none; }
+  section[data-hb="welcome"] p { margin: 0; font-family: "Special Elite", serif; }
+  .starts { display: flex; flex-wrap: wrap; gap: 8px; }
+  pre { margin: 0; font-size: 12px; overflow-x: auto; border: 2px solid var(--hb-ink); padding: 8px; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>welcome fixture</h1>
+    <button type="button" data-hb="guide">guide</button>
+  </header>
+  <section data-hb="welcome" aria-label="welcome">
+    <p>pick a start. this card stays closed once you close it; guide opens it again.</p>
+    <div class="starts" data-hb="welcome-starts"></div>
+    <div><button type="button" data-hb="welcome-dismiss">close</button></div>
+  </section>
+  <pre id="state" aria-label="design json"></pre>
+</main>
+<script>/* fixture entry */</script>
+</body>
+</html>

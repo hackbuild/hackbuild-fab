@@ -1,0 +1,16 @@
+{
+ "findings": [
+  {
+   "id": "CHK-SHP-06",
+   "verdict": "pass"
+  },
+  {
+   "id": "CHK-LNT-05",
+   "verdict": "pass"
+  },
+  {
+   "id": "CHK-ART-08",
+   "verdict": "pass"
+  }
+ ]
+}

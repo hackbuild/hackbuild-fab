@@ -1,0 +1,18 @@
+{
+ "rows": [
+  {
+   "bench": "fx",
+   "id": "G-43",
+   "expect": "fail",
+   "note": "fixture.md",
+   "line": 1
+  },
+  {
+   "bench": "fx",
+   "id": "G-51",
+   "expect": "pass",
+   "note": "fixture.md",
+   "line": 2
+  }
+ ]
+}

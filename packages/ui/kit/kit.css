@@ -1,0 +1,8 @@
+/* The kit page layout only. Each section is one shell part in one state. */
+.hbf-kit{ max-width:var(--hb-wide); margin:0 auto; padding:var(--hb-s4); display:flex; flex-direction:column; gap:var(--hb-s6) }
+.hbf-kit-section{ display:flex; flex-direction:column; gap:var(--hb-s3); min-width:0 }
+.hbf-kit-stage{ position:relative; height:520px }
+.hbf-kit-stage > .hb-stage{ height:100% }
+.hbf-kit-frame{ border:var(--hb-border) solid var(--hb-ink); min-width:0 }
+.hbf-kit-frame .hbf-bench.hb-app{ height:720px }
+@media(max-width:640px){ .hbf-kit{ padding:var(--hb-s2) } .hbf-kit-stage{ height:640px } }

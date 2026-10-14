@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>roundtrip fixture</title>
+</head>
+<body>
+<script>
+// A hook fixture for tools/hook/roundtrip.spec.ts. ?drop makes loadDesign
+// drop state.b, the fault a broken bench shows; designJson carries a
+// counter t that moves on every call, as a legacy page's volatile fields do.
+(function () {
+  var drop = location.search.indexOf("drop") >= 0;
+  var state = { a: 1, b: { w: 12.5, list: [1, 2] } };
+  var t = 0;
+  globalThis.__hbfHook = {
+    designJson: function () { t += 1; return JSON.stringify({ v: 1, state: state, t: t }); },
+    loadDesign: function (text) {
+      var s = JSON.parse(text).state;
+      if (drop) delete s.b;
+      state = s;
+    },
+    settled: function () { return Promise.resolve(); },
+  };
+})();
+</script>
+</body>
+</html>

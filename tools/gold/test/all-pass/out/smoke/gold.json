@@ -1,0 +1,9 @@
+{
+ "benches": [
+  {
+   "id": "fx",
+   "buildHash": "fixture-hash-1",
+   "rules": {}
+  }
+ ]
+}

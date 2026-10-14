@@ -1,0 +1,1045 @@
+{
+ "suites": [
+  {
+   "title": "gold/fixture.spec.ts",
+   "file": "gold/fixture.spec.ts",
+   "specs": [
+    {
+     "title": "G-01 fixture rule [fx] @gold",
+     "file": "gold/fixture.spec.ts",
+     "line": 1,
+     "tests": [
+      {
+       "projectName": "desktop",
+       "annotations": [
+        {
+         "type": "bench",
+         "description": "fx"
+        }
+       ],
+       "results": [
+        {
+         "status": "passed",
+         "errors": []
+        }
+       ],
+       "status": "expected"
+      }
+     ]
+    },
+    {
+     "title": "G-02 fixture rule [fx] @gold",
+     "file": "gold/fixture.spec.ts",
+     "line": 2,
+     "tests": [
+      {
+       "projectName": "desktop",
+       "annotations": [
+        {
+         "type": "bench",
+         "description": "fx"
+        }
+       ],
+       "results": [
+        {
+         "status": "passed",
+         "errors": []
+        }
+       ],
+       "status": "expected"
+      }
+     ]
+    },
+    {
+     "title": "G-03 fixture rule [fx] @gold",
+     "file": "gold/fixture.spec.ts",
+     "line": 3,
+     "tests": [
+      {
+       "projectName": "desktop",
+       "annotations": [
+        {
+         "type": "bench",
+         "description": "fx"
+        }
+       ],
+       "results": [
+        {
+         "status": "passed",
+         "errors": []
+        }
+       ],
+       "status": "expected"
+      }
+     ]
+    },
+    {
+     "title": "G-04 fixture rule [fx] @gold",
+     "file": "gold/fixture.spec.ts",
+     "line": 4,
+     "tests": [
+      {
+       "projectName": "desktop",
+       "annotations": [
+        {
+         "type": "bench",
+         "description": "fx"
+        }
+       ],
+       "results": [
+        {
+         "status": "passed",
+         "errors": []
+        }
+       ],
+       "status": "expected"
+      }
+     ]
+    },
+    {
+     "title": "G-05 fixture rule [fx] @gold",
+     "file": "gold/fixture.spec.ts",
+     "line": 5,
+     "tests": [
+      {
+       "projectName": "desktop",
+       "annotations": [
+        {
+         "type": "bench",
+         "description": "fx"
+        }
+       ],
+       "results": [
+        {
+         "status": "passed",
+         "errors": []
+        }
+       ],
+       "status": "expected"
+      }
+     ]
+    },
+    {
+     "title": "G-06 fixture rule [fx] @gold",
+     "file": "gold/fixture.spec.ts",
+     "line": 6,
+     "tests": [
+      {
+       "projectName": "desktop",
+       "annotations": [
+        {
+         "type": "bench",
+         "description": "fx"
+        }
+       ],
+       "results": [
+        {
+         "status": "passed",
+         "errors": []
+        }
+       ],
+       "status": "expected"
+      }
+     ]
+    },
+    {
+     "title": "G-10 fixture rule [fx] @gold",
+     "file": "gold/fixture.spec.ts",
+     "line": 7,
+     "tests": [
+      {
+       "projectName": "desktop",
+       "annotations": [
+        {
+         "type": "bench",
+         "description": "fx"
+        }
+       ],
+       "results": [
+        {
+         "status": "passed",
+         "errors": []
+        }
+       ],
+       "status": "expected"
+      }
+     ]
+    },
+    {
+     "title": "G-11 fixture rule [fx] @gold",
+     "file": "gold/fixture.spec.ts",
+     "line": 8,
+     "tests": [
+      {
+       "projectName": "desktop",
+       "annotations": [
+        {
+         "type": "bench",
+         "description": "fx"
+        }
+       ],
+       "results": [
+        {
+         "status": "passed",
+         "errors": []
+        }
+       ],
+       "status": "expected"
+      }
+     ]
+    },
+    {
+     "title": "G-12 fixture rule [fx] @gold",
+     "file": "gold/fixture.spec.ts",
+     "line": 9,
+     "tests": [
+      {
+       "projectName": "desktop",
+       "annotations": [
+        {
+         "type": "bench",
+         "description": "fx"
+        }
+       ],
+       "results": [
+        {
+         "status": "passed",
+         "errors": []
+        }
+       ],
+       "status": "expected"
+      }
+     ]
+    },
+    {
+     "title": "G-14 fixture rule [fx] @gold",
+     "file": "gold/fixture.spec.ts",
+     "line": 10,
+     "tests": [
+      {
+       "projectName": "desktop",
+       "annotations": [
+        {
+         "type": "bench",
+         "description": "fx"
+        }
+       ],
+       "results": [
+        {
+         "status": "passed",
+         "errors": []
+        }
+       ],
+       "status": "expected"
+      }
+     ]
+    },
+    {
+     "title": "G-15 fixture rule [fx] @gold",
+     "file": "gold/fixture.spec.ts",
+     "line": 11,
+     "tests": [
+      {
+       "projectName": "desktop",
+       "annotations": [
+        {
+         "type": "bench",
+         "description": "fx"
+        }
+       ],
+       "results": [
+        {
+         "status": "passed",
+         "errors": []
+        }
+       ],
+       "status": "expected"
+      }
+     ]
+    },
+    {
+     "title": "G-16 fixture rule [fx] @gold",
+     "file": "gold/fixture.spec.ts",
+     "line": 12,
+     "tests": [
+      {
+       "projectName": "desktop",
+       "annotations": [
+        {
+         "type": "bench",
+         "description": "fx"
+        }
+       ],
+       "results": [
+        {
+         "status": "passed",
+         "errors": []
+        }
+       ],
+       "status": "expected"
+      }
+     ]
+    },
+    {
+     "title": "G-17 fixture rule [fx] @gold",
+     "file": "gold/fixture.spec.ts",
+     "line": 13,
+     "tests": [
+      {
+       "projectName": "desktop",
+       "annotations": [
+        {
+         "type": "bench",
+         "description": "fx"
+        }
+       ],
+       "results": [
+        {
+         "status": "passed",
+         "errors": []
+        }
+       ],
+       "status": "expected"
+      }
+     ]
+    },
+    {
+     "title": "G-18 fixture rule [fx] @gold",
+     "file": "gold/fixture.spec.ts",
+     "line": 14,
+     "tests": [
+      {
+       "projectName": "desktop",
+       "annotations": [
+        {
+         "type": "bench",
+         "description": "fx"
+        }
+       ],
+       "results": [
+        {
+         "status": "passed",
+         "errors": []
+        }
+       ],
+       "status": "expected"
+      }
+     ]
+    },
+    {
+     "title": "G-19 fixture rule [fx] @gold",
+     "file": "gold/fixture.spec.ts",
+     "line": 15,
+     "tests": [
+      {
+       "projectName": "desktop",
+       "annotations": [
+        {
+         "type": "bench",
+         "description": "fx"
+        }
+       ],
+       "results": [
+        {
+         "status": "passed",
+         "errors": []
+        }
+       ],
+       "status": "expected"
+      }
+     ]
+    },
+    {
+     "title": "G-20 fixture rule [fx] @gold",
+     "file": "gold/fixture.spec.ts",
+     "line": 16,
+     "tests": [
+      {
+       "projectName": "desktop",
+       "annotations": [
+        {
+         "type": "bench",
+         "description": "fx"
+        }
+       ],
+       "results": [
+        {
+         "status": "passed",
+         "errors": []
+        }
+       ],
+       "status": "expected"
+      }
+     ]
+    },
+    {
+     "title": "G-21 fixture rule [fx] @gold",
+     "file": "gold/fixture.spec.ts",
+     "line": 17,
+     "tests": [
+      {
+       "projectName": "touch-390",
+       "annotations": [
+        {
+         "type": "bench",
+         "description": "fx"
+        }
+       ],
+       "results": [
+        {
+         "status": "passed",
+         "errors": []
+        }
+       ],
+       "status": "expected"
+      }
+     ]
+    },
+    {
+     "title": "G-22 fixture rule [fx] @gold",
+     "file": "gold/fixture.spec.ts",
+     "line": 18,
+     "tests": [
+      {
+       "projectName": "desktop",
+       "annotations": [
+        {
+         "type": "bench",
+         "description": "fx"
+        }
+       ],
+       "results": [
+        {
+         "status": "passed",
+         "errors": []
+        }
+       ],
+       "status": "expected"
+      }
+     ]
+    },
+    {
+     "title": "G-23 fixture rule [fx] @gold",
+     "file": "gold/fixture.spec.ts",
+     "line": 19,
+     "tests": [
+      {
+       "projectName": "desktop",
+       "annotations": [
+        {
+         "type": "bench",
+         "description": "fx"
+        }
+       ],
+       "results": [
+        {
+         "status": "passed",
+         "errors": []
+        }
+       ],
+       "status": "expected"
+      }
+     ]
+    },
+    {
+     "title": "G-25 fixture rule [fx] @gold",
+     "file": "gold/fixture.spec.ts",
+     "line": 20,
+     "tests": [
+      {
+       "projectName": "desktop",
+       "annotations": [
+        {
+         "type": "bench",
+         "description": "fx"
+        }
+       ],
+       "results": [
+        {
+         "status": "passed",
+         "errors": []
+        }
+       ],
+       "status": "expected"
+      }
+     ]
+    },
+    {
+     "title": "G-26 fixture rule [fx] @gold",
+     "file": "gold/fixture.spec.ts",
+     "line": 21,
+     "tests": [
+      {
+       "projectName": "desktop",
+       "annotations": [
+        {
+         "type": "bench",
+         "description": "fx"
+        }
+       ],
+       "results": [
+        {
+         "status": "passed",
+         "errors": []
+        }
+       ],
+       "status": "expected"
+      }
+     ]
+    },
+    {
+     "title": "G-27 fixture rule [fx] @gold",
+     "file": "gold/fixture.spec.ts",
+     "line": 22,
+     "tests": [
+      {
+       "projectName": "desktop",
+       "annotations": [
+        {
+         "type": "bench",
+         "description": "fx"
+        }
+       ],
+       "results": [
+        {
+         "status": "passed",
+         "errors": []
+        }
+       ],
+       "status": "expected"
+      }
+     ]
+    },
+    {
+     "title": "G-29 fixture rule [fx] @gold",
+     "file": "gold/fixture.spec.ts",
+     "line": 23,
+     "tests": [
+      {
+       "projectName": "desktop",
+       "annotations": [
+        {
+         "type": "bench",
+         "description": "fx"
+        }
+       ],
+       "results": [
+        {
+         "status": "passed",
+         "errors": []
+        }
+       ],
+       "status": "expected"
+      }
+     ]
+    },
+    {
+     "title": "G-30 fixture rule [fx] @gold",
+     "file": "gold/fixture.spec.ts",
+     "line": 24,
+     "tests": [
+      {
+       "projectName": "desktop",
+       "annotations": [
+        {
+         "type": "bench",
+         "description": "fx"
+        }
+       ],
+       "results": [
+        {
+         "status": "passed",
+         "errors": []
+        }
+       ],
+       "status": "expected"
+      }
+     ]
+    },
+    {
+     "title": "G-33 fixture rule [fx] @gold",
+     "file": "gold/fixture.spec.ts",
+     "line": 25,
+     "tests": [
+      {
+       "projectName": "desktop",
+       "annotations": [
+        {
+         "type": "bench",
+         "description": "fx"
+        }
+       ],
+       "results": [
+        {
+         "status": "passed",
+         "errors": []
+        }
+       ],
+       "status": "expected"
+      }
+     ]
+    },
+    {
+     "title": "G-34 fixture rule [fx] @gold",
+     "file": "gold/fixture.spec.ts",
+     "line": 26,
+     "tests": [
+      {
+       "projectName": "desktop",
+       "annotations": [
+        {
+         "type": "bench",
+         "description": "fx"
+        }
+       ],
+       "results": [
+        {
+         "status": "passed",
+         "errors": []
+        }
+       ],
+       "status": "expected"
+      }
+     ]
+    },
+    {
+     "title": "G-35 fixture rule [fx] @gold",
+     "file": "gold/fixture.spec.ts",
+     "line": 27,
+     "tests": [
+      {
+       "projectName": "desktop",
+       "annotations": [
+        {
+         "type": "bench",
+         "description": "fx"
+        }
+       ],
+       "results": [
+        {
+         "status": "passed",
+         "errors": []
+        }
+       ],
+       "status": "expected"
+      }
+     ]
+    },
+    {
+     "title": "G-36 fixture rule [fx] @gold",
+     "file": "gold/fixture.spec.ts",
+     "line": 28,
+     "tests": [
+      {
+       "projectName": "desktop",
+       "annotations": [
+        {
+         "type": "bench",
+         "description": "fx"
+        }
+       ],
+       "results": [
+        {
+         "status": "passed",
+         "errors": []
+        }
+       ],
+       "status": "expected"
+      }
+     ]
+    },
+    {
+     "title": "G-37 fixture rule [fx] @gold",
+     "file": "gold/fixture.spec.ts",
+     "line": 29,
+     "tests": [
+      {
+       "projectName": "desktop",
+       "annotations": [
+        {
+         "type": "bench",
+         "description": "fx"
+        }
+       ],
+       "results": [
+        {
+         "status": "passed",
+         "errors": []
+        }
+       ],
+       "status": "expected"
+      }
+     ]
+    },
+    {
+     "title": "G-38 fixture rule [fx] @gold",
+     "file": "gold/fixture.spec.ts",
+     "line": 30,
+     "tests": [
+      {
+       "projectName": "desktop",
+       "annotations": [
+        {
+         "type": "bench",
+         "description": "fx"
+        }
+       ],
+       "results": [
+        {
+         "status": "passed",
+         "errors": []
+        }
+       ],
+       "status": "expected"
+      }
+     ]
+    },
+    {
+     "title": "G-40 fixture rule [fx] @gold",
+     "file": "gold/fixture.spec.ts",
+     "line": 31,
+     "tests": [
+      {
+       "projectName": "desktop",
+       "annotations": [
+        {
+         "type": "bench",
+         "description": "fx"
+        }
+       ],
+       "results": [
+        {
+         "status": "passed",
+         "errors": []
+        }
+       ],
+       "status": "expected"
+      }
+     ]
+    },
+    {
+     "title": "G-42 fixture rule [fx] @gold",
+     "file": "gold/fixture.spec.ts",
+     "line": 32,
+     "tests": [
+      {
+       "projectName": "desktop",
+       "annotations": [
+        {
+         "type": "bench",
+         "description": "fx"
+        }
+       ],
+       "results": [
+        {
+         "status": "passed",
+         "errors": []
+        }
+       ],
+       "status": "expected"
+      }
+     ]
+    },
+    {
+     "title": "G-43 fixture rule [fx] @gold",
+     "file": "gold/fixture.spec.ts",
+     "line": 33,
+     "tests": [
+      {
+       "projectName": "desktop",
+       "annotations": [
+        {
+         "type": "bench",
+         "description": "fx"
+        }
+       ],
+       "results": [
+        {
+         "status": "passed",
+         "errors": []
+        }
+       ],
+       "status": "expected"
+      }
+     ]
+    },
+    {
+     "title": "G-44 fixture rule [fx] @gold",
+     "file": "gold/fixture.spec.ts",
+     "line": 34,
+     "tests": [
+      {
+       "projectName": "desktop",
+       "annotations": [
+        {
+         "type": "bench",
+         "description": "fx"
+        }
+       ],
+       "results": [
+        {
+         "status": "passed",
+         "errors": []
+        }
+       ],
+       "status": "expected"
+      }
+     ]
+    },
+    {
+     "title": "G-45 fixture rule [fx] @gold",
+     "file": "gold/fixture.spec.ts",
+     "line": 35,
+     "tests": [
+      {
+       "projectName": "desktop",
+       "annotations": [
+        {
+         "type": "bench",
+         "description": "fx"
+        }
+       ],
+       "results": [
+        {
+         "status": "passed",
+         "errors": []
+        }
+       ],
+       "status": "expected"
+      }
+     ]
+    },
+    {
+     "title": "G-46 fixture rule [fx] @gold",
+     "file": "gold/fixture.spec.ts",
+     "line": 36,
+     "tests": [
+      {
+       "projectName": "desktop",
+       "annotations": [
+        {
+         "type": "bench",
+         "description": "fx"
+        }
+       ],
+       "results": [
+        {
+         "status": "passed",
+         "errors": []
+        }
+       ],
+       "status": "expected"
+      }
+     ]
+    },
+    {
+     "title": "G-47 fixture rule [fx] @gold",
+     "file": "gold/fixture.spec.ts",
+     "line": 37,
+     "tests": [
+      {
+       "projectName": "desktop",
+       "annotations": [
+        {
+         "type": "bench",
+         "description": "fx"
+        }
+       ],
+       "results": [
+        {
+         "status": "passed",
+         "errors": []
+        }
+       ],
+       "status": "expected"
+      }
+     ]
+    },
+    {
+     "title": "G-48 fixture rule [fx] @gold",
+     "file": "gold/fixture.spec.ts",
+     "line": 38,
+     "tests": [
+      {
+       "projectName": "desktop",
+       "annotations": [
+        {
+         "type": "bench",
+         "description": "fx"
+        }
+       ],
+       "results": [
+        {
+         "status": "passed",
+         "errors": []
+        }
+       ],
+       "status": "expected"
+      }
+     ]
+    },
+    {
+     "title": "G-49 fixture rule [fx] @gold",
+     "file": "gold/fixture.spec.ts",
+     "line": 39,
+     "tests": [
+      {
+       "projectName": "desktop",
+       "annotations": [
+        {
+         "type": "bench",
+         "description": "fx"
+        }
+       ],
+       "results": [
+        {
+         "status": "passed",
+         "errors": []
+        }
+       ],
+       "status": "expected"
+      }
+     ]
+    },
+    {
+     "title": "G-51 fixture rule [fx] @gold",
+     "file": "gold/fixture.spec.ts",
+     "line": 40,
+     "tests": [
+      {
+       "projectName": "desktop",
+       "annotations": [
+        {
+         "type": "bench",
+         "description": "fx"
+        }
+       ],
+       "results": [
+        {
+         "status": "passed",
+         "errors": []
+        }
+       ],
+       "status": "expected"
+      }
+     ]
+    },
+    {
+     "title": "G-52 fixture rule [fx] @gold",
+     "file": "gold/fixture.spec.ts",
+     "line": 41,
+     "tests": [
+      {
+       "projectName": "touch-390",
+       "annotations": [
+        {
+         "type": "bench",
+         "description": "fx"
+        }
+       ],
+       "results": [
+        {
+         "status": "passed",
+         "errors": []
+        }
+       ],
+       "status": "expected"
+      }
+     ]
+    },
+    {
+     "title": "G-53 fixture rule [fx] @gold",
+     "file": "gold/fixture.spec.ts",
+     "line": 42,
+     "tests": [
+      {
+       "projectName": "desktop",
+       "annotations": [
+        {
+         "type": "bench",
+         "description": "fx"
+        }
+       ],
+       "results": [
+        {
+         "status": "passed",
+         "errors": []
+        }
+       ],
+       "status": "expected"
+      }
+     ]
+    },
+    {
+     "title": "G-54 fixture rule [fx] @gold",
+     "file": "gold/fixture.spec.ts",
+     "line": 43,
+     "tests": [
+      {
+       "projectName": "desktop",
+       "annotations": [
+        {
+         "type": "bench",
+         "description": "fx"
+        }
+       ],
+       "results": [
+        {
+         "status": "passed",
+         "errors": []
+        }
+       ],
+       "status": "expected"
+      }
+     ]
+    },
+    {
+     "title": "G-56 fixture rule [fx] @gold",
+     "file": "gold/fixture.spec.ts",
+     "line": 44,
+     "tests": [
+      {
+       "projectName": "desktop",
+       "annotations": [
+        {
+         "type": "bench",
+         "description": "fx"
+        }
+       ],
+       "results": [
+        {
+         "status": "passed",
+         "errors": []
+        }
+       ],
+       "status": "expected"
+      }
+     ]
+    },
+    {
+     "title": "G-57 fixture rule [fx] @gold",
+     "file": "gold/fixture.spec.ts",
+     "line": 45,
+     "tests": [
+      {
+       "projectName": "desktop",
+       "annotations": [
+        {
+         "type": "bench",
+         "description": "fx"
+        }
+       ],
+       "results": [
+        {
+         "status": "passed",
+         "errors": []
+        }
+       ],
+       "status": "expected"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

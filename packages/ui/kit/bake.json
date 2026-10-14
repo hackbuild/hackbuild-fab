@@ -1,0 +1,68 @@
+{
+  "id": "kit",
+  "out": "kit",
+  "shell": "ui",
+  "title": "kit",
+  "fonts": [
+    {
+      "family": "Permanent Marker",
+      "weight": 400,
+      "style": "normal",
+      "from": "npm:@fontsource/permanent-marker/files/permanent-marker-latin-400-normal.woff2"
+    },
+    {
+      "family": "Special Elite",
+      "weight": 400,
+      "style": "normal",
+      "from": "npm:@fontsource/special-elite/files/special-elite-latin-400-normal.woff2"
+    },
+    {
+      "family": "VT323",
+      "weight": 400,
+      "style": "normal",
+      "from": "npm:@fontsource/vt323/files/vt323-latin-400-normal.woff2"
+    },
+    {
+      "family": "IBM Plex Mono",
+      "weight": 400,
+      "style": "normal",
+      "from": "npm:@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-400-normal.woff2"
+    },
+    {
+      "family": "IBM Plex Mono",
+      "weight": 500,
+      "style": "normal",
+      "from": "npm:@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-500-normal.woff2"
+    },
+    {
+      "family": "IBM Plex Mono",
+      "weight": 600,
+      "style": "normal",
+      "from": "npm:@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-600-normal.woff2"
+    },
+    {
+      "family": "IBM Plex Mono",
+      "weight": 700,
+      "style": "normal",
+      "from": "npm:@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-700-normal.woff2"
+    },
+    {
+      "family": "Libre Baskerville",
+      "weight": 400,
+      "style": "italic",
+      "from": "npm:@fontsource/libre-baskerville/files/libre-baskerville-latin-400-italic.woff2"
+    }
+  ],
+  "css": [
+    {
+      "from": "npm:@virgilvox/hackbuild-ui/dist/styles/hackbuild.css"
+    },
+    {
+      "from": "../src/bench/bench.css"
+    },
+    {
+      "from": "./kit.css"
+    }
+  ],
+  "entry": "./main.ts"
+}

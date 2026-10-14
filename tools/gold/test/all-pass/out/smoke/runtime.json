@@ -1,0 +1,13 @@
+{
+ "fx": [
+  {
+   "measure": "first load",
+   "value": 900,
+   "unit": "ms",
+   "failed": false,
+   "rules": [
+    "G-55"
+   ]
+  }
+ ]
+}
