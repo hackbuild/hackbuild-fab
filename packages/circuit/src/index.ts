@@ -1,4 +1,4 @@
-export { circuitError, conductorGraph, footprint, legOf, polylineLength, postLeg, pressedPath, ringArea } from "./path1d.js";
+export { circuitError, conductorGraph, footprint, legOf, polylineLength, postLeg, pressedPath, ringArea, seatTaps, tapMismatch } from "./path1d.js";
 export type { CircuitError } from "./path1d.js";
 export type { ConductorGraph, Footprint, PathLeg, PressedPath } from "./path1d.js";
 export { flexCapBridgeOhm, rcCrossingUs, rcTauUs } from "./flex-switch.js";

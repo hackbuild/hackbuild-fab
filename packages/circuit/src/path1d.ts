@@ -17,10 +17,14 @@
 // - A net's lead is the conductor whose centreline end reaches the outline
 //   of its body; the net's port sits there. A net with no lead has no
 //   terminal and the path throws E_REF.
+// - A net with a seat tap (PortFeature.tap, a board pin pressed on a seat
+//   bump or socket) ends at the tapped conductor instead, and only there:
+//   the board pin is the MCU terminal (K-04), so no lead to the outline is
+//   needed and an outline end of that net is no terminal.
 
 import type {
   BodyDraft, CommandError, ConductorFeature, ContactFeature, DirectionalResistance, Feature, Mm, NetResistance,
-  Ohm, PartDraft, PortFeature, ProfileLookup, Ring, ThrownCommandError, Tier, Vec2,
+  Ohm, PartDraft, PortFeature, PortTap, ProfileLookup, Ring, ThrownCommandError, Tier, Vec2,
 } from "@hackbuild/spec";
 import { commandError, didYouMean, lowestTier } from "@hackbuild/spec";
 import { sectionResistance } from "@hackbuild/profile";
@@ -61,6 +65,8 @@ export interface PressedPath {
   readonly returnNet: string;
   /** Return port type: the level a press pulls the pin toward. */
   readonly returnType: PortFeature["type"];
+  /** The seat tap each end lands on, key end then return end; null where the end is a lead on the outline. */
+  readonly taps: readonly [PortTap | null, PortTap | null];
   readonly contact: ContactFeature;
   /** Legs in path order, key lead first. */
   readonly legs: readonly PathLeg[];
@@ -194,8 +200,25 @@ export interface ConductorGraph {
   readonly nets: ReadonlyMap<string, readonly string[]>;
   /** Conductor id to the ids it touches on its own net. */
   readonly touches: ReadonlyMap<string, readonly string[]>;
-  /** Conductor ids whose centreline end reaches their body outline: a net's lead. */
+  /** Conductor ids a read path may end on: the seat taps of a tapped net, else the centreline ends on the body outline. */
   readonly leads: ReadonlySet<string>;
+  /** Tapped conductor id to the port whose board pin presses on it. */
+  readonly taps: ReadonlyMap<string, PortFeature>;
+}
+
+/** The seat taps of a part, tapped conductor id to port; E_REF when a tap names no conductor of the port's net. */
+export function seatTaps(features: readonly Feature[]): Map<string, PortFeature> {
+  const out = new Map<string, PortFeature>();
+  for (const f of features) {
+    if (f.kind !== "port" || f.tap === undefined) continue;
+    const c = features.find((x): x is ConductorFeature => x.kind === "conductor" && x.id === f.tap!.conductor);
+    if (c === undefined || c.net !== f.net) {
+      const ids = features.filter((x): x is ConductorFeature => x.kind === "conductor" && x.net === f.net).map((x) => x.id);
+      throw refError(`/features/${f.id}/tap/conductor`, f.tap.conductor, `port ${f.id} taps ${f.tap.conductor}, which is no conductor on net ${f.net}`, ids);
+    }
+    out.set(c.id, f);
+  }
+  return out;
 }
 
 export function conductorGraph(part: PartDraft): ConductorGraph {
@@ -220,8 +243,11 @@ export function conductorGraph(part: PartDraft): ConductorGraph {
     });
   }
 
-  const leads = new Set<string>();
+  const taps = seatTaps(part.features);
+  const tapped = new Set([...taps.values()].map((p) => p.net));
+  const leads = new Set<string>(taps.keys());
   for (const f of list) {
+    if (tapped.has(f.net)) continue;
     const fp = prints.get(f.id);
     if (fp === undefined || fp.kind !== "line") continue;
     const outline = bodyOutline(part, f.body);
@@ -230,7 +256,21 @@ export function conductorGraph(part: PartDraft): ConductorGraph {
       || Math.min(...edges(outline).map(([a, b]) => segDist(p, a, b))) <= fp.half + TOUCH_EPS);
     if (reaches) leads.add(f.id);
   }
-  return { conductors, nets, touches, leads };
+  return { conductors, nets, touches, leads, taps };
+}
+
+/**
+ * Why a hookup entry cannot read the net it names, or null: a tapped net is
+ * wired by the seat, so the entry must read the board pin the seat lands on
+ * the net, on the MCU that board carries.
+ */
+export function tapMismatch(features: readonly Feature[], net: string, h: { readonly mcu: string; readonly pin: string }): string | null {
+  const port = [...seatTaps(features).values()].find((p) => p.net === net);
+  if (port === undefined) return null;
+  const t = port.tap!;
+  if (h.pin !== t.pin) return `hookup reads ${h.pin}, but net ${net} lands on ${t.board} pin ${t.pin} at ${port.id}; set the hookup pin to ${t.pin} or move the net to ${h.pin} in the seat`;
+  if (h.mcu !== t.mcu) return `hookup reads mcu ${h.mcu}, but the seated board ${t.board} carries ${t.mcu}; set the hookup mcu to ${t.mcu}`;
+  return null;
 }
 
 /** Shortest chain of touching conductors from `from` to a lead of the same net, breadth first. */
@@ -251,7 +291,11 @@ function chainToLead(g: ConductorGraph, from: string, net: string): string[] {
       }
     }
   }
-  throw refError(`/features/${from}`, net, `net ${net} has no lead from ${from} to its body outline; extend a trace to the edge`);
+  const tap = [...g.taps.values()].find((p) => p.net === net);
+  if (tap !== undefined) {
+    throw refError(`/features/${from}`, net, `net ${net} has no chain of touching conductors from ${from} to its seat tap ${tap.tap!.conductor} (${tap.tap!.board} ${tap.tap!.pin}); route a trace onto the seat terminal`);
+  }
+  throw refError(`/features/${from}`, net, `net ${net} has no lead from ${from} to its body outline; extend a trace to the edge, or seat the board so its pin taps the net`);
 }
 
 /** One leg read from a resistivity row: lengthMm over areaMm2 in `direction`, through profile sectionResistance. */
@@ -304,8 +348,11 @@ export function pressedPath(part: PartDraft, portId: string, profile: ProfileLoo
   const otherSide = keySide === contact.a ? contact.b : contact.a;
   const other = g.conductors.get(otherSide);
   if (other === undefined) throw refError(`/features/${contact.id}`, otherSide, `contact ${contact.id} names no conductor ${otherSide}`);
-  const returnPort = part.features.find((f: Feature): f is PortFeature => f.kind === "port" && f.net === other.net);
+  const portOf = (net: string): PortFeature | undefined =>
+    [...g.taps.values()].find((p) => p.net === net) ?? part.features.find((f: Feature): f is PortFeature => f.kind === "port" && f.net === net);
+  const returnPort = portOf(other.net);
   if (returnPort === undefined) throw refError(`/features/${contact.id}`, other.net, `net ${other.net} has no port`);
+  const keyPort = [...g.taps.values()].find((p) => p.net === port.net) ?? port;
 
   const keyChain = chainToLead(g, keySide, port.net).reverse();
   const returnChain = chainToLead(g, otherSide, other.net);
@@ -319,14 +366,15 @@ export function pressedPath(part: PartDraft, portId: string, profile: ProfileLoo
     direction: l.direction, lengthMm: l.lengthMm, areaMm2: l.areaMm2, ohmCm: l.ohmCm, ohm: l.ohm,
   }));
   return {
-    terminals: [port.id, returnPort.id],
+    terminals: [keyPort.id, returnPort.id],
     keyNet: port.net,
     returnNet: other.net,
     returnType: returnPort.type,
+    taps: [keyPort.tap ?? null, returnPort.tap ?? null],
     contact,
     legs,
     resistance: {
-      terminals: [port.id, returnPort.id],
+      terminals: [keyPort.id, returnPort.id],
       preview: { method: "path-1d", segments, ohm },
       solved: null,
       solvedOverPreview: null,

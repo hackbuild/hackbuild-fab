@@ -3,7 +3,8 @@
   "compilerOptions": {
     "outDir": "dist",
     "rootDir": "src",
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "resolveJsonModule": true
   },
   "include": [
     "src"
@@ -14,6 +15,9 @@
     },
     {
       "path": "../geom"
+    },
+    {
+      "path": "../catalog"
     }
   ]
 }

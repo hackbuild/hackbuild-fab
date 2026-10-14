@@ -25,7 +25,7 @@ import type {
   PinReading, ProfileLookup, Qualification, Qualified, ReadOutputs, Tier, Volt,
 } from "@hackbuild/spec";
 import { qualify, qualifyRow } from "@hackbuild/spec";
-import { circuitError, conductorGraph, pressedPath, type PathLeg, type PressedPath } from "./path1d.js";
+import { circuitError, conductorGraph, pressedPath, tapMismatch, type PathLeg, type PressedPath } from "./path1d.js";
 import { rcCrossingUs, rcTauUs } from "./flex-switch.js";
 import { SETTLE_TAUS, chargeReleaseRead, emitWait, expectUnit, type ChargeReleaseRead } from "./read/charge-release.js";
 import { classify, distinguishable, dividerV, pullupEnds } from "./read/pullup.js";
@@ -59,11 +59,13 @@ function pathContacts(
   const capMaterial = cap?.material ?? "unknown";
   const keySide = path.legs.find((l) => l.conductor === path.contact.a || l.conductor === path.contact.b);
   const otherSide = [...path.legs].reverse().find((l) => l.conductor === path.contact.a || l.conductor === path.contact.b);
+  // A seat tap is a board pin pressed on a printed bump or socket: a press contact, never a clip.
+  const endKind = (end: 0 | 1): ContactElement["kind"] => (path.taps[end] === null ? leadKind : "press");
   const elements = [
-    element(path.terminals[0], material(keyLead), "metal", leadKind),
+    element(path.terminals[0], material(keyLead), "metal", endKind(0)),
     element(`${keySide?.conductor ?? path.contact.a}|${cap?.id ?? path.contact.id}`, material(keySide), capMaterial, "press"),
     element(`${cap?.id ?? path.contact.id}|${otherSide?.conductor ?? path.contact.b}`, capMaterial, material(otherSide), "press"),
-    element(path.terminals[1], material(returnLead), "metal", leadKind),
+    element(path.terminals[1], material(returnLead), "metal", endKind(1)),
   ];
   return { elements, tiers };
 }
@@ -231,6 +233,12 @@ export function solveKeys(input: SolveKeysInput): SolveKeysOutput {
     if (h.read.model !== "charge-release") continue;
     if (!part.features.some((f) => f.kind === "port" && f.id === h.port)) {
       warnings.push({ code: "HOOKUP_PORT_ABSENT", text: `hookup port ${h.port} is not in this build; skipped` });
+      continue;
+    }
+    const portNet = part.features.find((f) => f.kind === "port" && f.id === h.port) as { net: string };
+    const mismatch = tapMismatch(part.features, portNet.net, h);
+    if (mismatch !== null) {
+      warnings.push({ code: "HOOKUP_TAP", text: `${h.port}: ${mismatch}; not solved` });
       continue;
     }
     const mcu = input.mcu(h.mcu);

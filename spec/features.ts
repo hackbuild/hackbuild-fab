@@ -336,10 +336,43 @@ export interface PortFeature extends FeatureBase {
   readonly interface: string;
   /** Allowed voltage range, V. */
   readonly voltage?: { /** V */ readonly min: number; /** V */ readonly max: number };
+  /**
+   * A board pin seated on the part: the port is a net tap where a printed
+   * contact meets the pin, and the read path of its net ends here instead
+   * of at a lead on the body outline (K-04). Absent for a port wired off
+   * the part.
+   */
+  readonly tap?: PortTap;
   // The receiving MCU, pin and read model are facts about the wiring, so
   // they live in Chase.hookup (chase.ts), keyed by this port's id. A wiring
   // change leaves the Part IR and its buildHash unchanged; circuit.solve and
-  // the firmware emitter read hookup, and geometry checks never do.
+  // the firmware emitter read hookup, and geometry checks never do. A tap
+  // is geometry: the seat places the board, so its pin is fixed by the part.
+}
+
+/**
+ * Where a seated board's pin lands on a printed contact (a seat bump or
+ * socket). The seat archetype writes it from the board's catalog row;
+ * circuit.solve ends the net's read path at `conductor` and reads the pin
+ * with the row's MCU, and CHK-NET-46 proves the landing.
+ */
+export interface PortTap {
+  /** Conductor feature id the pin presses on. */
+  readonly conductor: string;
+  /** Pin centre in the part frame at the contact face, mm: the catalog pin position placed by the seat frame. */
+  readonly at: Vec3;
+  /** Catalog row id of the seated board, for example "rp2040-zero". */
+  readonly board: string;
+  /** MCU catalog id the board row names, for example "rp2040". */
+  readonly mcu: string;
+  /** Pin name on the board row, for example "GP8". */
+  readonly pin: string;
+  /** How the pin meets the contact: pressed onto a bump, or a header pin into a socket. */
+  readonly contact: "bump" | "socket";
+  /** Declared press depth, mm: the clamp interference on a bump, the pin length into a socket. */
+  readonly pressMm: Mm;
+  /** Body that applies the press when the part carries it; absent when the clamp is another part (a bezel). */
+  readonly clamp?: string;
 }
 
 export interface PadFeature extends FeatureBase {

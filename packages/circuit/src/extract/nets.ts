@@ -34,7 +34,7 @@ import { loadManifold, toManifold, union, withScope, type MeshData } from "@hack
 
 // manifold types through the mesh package, which owns the dependency.
 type Manifold = ReturnType<typeof toManifold>;
-import { circuitError, footprint } from "../path1d.js";
+import { circuitError, footprint, seatTaps } from "../path1d.js";
 import { netRecord } from "./resistance.js";
 
 /** Body roles whose material carries a net (spec/part-ir.ts BodyRole). */
@@ -143,13 +143,20 @@ export interface Tap {
   readonly piece: number | null;
 }
 
-/** A lead: a centreline end that reaches the plan bounds of its host body (path1d lead rule on built geometry). */
+/**
+ * A lead: a centreline end that reaches the plan bounds of its host body
+ * (path1d lead rule on built geometry), or a seat tap, where a board pin
+ * presses on a printed contact (PortFeature.tap). A tapped net lists its
+ * taps first, so its read path starts at the board pin.
+ */
 export interface Lead {
   readonly conductor: string;
-  /** 0 for the first centreline point, 1 for the last. */
+  /** 0 for the first centreline point, 1 for the last; 0 for a seat tap. */
   readonly end: 0 | 1;
-  /** Tap point on the centreline, inside the host bounds by half the trace width, emitted frame, mm. */
+  /** Tap point, emitted frame, mm: on the centreline inside the host bounds by half the trace width, or the board pin centre at mid height of its contact. */
   readonly tap: Vec3;
+  /** The port whose board pin lands here; absent for a lead on the outline. */
+  readonly port?: string;
 }
 
 export interface Extraction {
@@ -296,8 +303,19 @@ export async function extractNets(input: ExtractInput): Promise<Extraction> {
   }
 
   const leads: Record<string, Lead[]> = {};
+  for (const p of seatTaps(part.features).values()) {
+    const t = p.tap!;
+    // Probed at mid height of the contact: the layer snap may move its face, and
+    // whether the pin reaches that face is CHK-NET-46's measure, not the piece's.
+    const c = conductors.find((f) => f.id === t.conductor)!;
+    const z = footprint(c).z;
+    (leads[p.net] ??= []).push({ conductor: t.conductor, end: 0, tap: [t.at[0] - lift[0], t.at[1] - lift[1], (z[0] + z[1]) / 2 - lift[2]], port: p.id });
+  }
   for (const f of conductors) (leads[f.net] ??= []).push(...leadsOf(f, part, lift, touchMm));
   const terminals = part.features.filter((f): f is PortFeature | PadFeature => f.kind === "port" || f.kind === "pad");
+  // A tapped port is tested at its own pin; any other terminal at its net's first lead.
+  const tapAt = (t: PortFeature | PadFeature): Vec3 | null =>
+    (t.kind === "port" ? leads[t.net]?.find((l) => l.port === t.id)?.tap : undefined) ?? leads[t.net]?.[0]?.tap ?? null;
 
   const featureNetsOf = (): string[] => {
     const out: string[] = [];
@@ -351,8 +369,8 @@ export async function extractNets(input: ExtractInput): Promise<Extraction> {
       return k < 0 ? null : k;
     };
     const tapComp = terminals.map((t) => {
-      const lead = leads[t.net]?.[0];
-      return lead === undefined ? null : contains(lead.tap);
+      const at = tapAt(t);
+      return at === null ? null : contains(at);
     });
     const gaps = search === null ? [] : netGaps(featureNetsOf().map((net) => ({
       net, solids: comps.filter((x) => netsOfBody.get(x.c.body)?.includes(net) === true).map((x) => x.m),
@@ -385,7 +403,7 @@ export async function extractNets(input: ExtractInput): Promise<Extraction> {
   const shorts = pieces.flatMap((p, i) => (p.nets.length > 1 ? [{ nets: p.nets, piece: i }] : []));
   const floating = pieces.flatMap((p, i) => (p.nets.length === 0 ? [i] : []));
   const taps: Tap[] = terminals.map((t, i) => ({
-    terminal: t.id, net: t.net, at: leads[t.net]?.[0]?.tap ?? null, piece: pieceOfComp(geo.tapComp[i] ?? null),
+    terminal: t.id, net: t.net, at: tapAt(t), piece: pieceOfComp(geo.tapComp[i] ?? null),
   }));
 
   const warnings: BuildWarning[] = [];

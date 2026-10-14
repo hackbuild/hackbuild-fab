@@ -31,6 +31,10 @@ export function prefixApplyOut(out: ApplyOut, prefix: string): ApplyOut {
   const feature = (x: Feature): Feature => {
     const base = { ...x, id: prefix + x.id, ...(x.body === undefined ? {} : { body: b(x.body) }) } as Feature;
     if (base.kind === "contact") return { ...base, a: f(base.a), b: f(base.b), ...(base.actuator === undefined ? {} : { actuator: b(base.actuator) }) };
+    if (base.kind === "port" && base.tap !== undefined) {
+      const t = base.tap;
+      return { ...base, tap: { ...t, conductor: f(t.conductor), ...(t.clamp === undefined ? {} : { clamp: b(t.clamp) }) } };
+    }
     return base;
   };
   return {

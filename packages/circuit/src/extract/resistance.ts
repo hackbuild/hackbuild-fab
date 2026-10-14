@@ -16,6 +16,13 @@
 // Touching is geometric: two conductors touch when the built components of
 // their bodies joined in extraction.
 //
+// A tapped net (a board pin pressed on a seat contact, PortFeature.tap)
+// starts at the tap. With no contact its far end is the conductor the most
+// touching steps away, the worst case a source resistance must cover (an
+// ADC wiper lead to its terminal). With several contacts each gets its own
+// pair, tap to contact, so a press on any key prices its own return leg
+// instead of the first key's (a branched net once had one pair, INES-02).
+//
 // Left for later cards, so the fields say so instead of guessing:
 // - capToGndPf, couplingPf: the per-mm rule needs the receiving pin's
 //   inputCap from Chase.hookup, M05-T05; written 0 and {} here.
@@ -76,30 +83,56 @@ function chainBetween(ids: readonly string[], from: string, to: string, touches:
   return null;
 }
 
-/** The read path of a net, or null when its far end is not reachable from its lead. */
-export function readPath(input: NetInput): ReadPath | null {
+/** The conductor the most touching steps from `from` (the last in feature order on a tie); `from` when nothing touches it. */
+function farthest(ids: readonly string[], from: string, touches: (a: string, b: string) => boolean): string {
+  const depth = new Map<string, number>([[from, 0]]);
+  const queue = [from];
+  while (queue.length > 0) {
+    const at = queue.shift() as string;
+    for (const next of ids) {
+      if (!depth.has(next) && touches(at, next)) {
+        depth.set(next, (depth.get(at) as number) + 1);
+        queue.push(next);
+      }
+    }
+  }
+  let best = from;
+  for (const id of ids) if ((depth.get(id) ?? -1) >= (depth.get(best) as number)) best = id;
+  return best;
+}
+
+/** The touch test of one net's conductors: same conductive body, or bodies whose components joined in extraction. */
+function touchesOf(input: NetInput, conductors: readonly ConductorFeature[]): (a: string, b: string) => boolean {
+  const bodyOf = new Map(conductors.map((f) => [f.id, bodyOfConductor(f, input.part.bodies)] as const));
+  const pairs = new Set(input.touching.map(([a, b]) => `${a}\u0000${b}`));
+  return (a, b) => {
+    const ba = bodyOf.get(a), bb = bodyOf.get(b);
+    if (ba === null || bb === null || ba === undefined || bb === undefined) return false;
+    return ba === bb || pairs.has(`${ba}\u0000${bb}`) || pairs.has(`${bb}\u0000${ba}`);
+  };
+}
+
+/** The read path of a net to `contact` (else its first contact), or null when its far end is not reachable from its lead. */
+export function readPath(input: NetInput, contactId?: string): ReadPath | null {
   const { id, part, profile } = input;
   const conductors = part.features.filter((f): f is ConductorFeature => f.kind === "conductor" && f.net === id);
   const ids = conductors.map((f) => f.id);
   const start = input.leads[0]?.conductor ?? ids[0];
   if (start === undefined) return null;
-  const contact = part.features.find((f): f is ContactFeature => f.kind === "contact" && (ids.includes(f.a) || ids.includes(f.b)));
+  const contact = part.features.find((f): f is ContactFeature =>
+    f.kind === "contact" && (contactId === undefined || f.id === contactId) && (ids.includes(f.a) || ids.includes(f.b)));
+  const tapPort = input.leads[0]?.port;
+  const touches = touchesOf(input, conductors);
   // A second lead, preferring one on another conductor; the far end of a lone trace is its own other end.
-  const otherLead = input.leads.slice(1).find((l) => l.conductor !== start) ?? input.leads[1];
-  const finish = contact !== undefined ? (ids.includes(contact.a) ? contact.a : contact.b) : otherLead?.conductor ?? start;
+  const otherLead = tapPort === undefined ? input.leads.slice(1).find((l) => l.conductor !== start) ?? input.leads[1] : undefined;
+  const finish = contact !== undefined ? (ids.includes(contact.a) ? contact.a : contact.b)
+    : tapPort !== undefined ? farthest(ids, start, touches) : otherLead?.conductor ?? start;
 
-  const bodyOf = new Map(conductors.map((f) => [f.id, bodyOfConductor(f, part.bodies)] as const));
-  const pairs = new Set(input.touching.map(([a, b]) => `${a}\u0000${b}`));
-  const touches = (a: string, b: string): boolean => {
-    const ba = bodyOf.get(a), bb = bodyOf.get(b);
-    if (ba === null || bb === null || ba === undefined || bb === undefined) return false;
-    return ba === bb || pairs.has(`${ba}\u0000${bb}`) || pairs.has(`${bb}\u0000${ba}`);
-  };
   const chain = chainBetween(ids, start, finish, touches);
   if (chain === null) return null;
 
   const terms = part.features.filter((f): f is PortFeature | PadFeature => (f.kind === "port" || f.kind === "pad") && f.net === id);
-  const from = terms.find((f) => f.kind === "port")?.id ?? terms[0]?.id ?? start;
+  const from = tapPort ?? terms.find((f) => f.kind === "port")?.id ?? terms[0]?.id ?? start;
   const to = contact?.id ?? (otherLead !== undefined ? terms.find((f) => f.id !== from)?.id : undefined) ?? finish;
   const legs = chain.map((c) => {
     const f = conductors.find((x) => x.id === c) as ConductorFeature;
@@ -117,16 +150,27 @@ export function netRecord(input: NetInput): Net {
   const path = readPath(input);
 
   const resistance: NetResistance[] = [];
+  const pairOf = (p: ReadPath): NetResistance => ({
+    terminals: p.terminals,
+    preview: {
+      method: "path-1d",
+      segments: p.legs.map((l): DirectionalResistance => ({ direction: l.direction, lengthMm: l.lengthMm, areaMm2: l.areaMm2, ohmCm: l.ohmCm, ohm: l.ohm })),
+      ohm: p.legs.reduce((s, l) => s + l.ohm, 0),
+    },
+    solved: null,
+    solvedOverPreview: null,
+  });
   if (path !== null) {
-    const segments: DirectionalResistance[] = path.legs.map((l) => ({
-      direction: l.direction, lengthMm: l.lengthMm, areaMm2: l.areaMm2, ohmCm: l.ohmCm, ohm: l.ohm,
-    }));
-    resistance.push({
-      terminals: path.terminals,
-      preview: { method: "path-1d", segments, ohm: path.legs.reduce((s, l) => s + l.ohm, 0) },
-      solved: null,
-      solvedOverPreview: null,
-    });
+    resistance.push(pairOf(path));
+    // A tapped net prices one pair per further contact on it, tap to contact.
+    if (input.leads[0]?.port !== undefined) {
+      const ids = new Set(conductors.map((f) => f.id));
+      for (const c of part.features) {
+        if (c.kind !== "contact" || c.id === path.terminals[1] || !(ids.has(c.a) || ids.has(c.b))) continue;
+        const more = readPath(input, c.id);
+        if (more !== null) resistance.push(pairOf(more));
+      }
+    }
   }
 
   // Series contacts in path order: the pads, then every material interface on the chain.
@@ -140,6 +184,12 @@ export function netRecord(input: NetInput): Net {
   };
   const material = conductors[0]?.material ?? "";
   for (const t of terminals) if (t.kind === "pad") contacts.push(priced(t.id, material, "metal", PAD_CONTACT[t.for]));
+  // A seat tap is a board pin pressed on the tapped conductor: a press contact on that conductor's material.
+  for (const t of terminals) {
+    if (t.kind !== "port" || t.tap === undefined) continue;
+    const on = conductors.find((f) => f.id === t.tap!.conductor);
+    contacts.push(priced(t.id, on?.material ?? material, "metal", "press"));
+  }
   if (path !== null) {
     for (let i = 0; i + 1 < path.chain.length; i++) {
       const a = conductors.find((f) => f.id === path.chain[i]);

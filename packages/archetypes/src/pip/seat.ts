@@ -15,12 +15,26 @@
 // and GUDGEON's header cups are the candidate seats/rp2040-zero-header-cups.
 
 import { z } from "zod";
-import { commandError, type ApplyIn, type ApplyOut, type DerivedValue, type ProfileLookup, type SchemaLike, type Vec2 } from "@hackbuild/spec";
+import { commandError, type ApplyIn, type ApplyOut, type DerivedValue, type PortTap, type ProfileLookup, type SchemaLike, type Vec2 } from "@hackbuild/spec";
 import {
   EZ, circle, dv, fitMetric, locateFit, fitRow, fitWarnings, frameOf, mm, pipStack, place, rect, snapUp,
   type FitRow, type PipStack,
 } from "./common.js";
 import { Emit } from "./emit.js";
+import zeroRow from "@hackbuild/catalog/data/modules/rp2040-zero.json" with { type: "json" };
+
+/** The seated board's catalog row id, its MCU, and its pin centres (row frame: top view, USB toward +y, origin at the board centre). */
+export const SEAT_BOARD = { id: zeroRow.id, mcu: zeroRow.mcu } as const;
+
+/** The pin centre of `name` from the catalog row, mm; E_REF when the row has no such pin. */
+export function boardPin(name: string): Vec2 {
+  const pins = zeroRow.fields.pins.value;
+  const hit = pins.find((q) => q.name === name);
+  if (hit === undefined) {
+    throw commandError({ code: "E_REF", path: "/params/nets", got: name, didYouMean: pins.map((q) => q.name), hint: `catalog row ${zeroRow.id} has no pin ${name}` });
+  }
+  return [hit.at[0] as number, hit.at[1] as number];
+}
 
 /** PIP's default pin map (layout.js line 44) for the buttons at PIP defaults, with the two commons (lines 404 to 405): net to pad. */
 export const PIP_SEAT_NETS: Readonly<Record<string, string>> = {
@@ -218,7 +232,14 @@ export function seatApply(input: ApplyIn<SeatParams>, id: string): ApplyOut {
       e.conductor(`conductor.bump${pad.name}`, net, circle(r, at, 24), floor - EZ, floor + S.bumpH, 2 * r);
     }
     e.terminal(pad.name, net, at, S.post);
-    e.feature({ kind: "port", id: `port.${pad.name}`, net, type: net === "GND" ? "gnd" : net === "3V3" || net === "5V" ? "power" : "signal", interface: "digital" });
+    // The port is the net tap where the board pin lands: the catalog row's pin
+    // centre, placed by the seat frame, on the contact face (the bump top the
+    // board stands on, or the socket bore floor the header pin reaches).
+    const pin = place(f, [boardPin(pad.name)])[0] as Vec2;
+    const tap: PortTap = zz.socket
+      ? { conductor: `conductor.socket${pad.name}`, at: [pin[0], pin[1], floor + 0.72], board: SEAT_BOARD.id, mcu: SEAT_BOARD.mcu, pin: pad.name, contact: "socket", pressMm: S.pinLen }
+      : { conductor: `conductor.bump${pad.name}`, at: [pin[0], pin[1], zz.boardZ], board: SEAT_BOARD.id, mcu: SEAT_BOARD.mcu, pin: pad.name, contact: "bump", pressMm: S.press };
+    e.feature({ kind: "port", id: `port.${pad.name}`, net, type: net === "GND" ? "gnd" : net === "3V3" || net === "5V" ? "power" : "signal", interface: "digital", tap });
   }
 
   // A slot between neighbouring used contacts on one edge (model.js lines 211 to 225).

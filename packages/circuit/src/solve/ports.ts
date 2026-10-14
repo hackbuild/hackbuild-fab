@@ -23,7 +23,7 @@ import type {
   ReadOutputs, Tier, Volt,
 } from "@hackbuild/spec";
 import { lowestTier, qualify } from "@hackbuild/spec";
-import { circuitError } from "../path1d.js";
+import { circuitError, tapMismatch } from "../path1d.js";
 import { floatPoint } from "../release.js";
 import { SETTLE_TAUS, benchSkinOhm, chargeReleaseRead, emitWait, expectUnit, nodeCapPf, touchPathOhm, traceCapRule } from "../read/charge-release.js";
 import { pullupEnds, pullupRead } from "../read/pullup.js";
@@ -171,8 +171,11 @@ export function pressedPathOf(
   // ends at another contact its ohms belong to another key, so the return
   // leg of this press is left out and named unpriced: the path is then a
   // lower bound for this key instead of a copy of another key's figure.
-  const pairTo = ret.resistance[0]!.terminals[1];
+  // A tapped return net prices one pair per contact (extract/resistance.ts); take this press's own.
+  const pair = ret.resistance.find((r) => r.terminals[1] === contact.id) ?? ret.resistance[0]!;
+  const pairTo = pair.terminals[1];
   const ownPair = pairTo === contact.id;
+  const retOhm = pair === ret.resistance[0] ? ret.totalOhm[1] : ret.totalOhm[1] - ret.bulkOhm + pair.preview.ohm;
   const warning: BuildWarning | undefined = ownPair ? undefined : {
     code: "RETURN_PATH_PAIR",
     text: `return net ${ret.id} is priced on its read path ${ret.resistance[0]!.terminals.join(" to ")}, not to ${contact.id}; the return leg of ${net.id} is unpriced and its path a lower bound (a branched net has one priced pair, M05-T04)`,
@@ -180,7 +183,7 @@ export function pressedPathOf(
   const traceMm = net.resistance[0]!.preview.segments.filter((s) => s.direction === "along").reduce((s, x) => s + x.lengthMm, 0);
   const path: PressedPathOhm = {
     net: net.id, returnNet: ret.id, contact: contact.id,
-    pathOhm: net.totalOhm[1] + (ownPair ? ret.totalOhm[1] : 0),
+    pathOhm: net.totalOhm[1] + (ownPair ? retOhm : 0),
     returnType: retPort.type,
     tier: lowestTier([net.tier, ret.tier]) as Tier,
     unpriced: [...net.unpricedContacts, ...(ownPair ? ret.unpricedContacts : [`${ret.id} return to ${contact.id}`]), contact.id],
@@ -251,6 +254,11 @@ export async function solvePorts(input: PortSolveInput): Promise<PortSolve> {
     const port = part.features.find((f): f is PortFeature => f.kind === "port" && f.id === h.port);
     if (port === undefined) {
       warnings.push({ code: "HOOKUP_PORT_ABSENT", text: `hookup port ${h.port} is not in this build; skipped` });
+      continue;
+    }
+    const mismatch = tapMismatch(part.features, port.net, h);
+    if (mismatch !== null) {
+      unsolved.push({ port: h.port, reason: mismatch });
       continue;
     }
     const mcu = input.mcu(h.mcu, `/hookup/${i}/mcu`);
