@@ -8,7 +8,7 @@ import type { CanonHit, CommandInput, CommandOutput, MechanismDef, Process } fro
 import { mechanisms } from "@hackbuild/mechanisms";
 import type { CommandOut } from "../result.js";
 import type { CoreCtx } from "../registry.js";
-import { ZERO, rank, type Scored } from "./canon-hits.js";
+import { ZERO, capped, rank, type Scored } from "./canon-hits.js";
 
 /** One mechanism as the hit list shows it. */
 export function mechanismHit(def: MechanismDef): CanonHit {
@@ -36,6 +36,9 @@ export function runMechFind(input: CommandInput<"mech.find">, ctx: CoreCtx): Com
     .filter((d) => family === undefined || d.family === family)
     .filter((d) => process === undefined || d.processes.includes(process))
     .map((d) => ({ id: d.id, family: d.family, text: [...d.governs, ...d.failureModes, d.provenance], runs: d.status === "typed", def: d }));
-  const hits = rank(entries, input.behaviour).map((e) => mechanismHit(e.def));
-  return { verdict: "pass", stage: "done", inputsHash: ctx.inputsHash, result: { hits }, findings: [], counts: { ...ZERO }, errors: [], artifacts: [], next: [] };
+  const { hits, truncated } = capped(rank(entries, input.behaviour).map((e) => mechanismHit(e.def)));
+  return {
+    verdict: "pass", stage: "done", inputsHash: ctx.inputsHash, result: { hits }, findings: [], counts: { ...ZERO }, errors: [], artifacts: [], next: [],
+    ...(truncated === undefined ? {} : { truncated }),
+  };
 }

@@ -38,15 +38,37 @@ export function interactive(s: GateStreams): boolean {
   return s.input.isTTY === true && s.output.isTTY === true;
 }
 
+/** What a fabrication export is about to write, as the person is shown it. */
+export interface GateInfo {
+  readonly kind: string;
+  readonly machine: string;
+  readonly chase: string;
+  readonly buildHash: string;
+  /** count */
+  readonly fail: number;
+  /** count */
+  readonly warn: number;
+  readonly path: string;
+  readonly notes?: readonly string[];
+}
+
+/**
+ * A gate a transport other than the CLI supplies (the MCP elicitation gate,
+ * core/src/mcp/handlers.ts). It answers for this one call and never writes.
+ */
+export type HostGate = (info: GateInfo) => Promise<GateAnswer>;
+
+/** The gate an export asks: the transport's host gate when it set one, else the terminal. */
+export function askHost(ctx: { readonly gate: GateStreams; readonly hostGate?: HostGate }, info: GateInfo): Promise<GateAnswer> {
+  return ctx.hostGate === undefined ? askGate(gatePrompt(info), ctx.gate) : ctx.hostGate(info);
+}
+
 /**
  * The one prompt: what is written, from which build, any note the person
  * reads before answering (an inferred TPU slot, PROFILE.md 8.1), and that
  * approval names nobody.
  */
-export function gatePrompt(o: {
-  readonly kind: string; readonly machine: string; readonly chase: string; readonly buildHash: string;
-  readonly fail: number; readonly warn: number; readonly path: string; readonly notes?: readonly string[];
-}): string {
+export function gatePrompt(o: GateInfo): string {
   // Every string is written through oneLine: a chase id or path that carries ESC or CR cannot redraw the line.
   const h = oneLine(`${o.buildHash.slice(0, 6)}..${o.buildHash.slice(-2)}`);
   const notes = (o.notes ?? []).map((n) => ` ${oneLine(n)}.`).join("");

@@ -23,3 +23,8 @@ coverage/
 
 # SPRUE upload with no known author, kept on disk only (D-269)
 tools/corpus/inlay/vtracer/07-user-art-reference.png
+
+# persona designs, local only
+.scratch/
+# a host config copied from .mcp.json.example
+.mcp.json

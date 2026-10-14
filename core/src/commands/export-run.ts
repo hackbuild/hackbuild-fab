@@ -14,10 +14,10 @@ import { countsOf, findingsOf, worst, type CommandOut } from "../result.js";
 import type { CoreCtx } from "../registry.js";
 import { exportedLine } from "@hackbuild/project";
 import { storeBuild } from "../load-build.js";
-import { askGate, gatePrompt } from "../tty-gate.js";
+import { askHost } from "../tty-gate.js";
 import { export3mf, fixCalls, mergeWarnings, type Values } from "./build.js";
 import { packageCheckIds, reportChecks, reportOrigin, runAllChecks } from "./check-run.js";
-import { baseArgs, buildTarget } from "./part-build.js";
+import { baseArgs, buildTarget, machineOf } from "./part-build.js";
 import { SHEET_EXPORTERS } from "../exporters/index.js";
 import { partName } from "../exporters/names.js";
 import { runSceneExport, type ExportInput } from "../exporters/scene-export.js";
@@ -88,6 +88,14 @@ export async function runExportRun(wide: ExportInput, ctx: CoreCtx): Promise<Com
   const params = input.params as Values | undefined;
   const built = await buildTarget(input.chase, ctx, params, input.preset);
   const machine = built.part.machine;
+  const row = machineOf(built);
+  if (!row.slices) {
+    const kinds = SHEET_EXPORTERS.filter((e) => (e.processes as readonly string[]).includes(row.process)).map((e) => e.id);
+    throw cmdError({
+      code: "E_SCHEMA", path: "/kind", got: input.kind, expected: "a part built for an fdm machine with a slicer preset",
+      hint: `${input.chase} builds for ${machine}, a ${row.process} machine with no slicer preset, so it takes no 3mf; ${kinds.length === 0 ? `no exporter writes a single ${row.process} part before M10` : `${kinds.join(", ")} export a nest scene with --scene <id> until M10`}`,
+    });
+  }
   if (input.machine !== undefined && input.machine !== machine) {
     throw cmdError({ code: "E_REF", path: "/machine", got: input.machine, didYouMean: [machine], hint: `export on ${machine}, the machine the part was built for` });
   }
@@ -118,10 +126,10 @@ export async function runExportRun(wide: ExportInput, ctx: CoreCtx): Promise<Com
   if (input.dryRun === true) {
     return { ...evidence, verdict: worst(results), stage: "gate", errors: [], artifacts: [], next: [], result: { artifacts: [], warnings } };
   }
-  const answer = await askGate(gatePrompt({
+  const answer = await askHost(ctx, {
     kind: input.kind, machine, chase: built.design.chase.meta.id, buildHash: built.part.buildHash,
     fail: counts.fail, warn: counts.warn, path: shown, notes: inferredSlotNotes(warnings),
-  }), ctx.gate);
+  });
   if (answer === "unavailable") {
     throw cmdError({
       code: "E_GATE_UNAVAILABLE", path: "/", personRuns: personLine(input, machine, ctx.cli.out),

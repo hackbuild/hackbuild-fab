@@ -11,7 +11,7 @@ import { archetypes } from "../canon.js";
 import { fullProfile } from "../load-build.js";
 import type { CommandOut } from "../result.js";
 import type { CoreCtx } from "../registry.js";
-import { ZERO, rank, type Scored } from "./canon-hits.js";
+import { ZERO, capped, rank, type Scored } from "./canon-hits.js";
 
 /**
  * The processes an archetype family is made by: printed parts print,
@@ -54,6 +54,9 @@ export function runArchFind(input: CommandInput<"arch.find">, ctx: CoreCtx): Com
     .filter((d) => input.process === undefined || FAMILY_PROCESS[d.family].includes(input.process))
     .filter((d) => input.channels === undefined || d.channels === null || d.channels <= input.channels)
     .map((d) => ({ id: d.id, family: d.family, text: [...d.senses, ...d.emits], runs: d.status === "proven", def: d }));
-  const hits = rank(entries, input.behaviour).map((e) => archetypeHit(e.def, profile));
-  return { verdict: "pass", stage: "done", inputsHash: ctx.inputsHash, result: { hits }, findings: [], counts: { ...ZERO }, errors: [], artifacts: [], next: [] };
+  const { hits, truncated } = capped(rank(entries, input.behaviour).map((e) => archetypeHit(e.def, profile)));
+  return {
+    verdict: "pass", stage: "done", inputsHash: ctx.inputsHash, result: { hits }, findings: [], counts: { ...ZERO }, errors: [], artifacts: [], next: [],
+    ...(truncated === undefined ? {} : { truncated }),
+  };
 }

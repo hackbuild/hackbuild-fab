@@ -7,13 +7,11 @@
 // command prints CommandResult (--json) or its text mirror and exits by the
 // spec/errors.ts transport tables. Utility verbs print their own record.
 
-import {
-  COMMAND_NAMES, isThrownCommandError,
-  type CommandError, type CommandResult, type Hash, type SchemaIssue,
-} from "@hackbuild/spec";
-import { EXIT_INTERNAL, cmdError, didYouMean, exitOf, schemaError } from "./errors.js";
+import { COMMAND_NAMES, isThrownCommandError, type CommandResult, type Hash } from "@hackbuild/spec";
+import { EXIT_INTERNAL, cmdError, didYouMean, exitOf } from "./errors.js";
+import { execute } from "./execute.js";
 import { hashOf } from "./jcs.js";
-import { errorResult, finish, type CommandOut } from "./result.js";
+import { errorResult } from "./result.js";
 import { CLI_FORM, COMMANDS, VERBS, commandOf, type CliForm, type CoreCtx } from "./registry.js";
 import { Store } from "./store.js";
 import { renderError, renderResult } from "./text.js";
@@ -23,6 +21,8 @@ import { workspaceRoot } from "./commands/build.js";
 import { boardDoctor, doctor, renderDoctor } from "./commands/doctor.js";
 import { explain, explainUri, renderExplained } from "./commands/explain.js";
 import { runParity, type ParityOut } from "./commands/parity.js";
+import { runMcp } from "./commands/mcp.js";
+import { mcpFacts } from "./mcp/discover.js";
 
 export interface Io {
   readonly out: (s: string) => void;
@@ -43,7 +43,8 @@ export function usage(): string {
       const f = CLI_FORM[c.name]!;
       return `  ${c.name.padEnd(18)}${f.targetOptional === true ? `[<${f.target}>]` : `<${f.target}>`} ${flagList(f)}`;
     }),
-    "  doctor",
+    "  doctor            [--json]",
+    "  mcp               [--workspace <dir>] [--tools all|query,prove|sweep]",
     "  explain           <check id, error code or hbf:// uri> [--json]",
     "  parity            <reference> [--accept] [--json]",
   ].join("\n");
@@ -188,16 +189,6 @@ function inputOf(command: string, form: CliForm, rest: readonly string[]): { inp
   return { input, cli, json: p.switches.has("json") };
 }
 
-/** E_SCHEMA from schema issues; an unrecognized key names its own pointer. */
-function issuesError(input: unknown, issues: readonly SchemaIssue[], command: string): CommandError {
-  const first = issues[0] as (SchemaIssue & { keys?: readonly string[] }) | undefined;
-  if (first?.keys !== undefined && first.keys.length > 0) {
-    const key = first.keys[0]!;
-    return { code: "E_SCHEMA", path: `${(first.path ?? []).map((s) => `/${String(s)}`).join("")}/${key}`, got: key, expected: "a field the command declares", hint: `remove ${key}; ${command} takes no such input` };
-  }
-  return schemaError(input, issues, command);
-}
-
 function renderParity(p: ParityOut): string {
   const lines = p.files.map((f) => `${f.status.padEnd(8)} ${f.file}${f.moved.length > 0 ? `   moved ${f.moved.join(", ")}` : ""}`);
   const head = `${p.ok ? "PASS" : "FAIL"} parity ${p.reference} build ${p.buildHash.slice(0, 6)}..${p.buildHash.slice(-2)}${p.accepted ? "   goldens written" : ""}`;
@@ -215,8 +206,12 @@ async function runVerb(verb: string, rest: readonly string[], cwd: string, io: I
     const p = parseFlags(verb, rest, [], ["json"]);
     const board = boardDoctor(root);
     const lines = doctor(root, board);
-    io.out(p.switches.has("json") ? JSON.stringify({ lines, result: { board } }, null, 2) : renderDoctor(lines));
+    io.out(p.switches.has("json") ? JSON.stringify({ lines, result: { board, mcp: mcpFacts(root, "all") } }, null, 2) : renderDoctor(lines));
     return lines.some((l) => l.status === "fail") ? 1 : 0;
+  }
+  if (verb === "mcp") {
+    const p = parseFlags(verb, rest, ["workspace", "tools", "http"], []);
+    return runMcp({ ...p.values }, cwd);
   }
   if (verb === "explain") {
     const p = parseFlags(verb, rest, [], ["json"]);
@@ -264,17 +259,15 @@ export async function main(argv: readonly string[], cwd: string, io: Io = STDIO)
     const { input, cli } = inputOf(command, form, rest);
     target = String(input[form.target] ?? input["chase"] ?? "");
     inputsHash = hashOf({ ...input, ...cli }) as Hash;
-    const checked = await def.input["~standard"].validate(input);
-    if (checked.issues !== undefined) throw cmdError(issuesError(input, checked.issues, command));
-    const workspace = workspaceRoot(cwd);
-    const ctx: CoreCtx = {
-      workspace, cwd, branch: "", store: new Store(workspace), transport: "cli",
-      clientCaps: { elicitation: false, tasks: false },
-      signal: { aborted: false, throwIfAborted: () => undefined },
-      inputsHash, gate: io.gate ?? PROCESS_STREAMS, cli,
-    };
-    const run = def.run as unknown as (i: unknown, c: CoreCtx) => Promise<CommandOut<unknown>>;
-    const r: CommandResult<unknown> = finish(await run(checked.value, ctx));
+    const r: CommandResult<unknown> = await execute(def, input, (): CoreCtx => {
+      const workspace = workspaceRoot(cwd);
+      return {
+        workspace, cwd, branch: "", store: new Store(workspace), transport: "cli",
+        clientCaps: { elicitation: false, tasks: false },
+        signal: { aborted: false, throwIfAborted: () => undefined },
+        inputsHash, gate: io.gate ?? PROCESS_STREAMS, cli,
+      };
+    });
     io.out(json ? JSON.stringify(r, null, 2) : renderResult(command, target, r));
     return exitOf(r);
   } catch (e) {

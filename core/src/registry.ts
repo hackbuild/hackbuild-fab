@@ -10,7 +10,7 @@ import { PROCESSES, TIERS } from "@hackbuild/spec";
 import type {
   AnyCommandDef, CommandCtx, CommandDef, CommandInput, CommandName, CommandOutput, Hash, SchemaLike, UtilityVerb,
 } from "@hackbuild/spec";
-import type { GateStreams } from "./tty-gate.js";
+import type { GateStreams, HostGate } from "./tty-gate.js";
 import type { Store } from "./store.js";
 import { runPartBuild } from "./commands/part-build.js";
 import { runPartInspect } from "./commands/part-inspect.js";
@@ -42,6 +42,8 @@ export interface CoreCtx extends CommandCtx {
   readonly store: Store;
   readonly inputsHash: Hash;
   readonly gate: GateStreams;
+  /** Set by a transport that asks through its host (MCP elicitation); absent on the CLI, which asks on the terminal. */
+  readonly hostGate?: HostGate;
   /** CLI transport flags that are not command inputs. */
   readonly cli: { readonly artifact?: string; readonly out?: string };
 }
@@ -633,7 +635,7 @@ export const archApply: CommandDef<"arch.apply"> = {
 export const COMMANDS: readonly AnyCommandDef[] = [partBuild, partInspect, partProbe, asmSolve, checkRun, fitsTable, simRun, simSweep, circuitSolve, motionRun, rulesAudit, viewRender, projectGraph, nestPack, exportRun, constraintsQuery, catalogFind, catalogPinsCmd, mechFind, mechDerive, archFind, archApply];
 
 /** The registered utility verbs (no verdict, no CommandDef). */
-export const VERBS = ["doctor", "explain", "parity"] as const satisfies readonly UtilityVerb[];
+export const VERBS = ["doctor", "explain", "parity", "mcp"] as const satisfies readonly UtilityVerb[];
 
 export function commandOf(name: string): AnyCommandDef | undefined {
   return COMMANDS.find((c) => c.name === name);

@@ -31,6 +31,16 @@ export async function buildTarget(target: string, ctx: CoreCtx, params: Values |
   return buildPart(design, resolveParams(design.chase, params, preset));
 }
 
+/**
+ * The machine a built part names, its process, and whether its profile row
+ * holds a slicer preset. Only a machine with a preset takes a 3mf; a sheet
+ * machine (laser, vinyl) holds none (M06-T02).
+ */
+export function machineOf(built: Built): { readonly id: string; readonly process: string; readonly slices: boolean } {
+  const row = built.design.ws.tables.machines.find((m) => m.id === built.part.machine);
+  return { id: built.part.machine, process: row?.process ?? "unknown", slices: (row?.presets.length ?? 0) > 0 };
+}
+
 /** The params and preset a next call repeats. */
 export function baseArgs(params: Values | undefined, preset: string | undefined): Values {
   return { ...(params === undefined ? {} : { params }), ...(preset === undefined ? {} : { preset }) };
@@ -78,9 +88,12 @@ export async function runPartBuild(input: CommandInput<"part.build">, ctx: CoreC
   ctx.store.putReport(reportChecks(built), checked.results, reportOrigin(built));
   const verdict = worst(checked.results);
   const base = baseArgs(params, input.preset);
-  const next: NextCall[] = verdict !== "fail"
-    ? [{ command: "export.run", args: { chase: input.chase, kind: "3mf", ...base }, why: "every check passes; a person approves the 3mf at a terminal" }]
-    : fixCalls("part.build", input.chase, checked.results, base);
+  // A passing part proposes the 3mf only where the machine slices; a sheet part has no single-part exporter before M10.
+  const next: NextCall[] = verdict === "fail"
+    ? fixCalls("part.build", input.chase, checked.results, base)
+    : machineOf(built).slices
+      ? [{ command: "export.run", args: { chase: input.chase, kind: "3mf", ...base }, why: "every check passes; a person approves the 3mf at a terminal" }]
+      : [];
   return {
     verdict, stage: stageOf(verdict), buildHash: built.part.buildHash, inputsHash: ctx.inputsHash,
     findings: findingsOf(checked.results), counts: countsOf(checked.results), errors: [], artifacts: [], next,

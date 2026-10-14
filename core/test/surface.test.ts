@@ -108,7 +108,10 @@ describe("registered surface (M00-T13 step 1, M01-T05 step 7, M02-T11 step 9, M0
   });
 
   it("registers exactly the utility verbs of the M-S, M00, M01 and M02 rows", () => {
-    const want = new Set(rows.flatMap(([, cell]) => mentioned(cell, UTILITY_VERBS)));
+    // hbf mcp landed ahead of M12 from the M12-T01 card; the M12 row names it.
+    const m12 = surfaceRows(["M12"]).flatMap(([, cell]) => mentioned(cell, UTILITY_VERBS)).filter((v) => v === "mcp");
+    expect(m12).toContain("mcp");
+    const want = new Set([...rows.flatMap(([, cell]) => mentioned(cell, UTILITY_VERBS)), ...m12]);
     expect([...VERBS].sort()).toEqual([...want].sort());
   });
 
