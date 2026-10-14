@@ -1,0 +1,247 @@
+{
+ "record": "slug-legacy",
+ "card": "M07-T01",
+ "date": "2026-10-08",
+ "qualifier": "computed: the page's own nest(), sheetDXF() and sheetSVG() run in node on the pinned slug.html; connectivity by an even-odd ray test from each loop's first vertex",
+ "command": "node designs/slug/legacy/tools/extract-nest.mjs --check",
+ "machine": {
+  "cpu": "Apple M1",
+  "os": "darwin 21.6.0 arm64",
+  "node": "v22.18.0"
+ },
+ "inputs": {
+  "designs/slug/legacy/slug.html": "2d09238c27d5ca4bf023eeee44939b1500470ad2058822b8d0add48ec9bf3241",
+  "designs/slug/legacy/sheets/slug_ply_sheet1.dxf": "5223680a0bc425c4997034e1965d7c5e8e0e3dc5b0e0710834bc49c752849077",
+  "designs/slug/legacy/sheets/slug_ply_sheet1.svg": "778b5cb5176bda74ebb353039239f898ef2c536f9809ea64f3b9a49ea938183b",
+  "designs/slug/legacy/sheets/slug_ply_sheet2.dxf": "a3636008fc6527f2b2d34453122faf29e1cdb8e6a4eb602ed9a723981632771f",
+  "designs/slug/legacy/sheets/slug_ply_sheet2.svg": "e8b7935d5c7493c6d606c69d31dacc574a392adc24a028cdd6738c71ec3449b6",
+  "designs/slug/legacy/sheets/slug_ply_sheet3.dxf": "b72bd967f0588a9e0f3940016b71c59a940095ce4bd62f5091882b3910b7632e",
+  "designs/slug/legacy/sheets/slug_ply_sheet3.svg": "5bea7423724a77d164b6445a16ffd91390b7d8f1b5d01c6cfb3a2ad050bcb25b",
+  "designs/slug/legacy/sheets/slug_ply_sheet4.dxf": "339ac13fee618c9e3f1fdde94ae788ae16f3bb603f3f305b3e5680372400b098",
+  "designs/slug/legacy/sheets/slug_ply_sheet4.svg": "6dd5dc7becc16d5d447e090cfcba196180a75ac5974e07498d5b6e5e6f60f4bf",
+  "designs/slug/legacy/sheets/slug_ply_sheet5.dxf": "f72e9137a2b6fe10ed94e833f596169ed35af75331fc60b7fda9a14a8cadfa3a",
+  "designs/slug/legacy/sheets/slug_ply_sheet5.svg": "7f230b602d10f21cd6d389b9c8b4117260069497842e695c12cdabf578ba789d",
+  "designs/slug/legacy/sheets/slug_ply_sheet6.dxf": "aedd8f8e288c73e7caaab5b6bfa8dd43c4dfcc67f820246eea71e5b542a5afb3",
+  "designs/slug/legacy/sheets/slug_ply_sheet6.svg": "59c5c75d799c3a1911c745ed609b2e1e6ea32cd0d1590fd6137365ef572c659f",
+  "designs/slug/legacy/sheets/slug_ply_sheet7.dxf": "655dfdf99599eac7a20633463bd74ae68fe4ac10cfc0c01ee962bb8dd02d9c92",
+  "designs/slug/legacy/sheets/slug_ply_sheet7.svg": "b3187650a220eb2cc122136e5cd55773dd1be68e0071b737d5ffd13262aec7d7",
+  "designs/slug/legacy/sheets/slug_ply_sheet8.dxf": "ed52795c20b09a0ee7a16bdb40e383574062805c3d458a219f8db5f5fcbef28e",
+  "designs/slug/legacy/sheets/slug_ply_sheet8.svg": "0a40cecb0f1e5a3849e3f9838a355ecdaed2e6bd8323a51e05cd6920bddc6495",
+  "designs/slug/legacy/sheets/slug_ply_sheet9.dxf": "a50dc6ba56c199989f70b078445503e328cdf5b18d9a365a778a6a4659ccbddc",
+  "designs/slug/legacy/sheets/slug_ply_sheet9.svg": "95ed22d7cb47537e6af96c27b17a7ca54d48e14a26345f173fa9a11fdc5b0f4c",
+  "designs/slug/legacy/sheets/slug_acrylic_sheet1.dxf": "d22ee353c35a871312f93c46ca10ee69f54d3b1e47a69f277ede40529fd4b899",
+  "designs/slug/legacy/sheets/slug_acrylic_sheet1.svg": "8d88145efd0afd8b5c5bacd8628c4571cbcb344b8e7e0cf0d5e5f1cf81ae036e"
+ },
+ "resultSha256": "5ce21f8c9b27e7afaf7326004a08c79e69f9999da86777152f5706b99ed1962e",
+ "result": {
+  "params": {
+   "sheetW": 600,
+   "sheetH": 400,
+   "gap": 4,
+   "margin": 6
+  },
+  "partQty": {
+   "names": 42,
+   "pieces": 63
+  },
+  "outlines": {
+   "names": 46,
+   "notInPartQty": [
+    "ret_lip",
+    "ret_back",
+    "door_flap",
+    "window"
+   ]
+  },
+  "nest": {
+   "ply": {
+    "sheets": 9,
+    "oversize": [],
+    "partsPerSheet": [
+     3,
+     3,
+     11,
+     18,
+     5,
+     5,
+     6,
+     7,
+     2
+    ],
+    "loopsPerSheet": [
+     34,
+     26,
+     38,
+     97,
+     52,
+     38,
+     39,
+     89,
+     5
+    ],
+    "fillPercent": [
+     82,
+     86,
+     76,
+     76,
+     77,
+     82,
+     73,
+     83,
+     11
+    ]
+   },
+   "acrylic": {
+    "sheets": 1,
+    "oversize": [],
+    "partsPerSheet": [
+     3
+    ],
+    "loopsPerSheet": [
+     6
+    ],
+    "fillPercent": [
+     1
+    ]
+   }
+  },
+  "dxfByteEqual": 10,
+  "svgByteEqual": 10,
+  "files": [
+   {
+    "name": "slug_ply_sheet1.dxf",
+    "shippedSha256": "5223680a0bc425c4997034e1965d7c5e8e0e3dc5b0e0710834bc49c752849077",
+    "regeneratedSha256": "5223680a0bc425c4997034e1965d7c5e8e0e3dc5b0e0710834bc49c752849077",
+    "equal": true
+   },
+   {
+    "name": "slug_ply_sheet1.svg",
+    "shippedSha256": "778b5cb5176bda74ebb353039239f898ef2c536f9809ea64f3b9a49ea938183b",
+    "regeneratedSha256": "778b5cb5176bda74ebb353039239f898ef2c536f9809ea64f3b9a49ea938183b",
+    "equal": true
+   },
+   {
+    "name": "slug_ply_sheet2.dxf",
+    "shippedSha256": "a3636008fc6527f2b2d34453122faf29e1cdb8e6a4eb602ed9a723981632771f",
+    "regeneratedSha256": "a3636008fc6527f2b2d34453122faf29e1cdb8e6a4eb602ed9a723981632771f",
+    "equal": true
+   },
+   {
+    "name": "slug_ply_sheet2.svg",
+    "shippedSha256": "e8b7935d5c7493c6d606c69d31dacc574a392adc24a028cdd6738c71ec3449b6",
+    "regeneratedSha256": "e8b7935d5c7493c6d606c69d31dacc574a392adc24a028cdd6738c71ec3449b6",
+    "equal": true
+   },
+   {
+    "name": "slug_ply_sheet3.dxf",
+    "shippedSha256": "b72bd967f0588a9e0f3940016b71c59a940095ce4bd62f5091882b3910b7632e",
+    "regeneratedSha256": "b72bd967f0588a9e0f3940016b71c59a940095ce4bd62f5091882b3910b7632e",
+    "equal": true
+   },
+   {
+    "name": "slug_ply_sheet3.svg",
+    "shippedSha256": "5bea7423724a77d164b6445a16ffd91390b7d8f1b5d01c6cfb3a2ad050bcb25b",
+    "regeneratedSha256": "5bea7423724a77d164b6445a16ffd91390b7d8f1b5d01c6cfb3a2ad050bcb25b",
+    "equal": true
+   },
+   {
+    "name": "slug_ply_sheet4.dxf",
+    "shippedSha256": "339ac13fee618c9e3f1fdde94ae788ae16f3bb603f3f305b3e5680372400b098",
+    "regeneratedSha256": "339ac13fee618c9e3f1fdde94ae788ae16f3bb603f3f305b3e5680372400b098",
+    "equal": true
+   },
+   {
+    "name": "slug_ply_sheet4.svg",
+    "shippedSha256": "6dd5dc7becc16d5d447e090cfcba196180a75ac5974e07498d5b6e5e6f60f4bf",
+    "regeneratedSha256": "6dd5dc7becc16d5d447e090cfcba196180a75ac5974e07498d5b6e5e6f60f4bf",
+    "equal": true
+   },
+   {
+    "name": "slug_ply_sheet5.dxf",
+    "shippedSha256": "f72e9137a2b6fe10ed94e833f596169ed35af75331fc60b7fda9a14a8cadfa3a",
+    "regeneratedSha256": "f72e9137a2b6fe10ed94e833f596169ed35af75331fc60b7fda9a14a8cadfa3a",
+    "equal": true
+   },
+   {
+    "name": "slug_ply_sheet5.svg",
+    "shippedSha256": "7f230b602d10f21cd6d389b9c8b4117260069497842e695c12cdabf578ba789d",
+    "regeneratedSha256": "7f230b602d10f21cd6d389b9c8b4117260069497842e695c12cdabf578ba789d",
+    "equal": true
+   },
+   {
+    "name": "slug_ply_sheet6.dxf",
+    "shippedSha256": "aedd8f8e288c73e7caaab5b6bfa8dd43c4dfcc67f820246eea71e5b542a5afb3",
+    "regeneratedSha256": "aedd8f8e288c73e7caaab5b6bfa8dd43c4dfcc67f820246eea71e5b542a5afb3",
+    "equal": true
+   },
+   {
+    "name": "slug_ply_sheet6.svg",
+    "shippedSha256": "59c5c75d799c3a1911c745ed609b2e1e6ea32cd0d1590fd6137365ef572c659f",
+    "regeneratedSha256": "59c5c75d799c3a1911c745ed609b2e1e6ea32cd0d1590fd6137365ef572c659f",
+    "equal": true
+   },
+   {
+    "name": "slug_ply_sheet7.dxf",
+    "shippedSha256": "655dfdf99599eac7a20633463bd74ae68fe4ac10cfc0c01ee962bb8dd02d9c92",
+    "regeneratedSha256": "655dfdf99599eac7a20633463bd74ae68fe4ac10cfc0c01ee962bb8dd02d9c92",
+    "equal": true
+   },
+   {
+    "name": "slug_ply_sheet7.svg",
+    "shippedSha256": "b3187650a220eb2cc122136e5cd55773dd1be68e0071b737d5ffd13262aec7d7",
+    "regeneratedSha256": "b3187650a220eb2cc122136e5cd55773dd1be68e0071b737d5ffd13262aec7d7",
+    "equal": true
+   },
+   {
+    "name": "slug_ply_sheet8.dxf",
+    "shippedSha256": "ed52795c20b09a0ee7a16bdb40e383574062805c3d458a219f8db5f5fcbef28e",
+    "regeneratedSha256": "ed52795c20b09a0ee7a16bdb40e383574062805c3d458a219f8db5f5fcbef28e",
+    "equal": true
+   },
+   {
+    "name": "slug_ply_sheet8.svg",
+    "shippedSha256": "0a40cecb0f1e5a3849e3f9838a355ecdaed2e6bd8323a51e05cd6920bddc6495",
+    "regeneratedSha256": "0a40cecb0f1e5a3849e3f9838a355ecdaed2e6bd8323a51e05cd6920bddc6495",
+    "equal": true
+   },
+   {
+    "name": "slug_ply_sheet9.dxf",
+    "shippedSha256": "a50dc6ba56c199989f70b078445503e328cdf5b18d9a365a778a6a4659ccbddc",
+    "regeneratedSha256": "a50dc6ba56c199989f70b078445503e328cdf5b18d9a365a778a6a4659ccbddc",
+    "equal": true
+   },
+   {
+    "name": "slug_ply_sheet9.svg",
+    "shippedSha256": "95ed22d7cb47537e6af96c27b17a7ca54d48e14a26345f173fa9a11fdc5b0f4c",
+    "regeneratedSha256": "95ed22d7cb47537e6af96c27b17a7ca54d48e14a26345f173fa9a11fdc5b0f4c",
+    "equal": true
+   },
+   {
+    "name": "slug_acrylic_sheet1.dxf",
+    "shippedSha256": "d22ee353c35a871312f93c46ca10ee69f54d3b1e47a69f277ede40529fd4b899",
+    "regeneratedSha256": "d22ee353c35a871312f93c46ca10ee69f54d3b1e47a69f277ede40529fd4b899",
+    "equal": true
+   },
+   {
+    "name": "slug_acrylic_sheet1.svg",
+    "shippedSha256": "8d88145efd0afd8b5c5bacd8628c4571cbcb344b8e7e0cf0d5e5f1cf81ae036e",
+    "regeneratedSha256": "8d88145efd0afd8b5c5bacd8628c4571cbcb344b8e7e0cf0d5e5f1cf81ae036e",
+    "equal": true
+   }
+  ],
+  "connectivity": {
+   "parts": 46,
+   "loops": 369,
+   "holes": 323,
+   "severed": [],
+   "holesOutsideOuter": 0
+  },
+  "acrylicWithDoorFlapAndWindow": {
+   "qualifier": "informational, quantities inferred from BUILD.md lines 4, 109, 153",
+   "sheets": 1,
+   "partsPerSheet": [
+    5
+   ]
+  }
+ }
+}

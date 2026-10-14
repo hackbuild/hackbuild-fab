@@ -1,0 +1,264 @@
+{
+ "record": "ogee16-assembly-order",
+ "card": "M07-T09",
+ "qualifier": "computed: nest assembly-order and fill mode on the OGEE16 R16 lasercut set (cutfiles.py parts, kerf 0.18 from cutfiles.py, sheet600) and the R16-P plate bills (centauri); steps from packages/nest/records/ogee16-steps.json",
+ "command": "npm test -w packages/nest -- assembly-order",
+ "result": {
+  "lasercut": {
+   "sheets": 3,
+   "fillSheets": 2,
+   "extra": 1,
+   "spans": [
+    [
+     0,
+     4,
+     5
+    ],
+    [
+     5,
+     11,
+     7
+    ],
+    [
+     12,
+     13,
+     2
+    ]
+   ],
+   "layoutHash": "e8e8d718a99076545266ead53b00141271229b571f823cacdd909ab8f324716a",
+   "unassigned": [
+    "coupon"
+   ],
+   "pieces": 182
+  },
+  "plates-knobs": {
+   "sheets": 20,
+   "fillSheets": 19,
+   "extra": 1,
+   "spans": [
+    [
+     0,
+     0,
+     1
+    ],
+    [
+     1,
+     1,
+     1
+    ],
+    [
+     1,
+     1,
+     1
+    ],
+    [
+     1,
+     1,
+     1
+    ],
+    [
+     1,
+     1,
+     1
+    ],
+    [
+     1,
+     1,
+     1
+    ],
+    [
+     2,
+     2,
+     1
+    ],
+    [
+     3,
+     3,
+     1
+    ],
+    [
+     3,
+     3,
+     1
+    ],
+    [
+     4,
+     4,
+     1
+    ],
+    [
+     5,
+     5,
+     1
+    ],
+    [
+     6,
+     6,
+     1
+    ],
+    [
+     6,
+     6,
+     1
+    ],
+    [
+     7,
+     7,
+     1
+    ],
+    [
+     7,
+     7,
+     1
+    ],
+    [
+     8,
+     8,
+     1
+    ],
+    [
+     8,
+     8,
+     1
+    ],
+    [
+     9,
+     9,
+     1
+    ],
+    [
+     10,
+     10,
+     1
+    ],
+    [
+     11,
+     11,
+     1
+    ]
+   ],
+   "layoutHash": "5bbe38b46b1975d82c884ef308fa4f79b7db1d9db870701e660ebcf650326158",
+   "unassigned": [
+    "drivepin"
+   ],
+   "pieces": 115
+  },
+  "plates-servos": {
+   "sheets": 21,
+   "fillSheets": 20,
+   "extra": 1,
+   "spans": [
+    [
+     0,
+     0,
+     1
+    ],
+    [
+     1,
+     1,
+     1
+    ],
+    [
+     1,
+     1,
+     1
+    ],
+    [
+     1,
+     1,
+     1
+    ],
+    [
+     1,
+     1,
+     1
+    ],
+    [
+     1,
+     1,
+     1
+    ],
+    [
+     2,
+     2,
+     1
+    ],
+    [
+     3,
+     3,
+     1
+    ],
+    [
+     3,
+     3,
+     1
+    ],
+    [
+     4,
+     4,
+     1
+    ],
+    [
+     5,
+     5,
+     1
+    ],
+    [
+     6,
+     6,
+     1
+    ],
+    [
+     6,
+     6,
+     1
+    ],
+    [
+     7,
+     7,
+     1
+    ],
+    [
+     7,
+     7,
+     1
+    ],
+    [
+     8,
+     8,
+     1
+    ],
+    [
+     8,
+     8,
+     1
+    ],
+    [
+     8,
+     8,
+     1
+    ],
+    [
+     9,
+     9,
+     1
+    ],
+    [
+     10,
+     10,
+     1
+    ],
+    [
+     11,
+     11,
+     1
+    ]
+   ],
+   "layoutHash": "4a56cacb61addfdb6d4e4a11942f3b20f5d1647c72a86c7effdd660ef92f54af",
+   "unassigned": [
+    "drivepin"
+   ],
+   "pieces": 110
+  }
+ }
+}

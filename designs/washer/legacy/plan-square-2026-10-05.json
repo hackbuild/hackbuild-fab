@@ -1,0 +1,64 @@
+{
+ "canonical": {
+  "PLAN": {
+   "feed": 260,
+   "travel": 400,
+   "accel": 8000,
+   "corner": 0.3,
+   "jd": 0.18,
+   "steps": 4,
+   "tol": 0.05,
+   "jerk": 0.045,
+   "settle": 0,
+   "hz": 50,
+   "buffer": 150,
+   "speed": 1
+  },
+  "servo": {
+   "label": "9g micro (SG90 / MG90S)",
+   "slew": 240,
+   "accel": 1800,
+   "deadband": 8,
+   "frame": 50,
+   "lash": 0.55,
+   "band": 6
+  },
+  "n": 961,
+  "dur": 1.1703,
+  "peak": 260,
+  "corner": 29.461,
+  "midBottom": 260,
+  "resMM": 1.91
+ },
+ "harvest": {
+  "PLAN": {
+   "feed": 160,
+   "travel": 400,
+   "accel": 8000,
+   "corner": 0.3,
+   "jd": 0.18,
+   "steps": 1,
+   "tol": 0.05,
+   "jerk": 0.045,
+   "settle": 0,
+   "hz": 50,
+   "buffer": 90,
+   "speed": 1
+  },
+  "servo": {
+   "label": "9g micro (SG90 / MG90S)",
+   "slew": 240,
+   "accel": 1800,
+   "deadband": 8,
+   "frame": 50,
+   "lash": 0.55,
+   "band": 6
+  },
+  "n": 961,
+  "dur": 2.2983,
+  "peak": 143.669,
+  "corner": 29.461,
+  "midBottom": 95.505,
+  "resMM": 1.91
+ }
+}

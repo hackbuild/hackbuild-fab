@@ -1,0 +1,1029 @@
+{
+ "record": "sparrow-eval",
+ "card": "M07-T13",
+ "qualifier": "build and wall times measured on the machine named; sheets, lengths, separations and layoutHashes computed",
+ "commands": [
+  "bash tools/sparrow/build.sh",
+  "node tools/sparrow/run.mjs eval"
+ ],
+ "build": {
+  "date": "2026-10-09",
+  "status": "built",
+  "machine": {
+   "cpu": "Apple M1",
+   "cores": 8,
+   "memGiB": 16,
+   "os": "darwin arm64 21.6.0",
+   "node": "v22.18.0",
+   "rustc": "rustc 1.92.0 (ded5c06cf 2025-12-08)",
+   "cargo": "cargo 1.92.0 (344c4567c 2025-10-21)",
+   "wasmPack": "wasm-pack 0.13.1"
+  },
+  "sparrow": {
+   "repo": "https://github.com/JeroenGar/sparrow",
+   "commit": "3be915856b543d18c9cb7d4664fe7c53901fe1fd",
+   "version": "0.3.0 (Cargo.toml at the commit)",
+   "licence": "MIT",
+   "jaguaRs": {
+    "version": "1.0.0 (tools/sparrow/native/Cargo.lock; the commit tracks no Cargo.lock)",
+    "licence": "MPL-2.0"
+   },
+   "wrapperPortedFrom": "https://github.com/JeroenGar/sparrow-studio web/wasm/src/lib.rs at a738c18d9c28e371983b164129190dad1616d273 (MIT)"
+  },
+  "native": {
+   "command": "cargo build --release --locked --features only_final_svg",
+   "rustflags": "--remap-path-prefix=<work>=/hbf-sparrow --remap-path-prefix=<cargo home>=/cargo-home -C link-arg=-Wl,-oso_prefix,<work>/",
+   "seconds": 112,
+   "qualifier": "measured, wall time of the cargo build",
+   "binary": {
+    "bytes": 2328096,
+    "sha256": "5bd12e31df97654672233d92b2e701e93efb85c2f0b8c1720b9ab6663be2ce03"
+   }
+  },
+  "wasm": {
+   "command": "wasm-pack build wasm --target no-modules --release --out-dir pkg --no-typescript -- --locked",
+   "rustflags": "--remap-path-prefix=<work>=/hbf-sparrow --remap-path-prefix=<cargo home>=/cargo-home",
+   "seconds": 117,
+   "qualifier": "measured, wall time of wasm-pack",
+   "wasm": {
+    "file": "pkg/hbf_sparrow_wasm_bg.wasm",
+    "bytes": 900903,
+    "sha256": "66b20a667b7dd2f234bc77e8254be78d54c622a81a5813438f37811cf2c93b06"
+   },
+   "glue": {
+    "file": "pkg/hbf_sparrow_wasm.js",
+    "bytes": 10062,
+    "sha256": "482503e35c048aab535a068dd19f42b3f32c78c22ea56d81eb8b495c12d0fbe2",
+    "kind": "classic script (wasm-pack --target no-modules), global wasm_bindgen"
+   },
+   "loadMs": {
+    "qualifier": "measured, glue evaluated and initSync from bytes, one fresh node process per load, 5 loads; V8 compiles lazily, so part of the compile moves to the first call",
+    "values": [
+     8.61,
+     8.93,
+     8.26,
+     8.9,
+     7.59
+    ],
+    "mean": 8.46
+   },
+   "bake": {
+    "limitBytes": 16777216,
+    "base64Bytes": 1201204,
+    "withinLimit": true,
+    "networkAtLoad": "none when initSync is given the bytes; the glue's fetch runs only when init is given a URL",
+    "workerMentions": 0,
+    "sharedMemory": "none"
+   },
+   "closure": {
+    "qualifier": "computed from cargo metadata of tools/sparrow/wasm for wasm32-unknown-unknown",
+    "crates": 108,
+    "licences": {
+     "(MIT OR Apache-2.0) AND Unicode-3.0": 1,
+     "Apache-2.0": 1,
+     "Apache-2.0 OR MIT": 3,
+     "MIT": 19,
+     "MIT OR Apache-2.0": 71,
+     "MIT/Apache-2.0": 3,
+     "MPL-2.0": 1,
+     "Unlicense OR MIT": 7,
+     "Zlib": 1
+    },
+    "copyleft": [
+     {
+      "crate": "jagua-rs",
+      "version": "1.0.0",
+      "licence": "MPL-2.0"
+     }
+    ],
+    "noLicenceField": [
+     "sparrow 0.3.0"
+    ]
+   }
+  }
+ },
+ "evalDate": "2026-10-09",
+ "evalMachine": {
+  "cpu": "Apple M1",
+  "cores": 8,
+  "memGiB": 16,
+  "os": "darwin arm64 21.6.0",
+  "node": "v22.18.0",
+  "rustc": "rustc 1.92.0 (ded5c06cf 2025-12-08)",
+  "cargo": "cargo 1.92.0 (344c4567c 2025-10-21)",
+  "wasmPack": "wasm-pack 0.13.1"
+ },
+ "sets": {
+  "slug-acrylic": {
+   "input": {
+    "source": "packages/nest/scenes/slug-sheets.ts (M07-T07), stock acrylic3, kerf mode none",
+    "items": 1,
+    "pieces": 3,
+    "sheet": [
+     600,
+     400
+    ],
+    "margin": 6,
+    "gap": 4,
+    "kerfMode": "none",
+    "rotations": [
+     0,
+     90,
+     180,
+     270
+    ],
+    "partInPart": true,
+    "roots": 3,
+    "insideHoles": 0,
+    "strip": {
+     "height": 396,
+     "cut": 592,
+     "shift": 2,
+     "minItemSeparation": 4
+    }
+   },
+   "fill": {
+    "sheets": 1,
+    "packer": "maxrects-bssf",
+    "order": "maxSide",
+    "inside": 0,
+    "usedLength": 48,
+    "layoutHash": "4493b4d5f83c958c686b6eb3d144846428a5668d9d4288e52411a196a362338c",
+    "wallMs": {
+     "qualifier": "measured, packSheets with checks, 3 runs",
+     "values": [
+      14,
+      2,
+      12
+     ],
+     "mean": 9
+    }
+   },
+   "sparrow": {
+    "settings": {
+     "timeLimitS": 60,
+     "earlyTermination": true,
+     "workers": "3, the CLI default",
+     "seeds": [
+      1,
+      2
+     ],
+     "runsPerSeed": 2
+    },
+    "perSeed": {
+     "1": {
+      "layoutHashes": [
+       "ed91993804317775158fb789a0f11d352ed6412d484e541f403e6d020e796e34",
+       "ed91993804317775158fb789a0f11d352ed6412d484e541f403e6d020e796e34"
+      ],
+      "equal": true
+     },
+     "2": {
+      "layoutHashes": [
+       "83007dcad63bdebfd4933b998ccef1953c8eec4410fe4eeaae453bd1a3e22c62",
+       "83007dcad63bdebfd4933b998ccef1953c8eec4410fe4eeaae453bd1a3e22c62"
+      ],
+      "equal": true
+     }
+    },
+    "runs": [
+     {
+      "run": 1,
+      "backend": "native",
+      "seed": 1,
+      "sheets": 1,
+      "pieces": 3,
+      "inside": 0,
+      "oneStripLength": 42.028,
+      "usedLength": 46.012,
+      "wallMs": 163,
+      "minEdge": 6.0065,
+      "minSeparation": 6.4289,
+      "holds": true,
+      "layoutHash": "ed91993804317775158fb789a0f11d352ed6412d484e541f403e6d020e796e34",
+      "strips": [
+       {
+        "roots": 3,
+        "kept": 3,
+        "stripLength": 42.028,
+        "usedLength": 46.012,
+        "wallMs": 149,
+        "firstPlacementsSha256": "f101f50f66a95168e243b46c674bcd6ee1bc71c79c57e8751285fb9f6baa7797"
+       }
+      ]
+     },
+     {
+      "run": 2,
+      "backend": "native",
+      "seed": 1,
+      "sheets": 1,
+      "pieces": 3,
+      "inside": 0,
+      "oneStripLength": 42.028,
+      "usedLength": 46.012,
+      "wallMs": 156,
+      "minEdge": 6.0065,
+      "minSeparation": 6.4289,
+      "holds": true,
+      "layoutHash": "ed91993804317775158fb789a0f11d352ed6412d484e541f403e6d020e796e34",
+      "strips": [
+       {
+        "roots": 3,
+        "kept": 3,
+        "stripLength": 42.028,
+        "usedLength": 46.012,
+        "wallMs": 153,
+        "firstPlacementsSha256": "f101f50f66a95168e243b46c674bcd6ee1bc71c79c57e8751285fb9f6baa7797"
+       }
+      ]
+     },
+     {
+      "run": 1,
+      "backend": "native",
+      "seed": 2,
+      "sheets": 1,
+      "pieces": 3,
+      "inside": 0,
+      "oneStripLength": 42.028,
+      "usedLength": 46.019,
+      "wallMs": 149,
+      "minEdge": 6.0102,
+      "minSeparation": 4.1021,
+      "holds": true,
+      "layoutHash": "83007dcad63bdebfd4933b998ccef1953c8eec4410fe4eeaae453bd1a3e22c62",
+      "strips": [
+       {
+        "roots": 3,
+        "kept": 3,
+        "stripLength": 42.028,
+        "usedLength": 46.019,
+        "wallMs": 146,
+        "firstPlacementsSha256": "a13ffd8722e0d78961f4414a3dde84f3e6b70b3dce09d880f588346c034e9d24"
+       }
+      ]
+     },
+     {
+      "run": 2,
+      "backend": "native",
+      "seed": 2,
+      "sheets": 1,
+      "pieces": 3,
+      "inside": 0,
+      "oneStripLength": 42.028,
+      "usedLength": 46.019,
+      "wallMs": 145,
+      "minEdge": 6.0102,
+      "minSeparation": 4.1021,
+      "holds": true,
+      "layoutHash": "83007dcad63bdebfd4933b998ccef1953c8eec4410fe4eeaae453bd1a3e22c62",
+      "strips": [
+       {
+        "roots": 3,
+        "kept": 3,
+        "stripLength": 42.028,
+        "usedLength": 46.019,
+        "wallMs": 140,
+        "firstPlacementsSha256": "a13ffd8722e0d78961f4414a3dde84f3e6b70b3dce09d880f588346c034e9d24"
+       }
+      ]
+     }
+    ],
+    "wasm": [
+     {
+      "backend": "wasm",
+      "seed": 1,
+      "sheets": 1,
+      "pieces": 3,
+      "inside": 0,
+      "oneStripLength": 42.028,
+      "usedLength": 46.012,
+      "wallMs": 570,
+      "minEdge": 6.0065,
+      "minSeparation": 6.4289,
+      "holds": true,
+      "layoutHash": "ed91993804317775158fb789a0f11d352ed6412d484e541f403e6d020e796e34",
+      "strips": [
+       {
+        "roots": 3,
+        "kept": 3,
+        "stripLength": 42.028,
+        "usedLength": 46.012,
+        "wallMs": 566,
+        "firstPlacementsSha256": "f101f50f66a95168e243b46c674bcd6ee1bc71c79c57e8751285fb9f6baa7797"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  "ogee16-r16": {
+   "input": {
+    "source": "packages/nest/records/ogee16-connect.json (M07-T06), compensated at cutfiles.py KERF 0.18, margin and gap GAP 4",
+    "items": 27,
+    "pieces": 183,
+    "sheet": [
+     600,
+     400
+    ],
+    "margin": 4,
+    "gap": 4,
+    "kerfMode": "outline",
+    "rotations": [
+     0,
+     90,
+     180,
+     270
+    ],
+    "partInPart": true,
+    "roots": 183,
+    "insideHoles": 0,
+    "strip": {
+     "height": 400,
+     "cut": 596,
+     "shift": 0,
+     "minItemSeparation": 4
+    }
+   },
+   "fill": {
+    "sheets": 2,
+    "packer": "maxrects-bssf",
+    "order": "area",
+    "inside": 0,
+    "usedLength": 1187.125,
+    "layoutHash": "f316abdd3e654c774b51325f5b9dc969e156e381475a72a5e77c7af56ac0940b",
+    "wallMs": {
+     "qualifier": "measured, packSheets with checks, 3 runs",
+     "values": [
+      8892,
+      6894,
+      7355
+     ],
+     "mean": 7714
+    }
+   },
+   "sparrow": {
+    "settings": {
+     "timeLimitS": 60,
+     "earlyTermination": true,
+     "workers": "3, the CLI default",
+     "seeds": [
+      1,
+      2
+     ],
+     "runsPerSeed": 2
+    },
+    "perSeed": {
+     "1": {
+      "layoutHashes": [
+       "ef2d51d2ae8dddb0e344c28531a79a83b9a795d2083b9fa4ad576e611f244b0a",
+       "52bd136985c2341dceb63a36ed535ddee5736a90c6dfb6a9bb7830c5d0ea85d1"
+      ],
+      "equal": false
+     },
+     "2": {
+      "layoutHashes": [
+       "78d11eaa12a3a8ea93aadc0c34ff3d9f8efd7776da27806edc1d6affc64f5c62",
+       "78d11eaa12a3a8ea93aadc0c34ff3d9f8efd7776da27806edc1d6affc64f5c62"
+      ],
+      "equal": true
+     }
+    },
+    "runs": [
+     {
+      "run": 1,
+      "backend": "native",
+      "seed": 1,
+      "sheets": 3,
+      "pieces": 183,
+      "inside": 0,
+      "oneStripLength": 1149.928,
+      "usedLength": 1269.209,
+      "wallMs": 191453,
+      "minEdge": 4,
+      "minSeparation": 4,
+      "holds": true,
+      "layoutHash": "ef2d51d2ae8dddb0e344c28531a79a83b9a795d2083b9fa4ad576e611f244b0a",
+      "strips": [
+       {
+        "roots": 183,
+        "kept": 12,
+        "stripLength": 1149.928,
+        "usedLength": 594.833,
+        "wallMs": 64456,
+        "firstPlacementsSha256": "d3345ff7e05aca32d49605162fe19e0f18fda1b4c826896c97d2d463877aced1"
+       },
+       {
+        "roots": 171,
+        "kept": 110,
+        "stripLength": 662.396,
+        "usedLength": 597.521,
+        "wallMs": 62657,
+        "firstPlacementsSha256": "8cabd06c29f57491c49c0b8b054cbd147079943475a6aaeb4c517dd5aba3c22e"
+       },
+       {
+        "roots": 61,
+        "kept": 61,
+        "stripLength": 76.855,
+        "usedLength": 76.855,
+        "wallMs": 63445,
+        "firstPlacementsSha256": "96ee8f1015a9b6c467af6045ae49da1590ea1c6b463ea3209f66741892fc5fad"
+       }
+      ]
+     },
+     {
+      "run": 2,
+      "backend": "native",
+      "seed": 1,
+      "sheets": 3,
+      "pieces": 183,
+      "inside": 0,
+      "oneStripLength": 1148.778,
+      "usedLength": 1269.179,
+      "wallMs": 194392,
+      "minEdge": 4,
+      "minSeparation": 4.0001,
+      "holds": true,
+      "layoutHash": "52bd136985c2341dceb63a36ed535ddee5736a90c6dfb6a9bb7830c5d0ea85d1",
+      "strips": [
+       {
+        "roots": 183,
+        "kept": 12,
+        "stripLength": 1148.778,
+        "usedLength": 594.601,
+        "wallMs": 71400,
+        "firstPlacementsSha256": "c540ae094d1ad7fa64726afc4480ccfd298efa38f9a49bb38a4a0144cbc63f28"
+       },
+       {
+        "roots": 171,
+        "kept": 111,
+        "stripLength": 660.411,
+        "usedLength": 599.917,
+        "wallMs": 62296,
+        "firstPlacementsSha256": "afa9b62b1b3570c5119b940f3ff173fe00940026cfba7612d6cb21d4e74a74e0"
+       },
+       {
+        "roots": 60,
+        "kept": 60,
+        "stripLength": 74.663,
+        "usedLength": 74.661,
+        "wallMs": 60401,
+        "firstPlacementsSha256": "fdd708a644e978d7ea8c65d551408e9e4b386a6ac2293fd2d3a64cbee69428fe"
+       }
+      ]
+     },
+     {
+      "run": 1,
+      "backend": "native",
+      "seed": 2,
+      "sheets": 3,
+      "pieces": 183,
+      "inside": 0,
+      "oneStripLength": 1142.402,
+      "usedLength": 1223.947,
+      "wallMs": 158739,
+      "minEdge": 4.0001,
+      "minSeparation": 4.0001,
+      "holds": true,
+      "layoutHash": "78d11eaa12a3a8ea93aadc0c34ff3d9f8efd7776da27806edc1d6affc64f5c62",
+      "strips": [
+       {
+        "roots": 183,
+        "kept": 38,
+        "stripLength": 1142.402,
+        "usedLength": 599.067,
+        "wallMs": 62551,
+        "firstPlacementsSha256": "638404b1803b04650ef38c5aabbda5a94a3a039211bef36458b4e9c8fb5427cd"
+       },
+       {
+        "roots": 145,
+        "kept": 135,
+        "stripLength": 610.43,
+        "usedLength": 596.598,
+        "wallMs": 63058,
+        "firstPlacementsSha256": "182d2a56d8e661152e9d541bcdd56b8a51bebbb55bf7cc87914ff86f0073d91c"
+       },
+       {
+        "roots": 10,
+        "kept": 10,
+        "stripLength": 28.282,
+        "usedLength": 28.282,
+        "wallMs": 32984,
+        "firstPlacementsSha256": "6513b535b36115860d029bb85733a0eea7e44d4c4db12bb84b57fdd83bcd025f"
+       }
+      ]
+     },
+     {
+      "run": 2,
+      "backend": "native",
+      "seed": 2,
+      "sheets": 3,
+      "pieces": 183,
+      "inside": 0,
+      "oneStripLength": 1142.402,
+      "usedLength": 1223.947,
+      "wallMs": 155469,
+      "minEdge": 4.0001,
+      "minSeparation": 4.0001,
+      "holds": true,
+      "layoutHash": "78d11eaa12a3a8ea93aadc0c34ff3d9f8efd7776da27806edc1d6affc64f5c62",
+      "strips": [
+       {
+        "roots": 183,
+        "kept": 38,
+        "stripLength": 1142.402,
+        "usedLength": 599.067,
+        "wallMs": 61097,
+        "firstPlacementsSha256": "638404b1803b04650ef38c5aabbda5a94a3a039211bef36458b4e9c8fb5427cd"
+       },
+       {
+        "roots": 145,
+        "kept": 135,
+        "stripLength": 610.43,
+        "usedLength": 596.598,
+        "wallMs": 60955,
+        "firstPlacementsSha256": "182d2a56d8e661152e9d541bcdd56b8a51bebbb55bf7cc87914ff86f0073d91c"
+       },
+       {
+        "roots": 10,
+        "kept": 10,
+        "stripLength": 28.282,
+        "usedLength": 28.282,
+        "wallMs": 33282,
+        "firstPlacementsSha256": "6513b535b36115860d029bb85733a0eea7e44d4c4db12bb84b57fdd83bcd025f"
+       }
+      ]
+     }
+    ],
+    "wasm": "not run"
+   }
+  },
+  "slug-ply": {
+   "input": {
+    "source": "packages/nest/scenes/slug-sheets.ts (M07-T07), stock ply3, kerf mode none",
+    "items": 41,
+    "pieces": 60,
+    "sheet": [
+     600,
+     400
+    ],
+    "margin": 6,
+    "gap": 4,
+    "kerfMode": "none",
+    "rotations": [
+     0,
+     90,
+     180,
+     270
+    ],
+    "partInPart": true,
+    "roots": 37,
+    "insideHoles": 23,
+    "strip": {
+     "height": 396,
+     "cut": 592,
+     "shift": 2,
+     "minItemSeparation": 4
+    }
+   },
+   "fill": {
+    "sheets": 8,
+    "packer": "shelf",
+    "order": null,
+    "inside": 23,
+    "usedLength": 4600.9,
+    "layoutHash": "5bbf6fc74d2e8d2760cd0918dd6068bcdcd88d40a736b050b40f44adb04ee0de",
+    "wallMs": {
+     "qualifier": "measured, packSheets with checks, 3 runs",
+     "values": [
+      460,
+      386,
+      388
+     ],
+     "mean": 411
+    }
+   },
+   "sparrow": {
+    "settings": {
+     "timeLimitS": 60,
+     "earlyTermination": true,
+     "workers": "3, the CLI default",
+     "seeds": [
+      1,
+      2
+     ],
+     "runsPerSeed": 2
+    },
+    "perSeed": {
+     "1": {
+      "layoutHashes": [
+       "b7549a3a2830523e0442916ff50a89bc9eec4fd369e97542cded11a3f9b47d4b",
+       "42943bc2e5afea42329fbb9c5b709e4f31051c5bf99b8b665fa1a3499bffecc3"
+      ],
+      "equal": false
+     },
+     "2": {
+      "layoutHashes": [
+       "e3c359b291fb52352240f4f3d7246cd73f5d78bde92f54a5186a6cb7c1c42465",
+       "e3c359b291fb52352240f4f3d7246cd73f5d78bde92f54a5186a6cb7c1c42465"
+      ],
+      "equal": true
+     }
+    },
+    "runs": [
+     {
+      "run": 1,
+      "backend": "native",
+      "seed": 1,
+      "sheets": 9,
+      "pieces": 60,
+      "inside": 23,
+      "oneStripLength": 4025.187,
+      "usedLength": 4533.579,
+      "wallMs": 321845,
+      "minEdge": 6.001,
+      "minSeparation": 4.0008,
+      "holds": true,
+      "layoutHash": "b7549a3a2830523e0442916ff50a89bc9eec4fd369e97542cded11a3f9b47d4b",
+      "strips": [
+       {
+        "roots": 37,
+        "kept": 4,
+        "stripLength": 4025.187,
+        "usedLength": 567.04,
+        "wallMs": 61536,
+        "firstPlacementsSha256": "68de26ce87df0e54c9ed3a09416ba4c2b7453d9959cdb35205add74bc3ff3b7a"
+       },
+       {
+        "roots": 33,
+        "kept": 5,
+        "stripLength": 3558.913,
+        "usedLength": 558.439,
+        "wallMs": 61205,
+        "firstPlacementsSha256": "e50ad21700991d1e038c2517ffe6787987338dbb2c2fba0281b497fb618ec518"
+       },
+       {
+        "roots": 28,
+        "kept": 3,
+        "stripLength": 3106.195,
+        "usedLength": 358.778,
+        "wallMs": 35003,
+        "firstPlacementsSha256": "67cced64733ec1b8e37f21ce213bc9fdd389b5c0c3cb67787eb278dc4b87d035"
+       },
+       {
+        "roots": 25,
+        "kept": 4,
+        "stripLength": 2778.036,
+        "usedLength": 583.101,
+        "wallMs": 54511,
+        "firstPlacementsSha256": "ddaeba623e05f2cdab53ac82dc47f43f2e13c00cfa7692d3e88657086983e913"
+       },
+       {
+        "roots": 21,
+        "kept": 6,
+        "stripLength": 2288.456,
+        "usedLength": 581.577,
+        "wallMs": 31785,
+        "firstPlacementsSha256": "98a65391be082c624536a4b1f864c2d4204b8f1dc3e6b6ed6a8f49a423145e3b"
+       },
+       {
+        "roots": 15,
+        "kept": 5,
+        "stripLength": 1744.228,
+        "usedLength": 585.637,
+        "wallMs": 35101,
+        "firstPlacementsSha256": "35e7c2f9e585a8fe9277c7762f10e194d9116d12167fe5e1690f2e1b86906b1b"
+       },
+       {
+        "roots": 10,
+        "kept": 5,
+        "stripLength": 1245.057,
+        "usedLength": 576.001,
+        "wallMs": 24732,
+        "firstPlacementsSha256": "6daa9bd86410c2821b15c3ac82accd0abbdc46967ce91debdc90b5fb1ec039a4"
+       },
+       {
+        "roots": 5,
+        "kept": 3,
+        "stripLength": 708.002,
+        "usedLength": 495.002,
+        "wallMs": 17763,
+        "firstPlacementsSha256": "6a941595b5a363df9318eb40b736b7d88163d505124b53f9f8d455538a647d70"
+       },
+       {
+        "roots": 2,
+        "kept": 2,
+        "stripLength": 224.007,
+        "usedLength": 228.004,
+        "wallMs": 54,
+        "firstPlacementsSha256": "c59512bba807ba5e315c89a9eba26c51be53a7255a0b67e1466b042b90a69365"
+       }
+      ]
+     },
+     {
+      "run": 2,
+      "backend": "native",
+      "seed": 1,
+      "sheets": 8,
+      "pieces": 60,
+      "inside": 23,
+      "oneStripLength": 4011.106,
+      "usedLength": 4303.249,
+      "wallMs": 339762,
+      "minEdge": 6.0002,
+      "minSeparation": 4.0011,
+      "holds": true,
+      "layoutHash": "42943bc2e5afea42329fbb9c5b709e4f31051c5bf99b8b665fa1a3499bffecc3",
+      "strips": [
+       {
+        "roots": 37,
+        "kept": 3,
+        "stripLength": 4011.106,
+        "usedLength": 471.029,
+        "wallMs": 61454,
+        "firstPlacementsSha256": "98ef6cda1619901fb841c8e1a041235211c66b8543d31f05816fd55b7329f23b"
+       },
+       {
+        "roots": 34,
+        "kept": 5,
+        "stripLength": 3554.587,
+        "usedLength": 461.571,
+        "wallMs": 61164,
+        "firstPlacementsSha256": "f1ab6c5dab4fae61ede3222923fe84bf7cd701aab48ccbb410d9e94b019418cf"
+       },
+       {
+        "roots": 29,
+        "kept": 4,
+        "stripLength": 3120.694,
+        "usedLength": 495.131,
+        "wallMs": 60965,
+        "firstPlacementsSha256": "42533ec76c7a97e34255fee8ba131b6694f8a02073584084304ba6925a1f7383"
+       },
+       {
+        "roots": 25,
+        "kept": 5,
+        "stripLength": 2630.396,
+        "usedLength": 595.256,
+        "wallMs": 59776,
+        "firstPlacementsSha256": "2401f009ead7cec0a998b3e1507970b1611153181915aa9842d59ed8d9360378"
+       },
+       {
+        "roots": 20,
+        "kept": 4,
+        "stripLength": 2130.058,
+        "usedLength": 548.668,
+        "wallMs": 25736,
+        "firstPlacementsSha256": "9eb54d0072c845a66f7e90f9facdf7ab489c968377c047a01d896f7befd6602d"
+       },
+       {
+        "roots": 16,
+        "kept": 4,
+        "stripLength": 1623.118,
+        "usedLength": 585.035,
+        "wallMs": 27495,
+        "firstPlacementsSha256": "e7c38aa8867fe355de11ce86be1d9a8307ade0a38ca3def038f4022a12a71610"
+       },
+       {
+        "roots": 12,
+        "kept": 7,
+        "stripLength": 1068.04,
+        "usedLength": 561.557,
+        "wallMs": 25892,
+        "firstPlacementsSha256": "30fea1e7beafb99081374376b08ac89efc8f9ee905465d1d2e8b3a9e4925c4b9"
+       },
+       {
+        "roots": 5,
+        "kept": 5,
+        "stripLength": 581.005,
+        "usedLength": 585.002,
+        "wallMs": 17062,
+        "firstPlacementsSha256": "7a4eeb9f8102b555543dc9524e2d2f009ffc0b022042bf7c7b9ac575829cbba2"
+       }
+      ]
+     },
+     {
+      "run": 1,
+      "backend": "native",
+      "seed": 2,
+      "sheets": 9,
+      "pieces": 60,
+      "inside": 23,
+      "oneStripLength": 4022.722,
+      "usedLength": 4336.791,
+      "wallMs": 398019,
+      "minEdge": 6.0005,
+      "minSeparation": 4.0011,
+      "holds": true,
+      "layoutHash": "e3c359b291fb52352240f4f3d7246cd73f5d78bde92f54a5186a6cb7c1c42465",
+      "strips": [
+       {
+        "roots": 37,
+        "kept": 3,
+        "stripLength": 4022.722,
+        "usedLength": 495.03,
+        "wallMs": 61243,
+        "firstPlacementsSha256": "3d3b494eaa077304f538ed5d4320db54c7bbbdc0a06af79987fbc240bda044c3"
+       },
+       {
+        "roots": 34,
+        "kept": 3,
+        "stripLength": 3543.13,
+        "usedLength": 542.339,
+        "wallMs": 61605,
+        "firstPlacementsSha256": "8b520cd3ae17add296364fd8aee69c2c19077853b7360db8850a4ef287501a94"
+       },
+       {
+        "roots": 31,
+        "kept": 3,
+        "stripLength": 3033.43,
+        "usedLength": 529.423,
+        "wallMs": 47539,
+        "firstPlacementsSha256": "c105e026729e8bfe02328ddd8063818d505e4254e589da61883fc081667ec756"
+       },
+       {
+        "roots": 28,
+        "kept": 5,
+        "stripLength": 2589.126,
+        "usedLength": 507.138,
+        "wallMs": 61299,
+        "firstPlacementsSha256": "5543fb9f698939dc4e5c56cfec2f93c567b2cc3244d81e501eee412788f4eed5"
+       },
+       {
+        "roots": 23,
+        "kept": 7,
+        "stripLength": 2096.217,
+        "usedLength": 495.034,
+        "wallMs": 47177,
+        "firstPlacementsSha256": "bd517203d484cbb492c7578b92be7744082464aa98d48dd4cf734e277aac6ebc"
+       },
+       {
+        "roots": 16,
+        "kept": 5,
+        "stripLength": 1613.022,
+        "usedLength": 585.037,
+        "wallMs": 45524,
+        "firstPlacementsSha256": "4abbc32f207fafd693f5c6da21717eb4c968199dfbaa46ae0f32d4a9a605d4b4"
+       },
+       {
+        "roots": 11,
+        "kept": 5,
+        "stripLength": 1067.946,
+        "usedLength": 391.041,
+        "wallMs": 39725,
+        "firstPlacementsSha256": "9ad33d71d33cd1ec684b61596eea970c12a74c69e477db4efa7387432054e81a"
+       },
+       {
+        "roots": 6,
+        "kept": 4,
+        "stripLength": 740.004,
+        "usedLength": 516.749,
+        "wallMs": 24874,
+        "firstPlacementsSha256": "aa3810de4854ce724ba1c0a43d58e86e1286cb49b5606d18437ea91bd6a19eff"
+       },
+       {
+        "roots": 2,
+        "kept": 2,
+        "stripLength": 271.001,
+        "usedLength": 275,
+        "wallMs": 8793,
+        "firstPlacementsSha256": "5c0d878850657f8e7f64314856217104ece838116258e6f356503480c6d9e25d"
+       }
+      ]
+     },
+     {
+      "run": 2,
+      "backend": "native",
+      "seed": 2,
+      "sheets": 9,
+      "pieces": 60,
+      "inside": 23,
+      "oneStripLength": 4022.722,
+      "usedLength": 4336.791,
+      "wallMs": 431259,
+      "minEdge": 6.0005,
+      "minSeparation": 4.0011,
+      "holds": true,
+      "layoutHash": "e3c359b291fb52352240f4f3d7246cd73f5d78bde92f54a5186a6cb7c1c42465",
+      "strips": [
+       {
+        "roots": 37,
+        "kept": 3,
+        "stripLength": 4022.722,
+        "usedLength": 495.03,
+        "wallMs": 61308,
+        "firstPlacementsSha256": "3d3b494eaa077304f538ed5d4320db54c7bbbdc0a06af79987fbc240bda044c3"
+       },
+       {
+        "roots": 34,
+        "kept": 3,
+        "stripLength": 3543.13,
+        "usedLength": 542.339,
+        "wallMs": 61338,
+        "firstPlacementsSha256": "8b520cd3ae17add296364fd8aee69c2c19077853b7360db8850a4ef287501a94"
+       },
+       {
+        "roots": 31,
+        "kept": 3,
+        "stripLength": 3033.43,
+        "usedLength": 529.423,
+        "wallMs": 48461,
+        "firstPlacementsSha256": "c105e026729e8bfe02328ddd8063818d505e4254e589da61883fc081667ec756"
+       },
+       {
+        "roots": 28,
+        "kept": 5,
+        "stripLength": 2589.126,
+        "usedLength": 507.138,
+        "wallMs": 61485,
+        "firstPlacementsSha256": "5543fb9f698939dc4e5c56cfec2f93c567b2cc3244d81e501eee412788f4eed5"
+       },
+       {
+        "roots": 23,
+        "kept": 7,
+        "stripLength": 2096.217,
+        "usedLength": 495.034,
+        "wallMs": 61375,
+        "firstPlacementsSha256": "bd517203d484cbb492c7578b92be7744082464aa98d48dd4cf734e277aac6ebc"
+       },
+       {
+        "roots": 16,
+        "kept": 5,
+        "stripLength": 1613.022,
+        "usedLength": 585.037,
+        "wallMs": 58154,
+        "firstPlacementsSha256": "4abbc32f207fafd693f5c6da21717eb4c968199dfbaa46ae0f32d4a9a605d4b4"
+       },
+       {
+        "roots": 11,
+        "kept": 5,
+        "stripLength": 1067.946,
+        "usedLength": 391.041,
+        "wallMs": 44151,
+        "firstPlacementsSha256": "9ad33d71d33cd1ec684b61596eea970c12a74c69e477db4efa7387432054e81a"
+       },
+       {
+        "roots": 6,
+        "kept": 4,
+        "stripLength": 740.004,
+        "usedLength": 516.749,
+        "wallMs": 25669,
+        "firstPlacementsSha256": "aa3810de4854ce724ba1c0a43d58e86e1286cb49b5606d18437ea91bd6a19eff"
+       },
+       {
+        "roots": 2,
+        "kept": 2,
+        "stripLength": 271.001,
+        "usedLength": 275,
+        "wallMs": 9054,
+        "firstPlacementsSha256": "5c0d878850657f8e7f64314856217104ece838116258e6f356503480c6d9e25d"
+       }
+      ]
+     }
+    ],
+    "wasm": "not run"
+   }
+  }
+ },
+ "reproducible": {
+  "date": "2026-10-09",
+  "qualifier": "measured, two clean builds by tools/sparrow/repro.sh",
+  "foldersDiffer": true,
+  "depths": [
+   9,
+   11
+  ],
+  "native": {
+   "sha256": [
+    "5bd12e31df97654672233d92b2e701e93efb85c2f0b8c1720b9ab6663be2ce03",
+    "5bd12e31df97654672233d92b2e701e93efb85c2f0b8c1720b9ab6663be2ce03"
+   ],
+   "equal": true,
+   "workPathsInBytes": [
+    0,
+    0
+   ]
+  },
+  "wasm": {
+   "sha256": [
+    "66b20a667b7dd2f234bc77e8254be78d54c622a81a5813438f37811cf2c93b06",
+    "66b20a667b7dd2f234bc77e8254be78d54c622a81a5813438f37811cf2c93b06"
+   ],
+   "equal": true,
+   "workPathsInBytes": [
+    0,
+    0
+   ]
+  },
+  "glue": {
+   "sha256": [
+    "482503e35c048aab535a068dd19f42b3f32c78c22ea56d81eb8b495c12d0fbe2",
+    "482503e35c048aab535a068dd19f42b3f32c78c22ea56d81eb8b495c12d0fbe2"
+   ],
+   "equal": true,
+   "workPathsInBytes": [
+    0,
+    0
+   ]
+  },
+  "equal": true
+ }
+}

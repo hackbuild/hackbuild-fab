@@ -1,0 +1,61 @@
+{
+ "record": "detent-cal",
+ "card": "M07-T01",
+ "date": "2026-10-08",
+ "qualifier": "computed: detent-plot.html solveH and invertH through the SOLVE handler body, caltest.py corners and grid",
+ "command": "node designs/detent/legacy/tools/extract-plan.mjs",
+ "machine": {
+  "cpu": "Apple M1",
+  "os": "darwin 21.6.0 arm64",
+  "node": "v22.18.0"
+ },
+ "inputs": {
+  "designs/detent/legacy/detent-plot.html": "81cdd5d8100dee9d77fce80599adf3244011df1b27e5709a7917ce8d45428bbd"
+ },
+ "resultSha256": "0fd17b3ead1edfb5d330cfb4a8a2873238406bc97e2f06ba9302251327413fd5",
+ "result": {
+  "params": {
+   "throw": 150,
+   "sep": 22,
+   "fieldW": 120,
+   "fieldH": 120,
+   "stepsPerRev": 4075.7728,
+   "corners": [
+    [
+     -150,
+     140
+    ],
+    [
+     170,
+     155
+    ],
+    [
+     165,
+     -130
+    ],
+    [
+     -160,
+     -145
+    ]
+   ],
+   "grid": [
+    -60,
+    60,
+    10
+   ]
+  },
+  "homography": [
+   0.009048530972366586,
+   0.00025159962537177084,
+   0.024267485150769198,
+   0.0004704780709662649,
+   0.007843301768487352,
+   0.02287395220758037,
+   -0.000023178793911218136,
+   0.00014429221432074092
+  ],
+  "cornerWorstStepError": 0,
+  "residualMm": 0,
+  "roundTripWorstMm": 0.28762040434308284
+ }
+}

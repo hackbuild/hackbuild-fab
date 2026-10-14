@@ -1,0 +1,230 @@
+{
+ "record": "ogee16-cut-legacy",
+ "card": "M07-T01",
+ "date": "2026-10-08",
+ "qualifier": "computed: cutfiles.py main() rerun on the shipped per-part DXFs; compared with the shipped sheets through ezdxf",
+ "command": "uv run --project tools/py designs/ogee16/legacy/tools/cut-record.py",
+ "machine": {
+  "cpu": "Apple M1",
+  "os": "darwin 21.6.0 arm64",
+  "python": "3.14.8"
+ },
+ "versions": {
+  "ezdxf": "1.4.4"
+ },
+ "inputs": {
+  "designs/ogee16/legacy/source/cutfiles.py": "ef535caca27def1a7b8a91e4c6273dfb1e85617c6087b93e4924debf3fb98800",
+  "designs/ogee16/legacy/source/kin.py": "d2d5a3250c438666179a511d7e87f0c1da9630c1c672eb570382c22f822c1de2",
+  "designs/ogee16/legacy/source/params.scad": "1c0a4b898b4977d87d435273a04857111fab5d43324bee591c2a6ad641591d6d",
+  "designs/ogee16/legacy/ogee16-cut.zip": "24f3af409b692f0d0aaecd8bc9f890b1b8c3834d42def2f50fa56e0e22f50b93",
+  "designs/ogee16/legacy/out/cut/sheet1.dxf": "4dd68db51e3826334165cd65a9924c3496795789e12c32b71bb89bdc0d18fa6d",
+  "designs/ogee16/legacy/out/cut/sheet1.svg": "0478da5d73b615a0ba478f0ab5e551df16e453402d6195beec253bcb2d330363",
+  "designs/ogee16/legacy/out/cut/sheet2.dxf": "ff282798d9c86de2c20e296be941b9cd09fc8cc395536cbfb847641c981ce872",
+  "designs/ogee16/legacy/out/cut/sheet2.svg": "15e567670153acbe8e7c7012fd6c63b300dfc59124c7faefca08f37f7184ebd6",
+  "designs/ogee16/legacy/out/cut/sheet3.dxf": "2c8d5852cc98e2e1c583bf39e29fee290f257bb208dcdf8beac9c5f165592dfb",
+  "designs/ogee16/legacy/out/cut/sheet3.svg": "b8d19a3f996d7c7eb155869bc8b744b01f5b7c165610667b7d0f2ae2e9488405",
+  "designs/ogee16/legacy/out/dxf/base.dxf": "48bc78eff27d5e977a2d673c0b4fedb1c4da81c848ad5aefe527cad884d582f1",
+  "designs/ogee16/legacy/out/dxf/cap_circle.dxf": "a27e48734263c4534face16df16dd510029f7150d15c1002db386aa9c754a4d7",
+  "designs/ogee16/legacy/out/dxf/cap_hex.dxf": "d52a02b414648afba81331160ec84f311b6372d2d4f7617540b5c6640fae375b",
+  "designs/ogee16/legacy/out/dxf/cap_square.dxf": "a2d37a010bede3142c00bdb34d9cc607e58a8d95975dc799b5c60148f870a53a",
+  "designs/ogee16/legacy/out/dxf/cap_triangle.dxf": "8d4dd03c53b53c48b0545afd7af862cc1fc5ff591273f1419eb8f088acf7f7f6",
+  "designs/ogee16/legacy/out/dxf/colbar.dxf": "fe9e339fbfded1b1bd2a1891a61af5c7448a54ff9ea8897d219a23dbf91f3476",
+  "designs/ogee16/legacy/out/dxf/coldrive.dxf": "c70a33989b7b91bc679baf9d75500378a5c67e45f0c78ae5feff86160f48998b",
+  "designs/ogee16/legacy/out/dxf/colguide.dxf": "864a34aedcc7ffd0d7da8111cf5d6853bf21de419e95f9ecd35189ebaf445121",
+  "designs/ogee16/legacy/out/dxf/collug.dxf": "40f701b146986aed6a8d5e1f45dac31991a2c0a9a936910a6b11e983ac5fb386",
+  "designs/ogee16/legacy/out/dxf/coupon.dxf": "195ac7f5fa88607d6c4faa6574e271970a03e09b3b3b0e1bbd4873ce79227b1b",
+  "designs/ogee16/legacy/out/dxf/crank.dxf": "1c51d89c74aed905d5fd450fe7f80252406d890e0fc7732e9133922ed7dbeb6e",
+  "designs/ogee16/legacy/out/dxf/deck.dxf": "76f6899f98e6bb3554247a55257e22a0f948d1beb8e3eab338d19b792a4871aa",
+  "designs/ogee16/legacy/out/dxf/face.dxf": "bbb579fcc67003121497b3b1cffe6ca2808f24673214e2e490c0e87e9df29564",
+  "designs/ogee16/legacy/out/dxf/face2_circle.dxf": "30b13aa2f86d99c155479bd580aba4e528da4eeceefc7f685963cb122ba147bf",
+  "designs/ogee16/legacy/out/dxf/face2_hex.dxf": "6245da58ee6470f50d496dd34f1dffa751a5d7d174a1f4fad00935c8d58d95c2",
+  "designs/ogee16/legacy/out/dxf/face2_square.dxf": "f192ace83034f873180d2dd81c971cdbbbfba66fc9243c7f720f8e073f2e7a79",
+  "designs/ogee16/legacy/out/dxf/face2_triangle.dxf": "3272fd7ed6b789971a5f727c984032d2c334e59b816f76a608b617cfd0ef00ac",
+  "designs/ogee16/legacy/out/dxf/latch.dxf": "de16670d2e844a184c281cdd9655fe38ee746e2a486354203e67b88081ffb43c",
+  "designs/ogee16/legacy/out/dxf/latchbracket.dxf": "2019b25b20401d29cde23d1665a1fa2bd06ed9096fbbef333ee65adef512f19e",
+  "designs/ogee16/legacy/out/dxf/latchcrank.dxf": "1c51d89c74aed905d5fd450fe7f80252406d890e0fc7732e9133922ed7dbeb6e",
+  "designs/ogee16/legacy/out/dxf/latchrib.dxf": "f51cc69f9cccbef90f6028eede0ab5f8ea72a7fd9ad231965a07ce48ea8a3874",
+  "designs/ogee16/legacy/out/dxf/link.dxf": "431e3107c0f81208606eda9d31f1b03e089ef88d4199aeac35eb924fd66f1c3c",
+  "designs/ogee16/legacy/out/dxf/rail.dxf": "a641c894cececbf45f2905a52465b587f4d4fb8f6f7e3c16ec1e515b4142cd07",
+  "designs/ogee16/legacy/out/dxf/rod.dxf": "7a85703bbd00fa1b8fdead263d766714cfba8eae5fcc7d3fcb7ed927bb42b2ad",
+  "designs/ogee16/legacy/out/dxf/rowbar.dxf": "6d504f9c9239fd83f36c53a70ec4e74be32aac49835c8d7b99e725934ad07180",
+  "designs/ogee16/legacy/out/dxf/rowdrive.dxf": "e2da22ecf334da31d52d839fcc49c3fda3a2726b957bd8f8fd71ee375654d199",
+  "designs/ogee16/legacy/out/dxf/rowguide.dxf": "ed5dad99c92c4819d7ac10de4906d4dfd99be12c34629dd740108646d217eb40",
+  "designs/ogee16/legacy/out/dxf/rowlug.dxf": "fa0ee899ac82c6a5417cb52d5bfe2de040f2a9d158f09242d656a9c00fb60856",
+  "designs/ogee16/legacy/out/dxf/svbracket_col.dxf": "c4a6ee4323b17480d61d2713578887b54bd8be2c0b0b21a64daa7b516fa6bf82",
+  "designs/ogee16/legacy/out/dxf/svbracket_row.dxf": "1afcdcc1d646936e17b95a32986ddd59fa865762408e4003e60516dc7566199d",
+  "designs/ogee16/legacy/out/dxf/wallx.dxf": "90d0580df9936b8fb8ce7e11cb3668ba4d2a4ce1593794ad475938721b69d194",
+  "designs/ogee16/legacy/out/dxf/wally.dxf": "20fc4108aaa187009d58e5315e3c7854fb7a35bdf33ac631b12b003f9abeb62c",
+  "designs/ogee16/legacy/out/dxf/washer.dxf": "6bee5e626f605d5198997725f4eed6759eb4dff3a64135ea17dd00e0b594a81c"
+ },
+ "resultSha256": "4004449a5df057c9741028f648be3212ca85c8851b579a76e1c78eea2ee89a29",
+ "result": {
+  "params": {
+   "kerf": 0.18,
+   "kerfProvenance": "inferred (cutfiles.py default, never measured)",
+   "sheetW": 600.0,
+   "sheetH": 400.0,
+   "gap": 4.0
+  },
+  "bom": [
+   [
+    "base",
+    1
+   ],
+   [
+    "face",
+    1
+   ],
+   [
+    "face2_circle",
+    1
+   ],
+   [
+    "deck",
+    1
+   ],
+   [
+    "latch",
+    1
+   ],
+   [
+    "wallx",
+    2
+   ],
+   [
+    "wally",
+    2
+   ],
+   [
+    "rail",
+    2
+   ],
+   [
+    "rowbar",
+    8
+   ],
+   [
+    "colbar",
+    8
+   ],
+   [
+    "rowlug",
+    16
+   ],
+   [
+    "collug",
+    16
+   ],
+   [
+    "link",
+    16
+   ],
+   [
+    "rod",
+    16
+   ],
+   [
+    "cap_circle",
+    16
+   ],
+   [
+    "rowdrive",
+    4
+   ],
+   [
+    "coldrive",
+    4
+   ],
+   [
+    "rowguide",
+    4
+   ],
+   [
+    "colguide",
+    8
+   ],
+   [
+    "svbracket_row",
+    1
+   ],
+   [
+    "svbracket_col",
+    1
+   ],
+   [
+    "latchbracket",
+    1
+   ],
+   [
+    "latchrib",
+    2
+   ],
+   [
+    "crank",
+    8
+   ],
+   [
+    "latchcrank",
+    1
+   ],
+   [
+    "washer",
+    41
+   ],
+   [
+    "coupon",
+    1
+   ]
+  ],
+  "distinctParts": 27,
+  "pieces": 183,
+  "sheets": 3,
+  "materialCm2": 3511,
+  "piecesPerSheet": [
+   2,
+   13,
+   168
+  ],
+  "perSheet": [
+   {
+    "sheet": 1,
+    "pieces": 2,
+    "rings": 28,
+    "shippedRings": 28,
+    "ringVertexCountsInOrderEqual": true,
+    "maxVertexDeltaInFileOrderMm": 102.00000999999999,
+    "ringMultisetEqual": true,
+    "ringsOutOfOrder": 12,
+    "dxfBytesEqual": false,
+    "svgBytesEqual": false,
+    "svgSha256": "b4d0cd9affca72e8903928e08db6968a5d9a09682c1631603d7412587a888e70"
+   },
+   {
+    "sheet": 2,
+    "pieces": 13,
+    "rings": 213,
+    "shippedRings": 213,
+    "ringVertexCountsInOrderEqual": true,
+    "maxVertexDeltaInFileOrderMm": 102.00001000000002,
+    "ringMultisetEqual": true,
+    "ringsOutOfOrder": 31,
+    "dxfBytesEqual": false,
+    "svgBytesEqual": false,
+    "svgSha256": "b48e0590c6646dd17ea3aa83dabb4235ccd9c3e7d0c526979fcf0bf838fd4e74"
+   },
+   {
+    "sheet": 3,
+    "pieces": 168,
+    "rings": 484,
+    "shippedRings": 484,
+    "ringVertexCountsInOrderEqual": true,
+    "maxVertexDeltaInFileOrderMm": 0.0,
+    "ringMultisetEqual": true,
+    "ringsOutOfOrder": 0,
+    "dxfBytesEqual": false,
+    "svgBytesEqual": true,
+    "svgSha256": "b8d19a3f996d7c7eb155869bc8b744b01f5b7c165610667b7d0f2ae2e9488405"
+   }
+  ]
+ }
+}

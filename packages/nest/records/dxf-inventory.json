@@ -1,0 +1,766 @@
+{
+ "record": "dxf-inventory",
+ "card": "M07-T01",
+ "date": "2026-10-08",
+ "qualifier": "computed: raw header text and ezdxf readfile and audit on the files of tools/corpus/dxf/MANIFEST.json",
+ "command": "uv run --project tools/py tools/py/dxf_inventory.py tools/corpus/dxf",
+ "machine": {
+  "cpu": "Apple M1",
+  "os": "darwin 21.6.0 arm64",
+  "python": "3.14.8"
+ },
+ "versions": {
+  "ezdxf": "1.4.4"
+ },
+ "inputs": {
+  "tools/corpus/dxf/MANIFEST.json": "ea28365f5b212d11d6859073bd34b30f6fda78e3684212f817ccc2a7e6ce1de3"
+ },
+ "resultSha256": "1f0fb80d9bc041fce9afbf3f558aafdd71e72093b4dbb0c8044e440518f241bb",
+ "result": {
+  "rows": [
+   {
+    "emitter": "SLUG sheetDXF",
+    "files": [
+     "slug/slug_acrylic_sheet1.dxf",
+     "slug/slug_ply_sheet1.dxf",
+     "slug/slug_ply_sheet2.dxf",
+     "slug/slug_ply_sheet3.dxf",
+     "slug/slug_ply_sheet4.dxf",
+     "slug/slug_ply_sheet5.dxf",
+     "slug/slug_ply_sheet6.dxf",
+     "slug/slug_ply_sheet7.dxf",
+     "slug/slug_ply_sheet8.dxf",
+     "slug/slug_ply_sheet9.dxf"
+    ],
+    "acadver": [
+     "absent"
+    ],
+    "insunits": [
+     "4"
+    ],
+    "entities": {
+     "POLYLINE": 424,
+     "SEQEND": 424,
+     "VERTEX": 27245
+    },
+    "closed": 424,
+    "open": 0,
+    "firstVertexRepeated": "no",
+    "auditErrors": 0,
+    "auditFixes": 0,
+    "read": [
+     "readfile"
+    ],
+    "perFile": {
+     "slug/slug_acrylic_sheet1.dxf": {
+      "acadver": null,
+      "insunits": "4",
+      "types": {
+       "POLYLINE": 6,
+       "VERTEX": 432,
+       "SEQEND": 6
+      },
+      "read": "readfile",
+      "closed": 6,
+      "open": 0,
+      "firstVertexRepeated": 0,
+      "firstVertexNotRepeated": 6,
+      "auditErrors": 0,
+      "auditFixes": 0
+     },
+     "slug/slug_ply_sheet1.dxf": {
+      "acadver": null,
+      "insunits": "4",
+      "types": {
+       "POLYLINE": 34,
+       "VERTEX": 1296,
+       "SEQEND": 34
+      },
+      "read": "readfile",
+      "closed": 34,
+      "open": 0,
+      "firstVertexRepeated": 0,
+      "firstVertexNotRepeated": 34,
+      "auditErrors": 0,
+      "auditFixes": 0
+     },
+     "slug/slug_ply_sheet2.dxf": {
+      "acadver": null,
+      "insunits": "4",
+      "types": {
+       "POLYLINE": 26,
+       "VERTEX": 1076,
+       "SEQEND": 26
+      },
+      "read": "readfile",
+      "closed": 26,
+      "open": 0,
+      "firstVertexRepeated": 0,
+      "firstVertexNotRepeated": 26,
+      "auditErrors": 0,
+      "auditFixes": 0
+     },
+     "slug/slug_ply_sheet3.dxf": {
+      "acadver": null,
+      "insunits": "4",
+      "types": {
+       "POLYLINE": 38,
+       "VERTEX": 2399,
+       "SEQEND": 38
+      },
+      "read": "readfile",
+      "closed": 38,
+      "open": 0,
+      "firstVertexRepeated": 0,
+      "firstVertexNotRepeated": 38,
+      "auditErrors": 0,
+      "auditFixes": 0
+     },
+     "slug/slug_ply_sheet4.dxf": {
+      "acadver": null,
+      "insunits": "4",
+      "types": {
+       "POLYLINE": 97,
+       "VERTEX": 6362,
+       "SEQEND": 97
+      },
+      "read": "readfile",
+      "closed": 97,
+      "open": 0,
+      "firstVertexRepeated": 0,
+      "firstVertexNotRepeated": 97,
+      "auditErrors": 0,
+      "auditFixes": 0
+     },
+     "slug/slug_ply_sheet5.dxf": {
+      "acadver": null,
+      "insunits": "4",
+      "types": {
+       "POLYLINE": 52,
+       "VERTEX": 2956,
+       "SEQEND": 52
+      },
+      "read": "readfile",
+      "closed": 52,
+      "open": 0,
+      "firstVertexRepeated": 0,
+      "firstVertexNotRepeated": 52,
+      "auditErrors": 0,
+      "auditFixes": 0
+     },
+     "slug/slug_ply_sheet6.dxf": {
+      "acadver": null,
+      "insunits": "4",
+      "types": {
+       "POLYLINE": 38,
+       "VERTEX": 2424,
+       "SEQEND": 38
+      },
+      "read": "readfile",
+      "closed": 38,
+      "open": 0,
+      "firstVertexRepeated": 0,
+      "firstVertexNotRepeated": 38,
+      "auditErrors": 0,
+      "auditFixes": 0
+     },
+     "slug/slug_ply_sheet7.dxf": {
+      "acadver": null,
+      "insunits": "4",
+      "types": {
+       "POLYLINE": 39,
+       "VERTEX": 2160,
+       "SEQEND": 39
+      },
+      "read": "readfile",
+      "closed": 39,
+      "open": 0,
+      "firstVertexRepeated": 0,
+      "firstVertexNotRepeated": 39,
+      "auditErrors": 0,
+      "auditFixes": 0
+     },
+     "slug/slug_ply_sheet8.dxf": {
+      "acadver": null,
+      "insunits": "4",
+      "types": {
+       "POLYLINE": 89,
+       "VERTEX": 7868,
+       "SEQEND": 89
+      },
+      "read": "readfile",
+      "closed": 89,
+      "open": 0,
+      "firstVertexRepeated": 0,
+      "firstVertexNotRepeated": 89,
+      "auditErrors": 0,
+      "auditFixes": 0
+     },
+     "slug/slug_ply_sheet9.dxf": {
+      "acadver": null,
+      "insunits": "4",
+      "types": {
+       "POLYLINE": 5,
+       "VERTEX": 272,
+       "SEQEND": 5
+      },
+      "read": "readfile",
+      "closed": 5,
+      "open": 0,
+      "firstVertexRepeated": 0,
+      "firstVertexNotRepeated": 5,
+      "auditErrors": 0,
+      "auditFixes": 0
+     }
+    }
+   },
+   {
+    "emitter": "OGEE16 cutfiles.py (ezdxf new())",
+    "files": [
+     "ogee16-cut/sheet1.dxf",
+     "ogee16-cut/sheet2.dxf",
+     "ogee16-cut/sheet3.dxf"
+    ],
+    "acadver": [
+     "AC1027"
+    ],
+    "insunits": [
+     "6"
+    ],
+    "entities": {
+     "LWPOLYLINE": 725
+    },
+    "closed": 725,
+    "open": 0,
+    "firstVertexRepeated": "yes",
+    "auditErrors": 0,
+    "auditFixes": 0,
+    "read": [
+     "readfile"
+    ],
+    "perFile": {
+     "ogee16-cut/sheet1.dxf": {
+      "acadver": "AC1027",
+      "insunits": "6",
+      "types": {
+       "LWPOLYLINE": 28
+      },
+      "read": "readfile",
+      "closed": 28,
+      "open": 0,
+      "firstVertexRepeated": 28,
+      "firstVertexNotRepeated": 0,
+      "auditErrors": 0,
+      "auditFixes": 0
+     },
+     "ogee16-cut/sheet2.dxf": {
+      "acadver": "AC1027",
+      "insunits": "6",
+      "types": {
+       "LWPOLYLINE": 213
+      },
+      "read": "readfile",
+      "closed": 213,
+      "open": 0,
+      "firstVertexRepeated": 213,
+      "firstVertexNotRepeated": 0,
+      "auditErrors": 0,
+      "auditFixes": 0
+     },
+     "ogee16-cut/sheet3.dxf": {
+      "acadver": "AC1027",
+      "insunits": "6",
+      "types": {
+       "LWPOLYLINE": 484
+      },
+      "read": "readfile",
+      "closed": 484,
+      "open": 0,
+      "firstVertexRepeated": 484,
+      "firstVertexNotRepeated": 0,
+      "auditErrors": 0,
+      "auditFixes": 0
+     }
+    }
+   },
+   {
+    "emitter": "OGEE16 OpenSCAD export",
+    "files": [
+     "ogee16-openscad/deck.dxf"
+    ],
+    "acadver": [
+     "absent"
+    ],
+    "insunits": [
+     "not set"
+    ],
+    "entities": {
+     "LINE": 294
+    },
+    "closed": 0,
+    "open": 0,
+    "firstVertexRepeated": "n/a",
+    "auditErrors": 0,
+    "auditFixes": 1,
+    "read": [
+     "readfile"
+    ],
+    "perFile": {
+     "ogee16-openscad/deck.dxf": {
+      "acadver": null,
+      "insunits": null,
+      "types": {
+       "LINE": 294
+      },
+      "read": "readfile",
+      "closed": 0,
+      "open": 0,
+      "firstVertexRepeated": 0,
+      "firstVertexNotRepeated": 0,
+      "auditErrors": 0,
+      "auditFixes": 1
+     }
+    }
+   },
+   {
+    "emitter": "OGEE build-it dxf()",
+    "files": [
+     "ogee-buildit/square.dxf"
+    ],
+    "acadver": [
+     "AC1015"
+    ],
+    "insunits": [
+     "4"
+    ],
+    "entities": {
+     "LWPOLYLINE": 1
+    },
+    "closed": 1,
+    "open": 0,
+    "firstVertexRepeated": "yes",
+    "auditErrors": 0,
+    "auditFixes": 0,
+    "read": [
+     "readfile"
+    ],
+    "perFile": {
+     "ogee-buildit/square.dxf": {
+      "acadver": "AC1015",
+      "insunits": "4",
+      "types": {
+       "LWPOLYLINE": 1
+      },
+      "read": "readfile",
+      "closed": 1,
+      "open": 0,
+      "firstVertexRepeated": 1,
+      "firstVertexNotRepeated": 0,
+      "auditErrors": 0,
+      "auditFixes": 0
+     }
+    }
+   },
+   {
+    "emitter": "COFFER",
+    "files": [
+     "coffer/A3_04_backer.dxf",
+     "coffer/D1_04_backer.dxf",
+     "coffer/K6_04_backer.dxf",
+     "coffer/M1_04_backer.dxf",
+     "coffer/S3_04_backer.dxf"
+    ],
+    "acadver": [
+     "AC1024"
+    ],
+    "insunits": [
+     "6"
+    ],
+    "entities": {
+     "LWPOLYLINE": 610
+    },
+    "closed": 610,
+    "open": 0,
+    "firstVertexRepeated": "yes",
+    "auditErrors": 0,
+    "auditFixes": 0,
+    "read": [
+     "readfile"
+    ],
+    "perFile": {
+     "coffer/A3_04_backer.dxf": {
+      "acadver": "AC1024",
+      "insunits": "6",
+      "types": {
+       "LWPOLYLINE": 129
+      },
+      "read": "readfile",
+      "closed": 129,
+      "open": 0,
+      "firstVertexRepeated": 129,
+      "firstVertexNotRepeated": 0,
+      "auditErrors": 0,
+      "auditFixes": 0
+     },
+     "coffer/D1_04_backer.dxf": {
+      "acadver": "AC1024",
+      "insunits": "6",
+      "types": {
+       "LWPOLYLINE": 111
+      },
+      "read": "readfile",
+      "closed": 111,
+      "open": 0,
+      "firstVertexRepeated": 111,
+      "firstVertexNotRepeated": 0,
+      "auditErrors": 0,
+      "auditFixes": 0
+     },
+     "coffer/K6_04_backer.dxf": {
+      "acadver": "AC1024",
+      "insunits": "6",
+      "types": {
+       "LWPOLYLINE": 100
+      },
+      "read": "readfile",
+      "closed": 100,
+      "open": 0,
+      "firstVertexRepeated": 100,
+      "firstVertexNotRepeated": 0,
+      "auditErrors": 0,
+      "auditFixes": 0
+     },
+     "coffer/M1_04_backer.dxf": {
+      "acadver": "AC1024",
+      "insunits": "6",
+      "types": {
+       "LWPOLYLINE": 145
+      },
+      "read": "readfile",
+      "closed": 145,
+      "open": 0,
+      "firstVertexRepeated": 145,
+      "firstVertexNotRepeated": 0,
+      "auditErrors": 0,
+      "auditFixes": 0
+     },
+     "coffer/S3_04_backer.dxf": {
+      "acadver": "AC1024",
+      "insunits": "6",
+      "types": {
+       "LWPOLYLINE": 125
+      },
+      "read": "readfile",
+      "closed": 125,
+      "open": 0,
+      "firstVertexRepeated": 125,
+      "firstVertexNotRepeated": 0,
+      "auditErrors": 0,
+      "auditFixes": 0
+     }
+    }
+   },
+   {
+    "emitter": "SHIM",
+    "files": [
+     "shim/shim-backer.dxf"
+    ],
+    "acadver": [
+     "AC1024"
+    ],
+    "insunits": [
+     "4"
+    ],
+    "entities": {
+     "CIRCLE": 35,
+     "LINE": 219,
+     "LWPOLYLINE": 1
+    },
+    "closed": 1,
+    "open": 0,
+    "firstVertexRepeated": "yes",
+    "auditErrors": 0,
+    "auditFixes": 0,
+    "read": [
+     "readfile"
+    ],
+    "perFile": {
+     "shim/shim-backer.dxf": {
+      "acadver": "AC1024",
+      "insunits": "4",
+      "types": {
+       "LWPOLYLINE": 1,
+       "CIRCLE": 35,
+       "LINE": 219
+      },
+      "read": "readfile",
+      "closed": 1,
+      "open": 0,
+      "firstVertexRepeated": 1,
+      "firstVertexNotRepeated": 0,
+      "auditErrors": 0,
+      "auditFixes": 0
+     }
+    }
+   },
+   {
+    "emitter": "SPINDLE",
+    "files": [
+     "spindle/board_backer.dxf"
+    ],
+    "acadver": [
+     "AC1024"
+    ],
+    "insunits": [
+     "6"
+    ],
+    "entities": {
+     "ARC": 8,
+     "CIRCLE": 31,
+     "LINE": 8,
+     "TEXT": 45
+    },
+    "closed": 0,
+    "open": 0,
+    "firstVertexRepeated": "n/a",
+    "auditErrors": 0,
+    "auditFixes": 0,
+    "read": [
+     "readfile"
+    ],
+    "perFile": {
+     "spindle/board_backer.dxf": {
+      "acadver": "AC1024",
+      "insunits": "6",
+      "types": {
+       "LINE": 8,
+       "ARC": 8,
+       "CIRCLE": 31,
+       "TEXT": 45
+      },
+      "read": "readfile",
+      "closed": 0,
+      "open": 0,
+      "firstVertexRepeated": 0,
+      "firstVertexNotRepeated": 0,
+      "auditErrors": 0,
+      "auditFixes": 0
+     }
+    }
+   },
+   {
+    "emitter": "TRUNNION (SPLICE backings)",
+    "files": [
+     "trunnion/splice-backing.dxf",
+     "trunnion/splicec-backing.dxf"
+    ],
+    "acadver": [
+     "absent"
+    ],
+    "insunits": [
+     "4"
+    ],
+    "entities": {
+     "LINE": 687,
+     "TEXT": 34
+    },
+    "closed": 0,
+    "open": 0,
+    "firstVertexRepeated": "n/a",
+    "auditErrors": 0,
+    "auditFixes": 0,
+    "read": [
+     "readfile"
+    ],
+    "perFile": {
+     "trunnion/splice-backing.dxf": {
+      "acadver": null,
+      "insunits": "4",
+      "types": {
+       "LINE": 203,
+       "TEXT": 15
+      },
+      "read": "readfile",
+      "closed": 0,
+      "open": 0,
+      "firstVertexRepeated": 0,
+      "firstVertexNotRepeated": 0,
+      "auditErrors": 0,
+      "auditFixes": 0
+     },
+     "trunnion/splicec-backing.dxf": {
+      "acadver": null,
+      "insunits": "4",
+      "types": {
+       "LINE": 484,
+       "TEXT": 19
+      },
+      "read": "readfile",
+      "closed": 0,
+      "open": 0,
+      "firstVertexRepeated": 0,
+      "firstVertexNotRepeated": 0,
+      "auditErrors": 0,
+      "auditFixes": 0
+     }
+    }
+   },
+   {
+    "emitter": "COTTER KIT.laserDXF",
+    "files": [
+     "cotter/x01_laser-bin-100x26-take-a-card_3.0mm-ply.dxf",
+     "cotter/x01_laser-bin-96x34-stickers_3.0mm-ply.dxf",
+     "cotter/x01_laser-coin-ledge-9in-4-coins_3.0mm-ply.dxf",
+     "cotter/x01_laser-qr-plate-waiver_3.0mm-ply.dxf",
+     "cotter/x01_laser-qr-plate-website_3.0mm-ply.dxf",
+     "cotter/x01_laser-sheet-pocket-letter-lip-strips-about-the-lab_3.0mm-ply.dxf",
+     "cotter/x01_laser-shelf-9in-made-here_3.0mm-ply.dxf",
+     "cotter/x01_laser-sign-420mm_3.0mm-ply.dxf"
+    ],
+    "acadver": [
+     "AC1024"
+    ],
+    "insunits": [
+     "4"
+    ],
+    "entities": {
+     "LWPOLYLINE": 563
+    },
+    "closed": 563,
+    "open": 0,
+    "firstVertexRepeated": "no",
+    "auditErrors": 0,
+    "auditFixes": 0,
+    "read": [
+     "readfile"
+    ],
+    "perFile": {
+     "cotter/x01_laser-bin-100x26-take-a-card_3.0mm-ply.dxf": {
+      "acadver": "AC1024",
+      "insunits": "4",
+      "types": {
+       "LWPOLYLINE": 27
+      },
+      "read": "readfile",
+      "closed": 27,
+      "open": 0,
+      "firstVertexRepeated": 0,
+      "firstVertexNotRepeated": 27,
+      "auditErrors": 0,
+      "auditFixes": 0
+     },
+     "cotter/x01_laser-bin-96x34-stickers_3.0mm-ply.dxf": {
+      "acadver": "AC1024",
+      "insunits": "4",
+      "types": {
+       "LWPOLYLINE": 40
+      },
+      "read": "readfile",
+      "closed": 40,
+      "open": 0,
+      "firstVertexRepeated": 0,
+      "firstVertexNotRepeated": 40,
+      "auditErrors": 0,
+      "auditFixes": 0
+     },
+     "cotter/x01_laser-coin-ledge-9in-4-coins_3.0mm-ply.dxf": {
+      "acadver": "AC1024",
+      "insunits": "4",
+      "types": {
+       "LWPOLYLINE": 49
+      },
+      "read": "readfile",
+      "closed": 49,
+      "open": 0,
+      "firstVertexRepeated": 0,
+      "firstVertexNotRepeated": 49,
+      "auditErrors": 0,
+      "auditFixes": 0
+     },
+     "cotter/x01_laser-qr-plate-waiver_3.0mm-ply.dxf": {
+      "acadver": "AC1024",
+      "insunits": "4",
+      "types": {
+       "LWPOLYLINE": 178
+      },
+      "read": "readfile",
+      "closed": 178,
+      "open": 0,
+      "firstVertexRepeated": 0,
+      "firstVertexNotRepeated": 178,
+      "auditErrors": 0,
+      "auditFixes": 0
+     },
+     "cotter/x01_laser-qr-plate-website_3.0mm-ply.dxf": {
+      "acadver": "AC1024",
+      "insunits": "4",
+      "types": {
+       "LWPOLYLINE": 101
+      },
+      "read": "readfile",
+      "closed": 101,
+      "open": 0,
+      "firstVertexRepeated": 0,
+      "firstVertexNotRepeated": 101,
+      "auditErrors": 0,
+      "auditFixes": 0
+     },
+     "cotter/x01_laser-sheet-pocket-letter-lip-strips-about-the-lab_3.0mm-ply.dxf": {
+      "acadver": "AC1024",
+      "insunits": "4",
+      "types": {
+       "LWPOLYLINE": 70
+      },
+      "read": "readfile",
+      "closed": 70,
+      "open": 0,
+      "firstVertexRepeated": 0,
+      "firstVertexNotRepeated": 70,
+      "auditErrors": 0,
+      "auditFixes": 0
+     },
+     "cotter/x01_laser-shelf-9in-made-here_3.0mm-ply.dxf": {
+      "acadver": "AC1024",
+      "insunits": "4",
+      "types": {
+       "LWPOLYLINE": 42
+      },
+      "read": "readfile",
+      "closed": 42,
+      "open": 0,
+      "firstVertexRepeated": 0,
+      "firstVertexNotRepeated": 42,
+      "auditErrors": 0,
+      "auditFixes": 0
+     },
+     "cotter/x01_laser-sign-420mm_3.0mm-ply.dxf": {
+      "acadver": "AC1024",
+      "insunits": "4",
+      "types": {
+       "LWPOLYLINE": 56
+      },
+      "read": "readfile",
+      "closed": 56,
+      "open": 0,
+      "firstVertexRepeated": 0,
+      "firstVertexNotRepeated": 56,
+      "auditErrors": 0,
+      "auditFixes": 0
+     }
+    }
+   }
+  ],
+  "notRun": [
+   {
+    "emitter": "OGEE16 sheets page dxf()",
+    "where": "designs/ogee16/legacy/source/sheet_template.html line 236",
+    "reason": "writes in the browser; no file was captured"
+   },
+   {
+    "emitter": "TUMBLER planSVGFile",
+    "where": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-ogee-stipple-mech/tumbler/tumbler-bench-sheet.svg",
+    "reason": "SVG, no DXF; header comment carries material, t 3, kerf 0.22, fit 0.15"
+   }
+  ]
+ }
+}

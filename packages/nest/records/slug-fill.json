@@ -1,0 +1,200 @@
+{
+ "record": "slug-fill",
+ "card": "M07-T05",
+ "date": "2026-10-08",
+ "qualifier": "computed; sheet counts are a metric of SLUG fill mode with part-in-part on and off, D-075",
+ "command": "HBF_SLUG_FILL_RECORD=1 npm test -w packages/nest -- part-in-part",
+ "machine": {
+  "cpu": "Apple M1",
+  "os": "darwin arm64",
+  "node": "v22.18.0"
+ },
+ "input": {
+  "file": "designs/slug/legacy/slug.html",
+  "items": 42,
+  "pieces": 63,
+  "request": {
+   "sheet": [
+    600,
+    400
+   ],
+   "margin": 6,
+   "gap": 4,
+   "mode": "fill",
+   "rotations": [
+    0,
+    90
+   ],
+   "partInPart": true,
+   "seed": 0
+  }
+ },
+ "result": {
+  "on": {
+   "sheets": {
+    "ply": 9,
+    "acrylic": 1
+   },
+   "packer": "shelf",
+   "order": null,
+   "inside": 0,
+   "layoutHash": "dfb95fedefca52c052abfc0115e096f67b2f851144180f96f3a89b4eb74d823a",
+   "trials": [
+    {
+     "packer": "maxrects-bssf",
+     "order": "maxSide",
+     "partInPart": false,
+     "sheets": 11,
+     "dropped": 0,
+     "inside": 0
+    },
+    {
+     "packer": "maxrects-bssf",
+     "order": "area",
+     "partInPart": false,
+     "sheets": 11,
+     "dropped": 0,
+     "inside": 0
+    },
+    {
+     "packer": "maxrects-bssf",
+     "order": "height",
+     "partInPart": false,
+     "sheets": 11,
+     "dropped": 0,
+     "inside": 0
+    },
+    {
+     "packer": "maxrects-bssf",
+     "order": "width",
+     "partInPart": false,
+     "sheets": 11,
+     "dropped": 0,
+     "inside": 0
+    },
+    {
+     "packer": "maxrects-bssf",
+     "order": "minSide",
+     "partInPart": false,
+     "sheets": 11,
+     "dropped": 0,
+     "inside": 0
+    },
+    {
+     "packer": "shelf",
+     "partInPart": false,
+     "sheets": 10,
+     "dropped": 0,
+     "inside": 0
+    },
+    {
+     "packer": "maxrects-bssf",
+     "order": "maxSide",
+     "partInPart": true,
+     "sheets": 11,
+     "dropped": 0,
+     "inside": 23
+    },
+    {
+     "packer": "maxrects-bssf",
+     "order": "area",
+     "partInPart": true,
+     "sheets": 11,
+     "dropped": 0,
+     "inside": 23
+    },
+    {
+     "packer": "maxrects-bssf",
+     "order": "height",
+     "partInPart": true,
+     "sheets": 11,
+     "dropped": 0,
+     "inside": 23
+    },
+    {
+     "packer": "maxrects-bssf",
+     "order": "width",
+     "partInPart": true,
+     "sheets": 11,
+     "dropped": 0,
+     "inside": 23
+    },
+    {
+     "packer": "maxrects-bssf",
+     "order": "minSide",
+     "partInPart": true,
+     "sheets": 11,
+     "dropped": 0,
+     "inside": 23
+    },
+    {
+     "packer": "shelf",
+     "partInPart": true,
+     "sheets": 10,
+     "dropped": 0,
+     "inside": 23
+    }
+   ]
+  },
+  "off": {
+   "sheets": {
+    "ply": 9,
+    "acrylic": 1
+   },
+   "packer": "shelf",
+   "order": null,
+   "inside": 0,
+   "layoutHash": "dfb95fedefca52c052abfc0115e096f67b2f851144180f96f3a89b4eb74d823a",
+   "trials": [
+    {
+     "packer": "maxrects-bssf",
+     "order": "maxSide",
+     "partInPart": false,
+     "sheets": 11,
+     "dropped": 0,
+     "inside": 0
+    },
+    {
+     "packer": "maxrects-bssf",
+     "order": "area",
+     "partInPart": false,
+     "sheets": 11,
+     "dropped": 0,
+     "inside": 0
+    },
+    {
+     "packer": "maxrects-bssf",
+     "order": "height",
+     "partInPart": false,
+     "sheets": 11,
+     "dropped": 0,
+     "inside": 0
+    },
+    {
+     "packer": "maxrects-bssf",
+     "order": "width",
+     "partInPart": false,
+     "sheets": 11,
+     "dropped": 0,
+     "inside": 0
+    },
+    {
+     "packer": "maxrects-bssf",
+     "order": "minSide",
+     "partInPart": false,
+     "sheets": 11,
+     "dropped": 0,
+     "inside": 0
+    },
+    {
+     "packer": "shelf",
+     "partInPart": false,
+     "sheets": 10,
+     "dropped": 0,
+     "inside": 0
+    }
+   ]
+  }
+ },
+ "resultSha256": "eeb63c63159440d51aca08ac930c6ab639d9204cba938c8ca53dace72fd485c8"
+}

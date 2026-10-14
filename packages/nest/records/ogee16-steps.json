@@ -1,0 +1,290 @@
+{
+ "record": "ogee16-steps",
+ "card": "M07-T09",
+ "date": "2026-10-09",
+ "qualifier": "computed: the reg(...) registries of viewer_template.html and printed_viewer_template.html run in node on stub THREE objects; counts held to cutfiles.py BOM and build_plate.py QTY",
+ "command": "node designs/ogee16/legacy/tools/extract-steps.mjs",
+ "machine": {
+  "cpu": "Apple M1",
+  "os": "darwin 21.6.0 arm64",
+  "node": "v22.18.0"
+ },
+ "inputs": {
+  "designs/ogee16/legacy/source/viewer_template.html": "9d101e0c28bd7ae75e81dce60483ac62b085460fc945d43d074077ecf5706dd9",
+  "designs/ogee16/legacy/source/printed_viewer_template.html": "70f859f6524e0abc2fc1f3a7a22abe5a25b560848bf615868191607092dc61b8",
+  "designs/ogee16/legacy/source/ogee16.scad": "4afd9001c421371385eef257060914a6f578b30c21e62fb51064e90dc4f3b078",
+  "designs/ogee16/legacy/source/params.scad": "1c0a4b898b4977d87d435273a04857111fab5d43324bee591c2a6ad641591d6d",
+  "designs/ogee16/legacy/source/cutfiles.py": "ef535caca27def1a7b8a91e4c6273dfb1e85617c6087b93e4924debf3fb98800",
+  "designs/ogee16/legacy/source/build_plate.py": "dc3f1772312360fda22e3ef5f89ebc243e714fbf88fc1498e30c6a2bfd0664ed"
+ },
+ "resultSha256": "28d11426197f3e96b4a4f8cb9069a33a72ce9d541460e6f85f71d5581513592e",
+ "result": {
+  "lasercut": {
+   "viewer": "source/viewer_template.html",
+   "asm": [
+    "bare frame",
+    "walls on",
+    "servo brackets and latch tower",
+    "row bars in",
+    "row lugs and drive",
+    "guide deck",
+    "column bars in",
+    "column lugs and drive",
+    "links on their pivots",
+    "latch rails",
+    "latch plate and rods",
+    "lower face",
+    "upper face",
+    "caps on"
+   ],
+   "steps": {
+    "base": {
+     "0": 1
+    },
+    "face": {
+     "11": 1
+    },
+    "face2_circle": {
+     "12": 1
+    },
+    "deck": {
+     "5": 1
+    },
+    "latch": {
+     "10": 1
+    },
+    "wallx": {
+     "1": 2
+    },
+    "wally": {
+     "1": 2
+    },
+    "rail": {
+     "9": 2
+    },
+    "rowbar": {
+     "3": 8
+    },
+    "colbar": {
+     "6": 8
+    },
+    "rowlug": {
+     "4": 16
+    },
+    "collug": {
+     "7": 16
+    },
+    "link": {
+     "8": 16
+    },
+    "rod": {
+     "10": 16
+    },
+    "cap_circle": {
+     "13": 16
+    },
+    "rowdrive": {
+     "4": 4
+    },
+    "coldrive": {
+     "7": 4
+    },
+    "rowguide": {
+     "4": 4
+    },
+    "colguide": {
+     "7": 8
+    },
+    "svbracket_row": {
+     "2": 1
+    },
+    "svbracket_col": {
+     "2": 1
+    },
+    "latchbracket": {
+     "2": 1
+    },
+    "latchrib": {
+     "2": 2
+    },
+    "crank": {
+     "4": 4,
+     "7": 4
+    },
+    "latchcrank": {
+     "10": 1
+    },
+    "washer": {
+     "4": 4,
+     "7": 4,
+     "8": 32,
+     "10": 1
+    }
+   },
+   "unassigned": [
+    "coupon"
+   ],
+   "notSheet": [
+    "m_crankpin_col",
+    "m_crankpin_latch",
+    "m_crankpin_row",
+    "m_pivot"
+   ],
+   "bought": 17,
+   "bill": {
+    "base": 1,
+    "face": 1,
+    "face2_circle": 1,
+    "deck": 1,
+    "latch": 1,
+    "wallx": 2,
+    "wally": 2,
+    "rail": 2,
+    "rowbar": 8,
+    "colbar": 8,
+    "rowlug": 16,
+    "collug": 16,
+    "link": 16,
+    "rod": 16,
+    "cap_circle": 16,
+    "rowdrive": 4,
+    "coldrive": 4,
+    "rowguide": 4,
+    "colguide": 8,
+    "svbracket_row": 1,
+    "svbracket_col": 1,
+    "latchbracket": 1,
+    "latchrib": 2,
+    "crank": 8,
+    "latchcrank": 1,
+    "washer": 41,
+    "coupon": 1
+   }
+  },
+  "printed": {
+   "viewer": "source/printed_viewer_template.html",
+   "asm": [
+    "base plate",
+    "walls and rails tabbed on",
+    "row bars in",
+    "row shafts and knobs",
+    "guide deck on",
+    "column bars in",
+    "column shafts and knobs",
+    "links on their pivots",
+    "latch plate through the rails",
+    "rods, from inside",
+    "face plate on",
+    "caps pressed on from the top"
+   ],
+   "steps": {
+    "base": {
+     "0": 1
+    },
+    "face_asm": {
+     "10": 1
+    },
+    "deck": {
+     "4": 1
+    },
+    "latch_asm": {
+     "8": 1
+    },
+    "wall_xp": {
+     "1": 1
+    },
+    "wall_xn": {
+     "1": 1
+    },
+    "wall_yp": {
+     "1": 1
+    },
+    "wall_yn": {
+     "1": 1
+    },
+    "rail": {
+     "1": 2
+    },
+    "rowbar_asm": {
+     "2": 4
+    },
+    "colbar_asm": {
+     "5": 4
+    },
+    "link": {
+     "7": 16
+    },
+    "rod": {
+     "9": 16
+    },
+    "cap": {
+     "11": 16
+    },
+    "pivot": {
+     "7": 32
+    },
+    "shaft_row": {
+     "3": 4
+    },
+    "shaft_col": {
+     "6": 4
+    },
+    "knob": {
+     "3": 4,
+     "6": 4
+    },
+    "latchpull": {
+     "8": 1
+    },
+    "svbracket_row": {
+     "3": 1
+    },
+    "svbracket_col": {
+     "6": 1
+    },
+    "latchtower": {
+     "8": 1
+    },
+    "crank": {
+     "3": 4,
+     "6": 4
+    },
+    "crank_latch": {
+     "8": 1
+    }
+   },
+   "unassigned": [
+    "drivepin"
+   ],
+   "notPrinted": [],
+   "bought": 18,
+   "bill": {
+    "base": 1,
+    "face_asm": 1,
+    "deck": 1,
+    "latch_asm": 1,
+    "wall_xp": 1,
+    "wall_xn": 1,
+    "wall_yp": 1,
+    "wall_yn": 1,
+    "rail": 2,
+    "rowbar_asm": 4,
+    "colbar_asm": 4,
+    "link": 16,
+    "rod": 16,
+    "cap": 16,
+    "pivot": 32,
+    "drivepin": 9,
+    "shaft_row": 4,
+    "shaft_col": 4,
+    "knob": 8,
+    "latchpull": 1,
+    "svbracket_row": 1,
+    "svbracket_col": 1,
+    "latchtower": 1,
+    "crank": 8,
+    "crank_latch": 1
+   }
+  }
+ }
+}

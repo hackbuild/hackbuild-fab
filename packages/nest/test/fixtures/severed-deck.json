@@ -1,0 +1,91 @@
+{
+  "note": "M07-T04 fixture, synthetic, after the OGEE R12 deck whose column channels ran edge to edge and cut it into strips (knowledge/kernels/sheet-design.md, connectivity section). A 200 x 20 mm deck; the channel is a 4 mm hole ring drawn 1 mm past both long edges, as a channel cut through the outline. The short variant is the fix the record names: the channel stops 3 mm short of each edge. Rings in mm, outer first.",
+  "items": [
+    {
+      "id": "deck",
+      "stock": "ply3",
+      "qty": 1,
+      "rings": [
+        [
+          [
+            0,
+            0
+          ],
+          [
+            200,
+            0
+          ],
+          [
+            200,
+            20
+          ],
+          [
+            0,
+            20
+          ]
+        ],
+        [
+          [
+            98,
+            -1
+          ],
+          [
+            102,
+            -1
+          ],
+          [
+            102,
+            21
+          ],
+          [
+            98,
+            21
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "deck-short",
+      "stock": "ply3",
+      "qty": 1,
+      "rings": [
+        [
+          [
+            0,
+            0
+          ],
+          [
+            200,
+            0
+          ],
+          [
+            200,
+            20
+          ],
+          [
+            0,
+            20
+          ]
+        ],
+        [
+          [
+            98,
+            3
+          ],
+          [
+            102,
+            3
+          ],
+          [
+            102,
+            17
+          ],
+          [
+            98,
+            17
+          ]
+        ]
+      ]
+    }
+  ]
+}

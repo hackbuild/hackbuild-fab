@@ -1,0 +1,111 @@
+{
+ "record": "washer-cal",
+ "card": "M07-T12",
+ "date": "2026-10-08",
+ "qualifier": "computed: laser-rig.html (2026-07-30 harvest) calibMap, fkCalib, fk and wallToAngles run in node on the ideal-map corners rounded to 0.01 deg, square and rolled 5 deg",
+ "command": "node designs/washer/legacy/tools/extract-cal.mjs",
+ "machine": {
+  "cpu": "Apple M1",
+  "os": "darwin 21.6.0 arm64",
+  "node": "v22.18.0"
+ },
+ "inputs": {
+  "designs/washer/legacy/laser-rig.zip": "6cb396e30a16260f44b8c86dbb35a80f2367141fbbd92e290a5beb1bbf81f72f",
+  "designs/washer/legacy/laser-rig.zip!laser-rig.html": "1b4f11d80a37b4882dccd9f1ae6a70705c270a962bd066f8cabca06ff7fd8ace"
+ },
+ "resultSha256": "91a7b2d1c63e21eeefabae6d42ec0c1602df5ed96c03112b43c19e2db8975d15",
+ "result": {
+  "square": {
+   "params": {
+    "dist": 152,
+    "wallW": 305,
+    "wallH": 305,
+    "mountH": 70,
+    "minUs": 500,
+    "maxUs": 2500,
+    "homePan": 90,
+    "homeTilt": 90,
+    "grid": [
+     -150,
+     150,
+     10
+    ],
+    "rollDeg": 0
+   },
+   "corners": {
+    "tl": {
+     "pan": 44.91,
+     "tilt": 109.01
+    },
+    "tr": {
+     "pan": 135.09,
+     "tilt": 109.01
+    },
+    "br": {
+     "pan": 135.09,
+     "tilt": 43.5
+    },
+    "bl": {
+     "pan": 44.91,
+     "tilt": 43.5
+    }
+   },
+   "residualMm": 0,
+   "cornerWireError": 0,
+   "roundTripMm": 0.25149768532706607,
+   "roundTripWorstAt": [
+    100,
+    -90
+   ],
+   "gridPoints": 961,
+   "quadAspectRaw": 0.9999887542980931,
+   "quadAspect": 0.9999887542980931
+  },
+  "rolled": {
+   "params": {
+    "dist": 152,
+    "wallW": 305,
+    "wallH": 305,
+    "mountH": 70,
+    "minUs": 500,
+    "maxUs": 2500,
+    "homePan": 90,
+    "homeTilt": 90,
+    "grid": [
+     -150,
+     150,
+     10
+    ],
+    "rollDeg": 5
+   },
+   "corners": {
+    "tl": {
+     "pan": 42.62,
+     "tilt": 106.08
+    },
+    "tr": {
+     "pan": 132.37,
+     "tilt": 111.8
+    },
+    "br": {
+     "pan": 137.38,
+     "tilt": 47.47
+    },
+    "bl": {
+     "pan": 47.63,
+     "tilt": 39.61
+    }
+   },
+   "residualMm": 0,
+   "cornerWireError": 0,
+   "roundTripMm": 0.25919180174486306,
+   "roundTripWorstAt": [
+    -80,
+    60
+   ],
+   "gridPoints": 961,
+   "quadAspectRaw": 0.9999298477407316,
+   "quadAspect": 0.9999298477407316
+  }
+ }
+}

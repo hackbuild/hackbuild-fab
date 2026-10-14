@@ -1,0 +1,25 @@
+{
+  "name": "@hackbuild/nest",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "author": "Moheeb Zara <hackbuildvideo@gmail.com>",
+  "exports": {
+    ".": {
+      "types": "./dist/src/index.d.ts",
+      "import": "./dist/src/index.js"
+    },
+    "./data/dxf-template.json": "./data/dxf-template.json"
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@hackbuild/geom": "0.0.0",
+    "@hackbuild/mesh": "0.0.0",
+    "@hackbuild/profile": "0.0.0",
+    "@hackbuild/spec": "0.1.0"
+  }
+}

@@ -1,0 +1,78 @@
+{
+ "record": "washer-plan",
+ "card": "M07-T01",
+ "date": "2026-10-08",
+ "qualifier": "computed: laser-rig.html (2026-07-30 harvest) planChainPen run in node on the 60 mm square, micro9g preset, calibration off",
+ "command": "node designs/washer/legacy/tools/extract-plan.mjs",
+ "machine": {
+  "cpu": "Apple M1",
+  "os": "darwin 21.6.0 arm64",
+  "node": "v22.18.0"
+ },
+ "inputs": {
+  "designs/washer/legacy/laser-rig.zip": "6cb396e30a16260f44b8c86dbb35a80f2367141fbbd92e290a5beb1bbf81f72f",
+  "designs/washer/legacy/laser-rig.zip!laser-rig.html": "1b4f11d80a37b4882dccd9f1ae6a70705c270a962bd066f8cabca06ff7fd8ace"
+ },
+ "resultSha256": "32dfe011ed2d8d9ae11756cd6a88a2c6115bccb1e01464440197d24b8960ad23",
+ "result": {
+  "params": {
+   "plan": {
+    "feed": 160,
+    "travel": 400,
+    "accel": 8000,
+    "corner": 0.3,
+    "jd": 0.18,
+    "steps": 1,
+    "tol": 0.05,
+    "jerk": 0.045,
+    "settle": 0,
+    "hz": 50,
+    "buffer": 90,
+    "speed": 1
+   },
+   "servo": {
+    "label": "9g micro (SG90 / MG90S)",
+    "slew": 240,
+    "accel": 1800,
+    "deadband": 8,
+    "frame": 50,
+    "lash": 0.55,
+    "band": 6
+   },
+   "cfg": {
+    "dist": 152,
+    "wallW": 305,
+    "wallH": 305,
+    "mountH": 70,
+    "minUs": 500,
+    "maxUs": 2500
+   },
+   "calibration": "off",
+   "square": 60,
+   "dense": 0.25
+  },
+  "points": 961,
+  "durationS": 2.2982954710369596,
+  "peakMmS": 143.66911464439167,
+  "corner": {
+   "at": [
+    30,
+    -30
+   ],
+   "index": 240,
+   "mmS": 29.46091963952067
+  },
+  "midBottom": {
+   "at": [
+    0,
+    -30
+   ],
+   "index": 120,
+   "mmS": 95.50450278728356
+  },
+  "resolutionSlewDegS": 36,
+  "degPerMmCentre": 0.3769404795971383,
+  "resolutionMm": 1.9101158908947973,
+  "lengthMm": 240
+ }
+}
