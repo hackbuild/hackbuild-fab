@@ -130,10 +130,10 @@ and the chase; never edit between the markers.
 <!-- generated: print card; rewrite with HBF_ACCEPT=1 npx vitest run reference/keys/flex-pair -->
 
 - design: keys-flex-pair, preset two, machine ffc5p
-- file: out/flex-pair-two.3mf, 65703 bytes, sha256 4419e5df06d472c0d22a5a6286e4922f43f344ba885b83edb364cb16e43b0eeb
-- artifact hash (hbf): 616ac8ab424721a20af931574aa731232121488b5121450170f65547c492324b
+- file: out/flex-pair-two.3mf, 65702 bytes, sha256 f20da97e93e04c24cd049592f895621dbad276b0290abaa5ea541b5557f54784
+- artifact hash (hbf): 8ce790b903d650f8d43ded3d0e2348cece6b0cc35e5c092d659d3df62e088e76
 - write it: `SOURCE_DATE_EPOCH=315532800 npx --no-install hbf export.run reference/keys/flex-pair --kind 3mf --preset two --out reference/keys/flex-pair/out/flex-pair-two.3mf` (the epoch is pinned; unset, it follows the HEAD commit time and the bytes move)
-- build: c66fdd9de9ab320544c3b751fadcd6c0e06bf9a00f3ecac80644a0b760885384
+- build: c1cbf839a54d72ee502cb08d81ce4344fa086d3bc41e715625a7619b7a6019c6
 - slicer: Flashforge Creator 5 Pro 0.4 nozzle, process 0.24mm Standard @FF C5
 - plate: Textured PEI Plate
 - layer grid: ffc5p_20260819, first layer 0.25 mm, then 0.24 mm (profile)
@@ -170,6 +170,18 @@ on GP3, as the hookup in `chase.ts` names them.
 
 ### Verified on this machine
 
+- 2026-10-14 (coupon export dropped, D-271): `npx --no-install hbf parity
+  reference/keys/flex-pair` exits 0 at build b22ba3..54 against the goldens
+  re-accepted when chase.ts dropped its `coupon` export: in build.json only
+  defHash and buildHash moved, registryHash and every mesh hash and volume
+  are unchanged, `query-solve.json` moves the same two hashes and
+  `artifacts.json` its 3MF hash, whose metadata carries the buildHash
+  (computed).
+- 2026-10-14 (coupon export dropped): the preset "two" writer 3MF of that
+  build (65702 bytes, sha256 f20da97e...4784, the print card's file at
+  build c1cbf8..c6) passes `uv run --project tools/py
+  tools/py/validate_3mf.py --overlap`: 27 checks ran, 0 skipped, 0 failed
+  (export, target bbs). Evidence: `fab-knowledge:evals/2026-10-14/flex-pair-slice/`.
 - 2026-10-11 (integration after M06 and M08): `npx --no-install hbf parity reference/keys/flex-pair`
   exits 0 at build e00fb0..6e against the goldens re-accepted when CHK-KEY-01 2.1.0,
   CHK-KEY-02 2.0.0, CHK-PRT-03 2.0.0, CHK-PRT-04 2.0.0, CHK-KEY-04 2.0.1,
@@ -388,6 +400,16 @@ printed body, and none meets M-S-T10. Full record:
   (computed); `validate_3mf.py --overlap` on the writer 3MF: 27 checks ran,
   0 skipped, 0 failed (export, target bbs).
   Evidence: `fab-knowledge:evidence/integration-m06-m08/flex-pair-slice-2026-10-11/`.
+- Rerun 2026-10-14 by the reference fixer on build b22ba3..54 (preset
+  "two" build c1cbf8..c6), chase.ts dropping its `coupon` export moving
+  defHash, registryHash and every mesh hash and volume unchanged: writer
+  3MF 65702 bytes, sha256 f20da97e...4784; completed 3MF sha256
+  1ee37b04...119c; slicer exit 0, 1532 ms wall (measured); G-code 686412
+  bytes, equal to the 2026-10-11 rerun's but for its generated-at line,
+  and the analysis equal on every figure from its summary on (computed);
+  `validate_3mf.py --overlap` on the writer 3MF: 27 checks ran, 0
+  skipped, 0 failed (export, target bbs).
+  Evidence: `fab-knowledge:evals/2026-10-14/flex-pair-slice/`.
 - Analyzer missing areas (at least 0.02 mm2 after a 0.10 mm opening): 78
   (computed). The largest are on both key tops (cones top1 and top2, T2)
   at layers 41 to 44, up to 1.538 mm2 at layer 41 (computed). By body:

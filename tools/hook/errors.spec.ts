@@ -138,7 +138,7 @@ test("out-of-range state writes clamp and log within 100 ms; loadDesign clamps t
   }
 });
 
-test("exportBytes: unknown kind message, aliases to the page writers, and a kind this bake cannot write", async ({ browser }) => {
+test("exportBytes: unknown kind message, aliases to the page writers, and an undeclared coupon", async ({ browser }) => {
   const ctx = await browser.newContext({ viewport: { width: 1280, height: 800 } });
   const page = await ctx.newPage();
   try {
@@ -160,8 +160,10 @@ test("exportBytes: unknown kind message, aliases to the page writers, and a kind
     // The aliases reach the page build's writers (D-264): the print card text and the stl fallback zip.
     expect(r.card.startsWith("print card")).toBe(true);
     expect(r.stl).toBe("PK");
-    // coupon is declared by the chase and has no writer in core or the page; the refusal says so.
-    expect(r.coupon).toBe("coupon export is not in this bake yet");
+    // flex-pair declares no coupon export until a coupon reference exists (PROFILE.md 11:
+    // coupons/resistivity has no bar geometry, coupons/pip-electrical is M10-T13), so
+    // coupon is an unknown kind on this bench.
+    expect(r.coupon).toBe("unknown export kind: coupon");
   } finally {
     await ctx.close();
   }

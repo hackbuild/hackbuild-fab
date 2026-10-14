@@ -32,12 +32,14 @@ Run every command from the repo root,
       shasum -a 256 reference/keys/flex-pair/out/flex-pair-two.3mf
       ```
 
-      Expected, from the print card `file:` line: 65703 bytes, sha256
-      4419e5df06d472c0d22a5a6286e4922f43f344ba885b83edb364cb16e43b0eeb
-      (regenerated 2026-10-11 by the M06 and M08 integration, whose check
-      version bumps moved the registryHash the 3MF metadata carries; every
-      mesh hash and volume is unchanged, computed. It was 65701 bytes,
-      sha256 ea0dd4f7...dc63, after M05-T20 on 2026-10-09).
+      Expected, from the print card `file:` line: 65702 bytes, sha256
+      f20da97e93e04c24cd049592f895621dbad276b0290abaa5ea541b5557f54784
+      (regenerated 2026-10-14 when chase.ts dropped its coupon export,
+      which moved defHash and so the build hash the 3MF metadata carries;
+      every mesh hash and volume is unchanged, computed. It was 65703
+      bytes, sha256 4419e5df...0eeb, from the M06 and M08 integration on
+      2026-10-11, and 65701 bytes, sha256 ea0dd4f7...dc63, after M05-T20
+      on 2026-10-09).
       A different hash means the build or the writer moved since the card
       was generated. Stop and record it; do not print a file the card does
       not describe.

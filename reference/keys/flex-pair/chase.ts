@@ -70,7 +70,7 @@ export const chase = defineChase({
     { id: "two", label: "two keys", params: { keys: [{ x: -14, d: 10, cone: 4, gap: 1.84 }, { x: 14, d: 10, cone: 4, gap: 1.84 }] } },
   ],
   build: { module: "./build.ts", fn: "build" },
-  exports: [{ kind: "3mf", machine: "ffc5p", pose: "print" }, { kind: "stl" }, { kind: "card" }, { kind: "json" }, { kind: "coupon" }],
+  exports: [{ kind: "3mf", machine: "ffc5p", pose: "print" }, { kind: "stl" }, { kind: "card" }, { kind: "json" }],
   // Wiring facts: changing an MCU or pin here leaves the buildHash unchanged.
   // Wait 3500 us as pip_stick ships it until a coupon calibrates (D-079).
   hookup: [
