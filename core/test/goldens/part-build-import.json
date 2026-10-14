@@ -1,0 +1,48 @@
+{
+  "note": "computed 2026-10-07 at first run of M04-T14 and pinned; the qualifier of every number is computed. exit and verdict are the CLI result of hbf part.build --import <file> --json at default units (glb m, stl mm).",
+  "cases": [
+    {
+      "file": "tools/corpus/import/board-rp2040-pizero-standin.stl",
+      "exit": 1,
+      "verdict": "fail",
+      "stage": "build",
+      "error": {
+        "code": "E_KERNEL",
+        "path": "tools/corpus/import/board-rp2040-pizero-standin.stl",
+        "got": -6505.728790283203
+      }
+    },
+    {
+      "file": "tools/corpus/import/locket-r2.glb",
+      "exit": 0,
+      "verdict": "pass",
+      "stage": "done",
+      "volumeMm3": 171378022396612.84,
+      "triangles": 25312,
+      "counts": {
+        "pass": 1,
+        "warn": 0,
+        "fail": 0,
+        "skip": 6
+      },
+      "fail": []
+    },
+    {
+      "file": "tools/corpus/import/lug.glb",
+      "exit": 1,
+      "verdict": "fail",
+      "stage": "check",
+      "volumeMm3": 6114325459209.888,
+      "triangles": 10264,
+      "counts": {
+        "pass": 0,
+        "warn": 0,
+        "fail": 1,
+        "skip": 6
+      },
+      "fail": [
+        "CHK-PRT-01"
+      ]
+    }
+  ]
+}

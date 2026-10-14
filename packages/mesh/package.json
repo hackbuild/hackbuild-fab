@@ -1,0 +1,27 @@
+{
+  "name": "@hackbuild/mesh",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "author": "Moheeb Zara <hackbuildvideo@gmail.com>",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "pretest": "tsc -b",
+    "test": "vitest run --exclude \"seed/**\"",
+    "sweep": "vitest run --config vitest.sweep.config.ts",
+    "revolve:full": "HBF_REVOLVE_FULL=1 vitest run test/routes/revolve.test.ts"
+  },
+  "dependencies": {
+    "@hackbuild/geom": "0.0.0",
+    "@hackbuild/profile": "0.0.0",
+    "@hackbuild/spec": "0.1.0",
+    "manifold-3d": "3.5.4"
+  }
+}

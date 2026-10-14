@@ -1,0 +1,24 @@
+{
+  "name": "@hackbuild/profile",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "author": "Moheeb Zara <hackbuildvideo@gmail.com>",
+  "exports": {
+    ".": {
+      "types": "./dist/src/index.d.ts",
+      "import": "./dist/src/index.js"
+    },
+    "./seed/profile.seed.json": "./seed/profile.seed.json",
+    "./data/*.json": "./data/*.json"
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "pretest": "tsc -b",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@hackbuild/spec": "0.1.0"
+  }
+}

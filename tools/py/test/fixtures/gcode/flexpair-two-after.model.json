@@ -1,0 +1,46 @@
+{
+  "qualifier": "computed",
+  "nets": {
+    "traces conductor.gnd": "GND",
+    "traces conductor.key1col": "K1",
+    "traces conductor.gnd1col": "GND",
+    "traces conductor.key1": "K1",
+    "traces conductor.gnd1stub": "GND",
+    "traces conductor.key2col": "K2",
+    "traces conductor.gnd2col": "GND",
+    "traces conductor.key2": "K2",
+    "traces conductor.gnd2stub": "GND"
+  },
+  "keys": [
+    {
+      "key": 1,
+      "x": -14,
+      "keyColumn": "traces conductor.key1col",
+      "gndColumn": "traces conductor.gnd1col",
+      "cap": "caps cap1",
+      "trace": "traces conductor.key1",
+      "traceBand": [
+        0.73,
+        1.45
+      ],
+      "colTop": 4.65,
+      "gap": 1.84,
+      "coneH": 4.08
+    },
+    {
+      "key": 2,
+      "x": 14,
+      "keyColumn": "traces conductor.key2col",
+      "gndColumn": "traces conductor.gnd2col",
+      "cap": "caps cap2",
+      "trace": "traces conductor.key2",
+      "traceBand": [
+        0.73,
+        1.45
+      ],
+      "colTop": 4.65,
+      "gap": 1.84,
+      "coneH": 4.08
+    }
+  ]
+}

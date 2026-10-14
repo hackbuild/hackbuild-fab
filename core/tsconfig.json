@@ -1,0 +1,72 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": "src",
+    "types": [
+      "node"
+    ]
+  },
+  "include": [
+    "src"
+  ],
+  "references": [
+    {
+      "path": "../packages/chase"
+    },
+    {
+      "path": "../packages/profile"
+    },
+    {
+      "path": "../packages/geom"
+    },
+    {
+      "path": "../packages/mesh"
+    },
+    {
+      "path": "../packages/3mf"
+    },
+    {
+      "path": "../packages/checks"
+    },
+    {
+      "path": "../packages/constraints"
+    },
+    {
+      "path": "../packages/catalog"
+    },
+    {
+      "path": "../packages/circuit"
+    },
+    {
+      "path": "../packages/sim"
+    },
+    {
+      "path": "../packages/inlay"
+    },
+    {
+      "path": "../packages/project"
+    },
+    {
+      "path": "../packages/motion"
+    },
+    {
+      "path": "../packages/nest"
+    },
+    {
+      "path": "../packages/copper"
+    },
+    {
+      "path": "../packages/mechanisms"
+    },
+    {
+      "path": "../packages/archetypes"
+    },
+    {
+      "path": "../packages/board"
+    },
+    {
+      "path": "../packages/wiring"
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "generator": "packages/mesh/test/legacy/imported_glb_oracle.py",
+  "trimesh": "5.1.1",
+  "qualifier": "computed",
+  "units": "file units, +Y up, as the glb stores them",
+  "rows": [
+    {
+      "file": "tools/corpus/import/locket-r2.glb",
+      "sha256": "c25fbaf4c6639e3a1396fa003824a468edb92362054104def4d78a31b3d7a401",
+      "triangles": 25312,
+      "signedVolume": 171378.01913319185,
+      "area": 133450.73914402997,
+      "boundsLo": [
+        -63.5,
+        -4.0,
+        -4.7683716530855236e-08
+      ],
+      "boundsHi": [
+        63.5,
+        149.0,
+        39.20000076293945
+      ],
+      "geometries": 16,
+      "geometriesWatertight": 16
+    },
+    {
+      "file": "tools/corpus/import/lug.glb",
+      "sha256": "15f3ea44045856ccead71b934b56f4b49b2f5d89940950b89287311568746b9e",
+      "triangles": 10264,
+      "signedVolume": 6114.325538233867,
+      "area": 9304.401669520616,
+      "boundsLo": [
+        -32.5,
+        -8.800000381469726,
+        -28.25
+      ],
+      "boundsHi": [
+        32.5,
+        2.175,
+        28.25
+      ],
+      "geometries": 53,
+      "geometriesWatertight": 0
+    }
+  ]
+}

@@ -1,0 +1,898 @@
+{
+  "note": "Material rows (spec/profile.ts Material) and the slicer filament table. Seed rows load at the tiers of PROFILE.md 2.4.",
+  "materials": [
+    {
+      "id": "petg",
+      "name": "PETG, shop default",
+      "processes": [
+        "fdm"
+      ],
+      "densityGcm3": 1.27,
+      "modulusMPa": 1900,
+      "resistivity": [],
+      "strain": [
+        {
+          "use": "click",
+          "bend": "inPlane",
+          "pct": 2.5,
+          "provenance": {
+            "tier": "inferred",
+            "method": "failure",
+            "date": "2026-10-04",
+            "source": "originals/pip/files/haft-src/src/model.js line 541 (fit click spring: eStop <= 0.025, PETG fatigues above about 2.5); seed materials.petg-click strainMax 0.025 (HAFT click spring solver; a 0.6 beam reached 2.7 to 3.3 percent and failed); D-073"
+          }
+        },
+        {
+          "use": "snap",
+          "bend": "inPlane",
+          "pct": 2.5,
+          "provenance": {
+            "tier": "inferred",
+            "method": "failure",
+            "date": "2026-10-04",
+            "source": "originals/pip/files/haft-src/src/model.js line 541 (fit click spring: eStop <= 0.025, PETG fatigues above about 2.5); seed materials.petg-click strainMax 0.025, applied to snaps; D-073"
+          }
+        },
+        {
+          "use": "click",
+          "bend": "acrossLayers",
+          "pct": 1.5,
+          "rangePct": [
+            1.5,
+            1.8
+          ],
+          "provenance": {
+            "tier": "inferred",
+            "method": "derived",
+            "date": "2026-10-04",
+            "source": "D-073 default until a coupon; research/3dp-landscape.md:512-516"
+          }
+        },
+        {
+          "use": "snap",
+          "bend": "acrossLayers",
+          "pct": 1.5,
+          "rangePct": [
+            1.5,
+            1.8
+          ],
+          "provenance": {
+            "tier": "inferred",
+            "method": "derived",
+            "date": "2026-10-04",
+            "source": "D-073 default until a coupon; research/3dp-landscape.md:512-516"
+          }
+        }
+      ],
+      "creep": "low",
+      "handling": {
+        "abrasive": false,
+        "flexible": false,
+        "minNozzleMm": 0.4,
+        "provenance": {
+          "tier": "inferred",
+          "method": "derived",
+          "date": "2026-10-04",
+          "source": "unfilled; prints on record at 0.4 only (24 owner 3MFs on the 0.4 preset)"
+        }
+      },
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-04",
+        "source": "seed materials.petg (OGEE R16-P PETG pass 2026-08); PROFILE.md 3.1: modulus 1900 working (pip/src/layout.js clicky defaults), density 1.27 vendor (gold filament_density)"
+      }
+    },
+    {
+      "id": "pla",
+      "name": "PLA",
+      "processes": [
+        "fdm"
+      ],
+      "densityGcm3": 1.24,
+      "resistivity": [],
+      "strain": [],
+      "creep": "high",
+      "handling": {
+        "abrasive": false,
+        "flexible": false,
+        "minNozzleMm": 0.25,
+        "provenance": {
+          "tier": "inferred",
+          "method": "derived",
+          "date": "2026-10-04",
+          "source": "unfilled; 3d/coin/hsl.3mf prints Generic HS PLA at 0.25 (vendor preset ffc5p-n025_20260819)"
+        }
+      },
+      "provenance": {
+        "tier": "vendor",
+        "method": "datasheet",
+        "date": "2026-10-04",
+        "source": "seed materials.pla (print-forge materials.json); density 1.24 from seed/3mf/materials.json PLA; PROFILE.md 3.1"
+      }
+    },
+    {
+      "id": "tpu95",
+      "name": "TPU 95A",
+      "processes": [
+        "fdm"
+      ],
+      "densityGcm3": 1.22,
+      "modulusMPa": 9.2,
+      "resistivity": [],
+      "strain": [],
+      "creep": "low",
+      "handling": {
+        "abrasive": false,
+        "flexible": true,
+        "minNozzleMm": 0.4,
+        "provenance": {
+          "tier": "inferred",
+          "method": "derived",
+          "date": "2026-10-04",
+          "source": "PIP slot 3 on ffc5p at 0.4 (pip-controller/docs/printing.md:9-19)"
+        }
+      },
+      "provenance": {
+        "tier": "vendor",
+        "method": "datasheet",
+        "date": "2026-10-04",
+        "source": "seed materials.tpu95 (print-forge materials.json); modulus 9.2 XY as published, Bambu TPU 95A TDS via research/3dp-landscape.md:501; density COLLAR MATERIALS; PROFILE.md 3.1"
+      }
+    },
+    {
+      "id": "cpla",
+      "name": "conductive PLA, Yousu (shop spool)",
+      "processes": [
+        "fdm"
+      ],
+      "brand": "Yousu",
+      "resistivity": [
+        {
+          "id": "cpla.pip.along",
+          "direction": "along",
+          "ohmCm": 500,
+          "form": "printed",
+          "brand": "Yousu",
+          "provenance": {
+            "tier": "inferred",
+            "method": "derived",
+            "date": "2026-09-18",
+            "source": "pip/src/layout.js:46 (rhoC); pip/docs/electrical.md:15-17"
+          }
+        },
+        {
+          "id": "cpla.pip.through",
+          "direction": "through",
+          "ohmCm": 2000,
+          "form": "printed",
+          "brand": "Yousu",
+          "provenance": {
+            "tier": "inferred",
+            "method": "derived",
+            "date": "2026-09-18",
+            "source": "pip/src/layout.js:46 (rhoCz)"
+          }
+        }
+      ],
+      "strain": [],
+      "creep": "high",
+      "handling": {
+        "abrasive": true,
+        "flexible": false,
+        "minNozzleMm": 0.4,
+        "provenance": {
+          "tier": "inferred",
+          "method": "derived",
+          "date": "2026-10-04",
+          "source": "carbon filled; PIP slot 2 at 0.4 (pip-controller/docs/printing.md:18)"
+        }
+      },
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-04",
+        "source": "seed materials.cpla; seed resistivityOhmCm 30 and anisotropy 15/30/115 retired for the D-081 rows (C-09); PROFILE.md 3.1"
+      }
+    },
+    {
+      "id": "ctpu",
+      "name": "conductive TPU 95A, Yousu (shop spool)",
+      "processes": [
+        "fdm"
+      ],
+      "brand": "Yousu",
+      "resistivity": [
+        {
+          "id": "ctpu.pip.bulk",
+          "direction": "bulk",
+          "ohmCm": 400,
+          "form": "printed",
+          "brand": "Yousu",
+          "provenance": {
+            "tier": "inferred",
+            "method": "derived",
+            "date": "2026-09-18",
+            "source": "pip/src/layout.js:46 (rhoT), contact TPU"
+          }
+        }
+      ],
+      "strain": [],
+      "creep": "low",
+      "handling": {
+        "abrasive": true,
+        "flexible": true,
+        "minNozzleMm": 0.4,
+        "provenance": {
+          "tier": "inferred",
+          "method": "derived",
+          "date": "2026-10-04",
+          "source": "carbon filled; PIP slot 4 at 0.4 (pip-controller/docs/printing.md:20)"
+        }
+      },
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-04",
+        "source": "seed materials.ctpu; seed resistivityOhmCm 1500 retired for the PIP preset 400 (D-081); PROFILE.md 3.1"
+      }
+    },
+    {
+      "id": "cpla-protopasta",
+      "name": "Protopasta conductive PLA",
+      "processes": [
+        "fdm"
+      ],
+      "brand": "Protopasta",
+      "resistivity": [
+        {
+          "id": "cpla-protopasta.molded",
+          "direction": "bulk",
+          "ohmCm": 15,
+          "form": "molded",
+          "brand": "Protopasta",
+          "provenance": {
+            "tier": "vendor",
+            "method": "datasheet",
+            "date": "2026-10-06",
+            "source": "proto-pasta.com/pages/conductive-pla, molded; seed materials.cpla resistivityAnisotropy.along 15 (hbf/seed/profile.seed.json line 48, where the seed files the molded figure under along); D-081, PROFILE.md 4.1"
+          }
+        },
+        {
+          "id": "cpla-protopasta.xy",
+          "direction": "along",
+          "ohmCm": 30,
+          "form": "printed",
+          "brand": "Protopasta",
+          "provenance": {
+            "tier": "vendor",
+            "method": "datasheet",
+            "date": "2026-10-06",
+            "source": "proto-pasta.com/pages/conductive-pla, printed XY; seed materials.cpla resistivityOhmCm 30 and resistivityAnisotropy.across 30 (hbf/seed/profile.seed.json lines 46, 49); D-081, PROFILE.md 4.1"
+          }
+        },
+        {
+          "id": "cpla-protopasta.z",
+          "direction": "through",
+          "ohmCm": 115,
+          "form": "printed",
+          "brand": "Protopasta",
+          "provenance": {
+            "tier": "vendor",
+            "method": "datasheet",
+            "date": "2026-10-06",
+            "source": "proto-pasta.com/pages/conductive-pla, printed Z; seed materials.cpla resistivityAnisotropy.through 115 (hbf/seed/profile.seed.json line 50); D-081, PROFILE.md 4.1"
+          }
+        }
+      ],
+      "strain": [],
+      "creep": "high",
+      "handling": {
+        "abrasive": true,
+        "flexible": false,
+        "minNozzleMm": 0.4,
+        "provenance": {
+          "tier": "inferred",
+          "method": "derived",
+          "date": "2026-10-06",
+          "source": "carbon filled; no shop print on record, bore taken from cpla (PROFILE.md 3.6)"
+        }
+      },
+      "provenance": {
+        "tier": "vendor",
+        "method": "datasheet",
+        "date": "2026-10-06",
+        "source": "proto-pasta.com/pages/conductive-pla; PROFILE.md 3.1; the shop spool is Yousu (row cpla), so no Protopasta row is read for cpla (C-09)"
+      }
+    },
+    {
+      "id": "electrifi",
+      "name": "Multi3D Electrifi, copper filled",
+      "processes": [
+        "fdm"
+      ],
+      "resistivity": [],
+      "strain": [],
+      "creep": "unknown",
+      "handling": {
+        "abrasive": true,
+        "flexible": false,
+        "minNozzleMm": 0.4,
+        "provenance": {
+          "tier": "inferred",
+          "method": "derived",
+          "date": "2026-10-04",
+          "source": "copper filled; no shop print on record"
+        }
+      },
+      "provenance": {
+        "tier": "inferred",
+        "method": "listing",
+        "date": "2026-10-04",
+        "source": "seed materials.electrifi (Multi3D marketing; get datasheet); seed resistivityOhmCm 0.01 not loaded, the D-081 rows of PROFILE.md 4.1 replace it"
+      }
+    },
+    {
+      "id": "cabs",
+      "name": "Torwell conductive ABS (Capricate)",
+      "processes": [
+        "fdm"
+      ],
+      "brand": "Torwell",
+      "resistivity": [
+        {
+          "id": "cabs.capricate.along",
+          "direction": "along",
+          "ohmCm": 0.4382,
+          "form": "printed",
+          "brand": "Torwell",
+          "provenance": {
+            "tier": "community",
+            "method": "coupon",
+            "date": "2026-10-08",
+            "conditions": {
+              "temperatureC": 230,
+              "layer": 0.2,
+              "direction": "along"
+            },
+            "source": "Schmitz et al., Capricate, UIST 2015 (mschmitz.org PDF): Torwell conductive ABS, parallel 4.382 ohm mm, SD 1.285; PROFILE.md 4.1 row cabs.capricate.along; D-081"
+          },
+          "note": "Measured by others on Capricate's own machine: samples 100 x 12 x 1 mm, n 14, 100 percent fill, 0.8 mm nozzle, 0.2 mm layer, 230 C (M05-T04 step 4). Paper units ohm mm; ohm cm is the paper figure / 10 (verified-claims.md lines 39 to 45)."
+        },
+        {
+          "id": "cabs.capricate.across",
+          "direction": "across",
+          "ohmCm": 0.8171,
+          "form": "printed",
+          "brand": "Torwell",
+          "provenance": {
+            "tier": "community",
+            "method": "coupon",
+            "date": "2026-10-08",
+            "conditions": {
+              "temperatureC": 230,
+              "layer": 0.2,
+              "direction": "across"
+            },
+            "source": "Schmitz et al., Capricate, UIST 2015 (mschmitz.org PDF): Torwell conductive ABS, perpendicular, in plane 8.171 ohm mm, SD 0.658; PROFILE.md 4.1 row cabs.capricate.across; D-081"
+          },
+          "note": "Measured by others on Capricate's own machine: samples 100 x 12 x 1 mm, n 14, 100 percent fill, 0.8 mm nozzle, 0.2 mm layer, 230 C (M05-T04 step 4). Paper units ohm mm; ohm cm is the paper figure / 10 (verified-claims.md lines 39 to 45)."
+        },
+        {
+          "id": "cabs.capricate.through",
+          "direction": "through",
+          "ohmCm": 0.9976,
+          "form": "printed",
+          "brand": "Torwell",
+          "provenance": {
+            "tier": "community",
+            "method": "coupon",
+            "date": "2026-10-08",
+            "conditions": {
+              "temperatureC": 230,
+              "layer": 0.2,
+              "direction": "through"
+            },
+            "source": "Schmitz et al., Capricate, UIST 2015 (mschmitz.org PDF): Torwell conductive ABS, vertical, Z 9.976 ohm mm, SD 1.729; PROFILE.md 4.1 row cabs.capricate.through; D-081"
+          },
+          "note": "Measured by others on Capricate's own machine: samples 100 x 12 x 1 mm, n 14, 100 percent fill, 0.8 mm nozzle, 0.2 mm layer, 230 C (M05-T04 step 4). Paper units ohm mm; ohm cm is the paper figure / 10 (verified-claims.md lines 39 to 45)."
+        }
+      ],
+      "strain": [],
+      "creep": "unknown",
+      "handling": {
+        "abrasive": true,
+        "flexible": false,
+        "minNozzleMm": 0.4,
+        "provenance": {
+          "tier": "inferred",
+          "method": "derived",
+          "date": "2026-10-08",
+          "source": "carbon filled; Capricate printed on its own machine, no shop print on record (PROFILE.md 3.6)"
+        }
+      },
+      "provenance": {
+        "tier": "community",
+        "method": "derived",
+        "date": "2026-10-08",
+        "source": "Schmitz et al., Capricate, UIST 2015; PROFILE.md 3.1 row cabs; the Capricate reproduction reads it (M05-T04, M05-T12)"
+      }
+    },
+    {
+      "id": "ply3",
+      "name": "plywood 3 mm",
+      "processes": [
+        "laser"
+      ],
+      "modulusMPa": 10000,
+      "thickness": 3,
+      "resistivity": [],
+      "strain": [],
+      "creep": "unknown",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-04",
+        "source": "seed materials.ply3 (SLUG 3mm rev); thickness 3.00 in SPINDLE checkstack.mjs (PROFILE.md 3.1)"
+      }
+    },
+    {
+      "id": "acrylic3",
+      "name": "acrylic 3 mm",
+      "processes": [
+        "laser"
+      ],
+      "modulusMPa": 3200,
+      "thickness": 3,
+      "frictionStatic": {
+        "acrylic3": 0.45
+      },
+      "resistivity": [],
+      "strain": [],
+      "creep": "unknown",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-04",
+        "source": "seed materials.acrylic3 (OGEE R12 ramp analysis); thickness 3.0 from OGEE16 params.scad T (PROFILE.md 3.1)"
+      }
+    },
+    {
+      "id": "copper-tape",
+      "name": "adhesive copper tape, 0.07 mm",
+      "processes": [
+        "vinyl"
+      ],
+      "thickness": 0.07,
+      "resistivity": [],
+      "strain": [],
+      "creep": "unknown",
+      "provenance": {
+        "tier": "vendor",
+        "method": "datasheet",
+        "date": "2026-10-04",
+        "source": "seed materials.copper-tape (KEYWAY); SPLICE sim TAPE Z 0.07 mm"
+      }
+    },
+    {
+      "id": "velostat",
+      "name": "Velostat 0.1 mm (4 mil)",
+      "processes": [
+        "vinyl"
+      ],
+      "thickness": 0.1,
+      "resistivity": [],
+      "strain": [],
+      "creep": "unknown",
+      "provenance": {
+        "tier": "vendor",
+        "method": "datasheet",
+        "date": "2026-10-04",
+        "source": "seed materials.velostat (KEYWAY 4 mil)"
+      }
+    },
+    {
+      "id": "cardstock-030",
+      "name": "cardstock, 0.3 mm (cut-sheet spacer)",
+      "processes": [
+        "vinyl"
+      ],
+      "thickness": 0.3,
+      "resistivity": [],
+      "strain": [],
+      "creep": "unknown",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-08",
+        "source": "KEYWAY README layer table and cut settings (lines 64, 65 and 112 of /Users/obsidian/Projects/hackbuild/fab-knowledge/originals/keyway/files/README.md): 0.3 mm cardstock for both spacers; the design's stated stock, no sheet measured; the paper row cardstock keeps its thickness absent (PROFILE.md 3.5); read by the KEYWAY stack declaration (M05-T14)"
+      }
+    },
+    {
+      "id": "eva-2",
+      "name": "EVA foam, 2 mm (key caps)",
+      "processes": [
+        "vinyl"
+      ],
+      "thickness": 2.0,
+      "resistivity": [],
+      "strain": [],
+      "creep": "unknown",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-08",
+        "source": "KEYWAY README layer table and cut settings (lines 67 and 113 of /Users/obsidian/Projects/hackbuild/fab-knowledge/originals/keyway/files/README.md): 2 mm EVA foam caps; the design's stated stock, no sheet measured; read by the KEYWAY stack declaration (M05-T14)"
+      }
+    },
+    {
+      "id": "chipboard-2",
+      "name": "chipboard, 2 mm (backer)",
+      "processes": [
+        "vinyl"
+      ],
+      "thickness": 2.0,
+      "resistivity": [],
+      "strain": [],
+      "creep": "unknown",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-08",
+        "source": "KEYWAY README layer table and cut settings (lines 68 and 114 of /Users/obsidian/Projects/hackbuild/fab-knowledge/originals/keyway/files/README.md): 2 mm chipboard or 1/16 in ply stiffener; the design's stated stock, no sheet measured; read by the KEYWAY stack declaration (M05-T14)"
+      }
+    }
+  ],
+  "filamentPresets": [
+    {
+      "id": "Flashforge HS PETG @FF C5P",
+      "type": "PETG",
+      "machine": "ffc5p",
+      "preset": "ffc5p_20260819",
+      "slot": 1,
+      "values": {
+        "filament_settings_id": "Flashforge HS PETG @FF C5P",
+        "filament_vendor": "Flashforge",
+        "filament_type": "PETG",
+        "filament_ids": "GFG99",
+        "nozzle_temperature": "235",
+        "nozzle_temperature_initial_layer": "235",
+        "nozzle_temperature_range_low": "220",
+        "nozzle_temperature_range_high": "260",
+        "hot_plate_temp": "85",
+        "hot_plate_temp_initial_layer": "85",
+        "textured_plate_temp": "85",
+        "textured_plate_temp_initial_layer": "85",
+        "eng_plate_temp": "85",
+        "eng_plate_temp_initial_layer": "85",
+        "filament_max_volumetric_speed": "18",
+        "fan_max_speed": "50",
+        "fan_min_speed": "30",
+        "overhang_fan_speed": "100",
+        "overhang_fan_threshold": "95%",
+        "close_fan_the_first_x_layers": "2",
+        "fan_cooling_layer_time": "30",
+        "slow_down_min_speed": "20",
+        "slow_down_layer_time": "8",
+        "enable_pressure_advance": "1",
+        "pressure_advance": "0.06",
+        "filament_flow_ratio": "1",
+        "filament_density": "1.27",
+        "filament_diameter": "1.75",
+        "temperature_vitrification": "70",
+        "filament_shrink": "100%",
+        "filament_minimal_purge_on_wipe_tower": "15",
+        "filament_cost": "30",
+        "filament_retraction_length": "nil",
+        "filament_map": "1",
+        "filament_self_index": "1",
+        "filament_extruder_variant": "Direct Drive Standard"
+      },
+      "provenance": {
+        "tier": "vendor",
+        "method": "datasheet",
+        "date": "2026-08-19",
+        "source": "slicer save 2026-08-19; fab-work-directory/benches/collar-coin/uploads/hackbuild-coin-nfc.3mf Metadata/project_settings.config slot 1"
+      }
+    },
+    {
+      "id": "Flashforge PETG Pro @FF C5P",
+      "type": "PETG",
+      "machine": "ffc5p",
+      "preset": "ffc5p_20260819",
+      "slot": 2,
+      "values": {
+        "filament_settings_id": "Flashforge PETG Pro @FF C5P",
+        "filament_vendor": "Flashforge",
+        "filament_type": "PETG",
+        "filament_ids": "GFG99",
+        "nozzle_temperature": "255",
+        "nozzle_temperature_initial_layer": "255",
+        "nozzle_temperature_range_low": "220",
+        "nozzle_temperature_range_high": "260",
+        "hot_plate_temp": "85",
+        "hot_plate_temp_initial_layer": "85",
+        "textured_plate_temp": "85",
+        "textured_plate_temp_initial_layer": "85",
+        "eng_plate_temp": "85",
+        "eng_plate_temp_initial_layer": "85",
+        "filament_max_volumetric_speed": "12",
+        "fan_max_speed": "70",
+        "fan_min_speed": "40",
+        "overhang_fan_speed": "90",
+        "overhang_fan_threshold": "10%",
+        "close_fan_the_first_x_layers": "3",
+        "fan_cooling_layer_time": "30",
+        "slow_down_min_speed": "15",
+        "slow_down_layer_time": "8",
+        "enable_pressure_advance": "1",
+        "pressure_advance": "0.07",
+        "filament_flow_ratio": "1",
+        "filament_density": "1.27",
+        "filament_diameter": "1.75",
+        "temperature_vitrification": "70",
+        "filament_shrink": "100%",
+        "filament_minimal_purge_on_wipe_tower": "15",
+        "filament_cost": "30",
+        "filament_retraction_length": "nil",
+        "filament_map": "1",
+        "filament_self_index": "2",
+        "filament_extruder_variant": "Direct Drive Standard"
+      },
+      "provenance": {
+        "tier": "vendor",
+        "method": "datasheet",
+        "date": "2026-08-19",
+        "source": "slicer save 2026-08-19; fab-work-directory/benches/collar-coin/uploads/hackbuild-coin-nfc.3mf Metadata/project_settings.config slot 2"
+      }
+    },
+    {
+      "id": "Generic PETG @FF C5P",
+      "type": "PETG",
+      "machine": "ffc5p",
+      "preset": "ffc5p_20260819",
+      "slot": 3,
+      "values": {
+        "filament_settings_id": "Generic PETG @FF C5P",
+        "filament_vendor": "Generic",
+        "filament_type": "PETG",
+        "filament_ids": "GFG99",
+        "nozzle_temperature": "255",
+        "nozzle_temperature_initial_layer": "255",
+        "nozzle_temperature_range_low": "220",
+        "nozzle_temperature_range_high": "260",
+        "hot_plate_temp": "85",
+        "hot_plate_temp_initial_layer": "85",
+        "textured_plate_temp": "85",
+        "textured_plate_temp_initial_layer": "85",
+        "eng_plate_temp": "85",
+        "eng_plate_temp_initial_layer": "85",
+        "filament_max_volumetric_speed": "12",
+        "fan_max_speed": "70",
+        "fan_min_speed": "40",
+        "overhang_fan_speed": "90",
+        "overhang_fan_threshold": "10%",
+        "close_fan_the_first_x_layers": "3",
+        "fan_cooling_layer_time": "20",
+        "slow_down_min_speed": "15",
+        "slow_down_layer_time": "8",
+        "enable_pressure_advance": "1",
+        "pressure_advance": "0.06",
+        "filament_flow_ratio": "1",
+        "filament_density": "1.27",
+        "filament_diameter": "1.75",
+        "temperature_vitrification": "70",
+        "filament_shrink": "100%",
+        "filament_minimal_purge_on_wipe_tower": "15",
+        "filament_cost": "30",
+        "filament_retraction_length": "nil",
+        "filament_map": "1",
+        "filament_self_index": "3",
+        "filament_extruder_variant": "Direct Drive Standard"
+      },
+      "provenance": {
+        "tier": "vendor",
+        "method": "datasheet",
+        "date": "2026-08-19",
+        "source": "slicer save 2026-08-19; fab-work-directory/benches/collar-coin/uploads/hackbuild-coin-nfc.3mf Metadata/project_settings.config slot 3"
+      }
+    }
+  ],
+  "filamentFallback": {
+    "note": "Generic fallback per filament type for a type no harvested preset covers. PETG disagrees with the gold table: fallback nozzle 240 against gold 235, 255, 255; maxvol 10 against gold 18, 12, 12; bed 70 against gold 85, 85, 85 (PROFILE.md 9). The gold presets win wherever a slot names one.",
+    "rows": [
+      {
+        "type": "PLA",
+        "tray": "GFL99",
+        "nozzle": 215,
+        "nozzle_first": 220,
+        "bed": 55,
+        "bed_first": 55,
+        "density": 1.24,
+        "cost": 20,
+        "vitrification": 45,
+        "maxvol": 12,
+        "fan_max": 100,
+        "fan_min": 100,
+        "overhang_fan": 100,
+        "flow": 0.98,
+        "range_low": 190,
+        "range_high": 240,
+        "provenance": {
+          "tier": "vendor",
+          "method": "datasheet",
+          "date": "2026-10-04",
+          "source": "handoff/seed/3mf/materials.json (print-forge); its own note calls the values Orca Generic profile ballparks"
+        }
+      },
+      {
+        "type": "PETG",
+        "tray": "GFG99",
+        "nozzle": 240,
+        "nozzle_first": 245,
+        "bed": 70,
+        "bed_first": 70,
+        "density": 1.27,
+        "cost": 25,
+        "vitrification": 60,
+        "maxvol": 10,
+        "fan_max": 40,
+        "fan_min": 20,
+        "overhang_fan": 90,
+        "flow": 0.95,
+        "range_low": 220,
+        "range_high": 270,
+        "provenance": {
+          "tier": "vendor",
+          "method": "datasheet",
+          "date": "2026-10-04",
+          "source": "handoff/seed/3mf/materials.json (print-forge); its own note calls the values Orca Generic profile ballparks"
+        }
+      },
+      {
+        "type": "ABS",
+        "tray": "GFB99",
+        "nozzle": 250,
+        "nozzle_first": 255,
+        "bed": 90,
+        "bed_first": 90,
+        "density": 1.04,
+        "cost": 25,
+        "vitrification": 90,
+        "maxvol": 12,
+        "fan_max": 30,
+        "fan_min": 10,
+        "overhang_fan": 80,
+        "flow": 0.95,
+        "range_low": 240,
+        "range_high": 270,
+        "provenance": {
+          "tier": "vendor",
+          "method": "datasheet",
+          "date": "2026-10-04",
+          "source": "handoff/seed/3mf/materials.json (print-forge); its own note calls the values Orca Generic profile ballparks"
+        }
+      },
+      {
+        "type": "ASA",
+        "tray": "GFB98",
+        "nozzle": 255,
+        "nozzle_first": 260,
+        "bed": 95,
+        "bed_first": 95,
+        "density": 1.05,
+        "cost": 28,
+        "vitrification": 95,
+        "maxvol": 12,
+        "fan_max": 30,
+        "fan_min": 10,
+        "overhang_fan": 80,
+        "flow": 0.95,
+        "range_low": 240,
+        "range_high": 280,
+        "provenance": {
+          "tier": "vendor",
+          "method": "datasheet",
+          "date": "2026-10-04",
+          "source": "handoff/seed/3mf/materials.json (print-forge); its own note calls the values Orca Generic profile ballparks"
+        }
+      },
+      {
+        "type": "TPU",
+        "tray": "GFU99",
+        "nozzle": 225,
+        "nozzle_first": 230,
+        "bed": 40,
+        "bed_first": 40,
+        "density": 1.21,
+        "cost": 40,
+        "vitrification": 35,
+        "maxvol": 3.2,
+        "fan_max": 100,
+        "fan_min": 100,
+        "overhang_fan": 100,
+        "flow": 0.98,
+        "range_low": 200,
+        "range_high": 250,
+        "provenance": {
+          "tier": "vendor",
+          "method": "datasheet",
+          "date": "2026-10-04",
+          "source": "handoff/seed/3mf/materials.json (print-forge); its own note calls the values Orca Generic profile ballparks"
+        }
+      },
+      {
+        "type": "PC",
+        "tray": "GFC99",
+        "nozzle": 270,
+        "nozzle_first": 270,
+        "bed": 100,
+        "bed_first": 100,
+        "density": 1.2,
+        "cost": 40,
+        "vitrification": 110,
+        "maxvol": 10,
+        "fan_max": 40,
+        "fan_min": 10,
+        "overhang_fan": 80,
+        "flow": 0.94,
+        "range_low": 250,
+        "range_high": 300,
+        "provenance": {
+          "tier": "vendor",
+          "method": "datasheet",
+          "date": "2026-10-04",
+          "source": "handoff/seed/3mf/materials.json (print-forge); its own note calls the values Orca Generic profile ballparks"
+        }
+      },
+      {
+        "type": "PA",
+        "tray": "GFN99",
+        "nozzle": 265,
+        "nozzle_first": 270,
+        "bed": 80,
+        "bed_first": 80,
+        "density": 1.14,
+        "cost": 40,
+        "vitrification": 80,
+        "maxvol": 8,
+        "fan_max": 40,
+        "fan_min": 10,
+        "overhang_fan": 80,
+        "flow": 0.94,
+        "range_low": 250,
+        "range_high": 300,
+        "provenance": {
+          "tier": "vendor",
+          "method": "datasheet",
+          "date": "2026-10-04",
+          "source": "handoff/seed/3mf/materials.json (print-forge); its own note calls the values Orca Generic profile ballparks"
+        }
+      },
+      {
+        "type": "PVA",
+        "tray": "GFS99",
+        "nozzle": 200,
+        "nozzle_first": 200,
+        "bed": 55,
+        "bed_first": 55,
+        "density": 1.23,
+        "cost": 60,
+        "vitrification": 50,
+        "maxvol": 4,
+        "fan_max": 100,
+        "fan_min": 100,
+        "overhang_fan": 100,
+        "flow": 0.95,
+        "range_low": 180,
+        "range_high": 220,
+        "provenance": {
+          "tier": "vendor",
+          "method": "datasheet",
+          "date": "2026-10-04",
+          "source": "handoff/seed/3mf/materials.json (print-forge); its own note calls the values Orca Generic profile ballparks"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,174 @@
+{
+  "note": "Fit bands on the real gap per side after loss (PROFILE.md 7.3). PSLIDE is dropped; the mixed class is PSLIP (D-100).",
+  "fits": [
+    {
+      "class": "SLIDE",
+      "processes": [
+        "fdm",
+        "fdm"
+      ],
+      "motion": "slide",
+      "basis": "perSide",
+      "realLoPerSide": 0.125,
+      "realHiPerSide": 0.2,
+      "note": "moves every actuation",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-04",
+        "source": "seed fits.SLIDE real 0.25 to 0.4 across the joint, halved; drawn hint 0.5 to 0.75 not loaded; PROFILE.md 7.3"
+      }
+    },
+    {
+      "class": "LOCATE",
+      "processes": [
+        "fdm",
+        "fdm"
+      ],
+      "motion": "static",
+      "basis": "perSide",
+      "realLoPerSide": 0,
+      "realHiPerSide": 0.075,
+      "note": "assembles by hand, stays",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-04",
+        "source": "seed fits.LOCATE real 0 to 0.15 across the joint, halved; drawn hint 0.25 to 0.4 not loaded; PROFILE.md 7.3"
+      }
+    },
+    {
+      "class": "PRESS",
+      "processes": [
+        "fdm",
+        "fdm"
+      ],
+      "motion": "press",
+      "basis": "perSide",
+      "realLoPerSide": -0.075,
+      "realHiPerSide": -0.025,
+      "note": "must not come apart; the hole shrinking grips",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-04",
+        "source": "seed fits.PRESS real -0.15 to -0.05 across the joint, halved; drawn hint 0.05 to 0.15 not loaded; PROFILE.md 7.3"
+      }
+    },
+    {
+      "class": "SNAP",
+      "processes": [
+        "fdm",
+        "fdm"
+      ],
+      "motion": "snap",
+      "basis": "perSide",
+      "realLoPerSide": -0.65,
+      "realHiPerSide": -0.075,
+      "note": "banded on catch interference; the lead-in angle decides",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-04",
+        "source": "seed fits.SNAP real -1.3 to -0.15 across the joint, halved; PROFILE.md 7.3"
+      }
+    },
+    {
+      "class": "LAP",
+      "processes": [
+        "laser",
+        "laser"
+      ],
+      "motion": "static",
+      "basis": "perSide",
+      "realLoPerSide": 0.075,
+      "realHiPerSide": 0.075,
+      "note": "laser tab in laser slot",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-04",
+        "source": "seed fits.LAP real 0.15 to 0.15 across the joint, halved; PROFILE.md 7.3"
+      }
+    },
+    {
+      "class": "SLIP",
+      "processes": [
+        "laser",
+        "laser"
+      ],
+      "motion": "slide",
+      "basis": "perSide",
+      "realLoPerSide": 0.2,
+      "realHiPerSide": 0.2,
+      "note": "laser part sliding in laser",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-04",
+        "source": "seed fits.SLIP real 0.4 to 0.4 across the joint, halved; PROFILE.md 7.3"
+      }
+    },
+    {
+      "class": "PSLIP",
+      "processes": [
+        "laser",
+        "fdm"
+      ],
+      "motion": "slide",
+      "basis": "perSide",
+      "realLoPerSide": 0.15,
+      "realHiPerSide": 0.275,
+      "note": "printed part sliding in a cut slot; print-over is the (laser, fdm) loss row, 0.15 across the part until a mixed coupon (D-100)",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-04",
+        "source": "seed fits.PSLIP real 0.3 to 0.55 across the joint, halved; PROFILE.md 7.3"
+      }
+    },
+    {
+      "class": "GUIDE",
+      "processes": [
+        "fdm",
+        "fdm"
+      ],
+      "motion": "slide",
+      "basis": "perSide",
+      "realLoPerSide": 0.15,
+      "realHiPerSide": 0.275,
+      "note": "printed in printed, must guide",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-04",
+        "source": "seed fits.GUIDE real 0.3 to 0.55 across the joint, halved; drawn hint 0.55 to 0.8 not loaded; PROFILE.md 7.3"
+      }
+    },
+    {
+      "class": "PGUIDE",
+      "processes": [
+        "laser",
+        "fdm"
+      ],
+      "motion": "slide",
+      "basis": "perSide",
+      "realLoPerSide": 0.15,
+      "realHiPerSide": 0.275,
+      "note": "printed in cut, must guide",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-04",
+        "source": "seed fits.PGUIDE real 0.3 to 0.55 across the joint, halved; PROFILE.md 7.3"
+      }
+    }
+  ],
+  "dropped": [
+    {
+      "class": "PSLIDE",
+      "use": "PSLIP",
+      "decision": "D-100"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "designs/davit/legacy/stl/davit_base.stl": "f61622b0525573982d737537dc87448ecbd7ff7ba7d299e9bbd5aef56ab4d87e",
+  "designs/davit/legacy/stl/davit_crank.stl": "c80f3ce754b4d6e92db7bfa5052a502d1a09ba03e6b0467b6546cf71310697fd",
+  "designs/davit/legacy/stl/davit_fore.stl": "84e2a2b940d363c1548353a487a273909513820c67b907e56e26b00d99d12967",
+  "designs/davit/legacy/stl/davit_jaw_drive.stl": "804423f493d3eb483c384c0535c39d43a3dc507234e8b1020b5d32eaef43663c",
+  "designs/davit/legacy/stl/davit_jaw_idle.stl": "35a904484a7bfec1c2092429da851fdeea34dd744b8eb153d0d6695b0f26734e",
+  "designs/davit/legacy/stl/davit_mini_base.stl": "0f62f334df277ae3d05088b929be61263a570d9440e1f52893d000df13e24181",
+  "designs/davit/legacy/stl/davit_mini_crank.stl": "e6dc4566362a5e9478a534ba5bb6ac9dbb67a85019d5600d6d95b0cd5787cb30",
+  "designs/davit/legacy/stl/davit_mini_fore.stl": "563040229ae78758b354ef06d943a97d1f0d3b3074f4d2f5e82d649f1ed32b1f",
+  "designs/davit/legacy/stl/davit_mini_upper.stl": "fd69fe4b01681d9cc23960cf97548d87cba6f1b4fcb4f4268b3e29bacf03fa5f",
+  "designs/davit/legacy/stl/davit_mount_125in.stl": "5e8c8217251f6a73618eb00a4823eda2664cb2528b962a060e723487675281c2",
+  "designs/davit/legacy/stl/davit_mount_15in.stl": "6600ca8956a8b2347ca47bfe2bcaef8e7545e7dcc7105508534ad2a24e25cbea",
+  "designs/davit/legacy/stl/davit_mount_1in.stl": "e3a7612810771c175ab59d0c21ebae86bb765b1e934a863b6bca4ba6a8427949",
+  "designs/davit/legacy/stl/davit_palm.stl": "141500fdd7856598a88ede2c1ee549c39b3e340726011cbcc37478500f88f0d7",
+  "designs/davit/legacy/stl/davit_pincap.stl": "2a1a505efc67da41281a87e596c7eb7a3a5cb97c1963446582176ba988e18661",
+  "designs/davit/legacy/stl/davit_upper.stl": "0d98c263686e8f71a712527bcc3b9d31d473ee98ebbd6193b4fa8697aefc31ae"
+}

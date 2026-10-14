@@ -1,0 +1,5250 @@
+{
+  "about": "Licence path map and dependency audit for hackbuild-fab (docs/plan/LICENSING.md sections 1.2 and 2). paths is read top to bottom, first match wins. dependencies holds one row per package in package-lock.json and tools/py/uv.lock; tools/licences.mjs --check fails on a missing row.",
+  "paths": [
+    {
+      "glob": [
+        "reference/copper/_inputs/hackbuild-logo.svg",
+        "tools/corpus/inlay/vtracer/01-hackbuild-mark.png",
+        "tools/corpus/inlay/vtracer/02-collar-hackbuild.png",
+        "tools/corpus/inlay/vtracer/05-python-coin-preview.png"
+      ],
+      "licence": "mark",
+      "note": "owner's mark, outside every open grant; later logo files join this row. The vtracer corpus rasters 01, 02 and 05 show the wrench mark and the hack.build wordmark (05 is the coin preview the python hack.build coin script rendered, read 2026-10-13)",
+      "decision": [
+        "D-171"
+      ]
+    },
+    {
+      "glob": [
+        "reference/copper/_inputs/*.woff2"
+      ],
+      "licence": "OFL-1.1",
+      "note": "IBM Plex Mono woff2 from @fontsource/ibm-plex-mono 5.3.0; the package LICENSE, IBM copyright line and OFL text, sits beside them as reference/copper/_inputs/OFL-1.1.txt (M05-T13). This row sits above the reference/*/*/** chase row, which would otherwise match first",
+      "decision": [
+        "D-121"
+      ],
+      "text": "LICENSES/OFL-1.1.txt"
+    },
+    {
+      "glob": [
+        "tools/py/board/fonts/ibm-plex-mono-*.woff2"
+      ],
+      "licence": "OFL-1.1",
+      "note": "IBM Plex Mono 400, 600, 700 woff2 from @fontsource/ibm-plex-mono 5.3.0, byte equal to SHUNT R1 fonts/ (sha256 measured 2026-10-09); the package LICENSE sits beside them as tools/py/board/fonts/OFL-1.1.txt. The direct-emit textpoly reads them (M08-T06)",
+      "decision": [
+        "D-121"
+      ],
+      "text": "LICENSES/OFL-1.1.txt"
+    },
+    {
+      "glob": [
+        "tools/py/board/fonts/permanent-marker-*.woff2",
+        "tools/py/board/fonts/special-elite-*.woff2"
+      ],
+      "licence": "Apache-2.0",
+      "note": "Permanent Marker and Special Elite woff2 from @fontsource/permanent-marker 5.3.0 and @fontsource/special-elite 5.3.0, byte equal to the package files (sha256 measured 2026-10-09); each package LICENSE (Apache-2.0 with the font copyright line) sits beside them as LICENSE-permanent-marker.txt and LICENSE-special-elite.txt (M08-T06)",
+      "decision": [
+        "D-043"
+      ],
+      "text": "tools/py/board/fonts/LICENSE-permanent-marker.txt"
+    },
+    {
+      "glob": [
+        "packages/*/templates/**",
+        "core/templates/**",
+        "designs/*/firmware/templates/**"
+      ],
+      "licence": "MIT-0",
+      "text": "LICENSES/MIT-0.txt",
+      "note": "template text copied verbatim into user outputs; the filling code stays MIT",
+      "decision": [
+        "D-172"
+      ]
+    },
+    {
+      "glob": [
+        "designs/*/firmware/**"
+      ],
+      "licence": "MIT",
+      "text": "LICENSE",
+      "decision": [
+        "D-041"
+      ]
+    },
+    {
+      "glob": [
+        "designs/*/build.ts",
+        "designs/*/bench.ts",
+        "designs/*/src/**",
+        "reference/*/*/build.ts",
+        "reference/*/*/bench.ts",
+        "reference/*/*/src/**"
+      ],
+      "licence": "MIT",
+      "text": "LICENSE",
+      "decision": [
+        "D-195"
+      ]
+    },
+    {
+      "glob": [
+        "designs/*/legacy/**",
+        "reference/*/*/legacy/**"
+      ],
+      "licence": "chase",
+      "note": "harvested originals of the owner's designs and boards; they take the folder's ChaseMeta.license, CC-BY-SA-4.0 for printable designs and CERN-OHL-W-2.0 for boards (owner, 2026-10-13); texts LICENSES/CC-BY-SA-4.0.txt and LICENSES/CERN-OHL-W-2.0.txt",
+      "decision": [
+        "D-185"
+      ]
+    },
+    {
+      "glob": [
+        "designs/*/**",
+        "reference/*/*/**"
+      ],
+      "licence": "chase",
+      "note": "the folder's ChaseMeta.license where a chase.ts declares one; a folder without a chase.ts carries no grant. Printable designs are CC-BY-SA-4.0 and boards CERN-OHL-W-2.0 (owner, 2026-10-13); texts LICENSES/CC-BY-SA-4.0.txt and LICENSES/CERN-OHL-W-2.0.txt",
+      "decision": [
+        "D-041",
+        "D-185"
+      ]
+    },
+    {
+      "glob": [
+        "knowledge/**"
+      ],
+      "licence": "CC-BY-4.0",
+      "text": "LICENSES/CC-BY-4.0.txt",
+      "decision": [
+        "D-042",
+        "D-185"
+      ],
+      "note": "failure corpus and knowledge records, community coupons credited by contributor (owner, 2026-10-13)"
+    },
+    {
+      "glob": [
+        "docs/**",
+        "README.md",
+        "packages/*/README.md"
+      ],
+      "licence": "CC-BY-4.0",
+      "text": "LICENSES/CC-BY-4.0.txt",
+      "note": "code samples inside are also MIT (owner, 2026-10-13)",
+      "decision": [
+        "D-170",
+        "D-185"
+      ]
+    },
+    {
+      "glob": [
+        "packages/catalog/data/kicad/**"
+      ],
+      "licence": "CC-BY-SA-4.0",
+      "note": "KiCad libraries, collection redistribution; KiCad's LICENSE.md sits beside them",
+      "decision": [
+        "D-090"
+      ]
+    },
+    {
+      "glob": [
+        "**"
+      ],
+      "licence": "MIT",
+      "text": "LICENSE",
+      "decision": [
+        "D-041"
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "ecosystem": "npm",
+      "name": "@changesets/apply-release-plan",
+      "version": "8.1.1",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@changesets/apply-release-plan\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@changesets/assemble-release-plan",
+      "version": "7.0.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@changesets/assemble-release-plan\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@changesets/changelog-git",
+      "version": "1.0.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@changesets/changelog-git\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@changesets/cli",
+      "version": "3.0.3",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@changesets/cli\"].license, read 2026-10-05",
+      "use": "kernel release",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-040"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@changesets/config",
+      "version": "4.0.1",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@changesets/config\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@changesets/errors",
+      "version": "1.0.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@changesets/errors\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@changesets/format",
+      "version": "0.1.2",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@changesets/format\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@changesets/get-dependents-graph",
+      "version": "3.0.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@changesets/get-dependents-graph\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@changesets/git",
+      "version": "4.0.1",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@changesets/git\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@changesets/parse",
+      "version": "1.0.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@changesets/parse\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@changesets/pre",
+      "version": "3.0.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@changesets/pre\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@changesets/read",
+      "version": "1.0.1",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@changesets/read\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@changesets/should-skip-package",
+      "version": "1.0.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@changesets/should-skip-package\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@changesets/types",
+      "version": "7.0.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@changesets/types\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@changesets/write",
+      "version": "1.0.1",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@changesets/write\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@clack/core",
+      "version": "1.5.1",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@clack/core\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@clack/prompts",
+      "version": "1.8.1",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@clack/prompts\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@dimforge/rapier3d-deterministic-compat",
+      "version": "0.21.0",
+      "published": "Apache-2.0",
+      "audited": "Apache-2.0",
+      "evidence": "package-lock.json packages[\"node_modules/@dimforge/rapier3d-deterministic-compat\"].license and the package LICENSE file (Apache License 2.0), read 2026-10-07",
+      "use": "sim: Rapier rigid-body worlds and snapshot hashes (M02); notice in bake manifest per docs/plan/LICENSING.md",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-134"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@emnapi/runtime",
+      "version": "1.11.3",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@emnapi/runtime\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@gltf-transform/core",
+      "version": "4.5.1",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@gltf-transform/core\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@gltf-transform/extensions",
+      "version": "4.5.1",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@gltf-transform/extensions\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@gltf-transform/functions",
+      "version": "4.5.1",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@gltf-transform/functions\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@img/colour",
+      "version": "1.1.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@img/colour\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@img/sharp-darwin-arm64",
+      "version": "0.35.5",
+      "published": "Apache-2.0",
+      "audited": "Apache-2.0",
+      "evidence": "package-lock.json packages[\"node_modules/@img/sharp-darwin-arm64\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@img/sharp-darwin-x64",
+      "version": "0.35.5",
+      "published": "Apache-2.0",
+      "audited": "Apache-2.0",
+      "evidence": "package-lock.json packages[\"node_modules/@img/sharp-darwin-x64\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@img/sharp-freebsd-wasm32",
+      "version": "0.35.5",
+      "published": "Apache-2.0",
+      "audited": "Apache-2.0",
+      "evidence": "package-lock.json packages[\"node_modules/@img/sharp-freebsd-wasm32\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@img/sharp-libvips-darwin-arm64",
+      "version": "1.3.4",
+      "published": "LGPL-3.0-or-later",
+      "audited": "LGPL-3.0-or-later",
+      "evidence": "package-lock.json packages[\"node_modules/@img/sharp-libvips-darwin-arm64\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "lazy-separate-file",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ],
+      "note": "reached only through manifold-3d 3.5.4 > @gltf-transform/functions > ndarray-pixels > sharp (npm ls sharp, 2026-10-05); no hackbuild-fab source imports sharp; libvips is a prebuilt shared library sharp loads at run time, a separate replaceable file; never in a bake (D-043)"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@img/sharp-libvips-darwin-x64",
+      "version": "1.3.4",
+      "published": "LGPL-3.0-or-later",
+      "audited": "LGPL-3.0-or-later",
+      "evidence": "package-lock.json packages[\"node_modules/@img/sharp-libvips-darwin-x64\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "lazy-separate-file",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ],
+      "note": "reached only through manifold-3d 3.5.4 > @gltf-transform/functions > ndarray-pixels > sharp (npm ls sharp, 2026-10-05); no hackbuild-fab source imports sharp; libvips is a prebuilt shared library sharp loads at run time, a separate replaceable file; never in a bake (D-043)"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@img/sharp-libvips-linux-arm",
+      "version": "1.3.4",
+      "published": "LGPL-3.0-or-later",
+      "audited": "LGPL-3.0-or-later",
+      "evidence": "package-lock.json packages[\"node_modules/@img/sharp-libvips-linux-arm\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "lazy-separate-file",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ],
+      "note": "reached only through manifold-3d 3.5.4 > @gltf-transform/functions > ndarray-pixels > sharp (npm ls sharp, 2026-10-05); no hackbuild-fab source imports sharp; libvips is a prebuilt shared library sharp loads at run time, a separate replaceable file; never in a bake (D-043)"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@img/sharp-libvips-linux-arm64",
+      "version": "1.3.4",
+      "published": "LGPL-3.0-or-later",
+      "audited": "LGPL-3.0-or-later",
+      "evidence": "package-lock.json packages[\"node_modules/@img/sharp-libvips-linux-arm64\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "lazy-separate-file",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ],
+      "note": "reached only through manifold-3d 3.5.4 > @gltf-transform/functions > ndarray-pixels > sharp (npm ls sharp, 2026-10-05); no hackbuild-fab source imports sharp; libvips is a prebuilt shared library sharp loads at run time, a separate replaceable file; never in a bake (D-043)"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@img/sharp-libvips-linux-ppc64",
+      "version": "1.3.4",
+      "published": "LGPL-3.0-or-later",
+      "audited": "LGPL-3.0-or-later",
+      "evidence": "package-lock.json packages[\"node_modules/@img/sharp-libvips-linux-ppc64\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "lazy-separate-file",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ],
+      "note": "reached only through manifold-3d 3.5.4 > @gltf-transform/functions > ndarray-pixels > sharp (npm ls sharp, 2026-10-05); no hackbuild-fab source imports sharp; libvips is a prebuilt shared library sharp loads at run time, a separate replaceable file; never in a bake (D-043)"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@img/sharp-libvips-linux-riscv64",
+      "version": "1.3.4",
+      "published": "LGPL-3.0-or-later",
+      "audited": "LGPL-3.0-or-later",
+      "evidence": "package-lock.json packages[\"node_modules/@img/sharp-libvips-linux-riscv64\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "lazy-separate-file",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ],
+      "note": "reached only through manifold-3d 3.5.4 > @gltf-transform/functions > ndarray-pixels > sharp (npm ls sharp, 2026-10-05); no hackbuild-fab source imports sharp; libvips is a prebuilt shared library sharp loads at run time, a separate replaceable file; never in a bake (D-043)"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@img/sharp-libvips-linux-s390x",
+      "version": "1.3.4",
+      "published": "LGPL-3.0-or-later",
+      "audited": "LGPL-3.0-or-later",
+      "evidence": "package-lock.json packages[\"node_modules/@img/sharp-libvips-linux-s390x\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "lazy-separate-file",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ],
+      "note": "reached only through manifold-3d 3.5.4 > @gltf-transform/functions > ndarray-pixels > sharp (npm ls sharp, 2026-10-05); no hackbuild-fab source imports sharp; libvips is a prebuilt shared library sharp loads at run time, a separate replaceable file; never in a bake (D-043)"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@img/sharp-libvips-linux-x64",
+      "version": "1.3.4",
+      "published": "LGPL-3.0-or-later",
+      "audited": "LGPL-3.0-or-later",
+      "evidence": "package-lock.json packages[\"node_modules/@img/sharp-libvips-linux-x64\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "lazy-separate-file",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ],
+      "note": "reached only through manifold-3d 3.5.4 > @gltf-transform/functions > ndarray-pixels > sharp (npm ls sharp, 2026-10-05); no hackbuild-fab source imports sharp; libvips is a prebuilt shared library sharp loads at run time, a separate replaceable file; never in a bake (D-043)"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@img/sharp-libvips-linuxmusl-arm64",
+      "version": "1.3.4",
+      "published": "LGPL-3.0-or-later",
+      "audited": "LGPL-3.0-or-later",
+      "evidence": "package-lock.json packages[\"node_modules/@img/sharp-libvips-linuxmusl-arm64\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "lazy-separate-file",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ],
+      "note": "reached only through manifold-3d 3.5.4 > @gltf-transform/functions > ndarray-pixels > sharp (npm ls sharp, 2026-10-05); no hackbuild-fab source imports sharp; libvips is a prebuilt shared library sharp loads at run time, a separate replaceable file; never in a bake (D-043)"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@img/sharp-libvips-linuxmusl-x64",
+      "version": "1.3.4",
+      "published": "LGPL-3.0-or-later",
+      "audited": "LGPL-3.0-or-later",
+      "evidence": "package-lock.json packages[\"node_modules/@img/sharp-libvips-linuxmusl-x64\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "lazy-separate-file",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ],
+      "note": "reached only through manifold-3d 3.5.4 > @gltf-transform/functions > ndarray-pixels > sharp (npm ls sharp, 2026-10-05); no hackbuild-fab source imports sharp; libvips is a prebuilt shared library sharp loads at run time, a separate replaceable file; never in a bake (D-043)"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@img/sharp-linux-arm",
+      "version": "0.35.5",
+      "published": "Apache-2.0",
+      "audited": "Apache-2.0",
+      "evidence": "package-lock.json packages[\"node_modules/@img/sharp-linux-arm\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@img/sharp-linux-arm64",
+      "version": "0.35.5",
+      "published": "Apache-2.0",
+      "audited": "Apache-2.0",
+      "evidence": "package-lock.json packages[\"node_modules/@img/sharp-linux-arm64\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@img/sharp-linux-ppc64",
+      "version": "0.35.5",
+      "published": "Apache-2.0",
+      "audited": "Apache-2.0",
+      "evidence": "package-lock.json packages[\"node_modules/@img/sharp-linux-ppc64\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@img/sharp-linux-riscv64",
+      "version": "0.35.5",
+      "published": "Apache-2.0",
+      "audited": "Apache-2.0",
+      "evidence": "package-lock.json packages[\"node_modules/@img/sharp-linux-riscv64\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@img/sharp-linux-s390x",
+      "version": "0.35.5",
+      "published": "Apache-2.0",
+      "audited": "Apache-2.0",
+      "evidence": "package-lock.json packages[\"node_modules/@img/sharp-linux-s390x\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@img/sharp-linux-x64",
+      "version": "0.35.5",
+      "published": "Apache-2.0",
+      "audited": "Apache-2.0",
+      "evidence": "package-lock.json packages[\"node_modules/@img/sharp-linux-x64\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@img/sharp-linuxmusl-arm64",
+      "version": "0.35.5",
+      "published": "Apache-2.0",
+      "audited": "Apache-2.0",
+      "evidence": "package-lock.json packages[\"node_modules/@img/sharp-linuxmusl-arm64\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@img/sharp-linuxmusl-x64",
+      "version": "0.35.5",
+      "published": "Apache-2.0",
+      "audited": "Apache-2.0",
+      "evidence": "package-lock.json packages[\"node_modules/@img/sharp-linuxmusl-x64\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@img/sharp-wasm32",
+      "version": "0.35.5",
+      "published": "Apache-2.0 AND LGPL-3.0-or-later AND MIT",
+      "audited": "Apache-2.0 AND LGPL-3.0-or-later AND MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@img/sharp-wasm32\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "lazy-separate-file",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ],
+      "note": "reached only through manifold-3d 3.5.4 > @gltf-transform/functions > ndarray-pixels > sharp (npm ls sharp, 2026-10-05); no hackbuild-fab source imports sharp; libvips is a prebuilt shared library sharp loads at run time, a separate replaceable file; never in a bake (D-043)"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@img/sharp-webcontainers-wasm32",
+      "version": "0.35.5",
+      "published": "Apache-2.0",
+      "audited": "Apache-2.0",
+      "evidence": "package-lock.json packages[\"node_modules/@img/sharp-webcontainers-wasm32\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@img/sharp-win32-arm64",
+      "version": "0.35.5",
+      "published": "Apache-2.0 AND LGPL-3.0-or-later",
+      "audited": "Apache-2.0 AND LGPL-3.0-or-later",
+      "evidence": "package-lock.json packages[\"node_modules/@img/sharp-win32-arm64\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "lazy-separate-file",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ],
+      "note": "reached only through manifold-3d 3.5.4 > @gltf-transform/functions > ndarray-pixels > sharp (npm ls sharp, 2026-10-05); no hackbuild-fab source imports sharp; libvips is a prebuilt shared library sharp loads at run time, a separate replaceable file; never in a bake (D-043)"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@img/sharp-win32-ia32",
+      "version": "0.35.5",
+      "published": "Apache-2.0 AND LGPL-3.0-or-later",
+      "audited": "Apache-2.0 AND LGPL-3.0-or-later",
+      "evidence": "package-lock.json packages[\"node_modules/@img/sharp-win32-ia32\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "lazy-separate-file",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ],
+      "note": "reached only through manifold-3d 3.5.4 > @gltf-transform/functions > ndarray-pixels > sharp (npm ls sharp, 2026-10-05); no hackbuild-fab source imports sharp; libvips is a prebuilt shared library sharp loads at run time, a separate replaceable file; never in a bake (D-043)"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@img/sharp-win32-x64",
+      "version": "0.35.5",
+      "published": "Apache-2.0 AND LGPL-3.0-or-later",
+      "audited": "Apache-2.0 AND LGPL-3.0-or-later",
+      "evidence": "package-lock.json packages[\"node_modules/@img/sharp-win32-x64\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "lazy-separate-file",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ],
+      "note": "reached only through manifold-3d 3.5.4 > @gltf-transform/functions > ndarray-pixels > sharp (npm ls sharp, 2026-10-05); no hackbuild-fab source imports sharp; libvips is a prebuilt shared library sharp loads at run time, a separate replaceable file; never in a bake (D-043)"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@jridgewell/resolve-uri",
+      "version": "3.1.2",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@jridgewell/resolve-uri\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@jridgewell/sourcemap-codec",
+      "version": "1.6.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@jridgewell/sourcemap-codec\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@jridgewell/trace-mapping",
+      "version": "0.3.31",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@jridgewell/trace-mapping\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@jscadui/3mf-export",
+      "version": "0.5.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@jscadui/3mf-export\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@manypkg/find-root",
+      "version": "3.1.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@manypkg/find-root\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@manypkg/get-packages",
+      "version": "3.1.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@manypkg/get-packages\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@manypkg/tools",
+      "version": "2.1.2",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@manypkg/tools\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@nodable/entities",
+      "version": "3.1.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@nodable/entities\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@oxc-project/types",
+      "version": "0.152.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@oxc-project/types\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@playwright/test",
+      "version": "1.63.0",
+      "published": "Apache-2.0",
+      "audited": "Apache-2.0",
+      "evidence": "package-lock.json packages[\"node_modules/@playwright/test\"].license, read 2026-10-05",
+      "use": "browser and hook conformance",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-040"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@pnpm/deps.graph-sequencer",
+      "version": "1100.0.1",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@pnpm/deps.graph-sequencer\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@quansync/fs",
+      "version": "1.1.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@quansync/fs\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-android-arm-eabi",
+      "version": "1.2.12",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@rolldown/binding-android-arm-eabi\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-android-arm64",
+      "version": "1.2.12",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@rolldown/binding-android-arm64\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-darwin-arm64",
+      "version": "1.2.12",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@rolldown/binding-darwin-arm64\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-darwin-x64",
+      "version": "1.2.12",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@rolldown/binding-darwin-x64\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-freebsd-x64",
+      "version": "1.2.12",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@rolldown/binding-freebsd-x64\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-linux-arm-gnueabihf",
+      "version": "1.2.12",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@rolldown/binding-linux-arm-gnueabihf\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-linux-arm64-gnu",
+      "version": "1.2.12",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@rolldown/binding-linux-arm64-gnu\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-linux-arm64-musl",
+      "version": "1.2.12",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@rolldown/binding-linux-arm64-musl\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-linux-ppc64-gnu",
+      "version": "1.2.12",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@rolldown/binding-linux-ppc64-gnu\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-linux-s390x-gnu",
+      "version": "1.2.12",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@rolldown/binding-linux-s390x-gnu\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-linux-x64-gnu",
+      "version": "1.2.12",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@rolldown/binding-linux-x64-gnu\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-linux-x64-musl",
+      "version": "1.2.12",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@rolldown/binding-linux-x64-musl\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-openharmony-arm64",
+      "version": "1.2.12",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@rolldown/binding-openharmony-arm64\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-win32-arm64-msvc",
+      "version": "1.2.12",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@rolldown/binding-win32-arm64-msvc\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-win32-x64-msvc",
+      "version": "1.2.12",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@rolldown/binding-win32-x64-msvc\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@rolldown/pluginutils",
+      "version": "1.0.1",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@rolldown/pluginutils\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@types/chai",
+      "version": "5.2.3",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@types/chai\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@types/deep-eql",
+      "version": "4.0.2",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@types/deep-eql\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@types/estree",
+      "version": "1.0.9",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@types/estree\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@types/ndarray",
+      "version": "1.1.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@types/ndarray\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@types/node",
+      "version": "22.20.5",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@types/node\"].license, read 2026-10-05",
+      "use": "typecheck",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-040"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@typescript/typescript-aix-ppc64",
+      "version": "7.0.2",
+      "published": "Apache-2.0",
+      "audited": "Apache-2.0",
+      "evidence": "package-lock.json packages[\"node_modules/@typescript/typescript-aix-ppc64\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@typescript/typescript-darwin-arm64",
+      "version": "7.0.2",
+      "published": "Apache-2.0",
+      "audited": "Apache-2.0",
+      "evidence": "package-lock.json packages[\"node_modules/@typescript/typescript-darwin-arm64\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@typescript/typescript-darwin-x64",
+      "version": "7.0.2",
+      "published": "Apache-2.0",
+      "audited": "Apache-2.0",
+      "evidence": "package-lock.json packages[\"node_modules/@typescript/typescript-darwin-x64\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@typescript/typescript-freebsd-arm64",
+      "version": "7.0.2",
+      "published": "Apache-2.0",
+      "audited": "Apache-2.0",
+      "evidence": "package-lock.json packages[\"node_modules/@typescript/typescript-freebsd-arm64\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@typescript/typescript-freebsd-x64",
+      "version": "7.0.2",
+      "published": "Apache-2.0",
+      "audited": "Apache-2.0",
+      "evidence": "package-lock.json packages[\"node_modules/@typescript/typescript-freebsd-x64\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@typescript/typescript-linux-arm64",
+      "version": "7.0.2",
+      "published": "Apache-2.0",
+      "audited": "Apache-2.0",
+      "evidence": "package-lock.json packages[\"node_modules/@typescript/typescript-linux-arm64\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@typescript/typescript-linux-arm",
+      "version": "7.0.2",
+      "published": "Apache-2.0",
+      "audited": "Apache-2.0",
+      "evidence": "package-lock.json packages[\"node_modules/@typescript/typescript-linux-arm\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@typescript/typescript-linux-loong64",
+      "version": "7.0.2",
+      "published": "Apache-2.0",
+      "audited": "Apache-2.0",
+      "evidence": "package-lock.json packages[\"node_modules/@typescript/typescript-linux-loong64\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@typescript/typescript-linux-mips64el",
+      "version": "7.0.2",
+      "published": "Apache-2.0",
+      "audited": "Apache-2.0",
+      "evidence": "package-lock.json packages[\"node_modules/@typescript/typescript-linux-mips64el\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@typescript/typescript-linux-ppc64",
+      "version": "7.0.2",
+      "published": "Apache-2.0",
+      "audited": "Apache-2.0",
+      "evidence": "package-lock.json packages[\"node_modules/@typescript/typescript-linux-ppc64\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@typescript/typescript-linux-riscv64",
+      "version": "7.0.2",
+      "published": "Apache-2.0",
+      "audited": "Apache-2.0",
+      "evidence": "package-lock.json packages[\"node_modules/@typescript/typescript-linux-riscv64\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@typescript/typescript-linux-s390x",
+      "version": "7.0.2",
+      "published": "Apache-2.0",
+      "audited": "Apache-2.0",
+      "evidence": "package-lock.json packages[\"node_modules/@typescript/typescript-linux-s390x\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@typescript/typescript-linux-x64",
+      "version": "7.0.2",
+      "published": "Apache-2.0",
+      "audited": "Apache-2.0",
+      "evidence": "package-lock.json packages[\"node_modules/@typescript/typescript-linux-x64\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@typescript/typescript-netbsd-arm64",
+      "version": "7.0.2",
+      "published": "Apache-2.0",
+      "audited": "Apache-2.0",
+      "evidence": "package-lock.json packages[\"node_modules/@typescript/typescript-netbsd-arm64\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@typescript/typescript-netbsd-x64",
+      "version": "7.0.2",
+      "published": "Apache-2.0",
+      "audited": "Apache-2.0",
+      "evidence": "package-lock.json packages[\"node_modules/@typescript/typescript-netbsd-x64\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@typescript/typescript-openbsd-arm64",
+      "version": "7.0.2",
+      "published": "Apache-2.0",
+      "audited": "Apache-2.0",
+      "evidence": "package-lock.json packages[\"node_modules/@typescript/typescript-openbsd-arm64\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@typescript/typescript-openbsd-x64",
+      "version": "7.0.2",
+      "published": "Apache-2.0",
+      "audited": "Apache-2.0",
+      "evidence": "package-lock.json packages[\"node_modules/@typescript/typescript-openbsd-x64\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@typescript/typescript-sunos-x64",
+      "version": "7.0.2",
+      "published": "Apache-2.0",
+      "audited": "Apache-2.0",
+      "evidence": "package-lock.json packages[\"node_modules/@typescript/typescript-sunos-x64\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@typescript/typescript-win32-arm64",
+      "version": "7.0.2",
+      "published": "Apache-2.0",
+      "audited": "Apache-2.0",
+      "evidence": "package-lock.json packages[\"node_modules/@typescript/typescript-win32-arm64\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@typescript/typescript-win32-x64",
+      "version": "7.0.2",
+      "published": "Apache-2.0",
+      "audited": "Apache-2.0",
+      "evidence": "package-lock.json packages[\"node_modules/@typescript/typescript-win32-x64\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@vitest/mocker",
+      "version": "5.0.3",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@vitest/mocker\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@vitest/spy",
+      "version": "5.0.3",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@vitest/spy\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@yuku-codegen/binding-android-arm64",
+      "version": "0.10.2",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@yuku-codegen/binding-android-arm64\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@yuku-codegen/binding-darwin-arm64",
+      "version": "0.10.2",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@yuku-codegen/binding-darwin-arm64\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@yuku-codegen/binding-darwin-x64",
+      "version": "0.10.2",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@yuku-codegen/binding-darwin-x64\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@yuku-codegen/binding-freebsd-x64",
+      "version": "0.10.2",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@yuku-codegen/binding-freebsd-x64\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@yuku-codegen/binding-linux-arm-gnu",
+      "version": "0.10.2",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@yuku-codegen/binding-linux-arm-gnu\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@yuku-codegen/binding-linux-arm-musl",
+      "version": "0.10.2",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@yuku-codegen/binding-linux-arm-musl\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@yuku-codegen/binding-linux-arm64-gnu",
+      "version": "0.10.2",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@yuku-codegen/binding-linux-arm64-gnu\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@yuku-codegen/binding-linux-arm64-musl",
+      "version": "0.10.2",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@yuku-codegen/binding-linux-arm64-musl\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@yuku-codegen/binding-linux-x64-gnu",
+      "version": "0.10.2",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@yuku-codegen/binding-linux-x64-gnu\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@yuku-codegen/binding-linux-x64-musl",
+      "version": "0.10.2",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@yuku-codegen/binding-linux-x64-musl\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@yuku-codegen/binding-win32-arm64",
+      "version": "0.10.2",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@yuku-codegen/binding-win32-arm64\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@yuku-codegen/binding-win32-x64",
+      "version": "0.10.2",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@yuku-codegen/binding-win32-x64\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@yuku-parser/binding-android-arm64",
+      "version": "0.10.2",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@yuku-parser/binding-android-arm64\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@yuku-parser/binding-darwin-arm64",
+      "version": "0.10.2",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@yuku-parser/binding-darwin-arm64\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@yuku-parser/binding-darwin-x64",
+      "version": "0.10.2",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@yuku-parser/binding-darwin-x64\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@yuku-parser/binding-freebsd-x64",
+      "version": "0.10.2",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@yuku-parser/binding-freebsd-x64\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@yuku-parser/binding-linux-arm-gnu",
+      "version": "0.10.2",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@yuku-parser/binding-linux-arm-gnu\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@yuku-parser/binding-linux-arm-musl",
+      "version": "0.10.2",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@yuku-parser/binding-linux-arm-musl\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@yuku-parser/binding-linux-arm64-gnu",
+      "version": "0.10.2",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@yuku-parser/binding-linux-arm64-gnu\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@yuku-parser/binding-linux-arm64-musl",
+      "version": "0.10.2",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@yuku-parser/binding-linux-arm64-musl\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@yuku-parser/binding-linux-x64-gnu",
+      "version": "0.10.2",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@yuku-parser/binding-linux-x64-gnu\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@yuku-parser/binding-linux-x64-musl",
+      "version": "0.10.2",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@yuku-parser/binding-linux-x64-musl\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@yuku-parser/binding-win32-arm64",
+      "version": "0.10.2",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@yuku-parser/binding-win32-arm64\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@yuku-parser/binding-win32-x64",
+      "version": "0.10.2",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@yuku-parser/binding-win32-x64\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@yuku-toolchain/types",
+      "version": "0.10.2",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@yuku-toolchain/types\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "anynum",
+      "version": "1.0.1",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/anynum\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "assertion-error",
+      "version": "2.0.1",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/assertion-error\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "cac",
+      "version": "7.0.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/cac\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "chai",
+      "version": "6.3.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/chai\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "commander",
+      "version": "13.1.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/commander\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "convert-source-map",
+      "version": "2.0.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/convert-source-map\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "core-util-is",
+      "version": "1.0.3",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/core-util-is\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "cwise-compiler",
+      "version": "1.1.3",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/cwise-compiler\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "defu",
+      "version": "6.1.7",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/defu\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "detect-libc",
+      "version": "2.1.2",
+      "published": "Apache-2.0",
+      "audited": "Apache-2.0",
+      "evidence": "package-lock.json packages[\"node_modules/detect-libc\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "dts-resolver",
+      "version": "3.0.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/dts-resolver\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "earcut",
+      "version": "2.2.4",
+      "published": "ISC",
+      "audited": "ISC",
+      "evidence": "package-lock.json packages[\"node_modules/earcut\"].license, read 2026-10-05",
+      "use": "legacy devDependency; the runtime port lives in packages/geom/src/earcut.ts",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-163"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "eecircuit-engine",
+      "version": "1.8.0",
+      "published": "MIT",
+      "audited": "MIT AND BSD-3-Clause AND LGPL-2.0-or-later AND LGPL-2.1-or-later",
+      "evidence": "package-lock.json packages[\"node_modules/eecircuit-engine\"].license and the package LICENSE (MIT, Copyright (c) 2024 EElab.dev), read 2026-10-08; ngspice tag ngspice-45.2 (commit 724dc77b9153dc75eaec474b1f7a44f1fcf5f362, git.code.sf.net/p/ngspice/ngspice) COPYING lines 14 to 15 (Modified BSD), 28 to 29 (src/maths/KLU LGPLv2) and 43 to 44 (src/frontend/numparam LGPLv2 or newer); KLU file headers read 2026-10-08: colamd.c lines 53 to 56 and colamd_global.c line 7 state LGPL version 2.1 or any later version, the other KLU, AMD and BTF files carry no licence text",
+      "use": "packages/circuit spice route: device models and transients (packages/circuit/src/spice/engine.ts)",
+      "load": "lazy-separate-file",
+      "status": "adopted",
+      "decision": [
+        "D-086",
+        "D-043"
+      ],
+      "note": "one 19 MB ESM file with spice.wasm inlined (vendor, verified-claims C9); reached only through the dynamic import in loadSpice(), never a static import, never in a bake; xspice (whose icm/table is GPLv2 or newer, COPYING lines 37 to 41) and osdi are disabled by EEcircuit-engine Docker/run.sh:107; ngspice source tarball https://sourceforge.net/projects/ngspice/files/ng-spice-rework/45.2/"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "empathic",
+      "version": "2.1.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/empathic\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "es-module-lexer",
+      "version": "2.3.2",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/es-module-lexer\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "esbuild-wasm",
+      "version": "0.27.7",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/esbuild-wasm\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "estree-walker",
+      "version": "3.0.3",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/estree-walker\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "expect-type",
+      "version": "1.4.0",
+      "published": "Apache-2.0",
+      "audited": "Apache-2.0",
+      "evidence": "package-lock.json packages[\"node_modules/expect-type\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "fast-check",
+      "version": "4.10.2",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/fast-check\"].license, read 2026-10-05",
+      "use": "property tests",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-040"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "fast-string-truncated-width",
+      "version": "3.0.3",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/fast-string-truncated-width\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "fast-string-width",
+      "version": "3.0.2",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/fast-string-width\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "fast-wrap-ansi",
+      "version": "0.2.2",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/fast-wrap-ansi\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "fast-xml-builder",
+      "version": "1.3.1",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/fast-xml-builder\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "fast-xml-parser",
+      "version": "5.11.2",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/fast-xml-parser\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "fdir",
+      "version": "6.5.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/fdir\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "fflate",
+      "version": "0.8.3",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/fflate\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "fsevents",
+      "version": "2.3.3",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/fsevents\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "get-tsconfig",
+      "version": "5.0.0-beta.6",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/get-tsconfig\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "hookable",
+      "version": "6.1.2",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/hookable\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "human-id",
+      "version": "4.2.2",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/human-id\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "immediate",
+      "version": "3.0.6",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/immediate\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "import-meta-resolve",
+      "version": "4.2.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/import-meta-resolve\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "import-without-cache",
+      "version": "0.4.1",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/import-without-cache\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "inherits",
+      "version": "2.0.4",
+      "published": "ISC",
+      "audited": "ISC",
+      "evidence": "package-lock.json packages[\"node_modules/inherits\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "iota-array",
+      "version": "1.0.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/iota-array\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "is-buffer",
+      "version": "1.1.6",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/is-buffer\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "is-unsafe",
+      "version": "2.0.2",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/is-unsafe\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "isarray",
+      "version": "1.0.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/isarray\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "jju",
+      "version": "1.4.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/jju\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "jsonc-parser",
+      "version": "3.3.1",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/jsonc-parser\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "jszip",
+      "version": "3.10.1",
+      "published": "(MIT OR GPL-3.0-or-later)",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/jszip\"].license, read 2026-10-05",
+      "use": "3mf writer and validator zip I/O; checks",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-040"
+      ],
+      "note": "dual licence; the project elects MIT (D-043 rule on dual licences)"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "ktx-parse",
+      "version": "1.1.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/ktx-parse\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "launch-editor",
+      "version": "2.14.1",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/launch-editor\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "lie",
+      "version": "3.3.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/lie\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "lightningcss-android-arm64",
+      "version": "1.33.0",
+      "published": "MPL-2.0",
+      "audited": "MPL-2.0",
+      "evidence": "package-lock.json packages[\"node_modules/lightningcss-android-arm64\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ],
+      "note": "file-level copyleft; vite's CSS transformer, dev toolchain only, unmodified"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "lightningcss-darwin-arm64",
+      "version": "1.33.0",
+      "published": "MPL-2.0",
+      "audited": "MPL-2.0",
+      "evidence": "package-lock.json packages[\"node_modules/lightningcss-darwin-arm64\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ],
+      "note": "file-level copyleft; vite's CSS transformer, dev toolchain only, unmodified"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "lightningcss-darwin-x64",
+      "version": "1.33.0",
+      "published": "MPL-2.0",
+      "audited": "MPL-2.0",
+      "evidence": "package-lock.json packages[\"node_modules/lightningcss-darwin-x64\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ],
+      "note": "file-level copyleft; vite's CSS transformer, dev toolchain only, unmodified"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "lightningcss-freebsd-x64",
+      "version": "1.33.0",
+      "published": "MPL-2.0",
+      "audited": "MPL-2.0",
+      "evidence": "package-lock.json packages[\"node_modules/lightningcss-freebsd-x64\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ],
+      "note": "file-level copyleft; vite's CSS transformer, dev toolchain only, unmodified"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "lightningcss-linux-arm-gnueabihf",
+      "version": "1.33.0",
+      "published": "MPL-2.0",
+      "audited": "MPL-2.0",
+      "evidence": "package-lock.json packages[\"node_modules/lightningcss-linux-arm-gnueabihf\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ],
+      "note": "file-level copyleft; vite's CSS transformer, dev toolchain only, unmodified"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "lightningcss-linux-arm64-gnu",
+      "version": "1.33.0",
+      "published": "MPL-2.0",
+      "audited": "MPL-2.0",
+      "evidence": "package-lock.json packages[\"node_modules/lightningcss-linux-arm64-gnu\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ],
+      "note": "file-level copyleft; vite's CSS transformer, dev toolchain only, unmodified"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "lightningcss-linux-arm64-musl",
+      "version": "1.33.0",
+      "published": "MPL-2.0",
+      "audited": "MPL-2.0",
+      "evidence": "package-lock.json packages[\"node_modules/lightningcss-linux-arm64-musl\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ],
+      "note": "file-level copyleft; vite's CSS transformer, dev toolchain only, unmodified"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "lightningcss-linux-x64-gnu",
+      "version": "1.33.0",
+      "published": "MPL-2.0",
+      "audited": "MPL-2.0",
+      "evidence": "package-lock.json packages[\"node_modules/lightningcss-linux-x64-gnu\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ],
+      "note": "file-level copyleft; vite's CSS transformer, dev toolchain only, unmodified"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "lightningcss-linux-x64-musl",
+      "version": "1.33.0",
+      "published": "MPL-2.0",
+      "audited": "MPL-2.0",
+      "evidence": "package-lock.json packages[\"node_modules/lightningcss-linux-x64-musl\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ],
+      "note": "file-level copyleft; vite's CSS transformer, dev toolchain only, unmodified"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "lightningcss-win32-arm64-msvc",
+      "version": "1.33.0",
+      "published": "MPL-2.0",
+      "audited": "MPL-2.0",
+      "evidence": "package-lock.json packages[\"node_modules/lightningcss-win32-arm64-msvc\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ],
+      "note": "file-level copyleft; vite's CSS transformer, dev toolchain only, unmodified"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "lightningcss-win32-x64-msvc",
+      "version": "1.33.0",
+      "published": "MPL-2.0",
+      "audited": "MPL-2.0",
+      "evidence": "package-lock.json packages[\"node_modules/lightningcss-win32-x64-msvc\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ],
+      "note": "file-level copyleft; vite's CSS transformer, dev toolchain only, unmodified"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "lightningcss",
+      "version": "1.33.0",
+      "published": "MPL-2.0",
+      "audited": "MPL-2.0",
+      "evidence": "package-lock.json packages[\"node_modules/lightningcss\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ],
+      "note": "file-level copyleft; vite's CSS transformer, dev toolchain only, unmodified"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "magic-string",
+      "version": "0.30.21",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/manifold-3d/node_modules/magic-string\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "magic-string",
+      "version": "1.4.3",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/magic-string\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "manifold-3d",
+      "version": "3.5.4",
+      "published": "Apache-2.0",
+      "audited": "Apache-2.0",
+      "evidence": "package-lock.json packages[\"node_modules/manifold-3d\"].license, read 2026-10-05",
+      "use": "geom, mesh: CrossSection and mesh booleans",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-040",
+        "D-163"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "nanoid",
+      "version": "3.3.20",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/nanoid\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "ndarray-lanczos",
+      "version": "0.3.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/ndarray-lanczos\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "ndarray-ops",
+      "version": "1.2.2",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/ndarray-ops\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "ndarray-pixels",
+      "version": "5.2.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/ndarray-pixels\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "ndarray",
+      "version": "1.1.1",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/ndarray\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "obug",
+      "version": "2.2.1",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/obug\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "obug",
+      "version": "3.0.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/rolldown-plugin-dts/node_modules/obug\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "package-manager-detector",
+      "version": "1.9.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/package-manager-detector\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "pako",
+      "version": "1.0.11",
+      "published": "(MIT AND Zlib)",
+      "audited": "(MIT AND Zlib)",
+      "evidence": "package-lock.json packages[\"node_modules/pako\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "path-expression-matcher",
+      "version": "1.6.2",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/path-expression-matcher\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "picocolors",
+      "version": "1.1.1",
+      "published": "ISC",
+      "audited": "ISC",
+      "evidence": "package-lock.json packages[\"node_modules/picocolors\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "picomatch",
+      "version": "4.0.7",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/picomatch\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "playwright-core",
+      "version": "1.63.0",
+      "published": "Apache-2.0",
+      "audited": "Apache-2.0",
+      "evidence": "package-lock.json packages[\"node_modules/playwright-core\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "playwright",
+      "version": "1.63.0",
+      "published": "Apache-2.0",
+      "audited": "Apache-2.0",
+      "evidence": "package-lock.json packages[\"node_modules/playwright\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "postcss",
+      "version": "8.5.29",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/postcss\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "process-nextick-args",
+      "version": "2.0.1",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/process-nextick-args\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "property-graph",
+      "version": "4.1.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/property-graph\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "pure-rand",
+      "version": "8.4.2",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/pure-rand\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "quansync",
+      "version": "1.0.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/quansync\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "readable-stream",
+      "version": "2.3.8",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/readable-stream\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "resolve-pkg-maps",
+      "version": "1.0.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/resolve-pkg-maps\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "rolldown-plugin-dts",
+      "version": "0.28.6",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/rolldown-plugin-dts\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "rolldown",
+      "version": "1.2.12",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/rolldown\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "safe-buffer",
+      "version": "5.1.2",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/safe-buffer\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "semver",
+      "version": "7.8.5",
+      "published": "ISC",
+      "audited": "ISC",
+      "evidence": "package-lock.json packages[\"node_modules/semver\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "setimmediate",
+      "version": "1.0.5",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/setimmediate\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "sharp",
+      "version": "0.35.5",
+      "published": "Apache-2.0",
+      "audited": "Apache-2.0",
+      "evidence": "package-lock.json packages[\"node_modules/sharp\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "shell-quote",
+      "version": "1.12.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/shell-quote\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "sisteransi",
+      "version": "1.0.5",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/sisteransi\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "source-map-js",
+      "version": "1.2.2",
+      "published": "BSD-3-Clause",
+      "audited": "BSD-3-Clause",
+      "evidence": "package-lock.json packages[\"node_modules/source-map-js\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "std-env",
+      "version": "4.3.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/std-env\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "string_decoder",
+      "version": "1.1.1",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/string_decoder\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "strnum",
+      "version": "2.4.2",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/strnum\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "tinybench",
+      "version": "6.2.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/tinybench\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "tinyexec",
+      "version": "1.3.1",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/tinyexec\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "tinyglobby",
+      "version": "0.2.17",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/tinyglobby\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "tree-kill",
+      "version": "1.2.2",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/tree-kill\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "tsdown",
+      "version": "0.23.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/tsdown\"].license, read 2026-10-05",
+      "use": "package build",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-040"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "tslib",
+      "version": "2.8.1",
+      "published": "0BSD",
+      "audited": "0BSD",
+      "evidence": "package-lock.json packages[\"node_modules/tslib\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "typescript",
+      "version": "7.0.2",
+      "published": "Apache-2.0",
+      "audited": "Apache-2.0",
+      "evidence": "package-lock.json packages[\"node_modules/typescript\"].license, read 2026-10-05",
+      "use": "typecheck",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-040"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "unconfig-core",
+      "version": "7.5.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/unconfig-core\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "undici-types",
+      "version": "6.21.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/undici-types\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "uniq",
+      "version": "1.0.1",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/uniq\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "util-deprecate",
+      "version": "1.0.2",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/util-deprecate\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "verkit",
+      "version": "0.4.1",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/verkit\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "vite",
+      "version": "8.3.2",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/vite\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "vitest",
+      "version": "5.0.3",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/vitest\"].license, read 2026-10-05",
+      "use": "unit and property tests",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-040"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "why-is-node-running",
+      "version": "3.2.1",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/why-is-node-running\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "xml-naming",
+      "version": "0.3.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/xml-naming\"].license, read 2026-10-05",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "yaml",
+      "version": "2.9.1",
+      "published": "ISC",
+      "audited": "ISC",
+      "evidence": "package-lock.json packages[\"node_modules/yaml\"].license, read 2026-10-05",
+      "use": "tools",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-040"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "yuku-ast",
+      "version": "0.10.2",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/yuku-ast\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "yuku-codegen",
+      "version": "0.10.2",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/yuku-codegen\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "yuku-parser",
+      "version": "0.10.2",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/yuku-parser\"].license, read 2026-10-05",
+      "use": "dev toolchain, transitive",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "zod",
+      "version": "4.6.5",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/zod\"].license, read 2026-10-05",
+      "use": "core: spec-derived schemas",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-040"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@jridgewell/gen-mapping",
+      "version": "0.3.13",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@jridgewell/gen-mapping\"].license, read 2026-10-09",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-089"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@tscircuit/props",
+      "version": "0.0.698",
+      "published": "ISC",
+      "audited": "ISC",
+      "evidence": "package-lock.json packages[\"node_modules/@tscircuit/props\"].license, read 2026-10-09",
+      "use": "board: tscircuit element props, read for enclosure and printed-part props (D-091, M08-T11)",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-091",
+        "D-040"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "any-promise",
+      "version": "1.3.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/any-promise\"].license, read 2026-10-09",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-089"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "circuit-json",
+      "version": "0.0.525",
+      "published": "ISC",
+      "audited": "ISC",
+      "evidence": "package-lock.json packages[\"node_modules/circuit-json\"].license, read 2026-10-09",
+      "use": "board, circuit, catalog: Circuit JSON element schemas (D-091)",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-091",
+        "D-040"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "format-si-unit",
+      "version": "0.0.14",
+      "published": null,
+      "audited": "MIT",
+      "evidence": "node_modules/format-si-unit/LICENSE opens \"MIT License\", Copyright (c) 2024 tscircuit Inc.; package.json has no license field; read 2026-10-09",
+      "use": "runtime, transitive (circuit-json 0.0.525 peer)",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-089"
+      ],
+      "note": "audited from the LICENSE file so scanners that flag a missing field pass (LICENSING.md 2.1)"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "kicadts",
+      "version": "0.0.58",
+      "published": null,
+      "audited": "MIT",
+      "evidence": "node_modules/kicadts/LICENSE opens \"MIT License\", Copyright (c) 2025 tscircuit Inc.; package.json has no license field; read 2026-10-09",
+      "use": "board: KiCad file read and write (D-090, M08-T08)",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-090",
+        "D-040"
+      ],
+      "note": "audited from the LICENSE file so scanners that flag a missing field pass (LICENSING.md 2.1)"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "lines-and-columns",
+      "version": "1.2.4",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/lines-and-columns\"].license, read 2026-10-09",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-089"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "mz",
+      "version": "2.7.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/mz\"].license, read 2026-10-09",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-089"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "object-assign",
+      "version": "4.1.1",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/object-assign\"].license, read 2026-10-09",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-089"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "pirates",
+      "version": "4.0.7",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/pirates\"].license, read 2026-10-09",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-089"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "react",
+      "version": "19.3.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/react\"].license, read 2026-10-09",
+      "use": "runtime, transitive (@tscircuit/props 0.0.698 peer)",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-089"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "sucrase",
+      "version": "3.35.1",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/sucrase\"].license, read 2026-10-09",
+      "use": "board: JSX transform for the tscircuit headless pipeline (M08-T10)",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-089",
+        "D-040"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "commander",
+      "version": "4.1.1",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/sucrase/node_modules/commander\"].license, read 2026-10-09",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-089"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "thenify",
+      "version": "3.3.1",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/thenify\"].license, read 2026-10-09",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-089"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "thenify-all",
+      "version": "1.6.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/thenify-all\"].license, read 2026-10-09",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-089"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "ts-interface-checker",
+      "version": "0.1.13",
+      "published": "Apache-2.0",
+      "audited": "Apache-2.0",
+      "evidence": "package-lock.json packages[\"node_modules/ts-interface-checker\"].license, read 2026-10-09",
+      "use": "runtime, transitive",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-089"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "tscircuit",
+      "version": "0.0.2806",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "npm view tscircuit@0.0.2806 license, 2026-10-09",
+      "use": "board capture backend (M08-T10)",
+      "load": "bundled",
+      "status": "blocked",
+      "decision": [
+        "D-089",
+        "D-040"
+      ],
+      "note": "not installed: its tree carries circuit-to-svg and jscad-electronics with engines node 24.x, which engine-strict refuses on the Node 22.18.0 floor (D-039); M08-T01 card defect"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@tscircuit/core",
+      "version": "0.0.2121",
+      "published": null,
+      "audited": "MIT",
+      "evidence": "npm view @tscircuit/core@0.0.2121 license is empty, 2026-10-09; LICENSE file MIT, Copyright (c) 2024 tscircuit Inc. (M08 card record, read 2026-10-04)",
+      "use": "board capture backend (M08-T10)",
+      "load": "bundled",
+      "status": "blocked",
+      "decision": [
+        "D-089",
+        "D-040"
+      ],
+      "note": "not installed, same reason as tscircuit; reread the LICENSE file from the tarball when it installs"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "circuit-json-to-gerber",
+      "version": "0.0.112",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "npm view circuit-json-to-gerber@0.0.112 license, 2026-10-09",
+      "use": "board gerbers from Circuit JSON (M08-T10)",
+      "load": "bundled",
+      "status": "blocked",
+      "decision": [
+        "D-089",
+        "D-040"
+      ],
+      "note": "not installed: its peer tscircuit pulls the node 24.x engines"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "circuit-to-svg",
+      "version": "0.0.447",
+      "published": "ISC",
+      "audited": "ISC",
+      "evidence": "npm view circuit-to-svg@0.0.447 license, 2026-10-09",
+      "use": "board SVG views (M08-T10)",
+      "load": "bundled",
+      "status": "blocked",
+      "decision": [
+        "D-089",
+        "D-040"
+      ],
+      "note": "not installed: every release from 0.0.437 (2026-10-02) declares engines node 24.x"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "circuit-json-to-kicad",
+      "version": "0.0.230",
+      "published": null,
+      "audited": "MIT",
+      "evidence": "LICENSE file MIT, Copyright (c) 2025 tscircuit Inc., KiCad-generated test artifacts excepted (M08 card record, read 2026-10-04)",
+      "use": "not adopted at M08-T01; listed for LICENSING.md 2.1",
+      "load": "bundled",
+      "status": "evaluated",
+      "decision": [
+        "D-089"
+      ],
+      "note": "not installed; when adopted, check the npm tarball for KiCad-generated artifacts and route any under the packages/catalog/data/kicad row"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "occt-import-js",
+      "version": "0.0.23",
+      "published": "LGPL-2.1",
+      "audited": "LGPL-2.1-only",
+      "evidence": "npm view occt-import-js@0.0.23 license, 2026-10-09",
+      "use": "packages/board/seed/step2mesh.mjs STEP import",
+      "load": "lazy-separate-file",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ],
+      "note": "not in package-lock.json; step2mesh.mjs requires it at run time from the working directory (createRequire, line 26) and never bundles it into an MIT package"
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "colorama",
+      "version": "0.4.6",
+      "published": null,
+      "audited": "BSD-3-Clause",
+      "evidence": "PyPI JSON classifier `License :: OSI Approved :: BSD License`, 2026-10-05; the 3-clause form is inferred from the classifier",
+      "use": "pytest dependency on Windows",
+      "load": "python-tool",
+      "status": "adopted",
+      "decision": [
+        "D-140"
+      ]
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "greenlet",
+      "version": "3.5.6",
+      "published": "MIT AND PSF-2.0",
+      "audited": "MIT AND PSF-2.0",
+      "evidence": "PyPI JSON license_expression, 2026-10-05",
+      "use": "playwright dependency, bench extra",
+      "load": "python-tool",
+      "status": "adopted",
+      "decision": [
+        "D-140"
+      ]
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "iniconfig",
+      "version": "2.3.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "installed metadata License-Expression, 2026-10-05",
+      "use": "pytest dependency",
+      "load": "python-tool",
+      "status": "adopted",
+      "decision": [
+        "D-140"
+      ]
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "lib3mf",
+      "version": "2.5.0",
+      "published": null,
+      "audited": "BSD-2-Clause",
+      "evidence": "PyPI classifier BSD; BSD-2-Clause per LICENSING.md section 2.3",
+      "use": "3MF validation (D-040)",
+      "load": "python-tool",
+      "status": "adopted",
+      "decision": [
+        "D-140"
+      ]
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "manifold3d",
+      "version": "3.5.4",
+      "published": null,
+      "audited": "Apache-2.0",
+      "evidence": "installed metadata classifier `License :: OSI Approved :: Apache Software License`, 2026-10-05",
+      "use": "validate_3mf.py --overlap",
+      "load": "python-tool",
+      "status": "adopted",
+      "decision": [
+        "D-140"
+      ]
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "numpy",
+      "version": "2.5.3",
+      "published": "BSD-3-Clause AND 0BSD AND MIT AND Zlib AND CC0-1.0",
+      "audited": "BSD-3-Clause AND 0BSD AND MIT AND Zlib AND CC0-1.0",
+      "evidence": "installed metadata License-Expression, 2026-10-05",
+      "use": "validate_3mf.py (D-140)",
+      "load": "python-tool",
+      "status": "adopted",
+      "decision": [
+        "D-140"
+      ]
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "packaging",
+      "version": "26.3",
+      "published": "Apache-2.0 OR BSD-2-Clause",
+      "audited": "BSD-2-Clause",
+      "evidence": "installed metadata License-Expression, 2026-10-05; the project elects BSD-2-Clause",
+      "use": "pytest dependency",
+      "load": "python-tool",
+      "status": "adopted",
+      "decision": [
+        "D-140"
+      ]
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "playwright",
+      "version": "1.63.0",
+      "published": "Apache-2.0",
+      "audited": "Apache-2.0",
+      "evidence": "PyPI JSON license_expression, 2026-10-05",
+      "use": "bench extra: smoke_bench.py",
+      "load": "python-tool",
+      "status": "adopted",
+      "decision": [
+        "D-140"
+      ]
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "pluggy",
+      "version": "1.6.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "installed metadata License field, 2026-10-05",
+      "use": "pytest dependency",
+      "load": "python-tool",
+      "status": "adopted",
+      "decision": [
+        "D-140"
+      ]
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "pyee",
+      "version": "13.0.1",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "PyPI JSON license field, 2026-10-05",
+      "use": "playwright dependency, bench extra",
+      "load": "python-tool",
+      "status": "adopted",
+      "decision": [
+        "D-140"
+      ]
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "pygments",
+      "version": "2.21.0",
+      "published": "BSD-2-Clause",
+      "audited": "BSD-2-Clause",
+      "evidence": "installed metadata License-Expression, 2026-10-05",
+      "use": "pytest dependency",
+      "load": "python-tool",
+      "status": "adopted",
+      "decision": [
+        "D-140"
+      ]
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "pytest",
+      "version": "9.1.1",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "installed metadata License-Expression, 2026-10-05",
+      "use": "tests",
+      "load": "python-tool",
+      "status": "adopted",
+      "decision": [
+        "D-140"
+      ]
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "shapely",
+      "version": "2.1.2",
+      "published": "BSD 3-Clause",
+      "audited": "BSD-3-Clause",
+      "evidence": "installed metadata License field `BSD 3-Clause`, 2026-10-05",
+      "use": "board tooling (D-089)",
+      "load": "python-tool",
+      "status": "adopted",
+      "decision": [
+        "D-140"
+      ]
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "trimesh",
+      "version": "5.1.1",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "installed metadata classifier `License :: OSI Approved :: MIT License`, 2026-10-05",
+      "use": "mesh loading in tools/py",
+      "load": "python-tool",
+      "status": "adopted",
+      "decision": [
+        "D-140"
+      ]
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "typing-extensions",
+      "version": "4.16.0",
+      "published": "PSF-2.0",
+      "audited": "PSF-2.0",
+      "evidence": "PyPI JSON license_expression, 2026-10-05",
+      "use": "playwright dependency, bench extra",
+      "load": "python-tool",
+      "status": "adopted",
+      "decision": [
+        "D-140"
+      ]
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "rtree",
+      "version": "1.4.1",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "installed metadata License-Expression `MIT`, 2026-10-07",
+      "use": "OGEE16 check_sweep.py oracle, trimesh proximity (M02-T07)",
+      "load": "python-tool",
+      "status": "adopted",
+      "decision": [
+        "D-140"
+      ]
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "scipy",
+      "version": "1.18.1",
+      "published": "BSD-3-Clause",
+      "audited": "BSD-3-Clause",
+      "evidence": "installed metadata License field, the SciPy Developers three-clause text (redistribution conditions 1 to 3 and the no-endorsement clause), bundled OpenBLAS BSD-3-Clause, 2026-10-07",
+      "use": "OGEE16 check_sweep.py oracle, trimesh proximity and bounds (M02-T07)",
+      "load": "python-tool",
+      "status": "adopted",
+      "decision": [
+        "D-140"
+      ]
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "fonttools",
+      "version": "4.66.1",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "installed metadata License field `MIT`, 2026-10-08",
+      "use": "KEYWAY family oracle: svgpath.py outlines the Plex Mono woff2 (M05-T13)",
+      "load": "python-tool",
+      "status": "adopted",
+      "decision": [
+        "D-089",
+        "D-140"
+      ]
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "brotli",
+      "version": "1.2.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "installed metadata License field `MIT`, 2026-10-08",
+      "use": "woff2 decode for fontTools in the KEYWAY family oracle (M05-T13)",
+      "load": "python-tool",
+      "status": "adopted",
+      "decision": [
+        "D-089",
+        "D-140"
+      ]
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "ezdxf",
+      "version": "1.4.4",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "installed metadata classifier `License :: OSI Approved :: MIT License`, 2026-10-08",
+      "use": "DXF reader for the M07 corpus inventory (tools/py/dxf_inventory.py), the OGEE16 cutfiles.py rerun and the writer audit (M07-T01, M07-T06)",
+      "load": "python-tool",
+      "status": "adopted",
+      "decision": [
+        "D-138",
+        "D-140"
+      ]
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "pyparsing",
+      "version": "3.3.3",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "installed metadata License-Expression `MIT`, 2026-10-08",
+      "use": "ezdxf runtime dependency, resolved by uv lock (M07-T01)",
+      "load": "python-tool",
+      "status": "adopted",
+      "decision": [
+        "D-140"
+      ]
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "aiofiles",
+      "version": "25.1.0",
+      "published": "Apache-2.0",
+      "audited": "Apache-2.0",
+      "evidence": "installed metadata License field `Apache-2.0`, 2026-10-09",
+      "use": "gerbonara 1.6.3 dependency",
+      "load": "python-tool",
+      "status": "adopted",
+      "decision": [
+        "D-090",
+        "D-140"
+      ]
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "annotated-types",
+      "version": "0.8.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "installed metadata License-Expression `MIT`, 2026-10-09",
+      "use": "pygerber 2.4.3 dependency",
+      "load": "python-tool",
+      "status": "adopted",
+      "decision": [
+        "D-090",
+        "D-140"
+      ]
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "blinker",
+      "version": "1.9.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "installed metadata classifier `License :: OSI Approved :: MIT License` and LICENSE.txt (Copyright 2010 Jason Kirtland), 2026-10-09",
+      "use": "gerbonara 1.6.3 dependency",
+      "load": "python-tool",
+      "status": "adopted",
+      "decision": [
+        "D-090",
+        "D-140"
+      ]
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "click",
+      "version": "8.5.0",
+      "published": "BSD-3-Clause",
+      "audited": "BSD-3-Clause",
+      "evidence": "installed metadata License-Expression `BSD-3-Clause`, 2026-10-09",
+      "use": "gerbonara 1.6.3 and pygerber 2.4.3 dependency",
+      "load": "python-tool",
+      "status": "adopted",
+      "decision": [
+        "D-090",
+        "D-140"
+      ]
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "flask",
+      "version": "3.1.3",
+      "published": "BSD-3-Clause",
+      "audited": "BSD-3-Clause",
+      "evidence": "installed metadata License-Expression `BSD-3-Clause`, 2026-10-09",
+      "use": "gerbonara 1.6.3 dependency",
+      "load": "python-tool",
+      "status": "adopted",
+      "decision": [
+        "D-090",
+        "D-140"
+      ]
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "gerbonara",
+      "version": "1.6.3",
+      "published": "Apache-2.0",
+      "audited": "Apache-2.0",
+      "evidence": "installed metadata License-Expression `Apache-2.0`; PyPI license_expression `Apache-2.0`, 2026-10-09",
+      "use": "board gerber and Excellon reparse, vector compare (M08-T07, D-090)",
+      "load": "python-tool",
+      "status": "adopted",
+      "decision": [
+        "D-090",
+        "D-140"
+      ]
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "h11",
+      "version": "0.16.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "installed metadata License field `MIT`, 2026-10-09",
+      "use": "gerbonara 1.6.3 dependency",
+      "load": "python-tool",
+      "status": "adopted",
+      "decision": [
+        "D-090",
+        "D-140"
+      ]
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "h2",
+      "version": "4.4.1",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "installed metadata License-Expression `MIT`, 2026-10-09",
+      "use": "gerbonara 1.6.3 dependency",
+      "load": "python-tool",
+      "status": "adopted",
+      "decision": [
+        "D-090",
+        "D-140"
+      ]
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "hpack",
+      "version": "4.2.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "installed metadata License-Expression `MIT`, 2026-10-09",
+      "use": "gerbonara 1.6.3 dependency",
+      "load": "python-tool",
+      "status": "adopted",
+      "decision": [
+        "D-090",
+        "D-140"
+      ]
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "hypercorn",
+      "version": "0.18.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "installed metadata License field `MIT`, 2026-10-09",
+      "use": "gerbonara 1.6.3 dependency",
+      "load": "python-tool",
+      "status": "adopted",
+      "decision": [
+        "D-090",
+        "D-140"
+      ]
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "hyperframe",
+      "version": "6.1.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "installed metadata License field (MIT licence text) and classifier `License :: OSI Approved :: MIT License`, 2026-10-09",
+      "use": "gerbonara 1.6.3 dependency",
+      "load": "python-tool",
+      "status": "adopted",
+      "decision": [
+        "D-090",
+        "D-140"
+      ]
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "itsdangerous",
+      "version": "2.2.0",
+      "published": "BSD",
+      "audited": "BSD-3-Clause",
+      "evidence": "installed metadata classifier `License :: OSI Approved :: BSD License`; LICENSE.txt is the three-clause text (clause 3 line 14, Copyright 2011 Pallets), 2026-10-09",
+      "use": "gerbonara 1.6.3 dependency",
+      "load": "python-tool",
+      "status": "adopted",
+      "decision": [
+        "D-090",
+        "D-140"
+      ]
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "jinja2",
+      "version": "3.1.6",
+      "published": "BSD",
+      "audited": "BSD-3-Clause",
+      "evidence": "installed metadata classifier `License :: OSI Approved :: BSD License`; licenses/LICENSE.txt is the three-clause text (clause 3 line 14, Copyright 2007 Pallets), 2026-10-09",
+      "use": "gerbonara 1.6.3 dependency",
+      "load": "python-tool",
+      "status": "adopted",
+      "decision": [
+        "D-090",
+        "D-140"
+      ]
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "markupsafe",
+      "version": "3.0.4",
+      "published": "BSD-3-Clause",
+      "audited": "BSD-3-Clause",
+      "evidence": "installed metadata License-Expression `BSD-3-Clause`, 2026-10-09",
+      "use": "gerbonara 1.6.3 dependency",
+      "load": "python-tool",
+      "status": "adopted",
+      "decision": [
+        "D-090",
+        "D-140"
+      ]
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "pillow",
+      "version": "12.3.0",
+      "published": "MIT-CMU",
+      "audited": "MIT-CMU",
+      "evidence": "installed metadata License-Expression `MIT-CMU`, 2026-10-09",
+      "use": "pygerber 2.4.3 dependency",
+      "load": "python-tool",
+      "status": "adopted",
+      "decision": [
+        "D-090",
+        "D-140"
+      ]
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "priority",
+      "version": "2.0.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "installed metadata License field `MIT License`, 2026-10-09",
+      "use": "gerbonara 1.6.3 dependency",
+      "load": "python-tool",
+      "status": "adopted",
+      "decision": [
+        "D-090",
+        "D-140"
+      ]
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "pydantic",
+      "version": "2.14.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "installed metadata License-Expression `MIT`, 2026-10-09",
+      "use": "pygerber 2.4.3 dependency",
+      "load": "python-tool",
+      "status": "adopted",
+      "decision": [
+        "D-090",
+        "D-140"
+      ]
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "pydantic-core",
+      "version": "2.50.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "installed metadata License-Expression `MIT`, 2026-10-09",
+      "use": "pygerber 2.4.3 dependency",
+      "load": "python-tool",
+      "status": "adopted",
+      "decision": [
+        "D-090",
+        "D-140"
+      ]
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "pygerber",
+      "version": "2.4.3",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "installed metadata License field `MIT` and classifier `License :: OSI Approved :: MIT License`, 2026-10-09",
+      "use": "board gerber raster reparse (M08-T07, D-090)",
+      "load": "python-tool",
+      "status": "adopted",
+      "decision": [
+        "D-090",
+        "D-140"
+      ]
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "quart",
+      "version": "0.23.1",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "installed metadata License-Expression `MIT`, 2026-10-09",
+      "use": "gerbonara 1.6.3 dependency",
+      "load": "python-tool",
+      "status": "adopted",
+      "decision": [
+        "D-090",
+        "D-140"
+      ]
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "typing-inspection",
+      "version": "0.4.4",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "installed metadata License-Expression `MIT`, 2026-10-09",
+      "use": "pygerber 2.4.3 dependency",
+      "load": "python-tool",
+      "status": "adopted",
+      "decision": [
+        "D-090",
+        "D-140"
+      ]
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "werkzeug",
+      "version": "3.1.9",
+      "published": "BSD-3-Clause",
+      "audited": "BSD-3-Clause",
+      "evidence": "installed metadata License-Expression `BSD-3-Clause`, 2026-10-09",
+      "use": "gerbonara 1.6.3 dependency",
+      "load": "python-tool",
+      "status": "adopted",
+      "decision": [
+        "D-090",
+        "D-140"
+      ]
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "wsproto",
+      "version": "1.3.2",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "installed metadata License-Expression `MIT`, 2026-10-09",
+      "use": "gerbonara 1.6.3 dependency",
+      "load": "python-tool",
+      "status": "adopted",
+      "decision": [
+        "D-090",
+        "D-140"
+      ]
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "easyeda2kicad",
+      "version": "1.0.1",
+      "published": "AGPL-3.0",
+      "audited": "AGPL-3.0",
+      "evidence": "PyPI JSON info.license `AGPL-3.0` and classifier `License :: OSI Approved :: GNU Affero General Public License v3`, 2026-10-09",
+      "use": "none; a person may run it by hand, no package calls it",
+      "load": "excluded",
+      "status": "excluded",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "kiutils",
+      "version": "1.4.8",
+      "published": "GPL-3.0",
+      "audited": "GPL-3.0",
+      "evidence": "PyPI JSON classifier `License :: OSI Approved :: GNU General Public License v3 (GPLv3)`, release 2024-02-02, 2026-10-09",
+      "use": "none; replaced by kicadts",
+      "load": "excluded",
+      "status": "excluded",
+      "decision": [
+        "D-090",
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "sparrow",
+      "version": "0.3.0",
+      "published": null,
+      "audited": "MIT",
+      "evidence": "github.com/JeroenGar/sparrow LICENSE at commit 3be915856b543d18c9cb7d4664fe7c53901fe1fd (MIT, Jeroen Gardeyn, KU Leuven); Cargo.toml carries no license field, read 2026-10-08",
+      "use": "tools/sparrow evaluation build only (M07-T13); no package or bake links it, only the evaluation locks tools/sparrow/native/Cargo.lock and tools/sparrow/wasm/Cargo.lock name it",
+      "load": "dev-only",
+      "status": "evaluated",
+      "decision": [
+        "D-137",
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "jagua-rs",
+      "version": "1.0.0",
+      "published": "MPL-2.0",
+      "audited": "MPL-2.0",
+      "evidence": "crates.io jagua-rs 1.0.0 Cargo.toml license field, read 2026-10-08; locked by tools/sparrow/native/Cargo.lock, the lock cargo resolved for 3be915856b543d18c9cb7d4664fe7c53901fe1fd (the commit tracks no Cargo.lock)",
+      "use": "linked into the tools/sparrow evaluation build through sparrow only (M07-T13); nest never calls it (D-137)",
+      "load": "dev-only",
+      "status": "evaluated",
+      "decision": [
+        "D-137",
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@babel/helper-string-parser",
+      "version": "7.29.7",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@babel/helper-string-parser\"].license, read 2026-10-11",
+      "use": "installed with vue 3.5.43 (@virgilvox/hackbuild-ui peer); compiler, SSR or typing code a runtime bake does not inline (inferred)",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@babel/helper-validator-identifier",
+      "version": "7.29.7",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@babel/helper-validator-identifier\"].license, read 2026-10-11",
+      "use": "installed with vue 3.5.43 (@virgilvox/hackbuild-ui peer); compiler, SSR or typing code a runtime bake does not inline (inferred)",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@babel/parser",
+      "version": "7.29.9",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@babel/parser\"].license, read 2026-10-11",
+      "use": "installed with vue 3.5.43 (@virgilvox/hackbuild-ui peer); compiler, SSR or typing code a runtime bake does not inline (inferred)",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@babel/types",
+      "version": "7.29.8",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@babel/types\"].license, read 2026-10-11",
+      "use": "installed with vue 3.5.43 (@virgilvox/hackbuild-ui peer); compiler, SSR or typing code a runtime bake does not inline (inferred)",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@virgilvox/hackbuild-ui",
+      "version": "0.3.0",
+      "published": "MIT",
+      "audited": "MIT; Font Awesome Free icon path data in dist/icons under CC-BY-4.0",
+      "evidence": "package-lock.json packages[\"node_modules/@virgilvox/hackbuild-ui\"].license and the attribution header of src/icons/index.ts in the packed branch (tools/vendor/hackbuild-ui-0.3.0-b3962ab.tgz), read 2026-10-11",
+      "use": "ui: design system and bench layer, packed from the hackbuild-ui bench-layer-0.3.0 branch until 0.3.0 is on npm (M09-T02)",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-116",
+        "D-117"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@vue/compiler-core",
+      "version": "3.5.43",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@vue/compiler-core\"].license, read 2026-10-11",
+      "use": "installed with vue 3.5.43 (@virgilvox/hackbuild-ui peer); compiler, SSR or typing code a runtime bake does not inline (inferred)",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "estree-walker",
+      "version": "2.0.2",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@vue/compiler-core/node_modules/estree-walker\"].license, read 2026-10-11",
+      "use": "installed with vue 3.5.43 (@virgilvox/hackbuild-ui peer); compiler, SSR or typing code a runtime bake does not inline (inferred)",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@vue/compiler-dom",
+      "version": "3.5.43",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@vue/compiler-dom\"].license, read 2026-10-11",
+      "use": "installed with vue 3.5.43 (@virgilvox/hackbuild-ui peer); compiler, SSR or typing code a runtime bake does not inline (inferred)",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@vue/compiler-sfc",
+      "version": "3.5.43",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@vue/compiler-sfc\"].license, read 2026-10-11",
+      "use": "installed with vue 3.5.43 (@virgilvox/hackbuild-ui peer); compiler, SSR or typing code a runtime bake does not inline (inferred)",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@vue/compiler-ssr",
+      "version": "3.5.43",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@vue/compiler-ssr\"].license, read 2026-10-11",
+      "use": "installed with vue 3.5.43 (@virgilvox/hackbuild-ui peer); compiler, SSR or typing code a runtime bake does not inline (inferred)",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@vue/reactivity",
+      "version": "3.5.43",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@vue/reactivity\"].license, read 2026-10-11",
+      "use": "runtime, transitive (@virgilvox/hackbuild-ui 0.3.0 peer vue)",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@vue/runtime-core",
+      "version": "3.5.43",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@vue/runtime-core\"].license, read 2026-10-11",
+      "use": "runtime, transitive (@virgilvox/hackbuild-ui 0.3.0 peer vue)",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@vue/runtime-dom",
+      "version": "3.5.43",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@vue/runtime-dom\"].license, read 2026-10-11",
+      "use": "runtime, transitive (@virgilvox/hackbuild-ui 0.3.0 peer vue)",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@vue/server-renderer",
+      "version": "3.5.43",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@vue/server-renderer\"].license, read 2026-10-11",
+      "use": "installed with vue 3.5.43 (@virgilvox/hackbuild-ui peer); compiler, SSR or typing code a runtime bake does not inline (inferred)",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@vue/shared",
+      "version": "3.5.43",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@vue/shared\"].license, read 2026-10-11",
+      "use": "runtime, transitive (@virgilvox/hackbuild-ui 0.3.0 peer vue)",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "csstype",
+      "version": "3.2.3",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/csstype\"].license, read 2026-10-11",
+      "use": "installed with vue 3.5.43 (@virgilvox/hackbuild-ui peer); compiler, SSR or typing code a runtime bake does not inline (inferred)",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "entities",
+      "version": "7.0.1",
+      "published": "BSD-2-Clause",
+      "audited": "BSD-2-Clause",
+      "evidence": "package-lock.json packages[\"node_modules/entities\"].license, read 2026-10-11",
+      "use": "installed with vue 3.5.43 (@virgilvox/hackbuild-ui peer); compiler, SSR or typing code a runtime bake does not inline (inferred)",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "vue",
+      "version": "3.5.43",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/vue\"].license, read 2026-10-11",
+      "use": "runtime, transitive (@virgilvox/hackbuild-ui 0.3.0 peer vue)",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "pinia",
+      "version": "4.0.3",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json license and node_modules/pinia/LICENSE, read 2026-10-12 (M09-T14)",
+      "use": "bench shell mirror stores (D-123); inlined in ui bakes",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-123"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "three",
+      "version": "0.186.1",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json license and node_modules/three/LICENSE, read 2026-10-12 (M09-T14)",
+      "use": "bench viewer, three 0.186.1 inlined in ui bakes (D-127)",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-127"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@fontsource/permanent-marker",
+      "version": "5.3.0",
+      "published": "Apache-2.0",
+      "audited": "Apache-2.0",
+      "evidence": "package-lock.json license and node_modules/@fontsource/permanent-marker/LICENSE, read 2026-10-12 (M09-T14)",
+      "use": "Permanent Marker woff2 inlined in bakes (D-121)",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-121"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@fontsource/special-elite",
+      "version": "5.3.0",
+      "published": "Apache-2.0",
+      "audited": "Apache-2.0",
+      "evidence": "package-lock.json license and node_modules/@fontsource/special-elite/LICENSE, read 2026-10-12 (M09-T14)",
+      "use": "Special Elite woff2 inlined in bakes (D-121)",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-121"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@fontsource/vt323",
+      "version": "5.3.0",
+      "published": "OFL-1.1",
+      "audited": "OFL-1.1",
+      "evidence": "package-lock.json license and node_modules/@fontsource/vt323/LICENSE, read 2026-10-12 (M09-T14)",
+      "use": "VT323 woff2 inlined in bakes (D-121)",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-121"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@fontsource/ibm-plex-mono",
+      "version": "5.3.0",
+      "published": "OFL-1.1",
+      "audited": "OFL-1.1",
+      "evidence": "package-lock.json license and node_modules/@fontsource/ibm-plex-mono/LICENSE, read 2026-10-12 (M09-T14)",
+      "use": "IBM Plex Mono woff2 inlined in bakes (D-121)",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-121"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@fontsource/libre-baskerville",
+      "version": "5.3.0",
+      "published": "OFL-1.1",
+      "audited": "OFL-1.1",
+      "evidence": "package-lock.json license and node_modules/@fontsource/libre-baskerville/LICENSE, read 2026-10-12 (M09-T14)",
+      "use": "Libre Baskerville italic woff2 inlined in bakes (D-121)",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-121"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "three",
+      "version": "0.128.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "designs/pip/legacy/package-lock.json license and designs/pip/legacy/node_modules/three/LICENSE, read 2026-10-12 (M09-T14)",
+      "use": "PIP legacy bake: three.min.js r128 vendored into pip.html by designs/pip/legacy/bake.json",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-142"
+      ],
+      "note": "legacy lock designs/pip/legacy/package-lock.json, outside the root lockfile the --check gate reads"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@dimforge/rapier3d-compat",
+      "version": "0.12.0",
+      "published": "Apache-2.0",
+      "audited": "Apache-2.0",
+      "evidence": "package-lock.json packages[\"node_modules/@dimforge/rapier3d-compat\"].license and node_modules/@dimforge/rapier3d-compat/LICENSE, read 2026-10-13",
+      "use": "@types/three 0.186.0 dependency; typing and its own deps, absent from the ui bakes (three 0.186.1 is the inlined copy)",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-127"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@tweenjs/tween.js",
+      "version": "23.1.3",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@tweenjs/tween.js\"].license and node_modules/@tweenjs/tween.js/LICENSE, read 2026-10-13",
+      "use": "@types/three 0.186.0 dependency; typing and its own deps, absent from the ui bakes (three 0.186.1 is the inlined copy)",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-127"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@types/stats.js",
+      "version": "0.17.4",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@types/stats.js\"].license and node_modules/@types/stats.js/LICENSE, read 2026-10-13",
+      "use": "@types/three 0.186.0 dependency; typing and its own deps, absent from the ui bakes (three 0.186.1 is the inlined copy)",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-127"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@types/three",
+      "version": "0.186.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@types/three\"].license and node_modules/@types/three/LICENSE, read 2026-10-13",
+      "use": "typecheck: three types for ui-core viewer (M09)",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-127"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@types/webxr",
+      "version": "0.5.24",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@types/webxr\"].license and node_modules/@types/webxr/LICENSE, read 2026-10-13",
+      "use": "@types/three 0.186.0 dependency; typing and its own deps, absent from the ui bakes (three 0.186.1 is the inlined copy)",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-127"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "meshoptimizer",
+      "version": "1.1.1",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/meshoptimizer\"].license and node_modules/meshoptimizer/LICENSE.md, read 2026-10-13",
+      "use": "@types/three 0.186.0 dependency; typing and its own deps, absent from the ui bakes (three 0.186.1 is the inlined copy)",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-127"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@vitejs/plugin-vue",
+      "version": "6.0.10",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@vitejs/plugin-vue\"].license and node_modules/@vitejs/plugin-vue/LICENSE, read 2026-10-13",
+      "use": "vue single file component build for ui bakes (M09)",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-123"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "happy-dom",
+      "version": "21.0.1",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/happy-dom\"].license and node_modules/happy-dom/LICENSE, read 2026-10-13",
+      "use": "vitest DOM environment for vue component tests (M09)",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-040"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@types/whatwg-mimetype",
+      "version": "3.0.2",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@types/whatwg-mimetype\"].license and node_modules/@types/whatwg-mimetype/LICENSE, read 2026-10-13",
+      "use": "happy-dom 21.0.1 dependency; vitest DOM environment",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@types/ws",
+      "version": "8.18.2",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@types/ws\"].license and node_modules/@types/ws/LICENSE, read 2026-10-13",
+      "use": "happy-dom 21.0.1 dependency; vitest DOM environment",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "buffer-image-size",
+      "version": "0.6.4",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/buffer-image-size\"].license and node_modules/buffer-image-size/LICENSE, read 2026-10-13",
+      "use": "happy-dom 21.0.1 dependency; vitest DOM environment",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "whatwg-mimetype",
+      "version": "3.0.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/whatwg-mimetype\"].license and node_modules/whatwg-mimetype/LICENSE.txt, read 2026-10-13",
+      "use": "happy-dom 21.0.1 dependency; vitest DOM environment",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "ws",
+      "version": "8.22.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/ws\"].license and node_modules/ws/LICENSE, read 2026-10-13",
+      "use": "happy-dom 21.0.1 dependency; vitest DOM environment",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@vue/devtools-api",
+      "version": "8.2.1",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@vue/devtools-api\"].license and node_modules/@vue/devtools-api/LICENSE, read 2026-10-13",
+      "use": "pinia 4.0.3 devtools hook; setupDevtoolsPlugin absent from dist/bench/flex-pair.html and dist/kit/kit.html (measured 2026-10-13)",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-123"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@vue/devtools-kit",
+      "version": "8.2.1",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@vue/devtools-kit\"].license and node_modules/@vue/devtools-kit/LICENSE, read 2026-10-13",
+      "use": "pinia 4.0.3 devtools hook; setupDevtoolsPlugin absent from dist/bench/flex-pair.html and dist/kit/kit.html (measured 2026-10-13)",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-123"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@vue/devtools-shared",
+      "version": "8.2.1",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@vue/devtools-shared\"].license and node_modules/@vue/devtools-shared/LICENSE, read 2026-10-13",
+      "use": "pinia 4.0.3 devtools hook; setupDevtoolsPlugin absent from dist/bench/flex-pair.html and dist/kit/kit.html (measured 2026-10-13)",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-123"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "hookable",
+      "version": "5.5.3",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@vue/devtools-kit/node_modules/hookable\"].license and node_modules/@vue/devtools-kit/node_modules/hookable/LICENSE.md, read 2026-10-13",
+      "use": "pinia 4.0.3 devtools hook; setupDevtoolsPlugin absent from dist/bench/flex-pair.html and dist/kit/kit.html (measured 2026-10-13)",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-123"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "birpc",
+      "version": "2.9.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/birpc\"].license and node_modules/birpc/LICENSE, read 2026-10-13",
+      "use": "pinia 4.0.3 devtools hook; setupDevtoolsPlugin absent from dist/bench/flex-pair.html and dist/kit/kit.html (measured 2026-10-13)",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-123"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "perfect-debounce",
+      "version": "2.1.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/perfect-debounce\"].license and node_modules/perfect-debounce/LICENSE, read 2026-10-13",
+      "use": "pinia 4.0.3 devtools hook; setupDevtoolsPlugin absent from dist/bench/flex-pair.html and dist/kit/kit.html (measured 2026-10-13)",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-123"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "nostics",
+      "version": "1.3.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/nostics\"].license and node_modules/nostics/LICENSE, read 2026-10-13",
+      "use": "pinia 4.0.3 diagnostics; defineDiagnostics and createConsoleReporter absent from dist/bench/flex-pair.html and dist/kit/kit.html (measured 2026-10-13)",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-123"
+      ]
+    }
+  ]
+}

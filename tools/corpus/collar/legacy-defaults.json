@@ -1,0 +1,947 @@
+{
+ "source": "designs/collar/legacy/collar.html",
+ "sha256": "ef0864ab66ca40e2930d12aba4cab3159aa470f743eee533d052fc99f844fd46",
+ "driver": "playwright",
+ "browser": "150.0.7871.125",
+ "labels": "tools/corpus/collar/legacy-defaults.labels.gz",
+ "labelsSha256": "adaaf3829781e7812f8727111c3ba265455d2199f08935d8802f57d8915a1319",
+ "rows": [
+  {
+   "baseline": "literal",
+   "st": {
+    "dia": 44,
+    "thk": 3.6,
+    "cham": 0.5,
+    "inlay": 1.2,
+    "layer": 0.2,
+    "res": 512,
+    "slots": [
+     {
+      "name": "black",
+      "color": "#1A1A1A",
+      "type": "PETG"
+     },
+     {
+      "name": "cream",
+      "color": "#F5F0E6",
+      "type": "PETG"
+     },
+     {
+      "name": "pink",
+      "color": "#FE0386",
+      "type": "PETG"
+     },
+     {
+      "name": "spare",
+      "color": "#2B6CB0",
+      "type": "PETG"
+     }
+    ],
+    "nSlots": 3,
+    "base": 1,
+    "presetPattern": "Generic {TYPE} @FF C5P",
+    "writeFilaments": true,
+    "printerId": "Flashforge Creator 5 Pro 0.4 nozzle",
+    "processId": "0.24mm Standard @FF C5",
+    "printerModel": "Flashforge Creator 5 Pro",
+    "printerVariant": "0.4",
+    "shape": {
+     "kind": "round",
+     "aspect": 0.72,
+     "corner": 0.3
+    },
+    "edge": {
+     "style": "reeded",
+     "count": 40,
+     "depth": 1,
+     "width": 2.8,
+     "twist": 35,
+     "gapDeg": 0
+    },
+    "rim": {
+     "on": true,
+     "w": 2.2,
+     "slot": 3,
+     "dashOn": false,
+     "dashN": 12,
+     "dashDuty": 45,
+     "dashSlot": 2,
+     "dashAlt": false,
+     "dashSlot2": 1,
+     "dashPhase": 0
+    },
+    "nfc": {
+     "on": false,
+     "dia": 26,
+     "depth": 0.6,
+     "tag": 25
+    },
+    "art": {
+     "boost": 0.1,
+     "gap": 0.45,
+     "keep": 1.4,
+     "despeck": true,
+     "minF": 0.9
+    },
+    "faces": {
+     "front": [],
+     "back": []
+    },
+    "face": "front",
+    "view": "solid",
+    "flipped": false
+   },
+   "slabs": 5,
+   "mm": 0.0859375,
+   "estimateVolume": {
+    "1": 4433.102050775061,
+    "3": 720.5585449218634
+   },
+   "parts": [
+    {
+     "slot": 1,
+     "name": "black",
+     "tris": 5368,
+     "volume": 4433.10193334416,
+     "bbox": [
+      [
+       -19.765625,
+       -19.765625,
+       0
+      ],
+      [
+       19.765625,
+       19.765625,
+       3.5999999046325684
+      ]
+     ]
+    },
+    {
+     "slot": 3,
+     "name": "pink",
+     "tris": 46934,
+     "volume": 720.5585336112139,
+     "bbox": [
+      [
+       -21.9140625,
+       -21.9140625,
+       0
+      ],
+      [
+       21.9140625,
+       21.9140625,
+       3.5999999046325684
+      ]
+     ]
+    }
+   ],
+   "bands": [
+    {
+     "z0": 0,
+     "z1": 0.2,
+     "counts": {
+      "1": 166740,
+      "3": 21102
+     },
+     "offset": 0,
+     "cells": 262144,
+     "sha256": "b51947cca96d2fafaf90982710c85a5c4c09eb31af9b509f19b9741fbcb01b7b"
+    },
+    {
+     "z0": 0.2,
+     "z1": 0.4,
+     "counts": {
+      "1": 166740,
+      "3": 24660
+     },
+     "offset": 262144,
+     "cells": 262144,
+     "sha256": "c60cf388ebf790c5134e77d6db2e6bf0e2329f77082fa71846693aaca16ca32f"
+    },
+    {
+     "z0": 0.4,
+     "z1": 0.6,
+     "counts": {
+      "1": 166740,
+      "3": 28308
+     },
+     "offset": 524288,
+     "cells": 262144,
+     "sha256": "3232590a9cbbfa6294973adc42a0fccd76b3e36c52aaa749dee0529572c94d70"
+    },
+    {
+     "z0": 0.6,
+     "z1": 1.2,
+     "counts": {
+      "1": 166740,
+      "3": 28308
+     },
+     "offset": 786432,
+     "cells": 262144,
+     "sha256": "3232590a9cbbfa6294973adc42a0fccd76b3e36c52aaa749dee0529572c94d70"
+    },
+    {
+     "z0": 1.2,
+     "z1": 2.4,
+     "counts": {
+      "1": 166740,
+      "3": 28308
+     },
+     "offset": 1048576,
+     "cells": 262144,
+     "sha256": "3232590a9cbbfa6294973adc42a0fccd76b3e36c52aaa749dee0529572c94d70"
+    },
+    {
+     "z0": 2.4,
+     "z1": 3,
+     "counts": {
+      "1": 166740,
+      "3": 28308
+     },
+     "offset": 1310720,
+     "cells": 262144,
+     "sha256": "3232590a9cbbfa6294973adc42a0fccd76b3e36c52aaa749dee0529572c94d70"
+    },
+    {
+     "z0": 3,
+     "z1": 3.2,
+     "counts": {
+      "1": 166740,
+      "3": 28308
+     },
+     "offset": 1572864,
+     "cells": 262144,
+     "sha256": "3232590a9cbbfa6294973adc42a0fccd76b3e36c52aaa749dee0529572c94d70"
+    },
+    {
+     "z0": 3.2,
+     "z1": 3.4,
+     "counts": {
+      "1": 166740,
+      "3": 24660
+     },
+     "offset": 1835008,
+     "cells": 262144,
+     "sha256": "c60cf388ebf790c5134e77d6db2e6bf0e2329f77082fa71846693aaca16ca32f"
+    },
+    {
+     "z0": 3.4,
+     "z1": 3.6,
+     "counts": {
+      "1": 166740,
+      "3": 21102
+     },
+     "offset": 2097152,
+     "cells": 262144,
+     "sha256": "b51947cca96d2fafaf90982710c85a5c4c09eb31af9b509f19b9741fbcb01b7b"
+    }
+   ],
+   "heal": {
+    "changed": 0,
+    "converged": true,
+    "frozen": 0,
+    "illFormed": 0
+   },
+   "snapped": {
+    "bands": [
+     {
+      "z0": 0,
+      "z1": 0.2001953125,
+      "counts": {
+       "1": 166740,
+       "3": 21104
+      },
+      "offset": 2359296,
+      "cells": 262144,
+      "sha256": "843fe2330fc388772d06aaeb8d9503c8095e77b8e57dfcb3934ad30694e15de1"
+     },
+     {
+      "z0": 0.2001953125,
+      "z1": 0.400390625,
+      "counts": {
+       "1": 166740,
+       "3": 24664
+      },
+      "offset": 2621440,
+      "cells": 262144,
+      "sha256": "b40cd4d42cbd07b053a04bb73f0c37021d951eb61c9e7bbd3cbe16a4a477f3cd"
+     },
+     {
+      "z0": 0.400390625,
+      "z1": 0.599609375,
+      "counts": {
+       "1": 166740,
+       "3": 28308
+      },
+      "offset": 2883584,
+      "cells": 262144,
+      "sha256": "3232590a9cbbfa6294973adc42a0fccd76b3e36c52aaa749dee0529572c94d70"
+     },
+     {
+      "z0": 0.599609375,
+      "z1": 1.2001953125,
+      "counts": {
+       "1": 166740,
+       "3": 28308
+      },
+      "offset": 3145728,
+      "cells": 262144,
+      "sha256": "3232590a9cbbfa6294973adc42a0fccd76b3e36c52aaa749dee0529572c94d70"
+     },
+     {
+      "z0": 1.2001953125,
+      "z1": 2.400390625,
+      "counts": {
+       "1": 166740,
+       "3": 28308
+      },
+      "offset": 3407872,
+      "cells": 262144,
+      "sha256": "3232590a9cbbfa6294973adc42a0fccd76b3e36c52aaa749dee0529572c94d70"
+     },
+     {
+      "z0": 2.400390625,
+      "z1": 3,
+      "counts": {
+       "1": 166740,
+       "3": 28308
+      },
+      "offset": 3670016,
+      "cells": 262144,
+      "sha256": "3232590a9cbbfa6294973adc42a0fccd76b3e36c52aaa749dee0529572c94d70"
+     },
+     {
+      "z0": 3,
+      "z1": 3.2001953125,
+      "counts": {
+       "1": 166740,
+       "3": 28308
+      },
+      "offset": 3932160,
+      "cells": 262144,
+      "sha256": "3232590a9cbbfa6294973adc42a0fccd76b3e36c52aaa749dee0529572c94d70"
+     },
+     {
+      "z0": 3.2001953125,
+      "z1": 3.400390625,
+      "counts": {
+       "1": 166740,
+       "3": 24660
+      },
+      "offset": 4194304,
+      "cells": 262144,
+      "sha256": "c60cf388ebf790c5134e77d6db2e6bf0e2329f77082fa71846693aaca16ca32f"
+     },
+     {
+      "z0": 3.400390625,
+      "z1": 3.599609375,
+      "counts": {
+       "1": 166740,
+       "3": 21102
+      },
+      "offset": 4456448,
+      "cells": 262144,
+      "sha256": "b51947cca96d2fafaf90982710c85a5c4c09eb31af9b509f19b9741fbcb01b7b"
+     }
+    ],
+    "estimateVolume": {
+     "1": 4432.621028423309,
+     "3": 720.5064096450806
+    }
+   },
+   "projectSettingsType": "string",
+   "perFilament": [
+    "activate_air_filtration",
+    "activate_air_filtration_during_print",
+    "activate_air_filtration_on_completion",
+    "activate_chamber_temp_control",
+    "adaptive_pressure_advance",
+    "adaptive_pressure_advance_bridges",
+    "adaptive_pressure_advance_model",
+    "adaptive_pressure_advance_overhangs",
+    "additional_cooling_fan_speed",
+    "additional_fan_full_speed_layer",
+    "chamber_temperature",
+    "close_additional_fan_first_x_layers",
+    "close_fan_the_first_x_layers",
+    "complete_print_exhaust_fan_speed",
+    "cool_plate_temp",
+    "cool_plate_temp_initial_layer",
+    "default_filament_colour",
+    "dont_slow_down_outer_wall",
+    "during_print_exhaust_fan_speed",
+    "enable_overhang_bridge_fan",
+    "enable_pressure_advance",
+    "eng_plate_temp",
+    "eng_plate_temp_initial_layer",
+    "fan_cooling_layer_time",
+    "fan_max_speed",
+    "fan_min_speed",
+    "filament_adaptive_volumetric_speed",
+    "filament_adhesiveness_category",
+    "filament_change_extrusion_role_gcode",
+    "filament_change_length",
+    "filament_colour",
+    "filament_colour_type",
+    "filament_cooling_before_tower",
+    "filament_cooling_final_speed",
+    "filament_cooling_initial_speed",
+    "filament_cooling_moves",
+    "filament_cost",
+    "filament_density",
+    "filament_deretraction_speed",
+    "filament_diameter",
+    "filament_end_gcode",
+    "filament_extruder_variant",
+    "filament_flow_ratio",
+    "filament_flush_temp",
+    "filament_flush_volumetric_speed",
+    "filament_ids",
+    "filament_ironing_flow",
+    "filament_ironing_inset",
+    "filament_ironing_spacing",
+    "filament_ironing_speed",
+    "filament_is_support",
+    "filament_loading_speed",
+    "filament_loading_speed_start",
+    "filament_long_retractions_when_cut",
+    "filament_map",
+    "filament_max_volumetric_speed",
+    "filament_minimal_purge_on_wipe_tower",
+    "filament_multi_colour",
+    "filament_multitool_ramming",
+    "filament_multitool_ramming_flow",
+    "filament_multitool_ramming_volume",
+    "filament_notes",
+    "filament_printable",
+    "filament_ramming_parameters",
+    "filament_retract_before_wipe",
+    "filament_retract_lift_above",
+    "filament_retract_lift_below",
+    "filament_retract_lift_enforce",
+    "filament_retract_restart_extra",
+    "filament_retract_when_changing_layer",
+    "filament_retraction_distances_when_cut",
+    "filament_retraction_length",
+    "filament_retraction_minimum_travel",
+    "filament_retraction_speed",
+    "filament_self_index",
+    "filament_settings_id",
+    "filament_shrink",
+    "filament_shrinkage_compensation_z",
+    "filament_soluble",
+    "filament_stamping_distance",
+    "filament_stamping_loading_speed",
+    "filament_start_gcode",
+    "filament_toolchange_delay",
+    "filament_tower_interface_pre_extrusion_dist",
+    "filament_tower_interface_pre_extrusion_length",
+    "filament_tower_interface_print_temp",
+    "filament_tower_interface_purge_volume",
+    "filament_tower_ironing_area",
+    "filament_type",
+    "filament_unloading_speed",
+    "filament_unloading_speed_start",
+    "filament_vendor",
+    "filament_wipe",
+    "filament_wipe_distance",
+    "filament_z_hop",
+    "filament_z_hop_types",
+    "first_x_layer_fan_speed",
+    "full_fan_speed_layer",
+    "hot_plate_temp",
+    "hot_plate_temp_initial_layer",
+    "idle_temperature",
+    "internal_bridge_fan_speed",
+    "ironing_fan_speed",
+    "long_retractions_when_ec",
+    "nozzle_temperature",
+    "nozzle_temperature_initial_layer",
+    "nozzle_temperature_range_high",
+    "nozzle_temperature_range_low",
+    "overhang_fan_speed",
+    "overhang_fan_threshold",
+    "pellet_flow_coefficient",
+    "pressure_advance",
+    "reduce_fan_stop_start_freq",
+    "required_nozzle_HRC",
+    "retraction_distances_when_ec",
+    "slow_down_for_layer_cooling",
+    "slow_down_layer_time",
+    "slow_down_min_speed",
+    "supertack_plate_temp",
+    "supertack_plate_temp_initial_layer",
+    "support_material_interface_fan_speed",
+    "temperature_vitrification",
+    "textured_cool_plate_temp",
+    "textured_cool_plate_temp_initial_layer",
+    "textured_plate_temp",
+    "textured_plate_temp_initial_layer",
+    "volumetric_speed_coefficients"
+   ],
+   "nonList": [
+    "from",
+    "name",
+    "print_settings_id",
+    "printer_model",
+    "printer_settings_id",
+    "printer_technology",
+    "printer_variant",
+    "version"
+   ],
+   "filamentSettingsId": [
+    "Generic PETG @FF C5P",
+    "Generic PETG @FF C5P"
+   ]
+  },
+  {
+   "baseline": "booted",
+   "st": {
+    "dia": 44,
+    "thk": 3.6,
+    "cham": 0.5,
+    "inlay": 1.2,
+    "layer": 0.2,
+    "res": 512,
+    "slots": [
+     {
+      "name": "black",
+      "color": "#1A1A1A",
+      "type": "PETG"
+     },
+     {
+      "name": "cream",
+      "color": "#F5F0E6",
+      "type": "PETG"
+     },
+     {
+      "name": "pink",
+      "color": "#FE0386",
+      "type": "PETG"
+     },
+     {
+      "name": "spare",
+      "color": "#2B6CB0",
+      "type": "PETG"
+     }
+    ],
+    "nSlots": 3,
+    "base": 1,
+    "presetPattern": "Generic {TYPE}",
+    "writeFilaments": true,
+    "printerId": "Flashforge Creator 5 Pro 0.4 nozzle",
+    "processId": "0.24mm Standard @FF C5",
+    "printerModel": "Flashforge Creator 5 Pro",
+    "printerVariant": "0.4",
+    "shape": {
+     "kind": "round",
+     "aspect": 0.72,
+     "corner": 0.3
+    },
+    "edge": {
+     "style": "plain",
+     "count": 40,
+     "depth": 1,
+     "width": 2.8,
+     "twist": 35,
+     "gapDeg": 0
+    },
+    "rim": {
+     "on": false,
+     "w": 2.2,
+     "slot": 3,
+     "dashOn": false,
+     "dashN": 12,
+     "dashDuty": 45,
+     "dashSlot": 2,
+     "dashAlt": false,
+     "dashSlot2": 1,
+     "dashPhase": 0
+    },
+    "nfc": {
+     "on": false,
+     "dia": 26,
+     "depth": 0.6,
+     "tag": 25
+    },
+    "art": {
+     "boost": 0.1,
+     "gap": 0.45,
+     "keep": 1.4,
+     "despeck": true,
+     "minF": 0.9
+    },
+    "faces": {
+     "front": [],
+     "back": []
+    },
+    "face": "front",
+    "view": "solid",
+    "flipped": false
+   },
+   "slabs": 5,
+   "mm": 0.0859375,
+   "estimateVolume": {
+    "1": 5441.029687488216
+   },
+   "parts": [
+    {
+     "slot": 1,
+     "name": "black",
+     "tris": 33158,
+     "volume": 5441.029551414736,
+     "bbox": [
+      [
+       -22,
+       -22,
+       0
+      ],
+      [
+       22,
+       22,
+       3.5999999046325684
+      ]
+     ]
+    }
+   ],
+   "bands": [
+    {
+     "z0": 0,
+     "z1": 0.2,
+     "counts": {
+      "1": 198448
+     },
+     "offset": 4718592,
+     "cells": 262144,
+     "sha256": "c013646ef70adcc104ba92367c705dcf2f0413651dc0f94a01ccf9cd1a260c01"
+    },
+    {
+     "z0": 0.2,
+     "z1": 0.4,
+     "counts": {
+      "1": 202164
+     },
+     "offset": 4980736,
+     "cells": 262144,
+     "sha256": "de4b9fa290b3be7d334307776d3e4e5b89648fbfbd29b2f77f51c11118fdea6c"
+    },
+    {
+     "z0": 0.4,
+     "z1": 0.6,
+     "counts": {
+      "1": 205892
+     },
+     "offset": 5242880,
+     "cells": 262144,
+     "sha256": "d8932103a8b5b1f9dcd71dfe7eedc50ee055e22c338327d44db52c75052da7b2"
+    },
+    {
+     "z0": 0.6,
+     "z1": 1.2,
+     "counts": {
+      "1": 205892
+     },
+     "offset": 5505024,
+     "cells": 262144,
+     "sha256": "d8932103a8b5b1f9dcd71dfe7eedc50ee055e22c338327d44db52c75052da7b2"
+    },
+    {
+     "z0": 1.2,
+     "z1": 2.4,
+     "counts": {
+      "1": 205892
+     },
+     "offset": 5767168,
+     "cells": 262144,
+     "sha256": "d8932103a8b5b1f9dcd71dfe7eedc50ee055e22c338327d44db52c75052da7b2"
+    },
+    {
+     "z0": 2.4,
+     "z1": 3,
+     "counts": {
+      "1": 205892
+     },
+     "offset": 6029312,
+     "cells": 262144,
+     "sha256": "d8932103a8b5b1f9dcd71dfe7eedc50ee055e22c338327d44db52c75052da7b2"
+    },
+    {
+     "z0": 3,
+     "z1": 3.2,
+     "counts": {
+      "1": 205892
+     },
+     "offset": 6291456,
+     "cells": 262144,
+     "sha256": "d8932103a8b5b1f9dcd71dfe7eedc50ee055e22c338327d44db52c75052da7b2"
+    },
+    {
+     "z0": 3.2,
+     "z1": 3.4,
+     "counts": {
+      "1": 202164
+     },
+     "offset": 6553600,
+     "cells": 262144,
+     "sha256": "de4b9fa290b3be7d334307776d3e4e5b89648fbfbd29b2f77f51c11118fdea6c"
+    },
+    {
+     "z0": 3.4,
+     "z1": 3.6,
+     "counts": {
+      "1": 198448
+     },
+     "offset": 6815744,
+     "cells": 262144,
+     "sha256": "c013646ef70adcc104ba92367c705dcf2f0413651dc0f94a01ccf9cd1a260c01"
+    }
+   ],
+   "heal": {
+    "changed": 0,
+    "converged": true,
+    "frozen": 0,
+    "illFormed": 0
+   },
+   "snapped": {
+    "bands": [
+     {
+      "z0": 0,
+      "z1": 0.2001953125,
+      "counts": {
+       "1": 198448
+      },
+      "offset": 7077888,
+      "cells": 262144,
+      "sha256": "c013646ef70adcc104ba92367c705dcf2f0413651dc0f94a01ccf9cd1a260c01"
+     },
+     {
+      "z0": 0.2001953125,
+      "z1": 0.400390625,
+      "counts": {
+       "1": 202164
+      },
+      "offset": 7340032,
+      "cells": 262144,
+      "sha256": "de4b9fa290b3be7d334307776d3e4e5b89648fbfbd29b2f77f51c11118fdea6c"
+     },
+     {
+      "z0": 0.400390625,
+      "z1": 0.599609375,
+      "counts": {
+       "1": 205892
+      },
+      "offset": 7602176,
+      "cells": 262144,
+      "sha256": "d8932103a8b5b1f9dcd71dfe7eedc50ee055e22c338327d44db52c75052da7b2"
+     },
+     {
+      "z0": 0.599609375,
+      "z1": 1.2001953125,
+      "counts": {
+       "1": 205892
+      },
+      "offset": 7864320,
+      "cells": 262144,
+      "sha256": "d8932103a8b5b1f9dcd71dfe7eedc50ee055e22c338327d44db52c75052da7b2"
+     },
+     {
+      "z0": 1.2001953125,
+      "z1": 2.400390625,
+      "counts": {
+       "1": 205892
+      },
+      "offset": 8126464,
+      "cells": 262144,
+      "sha256": "d8932103a8b5b1f9dcd71dfe7eedc50ee055e22c338327d44db52c75052da7b2"
+     },
+     {
+      "z0": 2.400390625,
+      "z1": 3,
+      "counts": {
+       "1": 205892
+      },
+      "offset": 8388608,
+      "cells": 262144,
+      "sha256": "d8932103a8b5b1f9dcd71dfe7eedc50ee055e22c338327d44db52c75052da7b2"
+     },
+     {
+      "z0": 3,
+      "z1": 3.2001953125,
+      "counts": {
+       "1": 205892
+      },
+      "offset": 8650752,
+      "cells": 262144,
+      "sha256": "d8932103a8b5b1f9dcd71dfe7eedc50ee055e22c338327d44db52c75052da7b2"
+     },
+     {
+      "z0": 3.2001953125,
+      "z1": 3.400390625,
+      "counts": {
+       "1": 202164
+      },
+      "offset": 8912896,
+      "cells": 262144,
+      "sha256": "de4b9fa290b3be7d334307776d3e4e5b89648fbfbd29b2f77f51c11118fdea6c"
+     },
+     {
+      "z0": 3.400390625,
+      "z1": 3.599609375,
+      "counts": {
+       "1": 198448
+      },
+      "offset": 9175040,
+      "cells": 262144,
+      "sha256": "c013646ef70adcc104ba92367c705dcf2f0413651dc0f94a01ccf9cd1a260c01"
+     }
+    ],
+    "estimateVolume": {
+     "1": 5440.457174539566
+    }
+   },
+   "projectSettingsType": "string",
+   "perFilament": [
+    "activate_air_filtration",
+    "activate_air_filtration_during_print",
+    "activate_air_filtration_on_completion",
+    "activate_chamber_temp_control",
+    "adaptive_pressure_advance",
+    "adaptive_pressure_advance_bridges",
+    "adaptive_pressure_advance_model",
+    "adaptive_pressure_advance_overhangs",
+    "additional_cooling_fan_speed",
+    "additional_fan_full_speed_layer",
+    "chamber_temperature",
+    "close_additional_fan_first_x_layers",
+    "close_fan_the_first_x_layers",
+    "complete_print_exhaust_fan_speed",
+    "cool_plate_temp",
+    "cool_plate_temp_initial_layer",
+    "default_filament_colour",
+    "dont_slow_down_outer_wall",
+    "during_print_exhaust_fan_speed",
+    "enable_overhang_bridge_fan",
+    "enable_pressure_advance",
+    "eng_plate_temp",
+    "eng_plate_temp_initial_layer",
+    "fan_cooling_layer_time",
+    "fan_max_speed",
+    "fan_min_speed",
+    "filament_adaptive_volumetric_speed",
+    "filament_adhesiveness_category",
+    "filament_change_extrusion_role_gcode",
+    "filament_change_length",
+    "filament_colour",
+    "filament_colour_type",
+    "filament_cooling_before_tower",
+    "filament_cooling_final_speed",
+    "filament_cooling_initial_speed",
+    "filament_cooling_moves",
+    "filament_cost",
+    "filament_density",
+    "filament_deretraction_speed",
+    "filament_diameter",
+    "filament_end_gcode",
+    "filament_extruder_variant",
+    "filament_flow_ratio",
+    "filament_flush_temp",
+    "filament_flush_volumetric_speed",
+    "filament_ids",
+    "filament_ironing_flow",
+    "filament_ironing_inset",
+    "filament_ironing_spacing",
+    "filament_ironing_speed",
+    "filament_is_support",
+    "filament_loading_speed",
+    "filament_loading_speed_start",
+    "filament_long_retractions_when_cut",
+    "filament_map",
+    "filament_max_volumetric_speed",
+    "filament_minimal_purge_on_wipe_tower",
+    "filament_multi_colour",
+    "filament_multitool_ramming",
+    "filament_multitool_ramming_flow",
+    "filament_multitool_ramming_volume",
+    "filament_notes",
+    "filament_printable",
+    "filament_ramming_parameters",
+    "filament_retract_before_wipe",
+    "filament_retract_lift_above",
+    "filament_retract_lift_below",
+    "filament_retract_lift_enforce",
+    "filament_retract_restart_extra",
+    "filament_retract_when_changing_layer",
+    "filament_retraction_distances_when_cut",
+    "filament_retraction_length",
+    "filament_retraction_minimum_travel",
+    "filament_retraction_speed",
+    "filament_self_index",
+    "filament_settings_id",
+    "filament_shrink",
+    "filament_shrinkage_compensation_z",
+    "filament_soluble",
+    "filament_stamping_distance",
+    "filament_stamping_loading_speed",
+    "filament_start_gcode",
+    "filament_toolchange_delay",
+    "filament_tower_interface_pre_extrusion_dist",
+    "filament_tower_interface_pre_extrusion_length",
+    "filament_tower_interface_print_temp",
+    "filament_tower_interface_purge_volume",
+    "filament_tower_ironing_area",
+    "filament_type",
+    "filament_unloading_speed",
+    "filament_unloading_speed_start",
+    "filament_vendor",
+    "filament_wipe",
+    "filament_wipe_distance",
+    "filament_z_hop",
+    "filament_z_hop_types",
+    "first_x_layer_fan_speed",
+    "full_fan_speed_layer",
+    "hot_plate_temp",
+    "hot_plate_temp_initial_layer",
+    "idle_temperature",
+    "internal_bridge_fan_speed",
+    "ironing_fan_speed",
+    "long_retractions_when_ec",
+    "nozzle_temperature",
+    "nozzle_temperature_initial_layer",
+    "nozzle_temperature_range_high",
+    "nozzle_temperature_range_low",
+    "overhang_fan_speed",
+    "overhang_fan_threshold",
+    "pellet_flow_coefficient",
+    "pressure_advance",
+    "reduce_fan_stop_start_freq",
+    "required_nozzle_HRC",
+    "retraction_distances_when_ec",
+    "slow_down_for_layer_cooling",
+    "slow_down_layer_time",
+    "slow_down_min_speed",
+    "supertack_plate_temp",
+    "supertack_plate_temp_initial_layer",
+    "support_material_interface_fan_speed",
+    "temperature_vitrification",
+    "textured_cool_plate_temp",
+    "textured_cool_plate_temp_initial_layer",
+    "textured_plate_temp",
+    "textured_plate_temp_initial_layer",
+    "volumetric_speed_coefficients"
+   ],
+   "nonList": [
+    "from",
+    "name",
+    "print_settings_id",
+    "printer_model",
+    "printer_settings_id",
+    "printer_technology",
+    "printer_variant",
+    "version"
+   ],
+   "filamentSettingsId": [
+    "Generic PETG"
+   ]
+  }
+ ]
+}

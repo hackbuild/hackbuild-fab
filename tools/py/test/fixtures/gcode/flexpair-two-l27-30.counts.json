@@ -1,0 +1,239 @@
+{
+ "source": "tools/py/test/fixtures/gcode/flexpair-two-l27-30.gcode",
+ "written_by": "tools/py/gcode/analyze.py parse_gcode and layer_counts; moves checked against an awk count of the fixture",
+ "layers": [
+  {
+   "index": 0,
+   "z": 6.73,
+   "height": 0.24,
+   "tools": {
+    "T3": {
+     "moves": 87,
+     "segments": 294,
+     "e_mm": 25.11312,
+     "roles": [
+      "Bridge",
+      "Inner wall",
+      "Outer wall",
+      "Prime tower"
+     ],
+     "widths_mm": [
+      0.42,
+      0.45,
+      0.5
+     ]
+    }
+   }
+  },
+  {
+   "index": 1,
+   "z": 6.97,
+   "height": 0.24,
+   "tools": {
+    "T0": {
+     "moves": 220,
+     "segments": 748,
+     "e_mm": 65.92959,
+     "roles": [
+      "Inner wall",
+      "Outer wall",
+      "Prime tower",
+      "Sparse infill"
+     ],
+     "widths_mm": [
+      0.42,
+      0.45,
+      0.5
+     ]
+    },
+    "T3": {
+     "moves": 59,
+     "segments": 256,
+     "e_mm": 8.0471,
+     "roles": [
+      "Bridge",
+      "Inner wall",
+      "Outer wall",
+      "Prime tower"
+     ],
+     "widths_mm": [
+      0.42,
+      0.45,
+      1.0
+     ]
+    }
+   }
+  },
+  {
+   "index": 2,
+   "z": 7.21,
+   "height": 0.24,
+   "tools": {
+    "T0": {
+     "moves": 238,
+     "segments": 935,
+     "e_mm": 56.5746,
+     "roles": [
+      "Inner wall",
+      "Internal solid infill",
+      "Outer wall",
+      "Prime tower",
+      "Sparse infill"
+     ],
+     "widths_mm": [
+      0.3915,
+      0.42,
+      0.45,
+      0.5,
+      1.0
+     ]
+    },
+    "T3": {
+     "moves": 215,
+     "segments": 416,
+     "e_mm": 25.08271,
+     "roles": [
+      "Inner wall",
+      "Internal solid infill",
+      "Outer wall",
+      "Prime tower"
+     ],
+     "widths_mm": [
+      0.42,
+      0.45,
+      0.5,
+      0.5211
+     ]
+    }
+   }
+  },
+  {
+   "index": 3,
+   "z": 7.45,
+   "height": 0.24,
+   "tools": {
+    "T0": {
+     "moves": 578,
+     "segments": 1126,
+     "e_mm": 190.58904,
+     "roles": [
+      "Inner wall",
+      "Internal Bridge",
+      "Outer wall",
+      "Prime tower"
+     ],
+     "widths_mm": [
+      0.4,
+      0.42,
+      0.45,
+      0.5
+     ]
+    },
+    "T2": {
+     "moves": 32,
+     "segments": 209,
+     "e_mm": 18.69892,
+     "roles": [
+      "Inner wall",
+      "Outer wall",
+      "Prime tower"
+     ],
+     "widths_mm": [
+      0.42,
+      0.45,
+      0.5,
+      1.0
+     ]
+    },
+    "T3": {
+     "moves": 1,
+     "segments": 1,
+     "e_mm": 3.0758,
+     "roles": [
+      "Prime tower"
+     ],
+     "widths_mm": [
+      1.0
+     ]
+    }
+   }
+  }
+ ],
+ "roles": [
+  "Inner wall",
+  "Outer wall",
+  "Sparse infill",
+  "Prime tower",
+  "Bridge",
+  "Internal solid infill",
+  "Internal Bridge"
+ ],
+ "tool_commands": 5,
+ "tool_changes": [
+  {
+   "line": 741,
+   "from": 3,
+   "to": 0,
+   "layer": 1
+  },
+  {
+   "line": 1563,
+   "from": 0,
+   "to": 3,
+   "layer": 2
+  },
+  {
+   "line": 1995,
+   "from": 3,
+   "to": 2,
+   "layer": 3
+  },
+  {
+   "line": 2134,
+   "from": 2,
+   "to": 0,
+   "layer": 3
+  }
+ ],
+ "footer": {
+  "filament_mm": [
+   3306.11,
+   334.94,
+   474.37,
+   61.32
+  ],
+  "filament_cm3": [
+   7.95,
+   0.81,
+   1.14,
+   0.15
+  ],
+  "filament_g": [
+   10.1,
+   1.0,
+   1.38,
+   0.18
+  ],
+  "total_filament_g": 12.66,
+  "filament_changes": 43,
+  "layers": 46,
+  "time_normal": "41m 13s",
+  "time_normal_s": 2473.0,
+  "time_first_layer": "14s",
+  "time_first_layer_s": 14.0
+ },
+ "header": {
+  "generator": "Flash Studio 1.7.14",
+  "total_layer_number": 46,
+  "max_z_height": 11.05
+ },
+ "config": {
+  "curr_bed_type": "Textured PEI Plate",
+  "enable_prime_tower": "1",
+  "initial_layer_print_height": "0.25",
+  "layer_height": "0.24",
+  "prime_tower_width": "35",
+  "prime_volume": "30"
+ },
+ "prelude_segments": 0
+}

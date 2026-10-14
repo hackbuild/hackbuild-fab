@@ -1,0 +1,235 @@
+{
+  "note": "One loss table keyed by (processA, processB, motion), per side (D-100, PROFILE.md 7.1). One row per motion with equal values until a coupon separates them.",
+  "loss": [
+    {
+      "processA": "fdm",
+      "processB": "fdm",
+      "motion": "static",
+      "machine": "ffc5p",
+      "basis": "perSide",
+      "holeUnderPerSide": 0.075,
+      "outerOverPerSide": 0.05,
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-04",
+        "source": "ogee16 source/fits.py:4-8 docstring; seed machines.ffc5p.processLoss 0.15/0.1 diametral, halved"
+      }
+    },
+    {
+      "processA": "fdm",
+      "processB": "fdm",
+      "motion": "static",
+      "material": "petg",
+      "layer": 0.24,
+      "basis": "perSide",
+      "holeUnderPerSide": 0.125,
+      "outerOverPerSide": 0.075,
+      "provenance": {
+        "tier": "inferred",
+        "method": "failure",
+        "date": "2026-10-04",
+        "source": "OGEE16 TIMES.md \"call it 0.40 lost\"; seed materials.petg.processLossAt024 0.25/0.15 diametral, halved"
+      }
+    },
+    {
+      "processA": "laser",
+      "processB": "fdm",
+      "motion": "static",
+      "machine": "ffc5p",
+      "basis": "perSide",
+      "holeUnderPerSide": 0,
+      "outerOverPerSide": 0.075,
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-04",
+        "source": "ogee16 source/params.scad:28 PRINT_OVER 0.15 across the part, halved (D-100)"
+      }
+    },
+    {
+      "processA": "fdm",
+      "processB": "fdm",
+      "motion": "slide",
+      "machine": "ffc5p",
+      "basis": "perSide",
+      "holeUnderPerSide": 0.075,
+      "outerOverPerSide": 0.05,
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-04",
+        "source": "ogee16 source/fits.py:4-8 docstring; seed machines.ffc5p.processLoss 0.15/0.1 diametral, halved"
+      }
+    },
+    {
+      "processA": "fdm",
+      "processB": "fdm",
+      "motion": "slide",
+      "material": "petg",
+      "layer": 0.24,
+      "basis": "perSide",
+      "holeUnderPerSide": 0.125,
+      "outerOverPerSide": 0.075,
+      "provenance": {
+        "tier": "inferred",
+        "method": "failure",
+        "date": "2026-10-04",
+        "source": "OGEE16 TIMES.md \"call it 0.40 lost\"; seed materials.petg.processLossAt024 0.25/0.15 diametral, halved"
+      }
+    },
+    {
+      "processA": "laser",
+      "processB": "fdm",
+      "motion": "slide",
+      "machine": "ffc5p",
+      "basis": "perSide",
+      "holeUnderPerSide": 0,
+      "outerOverPerSide": 0.075,
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-04",
+        "source": "ogee16 source/params.scad:28 PRINT_OVER 0.15 across the part, halved (D-100)"
+      }
+    },
+    {
+      "processA": "fdm",
+      "processB": "fdm",
+      "motion": "rotate",
+      "machine": "ffc5p",
+      "basis": "perSide",
+      "holeUnderPerSide": 0.075,
+      "outerOverPerSide": 0.05,
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-04",
+        "source": "ogee16 source/fits.py:4-8 docstring; seed machines.ffc5p.processLoss 0.15/0.1 diametral, halved"
+      }
+    },
+    {
+      "processA": "fdm",
+      "processB": "fdm",
+      "motion": "rotate",
+      "material": "petg",
+      "layer": 0.24,
+      "basis": "perSide",
+      "holeUnderPerSide": 0.125,
+      "outerOverPerSide": 0.075,
+      "provenance": {
+        "tier": "inferred",
+        "method": "failure",
+        "date": "2026-10-04",
+        "source": "OGEE16 TIMES.md \"call it 0.40 lost\"; seed materials.petg.processLossAt024 0.25/0.15 diametral, halved"
+      }
+    },
+    {
+      "processA": "laser",
+      "processB": "fdm",
+      "motion": "rotate",
+      "machine": "ffc5p",
+      "basis": "perSide",
+      "holeUnderPerSide": 0,
+      "outerOverPerSide": 0.075,
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-04",
+        "source": "ogee16 source/params.scad:28 PRINT_OVER 0.15 across the part, halved (D-100)"
+      }
+    },
+    {
+      "processA": "fdm",
+      "processB": "fdm",
+      "motion": "snap",
+      "machine": "ffc5p",
+      "basis": "perSide",
+      "holeUnderPerSide": 0.075,
+      "outerOverPerSide": 0.05,
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-04",
+        "source": "ogee16 source/fits.py:4-8 docstring; seed machines.ffc5p.processLoss 0.15/0.1 diametral, halved"
+      }
+    },
+    {
+      "processA": "fdm",
+      "processB": "fdm",
+      "motion": "snap",
+      "material": "petg",
+      "layer": 0.24,
+      "basis": "perSide",
+      "holeUnderPerSide": 0.125,
+      "outerOverPerSide": 0.075,
+      "provenance": {
+        "tier": "inferred",
+        "method": "failure",
+        "date": "2026-10-04",
+        "source": "OGEE16 TIMES.md \"call it 0.40 lost\"; seed materials.petg.processLossAt024 0.25/0.15 diametral, halved"
+      }
+    },
+    {
+      "processA": "laser",
+      "processB": "fdm",
+      "motion": "snap",
+      "machine": "ffc5p",
+      "basis": "perSide",
+      "holeUnderPerSide": 0,
+      "outerOverPerSide": 0.075,
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-04",
+        "source": "ogee16 source/params.scad:28 PRINT_OVER 0.15 across the part, halved (D-100)"
+      }
+    },
+    {
+      "processA": "fdm",
+      "processB": "fdm",
+      "motion": "press",
+      "machine": "ffc5p",
+      "basis": "perSide",
+      "holeUnderPerSide": 0.075,
+      "outerOverPerSide": 0.05,
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-04",
+        "source": "ogee16 source/fits.py:4-8 docstring; seed machines.ffc5p.processLoss 0.15/0.1 diametral, halved"
+      }
+    },
+    {
+      "processA": "fdm",
+      "processB": "fdm",
+      "motion": "press",
+      "material": "petg",
+      "layer": 0.24,
+      "basis": "perSide",
+      "holeUnderPerSide": 0.125,
+      "outerOverPerSide": 0.075,
+      "provenance": {
+        "tier": "inferred",
+        "method": "failure",
+        "date": "2026-10-04",
+        "source": "OGEE16 TIMES.md \"call it 0.40 lost\"; seed materials.petg.processLossAt024 0.25/0.15 diametral, halved"
+      }
+    },
+    {
+      "processA": "laser",
+      "processB": "fdm",
+      "motion": "press",
+      "machine": "ffc5p",
+      "basis": "perSide",
+      "holeUnderPerSide": 0,
+      "outerOverPerSide": 0.075,
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-04",
+        "source": "ogee16 source/params.scad:28 PRINT_OVER 0.15 across the part, halved (D-100)"
+      }
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "name": "@hackbuild/3mf",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "author": "Moheeb Zara <hackbuildvideo@gmail.com>",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./seed/materials.json": "./seed/materials.json",
+    "./data/filament_template.json": "./data/filament_template.json"
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "pretest": "tsc -b",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@hackbuild/spec": "0.1.0",
+    "jszip": "3.10.1"
+  },
+  "devDependencies": {
+    "@hackbuild/mesh": "0.0.0",
+    "@hackbuild/profile": "0.0.0"
+  }
+}

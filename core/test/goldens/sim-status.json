@@ -1,0 +1,11 @@
+{
+  "source": "Status lines of the sim commands' text mirror, written by hand from outside the code under test. Each verdict comes from the scene's oracle or record: cotter-hook every hook INSERTS and cotter-hook-sharp TRAPPED (packages/sim/test/goldens/cotter-insert-oracle.json, hook_fit.py), slug measured 91 of 128 against the declared 126 of 128 (packages/sim/records/slug-trials.json exitRow), davit-mini-15in 0 real fails and 0 left-right contacts (packages/sim/records/davit-sweep.json), slug-vend1 and part.probe declare nothing. Each command makes one comparison, measured against declared, and counts it once under its verdict. The target is empty while --scene stands in for a build.",
+  "cases": [
+    { "argv": ["sim.sweep", "--scene", "cotter-hook"], "exit": 0, "status": "PASS sim.sweep    0 fail  0 warn  1 pass  0 skip" },
+    { "argv": ["sim.sweep", "--scene", "cotter-hook-sharp"], "exit": 1, "status": "FAIL sim.sweep    1 fail  0 warn  0 pass  0 skip" },
+    { "argv": ["sim.sweep", "--scene", "davit-mini-15in"], "exit": 0, "status": "PASS sim.sweep    0 fail  0 warn  1 pass  0 skip" },
+    { "argv": ["sim.run", "--scene", "slug"], "exit": 1, "status": "FAIL sim.run    1 fail  0 warn  0 pass  0 skip" },
+    { "argv": ["sim.run", "--scene", "slug-vend1", "--trials", "1"], "exit": 0, "status": "SKIP sim.run    0 fail  0 warn  0 pass  1 skip" },
+    { "argv": ["part.probe", "--scene", "davit-std-1in", "--a", "crank", "--b", "upper", "--pose", "HANG"], "exit": 0, "status": "SKIP part.probe    0 fail  0 warn  0 pass  1 skip" }
+  ]
+}

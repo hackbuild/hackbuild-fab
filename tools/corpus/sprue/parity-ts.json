@@ -1,0 +1,282 @@
+{
+  "card": "M00-T12",
+  "writer": "packages/3mf (TypeScript)",
+  "machinePreset": "ffc5p/ffc5p_20260819",
+  "tolerances": {
+    "volumeMm3": 0.001,
+    "bboxMm": 0.000001,
+    "triangles": "equal"
+  },
+  "qualifier": "computed; key counts counted from the files",
+  "keySet": "SPRUE writes 21 per-filament keys plus version and two preset names, 24 in all; the writer writes the 127 gold per-filament keys. Key-set parity with SPRUE is not a target (D-028).",
+  "plates": [
+    {
+      "plate": "plates/sprue_coins.3mf",
+      "sha256": "335b111cd19f20fd620c7f38d7845c102590fd99225f0925aabffe6339cd4ada",
+      "objects": 1,
+      "instances": 12,
+      "legacy": {
+        "projectKeys": 24,
+        "perFilamentKeys": 21,
+        "listLength": 2,
+        "inGoldTemplate": 21
+      },
+      "emitted": {
+        "projectKeys": 136,
+        "perFilamentKeys": 127,
+        "listLength": 2,
+        "currBedType": "Textured PEI Plate",
+        "artifactHash": "077a2a7e87740e5dea89e14a992760bee6ced31c154cbc64105c32983135d607"
+      }
+    },
+    {
+      "plate": "plates/sprue_mix.3mf",
+      "sha256": "4f785c15fb073527246b9ce8851c6d1f4cb8f06a87cd8c0443a6791e43c7e0bf",
+      "objects": 2,
+      "instances": 26,
+      "legacy": {
+        "projectKeys": 24,
+        "perFilamentKeys": 21,
+        "listLength": 2,
+        "inGoldTemplate": 21
+      },
+      "emitted": {
+        "projectKeys": 136,
+        "perFilamentKeys": 127,
+        "listLength": 2,
+        "currBedType": "Textured PEI Plate",
+        "artifactHash": "b7da4d537a11bb7651dd00c1439f03c06a1a4d586e30c11c2fe0a8dfb70204b0"
+      }
+    },
+    {
+      "plate": "plates/sprue_picks.3mf",
+      "sha256": "853086405c4856ced3d958a1c5fe3bd1e1505dfc7ee2662c36d68272dc9c7193",
+      "objects": 1,
+      "instances": 40,
+      "legacy": {
+        "projectKeys": 24,
+        "perFilamentKeys": 21,
+        "listLength": 2,
+        "inGoldTemplate": 21
+      },
+      "emitted": {
+        "projectKeys": 136,
+        "perFilamentKeys": 127,
+        "listLength": 2,
+        "currBedType": "Textured PEI Plate",
+        "artifactHash": "63e71cc6b33897a23dcb578524d06fc60b28fbb2f3ae03d2952f146f453cf846"
+      }
+    },
+    {
+      "plate": "plates/sprue_picks_phx_backonly.3mf",
+      "sha256": "ba1633d008cef13c0306589bfdf1734b826444134606be3780fdac1fed4bfbae",
+      "objects": 1,
+      "instances": 40,
+      "legacy": {
+        "projectKeys": 24,
+        "perFilamentKeys": 21,
+        "listLength": 2,
+        "inGoldTemplate": 21
+      },
+      "emitted": {
+        "projectKeys": 136,
+        "perFilamentKeys": 127,
+        "listLength": 2,
+        "currBedType": "Textured PEI Plate",
+        "artifactHash": "624e94cbfdf0b7caf017cf58577ac954ec8c4380aa2edc18db3e00bc3ec0de72"
+      }
+    }
+  ],
+  "validator": [
+    {
+      "artifact": "sprue_coins.3mf",
+      "status": 0,
+      "fails": [],
+      "sourceFails": []
+    },
+    {
+      "artifact": "sprue_mix.3mf",
+      "status": 0,
+      "fails": [],
+      "sourceFails": []
+    },
+    {
+      "artifact": "sprue_picks.3mf",
+      "status": 0,
+      "fails": [],
+      "sourceFails": []
+    },
+    {
+      "artifact": "sprue_picks_phx_backonly.3mf",
+      "status": 1,
+      "fails": [
+        "CHK-PRT-01[topology] triangles 6244: not watertight after vertex merge"
+      ],
+      "sourceFails": [
+        "CHK-PRT-01[topology] triangles 6244: not watertight after vertex merge"
+      ]
+    },
+    {
+      "artifact": "sprue_parts.3mf",
+      "status": 0,
+      "fails": [],
+      "sourceFails": []
+    }
+  ],
+  "parts": [
+    {
+      "source": "plates/sprue_coins.3mf",
+      "object": "coin",
+      "part": "coin_white",
+      "slot": 1,
+      "tris": 12886,
+      "volumeMm3": 2066.723495,
+      "dVolumeMm3": 0,
+      "dBboxMm": 0,
+      "dTris": 0
+    },
+    {
+      "source": "plates/sprue_coins.3mf",
+      "object": "coin",
+      "part": "coin_black",
+      "slot": 2,
+      "tris": 9776,
+      "volumeMm3": 362.811278,
+      "dVolumeMm3": 0,
+      "dBboxMm": 0,
+      "dTris": 0
+    },
+    {
+      "source": "plates/sprue_mix.3mf",
+      "object": "coin",
+      "part": "coin_white",
+      "slot": 1,
+      "tris": 12886,
+      "volumeMm3": 2066.723495,
+      "dVolumeMm3": 0,
+      "dBboxMm": 0,
+      "dTris": 0
+    },
+    {
+      "source": "plates/sprue_mix.3mf",
+      "object": "coin",
+      "part": "coin_black",
+      "slot": 2,
+      "tris": 9776,
+      "volumeMm3": 362.811278,
+      "dVolumeMm3": 0,
+      "dBboxMm": 0,
+      "dTris": 0
+    },
+    {
+      "source": "plates/sprue_mix.3mf",
+      "object": "pick",
+      "part": "pick_white",
+      "slot": 1,
+      "tris": 3310,
+      "volumeMm3": 658.277359,
+      "dVolumeMm3": 0,
+      "dBboxMm": 0,
+      "dTris": 0
+    },
+    {
+      "source": "plates/sprue_mix.3mf",
+      "object": "pick",
+      "part": "pick_black",
+      "slot": 2,
+      "tris": 1440,
+      "volumeMm3": 53.025771,
+      "dVolumeMm3": 0,
+      "dBboxMm": 0,
+      "dTris": 0
+    },
+    {
+      "source": "plates/sprue_picks.3mf",
+      "object": "pick",
+      "part": "pick_white",
+      "slot": 1,
+      "tris": 3310,
+      "volumeMm3": 658.277359,
+      "dVolumeMm3": 0,
+      "dBboxMm": 0,
+      "dTris": 0
+    },
+    {
+      "source": "plates/sprue_picks.3mf",
+      "object": "pick",
+      "part": "pick_black",
+      "slot": 2,
+      "tris": 1440,
+      "volumeMm3": 53.025771,
+      "dVolumeMm3": 0,
+      "dBboxMm": 0,
+      "dTris": 0
+    },
+    {
+      "source": "plates/sprue_picks_phx_backonly.3mf",
+      "object": "pick",
+      "part": "pick_white",
+      "slot": 1,
+      "tris": 6244,
+      "volumeMm3": 658.263985,
+      "dVolumeMm3": 0,
+      "dBboxMm": 0,
+      "dTris": 0
+    },
+    {
+      "source": "plates/sprue_picks_phx_backonly.3mf",
+      "object": "pick",
+      "part": "pick_black",
+      "slot": 2,
+      "tris": 2268,
+      "volumeMm3": 53.02977,
+      "dVolumeMm3": 0,
+      "dBboxMm": 0,
+      "dTris": 0
+    },
+    {
+      "source": "parts/coin_white.stl",
+      "object": "coin",
+      "part": "coin_white",
+      "slot": 1,
+      "tris": 12886,
+      "volumeMm3": 2066.723665,
+      "dVolumeMm3": 1.327e-8,
+      "dBboxMm": 3.257e-11,
+      "dTris": 0
+    },
+    {
+      "source": "parts/coin_black.stl",
+      "object": "coin",
+      "part": "coin_black",
+      "slot": 2,
+      "tris": 9776,
+      "volumeMm3": 362.811141,
+      "dVolumeMm3": 2.009e-8,
+      "dBboxMm": 3.984e-11,
+      "dTris": 0
+    },
+    {
+      "source": "parts/pick_white.stl",
+      "object": "pick",
+      "part": "pick_white",
+      "slot": 1,
+      "tris": 3310,
+      "volumeMm3": 658.277357,
+      "dVolumeMm3": 4.494e-9,
+      "dBboxMm": 3.027e-11,
+      "dTris": 0
+    },
+    {
+      "source": "parts/pick_black.stl",
+      "object": "pick",
+      "part": "pick_black",
+      "slot": 2,
+      "tris": 1440,
+      "volumeMm3": 53.025791,
+      "dVolumeMm3": 3.126e-9,
+      "dBboxMm": 4.092e-11,
+      "dTris": 0
+    }
+  ]
+}
