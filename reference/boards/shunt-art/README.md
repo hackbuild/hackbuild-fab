@@ -27,8 +27,13 @@ covers: [CHK-BRD-01, CHK-BRD-02, CHK-BRD-03, CHK-BRD-05, CHK-BRD-09, CHK-BRD-19,
   board.json `defects` is a declared bridge with its reason. Its 24 vias
   carry no net and stay out of the record (the fab set holds them).
 - G7, the inverted electrical gate, is two expect sets in chase.ts
-  (D-074): CHK-BRD-21 expects the five shorts, CHK-BRD-09 the five
-  floating nets.
+  (D-074): CHK-BRD-21 expects the five shorts, CHK-BRD-09 the five nets
+  with fewer than two pads (D-254): ENC, PROBE and VBUS reach no pad (SW1,
+  J2 and J1 are stand-ins with no copper), MAGIC reaches U1.1 alone and
+  RF_OUT Y1.1 alone. The legacy floating list (gen_board.py lines 705 to
+  709: GND?, MAGIC, MATRIX, PROBE, VIBES) stays as shipped in board.json
+  `defects` and in designs/shunt/legacy; it is a hand-named set that no
+  registered check derives, and its gate counted 5, as this set does.
 
 ## What is in this folder
 
@@ -45,6 +50,16 @@ covers: [CHK-BRD-01, CHK-BRD-02, CHK-BRD-03, CHK-BRD-05, CHK-BRD-09, CHK-BRD-19,
 ## What is verified, and what is not
 
 ### Verified on this machine
+
+- 2026-10-14 (D-254 call): chase.ts declares the CHK-BRD-09 set ENC,
+  MAGIC, PROBE, RF_OUT, VBUS, was GND?, MAGIC, MATRIX, PROBE, VIBES.
+  `hbf check.run reference/boards/shunt-art --only CHK-BRD-09,CHK-BRD-21`
+  exits 0: both sets exact, missing and extra empty (computed). `hbf
+  parity --accept` re-recorded build.json (defHash, buildHash) and
+  report.json (the CHK-BRD-09 finding) at build 974e61..8d;
+  artifacts.json and reparse.json are byte equal and board.json did not
+  change (computed). Accepted under owner delegation; a person has not
+  accepted them (D-152).
 
 - 2026-10-14 (CI parity on Linux): the direct library's region writer,
   write_sources and reparse.py now put geometry in one form on every

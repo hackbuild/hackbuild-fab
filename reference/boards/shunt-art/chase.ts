@@ -22,10 +22,17 @@ export const chase = defineChase({
   assertions: [],
   // G7, the inverted electrical gate (D-074, CHECKS.md section 10): the five
   // deliberate shorts of board.json defects, each a declared bridge in the
-  // record, and the five floating nets gen_board.py lines 705 to 709 name.
-  // A pair id sorts its two nets (N8V|P8V); a net shorted to itself is the net.
+  // record. A pair id sorts its two nets (N8V|P8V); a net shorted to itself
+  // is the net.
+  // D-254: the CHK-BRD-09 set is what that check measures on this record,
+  // the nets with fewer than two pads. ENC, PROBE and VBUS reach no pad (SW1,
+  // J2 and J1 are stand-ins with no copper); MAGIC reaches U1.1 alone and
+  // RF_OUT Y1.1 alone. The legacy floating list of gen_board.py lines 705
+  // to 709 (GND?, MAGIC, MATRIX, PROBE, VIBES, kept in board.json defects)
+  // is a hand-named set no registered check derives; its gate counted 5,
+  // and this set is 5.
   expect: [
     { check: "CHK-BRD-21", target: "shunt-art", verdict: "fail", set: ["ANALOG", "BOOT", "ENC", "N8V|P8V", "NANO"] },
-    { check: "CHK-BRD-09", target: "shunt-art", verdict: "fail", set: ["GND?", "MAGIC", "MATRIX", "PROBE", "VIBES"] },
+    { check: "CHK-BRD-09", target: "shunt-art", verdict: "fail", set: ["ENC", "MAGIC", "PROBE", "RF_OUT", "VBUS"] },
   ],
 });
