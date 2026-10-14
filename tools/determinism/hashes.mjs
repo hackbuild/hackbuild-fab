@@ -200,9 +200,15 @@ export async function buildCorpusInput(file, epoch) {
     ...(inp.designer === undefined ? {} : { designer: inp.designer }),
     slicer: preset.slicer, nozzleMm: preset.nozzle, template: DEFAULT_TEMPLATE, materials: DEFAULT_MATERIALS,
     filaments: inp.filaments,
+    ...(inp.adjacency === undefined ? {} : { adjacency: inp.adjacency }),
     objects: inp.objects.map((o) => ({
       name: o.name, position: o.position,
-      bodies: o.bodies.map((b) => ({ name: b.name, slot: b.slot, mesh: { positions: b.positions, triangles: b.triangles } })),
+      bodies: o.bodies.map((b) => ({
+        name: b.name, slot: b.slot, mesh: { positions: b.positions, triangles: b.triangles },
+        ...(b.body === undefined ? {} : { body: b.body }),
+        ...(b.role === undefined ? {} : { role: b.role }),
+        ...(b.widthMm === undefined ? {} : { widthMm: b.widthMm }),
+      })),
     })),
   }));
   if (!built.ok) throw new Error(`${file}: export completeness failed ${JSON.stringify(built.completeness)}`);
