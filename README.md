@@ -11,11 +11,26 @@ Works from a file. No account. Your exports are yours.
 ## Status
 
 Work in progress, no release. Milestones M-1 to M09 are built and none is
-complete: CI has never run, and no part this code exported has been
-printed. The `hbf` command line runs locally. The MCP and HTTP servers
-come at M12 and are not built. Browser benches bake to single files, but
-the flex-pair bench cannot build a part in the page yet (D-264). The
-milestone table is `docs/plan/MILESTONES.md`.
+complete, and no part this code exported has been printed. The `hbf`
+command line runs locally, and `hbf mcp` serves its commands over MCP on
+stdio (`docs/how-to/connect-an-mcp-host.md`). The HTTP server comes at
+M12 and is not built. Browser benches bake to single files. The flex-pair bench
+builds, checks and exports 3mf, stl and card in the page from file://,
+and its 3mf bytes equal the `hbf` writer's for the same values (D-264);
+its coupon export has no writer yet. The milestone table is
+`docs/plan/MILESTONES.md`.
+
+CI first ran as run 38499440880 on 08fc356, 2026-10-14 02:08 UTC. 10 jobs
+failed and 2 were skipped (measured): unit, exit-a, parity, cold,
+corpus, exit-m06-m08, browser and determinism on x64, arm64 and macos.
+Known red: the D-251 rows for `reference/electrical/pip-buried-route` in
+unit, exit-a, parity and cold; the M06 AILERON row in exit-m06-m08; the
+M09 flex-pair coupon export in browser. New red: no uv in the unit,
+parity and cold jobs; no SOURCE_DATE_EPOCH in unit; the corpus input
+`flex-pair-two.json` buildHash moved; the determinism corpus input drops
+adjacency; the SLUG trials end differently on x64 linux than on arm64
+macOS. Fixes for the uv, epoch and corpus input rows are committed after
+08fc356 and have not run on a hosted runner.
 
 ## What you can do today
 
@@ -71,6 +86,10 @@ published.
   clone from GitHub.
 - 2026-10-13: `npx --no-install hbf parity reference/keys/flex-pair` on
   that copy, five of five goldens equal.
+- 2026-10-13: the flex-pair bake opened from file:// with its own page
+  build: `tools/smoke/page-build.spec.ts` passes, and the default and
+  preset two 3mf bytes equal the `hbf` writer's (cmp). The bench smoke
+  "edits, exports and round trip on flex-pair" fails on the coupon export.
 
 ### Measured on a printed body
 
@@ -82,11 +101,12 @@ published.
 - known red, recorded under D-251: `reference/electrical/pip-buried-route`
   fails `hbf parity` (build, report and query-solve moved), the
   determinism-queries test (query-solve hash), and the core tests
-  message-numbers and project-graph. The first CI parity run fails on it.
+  message-numbers and project-graph. CI run 38499440880 parity fails on it.
 
 ### Not verified by anything
 
-- CI has never run on this repository.
+- A green CI run. Run 38499440880 is the only one, red as listed under
+  Status.
 - `npm ci` from a clone of the published repository.
 - Any print of an export from this code.
 
