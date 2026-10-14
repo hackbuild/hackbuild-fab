@@ -482,7 +482,7 @@ M06-T03 ports it at parity the split is typed 24, stub 0; the M06 card and
 MILESTONES.md carry 23 and 1 until their owners update them (section 10).
 The SLUG seed provenance "126/128 vends across 8 trials" is declared and
 unverified (D-232): the original runner was never found, and the seeded runner
-rebuilt at M02-T08 measures 91 of 128 over 8 trials (computed).
+rebuilt at M02-T08 measures 90 of 128 over 8 trials (computed).
 
 Legacy readouts at TUMBLER defaults (Delrin 3 mm, t 3.0, k 0.22, c 0.15, E
 3100, declared bench values) are in milestones/M06-canons.md M06-T02:
@@ -1166,7 +1166,7 @@ and gap counts into counts.json.
 | pin-free-balance-beam | joints/balance-beam | STIPPLE R17 (recovered 2026-10-04, `x/downloads/dl-ogee-stipple-mech/stipple/stipple.html`) | orphan | covered |
 | slew-ring-joint | joints/slew-ring | PINTLE R6 (`orig/pintle/`) | covered | covered |
 | aileron-differential | joints/aileron-differential | STANCHION (`orig/stanchion/`, `solveHorns`) | orphan | covered once solveHorns is ported; stub only if the port fails |
-| capsule-pocket-rotor | sheet/capsule-rotor-cage; machines/slug-drive at M07 and M10 | SLUG (harvested) | covered (trial runner missing) | covered; trial count declared 126 of 128, unverified, measured 91 of 128 (computed, D-232) |
+| capsule-pocket-rotor | sheet/capsule-rotor-cage; machines/slug-drive at M07 and M10 | SLUG (harvested) | covered (trial runner missing) | covered; trial count declared 126 of 128, unverified, measured 90 of 128 (computed, D-232) |
 | snap-tongue-relief, snap-finger-collar, snap-c-socket-lip, snap-holster-tab, snap-press-plug-ribs | none | PLINTH, LOCKET R2, SLATE | absent | gap: candidate until a snap-kind reference |
 | counterbalance-band | none | DERRICK | absent | gap: candidate, milestone unassigned |
 | integer-metering-ratio | none | SLUG | absent | gap: candidate, M07 |

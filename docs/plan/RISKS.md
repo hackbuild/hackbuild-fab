@@ -196,7 +196,7 @@ with the measured row cited.
 
 | source | state | handling | card |
 |---|---|---|---|
-| SLUG trial runner | `slug.html` uses unseeded Math.random; the 126 of 128 runner was never harvested; Downloads searched 2026-10-04, absent | rebuilt seeded at M02-T08: 126 of 128 stays declared, unverified (D-232); the runner measures 91 of 128 over seeds 1 to 8 (computed) | M02-T08 (D-136, D-232) |
+| SLUG trial runner | `slug.html` uses unseeded Math.random; the 126 of 128 runner was never harvested; Downloads searched 2026-10-04, absent | rebuilt seeded at M02-T08: 126 of 128 stays declared, unverified (D-232); the runner measures 90 of 128 over seeds 1 to 8 (computed) | M02-T08 (D-136, D-232) |
 | SPINDLE reparse | scripts not found in any harvest | rewrite on gerbonara and pygerber, 55 of 55 pads | M08-T07 (D-149) |
 | TANG R6 | recovered 2026-10-04 (four revisions; the handoff swings belong to r6_0) | port from r6_4 design files | M06-T07, M06-T09 |
 | KEYWAY inputs | logo SVG and three Plex Mono woff2 read from `/mnt/skills`, not in the bench folder; 45, 60, 59, 85, 85, 95, 57 reproduced once supplied (syn `plan-deltas.md` line 973) | ship the inputs in `reference/` | M05-T13 |

@@ -1862,13 +1862,14 @@ Close notes, 2026-10-10 (finish pass):
 
 | exit number | qualifier | card | command |
 |---|---|---|---|
-| SPINDLE R1 reparse: 55 of 55 pads on F_Cu; 57 of 57 bottom rings; 57 of 57 drills within 1 um, worst 0.0000 mm; 35 of 35 non-GND holes isolated; 22 of 22 GND holes bonded. Run: every line holds except isolation 33 of 35 and bonded 18 of 22, the 5V to GND short (D-249, C-21); exit 1 | computed | T07 | `uv run --project tools/py tools/py/board/reparse.py .hbf/out/spindle-r1 --record .hbf/out/spindle-r1/record.json --legacy <zip>` |
+| SPINDLE R1 reparse: 55 of 55 pads on F_Cu; 57 of 57 bottom rings; 57 of 57 drills within 1 um, worst 0.0000 mm; 35 of 35 non-GND holes isolated; 22 of 22 GND holes bonded. Run: every line holds except isolation 33 of 35 and bonded 18 of 22, the 5V to GND short (D-249, C-21); exit 1. R1 stays the expect-fail fixture and spindle-r2 drops the four GND vias: isolated 35 of 35, bonded 18 of 18, drills 53 of 53 (D-276) | computed | T07 | `uv run --project tools/py tools/py/board/reparse.py .hbf/out/spindle-r1 --record .hbf/out/spindle-r1/record.json --legacy <zip>` |
 | SPINDLE R1 vector compare: every layer symmetric difference at most 1e-3 mm2 (scratch: at most 0.000087) | computed | T07 | same |
 | SPINDLE R1 raster: 0 px outside the 0.05 mm edge band on F_Cu and B_Cu | computed | T07 | same |
-| SPINDLE R1 DRC: 19 nets, 70 pads, 57 holes, tightest 0.32 mm against 0.25 | computed | T06 | `npx --no-install hbf part.build reference/boards/spindle-r1 --json` |
+| SPINDLE R1 DRC: 19 nets, 70 pads, 57 holes, tightest 0.32 mm against 0.25. Run (D-276): part.build exits 1 on exactly CHK-BRD-01, CHK-BRD-06 and CHK-BRD-09; CHK-BRD-21 passes on its expect set 5V\|GND | computed | T06, T12 | `npx --no-install hbf part.build reference/boards/spindle-r1 --json` |
+| SPINDLE R2 (D-276): CHK-BRD-01 and CHK-BRD-21 pass, 19 nets one island each; DRC 19 nets, 66 pads, 53 holes, tightest 0.32 mm; part.build exits 1 on CHK-BRD-06 and CHK-BRD-09 only | computed | T07, T12 | `npx --no-install hbf check.run reference/boards/spindle-r2 --only CHK-BRD-01,CHK-BRD-21 --json` |
 | kicadts readback: 55 of 55 pads, 15 of 15 vias, 19 nets one island each, on the new and the legacy file (the legacy file needs record.json beside it) | computed | T08 | `npx --no-install hbf check.run --artifact <kicad_pcb> --only CHK-BRD-22 --json` (was CHK-BRD-09, which skips on an artifact; the readback id is CHK-BRD-22, integration 2026-10-11) |
 | SHUNT lead landings: 55 at 0.000 mm, 4 within the declared allowance, 3 declared stand-ins | computed | T09 | `npx --no-install hbf check.run reference/boards/shunt-art --only CHK-BRD-19 --json` (was CHK-BRD-08, pin completeness; the landing id is CHK-BRD-19, integration 2026-10-11) |
-| SHUNT expect sets: 5 shorts, 5 floating nets, exact. Run: shorts exact (CHK-BRD-21); floating fails, CHK-BRD-09 measures ENC, MAGIC, PROBE, RF_OUT, VBUS against the declared GND?, MAGIC, MATRIX, PROBE, VIBES (M08-T12 notes) | computed | T09, T12 | `npx --no-install hbf check.run reference/boards/shunt-art --only CHK-BRD-09,CHK-BRD-21 --json` |
+| SHUNT expect sets: 5 shorts, 5 floating nets, exact. Run: both exact; CHK-BRD-09 declares its measured ENC, MAGIC, PROBE, RF_OUT, VBUS in place of the legacy GND?, MAGIC, MATRIX, PROBE, VIBES (D-277) | computed | T09, T12 | `npx --no-install hbf check.run reference/boards/shunt-art --only CHK-BRD-09,CHK-BRD-21 --json` |
 | SHUNT fab parity: drill worst 0.0000 mm over 83; silk 0 missing, 0 unexpected on both faces | computed | T09 | reparse script on shunt-art |
 | inferred part on export.run returns E_PROVENANCE, exit 4, before the TTY gate. Run on spindle-r1 gerbers: exit 4, 28 errors, no prompt; lug-hat not run (T10, D-250) | computed | T03, T10, T14 | `npx --no-install hbf export.run reference/boards/spindle-r1 --kind gerbers < /dev/null` |
 | LUG on the tscircuit backend: 37 parts, 141 SMD pads, 67 plated pads, 15 named nets equal to lug-netlist.txt, 0 error elements | counted from shipped files; rebuilt result recorded; not run at the M08 close: T10 and T11 wait on D-250 (Node 24) | T10 | `npx --no-install hbf part.build reference/boards/lug-hat --json` |
@@ -1897,9 +1898,9 @@ Close notes, 2026-10-10 (finish pass):
 | ESP32-S3 shelf row | closed 2026-10-09: datasheet v2.2 Table 3-1 p. 32 and Table 5-4 p. 65 read; the MCU row entered at vendor | S3 module rows (SuperMini, S3-Zero, XIAO, QT Py) wait for a pad table; their outlines stay inferred in the BUCK record |
 | easyeda2kicad | AGPL-3.0 on PyPI | excluded (D-043); LCSC lookups go through distributor pages or KiCad libraries |
 | SuperMini dual-supply jumper | D-088 owner | normally open |
-| SPINDLE R1 5V to GND short on B.Cu | D-249 owner (correction) | the reference keeps the shipped design and fails CHK-BRD-01 and CHK-BRD-21 |
+| SPINDLE R1 5V to GND short on B.Cu | D-249, answered by D-276 | R1 keeps the shipped design with a CHK-BRD-21 expect set; spindle-r2 drops the four GND vias |
 | Node 24 for the tscircuit family | D-250 owner | Node 24.11 as the dev floor; until answered nothing installs and T10 and T11 do not run |
-| SHUNT floating nets expect set | D-254 owner (M08-T12 notes) | the legacy declared set stays; CHK-BRD-09's measured set differs, the expect fails |
+| SHUNT floating nets expect set | D-254, answered by D-277 | the expect set is CHK-BRD-09's measured set; the legacy list stays in board.json |
 | npm scope and publish | D-037 owner | nothing publishes at M08 |
 
 ## Hands off to

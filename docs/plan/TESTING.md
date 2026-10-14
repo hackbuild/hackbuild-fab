@@ -169,7 +169,7 @@ run looked fine and six trials exposed arching at 5.5 of 13 vends (measured,
 `<x>/plan-to-refine/handoff/hbf/knowledge/kernels/verification.md`). Sim
 tests run N seeded trials by default (M02). SLUG's 126 of 128 across 8
 trials is declared, unverified (D-232): the rebuilt seeded runner measures
-91 of 128 over seeds 1 to 8 (computed), and a later claim of 126 needs the
+90 of 128 over seeds 1 to 8 (computed), and a later claim of 126 needs the
 original runner or the owner's protocol (D-136, D-232).
 
 ### 2.4 Liveness

@@ -582,12 +582,15 @@ wall times measured, counts computed):
 - Parity: the legacy step and relax, extracted from the page bytes, and the port agree bit for
   bit (worst difference 0 mm) on every capsule through 2400 steps for seeds 1 and 7, and count
   the same deck crossings at the same steps.
-- 8 trials, seeds 1 to 8: unverified, measured 91 of 128. Vend 1 delivers one capsule in every
+- 8 trials, seeds 1 to 8: unverified, measured 90 of 128. Vend 1 delivers one capsule in every
   trial. Every miss is a 0-delivery vend from vend 12 or 13 to vend 16; at the end 6 or 7 of
   the 18 capsules are still above the deck, 5 or 6 of them resting on the hood. No capsule
   crosses before the first vend.
-- 30 trials, seeds 1 to 30: 335 of 480; 11 or 12 passes per trial.
-- 58 mm mouth, seeds 1 to 6, 13 vends: mean 12.0 passes against 11.33 for the 156 mm mouth
+- 30 trials, seeds 1 to 30: 332 of 480; 11 or 12 passes per trial.
+- Re-recorded 2026-10-14 (D-275): the solver takes its trig from src/trig.ts, an fdlibm port,
+  so the counts and hashes above are equal on x64 and arm64 (computed); the 2026-10-07 arm64
+  run read 91 of 128 and 335 of 480 through V8 Math.
+- 58 mm mouth, seeds 1 to 6, 13 vends: mean 11.5 passes against 11.33 for the 156 mm mouth
   over the same seeds and vends. Bench record 5.5 of 13 (BUILD.md line 234, declared).
 - Wall: 8 trials 7.8 s, 30 trials 27.0 s, 58 mm mouth 4.4 s; `npm test -w packages/sim --
   slug` (both files, 15 tests) 27.0 s.
@@ -612,7 +615,7 @@ Card defects found in build:
   flips without a re-record; it does not assert "below".
 - `npx --no-install hbf sim.run --scene slug --trials 8 --seed 1 --json` exits 2 with E_REF
   ("sim.run is not registered in this build"); the command is T11's. The stand-in above exits 1,
-  since 91 of 128 differs from the declared set.
+  since 90 of 128 differs from the declared set.
 - spec/sim.ts documents TrialResult.runs as trials and snapshotHash as a Rapier state hash; this
   card counts vends in runs (128) and fills snapshotHash with the capsule end-state hash of the
   last trial. The spec comments change at the M02 spec freeze.
@@ -805,7 +808,7 @@ machine and include the contention.
 | DAVIT R4 parity | `npm test -w packages/sim -- davit-r4-parity` | exit 0, 7 of 7 in 2 files; the default run covers 125in, 144 of the 420 poses; the full 420 run in `npm run davit:sweep -w packages/sim` (521.8 s, T06 record); in-repo `verify_sim.py` not run (`data_r4.json` absent; scipy is now pinned by T07) | computed | 37 s | yes, default subset |
 | OGEE16 shipped and proud-head | `npm test -w packages/sim -- ogee-sweep` | exit 0, 14 passed, 1 skipped (the record writer); record: shipped 0 clashes, latch 2.10 mm, bar cranks 3.02 mm; proud head: the eight bar cranks clash with their own servo, per-step sum 681.95 mm3 beside the oracle 681.7 to 682.0 and the bench 577 mm3 (not reproduced, retired by D-233), union 78.96 mm3 | computed | 23 s | yes |
 | PAWL | `npm test -w packages/sim -- pawl-suite` | exit 0, 8 of 8; records: legacy 15 of 17 on 0.14.0 on arm64 and Rosetta 2 x64; port 9 of 17 on 0.21.0 on both; reads "recorded, target not met", scene status blocked | computed | 12 s | blocked |
-| SLUG | `npm test -w packages/sim -- slug-trials` | exit 0, 10 of 10; "unverified, measured 91 of 128" (8 seeded trials); 30 trials 335 of 480 | computed | 35 s | unverified |
+| SLUG | `npm test -w packages/sim -- slug-trials` | exit 0, 10 of 10; "unverified, measured 90 of 128" (8 seeded trials); 30 trials 332 of 480 | computed | 35 s | unverified |
 | COTTER | `npm test -w packages/sim -- cotter-insert` | exit 0, 14 of 14; 8 of 8 INSERTS equal to the oracle, sharp case TRAPPED | computed | 4 s | yes |
 | SASH | `npm test -w packages/sim -- sash-sweep` | exit 0, 29 of 29; 22 fixtures equal to `runCheck`, all 0 overlap; negative fixture 230 cells | computed | 10 s | yes |
 | commands registered, commit at command | `npm test -w core`, `npm test -w packages/sim -- commit-at-command` | exit 0, 222 of 222 in 23 files; exit 0, 7 of 7 | computed | 88 s; 23 s | yes |
@@ -858,7 +861,7 @@ Open questions for the PR body (D-006 process, rule 15), each with the default i
 - PAWL open-loop trial: labelled "should fail", passes on 0.14.0. Default: declared by its
   measured legacy outcome, pass (D-153).
 - SLUG vend protocol and 126 of 128: the runner is absent (D-180); the card protocol measures
-  91 of 128 (computed) and the hood ledge stalls the hopper at vend 12 or 13. Does 126 of 128
+  90 of 128 (computed) and the hood ledge stalls the hopper at vend 12 or 13. Does 126 of 128
   predate the cage drum, and what count, refill and vends per run did the runner use? Default:
   card protocol, status unverified (D-136, D-232).
 - DAVIT pose count: which of 416 (`README_R4.md`), 420 (`verify_sim.py`), 402
@@ -885,7 +888,7 @@ Open questions for the PR body (D-006 process, rule 15), each with the default i
 | OGEE16 shipped: 0 clashes; closest approach latch 2.10 mm, bar cranks 3.02 mm | computed | T07 | `npm test -w core -- ogee-sweep` (M07-T10) |
 | OGEE16 proud-head fixture: eight bar cranks clash with their own servo; per-step sum about 682 mm3 per bar crank over 25 steps, within 2 percent of `check_sweep.py`; the bench 577 mm3 is retired (D-233) | computed | T07 | same |
 | PAWL: legacy record 15 of 17 on 0.14.0; port meets the declared set on 0.21.0, or reported blocked with the per-trial diff (blocked at 9 of 17 on 0.21.0; the pin is owner decision D-231, default 0.21.0) | computed | T03 | `npm test -w packages/sim -- pawl-suite` |
-| SLUG: 8 seeded trials, 128 vends; 126 of 128 reproduced, or "unverified, measured N of 128" (126 of 128 is declared and unverified, D-232; measured 91 of 128) | computed | T08 | `npm test -w packages/sim -- slug-trials` |
+| SLUG: 8 seeded trials, 128 vends; 126 of 128 reproduced, or "unverified, measured N of 128" (126 of 128 is declared and unverified, D-232; measured 90 of 128) | computed | T08 | `npm test -w packages/sim -- slug-trials` |
 | COTTER: 8 of 8 INSERTS equal to the oracle (7 verify cases plus the 6.35, 4.10 kit board); sharp-bend case TRAPPED | computed | T09 | `npm test -w packages/sim -- cotter-insert` |
 | SASH: 22 fixtures equal to `runCheck`; negative fixture overlaps | computed | T10 | `npm test -w packages/sim -- sash-sweep` |
 | sim.run, sim.sweep, asm.solve, part.probe registered; outcome independent of frame schedule | computed | T11 | `npm test -w core`, `npm test -w packages/sim -- commit-at-command` |
@@ -897,7 +900,7 @@ Open questions for the PR body (D-006 process, rule 15), each with the default i
 |---|---|---|
 | PAWL under Rapier 0.21.0 | 9 of 17 against 15 of 17 on 0.14.0 (computed, one machine); the drop follows the version, not the deterministic build | T03 keeps the legacy set as the target and reports blocked; no constant retuned without an owner answer; owner decision D-231, default 0.21.0 kept (D-134) with both records |
 | PAWL open-loop trial | labelled "should fail", passes on 0.14.0 | declared by its measured legacy outcome; question listed in the PR |
-| SLUG 126 of 128 | runner absent from the harvest and from Downloads (D-136, D-180); the 15 `slug.html` downloads carry no trial code and use unseeded `Math.random`; `mandrel-spec.md` (2026-08-16 20:23) already cites 126/128; protocol unknown; may predate the cage drum (56 of 56 over 4 trials after the rebuild, sheet-design.md); the T08 runner measures 91 of 128 (computed) | T08 protocol; 126 of 128 declared and unverified (D-232) |
+| SLUG 126 of 128 | runner absent from the harvest and from Downloads (D-136, D-180); the 15 `slug.html` downloads carry no trial code and use unseeded `Math.random`; `mandrel-spec.md` (2026-08-16 20:23) already cites 126/128; protocol unknown; may predate the cage drum (56 of 56 over 4 trials after the rebuild, sheet-design.md); the T08 runner measures 90 of 128 (computed) | T08 protocol; 126 of 128 declared and unverified (D-232) |
 | DAVIT legacy pose counts | the counts disagree: `README_R4.md` 416 random poses, `verify_sim.py` 420 poses (4 presets plus 416 draws), `mandrel-spec.md` 402 poses (CHK-INT-02 row), `notes/benches-robots-a.md` 532; the calibration itself (`pack_sim.py`) sweeps one joint per pair at 1 deg and has no fixed pose list | M02 uses its own gated set (T06 step 4) and its own seeded combined set; `verify_sim.py` 420 is the parity set only |
 | DAVIT MINI | masks exist; D-135 names no model | std gated; MINI recorded |
 | DAVIT R4 | found in Downloads: `dl/dl-robots-machines/davit_r4.zip`, unzipped at `dl/dl-robots-machines/unzipped/davit_r4/`, with `sim_r4.html` | parity reference in T06 steps 9 to 11; copied to `designs/davit/legacy/r4/`; not ported |
