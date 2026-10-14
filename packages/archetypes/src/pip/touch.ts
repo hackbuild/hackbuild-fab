@@ -21,8 +21,13 @@ import { Emit } from "./emit.js";
 
 /** Touch key params, PIP defaults (layout.js line 37; route.post line 28; stack.bezel line 27). */
 export const touchParams = z.object({
-  /** Boss and comb disc diameter, mm. */
-  d: z.number().positive().default(12),
+  /**
+   * Boss and comb disc diameter, mm. Bounded to the PIP bench slider, 8 to 20
+   * (haft-src/bench/part1.html line 265): the reach rule keeps only fingers
+   * within about sqrt(3.2 rc) of the centre, so a wider disc grows the boss
+   * and leaves most of it without electrode.
+   */
+  d: z.number().min(8).max(20).default(12),
   /** Finger width, mm. */
   finger: z.number().positive().default(1.0),
   /** Gap between a finger and the other comb, mm. */
