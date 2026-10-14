@@ -1,0 +1,1414 @@
+{
+ "command": "node packages/archetypes/scripts/gib-legacy.mjs",
+ "note": "the original evaluated in place with the bench's inlined earcut; manifold-3d from the repo node_modules measures each part's union from the settled prism queue",
+ "manifold": "3.5.4",
+ "sources": {
+  "gib": {
+   "part2.js": "2ca8ce4a73db2091fc56ad70cae37439288f5fc8fdcb6c970ff00214347bf2fe",
+   "gib_4.html": "4baf10ed14f714575dee28940687e063488203a3954836e3613f0eb81ca204b7"
+  }
+ },
+ "variants": {
+  "finger.defaults": {
+   "state": {
+    "sense": "finger",
+    "body": "flex",
+    "cond": "ctpu",
+    "L": 60,
+    "W": 14,
+    "T": 1.44,
+    "r": 2,
+    "margin": 1.2,
+    "pad": 4,
+    "holeD": 2.2,
+    "clear": 0.8,
+    "term": "hole",
+    "touch": {
+     "n": 5,
+     "teeth": 2,
+     "depth": 0.6,
+     "gap": 0.8,
+     "cover": true,
+     "coverLayers": 2
+    },
+    "mem": {
+     "tw": 5,
+     "gapLayers": 1,
+     "ledge": 1.2,
+     "cs": 2.4,
+     "fit": 0.15,
+     "rw": 2.5
+    },
+    "fin": {
+     "tw": 4,
+     "bw": 2.5,
+     "rw": 2.5,
+     "gap": 1.5,
+     "rgap": 1.2,
+     "skin": 300
+    },
+    "layer": 0.24,
+    "floorLayers": 2,
+    "condLayers": 2,
+    "sheetLayers": 2,
+    "rho": 1500,
+    "colors": {
+     "body": "#1a1a1a",
+     "cond": "#4a4a4a",
+     "sheet": "#FE0386"
+    },
+    "printer": "Flashforge Creator 5 Pro 0.4 nozzle",
+    "process": "0.24mm Standard @FF C5",
+    "pattern": "Generic {TYPE} @FF C5P",
+    "writeFilaments": true,
+    "bed": {
+     "w": 256,
+     "h": 256
+    },
+    "sim": {
+     "x": 0.35,
+     "press": true
+    }
+   },
+   "T": 1.44,
+   "objectSizes": [
+    [
+     60,
+     14,
+     1.44
+    ]
+   ],
+   "f": 0.96,
+   "stack": {
+    "floor": 0.96,
+    "traces": 0.48
+   },
+   "warn": [
+    "narrowed to fit the width: track 1.6, bus 1.2, return 1.2, pads 3.2 mm"
+   ],
+   "notes": [],
+   "nudges": 0,
+   "memInstall": null,
+   "phys": {
+    "rows": [
+     [
+      "travel",
+      "53.2 mm of 60 mm"
+     ],
+     [
+      "track R",
+      "1.04 Mohm A to B over the travel"
+     ],
+     [
+      "return R",
+      "1.70 Mohm from the far end back to B, 62 percent of the range"
+     ],
+     [
+      "bus R",
+      "1.36 Mohm worst, finger at the far end"
+     ],
+     [
+      "skin R",
+      "300.0 kohm assumed, fingertip across a 1.5 mm gap"
+     ],
+     [
+      "wiper source R",
+      "1.66 Mohm worst (skin + bus)"
+     ],
+     [
+      "across",
+      "6.4 mm bus to far edge of track, under one fingertip"
+     ],
+     [
+      "cap at W",
+      "1 nF, settles in 8.32 ms"
+     ],
+     [
+      "divider current",
+      "0.00 mA at 3.3 V"
+     ]
+    ],
+    "notes": [
+     {
+      "w": 0,
+      "t": "position = (V(W) - V at the B end) / (V at the A end - V at the B end). the finger draws no current from the track once the cap has settled, so skin resistance cancels out of the reading; it only sets how long W takes to settle."
+     },
+     {
+      "w": 1,
+      "t": "the wiper is skin. it varies a few times over between dry and damp fingers and picks up mains hum, so sample slowly through the cap, median filter, and expect a few percent of jitter. for a stable no touch state read A and B swapped and check the two readings sum to the supply (see hookup)."
+     },
+     {
+      "w": 1,
+      "t": "the return lane eats 62 percent of the ADC range. widen it (it is a plain conductor, width is free) or use conductive PLA on a rigid body."
+     },
+     {
+      "w": 1,
+      "t": "track resistance is within a few times of skin resistance; a second finger or a sweaty palm across the track bends the reading. conductive PLA on a rigid body fixes it."
+     }
+    ],
+    "Rtrack": 1039062.5000000013,
+    "Rdead": 1713541.6666666667,
+    "Rret": 1697916.6666666667,
+    "Rbus": 1364583.3333333335,
+    "Rskin": 300000,
+    "Rsrc": 1664583.3333333335,
+    "capLabel": "1 nF",
+    "capVal": 1e-9,
+    "settle": 0.008322916666666668
+   },
+   "geom": {
+    "tw": 1.5999999999999979,
+    "bw": 1.2,
+    "rw": 1.2,
+    "fg": 1.5,
+    "pp": 3.1999999999999993,
+    "yc": 11.2,
+    "yb0": 5.6,
+    "xs": 4.3999999999999995,
+    "xe": 57.599999999999994,
+    "busEnd": 56.8,
+    "span": 6.399999999999999,
+    "yFinger": 8.799999999999999,
+    "retLen": 65.2,
+    "busLen": 52.4
+   },
+   "parts": [
+    {
+     "name": "traces",
+     "prisms": 2,
+     "volume": 117.299466,
+     "bbox": [
+      1.199811,
+      1.202843,
+      0.96,
+      58.799873,
+      12.802843,
+      1.44
+     ],
+     "pageVolume": 117.299507,
+     "pageBbox": [
+      1.199811,
+      1.202843,
+      0.96,
+      58.799873,
+      12.802843,
+      1.44
+     ]
+    },
+    {
+     "name": "body",
+     "prisms": 2,
+     "volume": 1082.851278,
+     "bbox": [
+      0,
+      0,
+      0,
+      60,
+      14,
+      1.46
+     ],
+     "pageVolume": 1094.471159,
+     "pageBbox": [
+      0,
+      0,
+      0,
+      60,
+      14,
+      1.46
+     ]
+    }
+   ]
+  },
+  "finger.rigid": {
+   "state": {
+    "sense": "finger",
+    "body": "rigid",
+    "cond": "cpla",
+    "L": 60,
+    "W": 16,
+    "T": 1.44,
+    "r": 2,
+    "margin": 1.2,
+    "pad": 4,
+    "holeD": 2.2,
+    "clear": 0.8,
+    "term": "hole",
+    "touch": {
+     "n": 5,
+     "teeth": 2,
+     "depth": 0.6,
+     "gap": 0.8,
+     "cover": true,
+     "coverLayers": 2
+    },
+    "mem": {
+     "tw": 5,
+     "gapLayers": 1,
+     "ledge": 1.2,
+     "cs": 2.4,
+     "fit": 0.15,
+     "rw": 2.5
+    },
+    "fin": {
+     "tw": 4,
+     "bw": 2.5,
+     "rw": 2.5,
+     "gap": 1.5,
+     "rgap": 1.2,
+     "skin": 300
+    },
+    "layer": 0.24,
+    "floorLayers": 2,
+    "condLayers": 2,
+    "sheetLayers": 2,
+    "rho": 1500,
+    "colors": {
+     "body": "#1a1a1a",
+     "cond": "#4a4a4a",
+     "sheet": "#FE0386"
+    },
+    "printer": "Flashforge Creator 5 Pro 0.4 nozzle",
+    "process": "0.24mm Standard @FF C5",
+    "pattern": "Generic {TYPE} @FF C5P",
+    "writeFilaments": true,
+    "bed": {
+     "w": 256,
+     "h": 256
+    },
+    "sim": {
+     "x": 0.35,
+     "press": true
+    }
+   },
+   "T": 1.44,
+   "objectSizes": [
+    [
+     60,
+     16,
+     1.44
+    ]
+   ],
+   "f": 0.96,
+   "stack": {
+    "floor": 0.96,
+    "traces": 0.48
+   },
+   "warn": [
+    "narrowed to fit the width: track 3.6, bus 2.1, return 2.1, pads 3.9 mm"
+   ],
+   "notes": [],
+   "nudges": 0,
+   "memInstall": null,
+   "phys": {
+    "rows": [
+     [
+      "travel",
+      "51.6 mm of 60 mm"
+     ],
+     [
+      "track R",
+      "448.2 kohm A to B over the travel"
+     ],
+     [
+      "return R",
+      "1.00 Mohm from the far end back to B, 68 percent of the range"
+     ],
+     [
+      "bus R",
+      "756.4 kohm worst, finger at the far end"
+     ],
+     [
+      "skin R",
+      "300.0 kohm assumed, fingertip across a 1.5 mm gap"
+     ],
+     [
+      "wiper source R",
+      "1.06 Mohm worst (skin + bus)"
+     ],
+     [
+      "across",
+      "8.4 mm bus to far edge of track, under one fingertip"
+     ],
+     [
+      "cap at W",
+      "4.7 nF, settles in 24.83 ms"
+     ],
+     [
+      "divider current",
+      "0.00 mA at 3.3 V"
+     ]
+    ],
+    "notes": [
+     {
+      "w": 0,
+      "t": "position = (V(W) - V at the B end) / (V at the A end - V at the B end). the finger draws no current from the track once the cap has settled, so skin resistance cancels out of the reading; it only sets how long W takes to settle."
+     },
+     {
+      "w": 1,
+      "t": "the wiper is skin. it varies a few times over between dry and damp fingers and picks up mains hum, so sample slowly through the cap, median filter, and expect a few percent of jitter. for a stable no touch state read A and B swapped and check the two readings sum to the supply (see hookup)."
+     },
+     {
+      "w": 1,
+      "t": "the return lane eats 68 percent of the ADC range. widen it (it is a plain conductor, width is free) or use conductive PLA on a rigid body."
+     },
+     {
+      "w": 1,
+      "t": "track resistance is within a few times of skin resistance; a second finger or a sweaty palm across the track bends the reading. conductive PLA on a rigid body fixes it."
+     }
+    ],
+    "Rtrack": 448206.0185185189,
+    "Rdead": 1015625.000000001,
+    "Rret": 1000000.000000001,
+    "Rbus": 756448.4126984136,
+    "Rskin": 300000,
+    "Rsrc": 1056448.4126984137,
+    "capLabel": "4.7 nF",
+    "capVal": 4.7e-9,
+    "settle": 0.024826537698412723
+   },
+   "geom": {
+    "tw": 3.599999999999998,
+    "bw": 2.099999999999998,
+    "rw": 2.099999999999998,
+    "fg": 1.5,
+    "pp": 3.866666666666666,
+    "yc": 12.866666666666665,
+    "yb0": 6.266666666666666,
+    "xs": 5.0666666666666655,
+    "xe": 56.7,
+    "busEnd": 55.900000000000006,
+    "span": 8.399999999999999,
+    "yFinger": 10.466666666666665,
+    "retLen": 67.2,
+    "busLen": 50.83333333333334
+   },
+   "parts": [
+    {
+     "name": "traces",
+     "prisms": 2,
+     "volume": 222.262666,
+     "bbox": [
+      1.199811,
+      1.202843,
+      0.96,
+      58.799873,
+      14.802843,
+      1.44
+     ],
+     "pageVolume": 222.262667,
+     "pageBbox": [
+      1.199811,
+      1.202843,
+      0.96,
+      58.799873,
+      14.802843,
+      1.44
+     ]
+    },
+    {
+     "name": "body",
+     "prisms": 2,
+     "volume": 1148.714612,
+     "bbox": [
+      0,
+      0,
+      0,
+      60,
+      16,
+      1.46
+     ],
+     "pageVolume": 1158.361083,
+     "pageBbox": [
+      0,
+      0,
+      0,
+      60,
+      16,
+      1.46
+     ]
+    }
+   ]
+  },
+  "finger.sweep": {
+   "state": {
+    "sense": "finger",
+    "body": "flex",
+    "cond": "ctpu",
+    "L": 60,
+    "W": 18,
+    "T": 1.44,
+    "r": 2,
+    "margin": 1.2,
+    "pad": 2.5,
+    "holeD": 1.5,
+    "clear": 0.8,
+    "term": "hole",
+    "touch": {
+     "n": 5,
+     "teeth": 2,
+     "depth": 0.6,
+     "gap": 0.8,
+     "cover": true,
+     "coverLayers": 2
+    },
+    "mem": {
+     "tw": 5,
+     "gapLayers": 1,
+     "ledge": 1.2,
+     "cs": 2.4,
+     "fit": 0.15,
+     "rw": 2.5
+    },
+    "fin": {
+     "tw": 4,
+     "bw": 2.5,
+     "rw": 2.5,
+     "gap": 1.5,
+     "rgap": 1.2,
+     "skin": 300
+    },
+    "layer": 0.24,
+    "floorLayers": 2,
+    "condLayers": 2,
+    "sheetLayers": 2,
+    "rho": 1500,
+    "colors": {
+     "body": "#1a1a1a",
+     "cond": "#4a4a4a",
+     "sheet": "#FE0386"
+    },
+    "printer": "Flashforge Creator 5 Pro 0.4 nozzle",
+    "process": "0.24mm Standard @FF C5",
+    "pattern": "Generic {TYPE} @FF C5P",
+    "writeFilaments": true,
+    "bed": {
+     "w": 256,
+     "h": 256
+    },
+    "sim": {
+     "x": 0.35,
+     "press": true
+    }
+   },
+   "T": 1.44,
+   "objectSizes": [
+    [
+     60,
+     18,
+     1.44
+    ]
+   ],
+   "f": 0.96,
+   "stack": {
+    "floor": 0.96,
+    "traces": 0.48
+   },
+   "warn": [],
+   "notes": [],
+   "nudges": 0,
+   "memInstall": null,
+   "phys": {
+    "rows": [
+     [
+      "travel",
+      "52.6 mm of 60 mm"
+     ],
+     [
+      "track R",
+      "410.9 kohm A to B over the travel"
+     ],
+     [
+      "return R",
+      "835.0 kohm from the far end back to B, 66 percent of the range"
+     ],
+     [
+      "bus R",
+      "647.5 kohm worst, finger at the far end"
+     ],
+     [
+      "skin R",
+      "300.0 kohm assumed, fingertip across a 1.5 mm gap"
+     ],
+     [
+      "wiper source R",
+      "947.5 kohm worst (skin + bus)"
+     ],
+     [
+      "across",
+      "8.0 mm bus to far edge of track, under one fingertip"
+     ],
+     [
+      "cap at W",
+      "4.7 nF, settles in 22.27 ms"
+     ],
+     [
+      "divider current",
+      "0.00 mA at 3.3 V"
+     ]
+    ],
+    "notes": [
+     {
+      "w": 0,
+      "t": "position = (V(W) - V at the B end) / (V at the A end - V at the B end). the finger draws no current from the track once the cap has settled, so skin resistance cancels out of the reading; it only sets how long W takes to settle."
+     },
+     {
+      "w": 1,
+      "t": "the wiper is skin. it varies a few times over between dry and damp fingers and picks up mains hum, so sample slowly through the cap, median filter, and expect a few percent of jitter. for a stable no touch state read A and B swapped and check the two readings sum to the supply (see hookup)."
+     },
+     {
+      "w": 1,
+      "t": "the return lane eats 66 percent of the ADC range. widen it (it is a plain conductor, width is free) or use conductive PLA on a rigid body."
+     },
+     {
+      "w": 1,
+      "t": "track resistance is within a few times of skin resistance; a second finger or a sweaty palm across the track bends the reading. conductive PLA on a rigid body fixes it."
+     }
+    ],
+    "Rtrack": 410937.49999999994,
+    "Rdead": 850625,
+    "Rret": 835000,
+    "Rbus": 647500,
+    "Rskin": 300000,
+    "Rsrc": 947500,
+    "capLabel": "4.7 nF",
+    "capVal": 4.7e-9,
+    "settle": 0.022266249999999998
+   },
+   "geom": {
+    "tw": 4,
+    "bw": 2.5,
+    "rw": 2.5,
+    "fg": 1.5,
+    "pp": 2.5,
+    "yc": 10.9,
+    "yb0": 4.9,
+    "xs": 3.7,
+    "xe": 56.3,
+    "busEnd": 55.5,
+    "span": 8,
+    "yFinger": 8.9,
+    "retLen": 66.8,
+    "busLen": 51.8
+   },
+   "parts": [
+    {
+     "name": "traces",
+     "prisms": 2,
+     "volume": 248.624851,
+     "bbox": [
+      1.199811,
+      1.202843,
+      0.96,
+      58.799873,
+      12.902843,
+      1.44
+     ],
+     "pageVolume": 248.62489,
+     "pageBbox": [
+      1.199811,
+      1.202843,
+      0.96,
+      58.799873,
+      12.902843,
+      1.44
+     ]
+    },
+    {
+     "name": "body",
+     "prisms": 2,
+     "volume": 1305.162248,
+     "bbox": [
+      0,
+      0,
+      0,
+      60,
+      18,
+      1.46
+     ],
+     "pageVolume": 1316.229547,
+     "pageBbox": [
+      0,
+      0,
+      0,
+      60,
+      18,
+      1.46
+     ]
+    }
+   ]
+  },
+  "membrane.defaults": {
+   "state": {
+    "sense": "membrane",
+    "body": "flex",
+    "cond": "ctpu",
+    "L": 60,
+    "W": 14,
+    "T": 1.44,
+    "r": 2,
+    "margin": 1.2,
+    "pad": 4,
+    "holeD": 2.2,
+    "clear": 0.8,
+    "term": "hole",
+    "touch": {
+     "n": 5,
+     "teeth": 2,
+     "depth": 0.6,
+     "gap": 0.8,
+     "cover": true,
+     "coverLayers": 2
+    },
+    "mem": {
+     "tw": 5,
+     "gapLayers": 1,
+     "ledge": 1.2,
+     "cs": 2.4,
+     "fit": 0.15,
+     "rw": 2.5
+    },
+    "fin": {
+     "tw": 4,
+     "bw": 2.5,
+     "rw": 2.5,
+     "gap": 1.5,
+     "rgap": 1.2,
+     "skin": 300
+    },
+    "layer": 0.24,
+    "floorLayers": 2,
+    "condLayers": 2,
+    "sheetLayers": 2,
+    "rho": 1500,
+    "colors": {
+     "body": "#1a1a1a",
+     "cond": "#4a4a4a",
+     "sheet": "#FE0386"
+    },
+    "printer": "Flashforge Creator 5 Pro 0.4 nozzle",
+    "process": "0.24mm Standard @FF C5",
+    "pattern": "Generic {TYPE} @FF C5P",
+    "writeFilaments": true,
+    "bed": {
+     "w": 256,
+     "h": 256
+    },
+    "sim": {
+     "x": 0.35,
+     "press": true
+    }
+   },
+   "T": 2.16,
+   "objectSizes": [
+    [
+     60,
+     14,
+     2.16
+    ],
+    [
+     51.949999999999996,
+     6.399999999999999,
+     0.96
+    ]
+   ],
+   "f": 0.4800000000000002,
+   "stack": {
+    "floor": 0.4800000000000002,
+    "track": 0.48,
+    "spacer": 0.72,
+    "gap": 0.24,
+    "strip": 0.48,
+    "sheet": 0.48
+   },
+   "warn": [
+    "thickness raised to the minimum stack 2.16 mm",
+    "narrowed to fit the width: track 1.2, ledge 0.6, post 1.2, return 1.2, pads 2.8 mm"
+   ],
+   "notes": [],
+   "nudges": 0,
+   "memInstall": {
+    "z4": 1.6800000000000002,
+    "T": 2.16,
+    "my": 8.824999999999998
+   },
+   "phys": {
+    "rows": [
+     [
+      "travel",
+      "49.5 mm of 60 mm"
+     ],
+     [
+      "track R",
+      "1.29 Mohm A to B over the travel"
+     ],
+     [
+      "end resistance",
+      "52.1 kohm at the A end, 1.68 Mohm return lane at the B end, 57 percent of the range"
+     ],
+     [
+      "wiper source R",
+      "1.41 Mohm worst (strip + post + lead)"
+     ],
+     [
+      "gap",
+      "0.24 mm, 1 layer"
+     ],
+     [
+      "press to close",
+      "1.51 N with a fingertip"
+     ],
+     [
+      "divider current",
+      "0.00 mA at 3.3 V"
+     ]
+    ],
+    "notes": [
+     {
+      "w": 0,
+      "t": "position = R(A to W) / R(A to B). read W with a high impedance input; the strip resistance never appears in the ratio as long as no current flows through it."
+     },
+     {
+      "w": 1,
+      "t": "the wiper looks like 1.41 Mohm to your ADC. an ESP32 ADC wants under 10 kohm, so add a 100 nF capacitor from W to ground and sample slowly, or buffer with an op amp follower. any no touch pull down must be at least 20 times this or it bends the reading."
+     },
+     {
+      "w": 1,
+      "t": "the return lane eats 56 percent of the ADC range. widen it up to the pad height (it costs no width there) or use conductive PLA on a rigid body."
+     },
+     {
+      "w": 1,
+      "t": "track is over a megohm: noise pickup goes up. shorten, widen or use conductive PLA on a rigid body."
+     },
+     {
+      "w": 1,
+      "t": "press force is high for a fingertip; widen the active area, use one gap layer, or a thinner sheet."
+     }
+    ],
+    "Rtrack": 1290364.5833333335,
+    "Rdead": 1728515.625,
+    "RdeadA": 52083.333333333314,
+    "Rret": 1676432.2916666667,
+    "Rsrc": 1405520.8333333335,
+    "F": 1.5101319981793355
+   },
+   "geom": {
+    "tw": 1.2,
+    "rw": 1.2,
+    "pp": 2.8499999999999996,
+    "yc": 10.224999999999998,
+    "xs": 6.049999999999999,
+    "xe": 55.599999999999994,
+    "xa0": 5.449999999999999,
+    "xa1": 56.199999999999996,
+    "ya0": 6.224999999999998,
+    "ya1": 11.424999999999997,
+    "xp0": 4.85,
+    "xp1": 56.8,
+    "yp0": 5.624999999999998,
+    "yp1": 12.024999999999997,
+    "gap": 0.24,
+    "retLen": 64.375,
+    "leadLen": 7.974999999999999
+   },
+   "parts": [
+    {
+     "name": "track",
+     "prisms": 3,
+     "volume": 81.074159,
+     "bbox": [
+      1.199811,
+      1.202843,
+      0.48,
+      58.799873,
+      11.652843,
+      1.2
+     ],
+     "pageVolume": 81.102957,
+     "pageBbox": [
+      1.199811,
+      1.202843,
+      0.48,
+      58.799873,
+      11.652843,
+      1.2
+     ]
+    },
+    {
+     "name": "body",
+     "prisms": 4,
+     "volume": 1330.45033,
+     "bbox": [
+      0,
+      0,
+      0,
+      60,
+      14,
+      2.16
+     ],
+     "pageVolume": 1362.032275,
+     "pageBbox": [
+      0,
+      0,
+      0,
+      60,
+      14,
+      2.16
+     ]
+    },
+    {
+     "name": "membrane",
+     "prisms": 1,
+     "volume": 151.2312,
+     "bbox": [
+      5,
+      5.775,
+      1.68,
+      56.65,
+      11.875,
+      2.16
+     ],
+     "pageVolume": 151.231245,
+     "pageBbox": [
+      5,
+      5.775,
+      0,
+      56.650002,
+      11.875,
+      0.48
+     ]
+    },
+    {
+     "name": "wiper",
+     "prisms": 1,
+     "volume": 31.4976,
+     "bbox": [
+      6.05,
+      6.825,
+      1.2,
+      55.6,
+      10.825,
+      1.68
+     ],
+     "pageVolume": 31.497578,
+     "pageBbox": [
+      6.05,
+      6.825,
+      0.48,
+      55.599998,
+      10.825,
+      0.96
+     ]
+    }
+   ]
+  },
+  "membrane.example": {
+   "state": {
+    "sense": "membrane",
+    "body": "flex",
+    "cond": "ctpu",
+    "L": 60,
+    "W": 16,
+    "T": 1.44,
+    "r": 2,
+    "margin": 1.2,
+    "pad": 4,
+    "holeD": 2.2,
+    "clear": 0.8,
+    "term": "hole",
+    "touch": {
+     "n": 5,
+     "teeth": 2,
+     "depth": 0.6,
+     "gap": 0.8,
+     "cover": true,
+     "coverLayers": 2
+    },
+    "mem": {
+     "tw": 5,
+     "gapLayers": 1,
+     "ledge": 1.2,
+     "cs": 2.4,
+     "fit": 0.15,
+     "rw": 2.5
+    },
+    "fin": {
+     "tw": 4,
+     "bw": 2.5,
+     "rw": 2.5,
+     "gap": 1.5,
+     "rgap": 1.2,
+     "skin": 300
+    },
+    "layer": 0.24,
+    "floorLayers": 2,
+    "condLayers": 2,
+    "sheetLayers": 2,
+    "rho": 1500,
+    "colors": {
+     "body": "#1a1a1a",
+     "cond": "#4a4a4a",
+     "sheet": "#FE0386"
+    },
+    "printer": "Flashforge Creator 5 Pro 0.4 nozzle",
+    "process": "0.24mm Standard @FF C5",
+    "pattern": "Generic {TYPE} @FF C5P",
+    "writeFilaments": true,
+    "bed": {
+     "w": 256,
+     "h": 256
+    },
+    "sim": {
+     "x": 0.35,
+     "press": true
+    }
+   },
+   "T": 2.16,
+   "objectSizes": [
+    [
+     60,
+     16,
+     2.16
+    ],
+    [
+     50.287499999999994,
+     7.925000000000002,
+     0.96
+    ]
+   ],
+   "f": 0.4800000000000002,
+   "stack": {
+    "floor": 0.4800000000000002,
+    "track": 0.48,
+    "spacer": 0.72,
+    "gap": 0.24,
+    "strip": 0.48,
+    "sheet": 0.48
+   },
+   "warn": [
+    "thickness raised to the minimum stack 2.16 mm",
+    "narrowed to fit the width: track 1.9, ledge 0.7, post 1.9, return 2.0, pads 3.7 mm"
+   ],
+   "notes": [],
+   "nudges": 0,
+   "memInstall": {
+    "z4": 1.6800000000000002,
+    "T": 2.16,
+    "my": 10.70625
+   },
+   "phys": {
+    "rows": [
+     [
+      "travel",
+      "47.7 mm of 60 mm"
+     ],
+     [
+      "track R",
+      "785.2 kohm A to B over the travel"
+     ],
+     [
+      "end resistance",
+      "34.1 kohm at the A end, 1.05 Mohm return lane at the B end, 58 percent of the range"
+     ],
+     [
+      "wiper source R",
+      "897.8 kohm worst (strip + post + lead)"
+     ],
+     [
+      "gap",
+      "0.24 mm, 1 layer"
+     ],
+     [
+      "press to close",
+      "0.75 N with a fingertip"
+     ],
+     [
+      "divider current",
+      "0.00 mA at 3.3 V"
+     ]
+    ],
+    "notes": [
+     {
+      "w": 0,
+      "t": "position = R(A to W) / R(A to B). read W with a high impedance input; the strip resistance never appears in the ratio as long as no current flows through it."
+     },
+     {
+      "w": 1,
+      "t": "the wiper looks like 897.8 kohm to your ADC. an ESP32 ADC wants under 10 kohm, so add a 100 nF capacitor from W to ground and sample slowly, or buffer with an op amp follower. any no touch pull down must be at least 20 times this or it bends the reading."
+     },
+     {
+      "w": 1,
+      "t": "the return lane eats 56 percent of the ADC range. widen it up to the pad height (it costs no width there) or use conductive PLA on a rigid body."
+     }
+    ],
+    "Rtrack": 785156.2500000005,
+    "Rdead": 1079322.1185876078,
+    "RdeadA": 34128.28947368426,
+    "Rret": 1045193.8291139235,
+    "Rsrc": 897833.1906392699,
+    "F": 0.7470293572578367
+   },
+   "geom": {
+    "tw": 1.8999999999999986,
+    "rw": 1.9750000000000014,
+    "pp": 3.7375000000000007,
+    "yc": 12.443750000000001,
+    "xs": 7.012500000000002,
+    "xe": 54.74999999999999,
+    "xa0": 6.412500000000002,
+    "xa1": 55.349999999999994,
+    "ya0": 7.418750000000001,
+    "ya1": 13.99375,
+    "xp0": 5.737500000000001,
+    "xp1": 56.025,
+    "yp0": 6.7437499999999995,
+    "yp1": 14.668750000000001,
+    "gap": 0.24,
+    "retLen": 66.05625,
+    "leadLen": 9.706250000000004
+   },
+   "parts": [
+    {
+     "name": "track",
+     "prisms": 3,
+     "volume": 133.648642,
+     "bbox": [
+      1.199811,
+      1.202843,
+      0.48,
+      58.799873,
+      14.315343,
+      1.2
+     ],
+     "pageVolume": 133.718933,
+     "pageBbox": [
+      1.199811,
+      1.202843,
+      0.48,
+      58.799873,
+      14.315344,
+      1.2
+     ]
+    },
+    {
+     "name": "body",
+     "prisms": 4,
+     "volume": 1438.678873,
+     "bbox": [
+      0,
+      0,
+      0,
+      60,
+      16,
+      2.16
+     ],
+     "pageVolume": 1470.838045,
+     "pageBbox": [
+      0,
+      0,
+      0,
+      60,
+      16,
+      2.16
+     ]
+    },
+    {
+     "name": "membrane",
+     "prisms": 1,
+     "volume": 182.95425,
+     "bbox": [
+      5.8875,
+      6.89375,
+      1.68,
+      55.875,
+      14.51875,
+      2.16
+     ],
+     "pageVolume": 182.954313,
+     "pageBbox": [
+      5.8875,
+      6.89375,
+      0,
+      55.875,
+      14.51875,
+      0.48
+     ]
+    },
+    {
+     "name": "wiper",
+     "prisms": 1,
+     "volume": 48.3321,
+     "bbox": [
+      7.0125,
+      8.01875,
+      1.2,
+      54.75,
+      13.39375,
+      1.68
+     ],
+     "pageVolume": 48.332105,
+     "pageBbox": [
+      7.0125,
+      8.01875,
+      0.48,
+      54.75,
+      13.39375,
+      0.96
+     ]
+    }
+   ]
+  },
+  "membrane.sweep": {
+   "state": {
+    "sense": "membrane",
+    "body": "flex",
+    "cond": "ctpu",
+    "L": 60,
+    "W": 20,
+    "T": 2.4,
+    "r": 2,
+    "margin": 1.2,
+    "pad": 2.5,
+    "holeD": 1.5,
+    "clear": 0.8,
+    "term": "hole",
+    "touch": {
+     "n": 5,
+     "teeth": 2,
+     "depth": 0.6,
+     "gap": 0.8,
+     "cover": true,
+     "coverLayers": 2
+    },
+    "mem": {
+     "tw": 5,
+     "gapLayers": 1,
+     "ledge": 1.2,
+     "cs": 2.4,
+     "fit": 0.15,
+     "rw": 2.5
+    },
+    "fin": {
+     "tw": 4,
+     "bw": 2.5,
+     "rw": 2.5,
+     "gap": 1.5,
+     "rgap": 1.2,
+     "skin": 300
+    },
+    "layer": 0.24,
+    "floorLayers": 2,
+    "condLayers": 2,
+    "sheetLayers": 2,
+    "rho": 1500,
+    "colors": {
+     "body": "#1a1a1a",
+     "cond": "#4a4a4a",
+     "sheet": "#FE0386"
+    },
+    "printer": "Flashforge Creator 5 Pro 0.4 nozzle",
+    "process": "0.24mm Standard @FF C5",
+    "pattern": "Generic {TYPE} @FF C5P",
+    "writeFilaments": true,
+    "bed": {
+     "w": 256,
+     "h": 256
+    },
+    "sim": {
+     "x": 0.35,
+     "press": true
+    }
+   },
+   "T": 2.4,
+   "objectSizes": [
+    [
+     60,
+     20,
+     2.4
+    ],
+    [
+     51,
+     12.599999999999998,
+     0.96
+    ]
+   ],
+   "f": 0.72,
+   "stack": {
+    "floor": 0.72,
+    "track": 0.48,
+    "spacer": 0.72,
+    "gap": 0.24,
+    "strip": 0.48,
+    "sheet": 0.48
+   },
+   "warn": [],
+   "notes": [],
+   "nudges": 0,
+   "memInstall": {
+    "z4": 1.92,
+    "T": 2.4,
+    "my": 9.6
+   },
+   "phys": {
+    "rows": [
+     [
+      "travel",
+      "47.4 mm of 60 mm"
+     ],
+     [
+      "track R",
+      "296.3 kohm A to B over the travel"
+     ],
+     [
+      "end resistance",
+      "16.2 kohm at the A end, 850.0 kohm return lane at the B end, 75 percent of the range"
+     ],
+     [
+      "wiper source R",
+      "434.5 kohm worst (strip + post + lead)"
+     ],
+     [
+      "gap",
+      "0.24 mm, 1 layer"
+     ],
+     [
+      "press to close",
+      "0.20 N with a fingertip"
+     ],
+     [
+      "divider current",
+      "0.00 mA at 3.3 V"
+     ]
+    ],
+    "notes": [
+     {
+      "w": 0,
+      "t": "position = R(A to W) / R(A to B). read W with a high impedance input; the strip resistance never appears in the ratio as long as no current flows through it."
+     },
+     {
+      "w": 1,
+      "t": "the wiper looks like 434.5 kohm to your ADC. an ESP32 ADC wants under 10 kohm, so add a 100 nF capacitor from W to ground and sample slowly, or buffer with an op amp follower. any no touch pull down must be at least 20 times this or it bends the reading."
+     },
+     {
+      "w": 1,
+      "t": "the return lane eats 73 percent of the ADC range. widen it up to the pad height (it costs no width there) or use conductive PLA on a rigid body."
+     }
+    ],
+    "Rtrack": 296250,
+    "Rdead": 866250,
+    "RdeadA": 16249.999999999998,
+    "Rret": 850000,
+    "Rsrc": 434488.63636363635,
+    "F": 0.20008955831467531
+   },
+   "geom": {
+    "tw": 5,
+    "rw": 2.5,
+    "pp": 2.5,
+    "yc": 11.6,
+    "xs": 6.3,
+    "xe": 53.699999999999996,
+    "xa0": 5.7,
+    "xa1": 54.3,
+    "ya0": 4.5,
+    "ya1": 14.7,
+    "xp0": 4.5,
+    "xp1": 55.5,
+    "yp0": 3.3,
+    "yp1": 15.899999999999999,
+    "gap": 0.24,
+    "retLen": 68,
+    "leadLen": 9.600000000000001
+   },
+   "parts": [
+    {
+     "name": "track",
+     "prisms": 3,
+     "volume": 224.567251,
+     "bbox": [
+      1.199811,
+      1.202843,
+      0.72,
+      58.799873,
+      14.102843,
+      1.44
+     ],
+     "pageVolume": 224.682461,
+     "pageBbox": [
+      1.199811,
+      1.202843,
+      0.72,
+      58.799873,
+      14.102843,
+      1.44
+     ]
+    },
+    {
+     "name": "body",
+     "prisms": 4,
+     "volume": 1938.537675,
+     "bbox": [
+      0,
+      0,
+      0,
+      60,
+      20,
+      2.4
+     ],
+     "pageVolume": 1972.881525,
+     "pageBbox": [
+      0,
+      0,
+      0,
+      60,
+      20,
+      2.4
+     ]
+    },
+    {
+     "name": "membrane",
+     "prisms": 1,
+     "volume": 299.3328,
+     "bbox": [
+      4.65,
+      3.45,
+      1.92,
+      55.35,
+      15.75,
+      2.4
+     ],
+     "pageVolume": 299.332879,
+     "pageBbox": [
+      4.65,
+      3.45,
+      0,
+      55.349998,
+      15.75,
+      0.48
+     ]
+    },
+    {
+     "name": "wiper",
+     "prisms": 1,
+     "volume": 120.288,
+     "bbox": [
+      6.3,
+      5.1,
+      1.44,
+      53.7,
+      14.1,
+      1.92
+     ],
+     "pageVolume": 120.28797,
+     "pageBbox": [
+      6.3,
+      5.099999,
+      0.48,
+      53.700001,
+      14.1,
+      0.96
+     ]
+    }
+   ]
+  }
+ }
+}

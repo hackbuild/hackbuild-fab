@@ -1,0 +1,1 @@
+{"expect":{"changed":["body"],"metricDelta":{},"unchanged":[],"verdicts":[{"from":"warn","id":"CHK-PRT-05","legal":{"base":0.24,"kind":"multipleOf","nearest":[9.61,9.85],"offset":0.25,"unit":"mm"},"measured":9.610352,"target":{"level":"part","part":"body"},"to":"pass"}]},"from":9.6,"pointer":"/H","to":9.61}

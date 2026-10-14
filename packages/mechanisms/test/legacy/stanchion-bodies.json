@@ -1,0 +1,147 @@
+{
+ "source": {
+  "file": "files/src/cad.py",
+  "sha256": "4fe0bf820f885dd229901f8608cf9e4ac11a1def46bfb08afbcad212e4cefec8",
+  "lines": "217 to 282",
+  "command": "uv run --project tools/py packages/mechanisms/test/legacy/record-stanchion-bodies.py",
+  "engine": "trimesh 5.1.1, booleans by its default engine"
+ },
+ "bodies": {
+  "yaw_plate": {
+   "built": {
+    "volume": 58230.764483,
+    "bboxMin": [
+     -44.0,
+     -28.0,
+     -2.4
+    ],
+    "bboxMax": [
+     30.0,
+     28.0,
+     87.400002
+    ],
+    "faces": 1244,
+    "watertight": true
+   },
+   "export": {
+    "file": "files/exports/yaw_plate.stl",
+    "sha256": "6f390f42538f8430c4355c4ad10f056ef2b08ae3fe5dc871998c15306d4f0739",
+    "volume": 58230.764483,
+    "bboxMin": [
+     -44.0,
+     -28.0,
+     -2.4
+    ],
+    "bboxMax": [
+     30.0,
+     28.0,
+     87.400002
+    ],
+    "faces": 1244,
+    "watertight": true
+   }
+  },
+  "gimbal_cross": {
+   "built": {
+    "volume": 1150.233457,
+    "bboxMin": [
+     -9.0,
+     -11.5,
+     -4.6
+    ],
+    "bboxMax": [
+     9.0,
+     11.5,
+     4.6
+    ],
+    "faces": 576,
+    "watertight": true
+   },
+   "export": {
+    "file": "files/exports/gimbal_cross.stl",
+    "sha256": "69995d3b07c173c3bc04ab2e6f089ff90326be2de8247b7f9ce7fa9b74235b20",
+    "volume": 1150.233457,
+    "bboxMin": [
+     -9.0,
+     -11.5,
+     -4.6
+    ],
+    "bboxMax": [
+     9.0,
+     11.5,
+     4.6
+    ],
+    "faces": 576,
+    "watertight": true
+   }
+  },
+  "cam_carrier": {
+   "built": {
+    "volume": 32054.640889,
+    "bboxMin": [
+     -30.0,
+     -66.0,
+     -24.5
+    ],
+    "bboxMax": [
+     9.0,
+     66.0,
+     13.0
+    ],
+    "faces": 678,
+    "watertight": true
+   },
+   "export": {
+    "file": "files/exports/cam_carrier.stl",
+    "sha256": "e412d87b911a067efddb9c1a65087dc5383f141dd5be3995ed9d56dbfbbf9673",
+    "volume": 32054.640889,
+    "bboxMin": [
+     -30.0,
+     -66.0,
+     -24.5
+    ],
+    "bboxMax": [
+     9.0,
+     66.0,
+     13.0
+    ],
+    "faces": 678,
+    "watertight": true
+   }
+  },
+  "pushrod": {
+   "built": {
+    "volume": 1086.204179,
+    "bboxMin": [
+     -3.6,
+     -3.6,
+     -3.6
+    ],
+    "bboxMax": [
+     3.6,
+     3.6,
+     43.599998
+    ],
+    "faces": 776,
+    "watertight": true
+   },
+   "export": {
+    "file": "files/exports/pushrod.stl",
+    "sha256": "140cf0b1fa0cd2b9d5be7e0143f6d86b6c5d0612e040a2d8b05fee1901939efb",
+    "volume": 1086.204179,
+    "bboxMin": [
+     -3.6,
+     -3.6,
+     -3.6
+    ],
+    "bboxMax": [
+     3.6,
+     3.6,
+     43.599998
+    ],
+    "faces": 776,
+    "watertight": true
+   }
+  }
+ }
+}

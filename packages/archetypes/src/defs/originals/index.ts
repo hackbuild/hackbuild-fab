@@ -1,0 +1,118 @@
+// The originals canon additions of M06-T14 (D-222), one file per row of
+// the card table that names this registry, in file name order. Generated
+// by evidence/m06-cmds/t14/gen.mjs from the card table; load.test.ts fails
+// when this list and the directory disagree.
+
+import type { ArchetypeDef } from "@hackbuild/spec";
+import { orig1sPowerPathBoost } from "./1s-power-path-boost.js";
+import { origArmedIndicator } from "./armed-indicator.js";
+import { origAugerFrontEnds } from "./auger-front-ends.js";
+import { origBandKernel } from "./band-kernel.js";
+import { origBlocksConeButtonArray } from "./blocks-cone-button-array.js";
+import { origBlocksDeck } from "./blocks-deck.js";
+import { origBlocksForceBrick } from "./blocks-force-brick.js";
+import { origBlocksJumperBus } from "./blocks-jumper-bus.js";
+import { origBlocksKnob } from "./blocks-knob.js";
+import { origBlocksLampSeriesR } from "./blocks-lamp-series-r.js";
+import { origBlocksPressBoreSocket } from "./blocks-press-bore-socket.js";
+import { origBlocksSideTabFlatFlex } from "./blocks-side-tab-flat-flex.js";
+import { origBlocksTouchBrick } from "./blocks-touch-brick.js";
+import { origBlocksTrimMeander } from "./blocks-trim-meander.js";
+import { origBoardFaceConvention } from "./board-face-convention.js";
+import { origBoardTableSeat } from "./board-table-seat.js";
+import { origBringupProbe } from "./bringup-probe.js";
+import { origC3SuperminiCarrierCopper } from "./c3-supermini-carrier-copper.js";
+import { origCastellatedModuleEdge } from "./castellated-module-edge.js";
+import { origComposerSceneContactNets } from "./composer-scene-contact-nets.js";
+import { origCopperClipField } from "./copper-clip-field.js";
+import { origCopperComBusKnockout } from "./copper-com-bus-knockout.js";
+import { origCopperCutSheetStack } from "./copper-cut-sheet-stack.js";
+import { origCopperLadderRoute } from "./copper-ladder-route.js";
+import { origDcMnaSolver } from "./dc-mna-solver.js";
+import { origDielectricFaceplate } from "./dielectric-faceplate.js";
+import { origDirectPinHexSkinBridgeKey } from "./direct-pin-hex-skin-bridge-key.js";
+import { origElectricalCoupon } from "./electrical-coupon.js";
+import { origFirmwareScanGuard } from "./firmware-scan-guard.js";
+import { origFitReportBvh } from "./fit-report-bvh.js";
+import { origFitsTable } from "./fits-table.js";
+import { origFootprintContract } from "./footprint-contract.js";
+import { origIntervalGate } from "./interval-gate.js";
+import { origLaneSolvers } from "./lane-solvers.js";
+import { origLayoutSolverGroups } from "./layout-solver-groups.js";
+import { origLegoTileCarrierCollet } from "./lego-tile-carrier-collet.js";
+import { origMaskArtPourBacked } from "./mask-art-pour-backed.js";
+import { origNetCheckUnionFind } from "./net-check-union-find.js";
+import { origPegSocketPressContact } from "./peg-socket-press-contact.js";
+import { origPrintBleed } from "./print-bleed.js";
+import { origQfnCornerClearFootprint } from "./qfn-corner-clear-footprint.js";
+import { origReadPullupE12 } from "./read-pullup-e12.js";
+import { origReadRcChargeTime } from "./read-rc-charge-time.js";
+import { origReadTwoPhaseSlide } from "./read-two-phase-slide.js";
+import { origRouterNegotiated } from "./router-negotiated.js";
+import { origSkinBridgeSlider } from "./skin-bridge-slider.js";
+import { origSwitchAsBridge } from "./switch-as-bridge.js";
+import { origTapeWidthGate } from "./tape-width-gate.js";
+import { origTeensySocketBlock } from "./teensy-socket-block.js";
+import { origTiltStick8way } from "./tilt-stick-8way.js";
+import { origTouchSegmentSlider } from "./touch-segment-slider.js";
+import { origUndefinedBandVerdict } from "./undefined-band-verdict.js";
+import { origVinylSubstrateModule } from "./vinyl-substrate-module.js";
+
+export const ORIGINAL_ARCHETYPE_DEFS: readonly ArchetypeDef[] = [
+  orig1sPowerPathBoost,
+  origArmedIndicator,
+  origAugerFrontEnds,
+  origBandKernel,
+  origBlocksConeButtonArray,
+  origBlocksDeck,
+  origBlocksForceBrick,
+  origBlocksJumperBus,
+  origBlocksKnob,
+  origBlocksLampSeriesR,
+  origBlocksPressBoreSocket,
+  origBlocksSideTabFlatFlex,
+  origBlocksTouchBrick,
+  origBlocksTrimMeander,
+  origBoardFaceConvention,
+  origBoardTableSeat,
+  origBringupProbe,
+  origC3SuperminiCarrierCopper,
+  origCastellatedModuleEdge,
+  origComposerSceneContactNets,
+  origCopperClipField,
+  origCopperComBusKnockout,
+  origCopperCutSheetStack,
+  origCopperLadderRoute,
+  origDcMnaSolver,
+  origDielectricFaceplate,
+  origDirectPinHexSkinBridgeKey,
+  origElectricalCoupon,
+  origFirmwareScanGuard,
+  origFitReportBvh,
+  origFitsTable,
+  origFootprintContract,
+  origIntervalGate,
+  origLaneSolvers,
+  origLayoutSolverGroups,
+  origLegoTileCarrierCollet,
+  origMaskArtPourBacked,
+  origNetCheckUnionFind,
+  origPegSocketPressContact,
+  origPrintBleed,
+  origQfnCornerClearFootprint,
+  origReadPullupE12,
+  origReadRcChargeTime,
+  origReadTwoPhaseSlide,
+  origRouterNegotiated,
+  origSkinBridgeSlider,
+  origSwitchAsBridge,
+  origTapeWidthGate,
+  origTeensySocketBlock,
+  origTiltStick8way,
+  origTouchSegmentSlider,
+  origUndefinedBandVerdict,
+  origVinylSubstrateModule,
+];
+
+/** The ids, for added.ts. */
+export const ORIGINAL_ARCHETYPE_IDS: readonly string[] = ORIGINAL_ARCHETYPE_DEFS.map((d) => d.id);

@@ -1,0 +1,194 @@
+{
+ "source": {
+  "lineage": "knurl.bench/knurl-8",
+  "file": "files/knurl.html",
+  "sha256": "90a7f98e708e3fa850e11ce3e58f3ab5fa612b8446f15b5f8a7efbde575e9af1",
+  "core": "163 to 549",
+  "design": "553 to 1226"
+ },
+ "defaults": {
+  "rounds": {
+   "R": 3,
+   "d": 25,
+   "rl": 14,
+   "disc": 3,
+   "mode": "numerals",
+   "numerals": "western",
+   "digitH": 2.9,
+   "numR": 8.3,
+   "angle": 190,
+   "lobe": -1,
+   "pinR": 1.3,
+   "pin": "printed",
+   "hub": 1,
+   "pipR": 1.1,
+   "pipShape": "circle",
+   "pipRad": 4.6,
+   "pipStep": 2.7,
+   "font": "IBM Plex Mono",
+   "weight": "bold",
+   "boost": 0.12
+  },
+  "pawl": {
+   "thick": 1.6,
+   "len": 20,
+   "tip": 262,
+   "engage": 7,
+   "fit": 0.5,
+   "height": 3.6
+  },
+  "count": {
+   "N": 33,
+   "Rc": 25,
+   "protrude": 2,
+   "disc": 3,
+   "fluteR": 1.7,
+   "fluteDepth": 1.2,
+   "numerals": "western",
+   "digitH": 2.9,
+   "numIn": 16.8,
+   "numOut": 23.3,
+   "dir": 1,
+   "font": "IBM Plex Mono",
+   "weight": "bold",
+   "boost": 0.12,
+   "startAt": 1
+  },
+  "print": {
+   "clr": 0.4
+  }
+ },
+ "layout": {
+  "d": 25,
+  "S_n": 3,
+  "rp": 21.650635094610966,
+  "Rs": 12.500000000000004,
+  "slotLen": 9.15063509461097,
+  "alpha": 60,
+  "pinR": 1.3,
+  "slotW": 3.4000000000000004,
+  "delta": 10.909090909090908,
+  "betaP": 160,
+  "rho0": 310,
+  "bumpR": 1.5,
+  "pawlLine": 25.7,
+  "pawlTipDeg": 261.8181818181818,
+  "pawlK": 0.9216000000000002,
+  "pawlLift": 0.7999999999999999,
+  "clickN": 0.73728,
+  "pawlStrain": 0.0048,
+  "pinSweep": 23.60063509461097,
+  "lockR": 14.55
+ },
+ "geneva": [
+  {
+   "phi": -30,
+   "theta": -59.99999999999999
+  },
+  {
+   "phi": -15,
+   "theta": -53.89413015323175
+  },
+  {
+   "phi": 0,
+   "theta": 0
+  },
+  {
+   "phi": 15,
+   "theta": 53.89413015323175
+  },
+  {
+   "phi": 30,
+   "theta": 59.99999999999999
+  }
+ ],
+ "sims": [
+  {
+   "omega": 0,
+   "rho": 370,
+   "phi": -30,
+   "driving": true,
+   "count": 1,
+   "countIdx": 0,
+   "round": 1,
+   "idx": 0
+  },
+  {
+   "omega": -294.5454545454545,
+   "rho": 370,
+   "phi": 35.454545454545496,
+   "driving": false,
+   "count": 28,
+   "countIdx": 27,
+   "round": 1,
+   "idx": 27
+  },
+  {
+   "omega": -305.45454545454544,
+   "rho": 370.5379125220145,
+   "phi": 24.54545454545456,
+   "driving": true,
+   "count": 29,
+   "countIdx": 28,
+   "round": 1,
+   "idx": 28
+  },
+  {
+   "omega": -316.3636363636363,
+   "rho": 377.80236607882625,
+   "phi": 13.636363636363683,
+   "driving": true,
+   "count": 30,
+   "countIdx": 29,
+   "round": 1,
+   "idx": 29
+  },
+  {
+   "omega": -327.27272727272725,
+   "rho": 413.0205381716191,
+   "phi": 2.727272727272748,
+   "driving": true,
+   "count": 31,
+   "countIdx": 30,
+   "round": 1,
+   "idx": 30
+  },
+  {
+   "omega": -338.18181818181813,
+   "rho": 470.7990082859756,
+   "phi": -8.18181818181813,
+   "driving": true,
+   "count": 32,
+   "countIdx": 31,
+   "round": 1,
+   "idx": 31
+  },
+  {
+   "omega": -349.09090909090907,
+   "rho": 487.3340256801016,
+   "phi": -19.090909090909065,
+   "driving": true,
+   "count": 33,
+   "countIdx": 32,
+   "round": 1,
+   "idx": 32
+  },
+  {
+   "omega": -360,
+   "rho": 490,
+   "phi": -30,
+   "driving": true,
+   "count": 1,
+   "countIdx": 0,
+   "round": 2,
+   "idx": 33
+  }
+ ],
+ "jam": {
+  "clr": 0.15,
+  "pawlK": 0.9216000000000002,
+  "pawlLift": 1.05,
+  "clickN": 0.9676800000000002,
+  "pawlStrain": 0.006300000000000001
+ }
+}

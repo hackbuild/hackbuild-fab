@@ -1,0 +1,116 @@
+{
+ "source": {
+  "file": "files/src/pintle_parts.py",
+  "lineage": "pintle.parts/r6",
+  "sha256": "5280a22350a488e721d411504a562dec2007f421129e5f7462e055cb2b45a6b1",
+  "lines": {
+   "stator": "328 to 399",
+   "rotor": "402 to 444",
+   "P": "19 to 69",
+   "SEG": "16",
+   "boreSeg": "356"
+  },
+  "command": "uv run --project tools/py packages/mechanisms/test/legacy/record-slew-ring.py",
+  "engine": "trimesh 5.1.1, booleans by manifold3d (pintle_parts.py ENG, line 15)"
+ },
+ "P": {
+  "r_j": 17.0,
+  "flange_t": 3.0,
+  "r_bore": 12.9,
+  "r_rboss": 12.6,
+  "cl_journal": 0.2,
+  "cl_thrust": 0.25,
+  "sv_spline_d": 4.8,
+  "r_head": 22.0,
+  "r_skirt": 15.0
+ },
+ "D": {
+  "z_thrust": 26.7,
+  "z_flange_top": 29.7,
+  "z_stop": 29.95,
+  "r_jbore": 17.2,
+  "z_top": 38.75
+ },
+ "SEG": 128,
+ "boreSeg": 96,
+ "bodies": {
+  "stator": {
+   "built": {
+    "volume": 17024.474833,
+    "bboxMin": [
+     -22.0,
+     -22.0,
+     0.0
+    ],
+    "bboxMax": [
+     27.9,
+     22.0,
+     35.150002
+    ],
+    "faces": 7828,
+    "watertight": true
+   },
+   "gridSnapVolume": 17024.317451,
+   "export": {
+    "file": "files/exports/pintle-stator.stl",
+    "sha256": "b4b504cc0d2bbecf94b7b299d5d1472bc821b12919a6f2adf15c3d7ea38704d5",
+    "volume": 17024.474833,
+    "bboxMin": [
+     -22.0,
+     -22.0,
+     0.0
+    ],
+    "bboxMax": [
+     27.9,
+     22.0,
+     35.150002
+    ],
+    "faces": 7828,
+    "watertight": true
+   }
+  },
+  "rotor": {
+   "built": {
+    "volume": 8472.92462,
+    "bboxMin": [
+     -17.0,
+     -17.0,
+     25.9
+    ],
+    "bboxMax": [
+     17.0,
+     17.0,
+     41.150002
+    ],
+    "faces": 4254,
+    "watertight": true
+   },
+   "gridSnapVolume": 8472.752754,
+   "export": {
+    "file": "files/exports/pintle-rotor.stl",
+    "sha256": "a117684aa2c95752e4f310da0cfabdb27fe474e5500f0d62c99a27828dcd0300",
+    "volume": 8472.92462,
+    "bboxMin": [
+     -17.0,
+     -17.0,
+     0.0
+    ],
+    "bboxMax": [
+     17.0,
+     17.0,
+     15.250002
+    ],
+    "faces": 4254,
+    "watertight": true
+   }
+  }
+ },
+ "thrustContact": {
+  "z": 26.7,
+  "statorFloorArea": 453.889821,
+  "rotorFaceArea": 346.064531,
+  "area": 322.204251,
+  "rIn": 12.893093,
+  "rOut": 16.400002
+ }
+}

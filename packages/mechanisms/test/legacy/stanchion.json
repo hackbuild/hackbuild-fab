@@ -1,0 +1,328 @@
+{
+ "source": {
+  "lineage": "stanchion.viewer/v2",
+  "file": "files/stanchion.html",
+  "sha256": "a955b326fd5cfeaf5f49d92a614054e5d0e050a953bd289cbac3b358c3f1ece0",
+  "fn": "solveHorns, placeRods",
+  "lines": "293 to 331",
+  "hud": "line 684"
+ },
+ "errors": [],
+ "poses": [
+  {
+   "tilt": -22,
+   "roll": -10,
+   "text": "servo A -52.9° servo B -7.7°",
+   "servoA": -52.9,
+   "servoB": -7.7,
+   "nearLimit": false,
+   "reachable": true
+  },
+  {
+   "tilt": -22,
+   "roll": -5,
+   "text": "servo A -40.1° servo B -18.0°",
+   "servoA": -40.1,
+   "servoB": -18,
+   "nearLimit": false,
+   "reachable": true
+  },
+  {
+   "tilt": -22,
+   "roll": 0,
+   "text": "servo A -28.7° servo B -28.7°",
+   "servoA": -28.7,
+   "servoB": -28.7,
+   "nearLimit": false,
+   "reachable": true
+  },
+  {
+   "tilt": -22,
+   "roll": 5,
+   "text": "servo A -18.0° servo B -40.1°",
+   "servoA": -18,
+   "servoB": -40.1,
+   "nearLimit": false,
+   "reachable": true
+  },
+  {
+   "tilt": -22,
+   "roll": 10,
+   "text": "servo A -7.7° servo B -52.9°",
+   "servoA": -7.7,
+   "servoB": -52.9,
+   "nearLimit": false,
+   "reachable": true
+  },
+  {
+   "tilt": -15,
+   "roll": -10,
+   "text": "servo A -43.1° servo B -0.2°",
+   "servoA": -43.1,
+   "servoB": -0.2,
+   "nearLimit": false,
+   "reachable": true
+  },
+  {
+   "tilt": -15,
+   "roll": -5,
+   "text": "servo A -32.1° servo B -10.8°",
+   "servoA": -32.1,
+   "servoB": -10.8,
+   "nearLimit": false,
+   "reachable": true
+  },
+  {
+   "tilt": -15,
+   "roll": 0,
+   "text": "servo A -21.4° servo B -21.4°",
+   "servoA": -21.4,
+   "servoB": -21.4,
+   "nearLimit": false,
+   "reachable": true
+  },
+  {
+   "tilt": -15,
+   "roll": 5,
+   "text": "servo A -10.8° servo B -32.1°",
+   "servoA": -10.8,
+   "servoB": -32.1,
+   "nearLimit": false,
+   "reachable": true
+  },
+  {
+   "tilt": -15,
+   "roll": 10,
+   "text": "servo A -0.2° servo B -43.1°",
+   "servoA": -0.2,
+   "servoB": -43.1,
+   "nearLimit": false,
+   "reachable": true
+  },
+  {
+   "tilt": -10,
+   "roll": -10,
+   "text": "servo A -35.3° servo B 6.3°",
+   "servoA": -35.3,
+   "servoB": 6.3,
+   "nearLimit": false,
+   "reachable": true
+  },
+  {
+   "tilt": -10,
+   "roll": -5,
+   "text": "servo A -25.3° servo B -4.6°",
+   "servoA": -25.3,
+   "servoB": -4.6,
+   "nearLimit": false,
+   "reachable": true
+  },
+  {
+   "tilt": -10,
+   "roll": 0,
+   "text": "servo A -15.0° servo B -15.0°",
+   "servoA": -15,
+   "servoB": -15,
+   "nearLimit": false,
+   "reachable": true
+  },
+  {
+   "tilt": -10,
+   "roll": 5,
+   "text": "servo A -4.6° servo B -25.3°",
+   "servoA": -4.6,
+   "servoB": -25.3,
+   "nearLimit": false,
+   "reachable": true
+  },
+  {
+   "tilt": -10,
+   "roll": 10,
+   "text": "servo A 6.3° servo B -35.3°",
+   "servoA": 6.3,
+   "servoB": -35.3,
+   "nearLimit": false,
+   "reachable": true
+  },
+  {
+   "tilt": -5,
+   "roll": -10,
+   "text": "servo A -27.1° servo B 13.7°",
+   "servoA": -27.1,
+   "servoB": 13.7,
+   "nearLimit": false,
+   "reachable": true
+  },
+  {
+   "tilt": -5,
+   "roll": -5,
+   "text": "servo A -17.8° servo B 2.5°",
+   "servoA": -17.8,
+   "servoB": 2.5,
+   "nearLimit": false,
+   "reachable": true
+  },
+  {
+   "tilt": -5,
+   "roll": 0,
+   "text": "servo A -7.9° servo B -7.9°",
+   "servoA": -7.9,
+   "servoB": -7.9,
+   "nearLimit": false,
+   "reachable": true
+  },
+  {
+   "tilt": -5,
+   "roll": 5,
+   "text": "servo A 2.5° servo B -17.8°",
+   "servoA": 2.5,
+   "servoB": -17.8,
+   "nearLimit": false,
+   "reachable": true
+  },
+  {
+   "tilt": -5,
+   "roll": 10,
+   "text": "servo A 13.7° servo B -27.1°",
+   "servoA": 13.7,
+   "servoB": -27.1,
+   "nearLimit": false,
+   "reachable": true
+  },
+  {
+   "tilt": 0,
+   "roll": -10,
+   "text": "servo A -18.5° servo B 22.3°",
+   "servoA": -18.5,
+   "servoB": 22.3,
+   "nearLimit": false,
+   "reachable": true
+  },
+  {
+   "tilt": 0,
+   "roll": -5,
+   "text": "servo A -9.7° servo B 10.6°",
+   "servoA": -9.7,
+   "servoB": 10.6,
+   "nearLimit": false,
+   "reachable": true
+  },
+  {
+   "tilt": 0,
+   "roll": 0,
+   "text": "servo A 0.0° servo B 0.0°",
+   "servoA": 0,
+   "servoB": 0,
+   "nearLimit": false,
+   "reachable": true
+  },
+  {
+   "tilt": 0,
+   "roll": 5,
+   "text": "servo A 10.6° servo B -9.7°",
+   "servoA": 10.6,
+   "servoB": -9.7,
+   "nearLimit": false,
+   "reachable": true
+  },
+  {
+   "tilt": 0,
+   "roll": 10,
+   "text": "servo A 22.3° servo B -18.5°",
+   "servoA": 22.3,
+   "servoB": -18.5,
+   "nearLimit": false,
+   "reachable": true
+  },
+  {
+   "tilt": 5,
+   "roll": -10,
+   "text": "servo A -9.3° servo B 32.5°",
+   "servoA": -9.3,
+   "servoB": 32.5,
+   "nearLimit": false,
+   "reachable": true
+  },
+  {
+   "tilt": 5,
+   "roll": -5,
+   "text": "servo A -0.8° servo B 19.7°",
+   "servoA": -0.8,
+   "servoB": 19.7,
+   "nearLimit": false,
+   "reachable": true
+  },
+  {
+   "tilt": 5,
+   "roll": 0,
+   "text": "servo A 8.8° servo B 8.8°",
+   "servoA": 8.8,
+   "servoB": 8.8,
+   "nearLimit": false,
+   "reachable": true
+  },
+  {
+   "tilt": 5,
+   "roll": 5,
+   "text": "servo A 19.7° servo B -0.8°",
+   "servoA": 19.7,
+   "servoB": -0.8,
+   "nearLimit": false,
+   "reachable": true
+  },
+  {
+   "tilt": 5,
+   "roll": 10,
+   "text": "servo A 32.5° servo B -9.3°",
+   "servoA": 32.5,
+   "servoB": -9.3,
+   "nearLimit": false,
+   "reachable": true
+  },
+  {
+   "tilt": 10,
+   "roll": -10,
+   "text": "servo A 0.6° servo B 46.1°",
+   "servoA": 0.6,
+   "servoB": 46.1,
+   "nearLimit": false,
+   "reachable": true
+  },
+  {
+   "tilt": 10,
+   "roll": -5,
+   "text": "servo A 9.0° servo B 30.6°",
+   "servoA": 9,
+   "servoB": 30.6,
+   "nearLimit": false,
+   "reachable": true
+  },
+  {
+   "tilt": 10,
+   "roll": 0,
+   "text": "servo A 18.8° servo B 18.8°",
+   "servoA": 18.8,
+   "servoB": 18.8,
+   "nearLimit": false,
+   "reachable": true
+  },
+  {
+   "tilt": 10,
+   "roll": 5,
+   "text": "servo A 30.6° servo B 9.0°",
+   "servoA": 30.6,
+   "servoB": 9,
+   "nearLimit": false,
+   "reachable": true
+  },
+  {
+   "tilt": 10,
+   "roll": 10,
+   "text": "servo A 46.1° servo B 0.6°",
+   "servoA": 46.1,
+   "servoB": 0.6,
+   "nearLimit": false,
+   "reachable": true
+  }
+ ]
+}

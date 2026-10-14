@@ -1,0 +1,4772 @@
+{
+ "how": "node packages/archetypes/scripts/pip-seat-legacy.mjs <modules>, manifold-3d 3.5.3, node v22.18.0",
+ "sources": {
+  "haft": {
+   "snapfe.js": "c6eea76f6456049675aec53ff08d8bdd901819e8c4f1106efafcbb23e536c3ae",
+   "geom.js": "43992b7d0617b6006729547db6909dba3b28ec3fea8d16ac23052e459d625305",
+   "font.js": "39675b8642eb84a73b41711dc4c761f6493202222b19f439729a3ddab2c7670b",
+   "layout.js": "2d1c6c10554b5c7d8dc333496529abee82e937d2d3fe85c41a8d7ee22bb2468c",
+   "router.js": "f182a45a493c64c997d137b3eff0f57da782db9d57758e62de18e05522649bd4",
+   "model.js": "95a996433e54d586cdaa970a844ee8f8f02196f80b23ba36983c95ed456d1f34"
+  },
+  "pipc": {
+   "snapfe.js": "ccd3a8a428bf19cf02f0b88e9a5ae739a60658d9e9f6b85e75106def206cdf90",
+   "geom.js": "c9b9f2692a99d3214f5d991023109c3806d8b456562bedce803da5ef7c61925b",
+   "font.js": "3125d13a388ef986c9da8c398f769e49b5d2ea9ebc3c9bd5758d1ddf54cb8100",
+   "layout.js": "6052af46de1330436bb160d7369902932e09b2a1ea3ed0e209363eba2ff38836",
+   "router.js": "c9217561d7341410c99793d72d3356f7637ff99b2be424639e1460111d4c16a0",
+   "model.js": "d2a9d47d98ff0a8e5b3a755cf5d6d1ee06528874d2e393597c8472e52ccf47be"
+  }
+ },
+ "variants": {
+  "haft.defaults": {
+   "name": "defaults",
+   "params": {
+    "bleed": 0.15,
+    "left": "dpad",
+    "contact": "bump",
+    "mode": "press"
+   },
+   "board": {
+    "mode": "press",
+    "L": 23.5,
+    "W": 18,
+    "T": 1,
+    "pitch": 2.54,
+    "inset": 1.38,
+    "usbH": 3.26,
+    "usbOver": 0.8,
+    "bumpW": 1.5,
+    "bumpH": 0.48,
+    "clr": 0.3,
+    "press": 0.3,
+    "window": true,
+    "contact": "bump",
+    "sockOD": 1.8,
+    "sockBore": 0.75,
+    "pinLen": 3,
+    "headerT": 2.5,
+    "datum": true,
+    "grip": true
+   },
+   "z": {
+    "floor": 4.8,
+    "top": 13.68,
+    "bezelTop": 16.08,
+    "l1": [
+     0.72,
+     1.44
+    ],
+    "l2": [
+     2.4,
+     3.12
+    ],
+    "pad": [
+     4.08,
+     4.8
+    ],
+    "board": 5.28,
+    "boardTop": 6.28,
+    "recC": 7.91,
+    "clickFloor": 4.8,
+    "flexFloor": 10.08
+   },
+   "stand": 0.48,
+   "boardRect": {
+    "cx": 0,
+    "cy": 19.45,
+    "x0": -9,
+    "x1": 9,
+    "y0": 7.7,
+    "y1": 31.2
+   },
+   "pocketRect": {
+    "x0": -9.3,
+    "x1": 9.3,
+    "y0": 7.4,
+    "y1": 34
+   },
+   "halfH": 32,
+   "yTopEdge": 31.982867,
+   "pads": [
+    {
+     "name": "5V",
+     "x": -7.62,
+     "y": 9.95,
+     "edge": "L",
+     "num": 1
+    },
+    {
+     "name": "GND",
+     "x": -7.62,
+     "y": 7.41,
+     "edge": "L",
+     "num": 2
+    },
+    {
+     "name": "3V3",
+     "x": -7.62,
+     "y": 4.87,
+     "edge": "L",
+     "num": 3
+    },
+    {
+     "name": "GP29",
+     "x": -7.62,
+     "y": 2.33,
+     "edge": "L",
+     "num": 4
+    },
+    {
+     "name": "GP28",
+     "x": -7.62,
+     "y": -0.21,
+     "edge": "L",
+     "num": 5
+    },
+    {
+     "name": "GP27",
+     "x": -7.62,
+     "y": -2.75,
+     "edge": "L",
+     "num": 6
+    },
+    {
+     "name": "GP26",
+     "x": -7.62,
+     "y": -5.29,
+     "edge": "L",
+     "num": 7
+    },
+    {
+     "name": "GP15",
+     "x": -7.62,
+     "y": -7.83,
+     "edge": "L",
+     "num": 8
+    },
+    {
+     "name": "GP14",
+     "x": -7.62,
+     "y": -10.37,
+     "edge": "L",
+     "num": 9
+    },
+    {
+     "name": "GP13",
+     "x": -5.08,
+     "y": -10.37,
+     "edge": "T",
+     "num": 10
+    },
+    {
+     "name": "GP12",
+     "x": -2.54,
+     "y": -10.37,
+     "edge": "T",
+     "num": 11
+    },
+    {
+     "name": "GP11",
+     "x": 0,
+     "y": -10.37,
+     "edge": "T",
+     "num": 12
+    },
+    {
+     "name": "GP10",
+     "x": 2.54,
+     "y": -10.37,
+     "edge": "T",
+     "num": 13
+    },
+    {
+     "name": "GP9",
+     "x": 5.08,
+     "y": -10.37,
+     "edge": "T",
+     "num": 14
+    },
+    {
+     "name": "GP8",
+     "x": 7.62,
+     "y": -10.37,
+     "edge": "R",
+     "num": 15
+    },
+    {
+     "name": "GP7",
+     "x": 7.62,
+     "y": -7.83,
+     "edge": "R",
+     "num": 16
+    },
+    {
+     "name": "GP6",
+     "x": 7.62,
+     "y": -5.29,
+     "edge": "R",
+     "num": 17
+    },
+    {
+     "name": "GP5",
+     "x": 7.62,
+     "y": -2.75,
+     "edge": "R",
+     "num": 18
+    },
+    {
+     "name": "GP4",
+     "x": 7.62,
+     "y": -0.21,
+     "edge": "R",
+     "num": 19
+    },
+    {
+     "name": "GP3",
+     "x": 7.62,
+     "y": 2.33,
+     "edge": "R",
+     "num": 20
+    },
+    {
+     "name": "GP2",
+     "x": 7.62,
+     "y": 4.87,
+     "edge": "R",
+     "num": 21
+    },
+    {
+     "name": "GP1",
+     "x": 7.62,
+     "y": 7.41,
+     "edge": "R",
+     "num": 22
+    },
+    {
+     "name": "GP0",
+     "x": 7.62,
+     "y": 9.95,
+     "edge": "R",
+     "num": 23
+    }
+   ],
+   "bumps": [
+    {
+     "net": "GND",
+     "pad": "GND",
+     "x": -7.62,
+     "y": 26.86
+    },
+    {
+     "net": "3V3",
+     "pad": "3V3",
+     "x": -7.62,
+     "y": 24.32
+    },
+    {
+     "net": "UP",
+     "pad": "GP29",
+     "x": -7.62,
+     "y": 21.78
+    },
+    {
+     "net": "LEFT",
+     "pad": "GP28",
+     "x": -7.62,
+     "y": 19.24
+    },
+    {
+     "net": "RIGHT",
+     "pad": "GP27",
+     "x": -7.62,
+     "y": 16.7
+    },
+    {
+     "net": "DOWN",
+     "pad": "GP26",
+     "x": -7.62,
+     "y": 14.16
+    },
+    {
+     "net": "SELECT",
+     "pad": "GP12",
+     "x": -2.54,
+     "y": 9.08
+    },
+    {
+     "net": "START",
+     "pad": "GP10",
+     "x": 2.54,
+     "y": 9.08
+    },
+    {
+     "net": "B",
+     "pad": "GP6",
+     "x": 7.62,
+     "y": 14.16
+    },
+    {
+     "net": "Y",
+     "pad": "GP5",
+     "x": 7.62,
+     "y": 16.7
+    },
+    {
+     "net": "A",
+     "pad": "GP4",
+     "x": 7.62,
+     "y": 19.24
+    },
+    {
+     "net": "X",
+     "pad": "GP3",
+     "x": 7.62,
+     "y": 21.78
+    }
+   ],
+   "usedPins": [
+    [
+     "GP29",
+     "UP"
+    ],
+    [
+     "GP26",
+     "DOWN"
+    ],
+    [
+     "GP28",
+     "LEFT"
+    ],
+    [
+     "GP27",
+     "RIGHT"
+    ],
+    [
+     "GP3",
+     "X"
+    ],
+    [
+     "GP6",
+     "B"
+    ],
+    [
+     "GP5",
+     "Y"
+    ],
+    [
+     "GP4",
+     "A"
+    ],
+    [
+     "GP12",
+     "SELECT"
+    ],
+    [
+     "GP10",
+     "START"
+    ],
+    [
+     "GND",
+     "GND"
+    ],
+    [
+     "3V3",
+     "3V3"
+    ]
+   ],
+   "fits": [
+    {
+     "group": "traces",
+     "name": "bleed allowance",
+     "value": "0.15 mm",
+     "ok": true,
+     "note": "every conductive edge is drawn back by half of this, so a nozzle that bleeds lands on size"
+    },
+    {
+     "group": "traces",
+     "name": "trace width",
+     "value": "1.40 mm",
+     "ok": true,
+     "note": "about 3 lines at a 0.4 nozzle"
+    },
+    {
+     "group": "traces",
+     "name": "net to net, measured",
+     "value": "0.75 mm",
+     "ok": true,
+     "note": "closest any two nets get anywhere, in plane or between layers"
+    },
+    {
+     "group": "traces",
+     "name": "insulation between layers",
+     "value": "0.96 mm",
+     "ok": true,
+     "note": "4 layers of PETG between a trace and the one crossing it"
+    },
+    {
+     "group": "traces",
+     "name": "PETG over layer 2",
+     "value": "1.68 mm",
+     "ok": true,
+     "note": "what separates a trace from a key pad or a bump"
+    },
+    {
+     "group": "flex key",
+     "name": "contact gap",
+     "value": "1.80 mm",
+     "ok": true,
+     "note": "45 percent of the cone"
+    },
+    {
+     "group": "flex key",
+     "name": "cap bridge",
+     "value": "3.60 mm",
+     "ok": true,
+     "note": "conductive TPU spanning the hole, unsupported"
+    },
+    {
+     "group": "flex key",
+     "name": "split between halves",
+     "value": "0.80 mm",
+     "ok": true,
+     "note": "exposed, a string across it reads as a press"
+    },
+    {
+     "group": "flex key",
+     "name": "column to cone wall",
+     "value": "1.71 mm",
+     "ok": true,
+     "note": "at the top of the column"
+    },
+    {
+     "group": "flex key",
+     "name": "face through bezel hole",
+     "value": "1.00 mm",
+     "ok": true,
+     "note": "diametral, the bezel drops over the key"
+    },
+    {
+     "group": "flex key",
+     "name": "stands proud of the bezel",
+     "value": "2.60 mm",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "group": "click spring",
+     "name": "slot at the end blocks",
+     "value": "0.30 mm",
+     "ok": true,
+     "note": "diametral, snug so the spring stands up straight"
+    },
+    {
+     "group": "click spring",
+     "name": "slot over the arch",
+     "value": "1.50 mm",
+     "ok": true,
+     "note": "diametral, the beams never touch a wall"
+    },
+    {
+     "group": "click spring",
+     "name": "slot length over spring",
+     "value": "0.40 mm",
+     "ok": true,
+     "note": "the ribs locate it, not the slot ends"
+    },
+    {
+     "group": "click spring",
+     "name": "rib in the block groove",
+     "value": "0.40 mm",
+     "ok": true,
+     "note": "keys each end block down to the floor so the arch cannot spread"
+    },
+    {
+     "group": "click spring",
+     "name": "under the bezel",
+     "value": "0.12 mm",
+     "ok": true,
+     "note": "the bezel holds the end blocks down"
+    },
+    {
+     "group": "click spring",
+     "name": "cap through bezel hole",
+     "value": "0.50 mm",
+     "ok": true,
+     "note": "diametral"
+    },
+    {
+     "group": "click spring",
+     "name": "cap flange in its well",
+     "value": "0.80 mm",
+     "ok": true,
+     "note": "diametral"
+    },
+    {
+     "group": "click spring",
+     "name": "travel to contact",
+     "value": "1.37 mm",
+     "ok": true,
+     "note": "snap peaks at 0.63 mm"
+    },
+    {
+     "group": "click spring",
+     "name": "tip over each pad",
+     "value": "1.30 mm",
+     "ok": true,
+     "note": "pads split by 0.60 mm"
+    },
+    {
+     "group": "click spring",
+     "name": "beam thickness",
+     "value": "0.55 mm",
+     "ok": true,
+     "note": "one line, needs thin wall handling on"
+    },
+    {
+     "group": "click spring",
+     "name": "strain at the stop",
+     "value": "2.3 percent",
+     "ok": true,
+     "note": "PETG fatigues above about 2.5"
+    },
+    {
+     "group": "touch pad",
+     "name": "comb gap",
+     "value": "0.80 mm",
+     "ok": true,
+     "note": "exposed, skin bridges it"
+    },
+    {
+     "group": "touch pad",
+     "name": "finger width",
+     "value": "1.00 mm",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "group": "touch pad",
+     "name": "boss through the bezel",
+     "value": "0.60 mm",
+     "ok": true,
+     "note": "diametral, flush with the bezel top"
+    },
+    {
+     "group": "board",
+     "name": "pocket around the board",
+     "value": "0.30 mm",
+     "ok": true,
+     "note": "each side"
+    },
+    {
+     "group": "board",
+     "name": "bump height",
+     "value": "0.48 mm",
+     "ok": true,
+     "note": "conductive PLA under each used pad"
+    },
+    {
+     "group": "board",
+     "name": "bezel squeeze on the board",
+     "value": "0.30 mm",
+     "ok": true,
+     "note": "interference, the ribs hold it on the bumps"
+    },
+    {
+     "group": "board",
+     "name": "bump to bump",
+     "value": "0.84 mm",
+     "ok": true,
+     "note": "exposed, adjacent pads are different nets"
+    },
+    {
+     "group": "board",
+     "name": "clearance under the board",
+     "value": "0.96 mm",
+     "ok": true,
+     "note": "window recessed into the pocket floor"
+    },
+    {
+     "group": "board",
+     "name": "USB opening",
+     "value": "12.50 mm wide",
+     "ok": true,
+     "note": "a plug overmould is usually 11 to 12 mm"
+    },
+    {
+     "group": "board",
+     "name": "USB opening height",
+     "value": "9.36 mm",
+     "ok": true,
+     "note": "a USB C plug overmould is about 7 mm tall"
+    },
+    {
+     "group": "bezel",
+     "name": "lip in its groove",
+     "value": "0.10 mm",
+     "ok": true,
+     "note": "diametral; the groove is 1.90 mm deep and the lip 1.60 mm"
+    },
+    {
+     "group": "bezel",
+     "name": "pry scallop",
+     "value": "6 mm wide",
+     "ok": true,
+     "note": "a gap under the bezel edge at each side, kept clear of the groove"
+    },
+    {
+     "group": "board",
+     "name": "datum corner",
+     "value": "0.30 mm",
+     "ok": true,
+     "note": "the far end and both sides are packed out there; the cable end keeps its clearance"
+    },
+    {
+     "group": "print",
+     "name": "smallest feature",
+     "value": "0.55 mm",
+     "ok": true,
+     "note": "under one nozzle width, check it slices"
+    }
+   ],
+   "elec": {
+    "minGap": 0.75,
+    "pairs": [
+     {
+      "a": "GND",
+      "b": "A",
+      "g": 0.75
+     },
+     {
+      "a": "GND",
+      "b": "X",
+      "g": 0.75
+     },
+     {
+      "a": "GND",
+      "b": "B",
+      "g": 0.75
+     },
+     {
+      "a": "GND",
+      "b": "Y",
+      "g": 0.75
+     },
+     {
+      "a": "3V3",
+      "b": "SELECT",
+      "g": 0.8
+     },
+     {
+      "a": "3V3",
+      "b": "START",
+      "g": 0.8
+     },
+     {
+      "a": "3V3",
+      "b": "UP",
+      "g": 0.863367
+     },
+     {
+      "a": "B",
+      "b": "Y",
+      "g": 0.863685
+     }
+    ],
+    "nets": [
+     {
+      "name": "GND",
+      "parts": 1,
+      "vol": 338.629201
+     },
+     {
+      "name": "3V3",
+      "parts": 1,
+      "vol": 129.308303
+     },
+     {
+      "name": "UP",
+      "parts": 1,
+      "vol": 68.523313
+     },
+     {
+      "name": "DOWN",
+      "parts": 1,
+      "vol": 76.04732
+     },
+     {
+      "name": "LEFT",
+      "parts": 1,
+      "vol": 85.289323
+     },
+     {
+      "name": "RIGHT",
+      "parts": 1,
+      "vol": 59.058018
+     },
+     {
+      "name": "X",
+      "parts": 1,
+      "vol": 46.27636
+     },
+     {
+      "name": "B",
+      "parts": 1,
+      "vol": 59.374125
+     },
+     {
+      "name": "Y",
+      "parts": 1,
+      "vol": 35.540484
+     },
+     {
+      "name": "A",
+      "parts": 1,
+      "vol": 68.82039
+     },
+     {
+      "name": "SELECT",
+      "parts": 1,
+      "vol": 67.14778
+     },
+     {
+      "name": "START",
+      "parts": 1,
+      "vol": 63.79265
+     }
+    ]
+   },
+   "unrouted": 0,
+   "conflicts": 0,
+   "warn": [],
+   "seat": {
+    "A": {
+     "box": {
+      "x": [
+       -11.3,
+       11.3
+      ],
+      "y": [
+       5.4,
+       27.05
+      ],
+      "z": [
+       4.2,
+       13.68
+      ]
+     },
+     "envelope": 4638.4692,
+     "boxVolume": 4638.4692,
+     "slots": {
+      "1": 1299.686308,
+      "2": 22.472223,
+      "3": 0,
+      "4": 0
+     }
+    },
+    "B": {
+     "box": {
+      "x": [
+       -11.3,
+       11.3
+      ],
+      "y": [
+       27.05,
+       31.982866
+      ],
+      "z": [
+       4.2,
+       11.73
+      ]
+     },
+     "envelope": 839.46527,
+     "boxVolume": 839.46527,
+     "slots": {
+      "1": 174.03043,
+      "2": 0.657652,
+      "3": 0,
+      "4": 0
+     }
+    }
+   },
+   "stack": {
+    "box": {
+     "x": [
+      -75.982867,
+      75.982867
+     ],
+     "y": [
+      -32.982867,
+      32.982867
+     ],
+     "z": [
+      -1,
+      4.08
+     ]
+    },
+    "slots": {
+     "1": 34796.290171,
+     "2": 763.960436,
+     "3": 0,
+     "4": 0
+    }
+   }
+  },
+  "haft.bleed0": {
+   "name": "bleed0",
+   "params": {
+    "bleed": 0,
+    "left": "dpad",
+    "contact": "bump",
+    "mode": "press"
+   },
+   "board": {
+    "mode": "press",
+    "L": 23.5,
+    "W": 18,
+    "T": 1,
+    "pitch": 2.54,
+    "inset": 1.38,
+    "usbH": 3.26,
+    "usbOver": 0.8,
+    "bumpW": 1.5,
+    "bumpH": 0.48,
+    "clr": 0.3,
+    "press": 0.3,
+    "window": true,
+    "contact": "bump",
+    "sockOD": 1.8,
+    "sockBore": 0.75,
+    "pinLen": 3,
+    "headerT": 2.5,
+    "datum": true,
+    "grip": true
+   },
+   "z": {
+    "floor": 4.8,
+    "top": 13.68,
+    "bezelTop": 16.08,
+    "l1": [
+     0.72,
+     1.44
+    ],
+    "l2": [
+     2.4,
+     3.12
+    ],
+    "pad": [
+     4.08,
+     4.8
+    ],
+    "board": 5.28,
+    "boardTop": 6.28,
+    "recC": 7.91,
+    "clickFloor": 4.8,
+    "flexFloor": 10.08
+   },
+   "stand": 0.48,
+   "boardRect": {
+    "cx": 0,
+    "cy": 19.45,
+    "x0": -9,
+    "x1": 9,
+    "y0": 7.7,
+    "y1": 31.2
+   },
+   "pocketRect": {
+    "x0": -9.3,
+    "x1": 9.3,
+    "y0": 7.4,
+    "y1": 34
+   },
+   "halfH": 32,
+   "yTopEdge": 31.982867,
+   "pads": [
+    {
+     "name": "5V",
+     "x": -7.62,
+     "y": 9.95,
+     "edge": "L",
+     "num": 1
+    },
+    {
+     "name": "GND",
+     "x": -7.62,
+     "y": 7.41,
+     "edge": "L",
+     "num": 2
+    },
+    {
+     "name": "3V3",
+     "x": -7.62,
+     "y": 4.87,
+     "edge": "L",
+     "num": 3
+    },
+    {
+     "name": "GP29",
+     "x": -7.62,
+     "y": 2.33,
+     "edge": "L",
+     "num": 4
+    },
+    {
+     "name": "GP28",
+     "x": -7.62,
+     "y": -0.21,
+     "edge": "L",
+     "num": 5
+    },
+    {
+     "name": "GP27",
+     "x": -7.62,
+     "y": -2.75,
+     "edge": "L",
+     "num": 6
+    },
+    {
+     "name": "GP26",
+     "x": -7.62,
+     "y": -5.29,
+     "edge": "L",
+     "num": 7
+    },
+    {
+     "name": "GP15",
+     "x": -7.62,
+     "y": -7.83,
+     "edge": "L",
+     "num": 8
+    },
+    {
+     "name": "GP14",
+     "x": -7.62,
+     "y": -10.37,
+     "edge": "L",
+     "num": 9
+    },
+    {
+     "name": "GP13",
+     "x": -5.08,
+     "y": -10.37,
+     "edge": "T",
+     "num": 10
+    },
+    {
+     "name": "GP12",
+     "x": -2.54,
+     "y": -10.37,
+     "edge": "T",
+     "num": 11
+    },
+    {
+     "name": "GP11",
+     "x": 0,
+     "y": -10.37,
+     "edge": "T",
+     "num": 12
+    },
+    {
+     "name": "GP10",
+     "x": 2.54,
+     "y": -10.37,
+     "edge": "T",
+     "num": 13
+    },
+    {
+     "name": "GP9",
+     "x": 5.08,
+     "y": -10.37,
+     "edge": "T",
+     "num": 14
+    },
+    {
+     "name": "GP8",
+     "x": 7.62,
+     "y": -10.37,
+     "edge": "R",
+     "num": 15
+    },
+    {
+     "name": "GP7",
+     "x": 7.62,
+     "y": -7.83,
+     "edge": "R",
+     "num": 16
+    },
+    {
+     "name": "GP6",
+     "x": 7.62,
+     "y": -5.29,
+     "edge": "R",
+     "num": 17
+    },
+    {
+     "name": "GP5",
+     "x": 7.62,
+     "y": -2.75,
+     "edge": "R",
+     "num": 18
+    },
+    {
+     "name": "GP4",
+     "x": 7.62,
+     "y": -0.21,
+     "edge": "R",
+     "num": 19
+    },
+    {
+     "name": "GP3",
+     "x": 7.62,
+     "y": 2.33,
+     "edge": "R",
+     "num": 20
+    },
+    {
+     "name": "GP2",
+     "x": 7.62,
+     "y": 4.87,
+     "edge": "R",
+     "num": 21
+    },
+    {
+     "name": "GP1",
+     "x": 7.62,
+     "y": 7.41,
+     "edge": "R",
+     "num": 22
+    },
+    {
+     "name": "GP0",
+     "x": 7.62,
+     "y": 9.95,
+     "edge": "R",
+     "num": 23
+    }
+   ],
+   "bumps": [
+    {
+     "net": "GND",
+     "pad": "GND",
+     "x": -7.62,
+     "y": 26.86
+    },
+    {
+     "net": "3V3",
+     "pad": "3V3",
+     "x": -7.62,
+     "y": 24.32
+    },
+    {
+     "net": "UP",
+     "pad": "GP29",
+     "x": -7.62,
+     "y": 21.78
+    },
+    {
+     "net": "LEFT",
+     "pad": "GP28",
+     "x": -7.62,
+     "y": 19.24
+    },
+    {
+     "net": "RIGHT",
+     "pad": "GP27",
+     "x": -7.62,
+     "y": 16.7
+    },
+    {
+     "net": "DOWN",
+     "pad": "GP26",
+     "x": -7.62,
+     "y": 14.16
+    },
+    {
+     "net": "SELECT",
+     "pad": "GP12",
+     "x": -2.54,
+     "y": 9.08
+    },
+    {
+     "net": "START",
+     "pad": "GP10",
+     "x": 2.54,
+     "y": 9.08
+    },
+    {
+     "net": "B",
+     "pad": "GP6",
+     "x": 7.62,
+     "y": 14.16
+    },
+    {
+     "net": "Y",
+     "pad": "GP5",
+     "x": 7.62,
+     "y": 16.7
+    },
+    {
+     "net": "A",
+     "pad": "GP4",
+     "x": 7.62,
+     "y": 19.24
+    },
+    {
+     "net": "X",
+     "pad": "GP3",
+     "x": 7.62,
+     "y": 21.78
+    }
+   ],
+   "usedPins": [
+    [
+     "GP29",
+     "UP"
+    ],
+    [
+     "GP26",
+     "DOWN"
+    ],
+    [
+     "GP28",
+     "LEFT"
+    ],
+    [
+     "GP27",
+     "RIGHT"
+    ],
+    [
+     "GP3",
+     "X"
+    ],
+    [
+     "GP6",
+     "B"
+    ],
+    [
+     "GP5",
+     "Y"
+    ],
+    [
+     "GP4",
+     "A"
+    ],
+    [
+     "GP12",
+     "SELECT"
+    ],
+    [
+     "GP10",
+     "START"
+    ],
+    [
+     "GND",
+     "GND"
+    ],
+    [
+     "3V3",
+     "3V3"
+    ]
+   ],
+   "fits": [
+    {
+     "group": "traces",
+     "name": "bleed allowance",
+     "value": "0.00 mm",
+     "ok": true,
+     "note": "every conductive edge is drawn back by half of this, so a nozzle that bleeds lands on size"
+    },
+    {
+     "group": "traces",
+     "name": "trace width",
+     "value": "1.40 mm",
+     "ok": true,
+     "note": "about 3 lines at a 0.4 nozzle"
+    },
+    {
+     "group": "traces",
+     "name": "net to net, measured",
+     "value": "0.60 mm",
+     "ok": true,
+     "note": "closest any two nets get anywhere, in plane or between layers"
+    },
+    {
+     "group": "traces",
+     "name": "insulation between layers",
+     "value": "0.96 mm",
+     "ok": true,
+     "note": "4 layers of PETG between a trace and the one crossing it"
+    },
+    {
+     "group": "traces",
+     "name": "PETG over layer 2",
+     "value": "1.68 mm",
+     "ok": true,
+     "note": "what separates a trace from a key pad or a bump"
+    },
+    {
+     "group": "flex key",
+     "name": "contact gap",
+     "value": "1.80 mm",
+     "ok": true,
+     "note": "45 percent of the cone"
+    },
+    {
+     "group": "flex key",
+     "name": "cap bridge",
+     "value": "3.60 mm",
+     "ok": true,
+     "note": "conductive TPU spanning the hole, unsupported"
+    },
+    {
+     "group": "flex key",
+     "name": "split between halves",
+     "value": "0.80 mm",
+     "ok": true,
+     "note": "exposed, a string across it reads as a press"
+    },
+    {
+     "group": "flex key",
+     "name": "column to cone wall",
+     "value": "1.71 mm",
+     "ok": true,
+     "note": "at the top of the column"
+    },
+    {
+     "group": "flex key",
+     "name": "face through bezel hole",
+     "value": "1.00 mm",
+     "ok": true,
+     "note": "diametral, the bezel drops over the key"
+    },
+    {
+     "group": "flex key",
+     "name": "stands proud of the bezel",
+     "value": "2.60 mm",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "group": "click spring",
+     "name": "slot at the end blocks",
+     "value": "0.30 mm",
+     "ok": true,
+     "note": "diametral, snug so the spring stands up straight"
+    },
+    {
+     "group": "click spring",
+     "name": "slot over the arch",
+     "value": "1.50 mm",
+     "ok": true,
+     "note": "diametral, the beams never touch a wall"
+    },
+    {
+     "group": "click spring",
+     "name": "slot length over spring",
+     "value": "0.40 mm",
+     "ok": true,
+     "note": "the ribs locate it, not the slot ends"
+    },
+    {
+     "group": "click spring",
+     "name": "rib in the block groove",
+     "value": "0.40 mm",
+     "ok": true,
+     "note": "keys each end block down to the floor so the arch cannot spread"
+    },
+    {
+     "group": "click spring",
+     "name": "under the bezel",
+     "value": "0.12 mm",
+     "ok": true,
+     "note": "the bezel holds the end blocks down"
+    },
+    {
+     "group": "click spring",
+     "name": "cap through bezel hole",
+     "value": "0.50 mm",
+     "ok": true,
+     "note": "diametral"
+    },
+    {
+     "group": "click spring",
+     "name": "cap flange in its well",
+     "value": "0.80 mm",
+     "ok": true,
+     "note": "diametral"
+    },
+    {
+     "group": "click spring",
+     "name": "travel to contact",
+     "value": "1.37 mm",
+     "ok": true,
+     "note": "snap peaks at 0.63 mm"
+    },
+    {
+     "group": "click spring",
+     "name": "tip over each pad",
+     "value": "1.30 mm",
+     "ok": true,
+     "note": "pads split by 0.60 mm"
+    },
+    {
+     "group": "click spring",
+     "name": "beam thickness",
+     "value": "0.55 mm",
+     "ok": true,
+     "note": "one line, needs thin wall handling on"
+    },
+    {
+     "group": "click spring",
+     "name": "strain at the stop",
+     "value": "2.3 percent",
+     "ok": true,
+     "note": "PETG fatigues above about 2.5"
+    },
+    {
+     "group": "touch pad",
+     "name": "comb gap",
+     "value": "0.80 mm",
+     "ok": true,
+     "note": "exposed, skin bridges it"
+    },
+    {
+     "group": "touch pad",
+     "name": "finger width",
+     "value": "1.00 mm",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "group": "touch pad",
+     "name": "boss through the bezel",
+     "value": "0.60 mm",
+     "ok": true,
+     "note": "diametral, flush with the bezel top"
+    },
+    {
+     "group": "board",
+     "name": "pocket around the board",
+     "value": "0.30 mm",
+     "ok": true,
+     "note": "each side"
+    },
+    {
+     "group": "board",
+     "name": "bump height",
+     "value": "0.48 mm",
+     "ok": true,
+     "note": "conductive PLA under each used pad"
+    },
+    {
+     "group": "board",
+     "name": "bezel squeeze on the board",
+     "value": "0.30 mm",
+     "ok": true,
+     "note": "interference, the ribs hold it on the bumps"
+    },
+    {
+     "group": "board",
+     "name": "bump to bump",
+     "value": "0.84 mm",
+     "ok": true,
+     "note": "exposed, adjacent pads are different nets"
+    },
+    {
+     "group": "board",
+     "name": "clearance under the board",
+     "value": "0.96 mm",
+     "ok": true,
+     "note": "window recessed into the pocket floor"
+    },
+    {
+     "group": "board",
+     "name": "USB opening",
+     "value": "12.50 mm wide",
+     "ok": true,
+     "note": "a plug overmould is usually 11 to 12 mm"
+    },
+    {
+     "group": "board",
+     "name": "USB opening height",
+     "value": "9.36 mm",
+     "ok": true,
+     "note": "a USB C plug overmould is about 7 mm tall"
+    },
+    {
+     "group": "bezel",
+     "name": "lip in its groove",
+     "value": "0.10 mm",
+     "ok": true,
+     "note": "diametral; the groove is 1.90 mm deep and the lip 1.60 mm"
+    },
+    {
+     "group": "bezel",
+     "name": "pry scallop",
+     "value": "6 mm wide",
+     "ok": true,
+     "note": "a gap under the bezel edge at each side, kept clear of the groove"
+    },
+    {
+     "group": "board",
+     "name": "datum corner",
+     "value": "0.30 mm",
+     "ok": true,
+     "note": "the far end and both sides are packed out there; the cable end keeps its clearance"
+    },
+    {
+     "group": "print",
+     "name": "smallest feature",
+     "value": "0.55 mm",
+     "ok": true,
+     "note": "under one nozzle width, check it slices"
+    }
+   ],
+   "elec": {
+    "minGap": 0.6,
+    "pairs": [
+     {
+      "a": "GND",
+      "b": "X",
+      "g": 0.6
+     },
+     {
+      "a": "GND",
+      "b": "B",
+      "g": 0.6
+     },
+     {
+      "a": "GND",
+      "b": "Y",
+      "g": 0.6
+     },
+     {
+      "a": "GND",
+      "b": "A",
+      "g": 0.6
+     },
+     {
+      "a": "B",
+      "b": "Y",
+      "g": 0.714327
+     },
+     {
+      "a": "3V3",
+      "b": "UP",
+      "g": 0.715759
+     },
+     {
+      "a": "Y",
+      "b": "A",
+      "g": 0.723778
+     },
+     {
+      "a": "LEFT",
+      "b": "RIGHT",
+      "g": 0.725285
+     }
+    ],
+    "nets": [
+     {
+      "name": "GND",
+      "parts": 1,
+      "vol": 381.065044
+     },
+     {
+      "name": "3V3",
+      "parts": 1,
+      "vol": 142.870205
+     },
+     {
+      "name": "UP",
+      "parts": 1,
+      "vol": 77.245209
+     },
+     {
+      "name": "DOWN",
+      "parts": 1,
+      "vol": 85.675662
+     },
+     {
+      "name": "LEFT",
+      "parts": 1,
+      "vol": 96.023177
+     },
+     {
+      "name": "RIGHT",
+      "parts": 1,
+      "vol": 66.645062
+     },
+     {
+      "name": "X",
+      "parts": 1,
+      "vol": 53.030779
+     },
+     {
+      "name": "B",
+      "parts": 1,
+      "vol": 67.695522
+     },
+     {
+      "name": "Y",
+      "parts": 1,
+      "vol": 41.002074
+     },
+     {
+      "name": "A",
+      "parts": 1,
+      "vol": 78.274655
+     },
+     {
+      "name": "SELECT",
+      "parts": 1,
+      "vol": 74.587185
+     },
+     {
+      "name": "START",
+      "parts": 1,
+      "vol": 70.82944
+     }
+    ]
+   },
+   "unrouted": 0,
+   "conflicts": 0,
+   "warn": [],
+   "seat": {
+    "A": {
+     "box": {
+      "x": [
+       -11.3,
+       11.3
+      ],
+      "y": [
+       5.4,
+       27.05
+      ],
+      "z": [
+       4.2,
+       13.68
+      ]
+     },
+     "envelope": 4638.4692,
+     "boxVolume": 4638.4692,
+     "slots": {
+      "1": 1297.162782,
+      "2": 27.09897,
+      "3": 0,
+      "4": 0
+     }
+    },
+    "B": {
+     "box": {
+      "x": [
+       -11.3,
+       11.3
+      ],
+      "y": [
+       27.05,
+       31.982866
+      ],
+      "z": [
+       4.2,
+       11.73
+      ]
+     },
+     "envelope": 839.46527,
+     "boxVolume": 839.46527,
+     "slots": {
+      "1": 173.938659,
+      "2": 0.826495,
+      "3": 0,
+      "4": 0
+     }
+    }
+   },
+   "stack": {
+    "box": {
+     "x": [
+      -75.982867,
+      75.982867
+     ],
+     "y": [
+      -32.982867,
+      32.982867
+     ],
+     "z": [
+      -1,
+      4.08
+     ]
+    },
+    "slots": {
+     "1": 34690.562799,
+     "2": 869.687808,
+     "3": 0,
+     "4": 0
+    }
+   }
+  },
+  "haft.stickBleed0": {
+   "name": "stickBleed0",
+   "params": {
+    "bleed": 0,
+    "left": "stick",
+    "contact": "bump",
+    "mode": "press"
+   },
+   "board": {
+    "mode": "press",
+    "L": 23.5,
+    "W": 18,
+    "T": 1,
+    "pitch": 2.54,
+    "inset": 1.38,
+    "usbH": 3.26,
+    "usbOver": 0.8,
+    "bumpW": 1.5,
+    "bumpH": 0.48,
+    "clr": 0.3,
+    "press": 0.3,
+    "window": true,
+    "contact": "bump",
+    "sockOD": 1.8,
+    "sockBore": 0.75,
+    "pinLen": 3,
+    "headerT": 2.5,
+    "datum": true,
+    "grip": true
+   },
+   "z": {
+    "floor": 4.8,
+    "top": 14.64,
+    "bezelTop": 17.04,
+    "l1": [
+     0.72,
+     1.44
+    ],
+    "l2": [
+     2.4,
+     3.12
+    ],
+    "pad": [
+     4.08,
+     4.8
+    ],
+    "board": 5.28,
+    "boardTop": 6.28,
+    "recC": 7.91,
+    "clickFloor": 5.76,
+    "flexFloor": 11.04
+   },
+   "stand": 0.48,
+   "boardRect": {
+    "cx": 0,
+    "cy": 19.45,
+    "x0": -9,
+    "x1": 9,
+    "y0": 7.7,
+    "y1": 31.2
+   },
+   "pocketRect": {
+    "x0": -9.3,
+    "x1": 9.3,
+    "y0": 7.4,
+    "y1": 34
+   },
+   "halfH": 32,
+   "yTopEdge": 31.982867,
+   "pads": [
+    {
+     "name": "5V",
+     "x": -7.62,
+     "y": 9.95,
+     "edge": "L",
+     "num": 1
+    },
+    {
+     "name": "GND",
+     "x": -7.62,
+     "y": 7.41,
+     "edge": "L",
+     "num": 2
+    },
+    {
+     "name": "3V3",
+     "x": -7.62,
+     "y": 4.87,
+     "edge": "L",
+     "num": 3
+    },
+    {
+     "name": "GP29",
+     "x": -7.62,
+     "y": 2.33,
+     "edge": "L",
+     "num": 4
+    },
+    {
+     "name": "GP28",
+     "x": -7.62,
+     "y": -0.21,
+     "edge": "L",
+     "num": 5
+    },
+    {
+     "name": "GP27",
+     "x": -7.62,
+     "y": -2.75,
+     "edge": "L",
+     "num": 6
+    },
+    {
+     "name": "GP26",
+     "x": -7.62,
+     "y": -5.29,
+     "edge": "L",
+     "num": 7
+    },
+    {
+     "name": "GP15",
+     "x": -7.62,
+     "y": -7.83,
+     "edge": "L",
+     "num": 8
+    },
+    {
+     "name": "GP14",
+     "x": -7.62,
+     "y": -10.37,
+     "edge": "L",
+     "num": 9
+    },
+    {
+     "name": "GP13",
+     "x": -5.08,
+     "y": -10.37,
+     "edge": "T",
+     "num": 10
+    },
+    {
+     "name": "GP12",
+     "x": -2.54,
+     "y": -10.37,
+     "edge": "T",
+     "num": 11
+    },
+    {
+     "name": "GP11",
+     "x": 0,
+     "y": -10.37,
+     "edge": "T",
+     "num": 12
+    },
+    {
+     "name": "GP10",
+     "x": 2.54,
+     "y": -10.37,
+     "edge": "T",
+     "num": 13
+    },
+    {
+     "name": "GP9",
+     "x": 5.08,
+     "y": -10.37,
+     "edge": "T",
+     "num": 14
+    },
+    {
+     "name": "GP8",
+     "x": 7.62,
+     "y": -10.37,
+     "edge": "R",
+     "num": 15
+    },
+    {
+     "name": "GP7",
+     "x": 7.62,
+     "y": -7.83,
+     "edge": "R",
+     "num": 16
+    },
+    {
+     "name": "GP6",
+     "x": 7.62,
+     "y": -5.29,
+     "edge": "R",
+     "num": 17
+    },
+    {
+     "name": "GP5",
+     "x": 7.62,
+     "y": -2.75,
+     "edge": "R",
+     "num": 18
+    },
+    {
+     "name": "GP4",
+     "x": 7.62,
+     "y": -0.21,
+     "edge": "R",
+     "num": 19
+    },
+    {
+     "name": "GP3",
+     "x": 7.62,
+     "y": 2.33,
+     "edge": "R",
+     "num": 20
+    },
+    {
+     "name": "GP2",
+     "x": 7.62,
+     "y": 4.87,
+     "edge": "R",
+     "num": 21
+    },
+    {
+     "name": "GP1",
+     "x": 7.62,
+     "y": 7.41,
+     "edge": "R",
+     "num": 22
+    },
+    {
+     "name": "GP0",
+     "x": 7.62,
+     "y": 9.95,
+     "edge": "R",
+     "num": 23
+    }
+   ],
+   "bumps": [
+    {
+     "net": "GND",
+     "pad": "GND",
+     "x": -7.62,
+     "y": 26.86
+    },
+    {
+     "net": "3V3",
+     "pad": "3V3",
+     "x": -7.62,
+     "y": 24.32
+    },
+    {
+     "net": "UP",
+     "pad": "GP29",
+     "x": -7.62,
+     "y": 21.78
+    },
+    {
+     "net": "LEFT",
+     "pad": "GP28",
+     "x": -7.62,
+     "y": 19.24
+    },
+    {
+     "net": "RIGHT",
+     "pad": "GP27",
+     "x": -7.62,
+     "y": 16.7
+    },
+    {
+     "net": "DOWN",
+     "pad": "GP26",
+     "x": -7.62,
+     "y": 14.16
+    },
+    {
+     "net": "SELECT",
+     "pad": "GP12",
+     "x": -2.54,
+     "y": 9.08
+    },
+    {
+     "net": "START",
+     "pad": "GP10",
+     "x": 2.54,
+     "y": 9.08
+    },
+    {
+     "net": "B",
+     "pad": "GP6",
+     "x": 7.62,
+     "y": 14.16
+    },
+    {
+     "net": "Y",
+     "pad": "GP5",
+     "x": 7.62,
+     "y": 16.7
+    },
+    {
+     "net": "A",
+     "pad": "GP4",
+     "x": 7.62,
+     "y": 19.24
+    },
+    {
+     "net": "X",
+     "pad": "GP3",
+     "x": 7.62,
+     "y": 21.78
+    }
+   ],
+   "usedPins": [
+    [
+     "GP29",
+     "UP"
+    ],
+    [
+     "GP28",
+     "LEFT"
+    ],
+    [
+     "GP27",
+     "RIGHT"
+    ],
+    [
+     "GP26",
+     "DOWN"
+    ],
+    [
+     "GP3",
+     "X"
+    ],
+    [
+     "GP6",
+     "B"
+    ],
+    [
+     "GP5",
+     "Y"
+    ],
+    [
+     "GP4",
+     "A"
+    ],
+    [
+     "GP12",
+     "SELECT"
+    ],
+    [
+     "GP10",
+     "START"
+    ],
+    [
+     "GND",
+     "GND"
+    ],
+    [
+     "3V3",
+     "3V3"
+    ]
+   ],
+   "fits": [
+    {
+     "group": "traces",
+     "name": "bleed allowance",
+     "value": "0.00 mm",
+     "ok": true,
+     "note": "every conductive edge is drawn back by half of this, so a nozzle that bleeds lands on size"
+    },
+    {
+     "group": "traces",
+     "name": "trace width",
+     "value": "1.40 mm",
+     "ok": true,
+     "note": "about 3 lines at a 0.4 nozzle"
+    },
+    {
+     "group": "traces",
+     "name": "net to net, measured",
+     "value": "0.60 mm",
+     "ok": true,
+     "note": "closest any two nets get anywhere, in plane or between layers"
+    },
+    {
+     "group": "traces",
+     "name": "insulation between layers",
+     "value": "0.96 mm",
+     "ok": true,
+     "note": "4 layers of PETG between a trace and the one crossing it"
+    },
+    {
+     "group": "traces",
+     "name": "PETG over layer 2",
+     "value": "1.68 mm",
+     "ok": true,
+     "note": "what separates a trace from a key pad or a bump"
+    },
+    {
+     "group": "click spring",
+     "name": "slot at the end blocks",
+     "value": "0.30 mm",
+     "ok": true,
+     "note": "diametral, snug so the spring stands up straight"
+    },
+    {
+     "group": "click spring",
+     "name": "slot over the arch",
+     "value": "1.50 mm",
+     "ok": true,
+     "note": "diametral, the beams never touch a wall"
+    },
+    {
+     "group": "click spring",
+     "name": "slot length over spring",
+     "value": "0.40 mm",
+     "ok": true,
+     "note": "the ribs locate it, not the slot ends"
+    },
+    {
+     "group": "click spring",
+     "name": "rib in the block groove",
+     "value": "0.40 mm",
+     "ok": true,
+     "note": "keys each end block down to the floor so the arch cannot spread"
+    },
+    {
+     "group": "click spring",
+     "name": "under the bezel",
+     "value": "0.12 mm",
+     "ok": true,
+     "note": "the bezel holds the end blocks down"
+    },
+    {
+     "group": "click spring",
+     "name": "cap through bezel hole",
+     "value": "0.50 mm",
+     "ok": true,
+     "note": "diametral"
+    },
+    {
+     "group": "click spring",
+     "name": "cap flange in its well",
+     "value": "0.80 mm",
+     "ok": true,
+     "note": "diametral"
+    },
+    {
+     "group": "click spring",
+     "name": "travel to contact",
+     "value": "1.37 mm",
+     "ok": true,
+     "note": "snap peaks at 0.63 mm"
+    },
+    {
+     "group": "click spring",
+     "name": "tip over each pad",
+     "value": "1.30 mm",
+     "ok": true,
+     "note": "pads split by 0.60 mm"
+    },
+    {
+     "group": "click spring",
+     "name": "beam thickness",
+     "value": "0.55 mm",
+     "ok": true,
+     "note": "one line, needs thin wall handling on"
+    },
+    {
+     "group": "click spring",
+     "name": "strain at the stop",
+     "value": "2.3 percent",
+     "ok": true,
+     "note": "PETG fatigues above about 2.5"
+    },
+    {
+     "group": "touch pad",
+     "name": "comb gap",
+     "value": "0.80 mm",
+     "ok": true,
+     "note": "exposed, skin bridges it"
+    },
+    {
+     "group": "touch pad",
+     "name": "finger width",
+     "value": "1.00 mm",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "group": "touch pad",
+     "name": "boss through the bezel",
+     "value": "0.60 mm",
+     "ok": true,
+     "note": "diametral, flush with the bezel top"
+    },
+    {
+     "group": "stick",
+     "name": "band to wall at rest",
+     "value": "0.66 mm",
+     "ok": true,
+     "note": "closes at 14 degrees of tilt"
+    },
+    {
+     "group": "stick",
+     "name": "band on the wall pad",
+     "value": "0.84 mm",
+     "ok": true,
+     "note": "and the same on the common ring above"
+    },
+    {
+     "group": "stick",
+     "name": "contact arc, one degree past",
+     "value": "36 deg",
+     "ok": true,
+     "note": "zero at the contact angle itself, it grows as you push"
+    },
+    {
+     "group": "stick",
+     "name": "contact arc at full tilt",
+     "value": "62 deg",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "group": "stick",
+     "name": "diagonals reach two pads",
+     "value": "yes",
+     "ok": true,
+     "note": "pads are 82 deg wide, split by 0.80 mm"
+    },
+    {
+     "group": "stick",
+     "name": "pad to common ring",
+     "value": "0.80 mm",
+     "ok": true,
+     "note": "the band bridges this"
+    },
+    {
+     "group": "stick",
+     "name": "bezel hole over the thumb pad",
+     "value": "1.60 mm",
+     "ok": true,
+     "note": "diametral, the bezel drops over it after printing"
+    },
+    {
+     "group": "stick",
+     "name": "pad rim above the bezel",
+     "value": "4.56 mm",
+     "ok": true,
+     "note": "the rim is the only part that has to clear at 17 degrees"
+    },
+    {
+     "group": "stick",
+     "name": "dish depth",
+     "value": "1.60 mm",
+     "ok": true,
+     "note": "3 grip rings, underside stays at 45 degrees"
+    },
+    {
+     "group": "stick",
+     "name": "pad diameter",
+     "value": "15.00 mm",
+     "ok": true,
+     "note": "a console thumb top is 18 to 20"
+    },
+    {
+     "group": "stick",
+     "name": "conductive collar thickness",
+     "value": "1.20 mm",
+     "ok": true,
+     "note": "a collar on the stem, the stem itself runs through unbroken"
+    },
+    {
+     "group": "stick",
+     "name": "stem stress at a 20 N side push",
+     "value": "4.9 MPa",
+     "ok": true,
+     "note": "TPU 95A parts break somewhere around 30, and the print is weaker than the spec"
+    },
+    {
+     "group": "stick",
+     "name": "well wall to the outline",
+     "value": "0.60 mm",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "group": "board",
+     "name": "pocket around the board",
+     "value": "0.30 mm",
+     "ok": true,
+     "note": "each side"
+    },
+    {
+     "group": "board",
+     "name": "bump height",
+     "value": "0.48 mm",
+     "ok": true,
+     "note": "conductive PLA under each used pad"
+    },
+    {
+     "group": "board",
+     "name": "bezel squeeze on the board",
+     "value": "0.30 mm",
+     "ok": true,
+     "note": "interference, the ribs hold it on the bumps"
+    },
+    {
+     "group": "board",
+     "name": "bump to bump",
+     "value": "0.84 mm",
+     "ok": true,
+     "note": "exposed, adjacent pads are different nets"
+    },
+    {
+     "group": "board",
+     "name": "clearance under the board",
+     "value": "0.96 mm",
+     "ok": true,
+     "note": "window recessed into the pocket floor"
+    },
+    {
+     "group": "board",
+     "name": "USB opening",
+     "value": "12.50 mm wide",
+     "ok": true,
+     "note": "a plug overmould is usually 11 to 12 mm"
+    },
+    {
+     "group": "board",
+     "name": "USB opening height",
+     "value": "10.32 mm",
+     "ok": true,
+     "note": "a USB C plug overmould is about 7 mm tall"
+    },
+    {
+     "group": "bezel",
+     "name": "lip in its groove",
+     "value": "0.10 mm",
+     "ok": true,
+     "note": "diametral; the groove is 1.90 mm deep and the lip 1.60 mm"
+    },
+    {
+     "group": "bezel",
+     "name": "pry scallop",
+     "value": "6 mm wide",
+     "ok": true,
+     "note": "a gap under the bezel edge at each side, kept clear of the groove"
+    },
+    {
+     "group": "board",
+     "name": "datum corner",
+     "value": "0.30 mm",
+     "ok": true,
+     "note": "the far end and both sides are packed out there; the cable end keeps its clearance"
+    },
+    {
+     "group": "print",
+     "name": "smallest feature",
+     "value": "0.55 mm",
+     "ok": true,
+     "note": "under one nozzle width, check it slices"
+    }
+   ],
+   "elec": {
+    "minGap": 0.6,
+    "pairs": [
+     {
+      "a": "GND",
+      "b": "X",
+      "g": 0.6
+     },
+     {
+      "a": "GND",
+      "b": "B",
+      "g": 0.6
+     },
+     {
+      "a": "GND",
+      "b": "Y",
+      "g": 0.6
+     },
+     {
+      "a": "GND",
+      "b": "A",
+      "g": 0.6
+     },
+     {
+      "a": "RIGHT",
+      "b": "LEFT",
+      "g": 0.68385
+     },
+     {
+      "a": "B",
+      "b": "Y",
+      "g": 0.714327
+     },
+     {
+      "a": "3V3",
+      "b": "UP",
+      "g": 0.715759
+     },
+     {
+      "a": "Y",
+      "b": "A",
+      "g": 0.723778
+     }
+    ],
+    "nets": [
+     {
+      "name": "GND",
+      "parts": 1,
+      "vol": 525.854431
+     },
+     {
+      "name": "3V3",
+      "parts": 1,
+      "vol": 145.00613
+     },
+     {
+      "name": "RIGHT",
+      "parts": 1,
+      "vol": 83.529028
+     },
+     {
+      "name": "UP",
+      "parts": 1,
+      "vol": 89.70063
+     },
+     {
+      "name": "LEFT",
+      "parts": 1,
+      "vol": 97.829799
+     },
+     {
+      "name": "DOWN",
+      "parts": 1,
+      "vol": 91.873667
+     },
+     {
+      "name": "X",
+      "parts": 1,
+      "vol": 55.910779
+     },
+     {
+      "name": "B",
+      "parts": 1,
+      "vol": 70.575522
+     },
+     {
+      "name": "Y",
+      "parts": 1,
+      "vol": 43.882074
+     },
+     {
+      "name": "A",
+      "parts": 1,
+      "vol": 81.154655
+     },
+     {
+      "name": "SELECT",
+      "parts": 1,
+      "vol": 75.655148
+     },
+     {
+      "name": "START",
+      "parts": 1,
+      "vol": 71.897403
+     }
+    ]
+   },
+   "unrouted": 0,
+   "conflicts": 0,
+   "warn": [],
+   "seat": {
+    "A": {
+     "box": {
+      "x": [
+       -11.3,
+       11.3
+      ],
+      "y": [
+       5.4,
+       27.05
+      ],
+      "z": [
+       4.2,
+       14.64
+      ]
+     },
+     "envelope": 5108.1876,
+     "boxVolume": 5108.1876,
+     "slots": {
+      "1": 1416.010782,
+      "2": 27.09897,
+      "3": 0,
+      "4": 0
+     }
+    },
+    "B": {
+     "box": {
+      "x": [
+       -11.3,
+       11.3
+      ],
+      "y": [
+       27.05,
+       31.982866
+      ],
+      "z": [
+       4.2,
+       12.69
+      ]
+     },
+     "envelope": 946.488731,
+     "boxVolume": 946.488731,
+     "slots": {
+      "1": 192.880864,
+      "2": 0.826495,
+      "3": 0,
+      "4": 0
+     }
+    }
+   },
+   "stack": {
+    "box": {
+     "x": [
+      -75.982867,
+      75.982867
+     ],
+     "y": [
+      -32.982867,
+      32.982867
+     ],
+     "z": [
+      -1,
+      4.08
+     ]
+    },
+    "slots": {
+     "1": 34755.180926,
+     "2": 805.069681,
+     "3": 0,
+     "4": 0
+    }
+   }
+  },
+  "haft.socketBleed0": {
+   "name": "socketBleed0",
+   "params": {
+    "bleed": 0,
+    "left": "dpad",
+    "contact": "socket",
+    "mode": "press"
+   },
+   "board": {
+    "mode": "press",
+    "L": 23.5,
+    "W": 18,
+    "T": 1,
+    "pitch": 2.54,
+    "inset": 1.38,
+    "usbH": 3.26,
+    "usbOver": 0.8,
+    "bumpW": 1.5,
+    "bumpH": 0.48,
+    "clr": 0.3,
+    "press": 0.3,
+    "window": true,
+    "contact": "socket",
+    "sockOD": 1.8,
+    "sockBore": 0.75,
+    "pinLen": 3,
+    "headerT": 2.5,
+    "datum": true,
+    "grip": true
+   },
+   "z": {
+    "floor": 4.8,
+    "top": 14.88,
+    "bezelTop": 17.28,
+    "l1": [
+     0.72,
+     1.44
+    ],
+    "l2": [
+     2.4,
+     3.12
+    ],
+    "pad": [
+     4.08,
+     4.8
+    ],
+    "board": 10.3,
+    "boardTop": 11.3,
+    "recC": 12.93,
+    "clickFloor": 6,
+    "flexFloor": 11.28
+   },
+   "stand": 5.5,
+   "boardRect": {
+    "cx": 0,
+    "cy": 19.45,
+    "x0": -9,
+    "x1": 9,
+    "y0": 7.7,
+    "y1": 31.2
+   },
+   "pocketRect": {
+    "x0": -9.3,
+    "x1": 9.3,
+    "y0": 7.4,
+    "y1": 34
+   },
+   "halfH": 32,
+   "yTopEdge": 31.982867,
+   "pads": [
+    {
+     "name": "5V",
+     "x": -7.62,
+     "y": 9.95,
+     "edge": "L",
+     "num": 1
+    },
+    {
+     "name": "GND",
+     "x": -7.62,
+     "y": 7.41,
+     "edge": "L",
+     "num": 2
+    },
+    {
+     "name": "3V3",
+     "x": -7.62,
+     "y": 4.87,
+     "edge": "L",
+     "num": 3
+    },
+    {
+     "name": "GP29",
+     "x": -7.62,
+     "y": 2.33,
+     "edge": "L",
+     "num": 4
+    },
+    {
+     "name": "GP28",
+     "x": -7.62,
+     "y": -0.21,
+     "edge": "L",
+     "num": 5
+    },
+    {
+     "name": "GP27",
+     "x": -7.62,
+     "y": -2.75,
+     "edge": "L",
+     "num": 6
+    },
+    {
+     "name": "GP26",
+     "x": -7.62,
+     "y": -5.29,
+     "edge": "L",
+     "num": 7
+    },
+    {
+     "name": "GP15",
+     "x": -7.62,
+     "y": -7.83,
+     "edge": "L",
+     "num": 8
+    },
+    {
+     "name": "GP14",
+     "x": -7.62,
+     "y": -10.37,
+     "edge": "L",
+     "num": 9
+    },
+    {
+     "name": "GP13",
+     "x": -5.08,
+     "y": -10.37,
+     "edge": "T",
+     "num": 10
+    },
+    {
+     "name": "GP12",
+     "x": -2.54,
+     "y": -10.37,
+     "edge": "T",
+     "num": 11
+    },
+    {
+     "name": "GP11",
+     "x": 0,
+     "y": -10.37,
+     "edge": "T",
+     "num": 12
+    },
+    {
+     "name": "GP10",
+     "x": 2.54,
+     "y": -10.37,
+     "edge": "T",
+     "num": 13
+    },
+    {
+     "name": "GP9",
+     "x": 5.08,
+     "y": -10.37,
+     "edge": "T",
+     "num": 14
+    },
+    {
+     "name": "GP8",
+     "x": 7.62,
+     "y": -10.37,
+     "edge": "R",
+     "num": 15
+    },
+    {
+     "name": "GP7",
+     "x": 7.62,
+     "y": -7.83,
+     "edge": "R",
+     "num": 16
+    },
+    {
+     "name": "GP6",
+     "x": 7.62,
+     "y": -5.29,
+     "edge": "R",
+     "num": 17
+    },
+    {
+     "name": "GP5",
+     "x": 7.62,
+     "y": -2.75,
+     "edge": "R",
+     "num": 18
+    },
+    {
+     "name": "GP4",
+     "x": 7.62,
+     "y": -0.21,
+     "edge": "R",
+     "num": 19
+    },
+    {
+     "name": "GP3",
+     "x": 7.62,
+     "y": 2.33,
+     "edge": "R",
+     "num": 20
+    },
+    {
+     "name": "GP2",
+     "x": 7.62,
+     "y": 4.87,
+     "edge": "R",
+     "num": 21
+    },
+    {
+     "name": "GP1",
+     "x": 7.62,
+     "y": 7.41,
+     "edge": "R",
+     "num": 22
+    },
+    {
+     "name": "GP0",
+     "x": 7.62,
+     "y": 9.95,
+     "edge": "R",
+     "num": 23
+    }
+   ],
+   "bumps": [
+    {
+     "net": "GND",
+     "pad": "GND",
+     "x": -7.62,
+     "y": 26.86
+    },
+    {
+     "net": "3V3",
+     "pad": "3V3",
+     "x": -7.62,
+     "y": 24.32
+    },
+    {
+     "net": "UP",
+     "pad": "GP29",
+     "x": -7.62,
+     "y": 21.78
+    },
+    {
+     "net": "LEFT",
+     "pad": "GP28",
+     "x": -7.62,
+     "y": 19.24
+    },
+    {
+     "net": "RIGHT",
+     "pad": "GP27",
+     "x": -7.62,
+     "y": 16.7
+    },
+    {
+     "net": "DOWN",
+     "pad": "GP26",
+     "x": -7.62,
+     "y": 14.16
+    },
+    {
+     "net": "SELECT",
+     "pad": "GP12",
+     "x": -2.54,
+     "y": 9.08
+    },
+    {
+     "net": "START",
+     "pad": "GP10",
+     "x": 2.54,
+     "y": 9.08
+    },
+    {
+     "net": "B",
+     "pad": "GP6",
+     "x": 7.62,
+     "y": 14.16
+    },
+    {
+     "net": "Y",
+     "pad": "GP5",
+     "x": 7.62,
+     "y": 16.7
+    },
+    {
+     "net": "A",
+     "pad": "GP4",
+     "x": 7.62,
+     "y": 19.24
+    },
+    {
+     "net": "X",
+     "pad": "GP3",
+     "x": 7.62,
+     "y": 21.78
+    }
+   ],
+   "usedPins": [
+    [
+     "GP29",
+     "UP"
+    ],
+    [
+     "GP26",
+     "DOWN"
+    ],
+    [
+     "GP28",
+     "LEFT"
+    ],
+    [
+     "GP27",
+     "RIGHT"
+    ],
+    [
+     "GP3",
+     "X"
+    ],
+    [
+     "GP6",
+     "B"
+    ],
+    [
+     "GP5",
+     "Y"
+    ],
+    [
+     "GP4",
+     "A"
+    ],
+    [
+     "GP12",
+     "SELECT"
+    ],
+    [
+     "GP10",
+     "START"
+    ],
+    [
+     "GND",
+     "GND"
+    ],
+    [
+     "3V3",
+     "3V3"
+    ]
+   ],
+   "fits": [
+    {
+     "group": "traces",
+     "name": "bleed allowance",
+     "value": "0.00 mm",
+     "ok": true,
+     "note": "every conductive edge is drawn back by half of this, so a nozzle that bleeds lands on size"
+    },
+    {
+     "group": "traces",
+     "name": "trace width",
+     "value": "1.40 mm",
+     "ok": true,
+     "note": "about 3 lines at a 0.4 nozzle"
+    },
+    {
+     "group": "traces",
+     "name": "net to net, measured",
+     "value": "0.60 mm",
+     "ok": true,
+     "note": "closest any two nets get anywhere, in plane or between layers"
+    },
+    {
+     "group": "traces",
+     "name": "insulation between layers",
+     "value": "0.96 mm",
+     "ok": true,
+     "note": "4 layers of PETG between a trace and the one crossing it"
+    },
+    {
+     "group": "traces",
+     "name": "PETG over layer 2",
+     "value": "1.68 mm",
+     "ok": true,
+     "note": "what separates a trace from a key pad or a bump"
+    },
+    {
+     "group": "flex key",
+     "name": "contact gap",
+     "value": "1.80 mm",
+     "ok": true,
+     "note": "45 percent of the cone"
+    },
+    {
+     "group": "flex key",
+     "name": "cap bridge",
+     "value": "3.60 mm",
+     "ok": true,
+     "note": "conductive TPU spanning the hole, unsupported"
+    },
+    {
+     "group": "flex key",
+     "name": "split between halves",
+     "value": "0.80 mm",
+     "ok": true,
+     "note": "exposed, a string across it reads as a press"
+    },
+    {
+     "group": "flex key",
+     "name": "column to cone wall",
+     "value": "1.71 mm",
+     "ok": true,
+     "note": "at the top of the column"
+    },
+    {
+     "group": "flex key",
+     "name": "face through bezel hole",
+     "value": "1.00 mm",
+     "ok": true,
+     "note": "diametral, the bezel drops over the key"
+    },
+    {
+     "group": "flex key",
+     "name": "stands proud of the bezel",
+     "value": "2.60 mm",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "group": "click spring",
+     "name": "slot at the end blocks",
+     "value": "0.30 mm",
+     "ok": true,
+     "note": "diametral, snug so the spring stands up straight"
+    },
+    {
+     "group": "click spring",
+     "name": "slot over the arch",
+     "value": "1.50 mm",
+     "ok": true,
+     "note": "diametral, the beams never touch a wall"
+    },
+    {
+     "group": "click spring",
+     "name": "slot length over spring",
+     "value": "0.40 mm",
+     "ok": true,
+     "note": "the ribs locate it, not the slot ends"
+    },
+    {
+     "group": "click spring",
+     "name": "rib in the block groove",
+     "value": "0.40 mm",
+     "ok": true,
+     "note": "keys each end block down to the floor so the arch cannot spread"
+    },
+    {
+     "group": "click spring",
+     "name": "under the bezel",
+     "value": "0.12 mm",
+     "ok": true,
+     "note": "the bezel holds the end blocks down"
+    },
+    {
+     "group": "click spring",
+     "name": "cap through bezel hole",
+     "value": "0.50 mm",
+     "ok": true,
+     "note": "diametral"
+    },
+    {
+     "group": "click spring",
+     "name": "cap flange in its well",
+     "value": "0.80 mm",
+     "ok": true,
+     "note": "diametral"
+    },
+    {
+     "group": "click spring",
+     "name": "travel to contact",
+     "value": "1.37 mm",
+     "ok": true,
+     "note": "snap peaks at 0.63 mm"
+    },
+    {
+     "group": "click spring",
+     "name": "tip over each pad",
+     "value": "1.30 mm",
+     "ok": true,
+     "note": "pads split by 0.60 mm"
+    },
+    {
+     "group": "click spring",
+     "name": "beam thickness",
+     "value": "0.55 mm",
+     "ok": true,
+     "note": "one line, needs thin wall handling on"
+    },
+    {
+     "group": "click spring",
+     "name": "strain at the stop",
+     "value": "2.3 percent",
+     "ok": true,
+     "note": "PETG fatigues above about 2.5"
+    },
+    {
+     "group": "touch pad",
+     "name": "comb gap",
+     "value": "0.80 mm",
+     "ok": true,
+     "note": "exposed, skin bridges it"
+    },
+    {
+     "group": "touch pad",
+     "name": "finger width",
+     "value": "1.00 mm",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "group": "touch pad",
+     "name": "boss through the bezel",
+     "value": "0.60 mm",
+     "ok": true,
+     "note": "diametral, flush with the bezel top"
+    },
+    {
+     "group": "board",
+     "name": "pocket around the board",
+     "value": "0.30 mm",
+     "ok": true,
+     "note": "each side"
+    },
+    {
+     "group": "board",
+     "name": "USB opening",
+     "value": "12.50 mm wide",
+     "ok": true,
+     "note": "a plug overmould is usually 11 to 12 mm"
+    },
+    {
+     "group": "board",
+     "name": "USB opening height",
+     "value": "7.20 mm",
+     "ok": true,
+     "note": "a USB C plug overmould is about 7 mm tall, the opening carries on into the bezel"
+    },
+    {
+     "group": "bezel",
+     "name": "lip in its groove",
+     "value": "0.10 mm",
+     "ok": true,
+     "note": "diametral; the groove is 1.90 mm deep and the lip 1.60 mm"
+    },
+    {
+     "group": "bezel",
+     "name": "pry scallop",
+     "value": "6 mm wide",
+     "ok": true,
+     "note": "a gap under the bezel edge at each side, kept clear of the groove"
+    },
+    {
+     "group": "board",
+     "name": "socket bore",
+     "value": "0.75 mm",
+     "ok": true,
+     "note": "a 0.64 mm square header pin; the print comes out about 0.1 small, which is the grip"
+    },
+    {
+     "group": "board",
+     "name": "socket wall",
+     "value": "0.53 mm",
+     "ok": true,
+     "note": "each socket stands proud of the floor like a cup"
+    },
+    {
+     "group": "board",
+     "name": "socket to socket",
+     "value": "0.74 mm",
+     "ok": true,
+     "note": "exposed, with a slot cut between neighbours"
+    },
+    {
+     "group": "board",
+     "name": "pin length into the socket",
+     "value": "3.00 mm",
+     "ok": true,
+     "note": "trim the header pins to this"
+    },
+    {
+     "group": "board",
+     "name": "board sits above the floor",
+     "value": "5.50 mm",
+     "ok": true,
+     "note": "header spacer 2.50 mm on top of the sockets"
+    },
+    {
+     "group": "board",
+     "name": "datum corner",
+     "value": "0.30 mm",
+     "ok": true,
+     "note": "the far end and both sides are packed out there; the cable end keeps its clearance"
+    },
+    {
+     "group": "print",
+     "name": "smallest feature",
+     "value": "0.55 mm",
+     "ok": true,
+     "note": "under one nozzle width, check it slices"
+    }
+   ],
+   "elec": {
+    "minGap": 0.6,
+    "pairs": [
+     {
+      "a": "GND",
+      "b": "X",
+      "g": 0.6
+     },
+     {
+      "a": "GND",
+      "b": "B",
+      "g": 0.6
+     },
+     {
+      "a": "GND",
+      "b": "Y",
+      "g": 0.6
+     },
+     {
+      "a": "GND",
+      "b": "A",
+      "g": 0.6
+     },
+     {
+      "a": "B",
+      "b": "Y",
+      "g": 0.714327
+     },
+     {
+      "a": "3V3",
+      "b": "UP",
+      "g": 0.715759
+     },
+     {
+      "a": "Y",
+      "b": "A",
+      "g": 0.723778
+     },
+     {
+      "a": "LEFT",
+      "b": "RIGHT",
+      "g": 0.725285
+     }
+    ],
+    "nets": [
+     {
+      "name": "GND",
+      "parts": 1,
+      "vol": 414.114396
+     },
+     {
+      "name": "3V3",
+      "parts": 1,
+      "vol": 151.034026
+     },
+     {
+      "name": "UP",
+      "parts": 1,
+      "vol": 86.027983
+     },
+     {
+      "name": "DOWN",
+      "parts": 1,
+      "vol": 94.458435
+     },
+     {
+      "name": "LEFT",
+      "parts": 1,
+      "vol": 104.805951
+     },
+     {
+      "name": "RIGHT",
+      "parts": 1,
+      "vol": 75.427836
+     },
+     {
+      "name": "X",
+      "parts": 1,
+      "vol": 62.124693
+     },
+     {
+      "name": "B",
+      "parts": 1,
+      "vol": 76.789436
+     },
+     {
+      "name": "Y",
+      "parts": 1,
+      "vol": 50.095988
+     },
+     {
+      "name": "A",
+      "parts": 1,
+      "vol": 87.368569
+     },
+     {
+      "name": "SELECT",
+      "parts": 1,
+      "vol": 81.416053
+     },
+     {
+      "name": "START",
+      "parts": 1,
+      "vol": 77.658307
+     }
+    ]
+   },
+   "unrouted": 0,
+   "conflicts": 0,
+   "warn": [],
+   "seat": {
+    "A": {
+     "box": {
+      "x": [
+       -11.3,
+       11.3
+      ],
+      "y": [
+       5.4,
+       27.05
+      ],
+      "z": [
+       4.2,
+       14.88
+      ]
+     },
+     "envelope": 5225.6172,
+     "boxVolume": 5225.6172,
+     "slots": {
+      "1": 1579.125719,
+      "2": 90.833686,
+      "3": 0,
+      "4": 0
+     }
+    },
+    "B": {
+     "box": {
+      "x": [
+       -11.3,
+       11.3
+      ],
+      "y": [
+       27.05,
+       31.982866
+      ],
+      "z": [
+       4.2,
+       12.93
+      ]
+     },
+     "envelope": 973.244596,
+     "boxVolume": 973.244596,
+     "slots": {
+      "1": 226.863276,
+      "2": 3.01875,
+      "3": 0,
+      "4": 0
+     }
+    }
+   },
+   "stack": {
+    "box": {
+     "x": [
+      -75.982867,
+      75.982867
+     ],
+     "y": [
+      -32.982867,
+      32.982867
+     ],
+     "z": [
+      -1,
+      4.08
+     ]
+    },
+    "slots": {
+     "1": 34690.562799,
+     "2": 869.687808,
+     "3": 0,
+     "4": 0
+    }
+   }
+  },
+  "haft.socket": {
+   "name": "socket",
+   "params": {
+    "bleed": 0.15,
+    "left": "dpad",
+    "contact": "socket",
+    "mode": "press"
+   },
+   "board": {
+    "mode": "press",
+    "L": 23.5,
+    "W": 18,
+    "T": 1,
+    "pitch": 2.54,
+    "inset": 1.38,
+    "usbH": 3.26,
+    "usbOver": 0.8,
+    "bumpW": 1.5,
+    "bumpH": 0.48,
+    "clr": 0.3,
+    "press": 0.3,
+    "window": true,
+    "contact": "socket",
+    "sockOD": 1.8,
+    "sockBore": 0.75,
+    "pinLen": 3,
+    "headerT": 2.5,
+    "datum": true,
+    "grip": true
+   },
+   "z": {
+    "floor": 4.8,
+    "top": 14.88,
+    "bezelTop": 17.28,
+    "l1": [
+     0.72,
+     1.44
+    ],
+    "l2": [
+     2.4,
+     3.12
+    ],
+    "pad": [
+     4.08,
+     4.8
+    ],
+    "board": 10.3,
+    "boardTop": 11.3,
+    "recC": 12.93,
+    "clickFloor": 6,
+    "flexFloor": 11.28
+   },
+   "stand": 5.5,
+   "boardRect": {
+    "cx": 0,
+    "cy": 19.45,
+    "x0": -9,
+    "x1": 9,
+    "y0": 7.7,
+    "y1": 31.2
+   },
+   "pocketRect": {
+    "x0": -9.3,
+    "x1": 9.3,
+    "y0": 7.4,
+    "y1": 34
+   },
+   "halfH": 32,
+   "yTopEdge": 31.982867,
+   "pads": [
+    {
+     "name": "5V",
+     "x": -7.62,
+     "y": 9.95,
+     "edge": "L",
+     "num": 1
+    },
+    {
+     "name": "GND",
+     "x": -7.62,
+     "y": 7.41,
+     "edge": "L",
+     "num": 2
+    },
+    {
+     "name": "3V3",
+     "x": -7.62,
+     "y": 4.87,
+     "edge": "L",
+     "num": 3
+    },
+    {
+     "name": "GP29",
+     "x": -7.62,
+     "y": 2.33,
+     "edge": "L",
+     "num": 4
+    },
+    {
+     "name": "GP28",
+     "x": -7.62,
+     "y": -0.21,
+     "edge": "L",
+     "num": 5
+    },
+    {
+     "name": "GP27",
+     "x": -7.62,
+     "y": -2.75,
+     "edge": "L",
+     "num": 6
+    },
+    {
+     "name": "GP26",
+     "x": -7.62,
+     "y": -5.29,
+     "edge": "L",
+     "num": 7
+    },
+    {
+     "name": "GP15",
+     "x": -7.62,
+     "y": -7.83,
+     "edge": "L",
+     "num": 8
+    },
+    {
+     "name": "GP14",
+     "x": -7.62,
+     "y": -10.37,
+     "edge": "L",
+     "num": 9
+    },
+    {
+     "name": "GP13",
+     "x": -5.08,
+     "y": -10.37,
+     "edge": "T",
+     "num": 10
+    },
+    {
+     "name": "GP12",
+     "x": -2.54,
+     "y": -10.37,
+     "edge": "T",
+     "num": 11
+    },
+    {
+     "name": "GP11",
+     "x": 0,
+     "y": -10.37,
+     "edge": "T",
+     "num": 12
+    },
+    {
+     "name": "GP10",
+     "x": 2.54,
+     "y": -10.37,
+     "edge": "T",
+     "num": 13
+    },
+    {
+     "name": "GP9",
+     "x": 5.08,
+     "y": -10.37,
+     "edge": "T",
+     "num": 14
+    },
+    {
+     "name": "GP8",
+     "x": 7.62,
+     "y": -10.37,
+     "edge": "R",
+     "num": 15
+    },
+    {
+     "name": "GP7",
+     "x": 7.62,
+     "y": -7.83,
+     "edge": "R",
+     "num": 16
+    },
+    {
+     "name": "GP6",
+     "x": 7.62,
+     "y": -5.29,
+     "edge": "R",
+     "num": 17
+    },
+    {
+     "name": "GP5",
+     "x": 7.62,
+     "y": -2.75,
+     "edge": "R",
+     "num": 18
+    },
+    {
+     "name": "GP4",
+     "x": 7.62,
+     "y": -0.21,
+     "edge": "R",
+     "num": 19
+    },
+    {
+     "name": "GP3",
+     "x": 7.62,
+     "y": 2.33,
+     "edge": "R",
+     "num": 20
+    },
+    {
+     "name": "GP2",
+     "x": 7.62,
+     "y": 4.87,
+     "edge": "R",
+     "num": 21
+    },
+    {
+     "name": "GP1",
+     "x": 7.62,
+     "y": 7.41,
+     "edge": "R",
+     "num": 22
+    },
+    {
+     "name": "GP0",
+     "x": 7.62,
+     "y": 9.95,
+     "edge": "R",
+     "num": 23
+    }
+   ],
+   "bumps": [
+    {
+     "net": "GND",
+     "pad": "GND",
+     "x": -7.62,
+     "y": 26.86
+    },
+    {
+     "net": "3V3",
+     "pad": "3V3",
+     "x": -7.62,
+     "y": 24.32
+    },
+    {
+     "net": "UP",
+     "pad": "GP29",
+     "x": -7.62,
+     "y": 21.78
+    },
+    {
+     "net": "LEFT",
+     "pad": "GP28",
+     "x": -7.62,
+     "y": 19.24
+    },
+    {
+     "net": "RIGHT",
+     "pad": "GP27",
+     "x": -7.62,
+     "y": 16.7
+    },
+    {
+     "net": "DOWN",
+     "pad": "GP26",
+     "x": -7.62,
+     "y": 14.16
+    },
+    {
+     "net": "SELECT",
+     "pad": "GP12",
+     "x": -2.54,
+     "y": 9.08
+    },
+    {
+     "net": "START",
+     "pad": "GP10",
+     "x": 2.54,
+     "y": 9.08
+    },
+    {
+     "net": "B",
+     "pad": "GP6",
+     "x": 7.62,
+     "y": 14.16
+    },
+    {
+     "net": "Y",
+     "pad": "GP5",
+     "x": 7.62,
+     "y": 16.7
+    },
+    {
+     "net": "A",
+     "pad": "GP4",
+     "x": 7.62,
+     "y": 19.24
+    },
+    {
+     "net": "X",
+     "pad": "GP3",
+     "x": 7.62,
+     "y": 21.78
+    }
+   ],
+   "usedPins": [
+    [
+     "GP29",
+     "UP"
+    ],
+    [
+     "GP26",
+     "DOWN"
+    ],
+    [
+     "GP28",
+     "LEFT"
+    ],
+    [
+     "GP27",
+     "RIGHT"
+    ],
+    [
+     "GP3",
+     "X"
+    ],
+    [
+     "GP6",
+     "B"
+    ],
+    [
+     "GP5",
+     "Y"
+    ],
+    [
+     "GP4",
+     "A"
+    ],
+    [
+     "GP12",
+     "SELECT"
+    ],
+    [
+     "GP10",
+     "START"
+    ],
+    [
+     "GND",
+     "GND"
+    ],
+    [
+     "3V3",
+     "3V3"
+    ]
+   ],
+   "fits": [
+    {
+     "group": "traces",
+     "name": "bleed allowance",
+     "value": "0.15 mm",
+     "ok": true,
+     "note": "every conductive edge is drawn back by half of this, so a nozzle that bleeds lands on size"
+    },
+    {
+     "group": "traces",
+     "name": "trace width",
+     "value": "1.40 mm",
+     "ok": true,
+     "note": "about 3 lines at a 0.4 nozzle"
+    },
+    {
+     "group": "traces",
+     "name": "net to net, measured",
+     "value": "0.75 mm",
+     "ok": true,
+     "note": "closest any two nets get anywhere, in plane or between layers"
+    },
+    {
+     "group": "traces",
+     "name": "insulation between layers",
+     "value": "0.96 mm",
+     "ok": true,
+     "note": "4 layers of PETG between a trace and the one crossing it"
+    },
+    {
+     "group": "traces",
+     "name": "PETG over layer 2",
+     "value": "1.68 mm",
+     "ok": true,
+     "note": "what separates a trace from a key pad or a bump"
+    },
+    {
+     "group": "flex key",
+     "name": "contact gap",
+     "value": "1.80 mm",
+     "ok": true,
+     "note": "45 percent of the cone"
+    },
+    {
+     "group": "flex key",
+     "name": "cap bridge",
+     "value": "3.60 mm",
+     "ok": true,
+     "note": "conductive TPU spanning the hole, unsupported"
+    },
+    {
+     "group": "flex key",
+     "name": "split between halves",
+     "value": "0.80 mm",
+     "ok": true,
+     "note": "exposed, a string across it reads as a press"
+    },
+    {
+     "group": "flex key",
+     "name": "column to cone wall",
+     "value": "1.71 mm",
+     "ok": true,
+     "note": "at the top of the column"
+    },
+    {
+     "group": "flex key",
+     "name": "face through bezel hole",
+     "value": "1.00 mm",
+     "ok": true,
+     "note": "diametral, the bezel drops over the key"
+    },
+    {
+     "group": "flex key",
+     "name": "stands proud of the bezel",
+     "value": "2.60 mm",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "group": "click spring",
+     "name": "slot at the end blocks",
+     "value": "0.30 mm",
+     "ok": true,
+     "note": "diametral, snug so the spring stands up straight"
+    },
+    {
+     "group": "click spring",
+     "name": "slot over the arch",
+     "value": "1.50 mm",
+     "ok": true,
+     "note": "diametral, the beams never touch a wall"
+    },
+    {
+     "group": "click spring",
+     "name": "slot length over spring",
+     "value": "0.40 mm",
+     "ok": true,
+     "note": "the ribs locate it, not the slot ends"
+    },
+    {
+     "group": "click spring",
+     "name": "rib in the block groove",
+     "value": "0.40 mm",
+     "ok": true,
+     "note": "keys each end block down to the floor so the arch cannot spread"
+    },
+    {
+     "group": "click spring",
+     "name": "under the bezel",
+     "value": "0.12 mm",
+     "ok": true,
+     "note": "the bezel holds the end blocks down"
+    },
+    {
+     "group": "click spring",
+     "name": "cap through bezel hole",
+     "value": "0.50 mm",
+     "ok": true,
+     "note": "diametral"
+    },
+    {
+     "group": "click spring",
+     "name": "cap flange in its well",
+     "value": "0.80 mm",
+     "ok": true,
+     "note": "diametral"
+    },
+    {
+     "group": "click spring",
+     "name": "travel to contact",
+     "value": "1.37 mm",
+     "ok": true,
+     "note": "snap peaks at 0.63 mm"
+    },
+    {
+     "group": "click spring",
+     "name": "tip over each pad",
+     "value": "1.30 mm",
+     "ok": true,
+     "note": "pads split by 0.60 mm"
+    },
+    {
+     "group": "click spring",
+     "name": "beam thickness",
+     "value": "0.55 mm",
+     "ok": true,
+     "note": "one line, needs thin wall handling on"
+    },
+    {
+     "group": "click spring",
+     "name": "strain at the stop",
+     "value": "2.3 percent",
+     "ok": true,
+     "note": "PETG fatigues above about 2.5"
+    },
+    {
+     "group": "touch pad",
+     "name": "comb gap",
+     "value": "0.80 mm",
+     "ok": true,
+     "note": "exposed, skin bridges it"
+    },
+    {
+     "group": "touch pad",
+     "name": "finger width",
+     "value": "1.00 mm",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "group": "touch pad",
+     "name": "boss through the bezel",
+     "value": "0.60 mm",
+     "ok": true,
+     "note": "diametral, flush with the bezel top"
+    },
+    {
+     "group": "board",
+     "name": "pocket around the board",
+     "value": "0.30 mm",
+     "ok": true,
+     "note": "each side"
+    },
+    {
+     "group": "board",
+     "name": "USB opening",
+     "value": "12.50 mm wide",
+     "ok": true,
+     "note": "a plug overmould is usually 11 to 12 mm"
+    },
+    {
+     "group": "board",
+     "name": "USB opening height",
+     "value": "7.20 mm",
+     "ok": true,
+     "note": "a USB C plug overmould is about 7 mm tall, the opening carries on into the bezel"
+    },
+    {
+     "group": "bezel",
+     "name": "lip in its groove",
+     "value": "0.10 mm",
+     "ok": true,
+     "note": "diametral; the groove is 1.90 mm deep and the lip 1.60 mm"
+    },
+    {
+     "group": "bezel",
+     "name": "pry scallop",
+     "value": "6 mm wide",
+     "ok": true,
+     "note": "a gap under the bezel edge at each side, kept clear of the groove"
+    },
+    {
+     "group": "board",
+     "name": "socket bore",
+     "value": "0.75 mm",
+     "ok": true,
+     "note": "a 0.64 mm square header pin; the print comes out about 0.1 small, which is the grip"
+    },
+    {
+     "group": "board",
+     "name": "socket wall",
+     "value": "0.45 mm",
+     "ok": true,
+     "note": "each socket stands proud of the floor like a cup"
+    },
+    {
+     "group": "board",
+     "name": "socket to socket",
+     "value": "0.89 mm",
+     "ok": true,
+     "note": "exposed, with a slot cut between neighbours"
+    },
+    {
+     "group": "board",
+     "name": "pin length into the socket",
+     "value": "3.00 mm",
+     "ok": true,
+     "note": "trim the header pins to this"
+    },
+    {
+     "group": "board",
+     "name": "board sits above the floor",
+     "value": "5.50 mm",
+     "ok": true,
+     "note": "header spacer 2.50 mm on top of the sockets"
+    },
+    {
+     "group": "board",
+     "name": "datum corner",
+     "value": "0.30 mm",
+     "ok": true,
+     "note": "the far end and both sides are packed out there; the cable end keeps its clearance"
+    },
+    {
+     "group": "print",
+     "name": "smallest feature",
+     "value": "0.55 mm",
+     "ok": true,
+     "note": "under one nozzle width, check it slices"
+    }
+   ],
+   "elec": {
+    "minGap": 0.75,
+    "pairs": [
+     {
+      "a": "GND",
+      "b": "A",
+      "g": 0.75
+     },
+     {
+      "a": "GND",
+      "b": "X",
+      "g": 0.75
+     },
+     {
+      "a": "GND",
+      "b": "B",
+      "g": 0.75
+     },
+     {
+      "a": "GND",
+      "b": "Y",
+      "g": 0.75
+     },
+     {
+      "a": "3V3",
+      "b": "SELECT",
+      "g": 0.8
+     },
+     {
+      "a": "3V3",
+      "b": "START",
+      "g": 0.8
+     },
+     {
+      "a": "3V3",
+      "b": "UP",
+      "g": 0.863367
+     },
+     {
+      "a": "B",
+      "b": "Y",
+      "g": 0.863685
+     }
+    ],
+    "nets": [
+     {
+      "name": "GND",
+      "parts": 1,
+      "vol": 367.623128
+     },
+     {
+      "name": "3V3",
+      "parts": 1,
+      "vol": 136.447899
+     },
+     {
+      "name": "UP",
+      "parts": 1,
+      "vol": 76.005562
+     },
+     {
+      "name": "DOWN",
+      "parts": 1,
+      "vol": 83.529569
+     },
+     {
+      "name": "LEFT",
+      "parts": 1,
+      "vol": 92.771572
+     },
+     {
+      "name": "RIGHT",
+      "parts": 1,
+      "vol": 66.540267
+     },
+     {
+      "name": "X",
+      "parts": 1,
+      "vol": 53.864549
+     },
+     {
+      "name": "B",
+      "parts": 1,
+      "vol": 66.962315
+     },
+     {
+      "name": "Y",
+      "parts": 1,
+      "vol": 43.128674
+     },
+     {
+      "name": "A",
+      "parts": 1,
+      "vol": 76.408579
+     },
+     {
+      "name": "SELECT",
+      "parts": 1,
+      "vol": 72.952423
+     },
+     {
+      "name": "START",
+      "parts": 1,
+      "vol": 69.597293
+     }
+    ]
+   },
+   "unrouted": 0,
+   "conflicts": 0,
+   "warn": [],
+   "seat": {
+    "A": {
+     "box": {
+      "x": [
+       -11.3,
+       11.3
+      ],
+      "y": [
+       5.4,
+       27.05
+      ],
+      "z": [
+       4.2,
+       14.88
+      ]
+     },
+     "envelope": 5225.6172,
+     "boxVolume": 5225.6172,
+     "slots": {
+      "1": 1581.654602,
+      "2": 74.356144,
+      "3": 0,
+      "4": 0
+     }
+    },
+    "B": {
+     "box": {
+      "x": [
+       -11.3,
+       11.3
+      ],
+      "y": [
+       27.05,
+       31.982866
+      ],
+      "z": [
+       4.2,
+       12.93
+      ]
+     },
+     "envelope": 973.244596,
+     "boxVolume": 973.244596,
+     "slots": {
+      "1": 226.955281,
+      "2": 2.410007,
+      "3": 0,
+      "4": 0
+     }
+    }
+   },
+   "stack": {
+    "box": {
+     "x": [
+      -75.982867,
+      75.982867
+     ],
+     "y": [
+      -32.982867,
+      32.982867
+     ],
+     "z": [
+      -1,
+      4.08
+     ]
+    },
+    "slots": {
+     "1": 34796.290171,
+     "2": 763.960436,
+     "3": 0,
+     "4": 0
+    }
+   }
+  },
+  "pipc.defaults": {
+   "name": "defaults",
+   "params": {
+    "bleed": 0,
+    "left": "dpad",
+    "mode": "press"
+   },
+   "board": {
+    "mode": "press",
+    "L": 23.5,
+    "W": 18,
+    "T": 1,
+    "pitch": 2.54,
+    "inset": 1.38,
+    "usbH": 3.26,
+    "usbOver": 0.8,
+    "bumpW": 1.5,
+    "bumpH": 0.48,
+    "clr": 0.3,
+    "press": 0.3,
+    "window": true
+   },
+   "z": {
+    "floor": 4.8,
+    "top": 13.68,
+    "bezelTop": 16.08,
+    "l1": [
+     0.72,
+     1.44
+    ],
+    "l2": [
+     2.4,
+     3.12
+    ],
+    "pad": [
+     4.08,
+     4.8
+    ],
+    "board": 5.28,
+    "boardTop": 6.28,
+    "recC": 7.91,
+    "clickFloor": 4.8,
+    "flexFloor": 10.08
+   },
+   "boardRect": {
+    "cx": 0,
+    "cy": 19.45,
+    "x0": -9,
+    "x1": 9,
+    "y0": 7.7,
+    "y1": 31.2
+   },
+   "pocketRect": {
+    "x0": -9.3,
+    "x1": 9.3,
+    "y0": 7.4,
+    "y1": 34
+   },
+   "halfH": 32,
+   "yTopEdge": 31.982867,
+   "pads": [
+    {
+     "name": "5V",
+     "x": -7.62,
+     "y": 9.95,
+     "edge": "L",
+     "num": 1
+    },
+    {
+     "name": "GND",
+     "x": -7.62,
+     "y": 7.41,
+     "edge": "L",
+     "num": 2
+    },
+    {
+     "name": "3V3",
+     "x": -7.62,
+     "y": 4.87,
+     "edge": "L",
+     "num": 3
+    },
+    {
+     "name": "GP29",
+     "x": -7.62,
+     "y": 2.33,
+     "edge": "L",
+     "num": 4
+    },
+    {
+     "name": "GP28",
+     "x": -7.62,
+     "y": -0.21,
+     "edge": "L",
+     "num": 5
+    },
+    {
+     "name": "GP27",
+     "x": -7.62,
+     "y": -2.75,
+     "edge": "L",
+     "num": 6
+    },
+    {
+     "name": "GP26",
+     "x": -7.62,
+     "y": -5.29,
+     "edge": "L",
+     "num": 7
+    },
+    {
+     "name": "GP15",
+     "x": -7.62,
+     "y": -7.83,
+     "edge": "L",
+     "num": 8
+    },
+    {
+     "name": "GP14",
+     "x": -7.62,
+     "y": -10.37,
+     "edge": "L",
+     "num": 9
+    },
+    {
+     "name": "GP13",
+     "x": -5.08,
+     "y": -10.37,
+     "edge": "T",
+     "num": 10
+    },
+    {
+     "name": "GP12",
+     "x": -2.54,
+     "y": -10.37,
+     "edge": "T",
+     "num": 11
+    },
+    {
+     "name": "GP11",
+     "x": 0,
+     "y": -10.37,
+     "edge": "T",
+     "num": 12
+    },
+    {
+     "name": "GP10",
+     "x": 2.54,
+     "y": -10.37,
+     "edge": "T",
+     "num": 13
+    },
+    {
+     "name": "GP9",
+     "x": 5.08,
+     "y": -10.37,
+     "edge": "T",
+     "num": 14
+    },
+    {
+     "name": "GP8",
+     "x": 7.62,
+     "y": -10.37,
+     "edge": "R",
+     "num": 15
+    },
+    {
+     "name": "GP7",
+     "x": 7.62,
+     "y": -7.83,
+     "edge": "R",
+     "num": 16
+    },
+    {
+     "name": "GP6",
+     "x": 7.62,
+     "y": -5.29,
+     "edge": "R",
+     "num": 17
+    },
+    {
+     "name": "GP5",
+     "x": 7.62,
+     "y": -2.75,
+     "edge": "R",
+     "num": 18
+    },
+    {
+     "name": "GP4",
+     "x": 7.62,
+     "y": -0.21,
+     "edge": "R",
+     "num": 19
+    },
+    {
+     "name": "GP3",
+     "x": 7.62,
+     "y": 2.33,
+     "edge": "R",
+     "num": 20
+    },
+    {
+     "name": "GP2",
+     "x": 7.62,
+     "y": 4.87,
+     "edge": "R",
+     "num": 21
+    },
+    {
+     "name": "GP1",
+     "x": 7.62,
+     "y": 7.41,
+     "edge": "R",
+     "num": 22
+    },
+    {
+     "name": "GP0",
+     "x": 7.62,
+     "y": 9.95,
+     "edge": "R",
+     "num": 23
+    }
+   ],
+   "bumps": [
+    {
+     "net": "GND",
+     "pad": "GND",
+     "x": -7.62,
+     "y": 26.86
+    },
+    {
+     "net": "3V3",
+     "pad": "3V3",
+     "x": -7.62,
+     "y": 24.32
+    },
+    {
+     "net": "UP",
+     "pad": "GP29",
+     "x": -7.62,
+     "y": 21.78
+    },
+    {
+     "net": "LEFT",
+     "pad": "GP28",
+     "x": -7.62,
+     "y": 19.24
+    },
+    {
+     "net": "RIGHT",
+     "pad": "GP27",
+     "x": -7.62,
+     "y": 16.7
+    },
+    {
+     "net": "DOWN",
+     "pad": "GP26",
+     "x": -7.62,
+     "y": 14.16
+    },
+    {
+     "net": "SELECT",
+     "pad": "GP12",
+     "x": -2.54,
+     "y": 9.08
+    },
+    {
+     "net": "START",
+     "pad": "GP10",
+     "x": 2.54,
+     "y": 9.08
+    },
+    {
+     "net": "B",
+     "pad": "GP6",
+     "x": 7.62,
+     "y": 14.16
+    },
+    {
+     "net": "Y",
+     "pad": "GP5",
+     "x": 7.62,
+     "y": 16.7
+    },
+    {
+     "net": "A",
+     "pad": "GP4",
+     "x": 7.62,
+     "y": 19.24
+    },
+    {
+     "net": "X",
+     "pad": "GP3",
+     "x": 7.62,
+     "y": 21.78
+    }
+   ],
+   "usedPins": [
+    [
+     "GP29",
+     "UP"
+    ],
+    [
+     "GP26",
+     "DOWN"
+    ],
+    [
+     "GP28",
+     "LEFT"
+    ],
+    [
+     "GP27",
+     "RIGHT"
+    ],
+    [
+     "GP3",
+     "X"
+    ],
+    [
+     "GP6",
+     "B"
+    ],
+    [
+     "GP5",
+     "Y"
+    ],
+    [
+     "GP4",
+     "A"
+    ],
+    [
+     "GP12",
+     "SELECT"
+    ],
+    [
+     "GP10",
+     "START"
+    ],
+    [
+     "GND",
+     "GND"
+    ],
+    [
+     "3V3",
+     "3V3"
+    ]
+   ],
+   "fits": [
+    {
+     "group": "traces",
+     "name": "trace width",
+     "value": "1.40 mm",
+     "ok": true,
+     "note": "about 3 lines at a 0.4 nozzle"
+    },
+    {
+     "group": "traces",
+     "name": "net to net, measured",
+     "value": "0.60 mm",
+     "ok": true,
+     "note": "closest any two nets get anywhere, in plane or between layers"
+    },
+    {
+     "group": "traces",
+     "name": "insulation between layers",
+     "value": "0.96 mm",
+     "ok": true,
+     "note": "4 layers of PETG between a trace and the one crossing it"
+    },
+    {
+     "group": "traces",
+     "name": "PETG over layer 2",
+     "value": "1.68 mm",
+     "ok": true,
+     "note": "what separates a trace from a key pad or a bump"
+    },
+    {
+     "group": "flex key",
+     "name": "contact gap",
+     "value": "1.80 mm",
+     "ok": true,
+     "note": "45 percent of the cone"
+    },
+    {
+     "group": "flex key",
+     "name": "cap bridge",
+     "value": "3.60 mm",
+     "ok": true,
+     "note": "conductive TPU spanning the hole, unsupported"
+    },
+    {
+     "group": "flex key",
+     "name": "split between halves",
+     "value": "0.80 mm",
+     "ok": true,
+     "note": "exposed, a string across it reads as a press"
+    },
+    {
+     "group": "flex key",
+     "name": "column to cone wall",
+     "value": "1.71 mm",
+     "ok": true,
+     "note": "at the top of the column"
+    },
+    {
+     "group": "flex key",
+     "name": "face through bezel hole",
+     "value": "1.00 mm",
+     "ok": true,
+     "note": "diametral, the bezel drops over the key"
+    },
+    {
+     "group": "flex key",
+     "name": "stands proud of the bezel",
+     "value": "2.60 mm",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "group": "click spring",
+     "name": "slot at the end blocks",
+     "value": "0.30 mm",
+     "ok": true,
+     "note": "diametral, snug so the spring stands up straight"
+    },
+    {
+     "group": "click spring",
+     "name": "slot over the arch",
+     "value": "1.50 mm",
+     "ok": true,
+     "note": "diametral, the beams never touch a wall"
+    },
+    {
+     "group": "click spring",
+     "name": "slot length over spring",
+     "value": "0.40 mm",
+     "ok": true,
+     "note": "the ribs locate it, not the slot ends"
+    },
+    {
+     "group": "click spring",
+     "name": "rib in the block groove",
+     "value": "0.40 mm",
+     "ok": true,
+     "note": "keys each end block down to the floor so the arch cannot spread"
+    },
+    {
+     "group": "click spring",
+     "name": "under the bezel",
+     "value": "0.12 mm",
+     "ok": true,
+     "note": "the bezel holds the end blocks down"
+    },
+    {
+     "group": "click spring",
+     "name": "cap through bezel hole",
+     "value": "0.50 mm",
+     "ok": true,
+     "note": "diametral"
+    },
+    {
+     "group": "click spring",
+     "name": "cap flange in its well",
+     "value": "0.80 mm",
+     "ok": true,
+     "note": "diametral"
+    },
+    {
+     "group": "click spring",
+     "name": "travel to contact",
+     "value": "1.37 mm",
+     "ok": true,
+     "note": "snap peaks at 0.63 mm"
+    },
+    {
+     "group": "click spring",
+     "name": "tip over each pad",
+     "value": "1.30 mm",
+     "ok": true,
+     "note": "pads split by 0.60 mm"
+    },
+    {
+     "group": "click spring",
+     "name": "beam thickness",
+     "value": "0.55 mm",
+     "ok": true,
+     "note": "one line, needs thin wall handling on"
+    },
+    {
+     "group": "click spring",
+     "name": "strain at the stop",
+     "value": "2.3 percent",
+     "ok": true,
+     "note": "PETG fatigues above about 2.5"
+    },
+    {
+     "group": "touch pad",
+     "name": "comb gap",
+     "value": "0.80 mm",
+     "ok": true,
+     "note": "exposed, skin bridges it"
+    },
+    {
+     "group": "touch pad",
+     "name": "finger width",
+     "value": "1.00 mm",
+     "ok": true,
+     "note": ""
+    },
+    {
+     "group": "touch pad",
+     "name": "boss through the bezel",
+     "value": "0.60 mm",
+     "ok": true,
+     "note": "diametral, flush with the bezel top"
+    },
+    {
+     "group": "board",
+     "name": "pocket around the board",
+     "value": "0.30 mm",
+     "ok": true,
+     "note": "each side"
+    },
+    {
+     "group": "board",
+     "name": "bump height",
+     "value": "0.48 mm",
+     "ok": true,
+     "note": "conductive PLA under each used pad"
+    },
+    {
+     "group": "board",
+     "name": "bezel squeeze on the board",
+     "value": "0.30 mm",
+     "ok": true,
+     "note": "interference, the ribs hold it on the bumps"
+    },
+    {
+     "group": "board",
+     "name": "bump to bump",
+     "value": "0.84 mm",
+     "ok": true,
+     "note": "exposed, adjacent pads are different nets"
+    },
+    {
+     "group": "board",
+     "name": "clearance under the board",
+     "value": "0.96 mm",
+     "ok": true,
+     "note": "window recessed into the pocket floor"
+    },
+    {
+     "group": "board",
+     "name": "USB opening",
+     "value": "12.50 mm wide",
+     "ok": true,
+     "note": "a plug overmould is usually 11 to 12 mm"
+    },
+    {
+     "group": "board",
+     "name": "USB opening height",
+     "value": "9.36 mm",
+     "ok": true,
+     "note": "a USB C plug overmould is about 7 mm tall"
+    },
+    {
+     "group": "bezel",
+     "name": "peg in its socket",
+     "value": "0.10 mm",
+     "ok": true,
+     "note": "diametral before printing; holes come out about 0.15 small, so expect a press"
+    },
+    {
+     "group": "bezel",
+     "name": "peg length",
+     "value": "3.00 mm",
+     "ok": true,
+     "note": "socket is 0.3 mm deeper"
+    },
+    {
+     "group": "print",
+     "name": "smallest feature",
+     "value": "0.55 mm",
+     "ok": true,
+     "note": "under one nozzle width, check it slices"
+    }
+   ],
+   "elec": {
+    "minGap": 0.6,
+    "pairs": [
+     {
+      "a": "GND",
+      "b": "X",
+      "g": 0.6
+     },
+     {
+      "a": "GND",
+      "b": "B",
+      "g": 0.6
+     },
+     {
+      "a": "GND",
+      "b": "Y",
+      "g": 0.6
+     },
+     {
+      "a": "GND",
+      "b": "A",
+      "g": 0.6
+     },
+     {
+      "a": "B",
+      "b": "Y",
+      "g": 0.714327
+     },
+     {
+      "a": "3V3",
+      "b": "UP",
+      "g": 0.715759
+     },
+     {
+      "a": "Y",
+      "b": "A",
+      "g": 0.723778
+     },
+     {
+      "a": "LEFT",
+      "b": "RIGHT",
+      "g": 0.725285
+     }
+    ],
+    "nets": [
+     {
+      "name": "GND",
+      "parts": 1,
+      "vol": 381.065044
+     },
+     {
+      "name": "3V3",
+      "parts": 1,
+      "vol": 151.140937
+     },
+     {
+      "name": "UP",
+      "parts": 1,
+      "vol": 77.245209
+     },
+     {
+      "name": "DOWN",
+      "parts": 1,
+      "vol": 85.675662
+     },
+     {
+      "name": "LEFT",
+      "parts": 1,
+      "vol": 96.023177
+     },
+     {
+      "name": "RIGHT",
+      "parts": 1,
+      "vol": 66.645062
+     },
+     {
+      "name": "X",
+      "parts": 1,
+      "vol": 53.030779
+     },
+     {
+      "name": "B",
+      "parts": 1,
+      "vol": 67.695522
+     },
+     {
+      "name": "Y",
+      "parts": 1,
+      "vol": 41.002074
+     },
+     {
+      "name": "A",
+      "parts": 1,
+      "vol": 78.274655
+     },
+     {
+      "name": "SELECT",
+      "parts": 1,
+      "vol": 78.722552
+     },
+     {
+      "name": "START",
+      "parts": 1,
+      "vol": 74.964806
+     }
+    ]
+   },
+   "unrouted": 0,
+   "conflicts": 0,
+   "warn": [],
+   "seat": null,
+   "stack": {
+    "box": {
+     "x": [
+      -75.982867,
+      75.982867
+     ],
+     "y": [
+      -32.982867,
+      32.982867
+     ],
+     "z": [
+      -1,
+      4.08
+     ]
+    },
+    "slots": {
+     "1": 34690.562799,
+     "2": 869.687808,
+     "3": 0,
+     "4": 0
+    }
+   }
+  }
+ }
+}

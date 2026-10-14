@@ -1,0 +1,5477 @@
+{
+ "command": "node packages/archetypes/scripts/blocks-legacy.mjs",
+ "measuredWith": "manifold-3d 3.5.4 (union of each slot's recorded prisms)",
+ "sources": {
+  "blocks": {
+   "kernel.js": "e514477f4a8a9f2996b8f4880fc774c07801467db9899cebcd21d03724b57188",
+   "blocks.js": "36feb99134fd23227ec4db6fbf8668de4f9c8527febba8034401f50cb77d7b9b",
+   "parts.js": "8822104bf031a6c803218f98791346e7015448f00af774f21a0cc13a42686b1f",
+   "blocks.html": "96bf187a3c56fcc04cca7491c4a2ff22c1d4ed1e87954c7694d953c04faf8b6c"
+  },
+  "boss": {
+   "kernel.js": "344d80b3df3b6b15e5861de343a03c79663669fd700578bf162f97afba499de1",
+   "boss.js": "fad77485920bb29d996610adf577d4d10c60f813ce4abc036a10f5a4aa8bfcf7",
+   "parts.js": "e9e44eaca651fac61e248e5d066cb523ec7d71252c8a792d1ef09057f801d9e6",
+   "boss.html": "00badce59c6638dbfd6c920bed481d93a683c605330780fb197686cda4e413f5"
+  }
+ },
+ "libs": {
+  "blocks": {
+   "earcut.min.js": "e7fdcb9d635855f1c09d92e727f035af74b8b2d0a2ebe6fb35dcda9a6321de63",
+   "polygon-clipping.umd.min.js": "2745bca32b090a411aed78058ab35162f3fb2f0d887de306a0a4ff71ace0a951"
+  },
+  "boss": {
+   "earcut.min.js": "e7fdcb9d635855f1c09d92e727f035af74b8b2d0a2ebe6fb35dcda9a6321de63",
+   "polygon-clipping.umd.min.js": "2745bca32b090a411aed78058ab35162f3fb2f0d887de306a0a4ff71ace0a951"
+  }
+ },
+ "blocks": {
+  "std": {
+   "P": 8,
+   "studD": 4.8,
+   "studH": 1.8,
+   "plateH": 3.2,
+   "deckH": 6.4,
+   "brickH": 9.6,
+   "sockH": 2.2,
+   "flangeH": 0.6,
+   "sockID_flex": 4.6,
+   "sockID_rigid": 4.86,
+   "sockOD": 6.6,
+   "padD": 5.6,
+   "postD": 3,
+   "isoT": 0.4,
+   "traceT": 0.6,
+   "gapT": 0.4,
+   "traceW": 1,
+   "clr": 0.6,
+   "cell": 0.4,
+   "sheetT": 1.6,
+   "capH": 3.2,
+   "flangeTop": 2.8,
+   "L1": 3.2,
+   "L2": 4.2,
+   "padTop": 4.8
+  },
+  "layer": 0.2,
+  "fit": {
+   "press": 0.1,
+   "snug": 0.25,
+   "free": 0.45
+  },
+  "shrink": 0.12,
+  "slots": [
+   {
+    "id": 1,
+    "name": "PETG",
+    "rho": 0
+   },
+   {
+    "id": 2,
+    "name": "conductive PLA",
+    "rho": 30
+   },
+   {
+    "id": 3,
+    "name": "TPU 95A",
+    "rho": 0
+   },
+   {
+    "id": 4,
+    "name": "conductive TPU",
+    "rho": 1500
+   }
+  ],
+  "postR": {
+   "9.6": 671.624436,
+   "3.2": 442.441318
+  },
+  "stud": {
+   "both@9.6": {
+    "asBuilt": {
+     "volumes": {
+      "2": {
+       "name": "stud conductive PLA",
+       "volume": 100.683161,
+       "bbox": {
+        "min": [
+         -3.291934,
+         -3.291934,
+         2.201
+        ],
+        "max": [
+         3.291934,
+         3.291934,
+         11.399
+        ]
+       },
+       "prisms": 4,
+       "tris": 752
+      },
+      "4": {
+       "name": "stud conductive TPU",
+       "volume": 38.481605,
+       "bbox": {
+        "min": [
+         -3.291934,
+         -3.291934,
+         0.001
+        ],
+        "max": [
+         3.291934,
+         3.291934,
+         2.199
+        ]
+       },
+       "prisms": 1,
+       "tris": 384
+      },
+      "shared": {
+       "2x4": 0
+      }
+     },
+     "errors": [],
+     "taps": [
+      {
+       "name": "S",
+       "x": 0,
+       "y": 0,
+       "z": 6.19
+      },
+      {
+       "name": "S.sock",
+       "x": 2.8,
+       "y": 0,
+       "z": 1.1
+      }
+     ],
+     "bores": [
+      {
+       "name": "S",
+       "shaft": 4.8,
+       "drawn": 4.6,
+       "fit": "clutch",
+       "printed": 4.48,
+       "depth": 2.2,
+       "shape": "ring"
+      }
+     ],
+     "feats": [
+      {
+       "slot": 4,
+       "z0": 0,
+       "z1": 2.2,
+       "tag": "clutch S"
+      },
+      {
+       "slot": 0,
+       "z0": 0,
+       "z1": 2.2,
+       "tag": "socket void"
+      },
+      {
+       "slot": 2,
+       "z0": 2.2,
+       "z1": 2.8,
+       "tag": "flange S"
+      },
+      {
+       "slot": 2,
+       "z0": 2.78,
+       "z1": 9.6,
+       "tag": "post S"
+      },
+      {
+       "slot": 2,
+       "z0": 9.58,
+       "z1": 9.62,
+       "tag": "post tip"
+      },
+      {
+       "slot": 2,
+       "z0": 9.6,
+       "z1": 11.4,
+       "tag": "stud S"
+      }
+     ]
+    },
+    "declared": {
+     "volumes": {
+      "2": {
+       "name": "stud conductive PLA",
+       "volume": 100.876898,
+       "bbox": {
+        "min": [
+         -3.292934,
+         -3.292934,
+         2.2
+        ],
+        "max": [
+         3.292934,
+         3.292934,
+         11.4
+        ]
+       },
+       "prisms": 4,
+       "tris": 752
+      },
+      "4": {
+       "name": "stud conductive TPU",
+       "volume": 38.593974,
+       "bbox": {
+        "min": [
+         -3.292934,
+         -3.292934,
+         0
+        ],
+        "max": [
+         3.292934,
+         3.292934,
+         2.2
+        ]
+       },
+       "prisms": 1,
+       "tris": 384
+      },
+      "shared": {
+       "2x4": 0
+      }
+     },
+     "errors": [],
+     "taps": [
+      {
+       "name": "S",
+       "x": 0,
+       "y": 0,
+       "z": 6.19
+      },
+      {
+       "name": "S.sock",
+       "x": 2.8,
+       "y": 0,
+       "z": 1.1
+      }
+     ],
+     "bores": [
+      {
+       "name": "S",
+       "shaft": 4.8,
+       "drawn": 4.6,
+       "fit": "clutch",
+       "printed": 4.48,
+       "depth": 2.2,
+       "shape": "ring"
+      }
+     ],
+     "feats": [
+      {
+       "slot": 4,
+       "z0": 0,
+       "z1": 2.2,
+       "tag": "clutch S"
+      },
+      {
+       "slot": 0,
+       "z0": 0,
+       "z1": 2.2,
+       "tag": "socket void"
+      },
+      {
+       "slot": 2,
+       "z0": 2.2,
+       "z1": 2.8,
+       "tag": "flange S"
+      },
+      {
+       "slot": 2,
+       "z0": 2.78,
+       "z1": 9.6,
+       "tag": "post S"
+      },
+      {
+       "slot": 2,
+       "z0": 9.58,
+       "z1": 9.62,
+       "tag": "post tip"
+      },
+      {
+       "slot": 2,
+       "z0": 9.6,
+       "z1": 11.4,
+       "tag": "stud S"
+      }
+     ]
+    }
+   },
+   "down@9.6": {
+    "asBuilt": {
+     "volumes": {
+      "2": {
+       "name": "stud conductive PLA",
+       "volume": 34.465972,
+       "bbox": {
+        "min": [
+         -3.291934,
+         -3.291934,
+         2.201
+        ],
+        "max": [
+         3.291934,
+         3.291934,
+         4.799
+        ]
+       },
+       "prisms": 2,
+       "tris": 376
+      },
+      "4": {
+       "name": "stud conductive TPU",
+       "volume": 38.481605,
+       "bbox": {
+        "min": [
+         -3.291934,
+         -3.291934,
+         0.001
+        ],
+        "max": [
+         3.291934,
+         3.291934,
+         2.199
+        ]
+       },
+       "prisms": 1,
+       "tris": 384
+      },
+      "shared": {
+       "2x4": 0
+      }
+     },
+     "errors": [],
+     "taps": [
+      {
+       "name": "S",
+       "x": 0,
+       "y": 0,
+       "z": 3.79
+      },
+      {
+       "name": "S.sock",
+       "x": 2.8,
+       "y": 0,
+       "z": 1.1
+      }
+     ],
+     "bores": [
+      {
+       "name": "S",
+       "shaft": 4.8,
+       "drawn": 4.6,
+       "fit": "clutch",
+       "printed": 4.48,
+       "depth": 2.2,
+       "shape": "ring"
+      }
+     ],
+     "feats": [
+      {
+       "slot": 4,
+       "z0": 0,
+       "z1": 2.2,
+       "tag": "clutch S"
+      },
+      {
+       "slot": 0,
+       "z0": 0,
+       "z1": 2.2,
+       "tag": "socket void"
+      },
+      {
+       "slot": 2,
+       "z0": 2.2,
+       "z1": 2.8,
+       "tag": "flange S"
+      },
+      {
+       "slot": 2,
+       "z0": 2.78,
+       "z1": 4.8,
+       "tag": "post S"
+      }
+     ]
+    },
+    "declared": {
+     "volumes": {
+      "2": {
+       "name": "stud conductive PLA",
+       "volume": 34.565419,
+       "bbox": {
+        "min": [
+         -3.292934,
+         -3.292934,
+         2.2
+        ],
+        "max": [
+         3.292934,
+         3.292934,
+         4.8
+        ]
+       },
+       "prisms": 2,
+       "tris": 376
+      },
+      "4": {
+       "name": "stud conductive TPU",
+       "volume": 38.593974,
+       "bbox": {
+        "min": [
+         -3.292934,
+         -3.292934,
+         0
+        ],
+        "max": [
+         3.292934,
+         3.292934,
+         2.2
+        ]
+       },
+       "prisms": 1,
+       "tris": 384
+      },
+      "shared": {
+       "2x4": 0
+      }
+     },
+     "errors": [],
+     "taps": [
+      {
+       "name": "S",
+       "x": 0,
+       "y": 0,
+       "z": 3.79
+      },
+      {
+       "name": "S.sock",
+       "x": 2.8,
+       "y": 0,
+       "z": 1.1
+      }
+     ],
+     "bores": [
+      {
+       "name": "S",
+       "shaft": 4.8,
+       "drawn": 4.6,
+       "fit": "clutch",
+       "printed": 4.48,
+       "depth": 2.2,
+       "shape": "ring"
+      }
+     ],
+     "feats": [
+      {
+       "slot": 4,
+       "z0": 0,
+       "z1": 2.2,
+       "tag": "clutch S"
+      },
+      {
+       "slot": 0,
+       "z0": 0,
+       "z1": 2.2,
+       "tag": "socket void"
+      },
+      {
+       "slot": 2,
+       "z0": 2.2,
+       "z1": 2.8,
+       "tag": "flange S"
+      },
+      {
+       "slot": 2,
+       "z0": 2.78,
+       "z1": 4.8,
+       "tag": "post S"
+      }
+     ]
+    }
+   },
+   "up@9.6": {
+    "asBuilt": {
+     "volumes": {
+      "2": {
+       "name": "stud conductive PLA",
+       "volume": 148.964348,
+       "bbox": {
+        "min": [
+         -2.793005,
+         -2.793005,
+         0.001
+        ],
+        "max": [
+         2.793005,
+         2.793005,
+         11.399
+        ]
+       },
+       "prisms": 4,
+       "tris": 752
+      },
+      "shared": {}
+     },
+     "errors": [],
+     "taps": [
+      {
+       "name": "S",
+       "x": 0,
+       "y": 0,
+       "z": 6.19
+      },
+      {
+       "name": "S.pad",
+       "x": 0,
+       "y": 0,
+       "z": 0.3
+      }
+     ],
+     "bores": [],
+     "feats": [
+      {
+       "slot": 2,
+       "z0": 0,
+       "z1": 2.8,
+       "tag": "pad S"
+      },
+      {
+       "slot": 2,
+       "z0": 2.78,
+       "z1": 9.6,
+       "tag": "post S"
+      },
+      {
+       "slot": 2,
+       "z0": 9.58,
+       "z1": 9.62,
+       "tag": "post tip"
+      },
+      {
+       "slot": 2,
+       "z0": 9.6,
+       "z1": 11.4,
+       "tag": "stud S"
+      }
+     ]
+    },
+    "declared": {
+     "volumes": {
+      "2": {
+       "name": "stud conductive PLA",
+       "volume": 149.175768,
+       "bbox": {
+        "min": [
+         -2.794005,
+         -2.794005,
+         0
+        ],
+        "max": [
+         2.794005,
+         2.794005,
+         11.4
+        ]
+       },
+       "prisms": 4,
+       "tris": 752
+      },
+      "shared": {}
+     },
+     "errors": [],
+     "taps": [
+      {
+       "name": "S",
+       "x": 0,
+       "y": 0,
+       "z": 6.19
+      },
+      {
+       "name": "S.pad",
+       "x": 0,
+       "y": 0,
+       "z": 0.3
+      }
+     ],
+     "bores": [],
+     "feats": [
+      {
+       "slot": 2,
+       "z0": 0,
+       "z1": 2.8,
+       "tag": "pad S"
+      },
+      {
+       "slot": 2,
+       "z0": 2.78,
+       "z1": 9.6,
+       "tag": "post S"
+      },
+      {
+       "slot": 2,
+       "z0": 9.58,
+       "z1": 9.62,
+       "tag": "post tip"
+      },
+      {
+       "slot": 2,
+       "z0": 9.6,
+       "z1": 11.4,
+       "tag": "stud S"
+      }
+     ]
+    }
+   },
+   "pad@9.6": {
+    "asBuilt": {
+     "volumes": {
+      "2": {
+       "name": "stud conductive PLA",
+       "volume": 82.747158,
+       "bbox": {
+        "min": [
+         -2.793005,
+         -2.793005,
+         0.001
+        ],
+        "max": [
+         2.793005,
+         2.793005,
+         4.799
+        ]
+       },
+       "prisms": 2,
+       "tris": 376
+      },
+      "shared": {}
+     },
+     "errors": [],
+     "taps": [
+      {
+       "name": "S",
+       "x": 0,
+       "y": 0,
+       "z": 3.79
+      },
+      {
+       "name": "S.pad",
+       "x": 0,
+       "y": 0,
+       "z": 0.3
+      }
+     ],
+     "bores": [],
+     "feats": [
+      {
+       "slot": 2,
+       "z0": 0,
+       "z1": 2.8,
+       "tag": "pad S"
+      },
+      {
+       "slot": 2,
+       "z0": 2.78,
+       "z1": 4.8,
+       "tag": "post S"
+      }
+     ]
+    },
+    "declared": {
+     "volumes": {
+      "2": {
+       "name": "stud conductive PLA",
+       "volume": 82.864289,
+       "bbox": {
+        "min": [
+         -2.794005,
+         -2.794005,
+         0
+        ],
+        "max": [
+         2.794005,
+         2.794005,
+         4.8
+        ]
+       },
+       "prisms": 2,
+       "tris": 376
+      },
+      "shared": {}
+     },
+     "errors": [],
+     "taps": [
+      {
+       "name": "S",
+       "x": 0,
+       "y": 0,
+       "z": 3.79
+      },
+      {
+       "name": "S.pad",
+       "x": 0,
+       "y": 0,
+       "z": 0.3
+      }
+     ],
+     "bores": [],
+     "feats": [
+      {
+       "slot": 2,
+       "z0": 0,
+       "z1": 2.8,
+       "tag": "pad S"
+      },
+      {
+       "slot": 2,
+       "z0": 2.78,
+       "z1": 4.8,
+       "tag": "post S"
+      }
+     ]
+    }
+   },
+   "both@3.2": {
+    "asBuilt": {
+     "volumes": {
+      "2": {
+       "name": "stud conductive PLA",
+       "volume": 55.633574,
+       "bbox": {
+        "min": [
+         -3.291934,
+         -3.291934,
+         2.201
+        ],
+        "max": [
+         3.291934,
+         3.291934,
+         4.999
+        ]
+       },
+       "prisms": 4,
+       "tris": 752
+      },
+      "4": {
+       "name": "stud conductive TPU",
+       "volume": 38.481605,
+       "bbox": {
+        "min": [
+         -3.291934,
+         -3.291934,
+         0.001
+        ],
+        "max": [
+         3.291934,
+         3.291934,
+         2.199
+        ]
+       },
+       "prisms": 1,
+       "tris": 384
+      },
+      "shared": {
+       "2x4": 0
+      }
+     },
+     "errors": [],
+     "taps": [
+      {
+       "name": "S",
+       "x": 0,
+       "y": 0,
+       "z": 2.99
+      },
+      {
+       "name": "S.sock",
+       "x": 2.8,
+       "y": 0,
+       "z": 1.1
+      }
+     ],
+     "bores": [
+      {
+       "name": "S",
+       "shaft": 4.8,
+       "drawn": 4.6,
+       "fit": "clutch",
+       "printed": 4.48,
+       "depth": 2.2,
+       "shape": "ring"
+      }
+     ],
+     "feats": [
+      {
+       "slot": 4,
+       "z0": 0,
+       "z1": 2.2,
+       "tag": "clutch S"
+      },
+      {
+       "slot": 0,
+       "z0": 0,
+       "z1": 2.2,
+       "tag": "socket void"
+      },
+      {
+       "slot": 2,
+       "z0": 2.2,
+       "z1": 2.8,
+       "tag": "flange S"
+      },
+      {
+       "slot": 2,
+       "z0": 2.78,
+       "z1": 3.2,
+       "tag": "post S"
+      },
+      {
+       "slot": 2,
+       "z0": 3.18,
+       "z1": 3.22,
+       "tag": "post tip"
+      },
+      {
+       "slot": 2,
+       "z0": 3.2,
+       "z1": 5,
+       "tag": "stud S"
+      }
+     ]
+    },
+    "declared": {
+     "volumes": {
+      "2": {
+       "name": "stud conductive PLA",
+       "volume": 55.767055,
+       "bbox": {
+        "min": [
+         -3.292934,
+         -3.292934,
+         2.2
+        ],
+        "max": [
+         3.292934,
+         3.292934,
+         5
+        ]
+       },
+       "prisms": 4,
+       "tris": 752
+      },
+      "4": {
+       "name": "stud conductive TPU",
+       "volume": 38.593974,
+       "bbox": {
+        "min": [
+         -3.292934,
+         -3.292934,
+         0
+        ],
+        "max": [
+         3.292934,
+         3.292934,
+         2.2
+        ]
+       },
+       "prisms": 1,
+       "tris": 384
+      },
+      "shared": {
+       "2x4": 0
+      }
+     },
+     "errors": [],
+     "taps": [
+      {
+       "name": "S",
+       "x": 0,
+       "y": 0,
+       "z": 2.99
+      },
+      {
+       "name": "S.sock",
+       "x": 2.8,
+       "y": 0,
+       "z": 1.1
+      }
+     ],
+     "bores": [
+      {
+       "name": "S",
+       "shaft": 4.8,
+       "drawn": 4.6,
+       "fit": "clutch",
+       "printed": 4.48,
+       "depth": 2.2,
+       "shape": "ring"
+      }
+     ],
+     "feats": [
+      {
+       "slot": 4,
+       "z0": 0,
+       "z1": 2.2,
+       "tag": "clutch S"
+      },
+      {
+       "slot": 0,
+       "z0": 0,
+       "z1": 2.2,
+       "tag": "socket void"
+      },
+      {
+       "slot": 2,
+       "z0": 2.2,
+       "z1": 2.8,
+       "tag": "flange S"
+      },
+      {
+       "slot": 2,
+       "z0": 2.78,
+       "z1": 3.2,
+       "tag": "post S"
+      },
+      {
+       "slot": 2,
+       "z0": 3.18,
+       "z1": 3.22,
+       "tag": "post tip"
+      },
+      {
+       "slot": 2,
+       "z0": 3.2,
+       "z1": 5,
+       "tag": "stud S"
+      }
+     ]
+    }
+   },
+   "down@3.2": {
+    "asBuilt": {
+     "volumes": {
+      "2": {
+       "name": "stud conductive PLA",
+       "volume": 23.203575,
+       "bbox": {
+        "min": [
+         -3.291934,
+         -3.291934,
+         2.201
+        ],
+        "max": [
+         3.291934,
+         3.291934,
+         3.199
+        ]
+       },
+       "prisms": 2,
+       "tris": 376
+      },
+      "4": {
+       "name": "stud conductive TPU",
+       "volume": 38.481605,
+       "bbox": {
+        "min": [
+         -3.291934,
+         -3.291934,
+         0.001
+        ],
+        "max": [
+         3.291934,
+         3.291934,
+         2.199
+        ]
+       },
+       "prisms": 1,
+       "tris": 384
+      },
+      "shared": {
+       "2x4": 0
+      }
+     },
+     "errors": [],
+     "taps": [
+      {
+       "name": "S",
+       "x": 0,
+       "y": 0,
+       "z": 2.99
+      },
+      {
+       "name": "S.sock",
+       "x": 2.8,
+       "y": 0,
+       "z": 1.1
+      }
+     ],
+     "bores": [
+      {
+       "name": "S",
+       "shaft": 4.8,
+       "drawn": 4.6,
+       "fit": "clutch",
+       "printed": 4.48,
+       "depth": 2.2,
+       "shape": "ring"
+      }
+     ],
+     "feats": [
+      {
+       "slot": 4,
+       "z0": 0,
+       "z1": 2.2,
+       "tag": "clutch S"
+      },
+      {
+       "slot": 0,
+       "z0": 0,
+       "z1": 2.2,
+       "tag": "socket void"
+      },
+      {
+       "slot": 2,
+       "z0": 2.2,
+       "z1": 2.8,
+       "tag": "flange S"
+      },
+      {
+       "slot": 2,
+       "z0": 2.78,
+       "z1": 3.2,
+       "tag": "post S"
+      }
+     ]
+    },
+    "declared": {
+     "volumes": {
+      "2": {
+       "name": "stud conductive PLA",
+       "volume": 23.287958,
+       "bbox": {
+        "min": [
+         -3.292934,
+         -3.292934,
+         2.2
+        ],
+        "max": [
+         3.292934,
+         3.292934,
+         3.2
+        ]
+       },
+       "prisms": 2,
+       "tris": 376
+      },
+      "4": {
+       "name": "stud conductive TPU",
+       "volume": 38.593974,
+       "bbox": {
+        "min": [
+         -3.292934,
+         -3.292934,
+         0
+        ],
+        "max": [
+         3.292934,
+         3.292934,
+         2.2
+        ]
+       },
+       "prisms": 1,
+       "tris": 384
+      },
+      "shared": {
+       "2x4": 0
+      }
+     },
+     "errors": [],
+     "taps": [
+      {
+       "name": "S",
+       "x": 0,
+       "y": 0,
+       "z": 2.99
+      },
+      {
+       "name": "S.sock",
+       "x": 2.8,
+       "y": 0,
+       "z": 1.1
+      }
+     ],
+     "bores": [
+      {
+       "name": "S",
+       "shaft": 4.8,
+       "drawn": 4.6,
+       "fit": "clutch",
+       "printed": 4.48,
+       "depth": 2.2,
+       "shape": "ring"
+      }
+     ],
+     "feats": [
+      {
+       "slot": 4,
+       "z0": 0,
+       "z1": 2.2,
+       "tag": "clutch S"
+      },
+      {
+       "slot": 0,
+       "z0": 0,
+       "z1": 2.2,
+       "tag": "socket void"
+      },
+      {
+       "slot": 2,
+       "z0": 2.2,
+       "z1": 2.8,
+       "tag": "flange S"
+      },
+      {
+       "slot": 2,
+       "z0": 2.78,
+       "z1": 3.2,
+       "tag": "post S"
+      }
+     ]
+    }
+   },
+   "up@3.2": {
+    "asBuilt": {
+     "volumes": {
+      "2": {
+       "name": "stud conductive PLA",
+       "volume": 100.414114,
+       "bbox": {
+        "min": [
+         -2.793005,
+         -2.793005,
+         0.001
+        ],
+        "max": [
+         2.793005,
+         2.793005,
+         4.999
+        ]
+       },
+       "prisms": 4,
+       "tris": 752
+      },
+      "shared": {}
+     },
+     "errors": [],
+     "taps": [
+      {
+       "name": "S",
+       "x": 0,
+       "y": 0,
+       "z": 2.89
+      },
+      {
+       "name": "S.pad",
+       "x": 0,
+       "y": 0,
+       "z": 0.3
+      }
+     ],
+     "bores": [],
+     "feats": [
+      {
+       "slot": 2,
+       "z0": 0,
+       "z1": 2.6,
+       "tag": "pad S"
+      },
+      {
+       "slot": 2,
+       "z0": 2.58,
+       "z1": 3.2,
+       "tag": "post S"
+      },
+      {
+       "slot": 2,
+       "z0": 3.18,
+       "z1": 3.22,
+       "tag": "post tip"
+      },
+      {
+       "slot": 2,
+       "z0": 3.2,
+       "z1": 5,
+       "tag": "stud S"
+      }
+     ]
+    },
+    "declared": {
+     "volumes": {
+      "2": {
+       "name": "stud conductive PLA",
+       "volume": 100.563646,
+       "bbox": {
+        "min": [
+         -2.794005,
+         -2.794005,
+         0
+        ],
+        "max": [
+         2.794005,
+         2.794005,
+         5
+        ]
+       },
+       "prisms": 4,
+       "tris": 752
+      },
+      "shared": {}
+     },
+     "errors": [],
+     "taps": [
+      {
+       "name": "S",
+       "x": 0,
+       "y": 0,
+       "z": 2.89
+      },
+      {
+       "name": "S.pad",
+       "x": 0,
+       "y": 0,
+       "z": 0.3
+      }
+     ],
+     "bores": [],
+     "feats": [
+      {
+       "slot": 2,
+       "z0": 0,
+       "z1": 2.6,
+       "tag": "pad S"
+      },
+      {
+       "slot": 2,
+       "z0": 2.58,
+       "z1": 3.2,
+       "tag": "post S"
+      },
+      {
+       "slot": 2,
+       "z0": 3.18,
+       "z1": 3.22,
+       "tag": "post tip"
+      },
+      {
+       "slot": 2,
+       "z0": 3.2,
+       "z1": 5,
+       "tag": "stud S"
+      }
+     ]
+    }
+   },
+   "pad@3.2": {
+    "asBuilt": {
+     "volumes": {
+      "2": {
+       "name": "stud conductive PLA",
+       "volume": 67.984115,
+       "bbox": {
+        "min": [
+         -2.793005,
+         -2.793005,
+         0.001
+        ],
+        "max": [
+         2.793005,
+         2.793005,
+         3.199
+        ]
+       },
+       "prisms": 2,
+       "tris": 376
+      },
+      "shared": {}
+     },
+     "errors": [],
+     "taps": [
+      {
+       "name": "S",
+       "x": 0,
+       "y": 0,
+       "z": 2.89
+      },
+      {
+       "name": "S.pad",
+       "x": 0,
+       "y": 0,
+       "z": 0.3
+      }
+     ],
+     "bores": [],
+     "feats": [
+      {
+       "slot": 2,
+       "z0": 0,
+       "z1": 2.6,
+       "tag": "pad S"
+      },
+      {
+       "slot": 2,
+       "z0": 2.58,
+       "z1": 3.2,
+       "tag": "post S"
+      }
+     ]
+    },
+    "declared": {
+     "volumes": {
+      "2": {
+       "name": "stud conductive PLA",
+       "volume": 68.084549,
+       "bbox": {
+        "min": [
+         -2.794005,
+         -2.794005,
+         0
+        ],
+        "max": [
+         2.794005,
+         2.794005,
+         3.2
+        ]
+       },
+       "prisms": 2,
+       "tris": 376
+      },
+      "shared": {}
+     },
+     "errors": [],
+     "taps": [
+      {
+       "name": "S",
+       "x": 0,
+       "y": 0,
+       "z": 2.89
+      },
+      {
+       "name": "S.pad",
+       "x": 0,
+       "y": 0,
+       "z": 0.3
+      }
+     ],
+     "bores": [],
+     "feats": [
+      {
+       "slot": 2,
+       "z0": 0,
+       "z1": 2.6,
+       "tag": "pad S"
+      },
+      {
+       "slot": 2,
+       "z0": 2.58,
+       "z1": 3.2,
+       "tag": "post S"
+      }
+     ]
+    }
+   }
+  },
+  "wire": {
+   "straight.ctpu": {
+    "params": {},
+    "asBuilt": {
+     "name": "WIRE straight 80.0 mm",
+     "len": 80,
+     "chord": 80,
+     "span": {
+      "min": 0,
+      "max": 79,
+      "flat": 80
+     },
+     "R": 1666666.666667,
+     "readout": [
+      [
+       "path length",
+       "80.0 mm, cap centre to cap centre"
+      ],
+      [
+       "spans",
+       "up to 79.0 mm pulled straight, 80.0 mm lying flat"
+      ],
+      [
+       "footprint",
+       "87.6 x 7.6 mm"
+      ],
+      [
+       "caps",
+       "3.2 mm tall: a wire cap is a plate, so it stacks like one"
+      ],
+      [
+       "core R",
+       "1.67 Mohm"
+      ],
+      [
+       "verdict",
+       "digital only (slow edges), no analog"
+      ]
+     ],
+     "fits": [
+      {
+       "label": "sheath wall each side",
+       "value": 1,
+       "lo": 0.6,
+       "hi": 99,
+       "unit": "mm",
+       "ok": true
+      }
+     ],
+     "warnings": [],
+     "ports": {
+      "A": {
+       "end": "A",
+       "top": true,
+       "bottom": true
+      },
+      "B": {
+       "end": "B",
+       "top": true,
+       "bottom": true
+      }
+     },
+     "tris": 3420,
+     "pts": [
+      [
+       0,
+       0
+      ],
+      [
+       80,
+       0
+      ]
+     ],
+     "volumes": {
+      "3": {
+       "name": "wire sheath TPU",
+       "volume": 494.703015,
+       "bbox": {
+        "min": [
+         -3.8,
+         -3.8,
+         0
+        ],
+        "max": [
+         83.8,
+         3.8,
+         3.2
+        ]
+       },
+       "prisms": 5,
+       "tris": 2136
+      },
+      "4": {
+       "name": "wire core cTPU",
+       "volume": 240.914915,
+       "bbox": {
+        "min": [
+         -3.28311,
+         -3.28311,
+         0.001
+        ],
+        "max": [
+         83.28311,
+         3.28311,
+         4.999
+        ]
+       },
+       "prisms": 9,
+       "tris": 1284
+      },
+      "shared": {
+       "3x4": 11.80348
+      }
+     }
+    },
+    "declared": {
+     "name": "WIRE straight 80.0 mm",
+     "len": 80,
+     "chord": 80,
+     "span": {
+      "min": 0,
+      "max": 79,
+      "flat": 80
+     },
+     "R": 1666666.666667,
+     "readout": [
+      [
+       "path length",
+       "80.0 mm, cap centre to cap centre"
+      ],
+      [
+       "spans",
+       "up to 79.0 mm pulled straight, 80.0 mm lying flat"
+      ],
+      [
+       "footprint",
+       "87.6 x 7.6 mm"
+      ],
+      [
+       "caps",
+       "3.2 mm tall: a wire cap is a plate, so it stacks like one"
+      ],
+      [
+       "core R",
+       "1.67 Mohm"
+      ],
+      [
+       "verdict",
+       "digital only (slow edges), no analog"
+      ]
+     ],
+     "fits": [
+      {
+       "label": "sheath wall each side",
+       "value": 1,
+       "lo": 0.6,
+       "hi": 99,
+       "unit": "mm",
+       "ok": true
+      }
+     ],
+     "warnings": [],
+     "ports": {
+      "A": {
+       "end": "A",
+       "top": true,
+       "bottom": true
+      },
+      "B": {
+       "end": "B",
+       "top": true,
+       "bottom": true
+      }
+     },
+     "tris": 3420,
+     "pts": [
+      [
+       0,
+       0
+      ],
+      [
+       80,
+       0
+      ]
+     ],
+     "volumes": {
+      "3": {
+       "name": "wire sheath TPU",
+       "volume": 494.703015,
+       "bbox": {
+        "min": [
+         -3.8,
+         -3.8,
+         0
+        ],
+        "max": [
+         83.8,
+         3.8,
+         3.2
+        ]
+       },
+       "prisms": 5,
+       "tris": 2136
+      },
+      "4": {
+       "name": "wire core cTPU",
+       "volume": 241.597956,
+       "bbox": {
+        "min": [
+         -3.28411,
+         -3.28411,
+         0
+        ],
+        "max": [
+         83.28411,
+         3.28411,
+         5
+        ]
+       },
+       "prisms": 9,
+       "tris": 1284
+      },
+      "shared": {
+       "3x4": 11.866484
+      }
+     }
+    }
+   },
+   "straight.cpla": {
+    "params": {
+     "core": 2
+    },
+    "asBuilt": {
+     "name": "WIRE straight 80.0 mm",
+     "len": 80,
+     "chord": 80,
+     "span": {
+      "min": 0,
+      "max": 79,
+      "flat": 80
+     },
+     "R": 33333.333333,
+     "readout": [
+      [
+       "path length",
+       "80.0 mm, cap centre to cap centre"
+      ],
+      [
+       "spans",
+       "up to 79.0 mm pulled straight, 80.0 mm lying flat"
+      ],
+      [
+       "footprint",
+       "87.6 x 7.6 mm"
+      ],
+      [
+       "caps",
+       "3.2 mm tall: a wire cap is a plate, so it stacks like one"
+      ],
+      [
+       "core R",
+       "33.3 kohm"
+      ],
+      [
+       "verdict",
+       "signal and ADC fine"
+      ]
+     ],
+     "fits": [
+      {
+       "label": "sheath wall each side",
+       "value": 1,
+       "lo": 0.6,
+       "hi": 99,
+       "unit": "mm",
+       "ok": true
+      }
+     ],
+     "warnings": [],
+     "ports": {
+      "A": {
+       "end": "A",
+       "top": true,
+       "bottom": true
+      },
+      "B": {
+       "end": "B",
+       "top": true,
+       "bottom": true
+      }
+     },
+     "tris": 3420,
+     "pts": [
+      [
+       0,
+       0
+      ],
+      [
+       80,
+       0
+      ]
+     ],
+     "volumes": {
+      "2": {
+       "name": "wire core cPLA",
+       "volume": 52.192017,
+       "bbox": {
+        "min": [
+         3.534725,
+         -0.599,
+         0.501
+        ],
+        "max": [
+         76.465275,
+         0.599,
+         1.099
+        ]
+       },
+       "prisms": 1,
+       "tris": 28
+      },
+      "3": {
+       "name": "wire sheath TPU",
+       "volume": 494.703015,
+       "bbox": {
+        "min": [
+         -3.8,
+         -3.8,
+         0
+        ],
+        "max": [
+         83.8,
+         3.8,
+         3.2
+        ]
+       },
+       "prisms": 5,
+       "tris": 2136
+      },
+      "4": {
+       "name": "wire cap conductor cTPU",
+       "volume": 188.288587,
+       "bbox": {
+        "min": [
+         -3.28311,
+         -3.28311,
+         0.001
+        ],
+        "max": [
+         83.28311,
+         3.28311,
+         4.999
+        ]
+       },
+       "prisms": 8,
+       "tris": 1256
+      },
+      "shared": {
+       "3x2": 0,
+       "3x4": 11.80348,
+       "2x4": 0
+      }
+     }
+    },
+    "declared": {
+     "name": "WIRE straight 80.0 mm",
+     "len": 80,
+     "chord": 80,
+     "span": {
+      "min": 0,
+      "max": 79,
+      "flat": 80
+     },
+     "R": 33333.333333,
+     "readout": [
+      [
+       "path length",
+       "80.0 mm, cap centre to cap centre"
+      ],
+      [
+       "spans",
+       "up to 79.0 mm pulled straight, 80.0 mm lying flat"
+      ],
+      [
+       "footprint",
+       "87.6 x 7.6 mm"
+      ],
+      [
+       "caps",
+       "3.2 mm tall: a wire cap is a plate, so it stacks like one"
+      ],
+      [
+       "core R",
+       "33.3 kohm"
+      ],
+      [
+       "verdict",
+       "signal and ADC fine"
+      ]
+     ],
+     "fits": [
+      {
+       "label": "sheath wall each side",
+       "value": 1,
+       "lo": 0.6,
+       "hi": 99,
+       "unit": "mm",
+       "ok": true
+      }
+     ],
+     "warnings": [],
+     "ports": {
+      "A": {
+       "end": "A",
+       "top": true,
+       "bottom": true
+      },
+      "B": {
+       "end": "B",
+       "top": true,
+       "bottom": true
+      }
+     },
+     "tris": 3420,
+     "pts": [
+      [
+       0,
+       0
+      ],
+      [
+       80,
+       0
+      ]
+     ],
+     "volumes": {
+      "2": {
+       "name": "wire core cPLA",
+       "volume": 52.455541,
+       "bbox": {
+        "min": [
+         3.533506,
+         -0.6,
+         0.5
+        ],
+        "max": [
+         76.466494,
+         0.6,
+         1.1
+        ]
+       },
+       "prisms": 1,
+       "tris": 28
+      },
+      "3": {
+       "name": "wire sheath TPU",
+       "volume": 494.703015,
+       "bbox": {
+        "min": [
+         -3.8,
+         -3.8,
+         0
+        ],
+        "max": [
+         83.8,
+         3.8,
+         3.2
+        ]
+       },
+       "prisms": 5,
+       "tris": 2136
+      },
+      "4": {
+       "name": "wire cap conductor cTPU",
+       "volume": 188.70882,
+       "bbox": {
+        "min": [
+         -3.28411,
+         -3.28411,
+         0
+        ],
+        "max": [
+         83.28411,
+         3.28411,
+         5
+        ]
+       },
+       "prisms": 8,
+       "tris": 1256
+      },
+      "shared": {
+       "3x2": 0,
+       "3x4": 11.866484,
+       "2x4": 0
+      }
+     }
+    }
+   },
+   "spiral.200": {
+    "params": {
+     "shape": "spiral",
+     "len": 200
+    },
+    "asBuilt": {
+     "name": "WIRE spiral 201.0 mm",
+     "len": 201.016426,
+     "chord": 15.001131,
+     "span": {
+      "min": 0,
+      "max": 200.02,
+      "flat": 15
+     },
+     "R": 4187842.208239,
+     "readout": [
+      [
+       "path length",
+       "201.0 mm, cap centre to cap centre"
+      ],
+      [
+       "spans",
+       "up to 200.0 mm pulled straight, 15.0 mm lying flat"
+      ],
+      [
+       "footprint",
+       "42.5 x 43.2 mm"
+      ],
+      [
+       "caps",
+       "3.2 mm tall: a wire cap is a plate, so it stacks like one"
+      ],
+      [
+       "core R",
+       "4.19 Mohm"
+      ],
+      [
+       "verdict",
+       "digital only (slow edges), no analog"
+      ]
+     ],
+     "fits": [
+      {
+       "label": "sheath wall each side",
+       "value": 1,
+       "lo": 0.6,
+       "hi": 99,
+       "unit": "mm",
+       "ok": true
+      }
+     ],
+     "warnings": [],
+     "ports": {
+      "A": {
+       "end": "A",
+       "top": true,
+       "bottom": true
+      },
+      "B": {
+       "end": "B",
+       "top": true,
+       "bottom": true
+      }
+     },
+     "tris": 25860,
+     "pts": [
+      [
+       11.7,
+       0
+      ],
+      [
+       11.727823,
+       1.207089
+      ],
+      [
+       11.63172,
+       2.410556
+      ],
+      [
+       11.413657,
+       3.597887
+      ],
+      [
+       11.076809,
+       4.757018
+      ],
+      [
+       10.625479,
+       5.876439
+      ],
+      [
+       10.065018,
+       6.945292
+      ],
+      [
+       9.401731,
+       7.953449
+      ],
+      [
+       8.642783,
+       8.891587
+      ],
+      [
+       7.796103,
+       9.751247
+      ],
+      [
+       6.870279,
+       10.524886
+      ],
+      [
+       5.874458,
+       11.205915
+      ],
+      [
+       4.818245,
+       11.788725
+      ],
+      [
+       3.711595,
+       12.26871
+      ],
+      [
+       2.564722,
+       12.642268
+      ],
+      [
+       1.387992,
+       12.906808
+      ],
+      [
+       0.191832,
+       13.060735
+      ],
+      [
+       -1.013361,
+       13.103435
+      ],
+      [
+       -2.217309,
+       13.035248
+      ],
+      [
+       -3.409933,
+       12.857436
+      ],
+      [
+       -4.581433,
+       12.572146
+      ],
+      [
+       -5.722358,
+       12.182365
+      ],
+      [
+       -6.823673,
+       11.69187
+      ],
+      [
+       -7.876819,
+       11.105175
+      ],
+      [
+       -8.873765,
+       10.427478
+      ],
+      [
+       -9.807057,
+       9.664593
+      ],
+      [
+       -10.66986,
+       8.822896
+      ],
+      [
+       -11.455989,
+       7.909254
+      ],
+      [
+       -12.159945,
+       6.930965
+      ],
+      [
+       -12.776928,
+       5.895688
+      ],
+      [
+       -13.30286,
+       4.811377
+      ],
+      [
+       -13.734394,
+       3.686218
+      ],
+      [
+       -14.068919,
+       2.528561
+      ],
+      [
+       -14.304556,
+       1.346855
+      ],
+      [
+       -14.440157,
+       0.14959
+      ],
+      [
+       -14.475294,
+       -1.054768
+      ],
+      [
+       -14.410237,
+       -2.257831
+      ],
+      [
+       -14.245945,
+       -3.45135
+      ],
+      [
+       -13.984034,
+       -4.627263
+      ],
+      [
+       -13.626752,
+       -5.777744
+      ],
+      [
+       -13.176951,
+       -6.895254
+      ],
+      [
+       -12.638053,
+       -7.97258
+      ],
+      [
+       -12.01401,
+       -9.002875
+      ],
+      [
+       -11.30927,
+       -9.979696
+      ],
+      [
+       -10.528738,
+       -10.897032
+      ],
+      [
+       -9.677728,
+       -11.749335
+      ],
+      [
+       -8.761926,
+       -12.531542
+      ],
+      [
+       -7.787344,
+       -13.239098
+      ],
+      [
+       -6.760275,
+       -13.867972
+      ],
+      [
+       -5.687249,
+       -14.414668
+      ],
+      [
+       -4.574987,
+       -14.876236
+      ],
+      [
+       -3.430357,
+       -15.250277
+      ],
+      [
+       -2.260332,
+       -15.534946
+      ],
+      [
+       -1.071941,
+       -15.728952
+      ],
+      [
+       0.127768,
+       -15.831549
+      ],
+      [
+       1.331771,
+       -15.842534
+      ],
+      [
+       2.53311,
+       -15.762236
+      ],
+      [
+       3.724929,
+       -15.591498
+      ],
+      [
+       4.900511,
+       -15.331667
+      ],
+      [
+       6.053314,
+       -14.984576
+      ],
+      [
+       7.177004,
+       -14.552519
+      ],
+      [
+       8.265484,
+       -14.038234
+      ],
+      [
+       9.312924,
+       -13.444876
+      ],
+      [
+       10.313787,
+       -12.775994
+      ],
+      [
+       11.262854,
+       -12.0355
+      ],
+      [
+       12.155246,
+       -11.227647
+      ],
+      [
+       12.98644,
+       -10.356993
+      ],
+      [
+       13.75229,
+       -9.428378
+      ],
+      [
+       14.449038,
+       -8.446886
+      ],
+      [
+       15.073332,
+       -7.417819
+      ],
+      [
+       15.622226,
+       -6.346666
+      ],
+      [
+       16.093198,
+       -5.239067
+      ],
+      [
+       16.484147,
+       -4.100785
+      ],
+      [
+       16.7934,
+       -2.937674
+      ],
+      [
+       17.019711,
+       -1.755647
+      ],
+      [
+       17.16226,
+       -0.560647
+      ],
+      [
+       17.220647,
+       0.641382
+      ],
+      [
+       17.194893,
+       1.844529
+      ],
+      [
+       17.085423,
+       3.042938
+      ],
+      [
+       16.893066,
+       4.230839
+      ],
+      [
+       16.619036,
+       5.402573
+      ],
+      [
+       16.264926,
+       6.552619
+      ],
+      [
+       15.832688,
+       7.675612
+      ],
+      [
+       15.324625,
+       8.766374
+      ],
+      [
+       14.743367,
+       9.819928
+      ],
+      [
+       14.091855,
+       10.83152
+      ],
+      [
+       13.373328,
+       11.796637
+      ],
+      [
+       12.591295,
+       12.711025
+      ],
+      [
+       11.74952,
+       13.570702
+      ],
+      [
+       10.851997,
+       14.371972
+      ],
+      [
+       9.902934,
+       15.111438
+      ],
+      [
+       8.906724,
+       15.786012
+      ],
+      [
+       7.867928,
+       16.39292
+      ],
+      [
+       6.791248,
+       16.929714
+      ],
+      [
+       5.681508,
+       17.394278
+      ],
+      [
+       4.54363,
+       17.784825
+      ],
+      [
+       3.382607,
+       18.099908
+      ],
+      [
+       2.203489,
+       18.338414
+      ],
+      [
+       1.011353,
+       18.499569
+      ],
+      [
+       -0.188717,
+       18.582931
+      ],
+      [
+       -1.391648,
+       18.588391
+      ],
+      [
+       -2.592403,
+       18.516167
+      ],
+      [
+       -3.786001,
+       18.366796
+      ],
+      [
+       -4.967534,
+       18.14113
+      ],
+      [
+       -6.132189,
+       17.840325
+      ],
+      [
+       -7.275265,
+       17.465836
+      ],
+      [
+       -8.392189,
+       17.0194
+      ],
+      [
+       -9.478535,
+       16.503033
+      ],
+      [
+       -10.530039,
+       15.91901
+      ],
+      [
+       -11.542614,
+       15.269858
+      ],
+      [
+       -12.512359,
+       14.558338
+      ],
+      [
+       -13.43558,
+       13.787435
+      ],
+      [
+       -14.308795,
+       12.96034
+      ],
+      [
+       -15.128746,
+       12.080434
+      ],
+      [
+       -15.892409,
+       11.151275
+      ],
+      [
+       -16.597004,
+       10.176582
+      ],
+      [
+       -17.24,
+       9.160215
+      ],
+      [
+       -17.81912,
+       8.106161
+      ],
+      [
+       -18.332349,
+       7.018517
+      ],
+      [
+       -18.777938,
+       5.901472
+      ],
+      [
+       -19.154403,
+       4.759291
+      ],
+      [
+       -19.460533,
+       3.596296
+      ],
+      [
+       -19.695384,
+       2.416855
+      ],
+      [
+       -19.858285,
+       1.225357
+      ],
+      [
+       -19.948833,
+       0.026203
+      ],
+      [
+       -19.966892,
+       -1.176217
+      ],
+      [
+       -19.912589,
+       -2.377532
+      ],
+      [
+       -19.786313,
+       -3.573411
+      ],
+      [
+       -19.588706,
+       -4.759579
+      ],
+      [
+       -19.320663,
+       -5.931826
+      ],
+      [
+       -18.983317,
+       -7.086027
+      ],
+      [
+       -18.578043,
+       -8.21815
+      ],
+      [
+       -18.106438,
+       -9.324273
+      ],
+      [
+       -17.570324,
+       -10.400596
+      ],
+      [
+       -16.97173,
+       -11.44345
+      ],
+      [
+       -16.312888,
+       -12.449311
+      ],
+      [
+       -15.596218,
+       -13.414809
+      ],
+      [
+       -14.824323,
+       -14.336736
+      ],
+      [
+       -13.999973,
+       -15.212059
+      ],
+      [
+       -13.126096,
+       -16.037925
+      ],
+      [
+       -12.205764,
+       -16.811667
+      ],
+      [
+       -11.242185,
+       -17.530816
+      ],
+      [
+       -10.238686,
+       -18.193101
+      ],
+      [
+       -9.198703,
+       -18.796459
+      ],
+      [
+       -8.125768,
+       -19.339035
+      ],
+      [
+       -7.023496,
+       -19.819189
+      ],
+      [
+       -5.895572,
+       -20.235496
+      ],
+      [
+       -4.745738,
+       -20.586752
+      ],
+      [
+       -3.577781,
+       -20.871972
+      ],
+      [
+       -2.39552,
+       -21.090389
+      ],
+      [
+       -1.202792,
+       -21.24146
+      ],
+      [
+       -0.003442,
+       -21.324858
+      ],
+      [
+       1.198693,
+       -21.340478
+      ],
+      [
+       2.399792,
+       -21.288427
+      ],
+      [
+       3.596063,
+       -21.169027
+      ],
+      [
+       4.783759,
+       -20.982809
+      ],
+      [
+       5.959182,
+       -20.730509
+      ],
+      [
+       7.118699,
+       -20.413064
+      ],
+      [
+       8.25875,
+       -20.031608
+      ],
+      [
+       9.375862,
+       -19.587462
+      ],
+      [
+       10.466652,
+       -19.082134
+      ],
+      [
+       11.527844,
+       -18.517307
+      ],
+      [
+       12.55627,
+       -17.894834
+      ],
+      [
+       13.548887,
+       -17.21673
+      ],
+      [
+       14.502777,
+       -16.485168
+      ],
+      [
+       15.415158,
+       -15.702462
+      ],
+      [
+       16.283392,
+       -14.871069
+      ],
+      [
+       17.104988,
+       -13.993571
+      ]
+     ],
+     "volumes": {
+      "3": {
+       "name": "wire sheath TPU",
+       "volume": 1022.805476,
+       "bbox": {
+        "min": [
+         -21.582947,
+         -22.956533,
+         0
+        ],
+        "max": [
+         20.904988,
+         20.204447,
+         3.2
+        ]
+       },
+       "prisms": 5,
+       "tris": 19908
+      },
+      "4": {
+       "name": "wire core cTPU",
+       "volume": 328.539541,
+       "bbox": {
+        "min": [
+         -20.583786,
+         -21.957373,
+         0.001
+        ],
+        "max": [
+         20.388098,
+         19.205286,
+         4.999
+        ]
+       },
+       "prisms": 9,
+       "tris": 5952
+      },
+      "shared": {
+       "3x4": 11.803481
+      }
+     }
+    },
+    "declared": {
+     "name": "WIRE spiral 201.0 mm",
+     "len": 201.016426,
+     "chord": 15.001131,
+     "span": {
+      "min": 0,
+      "max": 200.02,
+      "flat": 15
+     },
+     "R": 4187842.208239,
+     "readout": [
+      [
+       "path length",
+       "201.0 mm, cap centre to cap centre"
+      ],
+      [
+       "spans",
+       "up to 200.0 mm pulled straight, 15.0 mm lying flat"
+      ],
+      [
+       "footprint",
+       "42.5 x 43.2 mm"
+      ],
+      [
+       "caps",
+       "3.2 mm tall: a wire cap is a plate, so it stacks like one"
+      ],
+      [
+       "core R",
+       "4.19 Mohm"
+      ],
+      [
+       "verdict",
+       "digital only (slow edges), no analog"
+      ]
+     ],
+     "fits": [
+      {
+       "label": "sheath wall each side",
+       "value": 1,
+       "lo": 0.6,
+       "hi": 99,
+       "unit": "mm",
+       "ok": true
+      }
+     ],
+     "warnings": [],
+     "ports": {
+      "A": {
+       "end": "A",
+       "top": true,
+       "bottom": true
+      },
+      "B": {
+       "end": "B",
+       "top": true,
+       "bottom": true
+      }
+     },
+     "tris": 25860,
+     "pts": [
+      [
+       11.7,
+       0
+      ],
+      [
+       11.727823,
+       1.207089
+      ],
+      [
+       11.63172,
+       2.410556
+      ],
+      [
+       11.413657,
+       3.597887
+      ],
+      [
+       11.076809,
+       4.757018
+      ],
+      [
+       10.625479,
+       5.876439
+      ],
+      [
+       10.065018,
+       6.945292
+      ],
+      [
+       9.401731,
+       7.953449
+      ],
+      [
+       8.642783,
+       8.891587
+      ],
+      [
+       7.796103,
+       9.751247
+      ],
+      [
+       6.870279,
+       10.524886
+      ],
+      [
+       5.874458,
+       11.205915
+      ],
+      [
+       4.818245,
+       11.788725
+      ],
+      [
+       3.711595,
+       12.26871
+      ],
+      [
+       2.564722,
+       12.642268
+      ],
+      [
+       1.387992,
+       12.906808
+      ],
+      [
+       0.191832,
+       13.060735
+      ],
+      [
+       -1.013361,
+       13.103435
+      ],
+      [
+       -2.217309,
+       13.035248
+      ],
+      [
+       -3.409933,
+       12.857436
+      ],
+      [
+       -4.581433,
+       12.572146
+      ],
+      [
+       -5.722358,
+       12.182365
+      ],
+      [
+       -6.823673,
+       11.69187
+      ],
+      [
+       -7.876819,
+       11.105175
+      ],
+      [
+       -8.873765,
+       10.427478
+      ],
+      [
+       -9.807057,
+       9.664593
+      ],
+      [
+       -10.66986,
+       8.822896
+      ],
+      [
+       -11.455989,
+       7.909254
+      ],
+      [
+       -12.159945,
+       6.930965
+      ],
+      [
+       -12.776928,
+       5.895688
+      ],
+      [
+       -13.30286,
+       4.811377
+      ],
+      [
+       -13.734394,
+       3.686218
+      ],
+      [
+       -14.068919,
+       2.528561
+      ],
+      [
+       -14.304556,
+       1.346855
+      ],
+      [
+       -14.440157,
+       0.14959
+      ],
+      [
+       -14.475294,
+       -1.054768
+      ],
+      [
+       -14.410237,
+       -2.257831
+      ],
+      [
+       -14.245945,
+       -3.45135
+      ],
+      [
+       -13.984034,
+       -4.627263
+      ],
+      [
+       -13.626752,
+       -5.777744
+      ],
+      [
+       -13.176951,
+       -6.895254
+      ],
+      [
+       -12.638053,
+       -7.97258
+      ],
+      [
+       -12.01401,
+       -9.002875
+      ],
+      [
+       -11.30927,
+       -9.979696
+      ],
+      [
+       -10.528738,
+       -10.897032
+      ],
+      [
+       -9.677728,
+       -11.749335
+      ],
+      [
+       -8.761926,
+       -12.531542
+      ],
+      [
+       -7.787344,
+       -13.239098
+      ],
+      [
+       -6.760275,
+       -13.867972
+      ],
+      [
+       -5.687249,
+       -14.414668
+      ],
+      [
+       -4.574987,
+       -14.876236
+      ],
+      [
+       -3.430357,
+       -15.250277
+      ],
+      [
+       -2.260332,
+       -15.534946
+      ],
+      [
+       -1.071941,
+       -15.728952
+      ],
+      [
+       0.127768,
+       -15.831549
+      ],
+      [
+       1.331771,
+       -15.842534
+      ],
+      [
+       2.53311,
+       -15.762236
+      ],
+      [
+       3.724929,
+       -15.591498
+      ],
+      [
+       4.900511,
+       -15.331667
+      ],
+      [
+       6.053314,
+       -14.984576
+      ],
+      [
+       7.177004,
+       -14.552519
+      ],
+      [
+       8.265484,
+       -14.038234
+      ],
+      [
+       9.312924,
+       -13.444876
+      ],
+      [
+       10.313787,
+       -12.775994
+      ],
+      [
+       11.262854,
+       -12.0355
+      ],
+      [
+       12.155246,
+       -11.227647
+      ],
+      [
+       12.98644,
+       -10.356993
+      ],
+      [
+       13.75229,
+       -9.428378
+      ],
+      [
+       14.449038,
+       -8.446886
+      ],
+      [
+       15.073332,
+       -7.417819
+      ],
+      [
+       15.622226,
+       -6.346666
+      ],
+      [
+       16.093198,
+       -5.239067
+      ],
+      [
+       16.484147,
+       -4.100785
+      ],
+      [
+       16.7934,
+       -2.937674
+      ],
+      [
+       17.019711,
+       -1.755647
+      ],
+      [
+       17.16226,
+       -0.560647
+      ],
+      [
+       17.220647,
+       0.641382
+      ],
+      [
+       17.194893,
+       1.844529
+      ],
+      [
+       17.085423,
+       3.042938
+      ],
+      [
+       16.893066,
+       4.230839
+      ],
+      [
+       16.619036,
+       5.402573
+      ],
+      [
+       16.264926,
+       6.552619
+      ],
+      [
+       15.832688,
+       7.675612
+      ],
+      [
+       15.324625,
+       8.766374
+      ],
+      [
+       14.743367,
+       9.819928
+      ],
+      [
+       14.091855,
+       10.83152
+      ],
+      [
+       13.373328,
+       11.796637
+      ],
+      [
+       12.591295,
+       12.711025
+      ],
+      [
+       11.74952,
+       13.570702
+      ],
+      [
+       10.851997,
+       14.371972
+      ],
+      [
+       9.902934,
+       15.111438
+      ],
+      [
+       8.906724,
+       15.786012
+      ],
+      [
+       7.867928,
+       16.39292
+      ],
+      [
+       6.791248,
+       16.929714
+      ],
+      [
+       5.681508,
+       17.394278
+      ],
+      [
+       4.54363,
+       17.784825
+      ],
+      [
+       3.382607,
+       18.099908
+      ],
+      [
+       2.203489,
+       18.338414
+      ],
+      [
+       1.011353,
+       18.499569
+      ],
+      [
+       -0.188717,
+       18.582931
+      ],
+      [
+       -1.391648,
+       18.588391
+      ],
+      [
+       -2.592403,
+       18.516167
+      ],
+      [
+       -3.786001,
+       18.366796
+      ],
+      [
+       -4.967534,
+       18.14113
+      ],
+      [
+       -6.132189,
+       17.840325
+      ],
+      [
+       -7.275265,
+       17.465836
+      ],
+      [
+       -8.392189,
+       17.0194
+      ],
+      [
+       -9.478535,
+       16.503033
+      ],
+      [
+       -10.530039,
+       15.91901
+      ],
+      [
+       -11.542614,
+       15.269858
+      ],
+      [
+       -12.512359,
+       14.558338
+      ],
+      [
+       -13.43558,
+       13.787435
+      ],
+      [
+       -14.308795,
+       12.96034
+      ],
+      [
+       -15.128746,
+       12.080434
+      ],
+      [
+       -15.892409,
+       11.151275
+      ],
+      [
+       -16.597004,
+       10.176582
+      ],
+      [
+       -17.24,
+       9.160215
+      ],
+      [
+       -17.81912,
+       8.106161
+      ],
+      [
+       -18.332349,
+       7.018517
+      ],
+      [
+       -18.777938,
+       5.901472
+      ],
+      [
+       -19.154403,
+       4.759291
+      ],
+      [
+       -19.460533,
+       3.596296
+      ],
+      [
+       -19.695384,
+       2.416855
+      ],
+      [
+       -19.858285,
+       1.225357
+      ],
+      [
+       -19.948833,
+       0.026203
+      ],
+      [
+       -19.966892,
+       -1.176217
+      ],
+      [
+       -19.912589,
+       -2.377532
+      ],
+      [
+       -19.786313,
+       -3.573411
+      ],
+      [
+       -19.588706,
+       -4.759579
+      ],
+      [
+       -19.320663,
+       -5.931826
+      ],
+      [
+       -18.983317,
+       -7.086027
+      ],
+      [
+       -18.578043,
+       -8.21815
+      ],
+      [
+       -18.106438,
+       -9.324273
+      ],
+      [
+       -17.570324,
+       -10.400596
+      ],
+      [
+       -16.97173,
+       -11.44345
+      ],
+      [
+       -16.312888,
+       -12.449311
+      ],
+      [
+       -15.596218,
+       -13.414809
+      ],
+      [
+       -14.824323,
+       -14.336736
+      ],
+      [
+       -13.999973,
+       -15.212059
+      ],
+      [
+       -13.126096,
+       -16.037925
+      ],
+      [
+       -12.205764,
+       -16.811667
+      ],
+      [
+       -11.242185,
+       -17.530816
+      ],
+      [
+       -10.238686,
+       -18.193101
+      ],
+      [
+       -9.198703,
+       -18.796459
+      ],
+      [
+       -8.125768,
+       -19.339035
+      ],
+      [
+       -7.023496,
+       -19.819189
+      ],
+      [
+       -5.895572,
+       -20.235496
+      ],
+      [
+       -4.745738,
+       -20.586752
+      ],
+      [
+       -3.577781,
+       -20.871972
+      ],
+      [
+       -2.39552,
+       -21.090389
+      ],
+      [
+       -1.202792,
+       -21.24146
+      ],
+      [
+       -0.003442,
+       -21.324858
+      ],
+      [
+       1.198693,
+       -21.340478
+      ],
+      [
+       2.399792,
+       -21.288427
+      ],
+      [
+       3.596063,
+       -21.169027
+      ],
+      [
+       4.783759,
+       -20.982809
+      ],
+      [
+       5.959182,
+       -20.730509
+      ],
+      [
+       7.118699,
+       -20.413064
+      ],
+      [
+       8.25875,
+       -20.031608
+      ],
+      [
+       9.375862,
+       -19.587462
+      ],
+      [
+       10.466652,
+       -19.082134
+      ],
+      [
+       11.527844,
+       -18.517307
+      ],
+      [
+       12.55627,
+       -17.894834
+      ],
+      [
+       13.548887,
+       -17.21673
+      ],
+      [
+       14.502777,
+       -16.485168
+      ],
+      [
+       15.415158,
+       -15.702462
+      ],
+      [
+       16.283392,
+       -14.871069
+      ],
+      [
+       17.104988,
+       -13.993571
+      ]
+     ],
+     "volumes": {
+      "3": {
+       "name": "wire sheath TPU",
+       "volume": 1022.805476,
+       "bbox": {
+        "min": [
+         -21.582947,
+         -22.956533,
+         0
+        ],
+        "max": [
+         20.904988,
+         20.204447,
+         3.2
+        ]
+       },
+       "prisms": 5,
+       "tris": 19908
+      },
+      "4": {
+       "name": "wire core cTPU",
+       "volume": 329.662043,
+       "bbox": {
+        "min": [
+         -20.584786,
+         -21.958373,
+         0
+        ],
+        "max": [
+         20.389098,
+         19.206286,
+         5
+        ]
+       },
+       "prisms": 9,
+       "tris": 5952
+      },
+      "shared": {
+       "3x4": 11.866485
+      }
+     }
+    }
+   },
+   "arc": {
+    "params": {
+     "shape": "arc"
+    },
+    "asBuilt": {
+     "name": "WIRE arc 80.0 mm",
+     "len": 79.985186,
+     "chord": 58.316274,
+     "span": {
+      "min": 0,
+      "max": 78.99,
+      "flat": 58.32
+     },
+     "R": 1666358.041838,
+     "readout": [
+      [
+       "path length",
+       "80.0 mm, cap centre to cap centre"
+      ],
+      [
+       "spans",
+       "up to 79.0 mm pulled straight, 58.3 mm lying flat"
+      ],
+      [
+       "footprint",
+       "35.4 x 64.3 mm"
+      ],
+      [
+       "caps",
+       "3.2 mm tall: a wire cap is a plate, so it stacks like one"
+      ],
+      [
+       "core R",
+       "1.67 Mohm"
+      ],
+      [
+       "verdict",
+       "digital only (slow edges), no analog"
+      ]
+     ],
+     "fits": [
+      {
+       "label": "sheath wall each side",
+       "value": 1,
+       "lo": 0.6,
+       "hi": 99,
+       "unit": "mm",
+       "ok": true
+      }
+     ],
+     "warnings": [],
+     "ports": {
+      "A": {
+       "end": "A",
+       "top": true,
+       "bottom": true
+      },
+      "B": {
+       "end": "B",
+       "top": true,
+       "bottom": true
+      }
+     },
+     "tris": 8464,
+     "pts": [
+      [
+       0,
+       0
+      ],
+      [
+       1.998519,
+       0.066642
+      ],
+      [
+       3.988159,
+       0.266272
+      ],
+      [
+       5.96008,
+       0.598003
+      ],
+      [
+       7.905522,
+       1.060361
+      ],
+      [
+       9.815841,
+       1.651292
+      ],
+      [
+       11.68255,
+       2.36817
+      ],
+      [
+       13.497356,
+       3.207811
+      ],
+      [
+       15.252197,
+       4.166485
+      ],
+      [
+       16.939274,
+       5.239932
+      ],
+      [
+       18.551094,
+       6.423382
+      ],
+      [
+       20.080495,
+       7.711579
+      ],
+      [
+       21.520683,
+       9.098799
+      ],
+      [
+       22.865258,
+       10.578878
+      ],
+      [
+       24.108248,
+       12.145242
+      ],
+      [
+       25.24413,
+       13.790931
+      ],
+      [
+       26.267857,
+       15.508633
+      ],
+      [
+       27.174881,
+       17.290718
+      ],
+      [
+       27.961173,
+       19.129267
+      ],
+      [
+       28.623238,
+       21.016113
+      ],
+      [
+       29.158137,
+       22.942873
+      ],
+      [
+       29.563492,
+       24.900986
+      ],
+      [
+       29.837502,
+       26.881753
+      ],
+      [
+       29.97895,
+       28.876373
+      ],
+      [
+       29.987208,
+       30.875986
+      ],
+      [
+       29.862239,
+       32.871706
+      ],
+      [
+       29.604597,
+       34.854669
+      ],
+      [
+       29.215429,
+       36.816063
+      ],
+      [
+       28.696462,
+       38.747174
+      ],
+      [
+       28.050003,
+       40.639424
+      ],
+      [
+       27.278923,
+       42.484405
+      ],
+      [
+       26.386648,
+       44.27392
+      ],
+      [
+       25.377143,
+       46.000019
+      ],
+      [
+       24.254892,
+       47.655034
+      ],
+      [
+       23.024882,
+       49.23161
+      ],
+      [
+       21.692576,
+       50.722744
+      ],
+      [
+       20.263895,
+       52.121811
+      ],
+      [
+       18.745186,
+       53.422596
+      ],
+      [
+       17.143195,
+       54.619319
+      ],
+      [
+       15.465041,
+       55.706663
+      ],
+      [
+       13.718179,
+       56.679797
+      ]
+     ],
+     "volumes": {
+      "3": {
+       "name": "wire sheath TPU",
+       "volume": 492.596601,
+       "bbox": {
+        "min": [
+         -3.8,
+         -3.8,
+         0
+        ],
+        "max": [
+         31.603263,
+         60.479797,
+         3.2
+        ]
+       },
+       "prisms": 5,
+       "tris": 6132
+      },
+      "4": {
+       "name": "wire core cTPU",
+       "volume": 241.116117,
+       "bbox": {
+        "min": [
+         -3.28311,
+         -3.28311,
+         0.001
+        ],
+        "max": [
+         30.604103,
+         59.962907,
+         4.999
+        ]
+       },
+       "prisms": 9,
+       "tris": 2332
+      },
+      "shared": {
+       "3x4": 11.803481
+      }
+     }
+    },
+    "declared": {
+     "name": "WIRE arc 80.0 mm",
+     "len": 79.985186,
+     "chord": 58.316274,
+     "span": {
+      "min": 0,
+      "max": 78.99,
+      "flat": 58.32
+     },
+     "R": 1666358.041838,
+     "readout": [
+      [
+       "path length",
+       "80.0 mm, cap centre to cap centre"
+      ],
+      [
+       "spans",
+       "up to 79.0 mm pulled straight, 58.3 mm lying flat"
+      ],
+      [
+       "footprint",
+       "35.4 x 64.3 mm"
+      ],
+      [
+       "caps",
+       "3.2 mm tall: a wire cap is a plate, so it stacks like one"
+      ],
+      [
+       "core R",
+       "1.67 Mohm"
+      ],
+      [
+       "verdict",
+       "digital only (slow edges), no analog"
+      ]
+     ],
+     "fits": [
+      {
+       "label": "sheath wall each side",
+       "value": 1,
+       "lo": 0.6,
+       "hi": 99,
+       "unit": "mm",
+       "ok": true
+      }
+     ],
+     "warnings": [],
+     "ports": {
+      "A": {
+       "end": "A",
+       "top": true,
+       "bottom": true
+      },
+      "B": {
+       "end": "B",
+       "top": true,
+       "bottom": true
+      }
+     },
+     "tris": 8464,
+     "pts": [
+      [
+       0,
+       0
+      ],
+      [
+       1.998519,
+       0.066642
+      ],
+      [
+       3.988159,
+       0.266272
+      ],
+      [
+       5.96008,
+       0.598003
+      ],
+      [
+       7.905522,
+       1.060361
+      ],
+      [
+       9.815841,
+       1.651292
+      ],
+      [
+       11.68255,
+       2.36817
+      ],
+      [
+       13.497356,
+       3.207811
+      ],
+      [
+       15.252197,
+       4.166485
+      ],
+      [
+       16.939274,
+       5.239932
+      ],
+      [
+       18.551094,
+       6.423382
+      ],
+      [
+       20.080495,
+       7.711579
+      ],
+      [
+       21.520683,
+       9.098799
+      ],
+      [
+       22.865258,
+       10.578878
+      ],
+      [
+       24.108248,
+       12.145242
+      ],
+      [
+       25.24413,
+       13.790931
+      ],
+      [
+       26.267857,
+       15.508633
+      ],
+      [
+       27.174881,
+       17.290718
+      ],
+      [
+       27.961173,
+       19.129267
+      ],
+      [
+       28.623238,
+       21.016113
+      ],
+      [
+       29.158137,
+       22.942873
+      ],
+      [
+       29.563492,
+       24.900986
+      ],
+      [
+       29.837502,
+       26.881753
+      ],
+      [
+       29.97895,
+       28.876373
+      ],
+      [
+       29.987208,
+       30.875986
+      ],
+      [
+       29.862239,
+       32.871706
+      ],
+      [
+       29.604597,
+       34.854669
+      ],
+      [
+       29.215429,
+       36.816063
+      ],
+      [
+       28.696462,
+       38.747174
+      ],
+      [
+       28.050003,
+       40.639424
+      ],
+      [
+       27.278923,
+       42.484405
+      ],
+      [
+       26.386648,
+       44.27392
+      ],
+      [
+       25.377143,
+       46.000019
+      ],
+      [
+       24.254892,
+       47.655034
+      ],
+      [
+       23.024882,
+       49.23161
+      ],
+      [
+       21.692576,
+       50.722744
+      ],
+      [
+       20.263895,
+       52.121811
+      ],
+      [
+       18.745186,
+       53.422596
+      ],
+      [
+       17.143195,
+       54.619319
+      ],
+      [
+       15.465041,
+       55.706663
+      ],
+      [
+       13.718179,
+       56.679797
+      ]
+     ],
+     "volumes": {
+      "3": {
+       "name": "wire sheath TPU",
+       "volume": 492.596601,
+       "bbox": {
+        "min": [
+         -3.8,
+         -3.8,
+         0
+        ],
+        "max": [
+         31.603263,
+         60.479797,
+         3.2
+        ]
+       },
+       "prisms": 5,
+       "tris": 6132
+      },
+      "4": {
+       "name": "wire core cTPU",
+       "volume": 241.800073,
+       "bbox": {
+        "min": [
+         -3.28411,
+         -3.28411,
+         0
+        ],
+        "max": [
+         30.605103,
+         59.963907,
+         5
+        ]
+       },
+       "prisms": 9,
+       "tris": 2332
+      },
+      "shared": {
+       "3x4": 11.866485
+      }
+     }
+    }
+   },
+   "zigzag.bareA": {
+    "params": {
+     "shape": "zigzag",
+     "endA": "bare"
+    },
+    "asBuilt": {
+     "name": "WIRE zigzag 85.9 mm",
+     "len": 85.867884,
+     "chord": 43.737855,
+     "span": {
+      "min": 0,
+      "max": 84.87,
+      "flat": 43.74
+     },
+     "R": 1788914.245395,
+     "readout": [
+      [
+       "path length",
+       "85.9 mm, cap centre to cap centre"
+      ],
+      [
+       "spans",
+       "up to 84.9 mm pulled straight, 43.7 mm lying flat"
+      ],
+      [
+       "footprint",
+       "44.9 x 21.4 mm"
+      ],
+      [
+       "caps",
+       "3.2 mm tall: a wire cap is a plate, so it stacks like one"
+      ],
+      [
+       "core R",
+       "1.79 Mohm"
+      ],
+      [
+       "verdict",
+       "digital only (slow edges), no analog"
+      ]
+     ],
+     "fits": [
+      {
+       "label": "sheath wall each side",
+       "value": 1,
+       "lo": 0.6,
+       "hi": 99,
+       "unit": "mm",
+       "ok": true
+      }
+     ],
+     "warnings": [],
+     "ports": {
+      "B": {
+       "end": "B",
+       "top": true,
+       "bottom": true
+      },
+      "A": {
+       "end": "A",
+       "top": false,
+       "bottom": false
+      }
+     },
+     "tris": 2952,
+     "pts": [
+      [
+       0,
+       0
+      ],
+      [
+       8,
+       8
+      ],
+      [
+       16,
+       -8
+      ],
+      [
+       24,
+       8
+      ],
+      [
+       32,
+       -8
+      ],
+      [
+       40,
+       8
+      ],
+      [
+       43,
+       8
+      ]
+     ],
+     "volumes": {
+      "3": {
+       "name": "wire sheath TPU",
+       "volume": 417.11546,
+       "bbox": {
+        "min": [
+         1.919479,
+         -9.616055,
+         0
+        ],
+        "max": [
+         46.8,
+         11.8,
+         3.2
+        ]
+       },
+       "prisms": 5,
+       "tris": 2060
+      },
+      "4": {
+       "name": "wire core cTPU",
+       "volume": 152.947742,
+       "bbox": {
+        "min": [
+         -0.616895,
+         -8.616895,
+         0.001
+        ],
+        "max": [
+         46.28311,
+         11.28311,
+         4.999
+        ]
+       },
+       "prisms": 5,
+       "tris": 892
+      },
+      "shared": {
+       "3x4": 5.90174
+      }
+     }
+    },
+    "declared": {
+     "name": "WIRE zigzag 85.9 mm",
+     "len": 85.867884,
+     "chord": 43.737855,
+     "span": {
+      "min": 0,
+      "max": 84.87,
+      "flat": 43.74
+     },
+     "R": 1788914.245395,
+     "readout": [
+      [
+       "path length",
+       "85.9 mm, cap centre to cap centre"
+      ],
+      [
+       "spans",
+       "up to 84.9 mm pulled straight, 43.7 mm lying flat"
+      ],
+      [
+       "footprint",
+       "44.9 x 21.4 mm"
+      ],
+      [
+       "caps",
+       "3.2 mm tall: a wire cap is a plate, so it stacks like one"
+      ],
+      [
+       "core R",
+       "1.79 Mohm"
+      ],
+      [
+       "verdict",
+       "digital only (slow edges), no analog"
+      ]
+     ],
+     "fits": [
+      {
+       "label": "sheath wall each side",
+       "value": 1,
+       "lo": 0.6,
+       "hi": 99,
+       "unit": "mm",
+       "ok": true
+      }
+     ],
+     "warnings": [],
+     "ports": {
+      "B": {
+       "end": "B",
+       "top": true,
+       "bottom": true
+      },
+      "A": {
+       "end": "A",
+       "top": false,
+       "bottom": false
+      }
+     },
+     "tris": 2952,
+     "pts": [
+      [
+       0,
+       0
+      ],
+      [
+       8,
+       8
+      ],
+      [
+       16,
+       -8
+      ],
+      [
+       24,
+       8
+      ],
+      [
+       32,
+       -8
+      ],
+      [
+       40,
+       8
+      ],
+      [
+       43,
+       8
+      ]
+     ],
+     "volumes": {
+      "3": {
+       "name": "wire sheath TPU",
+       "volume": 417.11546,
+       "bbox": {
+        "min": [
+         1.919479,
+         -9.616055,
+         0
+        ],
+        "max": [
+         46.8,
+         11.8,
+         3.2
+        ]
+       },
+       "prisms": 5,
+       "tris": 2060
+      },
+      "4": {
+       "name": "wire core cTPU",
+       "volume": 153.45143,
+       "bbox": {
+        "min": [
+         -0.617895,
+         -8.617895,
+         0
+        ],
+        "max": [
+         46.28411,
+         11.28411,
+         5
+        ]
+       },
+       "prisms": 5,
+       "tris": 892
+      },
+      "shared": {
+       "3x4": 5.933242
+      }
+     }
+    }
+   },
+   "s.cpla": {
+    "params": {
+     "shape": "s",
+     "core": 2
+    },
+    "asBuilt": {
+     "name": "WIRE s 104.2 mm",
+     "len": 104.180506,
+     "chord": 92.195445,
+     "span": {
+      "min": 0,
+      "max": 103.18,
+      "flat": 92.2
+     },
+     "R": 43408.544205,
+     "readout": [
+      [
+       "path length",
+       "104.2 mm, cap centre to cap centre"
+      ],
+      [
+       "spans",
+       "up to 103.2 mm pulled straight, 92.2 mm lying flat"
+      ],
+      [
+       "footprint",
+       "77.6 x 67.6 mm"
+      ],
+      [
+       "caps",
+       "3.2 mm tall: a wire cap is a plate, so it stacks like one"
+      ],
+      [
+       "core R",
+       "43.4 kohm"
+      ],
+      [
+       "verdict",
+       "signal and ADC fine"
+      ]
+     ],
+     "fits": [
+      {
+       "label": "sheath wall each side",
+       "value": 1,
+       "lo": 0.6,
+       "hi": 99,
+       "unit": "mm",
+       "ok": true
+      }
+     ],
+     "warnings": [],
+     "ports": {
+      "A": {
+       "end": "A",
+       "top": true,
+       "bottom": true
+      },
+      "B": {
+       "end": "B",
+       "top": true,
+       "bottom": true
+      }
+     },
+     "tris": 6716,
+     "pts": [
+      [
+       0,
+       0
+      ],
+      [
+       5,
+       0
+      ],
+      [
+       8.915786,
+       0.256654
+      ],
+      [
+       12.764571,
+       1.022225
+      ],
+      [
+       16.480503,
+       2.283614
+      ],
+      [
+       20,
+       4.019238
+      ],
+      [
+       23.262843,
+       6.1994
+      ],
+      [
+       26.213203,
+       8.786797
+      ],
+      [
+       28.8006,
+       11.737157
+      ],
+      [
+       30.980762,
+       15
+      ],
+      [
+       32.716386,
+       18.519497
+      ],
+      [
+       33.977775,
+       22.235429
+      ],
+      [
+       34.743346,
+       26.084214
+      ],
+      [
+       35,
+       30
+      ],
+      [
+       35.256654,
+       33.915786
+      ],
+      [
+       36.022225,
+       37.764571
+      ],
+      [
+       37.283614,
+       41.480503
+      ],
+      [
+       39.019238,
+       45
+      ],
+      [
+       41.1994,
+       48.262843
+      ],
+      [
+       43.786797,
+       51.213203
+      ],
+      [
+       46.737157,
+       53.8006
+      ],
+      [
+       50,
+       55.980762
+      ],
+      [
+       53.519497,
+       57.716386
+      ],
+      [
+       57.235429,
+       58.977775
+      ],
+      [
+       61.084214,
+       59.743346
+      ],
+      [
+       65,
+       60
+      ],
+      [
+       70,
+       60
+      ]
+     ],
+     "volumes": {
+      "2": {
+       "name": "wire core cPLA",
+       "volume": 69.660591,
+       "bbox": {
+        "min": [
+         3.534725,
+         -0.616895,
+         0.501
+        ],
+        "max": [
+         66.465275,
+         60.616895,
+         1.099
+        ]
+       },
+       "prisms": 1,
+       "tris": 764
+      },
+      "3": {
+       "name": "wire sheath TPU",
+       "volume": 601.523346,
+       "bbox": {
+        "min": [
+         -3.8,
+         -3.8,
+         0
+        ],
+        "max": [
+         73.8,
+         63.8,
+         3.2
+        ]
+       },
+       "prisms": 5,
+       "tris": 4696
+      },
+      "4": {
+       "name": "wire cap conductor cTPU",
+       "volume": 188.288587,
+       "bbox": {
+        "min": [
+         -3.28311,
+         -3.28311,
+         0.001
+        ],
+        "max": [
+         73.28311,
+         63.28311,
+         4.999
+        ]
+       },
+       "prisms": 8,
+       "tris": 1256
+      },
+      "shared": {
+       "3x2": 0,
+       "3x4": 11.80348,
+       "2x4": 0
+      }
+     }
+    },
+    "declared": {
+     "name": "WIRE s 104.2 mm",
+     "len": 104.180506,
+     "chord": 92.195445,
+     "span": {
+      "min": 0,
+      "max": 103.18,
+      "flat": 92.2
+     },
+     "R": 43408.544205,
+     "readout": [
+      [
+       "path length",
+       "104.2 mm, cap centre to cap centre"
+      ],
+      [
+       "spans",
+       "up to 103.2 mm pulled straight, 92.2 mm lying flat"
+      ],
+      [
+       "footprint",
+       "77.6 x 67.6 mm"
+      ],
+      [
+       "caps",
+       "3.2 mm tall: a wire cap is a plate, so it stacks like one"
+      ],
+      [
+       "core R",
+       "43.4 kohm"
+      ],
+      [
+       "verdict",
+       "signal and ADC fine"
+      ]
+     ],
+     "fits": [
+      {
+       "label": "sheath wall each side",
+       "value": 1,
+       "lo": 0.6,
+       "hi": 99,
+       "unit": "mm",
+       "ok": true
+      }
+     ],
+     "warnings": [],
+     "ports": {
+      "A": {
+       "end": "A",
+       "top": true,
+       "bottom": true
+      },
+      "B": {
+       "end": "B",
+       "top": true,
+       "bottom": true
+      }
+     },
+     "tris": 6716,
+     "pts": [
+      [
+       0,
+       0
+      ],
+      [
+       5,
+       0
+      ],
+      [
+       8.915786,
+       0.256654
+      ],
+      [
+       12.764571,
+       1.022225
+      ],
+      [
+       16.480503,
+       2.283614
+      ],
+      [
+       20,
+       4.019238
+      ],
+      [
+       23.262843,
+       6.1994
+      ],
+      [
+       26.213203,
+       8.786797
+      ],
+      [
+       28.8006,
+       11.737157
+      ],
+      [
+       30.980762,
+       15
+      ],
+      [
+       32.716386,
+       18.519497
+      ],
+      [
+       33.977775,
+       22.235429
+      ],
+      [
+       34.743346,
+       26.084214
+      ],
+      [
+       35,
+       30
+      ],
+      [
+       35.256654,
+       33.915786
+      ],
+      [
+       36.022225,
+       37.764571
+      ],
+      [
+       37.283614,
+       41.480503
+      ],
+      [
+       39.019238,
+       45
+      ],
+      [
+       41.1994,
+       48.262843
+      ],
+      [
+       43.786797,
+       51.213203
+      ],
+      [
+       46.737157,
+       53.8006
+      ],
+      [
+       50,
+       55.980762
+      ],
+      [
+       53.519497,
+       57.716386
+      ],
+      [
+       57.235429,
+       58.977775
+      ],
+      [
+       61.084214,
+       59.743346
+      ],
+      [
+       65,
+       60
+      ],
+      [
+       70,
+       60
+      ]
+     ],
+     "volumes": {
+      "2": {
+       "name": "wire core cPLA",
+       "volume": 70.011746,
+       "bbox": {
+        "min": [
+         3.533506,
+         -0.617895,
+         0.5
+        ],
+        "max": [
+         66.466494,
+         60.617895,
+         1.1
+        ]
+       },
+       "prisms": 1,
+       "tris": 764
+      },
+      "3": {
+       "name": "wire sheath TPU",
+       "volume": 601.523346,
+       "bbox": {
+        "min": [
+         -3.8,
+         -3.8,
+         0
+        ],
+        "max": [
+         73.8,
+         63.8,
+         3.2
+        ]
+       },
+       "prisms": 5,
+       "tris": 4696
+      },
+      "4": {
+       "name": "wire cap conductor cTPU",
+       "volume": 188.70882,
+       "bbox": {
+        "min": [
+         -3.28411,
+         -3.28411,
+         0
+        ],
+        "max": [
+         73.28411,
+         63.28411,
+         5
+        ]
+       },
+       "prisms": 8,
+       "tris": 1256
+      },
+      "shared": {
+       "3x2": 0,
+       "3x4": 11.866484,
+       "2x4": 0
+      }
+     }
+    }
+   },
+   "straight.downUp": {
+    "params": {
+     "endA": "down",
+     "endB": "up"
+    },
+    "asBuilt": {
+     "name": "WIRE straight 80.0 mm",
+     "len": 80,
+     "chord": 80,
+     "span": {
+      "min": 0,
+      "max": 79,
+      "flat": 80
+     },
+     "R": 1666666.666667,
+     "readout": [
+      [
+       "path length",
+       "80.0 mm, cap centre to cap centre"
+      ],
+      [
+       "spans",
+       "up to 79.0 mm pulled straight, 80.0 mm lying flat"
+      ],
+      [
+       "footprint",
+       "87.6 x 7.6 mm"
+      ],
+      [
+       "caps",
+       "3.2 mm tall: a wire cap is a plate, so it stacks like one"
+      ],
+      [
+       "core R",
+       "1.67 Mohm"
+      ],
+      [
+       "verdict",
+       "digital only (slow edges), no analog"
+      ]
+     ],
+     "fits": [
+      {
+       "label": "sheath wall each side",
+       "value": 1,
+       "lo": 0.6,
+       "hi": 99,
+       "unit": "mm",
+       "ok": true
+      }
+     ],
+     "warnings": [],
+     "ports": {
+      "A": {
+       "end": "A",
+       "top": false,
+       "bottom": true
+      },
+      "B": {
+       "end": "B",
+       "top": true,
+       "bottom": false
+      }
+     },
+     "tris": 3040,
+     "pts": [
+      [
+       0,
+       0
+      ],
+      [
+       80,
+       0
+      ]
+     ],
+     "volumes": {
+      "3": {
+       "name": "wire sheath TPU",
+       "volume": 518.903874,
+       "bbox": {
+        "min": [
+         -3.8,
+         -3.8,
+         0
+        ],
+        "max": [
+         83.8,
+         3.8,
+         3.2
+        ]
+       },
+       "prisms": 5,
+       "tris": 2136
+      },
+      "4": {
+       "name": "wire core cTPU",
+       "volume": 214.871876,
+       "bbox": {
+        "min": [
+         -3.28311,
+         -3.28311,
+         0.001
+        ],
+        "max": [
+         82.785517,
+         3.28311,
+         4.999
+        ]
+       },
+       "prisms": 7,
+       "tris": 904
+      },
+      "shared": {
+       "3x4": 6.232935
+      }
+     }
+    },
+    "declared": {
+     "name": "WIRE straight 80.0 mm",
+     "len": 80,
+     "chord": 80,
+     "span": {
+      "min": 0,
+      "max": 79,
+      "flat": 80
+     },
+     "R": 1666666.666667,
+     "readout": [
+      [
+       "path length",
+       "80.0 mm, cap centre to cap centre"
+      ],
+      [
+       "spans",
+       "up to 79.0 mm pulled straight, 80.0 mm lying flat"
+      ],
+      [
+       "footprint",
+       "87.6 x 7.6 mm"
+      ],
+      [
+       "caps",
+       "3.2 mm tall: a wire cap is a plate, so it stacks like one"
+      ],
+      [
+       "core R",
+       "1.67 Mohm"
+      ],
+      [
+       "verdict",
+       "digital only (slow edges), no analog"
+      ]
+     ],
+     "fits": [
+      {
+       "label": "sheath wall each side",
+       "value": 1,
+       "lo": 0.6,
+       "hi": 99,
+       "unit": "mm",
+       "ok": true
+      }
+     ],
+     "warnings": [],
+     "ports": {
+      "A": {
+       "end": "A",
+       "top": false,
+       "bottom": true
+      },
+      "B": {
+       "end": "B",
+       "top": true,
+       "bottom": false
+      }
+     },
+     "tris": 3040,
+     "pts": [
+      [
+       0,
+       0
+      ],
+      [
+       80,
+       0
+      ]
+     ],
+     "volumes": {
+      "3": {
+       "name": "wire sheath TPU",
+       "volume": 518.903874,
+       "bbox": {
+        "min": [
+         -3.8,
+         -3.8,
+         0
+        ],
+        "max": [
+         83.8,
+         3.8,
+         3.2
+        ]
+       },
+       "prisms": 5,
+       "tris": 2136
+      },
+      "4": {
+       "name": "wire core cTPU",
+       "volume": 215.446824,
+       "bbox": {
+        "min": [
+         -3.28411,
+         -3.28411,
+         0
+        ],
+        "max": [
+         82.786517,
+         3.28411,
+         5
+        ]
+       },
+       "prisms": 7,
+       "tris": 904
+      },
+      "shared": {
+       "3x4": 6.28222
+      }
+     }
+    }
+   }
+  }
+ },
+ "boss": {
+  "std": {
+   "P": 8,
+   "studD": 4.8,
+   "studH": 1.8,
+   "plateH": 3.2,
+   "brickH": 9.6,
+   "sockH": 2.4,
+   "sockID_flex": 4.6,
+   "sockID_rigid": 5,
+   "sockOD": 6.6,
+   "flangeH": 0.72,
+   "postD": 3,
+   "padW": 1.8,
+   "boreD": 0.9,
+   "boreInPad": 1.2,
+   "L1": 3.36,
+   "traceT": 0.72,
+   "gapT": 0.48,
+   "traceW": 1,
+   "clr": 0.6,
+   "cell": 0.4,
+   "voidID_plain": 5,
+   "L2": 4.5600000000000005,
+   "padTop": 5.28
+  },
+  "layer": 0.24,
+  "slots": [
+   {
+    "id": 1,
+    "name": "PETG",
+    "rho": 0
+   },
+   {
+    "id": 2,
+    "name": "conductive PLA",
+    "rho": 30
+   },
+   {
+    "id": 3,
+    "name": "TPU 95A",
+    "rho": 0
+   },
+   {
+    "id": 4,
+    "name": "conductive TPU",
+    "rho": 1500
+   }
+  ],
+  "stud": {
+   "both@9.6": {
+    "asBuilt": {
+     "volumes": {
+      "2": {
+       "name": "stud conductive PLA",
+       "volume": 102.521915,
+       "bbox": {
+        "min": [
+         -3.291934,
+         -3.291934,
+         2.401
+        ],
+        "max": [
+         3.291934,
+         3.291934,
+         11.399
+        ]
+       },
+       "prisms": 4,
+       "tris": 752
+      },
+      "4": {
+       "name": "stud conductive TPU",
+       "volume": 41.983116,
+       "bbox": {
+        "min": [
+         -3.291934,
+         -3.291934,
+         0.001
+        ],
+        "max": [
+         3.291934,
+         3.291934,
+         2.399
+        ]
+       },
+       "prisms": 1,
+       "tris": 384
+      },
+      "shared": {
+       "2x4": 0
+      }
+     },
+     "errors": [],
+     "taps": [
+      {
+       "name": "S",
+       "x": 0,
+       "y": 0,
+       "z": 9.1
+      },
+      {
+       "name": "S.sock",
+       "x": 2.8,
+       "y": 0,
+       "z": 1.2
+      }
+     ],
+     "feats": [
+      {
+       "slot": 4,
+       "z0": 0,
+       "z1": 2.4,
+       "tag": "socket S"
+      },
+      {
+       "slot": 0,
+       "z0": 0,
+       "z1": 2.4,
+       "tag": "socket void"
+      },
+      {
+       "slot": 2,
+       "z0": 2.4,
+       "z1": 3.12,
+       "tag": "flange S"
+      },
+      {
+       "slot": 2,
+       "z0": 3.1,
+       "z1": 9.6,
+       "tag": "post S"
+      },
+      {
+       "slot": 2,
+       "z0": 9.58,
+       "z1": 9.62,
+       "tag": "post tip"
+      },
+      {
+       "slot": 2,
+       "z0": 9.6,
+       "z1": 11.4,
+       "tag": "stud S"
+      }
+     ]
+    },
+    "declared": {
+     "volumes": {
+      "2": {
+       "name": "stud conductive PLA",
+       "volume": 102.715124,
+       "bbox": {
+        "min": [
+         -3.292934,
+         -3.292934,
+         2.4
+        ],
+        "max": [
+         3.292934,
+         3.292934,
+         11.4
+        ]
+       },
+       "prisms": 4,
+       "tris": 752
+      },
+      "4": {
+       "name": "stud conductive TPU",
+       "volume": 42.102517,
+       "bbox": {
+        "min": [
+         -3.292934,
+         -3.292934,
+         0
+        ],
+        "max": [
+         3.292934,
+         3.292934,
+         2.4
+        ]
+       },
+       "prisms": 1,
+       "tris": 384
+      },
+      "shared": {
+       "2x4": 0
+      }
+     },
+     "errors": [],
+     "taps": [
+      {
+       "name": "S",
+       "x": 0,
+       "y": 0,
+       "z": 9.1
+      },
+      {
+       "name": "S.sock",
+       "x": 2.8,
+       "y": 0,
+       "z": 1.2
+      }
+     ],
+     "feats": [
+      {
+       "slot": 4,
+       "z0": 0,
+       "z1": 2.4,
+       "tag": "socket S"
+      },
+      {
+       "slot": 0,
+       "z0": 0,
+       "z1": 2.4,
+       "tag": "socket void"
+      },
+      {
+       "slot": 2,
+       "z0": 2.4,
+       "z1": 3.12,
+       "tag": "flange S"
+      },
+      {
+       "slot": 2,
+       "z0": 3.1,
+       "z1": 9.6,
+       "tag": "post S"
+      },
+      {
+       "slot": 2,
+       "z0": 9.58,
+       "z1": 9.62,
+       "tag": "post tip"
+      },
+      {
+       "slot": 2,
+       "z0": 9.6,
+       "z1": 11.4,
+       "tag": "stud S"
+      }
+     ]
+    }
+   },
+   "down@9.6": {
+    "asBuilt": {
+     "volumes": {
+      "2": {
+       "name": "stud conductive PLA",
+       "volume": 39.683444,
+       "bbox": {
+        "min": [
+         -3.291934,
+         -3.291934,
+         2.401
+        ],
+        "max": [
+         3.291934,
+         3.291934,
+         5.279
+        ]
+       },
+       "prisms": 2,
+       "tris": 376
+      },
+      "4": {
+       "name": "stud conductive TPU",
+       "volume": 41.983116,
+       "bbox": {
+        "min": [
+         -3.291934,
+         -3.291934,
+         0.001
+        ],
+        "max": [
+         3.291934,
+         3.291934,
+         2.399
+        ]
+       },
+       "prisms": 1,
+       "tris": 384
+      },
+      "shared": {
+       "2x4": 0
+      }
+     },
+     "errors": [],
+     "taps": [
+      {
+       "name": "S",
+       "x": 0,
+       "y": 0,
+       "z": 4.78
+      },
+      {
+       "name": "S.sock",
+       "x": 2.8,
+       "y": 0,
+       "z": 1.2
+      }
+     ],
+     "feats": [
+      {
+       "slot": 4,
+       "z0": 0,
+       "z1": 2.4,
+       "tag": "socket S"
+      },
+      {
+       "slot": 0,
+       "z0": 0,
+       "z1": 2.4,
+       "tag": "socket void"
+      },
+      {
+       "slot": 2,
+       "z0": 2.4,
+       "z1": 3.12,
+       "tag": "flange S"
+      },
+      {
+       "slot": 2,
+       "z0": 3.1,
+       "z1": 5.28,
+       "tag": "post S"
+      }
+     ]
+    },
+    "declared": {
+     "volumes": {
+      "2": {
+       "name": "stud conductive PLA",
+       "volume": 39.786883,
+       "bbox": {
+        "min": [
+         -3.292934,
+         -3.292934,
+         2.4
+        ],
+        "max": [
+         3.292934,
+         3.292934,
+         5.28
+        ]
+       },
+       "prisms": 2,
+       "tris": 376
+      },
+      "4": {
+       "name": "stud conductive TPU",
+       "volume": 42.102517,
+       "bbox": {
+        "min": [
+         -3.292934,
+         -3.292934,
+         0
+        ],
+        "max": [
+         3.292934,
+         3.292934,
+         2.4
+        ]
+       },
+       "prisms": 1,
+       "tris": 384
+      },
+      "shared": {
+       "2x4": 0
+      }
+     },
+     "errors": [],
+     "taps": [
+      {
+       "name": "S",
+       "x": 0,
+       "y": 0,
+       "z": 4.78
+      },
+      {
+       "name": "S.sock",
+       "x": 2.8,
+       "y": 0,
+       "z": 1.2
+      }
+     ],
+     "feats": [
+      {
+       "slot": 4,
+       "z0": 0,
+       "z1": 2.4,
+       "tag": "socket S"
+      },
+      {
+       "slot": 0,
+       "z0": 0,
+       "z1": 2.4,
+       "tag": "socket void"
+      },
+      {
+       "slot": 2,
+       "z0": 2.4,
+       "z1": 3.12,
+       "tag": "flange S"
+      },
+      {
+       "slot": 2,
+       "z0": 3.1,
+       "z1": 5.28,
+       "tag": "post S"
+      }
+     ]
+    }
+   },
+   "up@9.6": {
+    "asBuilt": {
+     "volumes": {
+      "2": {
+       "name": "stud conductive PLA",
+       "volume": 76.339269,
+       "bbox": {
+        "min": [
+         -2.393861,
+         -2.393861,
+         3.361
+        ],
+        "max": [
+         2.393861,
+         2.393861,
+         11.399
+        ]
+       },
+       "prisms": 3,
+       "tris": 564
+      },
+      "shared": {}
+     },
+     "errors": [],
+     "taps": [
+      {
+       "name": "S",
+       "x": 0,
+       "y": 0,
+       "z": 9.1
+      }
+     ],
+     "feats": [
+      {
+       "slot": 2,
+       "z0": 3.36,
+       "z1": 9.6,
+       "tag": "post S"
+      },
+      {
+       "slot": 2,
+       "z0": 9.58,
+       "z1": 9.62,
+       "tag": "post tip"
+      },
+      {
+       "slot": 2,
+       "z0": 9.6,
+       "z1": 11.4,
+       "tag": "stud S"
+      }
+     ]
+    },
+    "declared": {
+     "volumes": {
+      "2": {
+       "name": "stud conductive PLA",
+       "volume": 76.461194,
+       "bbox": {
+        "min": [
+         -2.394861,
+         -2.394861,
+         3.36
+        ],
+        "max": [
+         2.394861,
+         2.394861,
+         11.4
+        ]
+       },
+       "prisms": 3,
+       "tris": 564
+      },
+      "shared": {}
+     },
+     "errors": [],
+     "taps": [
+      {
+       "name": "S",
+       "x": 0,
+       "y": 0,
+       "z": 9.1
+      }
+     ],
+     "feats": [
+      {
+       "slot": 2,
+       "z0": 3.36,
+       "z1": 9.6,
+       "tag": "post S"
+      },
+      {
+       "slot": 2,
+       "z0": 9.58,
+       "z1": 9.62,
+       "tag": "post tip"
+      },
+      {
+       "slot": 2,
+       "z0": 9.6,
+       "z1": 11.4,
+       "tag": "stud S"
+      }
+     ]
+    }
+   }
+  }
+ }
+}

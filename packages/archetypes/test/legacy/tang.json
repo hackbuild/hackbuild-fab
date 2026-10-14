@@ -1,0 +1,622 @@
+{
+ "command": "node packages/archetypes/scripts/tang-legacy.mjs",
+ "note": "TANG R6 r6_4 evaluated in place in a vm (as runs/run.js does) with the Clipper and earcut builds inlined in tang_r6_4.html; D.build(D.defaults()). Volumes are union area times band height per slot from the original's own kernel (K.unionAll, K.area), before meshPart's DZ lift and EZ feet; bboxes from K.bbox and the prism z ranges. mm, mm3, ohm; computed.",
+ "sources": {
+  "tang-r6": {
+   "tang_r6_4.html": "9a12993fb5ebff4a2f4d577a4bf396698564cfc538cd213113cd4ed0332482eb",
+   "02_kernel.js": "e4012a32c15fe0ba2b10ce95844e3e40dc461d2d1c4bec8b8c6951cde0e955a7",
+   "03_design.js": "66212020941634972bd533944ca8e90d69b6195a18859d1a6e38589af921b9b1",
+   "04_design.js": "43893788df778791f8f309ee1253addfb0248dc9f5fd42495f8809cf8d0ceef0",
+   "05_design.js": "36220ca1d95cef4012ee7e4d153a1afff7357cf0047773c8caafe787fd19e1c3"
+  }
+ },
+ "defaults": {
+  "pots": {
+   "type": "printed",
+   "arcMat": "ctpu",
+   "x0": -57,
+   "pitch": 22,
+   "x": [
+    -57,
+    -35,
+    -13
+   ],
+   "y": -33,
+   "arcR": 6.5,
+   "arcW": 1,
+   "colR": 9.5,
+   "colW": 2,
+   "sweep": 300,
+   "colSweep": 270,
+   "shaftD": 6,
+   "flat": 0.5,
+   "holeD": 6.5,
+   "realHole": 7.2,
+   "hubD": 9,
+   "coreD": 4,
+   "armW": 3.6,
+   "armT": 1.68,
+   "hubH": 1.44,
+   "bumpH": 1.92,
+   "bumpD": 2.2,
+   "tipR": 12.5,
+   "balR": 11,
+   "capD": 16,
+   "capH": 12,
+   "bore": 8,
+   "stopH": 2.4
+  },
+  "neck": {
+   "L": 240,
+   "W": 30,
+   "H": 12,
+   "tenon": 20,
+   "tIn": 18,
+   "foot": 7,
+   "waist": 2,
+   "socket": 3.2,
+   "socketD": 4.6,
+   "mstart": 3,
+   "trackW": 6.8,
+   "trackT": 1.2,
+   "condW": 11,
+   "condT": 0.8,
+   "tpuT": 0.8,
+   "gap": 0.6,
+   "railW": 6,
+   "leadW": 1.5,
+   "leadT": 1.2,
+   "landL": 10,
+   "landT": 6,
+   "landW": 6,
+   "landPitch": 9,
+   "key": 0.4
+  },
+  "el": {
+   "pressure": "internal",
+   "traceW": 1,
+   "busW": 3,
+   "clear": 0.8,
+   "viaSize": 1.6,
+   "meanderW": 0.8,
+   "meanderGap": 0.8
+  },
+  "mat": {
+   "cplaXY": 30,
+   "cplaZ": 115,
+   "ctpu": 1500,
+   "tpuE": 30
+  },
+  "layer": 0.24,
+  "faceStack": {
+   "l1": [
+    0,
+    0.72
+   ],
+   "sep": [
+    0.72,
+    1.2
+   ],
+   "l2": [
+    1.2,
+    1.92
+   ],
+   "sep2": [
+    1.92,
+    2.4
+   ],
+   "pad": [
+    2.4,
+    3.12
+   ],
+   "t": 3.12
+  }
+ },
+ "neck": {
+  "dims": {
+   "xm0": 23,
+   "xm1": 237,
+   "zc0": 9.6,
+   "zc1": 20.4,
+   "zw0": 12.24,
+   "zw1": 18.24,
+   "memT": 2.2,
+   "trackLen": 210,
+   "uPeg": 11,
+   "size": {
+    "x": 240,
+    "y": 21.2,
+    "z": 30
+   }
+  },
+  "readouts": {
+   "trackR": 357954.545455,
+   "leadA": 1500,
+   "leadB": 37166.666667,
+   "wiperR": 9291.666667,
+   "swing": 0.777025,
+   "counts": 3182,
+   "lead33": 25386.805556,
+   "leadG": 38665.277778
+  },
+  "checks": [
+   {
+    "kind": "OK",
+    "text": "neck nets: no shorts, opens or clearance violations (34 conductive prisms)"
+   },
+   {
+    "kind": "OK",
+    "text": "three 3 mm conductive pegs on the face underside plug 4 mm into 3.2 mm sockets in the neck lands (0.2 mm slack, socket 4.6 deep, 1.4 mm conductive floor)"
+   },
+   {
+    "kind": "OK",
+    "text": "joinery: neck drops into a 26.4 mm open mortise; 2 mm shoulders stop it going in, the full width tenon inside stops it pulling out, the 7 mm foot rests in a cradle on the floor, the face pegs lock it down"
+   },
+   {
+    "kind": "NOTE",
+    "text": "membrane: 1.60 mm TPU wall over an 18 mm span, gap 0.6 mm, about 2.2 N to make contact (E 30 MPa)"
+   }
+  ],
+  "netCheck": [
+   "OK neck nets: no shorts, opens or clearance violations (34 conductive prisms)"
+  ],
+  "solids": {
+   "1": {
+    "volume": 85970.064,
+    "bbox": {
+     "min": [
+      0,
+      0,
+      0
+     ],
+     "max": [
+      240,
+      19,
+      30
+     ]
+    }
+   },
+   "2": {
+    "volume": 2933.904,
+    "bbox": {
+     "min": [
+      6,
+      0,
+      3
+     ],
+     "max": [
+      237,
+      6,
+      27
+     ]
+    }
+   },
+   "3": {
+    "volume": 11160.96,
+    "bbox": {
+     "min": [
+      21.8,
+      -2.2,
+      0
+     ],
+     "max": [
+      238.2,
+      0.4,
+      30
+     ]
+    }
+   },
+   "4": {
+    "volume": 1852.56,
+    "bbox": {
+     "min": [
+      23,
+      -1.4,
+      9.6
+     ],
+     "max": [
+      237,
+      0,
+      20.4
+     ]
+    }
+   }
+  },
+  "prisms": 107
+ },
+ "pot": {
+  "readouts": {
+   "arcOhms": 709040.008623,
+   "rPar": 236346.669541,
+   "swing": 0.786776,
+   "counts": 3222,
+   "lead33": 25386.805556,
+   "leadG": 38665.277778
+  },
+  "info": [
+   {
+    "x": -57,
+    "y": -33,
+    "wv": [
+     -57,
+     -19.5
+    ],
+    "e3": [
+     -50.071797,
+     -45
+    ],
+    "eG": [
+     -65.948929,
+     -48.5
+    ],
+    "arcSpan": [
+     300,
+     600
+    ],
+    "colSpan": [
+     315,
+     585
+    ]
+   },
+   {
+    "x": -35,
+    "y": -33,
+    "wv": [
+     -35,
+     -19.5
+    ],
+    "e3": [
+     -28.071797,
+     -45
+    ],
+    "eG": [
+     -43.948929,
+     -48.5
+    ],
+    "arcSpan": [
+     300,
+     600
+    ],
+    "colSpan": [
+     315,
+     585
+    ]
+   },
+   {
+    "x": -13,
+    "y": -33,
+    "wv": [
+     -13,
+     -19.5
+    ],
+    "e3": [
+     -6.071797,
+     -45
+    ],
+    "eG": [
+     -21.948929,
+     -48.5
+    ],
+    "arcSpan": [
+     300,
+     600
+    ],
+    "colSpan": [
+     315,
+     585
+    ]
+   }
+  ],
+  "items": [
+   {
+    "tag": "pot1 collector",
+    "net": "PW1",
+    "slot": 2,
+    "sub": null,
+    "area": 89.457385,
+    "len": null
+   },
+   {
+    "tag": "pot1 arc",
+    "net": "R:pot1",
+    "slot": 4,
+    "sub": null,
+    "area": 32.994359,
+    "len": 34.03392
+   },
+   {
+    "tag": "pot1 arc ends",
+    "net": "R:pot1",
+    "slot": 4,
+    "sub": "lower",
+    "area": 1.000165,
+    "len": null
+   },
+   {
+    "tag": "pot1 3V3 pad",
+    "net": "3V3",
+    "slot": 2,
+    "sub": "upper",
+    "area": 0.500082,
+    "len": null
+   },
+   {
+    "tag": "pot1 GND pad",
+    "net": "GND",
+    "slot": 2,
+    "sub": "upper",
+    "area": 0.500082,
+    "len": null
+   },
+   {
+    "tag": "pot1 3V3 end",
+    "net": "3V3",
+    "slot": 2,
+    "sub": null,
+    "area": 8.056135,
+    "len": 7.556406
+   },
+   {
+    "tag": "pot1 GND end",
+    "net": "GND",
+    "slot": 2,
+    "sub": null,
+    "area": 12.097404,
+    "len": 11.597858
+   },
+   {
+    "tag": "pot1 wiper lead",
+    "net": "PW1",
+    "slot": 2,
+    "sub": null,
+    "area": 5.3,
+    "len": 4.3
+   }
+  ],
+  "tracks": [
+   {
+    "2": {
+     "volume": 81.686459,
+     "bbox": {
+      "min": [
+       -67.497,
+       -49.183,
+       0
+      ],
+      "max": [
+       -46.503,
+       -19,
+       0.72
+      ]
+     }
+    },
+    "4": {
+     "volume": 24.236018,
+     "bbox": {
+      "min": [
+       -63.999,
+       -39.062,
+       0
+      ],
+      "max": [
+       -50.001,
+       -26,
+       0.72
+      ]
+     }
+    }
+   },
+   {
+    "2": {
+     "volume": 81.686459,
+     "bbox": {
+      "min": [
+       -45.497,
+       -49.183,
+       0
+      ],
+      "max": [
+       -24.503,
+       -19,
+       0.72
+      ]
+     }
+    },
+    "4": {
+     "volume": 24.236018,
+     "bbox": {
+      "min": [
+       -41.999,
+       -39.062,
+       0
+      ],
+      "max": [
+       -28.001,
+       -26,
+       0.72
+      ]
+     }
+    }
+   },
+   {
+    "2": {
+     "volume": 81.686459,
+     "bbox": {
+      "min": [
+       -23.497,
+       -49.183,
+       0
+      ],
+      "max": [
+       -2.503,
+       -19,
+       0.72
+      ]
+     }
+    },
+    "4": {
+     "volume": 24.236018,
+     "bbox": {
+      "min": [
+       -19.999,
+       -39.062,
+       0
+      ],
+      "max": [
+       -6.001,
+       -26,
+       0.72
+      ]
+     }
+    }
+   }
+  ],
+  "stops": [
+   {
+    "1": {
+     "volume": 105.81577,
+     "bbox": {
+      "min": [
+       -67.49,
+       -46.9,
+       -2.4
+      ],
+      "max": [
+       -46.51,
+       -40.807,
+       0
+      ]
+     }
+    }
+   },
+   {
+    "1": {
+     "volume": 105.81577,
+     "bbox": {
+      "min": [
+       -45.49,
+       -46.9,
+       -2.4
+      ],
+      "max": [
+       -24.51,
+       -40.807,
+       0
+      ]
+     }
+    }
+   },
+   {
+    "1": {
+     "volume": 105.81577,
+     "bbox": {
+      "min": [
+       -23.49,
+       -46.9,
+       -2.4
+      ],
+      "max": [
+       -2.51,
+       -40.807,
+       0
+      ]
+     }
+    }
+   }
+  ],
+  "rotor": {
+   "preload": 0.48,
+   "hubTop": 3.12,
+   "bumpTop": 3.6,
+   "armT": 1.68,
+   "shaftL": 11.12,
+   "size": {
+    "x": 25,
+    "y": 25,
+    "z": 14.240000000000002
+   },
+   "solids": {
+    "1": {
+     "volume": 418.947125,
+     "bbox": {
+      "min": [
+       -4.5,
+       -4.5,
+       0
+      ],
+      "max": [
+       4.5,
+       4.5,
+       14.24
+      ]
+     }
+    },
+    "4": {
+     "volume": 220.182523,
+     "bbox": {
+      "min": [
+       -10.426,
+       -7.059,
+       0
+      ],
+      "max": [
+       10.426,
+       12.5,
+       3.6
+      ]
+     }
+    }
+   }
+  },
+  "cap": {
+   "height": 12.48,
+   "ring": 0.48,
+   "solids": {
+    "1": {
+     "volume": 2036.826996,
+     "bbox": {
+      "min": [
+       -7.932,
+       -7.932,
+       0
+      ],
+      "max": [
+       7.932,
+       9,
+       12.48
+      ]
+     }
+    }
+   }
+  },
+  "checks": [
+   {
+    "kind": "OK",
+    "text": "rotor bumps sit on their tracks (dome centre margins 0.50 / 1.00 mm, domes 2.2 wide on 1 / 2 tracks); preload 0.48 mm"
+   },
+   {
+    "kind": "NOTE",
+    "text": "pot wiper vias at y -18.7 sit under the lower pad row (pads reach y -24.3); they only span the buried layers, no conflict"
+   },
+   {
+    "kind": "NOTE",
+    "text": "rotor: each cTPU leaf carries about 0.49 N at 0.48 mm preload"
+   }
+  ],
+  "resistors": [
+   {
+    "tag": "pot1 arc",
+    "ohms": 709040.008623
+   },
+   {
+    "tag": "pot2 arc",
+    "ohms": 709040.008623
+   },
+   {
+    "tag": "pot3 arc",
+    "ohms": 709040.008623
+   }
+  ]
+ },
+ "firmware": "// TANG R6 firmware sketch, Teensy 4.0. Generated by the TANG R6 bench.\n// Mode: TEENSY, pads: CAP, pots: printed, slider track on the undefined.\n// No discrete resistors: pads use the internal pull up and RC charge timing, the slide and the pots are\n// ratiometric printed tracks, pressure uses the internal pull up on the wiper pin.\n#include <Audio.h>\nconst int PAD_PIN[6] = {7, 8, 9, 12, 11, 10};   // A1 A2 A3 B1 B2 B3\nconst int NECK_W = 22;                      // slider wiper (analog)\nconst int POT_W[3] = {18, 15, 14};   // printed pot wipers (analog)\n\n// slide track ends are on the 3V3 and GND buses of the face; nothing to drive.\n\n// ---- capacitive pads: charge time through the internal pull up (about 22k on Teensy 4.0)\nuint32_t padTime(int p) {\n  pinMode(p, OUTPUT); digitalWriteFast(p, LOW); delayMicroseconds(20);   // pre discharge\n  noInterrupts();\n  pinMode(p, INPUT_PULLUP);\n  uint32_t t0 = ARM_DWT_CYCCNT;\n  while (!digitalReadFast(p) && (ARM_DWT_CYCCNT - t0) < 200000) {}\n  uint32_t dt = ARM_DWT_CYCCNT - t0;\n  interrupts();\n  pinMode(p, OUTPUT); digitalWriteFast(p, LOW);\n  return dt;                                    // cycles at 600 MHz; touched pads read 2 to 4 times longer\n}\nuint32_t padBase[6]; bool padOn[6];\nvoid padsInit() { ARM_DEMCR |= ARM_DEMCR_TRCENA; ARM_DWT_CTRL |= ARM_DWT_CTRL_CYCCNTENA; for (int i = 0; i < 6; i++) { uint32_t s = 0; for (int k = 0; k < 16; k++) s += padTime(PAD_PIN[i]); padBase[i] = s / 16; } }\nvoid padsScan() { for (int i = 0; i < 6; i++) { uint32_t t = padTime(PAD_PIN[i]); bool on = t > padBase[i] * 3 / 2; if (!on) padBase[i] = (padBase[i] * 31 + t) / 32; padOn[i] = on; } }\n\n// ---- slider: position, then pressure\n// phase A: plain read of the wiper, ratiometric between the 3V3 and GND ends of the printed track\n// no touch: the wiper floats. Pre discharge it and see if it stays low.\nint slidePos = -1; int slidePressure = 0;\nvoid slideRead() {\n  pinMode(NECK_W, OUTPUT); digitalWriteFast(NECK_W, LOW); delayMicroseconds(10); pinMode(NECK_W, INPUT);\n  delayMicroseconds(30);\n  int v = analogRead(NECK_W);\n  if (v < 12) { slidePos = -1; slidePressure = 0; return; }   // stayed near ground: nothing touching\n  slidePos = v;                                              // 0..1023 (set analogReadResolution for more)\n  // phase B: enable the internal pull up and read again. The wiper now sees the track ends' parallel\n  // resistance (position dependent, subtract it) plus the contact resistance, which drops with pressure.\n  pinMode(NECK_W, INPUT_PULLUP); delayMicroseconds(30);\n  int vb = analogRead(NECK_W);\n  pinMode(NECK_W, INPUT);\n  slidePressure = 1023 - vb;                                 // bigger when pressed harder\n}\n\n// ---- printed pots: ratiometric, calibrate the end stops once (turn each fully both ways at power up)\nint potMin[3] = {40, 40, 40}, potMax[3] = {1000, 1000, 1000};\nint potRead(int k) { int v = analogRead(POT_W[k]); if (v < potMin[k]) potMin[k] = v; if (v > potMax[k]) potMax[k] = v; return map(v, potMin[k], potMax[k], 0, 1023); }\n\n// ---- audio: MAX98357A on I2S2 (BCLK pin 4, LRCLK pin 3, DIN pin 2), hand wired to the pin tails. I2S1 would\n// take pin 7, which is a pad drive here.\nAudioSynthWaveform osc; AudioOutputI2S2 i2s; AudioConnection c1(osc, 0, i2s, 0); AudioConnection c2(osc, 0, i2s, 1);\nvoid setup() {\n  AudioMemory(12); analogReadResolution(10); analogReadAveraging(4);\n  padsInit(); osc.begin(0.4, 220, WAVEFORM_TRIANGLE);\n}\nvoid loop() {\n  padsScan(); slideRead();\n  if (slidePos >= 0) osc.frequency(110.0 * powf(2.0, slidePos / 1023.0 * 2.0));\n  float amp = potRead(0) / 1023.0; osc.amplitude(amp * 0.6);\n  delay(5);\n}\n"
+}

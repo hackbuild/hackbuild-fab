@@ -1,0 +1,1 @@
+{"expect":{"changed":["blocks-stud.0.conductor.post","blocks-stud.0.conductor.stud","blocks-stud.0.conductor.tip","body"],"metricDelta":{"blocks-stud.0.stud.R.post":9054.147873672,"blocks-stud.0.stud.postTop":3.2,"blocks-stud.0.stud.tap.S":1.6},"unchanged":["blocks-stud.0.conductor.flange","blocks-stud.0.ring"]},"from":9.6,"pointer":"/params/0/fields/0/default","to":12.8}

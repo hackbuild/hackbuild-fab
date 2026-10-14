@@ -1,0 +1,1 @@
+{"expect":{"changed":["differential-xor.0.bar-a","differential-xor.0.bar-b","differential-xor.0.guide-plate","differential-xor.0.or-yoke"],"metricDelta":{},"unchanged":["differential-xor.0.pin"]},"from":0.22,"pointer":"/k","to":0.2}

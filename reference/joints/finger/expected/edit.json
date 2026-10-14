@@ -1,0 +1,1 @@
+{"expect":{"changed":["finger-joint.0.edge-a","finger-joint.0.edge-b"],"metricDelta":{"finger-joint.0.finger.slot":0.02,"finger-joint.0.finger.tab":-0.02},"unchanged":[]},"from":0.22,"pointer":"/k","to":0.2}

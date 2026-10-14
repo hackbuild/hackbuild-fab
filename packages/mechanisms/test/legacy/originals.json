@@ -1,0 +1,140 @@
+{
+ "stipple": {
+  "r17b": {
+   "source": {
+    "lineage": "stipple.kin/r17b",
+    "sha256": "f4afad81c417627e84349c5f6cf6b1016e520083ce8ac631b7d71fc6c02f1767",
+    "lines": "125 to 171",
+    "fn": "link"
+   },
+   "P": {
+    "STROKE": 5,
+    "CROWN_R": 6,
+    "CROWN_TOP": 55,
+    "NOSE_R": 2,
+    "BOSS_R": 1.6,
+    "LINK_L": 12,
+    "RT_FLOOR": 47.4,
+    "CT_FLOOR": 47
+   },
+   "half": {
+    "thetaDeg": 24.62431835216408,
+    "crown": 57.5,
+    "rise": 2.5
+   },
+   "full": {
+    "thetaDeg": 0,
+    "crown": 60,
+    "rise": 5
+   }
+  },
+  "r17": {
+   "source": {
+    "lineage": "stipple.bench/r17",
+    "sha256": "e1f4e1ddf366772e6658210b755e76ac7a34a61129c8bcbe2819eed9c1c67fb0",
+    "lines": "125 to 171",
+    "fn": "link"
+   },
+   "P": {
+    "STROKE": 4.8,
+    "CROWN_R": 6,
+    "CROWN_TOP": 55,
+    "NOSE_R": 2,
+    "BOSS_R": 1.6,
+    "LINK_L": 12,
+    "RT_FLOOR": 47.4,
+    "CT_FLOOR": 47
+   },
+   "half": {
+    "thetaDeg": 23.578178478201817,
+    "crown": 57.4,
+    "rise": 2.3999999999999986
+   },
+   "full": {
+    "thetaDeg": 0,
+    "crown": 59.8,
+    "rise": 4.799999999999997
+   }
+  }
+ },
+ "ogee16": {
+  "source": {
+   "lineage": "ogee16.kin/r16p",
+   "sha256": "d2d5a3250c438666179a511d7e87f0c1da9630c1c672eb570382c22f822c1de2",
+   "params": {
+    "lineage": "ogee16.params/r16p",
+    "sha256": "1c0a4b898b4977d87d435273a04857111fab5d43324bee591c2a6ad641591d6d"
+   },
+   "fn": "__main__ readout",
+   "lines": "144 to 166"
+  },
+  "stdout": "CAM needed          0.925 mm  (available 1.450)\ncam lift            0.776 mm\nfull select rise    9.000 (target 9.0)\nhalf select rise    4.249  slot use 2.125  crown x -0.503\nhalf select lug top 79.225  plate top 80.000  margin 0.775\nfull select lug bot 81.400  plate top 80.000  overshoot 1.400\nrest lug top        74.200  plate bottom 77.000\nlatch matrix (row0/col0 driven): [[1, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]\n",
+  "printed": {
+   "cam": 0.925,
+   "camLift": 0.776,
+   "fullRise": 9,
+   "halfRise": 4.249,
+   "margin": 0.775,
+   "overshoot": 1.4
+  }
+ },
+ "pintle": {
+  "source": {
+   "lineage": "pintle.parts/r6",
+   "sha256": "5280a22350a488e721d411504a562dec2007f421129e5f7462e055cb2b45a6b1",
+   "lines": "19 to 69",
+   "fn": "P"
+  },
+  "P": {
+   "r_j": 17,
+   "flange_t": 3,
+   "r_bore": 12.9,
+   "r_rboss": 12.6,
+   "cl_journal": 0.2,
+   "cl_thrust": 0.25,
+   "sv_spline_d": 4.8
+  }
+ },
+ "slug": {
+  "source": {
+   "lineage": "slug.scad/slug-12",
+   "sha256": "a5990b866b0829282ec7dc9b6f090c64c447c8f1a3432164b279ebc8dcf3fef6",
+   "lines": "24 to 46",
+   "fn": "top-level assignments"
+  },
+  "values": {
+   "cap_d": 50.8,
+   "pock_d": 62,
+   "npock": 4,
+   "gm": 2.5,
+   "gz_rot": 76,
+   "gz_pin": 19,
+   "CD": 118.75,
+   "RATIO": 4,
+   "rot_h": 54
+  }
+ },
+ "plinth": {
+  "source": {
+   "lineage": "plinth.bench/plinth-html",
+   "sha256": "e19f9e647763baf7d62c23bba214ea36b21234e3a9a7f6015e12c69117259785",
+   "lines": "2927 to 2928",
+   "defaults": "2553 to 2554"
+  },
+  "snap": {
+   "on": 1,
+   "count": 6,
+   "len": 14,
+   "h": 2.4,
+   "d": 0.3,
+   "z": 2.6,
+   "lip": 7,
+   "lipW": 1.5,
+   "clear": 0.25,
+   "root": 1.4,
+   "slotW": 1.6
+  },
+  "free": 5.6,
+  "strain": 2.152423469387755
+ }
+}

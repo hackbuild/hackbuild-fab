@@ -1,0 +1,81 @@
+// Every def file in this directory, in file name order, then the STYLUS
+// THINPOT candidates of feeler/ (M06-T10). load.test.ts fails when this
+// list and the directories disagree.
+
+import type { ArchetypeDef } from "@hackbuild/spec";
+import { arcSlider } from "./arc-slider.js";
+import { astableBlinkyShim } from "./astable-blinky-shim.js";
+import { astableBlinkyTack } from "./astable-blinky-tack.js";
+import { blocksBoardSeat } from "./blocks-board-seat.js";
+import { blocksStud } from "./blocks-stud.js";
+import { blocksWire } from "./blocks-wire.js";
+import { buriedTraceStack } from "./buried-trace-stack.js";
+import { c3Carrier } from "./c3-carrier.js";
+import { capacitivePlate } from "./capacitive-plate.js";
+import { clickSpringKey } from "./click-spring-key.js";
+import { cofferPort } from "./coffer-port.js";
+import { domeButton } from "./dome-button.js";
+import { faceAsBoard } from "./face-as-board.js";
+import { fingerPot } from "./finger-pot.js";
+import { flexConeKey } from "./flex-cone-key.js";
+import { forceComb } from "./force-comb.js";
+import { gradedSliderWiper } from "./graded-slider-wiper.js";
+import { hexKey } from "./hex-key.js";
+import { ladderKeypad } from "./ladder-keypad.js";
+import { membraneSliderGib } from "./membrane-slider-gib.js";
+import { membraneSliderThinpot } from "./membrane-slider-thinpot.js";
+import { membraneSliderWall } from "./membrane-slider-wall.js";
+import { mosfetLowSideGate } from "./mosfet-low-side-gate.js";
+import { piHatCarrier } from "./pi-hat-carrier.js";
+import { printedPullupMeander } from "./printed-pullup-meander.js";
+import { printedRotaryPot } from "./printed-rotary-pot.js";
+import { resolverDial } from "./resolver-dial.js";
+import { rp2040ZeroSeat } from "./rp2040-zero-seat.js";
+import { saoPort } from "./sao-port.js";
+import { scanSixPads } from "./scan-six-pads.js";
+import { threeSourcePowerOring } from "./three-source-power-oring.js";
+import { tiltStick } from "./tilt-stick.js";
+import { touchCombKey } from "./touch-comb-key.js";
+import { wedgePairSlider } from "./wedge-pair-slider.js";
+import { FEELER_DEFS } from "./feeler/index.js";
+import { ORIGINAL_ARCHETYPE_DEFS } from "./originals/index.js";
+
+export const ARCHETYPE_DEFS: readonly ArchetypeDef[] = [
+  arcSlider,
+  astableBlinkyShim,
+  astableBlinkyTack,
+  blocksBoardSeat,
+  blocksStud,
+  blocksWire,
+  buriedTraceStack,
+  c3Carrier,
+  capacitivePlate,
+  clickSpringKey,
+  cofferPort,
+  domeButton,
+  faceAsBoard,
+  fingerPot,
+  flexConeKey,
+  forceComb,
+  gradedSliderWiper,
+  hexKey,
+  ladderKeypad,
+  membraneSliderGib,
+  membraneSliderThinpot,
+  membraneSliderWall,
+  mosfetLowSideGate,
+  piHatCarrier,
+  printedPullupMeander,
+  printedRotaryPot,
+  resolverDial,
+  rp2040ZeroSeat,
+  saoPort,
+  scanSixPads,
+  threeSourcePowerOring,
+  tiltStick,
+  touchCombKey,
+  wedgePairSlider,
+  ...FEELER_DEFS,
+  // The originals canon additions (M06-T14, D-222).
+  ...ORIGINAL_ARCHETYPE_DEFS,
+];

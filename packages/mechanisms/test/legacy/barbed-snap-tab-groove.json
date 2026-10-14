@@ -1,0 +1,28 @@
+{
+ "mechanism": "barbed-snap-tab-groove",
+ "source": {
+  "slug": "knurl",
+  "file": "files/knurl.html",
+  "sha256": "90a7f98e708e3fa850e11ce3e58f3ab5fa612b8446f15b5f8a7efbde575e9af1",
+  "fn": "K.layout",
+  "lines": "650 to 654"
+ },
+ "command": "node /Users/obsidian/Projects/hackbuild/fab-knowledge/originals/knurl/drive/layout.cjs (headless Chrome over the original page, K.layout(K.defaults()) at defaults), output saved as originals/knurl/drive/layout-defaults.json",
+ "output": {
+  "file": "drive/layout-defaults.json",
+  "sha256": "b8ee8dadb4b53294945b9d560e6d9692e9d52d9aaf9592c4559cff517d8756b5"
+ },
+ "qualifier": "computed",
+ "values": {
+  "Rin": 33.25,
+  "notchHalf": 41.873988045675006,
+  "tabs": [
+   60,
+   120,
+   180,
+   215,
+   290
+  ],
+  "tabHalf": 0.12030075187969924
+ }
+}
