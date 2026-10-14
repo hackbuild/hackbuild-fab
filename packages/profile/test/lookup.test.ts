@@ -164,6 +164,15 @@ describe("strain limits by bend direction (D-073)", () => {
   });
 });
 
+describe("pla modulus (vendor)", () => {
+  test("pla carries the PLA Basic TDS Young's modulus XY so a click force can be computed in PLA", () => {
+    const m = createProfileLookup(tables).material("pla");
+    expect(m.modulusMPa).toBe(2680);
+    expect(m.provenance.tier).toBe("vendor");
+    expect(m.provenance.source).toMatch(/modulus 2680 XY .*ISO 527.*PLA Basic Technical Data Sheet V2\.0/);
+  });
+});
+
 describe("the M-S seed slice agrees with data/", () => {
   const slice = tablesFromSeed(seed);
 

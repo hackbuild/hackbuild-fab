@@ -90,6 +90,7 @@
         "fdm"
       ],
       "densityGcm3": 1.24,
+      "modulusMPa": 2680,
       "resistivity": [],
       "strain": [],
       "creep": "high",
@@ -108,7 +109,7 @@
         "tier": "vendor",
         "method": "datasheet",
         "date": "2026-10-04",
-        "source": "seed materials.pla (print-forge materials.json); density 1.24 from seed/3mf/materials.json PLA; PROFILE.md 3.1"
+        "source": "seed materials.pla (print-forge materials.json); density 1.24 from seed/3mf/materials.json PLA; PROFILE.md 3.1; modulus 2680 XY (Z 2160) Young's modulus ISO 527, Bambu Lab PLA Basic Technical Data Sheet V2.0, https://www.additive-x.com/shop/mpattachments/file/viewonline/id/494/product_id/2236"
       }
     },
     {
