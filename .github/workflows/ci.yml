@@ -285,9 +285,12 @@ jobs:
           uv run --project tools/py --extra bench tools/py/harness/artboard_smoke.py packages/ui-core/test/artboard/fixture.html "$RUNNER_TEMP/artboard"
   exit-m06-m08:
     # M06 and M08 Exit rows run as commands: the AILERON differential
-    # derivation, the mockups quarantine grep, the SPINDLE board build, the
+    # derivation, the mockups quarantine grep, the SPINDLE board builds, the
     # SHUNT board checks, the SPINDLE gerbers refused at E_PROVENANCE without
     # a terminal (exit 4) and the SuperMini pin map. A board build spawns uv.
+    # SPINDLE R1 is kept as shipped with its 5V to GND short (D-249): each
+    # R1 step passes only while the checks still catch it, and spindle-r2,
+    # R1 less the four GND vias on the 5V trace, passes CHK-BRD-01 and -21.
     runs-on: ubuntu-24.04
     env:
       SOURCE_DATE_EPOCH: "315532800"
@@ -305,11 +308,37 @@ jobs:
       - name: no canon package or reference cites the quarantined mockups (M06-T06, M06-T14)
         if: ${{ !cancelled() }}
         run: '! grep -rn "fab-knowledge/mockups" packages/mechanisms packages/archetypes reference'
-      - if: ${{ !cancelled() }}
-        run: npx --no-install hbf part.build reference/boards/spindle-r1 --json
+      - name: SPINDLE R1 builds (DRC 19 nets, 70 pads, 57 holes) and fails exactly CHK-BRD-01, -06 and -09 (D-249, inferred hand pads, GPIO8 and GPIO9)
+        if: ${{ !cancelled() }}
+        run: |
+          set +e
+          npx --no-install hbf part.build reference/boards/spindle-r1 --json > "$RUNNER_TEMP/spindle-r1.json"
+          test $? -eq 1 || exit 1
+          jq -e '.stage == "check" and ([.findings[] | select(.verdict == "fail") | .id] | unique) == ["CHK-BRD-01", "CHK-BRD-06", "CHK-BRD-09"] and ([.result.metrics[] | select(.id == "board.nets" or .id == "board.pads" or .id == "board.holes") | .value] == [19, 70, 57])' "$RUNNER_TEMP/spindle-r1.json"
+      - name: SPINDLE R1 short set is exactly 5V|GND (CHK-BRD-21 expect set, D-249)
+        if: ${{ !cancelled() }}
+        run: npx --no-install hbf check.run reference/boards/spindle-r1 --only CHK-BRD-21 --json
+      - name: SPINDLE R1 reparse fails on the 5V to GND short and its two hole counts only (CHK-BRD-01, D-249)
+        if: ${{ !cancelled() }}
+        run: |
+          set +e
+          npx --no-install hbf check.run reference/boards/spindle-r1 --only CHK-BRD-01 --json > "$RUNNER_TEMP/spindle-r1-brd01.json"
+          test $? -eq 1 || exit 1
+          jq -e '[.result.results[] | select(.verdict == "fail")] | length == 1 and .[0].extra.failed == 3 and (.[0].extra.fails | contains("B_Cu piece of 34.15 mm2 joins nets 5V, GND")) and (.[0].extra.fails | contains("2 holes off GND touch the pour")) and (.[0].extra.fails | contains("4 GND holes sit off the pour"))' "$RUNNER_TEMP/spindle-r1-brd01.json"
+      - name: SPINDLE R2 builds and fails exactly CHK-BRD-06 and -09 (inferred hand pads, GPIO8 and GPIO9)
+        if: ${{ !cancelled() }}
+        run: |
+          set +e
+          npx --no-install hbf part.build reference/boards/spindle-r2 --json > "$RUNNER_TEMP/spindle-r2.json"
+          test $? -eq 1 || exit 1
+          jq -e '.stage == "check" and ([.findings[] | select(.verdict == "fail") | .id] | unique) == ["CHK-BRD-06", "CHK-BRD-09"]' "$RUNNER_TEMP/spindle-r2.json"
+      - name: SPINDLE R2 reparse and islands pass, no short (CHK-BRD-01, CHK-BRD-21)
+        if: ${{ !cancelled() }}
+        run: npx --no-install hbf check.run reference/boards/spindle-r2 --only CHK-BRD-01,CHK-BRD-21 --json
       - if: ${{ !cancelled() }}
         run: npx --no-install hbf check.run reference/boards/shunt-art --only CHK-BRD-19 --json
-      - if: ${{ !cancelled() }}
+      - name: SHUNT expect sets, 5 shorts and 5 nets under two pads, exact (D-074, D-254)
+        if: ${{ !cancelled() }}
         run: npx --no-install hbf check.run reference/boards/shunt-art --only CHK-BRD-09,CHK-BRD-21 --json
       - name: SPINDLE R1 gerbers without a terminal stop at the provenance gate, exit 4 (D-102)
         if: ${{ !cancelled() }}
