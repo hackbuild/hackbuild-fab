@@ -1,0 +1,225 @@
+{
+  "note": "World and funnel rows of scene granular-funnel (M02-T05). SLUG axes: x, y plan, z up, mm. The scene maps them to Rapier metres as (x, z, -y). Runtime scene: it claims nothing about SLUG vend behaviour (D-075).",
+  "gravity": {
+    "id": "sim.gravity",
+    "value": 9.81,
+    "unit": "m/s2",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-07",
+      "source": "fab-knowledge/originals/slug/files/slug.html line 814 (c.v.z -= 9810 * dt, mm/s2), lineage slug.relax/slug-12"
+    }
+  },
+  "timestep": {
+    "id": "sim.timestep",
+    "value": 0.004166666666666667,
+    "unit": "s",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-07",
+      "source": "docs/plan/milestones/M02-sim.md M02-T05 step 2 (timestep 1/240)"
+    }
+  },
+  "funnel": {
+    "fb": {
+      "id": "slug.fb",
+      "value": 78,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-07",
+        "source": "fab-knowledge/originals/slug/files/params.json key fb (lineage slug.params/slug-12)"
+      }
+    },
+    "t": {
+      "id": "slug.t",
+      "value": 3,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-07",
+        "source": "fab-knowledge/originals/slug/files/params.json key t (lineage slug.params/slug-12)"
+      }
+    },
+    "capD": {
+      "id": "slug.cap_d",
+      "value": 50.8,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-07",
+        "source": "fab-knowledge/originals/slug/files/params.json key cap_d (lineage slug.params/slug-12)"
+      }
+    },
+    "xl": {
+      "id": "slug.XL",
+      "value": -152,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-07",
+        "source": "fab-knowledge/originals/slug/files/params.json key XL (lineage slug.params/slug-12)"
+      }
+    },
+    "xr": {
+      "id": "slug.XR",
+      "value": 105,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-07",
+        "source": "fab-knowledge/originals/slug/files/params.json key XR (lineage slug.params/slug-12)"
+      }
+    },
+    "yb": {
+      "id": "slug.YB",
+      "value": -105,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-07",
+        "source": "fab-knowledge/originals/slug/files/params.json key YB (lineage slug.params/slug-12)"
+      }
+    },
+    "yf": {
+      "id": "slug.YF",
+      "value": 105,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-07",
+        "source": "fab-knowledge/originals/slug/files/params.json key YF (lineage slug.params/slug-12)"
+      }
+    },
+    "thrX": {
+      "id": "slug.thr.x",
+      "value": 0,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-07",
+        "source": "fab-knowledge/originals/slug/files/params.json key thr (lineage slug.params/slug-12)"
+      }
+    },
+    "thrY": {
+      "id": "slug.thr.y",
+      "value": 0,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-07",
+        "source": "fab-knowledge/originals/slug/files/params.json key thr (lineage slug.params/slug-12)"
+      }
+    },
+    "zCeil": {
+      "id": "slug.z_ceil",
+      "value": 366.5,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-07",
+        "source": "fab-knowledge/originals/slug/files/params.json key z_ceil (lineage slug.params/slug-12)"
+      }
+    },
+    "zFunTop": {
+      "id": "slug.z_funtop",
+      "value": 515,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-07",
+        "source": "fab-knowledge/originals/slug/files/params.json key z_funtop (lineage slug.params/slug-12)"
+      }
+    },
+    "fLap": {
+      "id": "slug.f_lap",
+      "value": 6,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-07",
+        "source": "fab-knowledge/originals/slug/files/params.json key f_lap (lineage slug.params/slug-12)"
+      }
+    },
+    "spawnPitch": {
+      "id": "slug.spawn.pitch",
+      "value": 52,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-07",
+        "source": "fab-knowledge/originals/slug/files/slug.html line 685 (SPAWN_PITCH)"
+      }
+    },
+    "spawnEdgeGap": {
+      "id": "slug.spawn.edgeGap",
+      "value": 2,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-07",
+        "source": "fab-knowledge/originals/slug/files/slug.html lines 689 to 692 (the + 2 after CAP_R)"
+      }
+    },
+    "spawnAboveTop": {
+      "id": "slug.spawn.aboveFunTop",
+      "value": 40,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-07",
+        "source": "fab-knowledge/originals/slug/files/slug.html line 693 (z_funtop + 40)"
+      }
+    },
+    "spawnLateral": {
+      "id": "slug.spawn.lateral",
+      "value": 10,
+      "unit": "mm/s",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-07",
+        "source": "fab-knowledge/originals/slug/files/slug.html line 701 ((Math.random() - 0.5) * 20 per axis, so plus or minus 10)"
+      }
+    },
+    "balls": {
+      "id": "slug.spawn.count",
+      "value": 18,
+      "unit": "count",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-07",
+        "source": "fab-knowledge/originals/slug/files/slug.html line 705 (refill n = 18)"
+      }
+    },
+    "duration": {
+      "id": "sim.granular.duration",
+      "value": 10,
+      "unit": "s",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-07",
+        "source": "docs/plan/milestones/M02-sim.md M02-T05 step 2 (10 s per trial)"
+      }
+    }
+  }
+}

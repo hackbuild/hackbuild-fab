@@ -1,0 +1,273 @@
+{
+ "record": "ogee-sweep",
+ "card": "M02-T07",
+ "date": "2026-10-08",
+ "qualifier": "volumes and distances are computed; wall times are measured on the named machine; the retired bench figure is a chat record, not reproduced (D-233)",
+ "command": "npm run ogee:record -w packages/sim",
+ "machine": {
+  "cpu": "Apple M1",
+  "cores": 8,
+  "os": "darwin arm64",
+  "node": "v22.18.0",
+  "note": "shared with other builds while it ran; wall times include contention"
+ },
+ "params": {
+  "steps": 25,
+  "clashMm3": 1
+ },
+ "oracle": {
+  "versions": {
+   "trimesh": "5.1.1",
+   "numpy": "2.5.3",
+   "scipy": "1.18.1",
+   "rtree": "1.4.1",
+   "manifold3d": "3.5.4"
+  },
+  "exit": {
+   "shipped": 0,
+   "proud": 1
+  }
+ },
+ "fixture": {
+  "dir": "designs/ogee16/legacy/fixtures/proud-head",
+  "openscad": "OpenSCAD 2021.01, files.openscad.org/OpenSCAD-2021.01.dmg sha256 4e4568e19992636ba497c04bc2238399c92314fcb7bf75dc3632aa623ca3635e (vendor), x86_64 under Rosetta",
+  "command": "openscad -o <part>.stl -D part=\"<part>\" -D shape=\"circle\" printed_proud.scad",
+  "ignoringUnknownLines": 0,
+  "renderWallS": {
+   "crank_row_asm": 16.06,
+   "crank_col_asm": 9.74,
+   "crank_latch_asm": 12.22,
+   "qualifier": "measured, Apple M1, 2026-10-07"
+  },
+  "shippedRerender": "the same OpenSCAD on the unedited printed.scad gives crank_row_asm, crank_col_asm and crank_latch_asm with the shipped volumes 299.965, 299.965 and 343.000 mm3 and bounds (computed, trimesh 5.1.1); the bytes differ",
+  "sha256": {
+   "crank_row_asm": "0da6cf16e880b7f59e2e1d645bc7a9fffd6f9b7603ffe0475f8ee945333bbd0c",
+   "crank_col_asm": "d9697aa277513bb94b346c4efed777aa16ccd2dcdee8c1f4c3b1aaeecccbbea4",
+   "crank_latch_asm": "c5200f432c3a1e12abc92b5e6458aa66a2b54c463ad20338c6366c62e857249f"
+  }
+ },
+ "retiredBenchFigure": {
+  "value": 577,
+  "unit": "mm3 per pin head",
+  "qualifier": "retired by D-233: a bench chat record (notes/benches-mechanisms.md) that neither check_sweep.py (681.7 to 682.0 mm3 per bar crank, per-step sum) nor the count-once union (78.96 to 79.16 mm3) reproduces; never a number of record"
+ },
+ "variants": {
+  "shipped": {
+   "wallMs": 1180,
+   "clashes": [],
+   "near": [
+    {
+     "sweep": "row crank 0",
+     "box": "row 0 servo",
+     "cornerMm": 3.0170206037226546,
+     "gapMm": 0.5,
+     "oracleMm": 3.02
+    },
+    {
+     "sweep": "row crank 1",
+     "box": "row 1 servo",
+     "cornerMm": 3.0170206037226532,
+     "gapMm": 0.5,
+     "oracleMm": 3.02
+    },
+    {
+     "sweep": "row crank 2",
+     "box": "row 2 servo",
+     "cornerMm": 3.0170206037226532,
+     "gapMm": 0.5,
+     "oracleMm": 3.02
+    },
+    {
+     "sweep": "row crank 3",
+     "box": "row 3 servo",
+     "cornerMm": 3.0170206037226595,
+     "gapMm": 0.5,
+     "oracleMm": 3.02
+    },
+    {
+     "sweep": "col crank 0",
+     "box": "col 0 servo",
+     "cornerMm": 3.0170206037226532,
+     "gapMm": 0.5,
+     "oracleMm": 3.02
+    },
+    {
+     "sweep": "col crank 1",
+     "box": "col 1 servo",
+     "cornerMm": 3.0170206037226546,
+     "gapMm": 0.5,
+     "oracleMm": 3.02
+    },
+    {
+     "sweep": "col crank 2",
+     "box": "col 2 servo",
+     "cornerMm": 3.0170206037226532,
+     "gapMm": 0.5,
+     "oracleMm": 3.02
+    },
+    {
+     "sweep": "col crank 3",
+     "box": "col 3 servo",
+     "cornerMm": 3.0170206037226595,
+     "gapMm": 0.5,
+     "oracleMm": 3.02
+    },
+    {
+     "sweep": "latch crank",
+     "box": "latch servo",
+     "cornerMm": 2.1006452835847957,
+     "gapMm": 2,
+     "oracleMm": 2.1
+    }
+   ],
+   "sweptHash": {
+    "row crank 0": "58f7aaffe1ab0d3d9f9d7b9bf5bc14981e5046752f93914248e8f32fab60d7fc",
+    "row crank 1": "208fc529ca5b79c600e4c11297cc781d92926dec9b901a5eff70d5a27e94fa22",
+    "row crank 2": "bb3c582207c30b94ac210d47fbc9765c6e3b6ecba417563cbfd4204c90456d64",
+    "row crank 3": "e0fd27cdf44b75d15719919f283162df7c959d74a3f8e29fd9415d1cead4a47c",
+    "col crank 0": "b46a79b4338c0df201b74862148fb91202b4a8e2601eb17a7ab876eece067881",
+    "col crank 1": "8006da4c82241ce2b41b4b0bf69a311105a64d562c1f45c9467563f7b5803e29",
+    "col crank 2": "968357d3443d60d4ede159341d4a7f1e6273734226e7281697320fa619f475f5",
+    "col crank 3": "0870018c30efc9f34eac6f0b1cb37a355db32a83a9ea95152efcc54eb2a51a56",
+    "latch crank": "dce41d60a551baa949929647ab2a7b1df92ab46fe9df264378d575f1771a5bac"
+   }
+  },
+  "proud": {
+   "wallMs": 1914,
+   "clashes": [
+    {
+     "sweep": "row crank 0",
+     "with": "row 0 servo",
+     "mm3": 78.95969196581609,
+     "stepSumMm3": 681.9514107185055,
+     "oracleMm3": 681.7
+    },
+    {
+     "sweep": "row crank 1",
+     "with": "row 1 servo",
+     "mm3": 78.95969196581609,
+     "stepSumMm3": 681.9514107185056,
+     "oracleMm3": 681.7
+    },
+    {
+     "sweep": "row crank 2",
+     "with": "row 2 servo",
+     "mm3": 78.95969196581427,
+     "stepSumMm3": 681.951410718505,
+     "oracleMm3": 681.7
+    },
+    {
+     "sweep": "row crank 3",
+     "with": "row 3 servo",
+     "mm3": 78.959691965817,
+     "stepSumMm3": 681.9514107185051,
+     "oracleMm3": 681.7
+    },
+    {
+     "sweep": "col crank 0",
+     "with": "col 0 servo",
+     "mm3": 78.959691965817,
+     "stepSumMm3": 681.9514107185051,
+     "oracleMm3": 682
+    },
+    {
+     "sweep": "col crank 1",
+     "with": "col 1 servo",
+     "mm3": 78.95969196581882,
+     "stepSumMm3": 681.9514107185051,
+     "oracleMm3": 682
+    },
+    {
+     "sweep": "col crank 2",
+     "with": "col 2 servo",
+     "mm3": 78.95969196581427,
+     "stepSumMm3": 681.9514107185058,
+     "oracleMm3": 682
+    },
+    {
+     "sweep": "col crank 3",
+     "with": "col 3 servo",
+     "mm3": 78.95969196581609,
+     "stepSumMm3": 681.9514107185051,
+     "oracleMm3": 681.9
+    }
+   ],
+   "near": [
+    {
+     "sweep": "row crank 0",
+     "box": "row 0 servo",
+     "cornerMm": 3.0170206037226546,
+     "gapMm": 0,
+     "oracleMm": 3.02
+    },
+    {
+     "sweep": "row crank 1",
+     "box": "row 1 servo",
+     "cornerMm": 3.0170206037226532,
+     "gapMm": 0,
+     "oracleMm": 3.02
+    },
+    {
+     "sweep": "row crank 2",
+     "box": "row 2 servo",
+     "cornerMm": 3.0170206037226532,
+     "gapMm": 0,
+     "oracleMm": 3.02
+    },
+    {
+     "sweep": "row crank 3",
+     "box": "row 3 servo",
+     "cornerMm": 3.0170206037226595,
+     "gapMm": 0,
+     "oracleMm": 3.02
+    },
+    {
+     "sweep": "col crank 0",
+     "box": "col 0 servo",
+     "cornerMm": 3.0170206037226532,
+     "gapMm": 0,
+     "oracleMm": 3.02
+    },
+    {
+     "sweep": "col crank 1",
+     "box": "col 1 servo",
+     "cornerMm": 3.0170206037226546,
+     "gapMm": 0,
+     "oracleMm": 3.02
+    },
+    {
+     "sweep": "col crank 2",
+     "box": "col 2 servo",
+     "cornerMm": 3.0170206037226532,
+     "gapMm": 0,
+     "oracleMm": 3.02
+    },
+    {
+     "sweep": "col crank 3",
+     "box": "col 3 servo",
+     "cornerMm": 3.0170206037226595,
+     "gapMm": 0,
+     "oracleMm": 3.02
+    },
+    {
+     "sweep": "latch crank",
+     "box": "latch servo",
+     "cornerMm": 1.6896286251664017,
+     "gapMm": 0.5,
+     "oracleMm": 1.69
+    }
+   ],
+   "sweptHash": {
+    "row crank 0": "9a0c8a8f587668523cfa3d7736775c866f6906845ebf6457dfa2ab7acb4900f1",
+    "row crank 1": "7a2e28badb792bcbd309dcdadc5ed72787dfb00f4e5ba4c525797990f028c313",
+    "row crank 2": "da4a5caa68b3d45de8b896b904548013aee008ffe5a395ee732c769a7fb929bb",
+    "row crank 3": "5305258e1c047131799084deb6811105c6c3e0382ac8a3081a4efb7e3f34675d",
+    "col crank 0": "14526c073f907866003f23549195adfc60e33de9673b000bce9c2f6b8050743f",
+    "col crank 1": "662240784981e6b5ac100b30c5d28e42c3210e94769430e2795afb94f8add8fb",
+    "col crank 2": "3889bda4ee5ad1e437c8ac6d47865bd5406628a1258ff9f63524e22661946036",
+    "col crank 3": "509d70686df7c82eb2ce89846dee9f33278c669bc404ce21bfbef329ebba0577",
+    "latch crank": "c2e0ecb2a98f3792cae3b65f43a011c94673fd34a49de44289335f53267c4647"
+   }
+  }
+ }
+}

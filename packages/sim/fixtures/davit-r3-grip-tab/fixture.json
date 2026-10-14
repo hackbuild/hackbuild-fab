@@ -1,0 +1,10 @@
+{
+  "id": "davit-r3-grip-tab",
+  "claim": "README_R4.md item 8: the R3 palm tab channel stops at 4.6 mm against grip servo tabs at 7.0 mm, 247 mm3 of interference that the R3 auto calibrated masks whitelisted. The sweep with Stage B masks must report it as a real fail.",
+  "readmeVolumeMm3": 247,
+  "palm": { "path": "designs/davit/legacy/stl/davit_palm.stl", "sha256": "76c4d76b9619c16213976157eaf88efd305543ede0e4ecd5272663915470846c" },
+  "palmFixed": { "path": "designs/davit/legacy/r4/stl/davit_palm.stl" },
+  "servo": { "page": "designs/davit/legacy/r4/sim_r4.html", "record": "hw.mic_servo", "body": "mic_servo#8" },
+  "pose": { "pitch": 0, "roll": 0, "elbow": 0, "wrist": 0, "grip": 35 },
+  "pair": "mic_servo#8|palm"
+}

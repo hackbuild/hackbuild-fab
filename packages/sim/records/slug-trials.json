@@ -1,0 +1,4687 @@
+{
+  "card": "M02-T08",
+  "note": "Pass counts are computed; wallMs is measured on the machine below. The runner behind BUILD.md's 126 of 128 is absent, so the protocol is the card's (M02-T08 step 4) and the expectation stays unverified until a run reproduces it.",
+  "date": "2026-10-07",
+  "machine": {
+    "cpu": "Apple M1",
+    "os": "darwin 21.6.0",
+    "arch": "arm64",
+    "translated": false,
+    "node": "v22.18.0"
+  },
+  "program": "packages/sim/src/capsule/vend.ts with scenes packages/sim/scenes/slug.ts and slug-mouth58.ts",
+  "exitRow": "unverified, measured 91 of 128",
+  "trials8": {
+    "result": {
+      "runs": 128,
+      "passes": 91,
+      "worst": "seed 1 vend 13: 0 delivered",
+      "seed": 1,
+      "snapshotHash": "50e70943e50c3826505769470d2e20ee228c27b6f1420b657f738636130509c9",
+      "wallMs": 7828.0885419999995
+    },
+    "rows": [
+      {
+        "seed": 1,
+        "vends": 16,
+        "passes": 12,
+        "delivered": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "misses": [
+          {
+            "vend": 13,
+            "delivered": 0
+          },
+          {
+            "vend": 14,
+            "delivered": 0
+          },
+          {
+            "vend": 15,
+            "delivered": 0
+          },
+          {
+            "vend": 16,
+            "delivered": 0
+          }
+        ],
+        "beforeFirstVend": 0,
+        "crossings": [
+          {
+            "vend": 1,
+            "capsule": 7,
+            "step": 1297
+          },
+          {
+            "vend": 2,
+            "capsule": 2,
+            "step": 2636
+          },
+          {
+            "vend": 3,
+            "capsule": 5,
+            "step": 3975
+          },
+          {
+            "vend": 4,
+            "capsule": 4,
+            "step": 5314
+          },
+          {
+            "vend": 5,
+            "capsule": 9,
+            "step": 6653
+          },
+          {
+            "vend": 6,
+            "capsule": 13,
+            "step": 7992
+          },
+          {
+            "vend": 7,
+            "capsule": 10,
+            "step": 9331
+          },
+          {
+            "vend": 8,
+            "capsule": 14,
+            "step": 10670
+          },
+          {
+            "vend": 9,
+            "capsule": 6,
+            "step": 12009
+          },
+          {
+            "vend": 10,
+            "capsule": 1,
+            "step": 13348
+          },
+          {
+            "vend": 11,
+            "capsule": 3,
+            "step": 14687
+          },
+          {
+            "vend": 12,
+            "capsule": 12,
+            "step": 16026
+          }
+        ],
+        "leftAbove": 6,
+        "onHood": 5,
+        "steps": 21904,
+        "endHash": "cd7b692d704df715c8f7c3ff030a86c64d135fabbd97bd92e5c449c17b9bd5e6"
+      },
+      {
+        "seed": 2,
+        "vends": 16,
+        "passes": 11,
+        "delivered": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "misses": [
+          {
+            "vend": 12,
+            "delivered": 0
+          },
+          {
+            "vend": 13,
+            "delivered": 0
+          },
+          {
+            "vend": 14,
+            "delivered": 0
+          },
+          {
+            "vend": 15,
+            "delivered": 0
+          },
+          {
+            "vend": 16,
+            "delivered": 0
+          }
+        ],
+        "beforeFirstVend": 0,
+        "crossings": [
+          {
+            "vend": 1,
+            "capsule": 7,
+            "step": 1297
+          },
+          {
+            "vend": 2,
+            "capsule": 2,
+            "step": 2636
+          },
+          {
+            "vend": 3,
+            "capsule": 5,
+            "step": 3975
+          },
+          {
+            "vend": 4,
+            "capsule": 1,
+            "step": 5314
+          },
+          {
+            "vend": 5,
+            "capsule": 8,
+            "step": 6653
+          },
+          {
+            "vend": 6,
+            "capsule": 16,
+            "step": 7992
+          },
+          {
+            "vend": 7,
+            "capsule": 9,
+            "step": 9331
+          },
+          {
+            "vend": 8,
+            "capsule": 12,
+            "step": 10670
+          },
+          {
+            "vend": 9,
+            "capsule": 13,
+            "step": 12009
+          },
+          {
+            "vend": 10,
+            "capsule": 6,
+            "step": 13348
+          },
+          {
+            "vend": 11,
+            "capsule": 17,
+            "step": 14687
+          }
+        ],
+        "leftAbove": 7,
+        "onHood": 6,
+        "steps": 21904,
+        "endHash": "1574c266b69b9e9861f9995d4b50617b83671f5b1645a6c162f19e9c5a2cace4"
+      },
+      {
+        "seed": 3,
+        "vends": 16,
+        "passes": 11,
+        "delivered": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "misses": [
+          {
+            "vend": 12,
+            "delivered": 0
+          },
+          {
+            "vend": 13,
+            "delivered": 0
+          },
+          {
+            "vend": 14,
+            "delivered": 0
+          },
+          {
+            "vend": 15,
+            "delivered": 0
+          },
+          {
+            "vend": 16,
+            "delivered": 0
+          }
+        ],
+        "beforeFirstVend": 0,
+        "crossings": [
+          {
+            "vend": 1,
+            "capsule": 7,
+            "step": 1297
+          },
+          {
+            "vend": 2,
+            "capsule": 2,
+            "step": 2636
+          },
+          {
+            "vend": 3,
+            "capsule": 17,
+            "step": 3975
+          },
+          {
+            "vend": 4,
+            "capsule": 0,
+            "step": 5314
+          },
+          {
+            "vend": 5,
+            "capsule": 1,
+            "step": 6653
+          },
+          {
+            "vend": 6,
+            "capsule": 4,
+            "step": 7992
+          },
+          {
+            "vend": 7,
+            "capsule": 9,
+            "step": 9331
+          },
+          {
+            "vend": 8,
+            "capsule": 8,
+            "step": 10670
+          },
+          {
+            "vend": 9,
+            "capsule": 12,
+            "step": 12009
+          },
+          {
+            "vend": 10,
+            "capsule": 5,
+            "step": 13348
+          },
+          {
+            "vend": 11,
+            "capsule": 3,
+            "step": 14687
+          }
+        ],
+        "leftAbove": 7,
+        "onHood": 6,
+        "steps": 21904,
+        "endHash": "e4aa46e12b7c3caaf6d3024e56f295ab399d370464a320fe700de3f91b918d87"
+      },
+      {
+        "seed": 4,
+        "vends": 16,
+        "passes": 11,
+        "delivered": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "misses": [
+          {
+            "vend": 12,
+            "delivered": 0
+          },
+          {
+            "vend": 13,
+            "delivered": 0
+          },
+          {
+            "vend": 14,
+            "delivered": 0
+          },
+          {
+            "vend": 15,
+            "delivered": 0
+          },
+          {
+            "vend": 16,
+            "delivered": 0
+          }
+        ],
+        "beforeFirstVend": 0,
+        "crossings": [
+          {
+            "vend": 1,
+            "capsule": 7,
+            "step": 1297
+          },
+          {
+            "vend": 2,
+            "capsule": 2,
+            "step": 2636
+          },
+          {
+            "vend": 3,
+            "capsule": 5,
+            "step": 3975
+          },
+          {
+            "vend": 4,
+            "capsule": 4,
+            "step": 5314
+          },
+          {
+            "vend": 5,
+            "capsule": 6,
+            "step": 6653
+          },
+          {
+            "vend": 6,
+            "capsule": 8,
+            "step": 7992
+          },
+          {
+            "vend": 7,
+            "capsule": 17,
+            "step": 9331
+          },
+          {
+            "vend": 8,
+            "capsule": 9,
+            "step": 10670
+          },
+          {
+            "vend": 9,
+            "capsule": 12,
+            "step": 12009
+          },
+          {
+            "vend": 10,
+            "capsule": 10,
+            "step": 13348
+          },
+          {
+            "vend": 11,
+            "capsule": 3,
+            "step": 14687
+          }
+        ],
+        "leftAbove": 7,
+        "onHood": 6,
+        "steps": 21904,
+        "endHash": "f77e48eee37bdb29fbbe9f2b46c2b311964a16fee035985eb58393f150f4a412"
+      },
+      {
+        "seed": 5,
+        "vends": 16,
+        "passes": 11,
+        "delivered": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "misses": [
+          {
+            "vend": 12,
+            "delivered": 0
+          },
+          {
+            "vend": 13,
+            "delivered": 0
+          },
+          {
+            "vend": 14,
+            "delivered": 0
+          },
+          {
+            "vend": 15,
+            "delivered": 0
+          },
+          {
+            "vend": 16,
+            "delivered": 0
+          }
+        ],
+        "beforeFirstVend": 0,
+        "crossings": [
+          {
+            "vend": 1,
+            "capsule": 7,
+            "step": 1297
+          },
+          {
+            "vend": 2,
+            "capsule": 2,
+            "step": 2636
+          },
+          {
+            "vend": 3,
+            "capsule": 17,
+            "step": 3975
+          },
+          {
+            "vend": 4,
+            "capsule": 0,
+            "step": 5314
+          },
+          {
+            "vend": 5,
+            "capsule": 8,
+            "step": 6653
+          },
+          {
+            "vend": 6,
+            "capsule": 4,
+            "step": 7992
+          },
+          {
+            "vend": 7,
+            "capsule": 13,
+            "step": 9331
+          },
+          {
+            "vend": 8,
+            "capsule": 12,
+            "step": 10670
+          },
+          {
+            "vend": 9,
+            "capsule": 1,
+            "step": 12009
+          },
+          {
+            "vend": 10,
+            "capsule": 5,
+            "step": 13348
+          },
+          {
+            "vend": 11,
+            "capsule": 14,
+            "step": 14687
+          }
+        ],
+        "leftAbove": 7,
+        "onHood": 6,
+        "steps": 21904,
+        "endHash": "6810dd0c40b50ece35166fe790115f536eeb7bb817f71732ea26a75f94746453"
+      },
+      {
+        "seed": 6,
+        "vends": 16,
+        "passes": 12,
+        "delivered": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "misses": [
+          {
+            "vend": 13,
+            "delivered": 0
+          },
+          {
+            "vend": 14,
+            "delivered": 0
+          },
+          {
+            "vend": 15,
+            "delivered": 0
+          },
+          {
+            "vend": 16,
+            "delivered": 0
+          }
+        ],
+        "beforeFirstVend": 0,
+        "crossings": [
+          {
+            "vend": 1,
+            "capsule": 7,
+            "step": 1297
+          },
+          {
+            "vend": 2,
+            "capsule": 2,
+            "step": 2636
+          },
+          {
+            "vend": 3,
+            "capsule": 5,
+            "step": 3975
+          },
+          {
+            "vend": 4,
+            "capsule": 4,
+            "step": 5314
+          },
+          {
+            "vend": 5,
+            "capsule": 0,
+            "step": 6653
+          },
+          {
+            "vend": 6,
+            "capsule": 9,
+            "step": 7992
+          },
+          {
+            "vend": 7,
+            "capsule": 6,
+            "step": 9331
+          },
+          {
+            "vend": 8,
+            "capsule": 8,
+            "step": 10670
+          },
+          {
+            "vend": 9,
+            "capsule": 10,
+            "step": 12009
+          },
+          {
+            "vend": 10,
+            "capsule": 13,
+            "step": 13348
+          },
+          {
+            "vend": 11,
+            "capsule": 16,
+            "step": 14687
+          },
+          {
+            "vend": 12,
+            "capsule": 17,
+            "step": 16026
+          }
+        ],
+        "leftAbove": 6,
+        "onHood": 6,
+        "steps": 21904,
+        "endHash": "a83a99dd6c6f1c952fa6b83bde1205fbdff713f6fcf74a062a24926aa3f52ba6"
+      },
+      {
+        "seed": 7,
+        "vends": 16,
+        "passes": 12,
+        "delivered": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "misses": [
+          {
+            "vend": 13,
+            "delivered": 0
+          },
+          {
+            "vend": 14,
+            "delivered": 0
+          },
+          {
+            "vend": 15,
+            "delivered": 0
+          },
+          {
+            "vend": 16,
+            "delivered": 0
+          }
+        ],
+        "beforeFirstVend": 0,
+        "crossings": [
+          {
+            "vend": 1,
+            "capsule": 7,
+            "step": 1297
+          },
+          {
+            "vend": 2,
+            "capsule": 2,
+            "step": 2636
+          },
+          {
+            "vend": 3,
+            "capsule": 5,
+            "step": 3975
+          },
+          {
+            "vend": 4,
+            "capsule": 8,
+            "step": 5314
+          },
+          {
+            "vend": 5,
+            "capsule": 9,
+            "step": 6653
+          },
+          {
+            "vend": 6,
+            "capsule": 13,
+            "step": 7992
+          },
+          {
+            "vend": 7,
+            "capsule": 12,
+            "step": 9331
+          },
+          {
+            "vend": 8,
+            "capsule": 14,
+            "step": 10670
+          },
+          {
+            "vend": 9,
+            "capsule": 4,
+            "step": 12009
+          },
+          {
+            "vend": 10,
+            "capsule": 16,
+            "step": 13348
+          },
+          {
+            "vend": 11,
+            "capsule": 1,
+            "step": 14687
+          },
+          {
+            "vend": 12,
+            "capsule": 6,
+            "step": 16026
+          }
+        ],
+        "leftAbove": 6,
+        "onHood": 5,
+        "steps": 21904,
+        "endHash": "bf13af38781868d88a7e57a6397bc34c7c5155aa31b062e0ec0b97dcee6e6513"
+      },
+      {
+        "seed": 8,
+        "vends": 16,
+        "passes": 11,
+        "delivered": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "misses": [
+          {
+            "vend": 12,
+            "delivered": 0
+          },
+          {
+            "vend": 13,
+            "delivered": 0
+          },
+          {
+            "vend": 14,
+            "delivered": 0
+          },
+          {
+            "vend": 15,
+            "delivered": 0
+          },
+          {
+            "vend": 16,
+            "delivered": 0
+          }
+        ],
+        "beforeFirstVend": 0,
+        "crossings": [
+          {
+            "vend": 1,
+            "capsule": 7,
+            "step": 1297
+          },
+          {
+            "vend": 2,
+            "capsule": 2,
+            "step": 2636
+          },
+          {
+            "vend": 3,
+            "capsule": 4,
+            "step": 3975
+          },
+          {
+            "vend": 4,
+            "capsule": 1,
+            "step": 5314
+          },
+          {
+            "vend": 5,
+            "capsule": 5,
+            "step": 6653
+          },
+          {
+            "vend": 6,
+            "capsule": 10,
+            "step": 7992
+          },
+          {
+            "vend": 7,
+            "capsule": 9,
+            "step": 9331
+          },
+          {
+            "vend": 8,
+            "capsule": 13,
+            "step": 10670
+          },
+          {
+            "vend": 9,
+            "capsule": 12,
+            "step": 12009
+          },
+          {
+            "vend": 10,
+            "capsule": 8,
+            "step": 13348
+          },
+          {
+            "vend": 11,
+            "capsule": 3,
+            "step": 14687
+          }
+        ],
+        "leftAbove": 7,
+        "onHood": 6,
+        "steps": 21904,
+        "endHash": "50e70943e50c3826505769470d2e20ee228c27b6f1420b657f738636130509c9"
+      }
+    ]
+  },
+  "trials30": {
+    "result": {
+      "runs": 480,
+      "passes": 335,
+      "worst": "seed 1 vend 13: 0 delivered",
+      "seed": 1,
+      "snapshotHash": "c3201b5ef51eed1758fcb8d80255d5247f8e2a8c7f5a493f005d177772ba412f",
+      "wallMs": 27031.000041
+    },
+    "rows": [
+      {
+        "seed": 1,
+        "vends": 16,
+        "passes": 12,
+        "delivered": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "misses": [
+          {
+            "vend": 13,
+            "delivered": 0
+          },
+          {
+            "vend": 14,
+            "delivered": 0
+          },
+          {
+            "vend": 15,
+            "delivered": 0
+          },
+          {
+            "vend": 16,
+            "delivered": 0
+          }
+        ],
+        "beforeFirstVend": 0,
+        "crossings": [
+          {
+            "vend": 1,
+            "capsule": 7,
+            "step": 1297
+          },
+          {
+            "vend": 2,
+            "capsule": 2,
+            "step": 2636
+          },
+          {
+            "vend": 3,
+            "capsule": 5,
+            "step": 3975
+          },
+          {
+            "vend": 4,
+            "capsule": 4,
+            "step": 5314
+          },
+          {
+            "vend": 5,
+            "capsule": 9,
+            "step": 6653
+          },
+          {
+            "vend": 6,
+            "capsule": 13,
+            "step": 7992
+          },
+          {
+            "vend": 7,
+            "capsule": 10,
+            "step": 9331
+          },
+          {
+            "vend": 8,
+            "capsule": 14,
+            "step": 10670
+          },
+          {
+            "vend": 9,
+            "capsule": 6,
+            "step": 12009
+          },
+          {
+            "vend": 10,
+            "capsule": 1,
+            "step": 13348
+          },
+          {
+            "vend": 11,
+            "capsule": 3,
+            "step": 14687
+          },
+          {
+            "vend": 12,
+            "capsule": 12,
+            "step": 16026
+          }
+        ],
+        "leftAbove": 6,
+        "onHood": 5,
+        "steps": 21904,
+        "endHash": "cd7b692d704df715c8f7c3ff030a86c64d135fabbd97bd92e5c449c17b9bd5e6"
+      },
+      {
+        "seed": 2,
+        "vends": 16,
+        "passes": 11,
+        "delivered": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "misses": [
+          {
+            "vend": 12,
+            "delivered": 0
+          },
+          {
+            "vend": 13,
+            "delivered": 0
+          },
+          {
+            "vend": 14,
+            "delivered": 0
+          },
+          {
+            "vend": 15,
+            "delivered": 0
+          },
+          {
+            "vend": 16,
+            "delivered": 0
+          }
+        ],
+        "beforeFirstVend": 0,
+        "crossings": [
+          {
+            "vend": 1,
+            "capsule": 7,
+            "step": 1297
+          },
+          {
+            "vend": 2,
+            "capsule": 2,
+            "step": 2636
+          },
+          {
+            "vend": 3,
+            "capsule": 5,
+            "step": 3975
+          },
+          {
+            "vend": 4,
+            "capsule": 1,
+            "step": 5314
+          },
+          {
+            "vend": 5,
+            "capsule": 8,
+            "step": 6653
+          },
+          {
+            "vend": 6,
+            "capsule": 16,
+            "step": 7992
+          },
+          {
+            "vend": 7,
+            "capsule": 9,
+            "step": 9331
+          },
+          {
+            "vend": 8,
+            "capsule": 12,
+            "step": 10670
+          },
+          {
+            "vend": 9,
+            "capsule": 13,
+            "step": 12009
+          },
+          {
+            "vend": 10,
+            "capsule": 6,
+            "step": 13348
+          },
+          {
+            "vend": 11,
+            "capsule": 17,
+            "step": 14687
+          }
+        ],
+        "leftAbove": 7,
+        "onHood": 6,
+        "steps": 21904,
+        "endHash": "1574c266b69b9e9861f9995d4b50617b83671f5b1645a6c162f19e9c5a2cace4"
+      },
+      {
+        "seed": 3,
+        "vends": 16,
+        "passes": 11,
+        "delivered": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "misses": [
+          {
+            "vend": 12,
+            "delivered": 0
+          },
+          {
+            "vend": 13,
+            "delivered": 0
+          },
+          {
+            "vend": 14,
+            "delivered": 0
+          },
+          {
+            "vend": 15,
+            "delivered": 0
+          },
+          {
+            "vend": 16,
+            "delivered": 0
+          }
+        ],
+        "beforeFirstVend": 0,
+        "crossings": [
+          {
+            "vend": 1,
+            "capsule": 7,
+            "step": 1297
+          },
+          {
+            "vend": 2,
+            "capsule": 2,
+            "step": 2636
+          },
+          {
+            "vend": 3,
+            "capsule": 17,
+            "step": 3975
+          },
+          {
+            "vend": 4,
+            "capsule": 0,
+            "step": 5314
+          },
+          {
+            "vend": 5,
+            "capsule": 1,
+            "step": 6653
+          },
+          {
+            "vend": 6,
+            "capsule": 4,
+            "step": 7992
+          },
+          {
+            "vend": 7,
+            "capsule": 9,
+            "step": 9331
+          },
+          {
+            "vend": 8,
+            "capsule": 8,
+            "step": 10670
+          },
+          {
+            "vend": 9,
+            "capsule": 12,
+            "step": 12009
+          },
+          {
+            "vend": 10,
+            "capsule": 5,
+            "step": 13348
+          },
+          {
+            "vend": 11,
+            "capsule": 3,
+            "step": 14687
+          }
+        ],
+        "leftAbove": 7,
+        "onHood": 6,
+        "steps": 21904,
+        "endHash": "e4aa46e12b7c3caaf6d3024e56f295ab399d370464a320fe700de3f91b918d87"
+      },
+      {
+        "seed": 4,
+        "vends": 16,
+        "passes": 11,
+        "delivered": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "misses": [
+          {
+            "vend": 12,
+            "delivered": 0
+          },
+          {
+            "vend": 13,
+            "delivered": 0
+          },
+          {
+            "vend": 14,
+            "delivered": 0
+          },
+          {
+            "vend": 15,
+            "delivered": 0
+          },
+          {
+            "vend": 16,
+            "delivered": 0
+          }
+        ],
+        "beforeFirstVend": 0,
+        "crossings": [
+          {
+            "vend": 1,
+            "capsule": 7,
+            "step": 1297
+          },
+          {
+            "vend": 2,
+            "capsule": 2,
+            "step": 2636
+          },
+          {
+            "vend": 3,
+            "capsule": 5,
+            "step": 3975
+          },
+          {
+            "vend": 4,
+            "capsule": 4,
+            "step": 5314
+          },
+          {
+            "vend": 5,
+            "capsule": 6,
+            "step": 6653
+          },
+          {
+            "vend": 6,
+            "capsule": 8,
+            "step": 7992
+          },
+          {
+            "vend": 7,
+            "capsule": 17,
+            "step": 9331
+          },
+          {
+            "vend": 8,
+            "capsule": 9,
+            "step": 10670
+          },
+          {
+            "vend": 9,
+            "capsule": 12,
+            "step": 12009
+          },
+          {
+            "vend": 10,
+            "capsule": 10,
+            "step": 13348
+          },
+          {
+            "vend": 11,
+            "capsule": 3,
+            "step": 14687
+          }
+        ],
+        "leftAbove": 7,
+        "onHood": 6,
+        "steps": 21904,
+        "endHash": "f77e48eee37bdb29fbbe9f2b46c2b311964a16fee035985eb58393f150f4a412"
+      },
+      {
+        "seed": 5,
+        "vends": 16,
+        "passes": 11,
+        "delivered": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "misses": [
+          {
+            "vend": 12,
+            "delivered": 0
+          },
+          {
+            "vend": 13,
+            "delivered": 0
+          },
+          {
+            "vend": 14,
+            "delivered": 0
+          },
+          {
+            "vend": 15,
+            "delivered": 0
+          },
+          {
+            "vend": 16,
+            "delivered": 0
+          }
+        ],
+        "beforeFirstVend": 0,
+        "crossings": [
+          {
+            "vend": 1,
+            "capsule": 7,
+            "step": 1297
+          },
+          {
+            "vend": 2,
+            "capsule": 2,
+            "step": 2636
+          },
+          {
+            "vend": 3,
+            "capsule": 17,
+            "step": 3975
+          },
+          {
+            "vend": 4,
+            "capsule": 0,
+            "step": 5314
+          },
+          {
+            "vend": 5,
+            "capsule": 8,
+            "step": 6653
+          },
+          {
+            "vend": 6,
+            "capsule": 4,
+            "step": 7992
+          },
+          {
+            "vend": 7,
+            "capsule": 13,
+            "step": 9331
+          },
+          {
+            "vend": 8,
+            "capsule": 12,
+            "step": 10670
+          },
+          {
+            "vend": 9,
+            "capsule": 1,
+            "step": 12009
+          },
+          {
+            "vend": 10,
+            "capsule": 5,
+            "step": 13348
+          },
+          {
+            "vend": 11,
+            "capsule": 14,
+            "step": 14687
+          }
+        ],
+        "leftAbove": 7,
+        "onHood": 6,
+        "steps": 21904,
+        "endHash": "6810dd0c40b50ece35166fe790115f536eeb7bb817f71732ea26a75f94746453"
+      },
+      {
+        "seed": 6,
+        "vends": 16,
+        "passes": 12,
+        "delivered": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "misses": [
+          {
+            "vend": 13,
+            "delivered": 0
+          },
+          {
+            "vend": 14,
+            "delivered": 0
+          },
+          {
+            "vend": 15,
+            "delivered": 0
+          },
+          {
+            "vend": 16,
+            "delivered": 0
+          }
+        ],
+        "beforeFirstVend": 0,
+        "crossings": [
+          {
+            "vend": 1,
+            "capsule": 7,
+            "step": 1297
+          },
+          {
+            "vend": 2,
+            "capsule": 2,
+            "step": 2636
+          },
+          {
+            "vend": 3,
+            "capsule": 5,
+            "step": 3975
+          },
+          {
+            "vend": 4,
+            "capsule": 4,
+            "step": 5314
+          },
+          {
+            "vend": 5,
+            "capsule": 0,
+            "step": 6653
+          },
+          {
+            "vend": 6,
+            "capsule": 9,
+            "step": 7992
+          },
+          {
+            "vend": 7,
+            "capsule": 6,
+            "step": 9331
+          },
+          {
+            "vend": 8,
+            "capsule": 8,
+            "step": 10670
+          },
+          {
+            "vend": 9,
+            "capsule": 10,
+            "step": 12009
+          },
+          {
+            "vend": 10,
+            "capsule": 13,
+            "step": 13348
+          },
+          {
+            "vend": 11,
+            "capsule": 16,
+            "step": 14687
+          },
+          {
+            "vend": 12,
+            "capsule": 17,
+            "step": 16026
+          }
+        ],
+        "leftAbove": 6,
+        "onHood": 6,
+        "steps": 21904,
+        "endHash": "a83a99dd6c6f1c952fa6b83bde1205fbdff713f6fcf74a062a24926aa3f52ba6"
+      },
+      {
+        "seed": 7,
+        "vends": 16,
+        "passes": 12,
+        "delivered": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "misses": [
+          {
+            "vend": 13,
+            "delivered": 0
+          },
+          {
+            "vend": 14,
+            "delivered": 0
+          },
+          {
+            "vend": 15,
+            "delivered": 0
+          },
+          {
+            "vend": 16,
+            "delivered": 0
+          }
+        ],
+        "beforeFirstVend": 0,
+        "crossings": [
+          {
+            "vend": 1,
+            "capsule": 7,
+            "step": 1297
+          },
+          {
+            "vend": 2,
+            "capsule": 2,
+            "step": 2636
+          },
+          {
+            "vend": 3,
+            "capsule": 5,
+            "step": 3975
+          },
+          {
+            "vend": 4,
+            "capsule": 8,
+            "step": 5314
+          },
+          {
+            "vend": 5,
+            "capsule": 9,
+            "step": 6653
+          },
+          {
+            "vend": 6,
+            "capsule": 13,
+            "step": 7992
+          },
+          {
+            "vend": 7,
+            "capsule": 12,
+            "step": 9331
+          },
+          {
+            "vend": 8,
+            "capsule": 14,
+            "step": 10670
+          },
+          {
+            "vend": 9,
+            "capsule": 4,
+            "step": 12009
+          },
+          {
+            "vend": 10,
+            "capsule": 16,
+            "step": 13348
+          },
+          {
+            "vend": 11,
+            "capsule": 1,
+            "step": 14687
+          },
+          {
+            "vend": 12,
+            "capsule": 6,
+            "step": 16026
+          }
+        ],
+        "leftAbove": 6,
+        "onHood": 5,
+        "steps": 21904,
+        "endHash": "bf13af38781868d88a7e57a6397bc34c7c5155aa31b062e0ec0b97dcee6e6513"
+      },
+      {
+        "seed": 8,
+        "vends": 16,
+        "passes": 11,
+        "delivered": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "misses": [
+          {
+            "vend": 12,
+            "delivered": 0
+          },
+          {
+            "vend": 13,
+            "delivered": 0
+          },
+          {
+            "vend": 14,
+            "delivered": 0
+          },
+          {
+            "vend": 15,
+            "delivered": 0
+          },
+          {
+            "vend": 16,
+            "delivered": 0
+          }
+        ],
+        "beforeFirstVend": 0,
+        "crossings": [
+          {
+            "vend": 1,
+            "capsule": 7,
+            "step": 1297
+          },
+          {
+            "vend": 2,
+            "capsule": 2,
+            "step": 2636
+          },
+          {
+            "vend": 3,
+            "capsule": 4,
+            "step": 3975
+          },
+          {
+            "vend": 4,
+            "capsule": 1,
+            "step": 5314
+          },
+          {
+            "vend": 5,
+            "capsule": 5,
+            "step": 6653
+          },
+          {
+            "vend": 6,
+            "capsule": 10,
+            "step": 7992
+          },
+          {
+            "vend": 7,
+            "capsule": 9,
+            "step": 9331
+          },
+          {
+            "vend": 8,
+            "capsule": 13,
+            "step": 10670
+          },
+          {
+            "vend": 9,
+            "capsule": 12,
+            "step": 12009
+          },
+          {
+            "vend": 10,
+            "capsule": 8,
+            "step": 13348
+          },
+          {
+            "vend": 11,
+            "capsule": 3,
+            "step": 14687
+          }
+        ],
+        "leftAbove": 7,
+        "onHood": 6,
+        "steps": 21904,
+        "endHash": "50e70943e50c3826505769470d2e20ee228c27b6f1420b657f738636130509c9"
+      },
+      {
+        "seed": 9,
+        "vends": 16,
+        "passes": 11,
+        "delivered": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "misses": [
+          {
+            "vend": 12,
+            "delivered": 0
+          },
+          {
+            "vend": 13,
+            "delivered": 0
+          },
+          {
+            "vend": 14,
+            "delivered": 0
+          },
+          {
+            "vend": 15,
+            "delivered": 0
+          },
+          {
+            "vend": 16,
+            "delivered": 0
+          }
+        ],
+        "beforeFirstVend": 0,
+        "crossings": [
+          {
+            "vend": 1,
+            "capsule": 7,
+            "step": 1297
+          },
+          {
+            "vend": 2,
+            "capsule": 2,
+            "step": 2636
+          },
+          {
+            "vend": 3,
+            "capsule": 5,
+            "step": 3975
+          },
+          {
+            "vend": 4,
+            "capsule": 8,
+            "step": 5314
+          },
+          {
+            "vend": 5,
+            "capsule": 16,
+            "step": 6653
+          },
+          {
+            "vend": 6,
+            "capsule": 6,
+            "step": 7992
+          },
+          {
+            "vend": 7,
+            "capsule": 13,
+            "step": 9331
+          },
+          {
+            "vend": 8,
+            "capsule": 9,
+            "step": 10670
+          },
+          {
+            "vend": 9,
+            "capsule": 12,
+            "step": 12009
+          },
+          {
+            "vend": 10,
+            "capsule": 1,
+            "step": 13348
+          },
+          {
+            "vend": 11,
+            "capsule": 11,
+            "step": 14687
+          }
+        ],
+        "leftAbove": 7,
+        "onHood": 6,
+        "steps": 21904,
+        "endHash": "08fd538da9a596e579db30ec2d90d8596a584d5d69b15bb18297e2ccb6c24d69"
+      },
+      {
+        "seed": 10,
+        "vends": 16,
+        "passes": 11,
+        "delivered": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "misses": [
+          {
+            "vend": 12,
+            "delivered": 0
+          },
+          {
+            "vend": 13,
+            "delivered": 0
+          },
+          {
+            "vend": 14,
+            "delivered": 0
+          },
+          {
+            "vend": 15,
+            "delivered": 0
+          },
+          {
+            "vend": 16,
+            "delivered": 0
+          }
+        ],
+        "beforeFirstVend": 0,
+        "crossings": [
+          {
+            "vend": 1,
+            "capsule": 7,
+            "step": 1297
+          },
+          {
+            "vend": 2,
+            "capsule": 2,
+            "step": 2636
+          },
+          {
+            "vend": 3,
+            "capsule": 5,
+            "step": 3975
+          },
+          {
+            "vend": 4,
+            "capsule": 8,
+            "step": 5314
+          },
+          {
+            "vend": 5,
+            "capsule": 9,
+            "step": 6653
+          },
+          {
+            "vend": 6,
+            "capsule": 13,
+            "step": 7992
+          },
+          {
+            "vend": 7,
+            "capsule": 12,
+            "step": 9331
+          },
+          {
+            "vend": 8,
+            "capsule": 14,
+            "step": 10670
+          },
+          {
+            "vend": 9,
+            "capsule": 10,
+            "step": 12009
+          },
+          {
+            "vend": 10,
+            "capsule": 1,
+            "step": 13348
+          },
+          {
+            "vend": 11,
+            "capsule": 16,
+            "step": 14687
+          }
+        ],
+        "leftAbove": 7,
+        "onHood": 6,
+        "steps": 21904,
+        "endHash": "7bf0712787ad58e3d35636578fb4009ae39528eb6f4c781c10c215ef21551e6f"
+      },
+      {
+        "seed": 11,
+        "vends": 16,
+        "passes": 11,
+        "delivered": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "misses": [
+          {
+            "vend": 12,
+            "delivered": 0
+          },
+          {
+            "vend": 13,
+            "delivered": 0
+          },
+          {
+            "vend": 14,
+            "delivered": 0
+          },
+          {
+            "vend": 15,
+            "delivered": 0
+          },
+          {
+            "vend": 16,
+            "delivered": 0
+          }
+        ],
+        "beforeFirstVend": 0,
+        "crossings": [
+          {
+            "vend": 1,
+            "capsule": 7,
+            "step": 1297
+          },
+          {
+            "vend": 2,
+            "capsule": 2,
+            "step": 2636
+          },
+          {
+            "vend": 3,
+            "capsule": 5,
+            "step": 3975
+          },
+          {
+            "vend": 4,
+            "capsule": 8,
+            "step": 5314
+          },
+          {
+            "vend": 5,
+            "capsule": 16,
+            "step": 6653
+          },
+          {
+            "vend": 6,
+            "capsule": 6,
+            "step": 7992
+          },
+          {
+            "vend": 7,
+            "capsule": 13,
+            "step": 9331
+          },
+          {
+            "vend": 8,
+            "capsule": 9,
+            "step": 10670
+          },
+          {
+            "vend": 9,
+            "capsule": 12,
+            "step": 12009
+          },
+          {
+            "vend": 10,
+            "capsule": 1,
+            "step": 13348
+          },
+          {
+            "vend": 11,
+            "capsule": 11,
+            "step": 14687
+          }
+        ],
+        "leftAbove": 7,
+        "onHood": 6,
+        "steps": 21904,
+        "endHash": "a0b59f9865b428cf19dabf54b54cbd6373e76ecf74f3eec3bb283dcd176f400e"
+      },
+      {
+        "seed": 12,
+        "vends": 16,
+        "passes": 11,
+        "delivered": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "misses": [
+          {
+            "vend": 12,
+            "delivered": 0
+          },
+          {
+            "vend": 13,
+            "delivered": 0
+          },
+          {
+            "vend": 14,
+            "delivered": 0
+          },
+          {
+            "vend": 15,
+            "delivered": 0
+          },
+          {
+            "vend": 16,
+            "delivered": 0
+          }
+        ],
+        "beforeFirstVend": 0,
+        "crossings": [
+          {
+            "vend": 1,
+            "capsule": 7,
+            "step": 1297
+          },
+          {
+            "vend": 2,
+            "capsule": 2,
+            "step": 2636
+          },
+          {
+            "vend": 3,
+            "capsule": 5,
+            "step": 3975
+          },
+          {
+            "vend": 4,
+            "capsule": 4,
+            "step": 5314
+          },
+          {
+            "vend": 5,
+            "capsule": 9,
+            "step": 6653
+          },
+          {
+            "vend": 6,
+            "capsule": 12,
+            "step": 7992
+          },
+          {
+            "vend": 7,
+            "capsule": 6,
+            "step": 9331
+          },
+          {
+            "vend": 8,
+            "capsule": 13,
+            "step": 10670
+          },
+          {
+            "vend": 9,
+            "capsule": 10,
+            "step": 12009
+          },
+          {
+            "vend": 10,
+            "capsule": 1,
+            "step": 13348
+          },
+          {
+            "vend": 11,
+            "capsule": 3,
+            "step": 14687
+          }
+        ],
+        "leftAbove": 7,
+        "onHood": 6,
+        "steps": 21904,
+        "endHash": "31466ba6ad705f58567af6e5f51c89bc270f1559121977e38d8a63023609228c"
+      },
+      {
+        "seed": 13,
+        "vends": 16,
+        "passes": 11,
+        "delivered": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "misses": [
+          {
+            "vend": 12,
+            "delivered": 0
+          },
+          {
+            "vend": 13,
+            "delivered": 0
+          },
+          {
+            "vend": 14,
+            "delivered": 0
+          },
+          {
+            "vend": 15,
+            "delivered": 0
+          },
+          {
+            "vend": 16,
+            "delivered": 0
+          }
+        ],
+        "beforeFirstVend": 0,
+        "crossings": [
+          {
+            "vend": 1,
+            "capsule": 7,
+            "step": 1297
+          },
+          {
+            "vend": 2,
+            "capsule": 2,
+            "step": 2636
+          },
+          {
+            "vend": 3,
+            "capsule": 5,
+            "step": 3975
+          },
+          {
+            "vend": 4,
+            "capsule": 0,
+            "step": 5314
+          },
+          {
+            "vend": 5,
+            "capsule": 9,
+            "step": 6653
+          },
+          {
+            "vend": 6,
+            "capsule": 12,
+            "step": 7992
+          },
+          {
+            "vend": 7,
+            "capsule": 13,
+            "step": 9331
+          },
+          {
+            "vend": 8,
+            "capsule": 16,
+            "step": 10670
+          },
+          {
+            "vend": 9,
+            "capsule": 11,
+            "step": 12009
+          },
+          {
+            "vend": 10,
+            "capsule": 4,
+            "step": 13348
+          },
+          {
+            "vend": 11,
+            "capsule": 1,
+            "step": 14687
+          }
+        ],
+        "leftAbove": 7,
+        "onHood": 6,
+        "steps": 21904,
+        "endHash": "70d078deec74730db501a4d90e427cf694fae7f6d0d317e472889add1f8145ae"
+      },
+      {
+        "seed": 14,
+        "vends": 16,
+        "passes": 11,
+        "delivered": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "misses": [
+          {
+            "vend": 12,
+            "delivered": 0
+          },
+          {
+            "vend": 13,
+            "delivered": 0
+          },
+          {
+            "vend": 14,
+            "delivered": 0
+          },
+          {
+            "vend": 15,
+            "delivered": 0
+          },
+          {
+            "vend": 16,
+            "delivered": 0
+          }
+        ],
+        "beforeFirstVend": 0,
+        "crossings": [
+          {
+            "vend": 1,
+            "capsule": 7,
+            "step": 1297
+          },
+          {
+            "vend": 2,
+            "capsule": 2,
+            "step": 2636
+          },
+          {
+            "vend": 3,
+            "capsule": 5,
+            "step": 3975
+          },
+          {
+            "vend": 4,
+            "capsule": 4,
+            "step": 5314
+          },
+          {
+            "vend": 5,
+            "capsule": 9,
+            "step": 6653
+          },
+          {
+            "vend": 6,
+            "capsule": 13,
+            "step": 7992
+          },
+          {
+            "vend": 7,
+            "capsule": 10,
+            "step": 9331
+          },
+          {
+            "vend": 8,
+            "capsule": 14,
+            "step": 10670
+          },
+          {
+            "vend": 9,
+            "capsule": 6,
+            "step": 12009
+          },
+          {
+            "vend": 10,
+            "capsule": 1,
+            "step": 13348
+          },
+          {
+            "vend": 11,
+            "capsule": 3,
+            "step": 14687
+          }
+        ],
+        "leftAbove": 7,
+        "onHood": 6,
+        "steps": 21904,
+        "endHash": "5349ceb7f664bb10f133119bf2f10a21a5f561294db9fed51f1a1d32b684c379"
+      },
+      {
+        "seed": 15,
+        "vends": 16,
+        "passes": 12,
+        "delivered": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "misses": [
+          {
+            "vend": 13,
+            "delivered": 0
+          },
+          {
+            "vend": 14,
+            "delivered": 0
+          },
+          {
+            "vend": 15,
+            "delivered": 0
+          },
+          {
+            "vend": 16,
+            "delivered": 0
+          }
+        ],
+        "beforeFirstVend": 0,
+        "crossings": [
+          {
+            "vend": 1,
+            "capsule": 7,
+            "step": 1297
+          },
+          {
+            "vend": 2,
+            "capsule": 2,
+            "step": 2636
+          },
+          {
+            "vend": 3,
+            "capsule": 4,
+            "step": 3975
+          },
+          {
+            "vend": 4,
+            "capsule": 1,
+            "step": 5314
+          },
+          {
+            "vend": 5,
+            "capsule": 8,
+            "step": 6653
+          },
+          {
+            "vend": 6,
+            "capsule": 9,
+            "step": 7992
+          },
+          {
+            "vend": 7,
+            "capsule": 13,
+            "step": 9331
+          },
+          {
+            "vend": 8,
+            "capsule": 14,
+            "step": 10670
+          },
+          {
+            "vend": 9,
+            "capsule": 16,
+            "step": 12009
+          },
+          {
+            "vend": 10,
+            "capsule": 6,
+            "step": 13348
+          },
+          {
+            "vend": 11,
+            "capsule": 17,
+            "step": 14687
+          },
+          {
+            "vend": 12,
+            "capsule": 11,
+            "step": 16026
+          }
+        ],
+        "leftAbove": 6,
+        "onHood": 5,
+        "steps": 21904,
+        "endHash": "2e3869fa7690d1262b8a37ac23651f543fa466d2d2212bf986c5c33f98f5b746"
+      },
+      {
+        "seed": 16,
+        "vends": 16,
+        "passes": 11,
+        "delivered": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "misses": [
+          {
+            "vend": 12,
+            "delivered": 0
+          },
+          {
+            "vend": 13,
+            "delivered": 0
+          },
+          {
+            "vend": 14,
+            "delivered": 0
+          },
+          {
+            "vend": 15,
+            "delivered": 0
+          },
+          {
+            "vend": 16,
+            "delivered": 0
+          }
+        ],
+        "beforeFirstVend": 0,
+        "crossings": [
+          {
+            "vend": 1,
+            "capsule": 7,
+            "step": 1297
+          },
+          {
+            "vend": 2,
+            "capsule": 2,
+            "step": 2636
+          },
+          {
+            "vend": 3,
+            "capsule": 5,
+            "step": 3975
+          },
+          {
+            "vend": 4,
+            "capsule": 1,
+            "step": 5314
+          },
+          {
+            "vend": 5,
+            "capsule": 8,
+            "step": 6653
+          },
+          {
+            "vend": 6,
+            "capsule": 9,
+            "step": 7992
+          },
+          {
+            "vend": 7,
+            "capsule": 13,
+            "step": 9331
+          },
+          {
+            "vend": 8,
+            "capsule": 11,
+            "step": 10670
+          },
+          {
+            "vend": 9,
+            "capsule": 10,
+            "step": 12009
+          },
+          {
+            "vend": 10,
+            "capsule": 12,
+            "step": 13348
+          },
+          {
+            "vend": 11,
+            "capsule": 17,
+            "step": 14687
+          }
+        ],
+        "leftAbove": 7,
+        "onHood": 6,
+        "steps": 21904,
+        "endHash": "31610a707f2c5f40785a2be97a130acce85d43edefd5afb5290473ee9943bcbb"
+      },
+      {
+        "seed": 17,
+        "vends": 16,
+        "passes": 11,
+        "delivered": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "misses": [
+          {
+            "vend": 12,
+            "delivered": 0
+          },
+          {
+            "vend": 13,
+            "delivered": 0
+          },
+          {
+            "vend": 14,
+            "delivered": 0
+          },
+          {
+            "vend": 15,
+            "delivered": 0
+          },
+          {
+            "vend": 16,
+            "delivered": 0
+          }
+        ],
+        "beforeFirstVend": 0,
+        "crossings": [
+          {
+            "vend": 1,
+            "capsule": 7,
+            "step": 1297
+          },
+          {
+            "vend": 2,
+            "capsule": 2,
+            "step": 2636
+          },
+          {
+            "vend": 3,
+            "capsule": 5,
+            "step": 3975
+          },
+          {
+            "vend": 4,
+            "capsule": 4,
+            "step": 5314
+          },
+          {
+            "vend": 5,
+            "capsule": 9,
+            "step": 6653
+          },
+          {
+            "vend": 6,
+            "capsule": 13,
+            "step": 7992
+          },
+          {
+            "vend": 7,
+            "capsule": 10,
+            "step": 9331
+          },
+          {
+            "vend": 8,
+            "capsule": 14,
+            "step": 10670
+          },
+          {
+            "vend": 9,
+            "capsule": 1,
+            "step": 12009
+          },
+          {
+            "vend": 10,
+            "capsule": 15,
+            "step": 13348
+          },
+          {
+            "vend": 11,
+            "capsule": 12,
+            "step": 14687
+          }
+        ],
+        "leftAbove": 7,
+        "onHood": 6,
+        "steps": 21904,
+        "endHash": "000ae400fa58c1179dddf2065a5181d9c53a361e4bc1a90344d7d8f3ee8e0808"
+      },
+      {
+        "seed": 18,
+        "vends": 16,
+        "passes": 12,
+        "delivered": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "misses": [
+          {
+            "vend": 13,
+            "delivered": 0
+          },
+          {
+            "vend": 14,
+            "delivered": 0
+          },
+          {
+            "vend": 15,
+            "delivered": 0
+          },
+          {
+            "vend": 16,
+            "delivered": 0
+          }
+        ],
+        "beforeFirstVend": 0,
+        "crossings": [
+          {
+            "vend": 1,
+            "capsule": 7,
+            "step": 1297
+          },
+          {
+            "vend": 2,
+            "capsule": 2,
+            "step": 2636
+          },
+          {
+            "vend": 3,
+            "capsule": 5,
+            "step": 3975
+          },
+          {
+            "vend": 4,
+            "capsule": 4,
+            "step": 5314
+          },
+          {
+            "vend": 5,
+            "capsule": 0,
+            "step": 6653
+          },
+          {
+            "vend": 6,
+            "capsule": 9,
+            "step": 7992
+          },
+          {
+            "vend": 7,
+            "capsule": 10,
+            "step": 9331
+          },
+          {
+            "vend": 8,
+            "capsule": 12,
+            "step": 10670
+          },
+          {
+            "vend": 9,
+            "capsule": 1,
+            "step": 12009
+          },
+          {
+            "vend": 10,
+            "capsule": 6,
+            "step": 13348
+          },
+          {
+            "vend": 11,
+            "capsule": 3,
+            "step": 14687
+          },
+          {
+            "vend": 12,
+            "capsule": 16,
+            "step": 16026
+          }
+        ],
+        "leftAbove": 6,
+        "onHood": 5,
+        "steps": 21904,
+        "endHash": "d9bb7519d6683f7e2bfd0ed4407de951fe1010f75d8bc4e212772af7cc9a6cdb"
+      },
+      {
+        "seed": 19,
+        "vends": 16,
+        "passes": 11,
+        "delivered": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "misses": [
+          {
+            "vend": 12,
+            "delivered": 0
+          },
+          {
+            "vend": 13,
+            "delivered": 0
+          },
+          {
+            "vend": 14,
+            "delivered": 0
+          },
+          {
+            "vend": 15,
+            "delivered": 0
+          },
+          {
+            "vend": 16,
+            "delivered": 0
+          }
+        ],
+        "beforeFirstVend": 0,
+        "crossings": [
+          {
+            "vend": 1,
+            "capsule": 7,
+            "step": 1297
+          },
+          {
+            "vend": 2,
+            "capsule": 2,
+            "step": 2636
+          },
+          {
+            "vend": 3,
+            "capsule": 5,
+            "step": 3975
+          },
+          {
+            "vend": 4,
+            "capsule": 8,
+            "step": 5314
+          },
+          {
+            "vend": 5,
+            "capsule": 4,
+            "step": 6653
+          },
+          {
+            "vend": 6,
+            "capsule": 16,
+            "step": 7992
+          },
+          {
+            "vend": 7,
+            "capsule": 0,
+            "step": 9331
+          },
+          {
+            "vend": 8,
+            "capsule": 14,
+            "step": 10670
+          },
+          {
+            "vend": 9,
+            "capsule": 9,
+            "step": 12009
+          },
+          {
+            "vend": 10,
+            "capsule": 6,
+            "step": 13348
+          },
+          {
+            "vend": 11,
+            "capsule": 17,
+            "step": 14687
+          }
+        ],
+        "leftAbove": 7,
+        "onHood": 6,
+        "steps": 21904,
+        "endHash": "b71afee5482ac2b541fcd4c0ff1a7fa2a660a22bfc541cc7c2cd1854c680427a"
+      },
+      {
+        "seed": 20,
+        "vends": 16,
+        "passes": 11,
+        "delivered": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "misses": [
+          {
+            "vend": 12,
+            "delivered": 0
+          },
+          {
+            "vend": 13,
+            "delivered": 0
+          },
+          {
+            "vend": 14,
+            "delivered": 0
+          },
+          {
+            "vend": 15,
+            "delivered": 0
+          },
+          {
+            "vend": 16,
+            "delivered": 0
+          }
+        ],
+        "beforeFirstVend": 0,
+        "crossings": [
+          {
+            "vend": 1,
+            "capsule": 7,
+            "step": 1297
+          },
+          {
+            "vend": 2,
+            "capsule": 2,
+            "step": 2636
+          },
+          {
+            "vend": 3,
+            "capsule": 5,
+            "step": 3975
+          },
+          {
+            "vend": 4,
+            "capsule": 8,
+            "step": 5314
+          },
+          {
+            "vend": 5,
+            "capsule": 13,
+            "step": 6653
+          },
+          {
+            "vend": 6,
+            "capsule": 14,
+            "step": 7992
+          },
+          {
+            "vend": 7,
+            "capsule": 12,
+            "step": 9331
+          },
+          {
+            "vend": 8,
+            "capsule": 10,
+            "step": 10670
+          },
+          {
+            "vend": 9,
+            "capsule": 9,
+            "step": 12009
+          },
+          {
+            "vend": 10,
+            "capsule": 6,
+            "step": 13348
+          },
+          {
+            "vend": 11,
+            "capsule": 16,
+            "step": 14687
+          }
+        ],
+        "leftAbove": 7,
+        "onHood": 6,
+        "steps": 21904,
+        "endHash": "6c53d5b59997e42972e5085b05ef828d0af7e64a707d7a7a778f38b603573a36"
+      },
+      {
+        "seed": 21,
+        "vends": 16,
+        "passes": 11,
+        "delivered": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "misses": [
+          {
+            "vend": 12,
+            "delivered": 0
+          },
+          {
+            "vend": 13,
+            "delivered": 0
+          },
+          {
+            "vend": 14,
+            "delivered": 0
+          },
+          {
+            "vend": 15,
+            "delivered": 0
+          },
+          {
+            "vend": 16,
+            "delivered": 0
+          }
+        ],
+        "beforeFirstVend": 0,
+        "crossings": [
+          {
+            "vend": 1,
+            "capsule": 7,
+            "step": 1297
+          },
+          {
+            "vend": 2,
+            "capsule": 2,
+            "step": 2636
+          },
+          {
+            "vend": 3,
+            "capsule": 5,
+            "step": 3975
+          },
+          {
+            "vend": 4,
+            "capsule": 8,
+            "step": 5314
+          },
+          {
+            "vend": 5,
+            "capsule": 16,
+            "step": 6653
+          },
+          {
+            "vend": 6,
+            "capsule": 1,
+            "step": 7992
+          },
+          {
+            "vend": 7,
+            "capsule": 13,
+            "step": 9331
+          },
+          {
+            "vend": 8,
+            "capsule": 12,
+            "step": 10670
+          },
+          {
+            "vend": 9,
+            "capsule": 9,
+            "step": 12009
+          },
+          {
+            "vend": 10,
+            "capsule": 6,
+            "step": 13348
+          },
+          {
+            "vend": 11,
+            "capsule": 0,
+            "step": 14687
+          }
+        ],
+        "leftAbove": 7,
+        "onHood": 6,
+        "steps": 21904,
+        "endHash": "58fb86795581e1e6ce33bfd0d417ab3907bad346008fd32b7af16f638bbf7bd4"
+      },
+      {
+        "seed": 22,
+        "vends": 16,
+        "passes": 11,
+        "delivered": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "misses": [
+          {
+            "vend": 12,
+            "delivered": 0
+          },
+          {
+            "vend": 13,
+            "delivered": 0
+          },
+          {
+            "vend": 14,
+            "delivered": 0
+          },
+          {
+            "vend": 15,
+            "delivered": 0
+          },
+          {
+            "vend": 16,
+            "delivered": 0
+          }
+        ],
+        "beforeFirstVend": 0,
+        "crossings": [
+          {
+            "vend": 1,
+            "capsule": 7,
+            "step": 1297
+          },
+          {
+            "vend": 2,
+            "capsule": 2,
+            "step": 2636
+          },
+          {
+            "vend": 3,
+            "capsule": 5,
+            "step": 3975
+          },
+          {
+            "vend": 4,
+            "capsule": 8,
+            "step": 5314
+          },
+          {
+            "vend": 5,
+            "capsule": 13,
+            "step": 6653
+          },
+          {
+            "vend": 6,
+            "capsule": 9,
+            "step": 7992
+          },
+          {
+            "vend": 7,
+            "capsule": 12,
+            "step": 9331
+          },
+          {
+            "vend": 8,
+            "capsule": 14,
+            "step": 10670
+          },
+          {
+            "vend": 9,
+            "capsule": 6,
+            "step": 12009
+          },
+          {
+            "vend": 10,
+            "capsule": 17,
+            "step": 13348
+          },
+          {
+            "vend": 11,
+            "capsule": 3,
+            "step": 14687
+          }
+        ],
+        "leftAbove": 7,
+        "onHood": 6,
+        "steps": 21904,
+        "endHash": "cd570c4233d6c35a9fccce99e50b1f5bdcfa2c4fdea09ac8a314f57da49fc6bf"
+      },
+      {
+        "seed": 23,
+        "vends": 16,
+        "passes": 11,
+        "delivered": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "misses": [
+          {
+            "vend": 12,
+            "delivered": 0
+          },
+          {
+            "vend": 13,
+            "delivered": 0
+          },
+          {
+            "vend": 14,
+            "delivered": 0
+          },
+          {
+            "vend": 15,
+            "delivered": 0
+          },
+          {
+            "vend": 16,
+            "delivered": 0
+          }
+        ],
+        "beforeFirstVend": 0,
+        "crossings": [
+          {
+            "vend": 1,
+            "capsule": 7,
+            "step": 1297
+          },
+          {
+            "vend": 2,
+            "capsule": 2,
+            "step": 2636
+          },
+          {
+            "vend": 3,
+            "capsule": 4,
+            "step": 3975
+          },
+          {
+            "vend": 4,
+            "capsule": 16,
+            "step": 5314
+          },
+          {
+            "vend": 5,
+            "capsule": 8,
+            "step": 6653
+          },
+          {
+            "vend": 6,
+            "capsule": 9,
+            "step": 7992
+          },
+          {
+            "vend": 7,
+            "capsule": 12,
+            "step": 9331
+          },
+          {
+            "vend": 8,
+            "capsule": 6,
+            "step": 10670
+          },
+          {
+            "vend": 9,
+            "capsule": 13,
+            "step": 12009
+          },
+          {
+            "vend": 10,
+            "capsule": 1,
+            "step": 13348
+          },
+          {
+            "vend": 11,
+            "capsule": 3,
+            "step": 14687
+          }
+        ],
+        "leftAbove": 7,
+        "onHood": 6,
+        "steps": 21904,
+        "endHash": "b4f64fae77d545864c20a28408f1092b59f6e65550eba9921fcb881e11260f93"
+      },
+      {
+        "seed": 24,
+        "vends": 16,
+        "passes": 11,
+        "delivered": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "misses": [
+          {
+            "vend": 12,
+            "delivered": 0
+          },
+          {
+            "vend": 13,
+            "delivered": 0
+          },
+          {
+            "vend": 14,
+            "delivered": 0
+          },
+          {
+            "vend": 15,
+            "delivered": 0
+          },
+          {
+            "vend": 16,
+            "delivered": 0
+          }
+        ],
+        "beforeFirstVend": 0,
+        "crossings": [
+          {
+            "vend": 1,
+            "capsule": 7,
+            "step": 1297
+          },
+          {
+            "vend": 2,
+            "capsule": 2,
+            "step": 2636
+          },
+          {
+            "vend": 3,
+            "capsule": 5,
+            "step": 3975
+          },
+          {
+            "vend": 4,
+            "capsule": 4,
+            "step": 5314
+          },
+          {
+            "vend": 5,
+            "capsule": 9,
+            "step": 6653
+          },
+          {
+            "vend": 6,
+            "capsule": 13,
+            "step": 7992
+          },
+          {
+            "vend": 7,
+            "capsule": 10,
+            "step": 9331
+          },
+          {
+            "vend": 8,
+            "capsule": 14,
+            "step": 10670
+          },
+          {
+            "vend": 9,
+            "capsule": 15,
+            "step": 12009
+          },
+          {
+            "vend": 10,
+            "capsule": 1,
+            "step": 13348
+          },
+          {
+            "vend": 11,
+            "capsule": 17,
+            "step": 14687
+          }
+        ],
+        "leftAbove": 7,
+        "onHood": 6,
+        "steps": 21904,
+        "endHash": "afb5ca46690960b025026884c6f7f3197dbd8746b7c2d2fd6ba4b41000418fc0"
+      },
+      {
+        "seed": 25,
+        "vends": 16,
+        "passes": 11,
+        "delivered": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "misses": [
+          {
+            "vend": 12,
+            "delivered": 0
+          },
+          {
+            "vend": 13,
+            "delivered": 0
+          },
+          {
+            "vend": 14,
+            "delivered": 0
+          },
+          {
+            "vend": 15,
+            "delivered": 0
+          },
+          {
+            "vend": 16,
+            "delivered": 0
+          }
+        ],
+        "beforeFirstVend": 0,
+        "crossings": [
+          {
+            "vend": 1,
+            "capsule": 7,
+            "step": 1297
+          },
+          {
+            "vend": 2,
+            "capsule": 2,
+            "step": 2636
+          },
+          {
+            "vend": 3,
+            "capsule": 5,
+            "step": 3975
+          },
+          {
+            "vend": 4,
+            "capsule": 4,
+            "step": 5314
+          },
+          {
+            "vend": 5,
+            "capsule": 6,
+            "step": 6653
+          },
+          {
+            "vend": 6,
+            "capsule": 8,
+            "step": 7992
+          },
+          {
+            "vend": 7,
+            "capsule": 17,
+            "step": 9331
+          },
+          {
+            "vend": 8,
+            "capsule": 9,
+            "step": 10670
+          },
+          {
+            "vend": 9,
+            "capsule": 12,
+            "step": 12009
+          },
+          {
+            "vend": 10,
+            "capsule": 10,
+            "step": 13348
+          },
+          {
+            "vend": 11,
+            "capsule": 3,
+            "step": 14687
+          }
+        ],
+        "leftAbove": 7,
+        "onHood": 6,
+        "steps": 21904,
+        "endHash": "c7ebb1a9a8d460c35b7614f3cdabeba89db905f1cf2c5029949414bdffcfac12"
+      },
+      {
+        "seed": 26,
+        "vends": 16,
+        "passes": 11,
+        "delivered": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "misses": [
+          {
+            "vend": 12,
+            "delivered": 0
+          },
+          {
+            "vend": 13,
+            "delivered": 0
+          },
+          {
+            "vend": 14,
+            "delivered": 0
+          },
+          {
+            "vend": 15,
+            "delivered": 0
+          },
+          {
+            "vend": 16,
+            "delivered": 0
+          }
+        ],
+        "beforeFirstVend": 0,
+        "crossings": [
+          {
+            "vend": 1,
+            "capsule": 7,
+            "step": 1297
+          },
+          {
+            "vend": 2,
+            "capsule": 2,
+            "step": 2636
+          },
+          {
+            "vend": 3,
+            "capsule": 5,
+            "step": 3975
+          },
+          {
+            "vend": 4,
+            "capsule": 4,
+            "step": 5314
+          },
+          {
+            "vend": 5,
+            "capsule": 8,
+            "step": 6653
+          },
+          {
+            "vend": 6,
+            "capsule": 0,
+            "step": 7992
+          },
+          {
+            "vend": 7,
+            "capsule": 10,
+            "step": 9331
+          },
+          {
+            "vend": 8,
+            "capsule": 12,
+            "step": 10670
+          },
+          {
+            "vend": 9,
+            "capsule": 13,
+            "step": 12009
+          },
+          {
+            "vend": 10,
+            "capsule": 1,
+            "step": 13348
+          },
+          {
+            "vend": 11,
+            "capsule": 3,
+            "step": 14687
+          }
+        ],
+        "leftAbove": 7,
+        "onHood": 6,
+        "steps": 21904,
+        "endHash": "2212c20701f3115d5daaea072b3c5cbb10546c9d4ebb12ca2ddfbbda682c6c9f"
+      },
+      {
+        "seed": 27,
+        "vends": 16,
+        "passes": 11,
+        "delivered": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "misses": [
+          {
+            "vend": 12,
+            "delivered": 0
+          },
+          {
+            "vend": 13,
+            "delivered": 0
+          },
+          {
+            "vend": 14,
+            "delivered": 0
+          },
+          {
+            "vend": 15,
+            "delivered": 0
+          },
+          {
+            "vend": 16,
+            "delivered": 0
+          }
+        ],
+        "beforeFirstVend": 0,
+        "crossings": [
+          {
+            "vend": 1,
+            "capsule": 7,
+            "step": 1297
+          },
+          {
+            "vend": 2,
+            "capsule": 2,
+            "step": 2636
+          },
+          {
+            "vend": 3,
+            "capsule": 4,
+            "step": 3975
+          },
+          {
+            "vend": 4,
+            "capsule": 1,
+            "step": 5314
+          },
+          {
+            "vend": 5,
+            "capsule": 5,
+            "step": 6653
+          },
+          {
+            "vend": 6,
+            "capsule": 9,
+            "step": 7992
+          },
+          {
+            "vend": 7,
+            "capsule": 13,
+            "step": 9331
+          },
+          {
+            "vend": 8,
+            "capsule": 0,
+            "step": 10670
+          },
+          {
+            "vend": 9,
+            "capsule": 12,
+            "step": 12009
+          },
+          {
+            "vend": 10,
+            "capsule": 17,
+            "step": 13348
+          },
+          {
+            "vend": 11,
+            "capsule": 3,
+            "step": 14687
+          }
+        ],
+        "leftAbove": 7,
+        "onHood": 6,
+        "steps": 21904,
+        "endHash": "afe4ade04ea65f9d7ffa4b7d500132eff7ec117110b48033a0dcbe38531aa4e0"
+      },
+      {
+        "seed": 28,
+        "vends": 16,
+        "passes": 11,
+        "delivered": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "misses": [
+          {
+            "vend": 12,
+            "delivered": 0
+          },
+          {
+            "vend": 13,
+            "delivered": 0
+          },
+          {
+            "vend": 14,
+            "delivered": 0
+          },
+          {
+            "vend": 15,
+            "delivered": 0
+          },
+          {
+            "vend": 16,
+            "delivered": 0
+          }
+        ],
+        "beforeFirstVend": 0,
+        "crossings": [
+          {
+            "vend": 1,
+            "capsule": 7,
+            "step": 1297
+          },
+          {
+            "vend": 2,
+            "capsule": 2,
+            "step": 2636
+          },
+          {
+            "vend": 3,
+            "capsule": 5,
+            "step": 3975
+          },
+          {
+            "vend": 4,
+            "capsule": 8,
+            "step": 5314
+          },
+          {
+            "vend": 5,
+            "capsule": 16,
+            "step": 6653
+          },
+          {
+            "vend": 6,
+            "capsule": 6,
+            "step": 7992
+          },
+          {
+            "vend": 7,
+            "capsule": 13,
+            "step": 9331
+          },
+          {
+            "vend": 8,
+            "capsule": 9,
+            "step": 10670
+          },
+          {
+            "vend": 9,
+            "capsule": 12,
+            "step": 12009
+          },
+          {
+            "vend": 10,
+            "capsule": 1,
+            "step": 13348
+          },
+          {
+            "vend": 11,
+            "capsule": 11,
+            "step": 14687
+          }
+        ],
+        "leftAbove": 7,
+        "onHood": 6,
+        "steps": 21904,
+        "endHash": "8433361c021dd4164fca2dc536c1addc6b98646f3a5963b7e34d675676904c94"
+      },
+      {
+        "seed": 29,
+        "vends": 16,
+        "passes": 11,
+        "delivered": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "misses": [
+          {
+            "vend": 12,
+            "delivered": 0
+          },
+          {
+            "vend": 13,
+            "delivered": 0
+          },
+          {
+            "vend": 14,
+            "delivered": 0
+          },
+          {
+            "vend": 15,
+            "delivered": 0
+          },
+          {
+            "vend": 16,
+            "delivered": 0
+          }
+        ],
+        "beforeFirstVend": 0,
+        "crossings": [
+          {
+            "vend": 1,
+            "capsule": 7,
+            "step": 1297
+          },
+          {
+            "vend": 2,
+            "capsule": 2,
+            "step": 2636
+          },
+          {
+            "vend": 3,
+            "capsule": 5,
+            "step": 3975
+          },
+          {
+            "vend": 4,
+            "capsule": 4,
+            "step": 5314
+          },
+          {
+            "vend": 5,
+            "capsule": 9,
+            "step": 6653
+          },
+          {
+            "vend": 6,
+            "capsule": 12,
+            "step": 7992
+          },
+          {
+            "vend": 7,
+            "capsule": 6,
+            "step": 9331
+          },
+          {
+            "vend": 8,
+            "capsule": 13,
+            "step": 10670
+          },
+          {
+            "vend": 9,
+            "capsule": 10,
+            "step": 12009
+          },
+          {
+            "vend": 10,
+            "capsule": 1,
+            "step": 13348
+          },
+          {
+            "vend": 11,
+            "capsule": 3,
+            "step": 14687
+          }
+        ],
+        "leftAbove": 7,
+        "onHood": 6,
+        "steps": 21904,
+        "endHash": "fa8a7af92ee43a1708ae37371987e86f9e41ca9d7ccdbdcd53104fabb6b24fa9"
+      },
+      {
+        "seed": 30,
+        "vends": 16,
+        "passes": 11,
+        "delivered": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "misses": [
+          {
+            "vend": 12,
+            "delivered": 0
+          },
+          {
+            "vend": 13,
+            "delivered": 0
+          },
+          {
+            "vend": 14,
+            "delivered": 0
+          },
+          {
+            "vend": 15,
+            "delivered": 0
+          },
+          {
+            "vend": 16,
+            "delivered": 0
+          }
+        ],
+        "beforeFirstVend": 0,
+        "crossings": [
+          {
+            "vend": 1,
+            "capsule": 7,
+            "step": 1297
+          },
+          {
+            "vend": 2,
+            "capsule": 2,
+            "step": 2636
+          },
+          {
+            "vend": 3,
+            "capsule": 5,
+            "step": 3975
+          },
+          {
+            "vend": 4,
+            "capsule": 4,
+            "step": 5314
+          },
+          {
+            "vend": 5,
+            "capsule": 8,
+            "step": 6653
+          },
+          {
+            "vend": 6,
+            "capsule": 0,
+            "step": 7992
+          },
+          {
+            "vend": 7,
+            "capsule": 10,
+            "step": 9331
+          },
+          {
+            "vend": 8,
+            "capsule": 12,
+            "step": 10670
+          },
+          {
+            "vend": 9,
+            "capsule": 13,
+            "step": 12009
+          },
+          {
+            "vend": 10,
+            "capsule": 16,
+            "step": 13348
+          },
+          {
+            "vend": 11,
+            "capsule": 3,
+            "step": 14687
+          }
+        ],
+        "leftAbove": 7,
+        "onHood": 6,
+        "steps": 21904,
+        "endHash": "c3201b5ef51eed1758fcb8d80255d5247f8e2a8c7f5a493f005d177772ba412f"
+      }
+    ]
+  },
+  "mouth58": {
+    "result": {
+      "runs": 78,
+      "passes": 72,
+      "worst": "seed 1 vend 1: 0 delivered",
+      "seed": 1,
+      "snapshotHash": "51fb0b14be23c0eb2758b8ab389fe73904661a20c2fda06f77b7215092997ea3",
+      "wallMs": 4401.045708000005
+    },
+    "rows": [
+      {
+        "seed": 1,
+        "vends": 13,
+        "passes": 12,
+        "delivered": [
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "misses": [
+          {
+            "vend": 1,
+            "delivered": 0
+          }
+        ],
+        "beforeFirstVend": 0,
+        "crossings": [
+          {
+            "vend": 2,
+            "capsule": 2,
+            "step": 2636
+          },
+          {
+            "vend": 3,
+            "capsule": 3,
+            "step": 3975
+          },
+          {
+            "vend": 4,
+            "capsule": 17,
+            "step": 5314
+          },
+          {
+            "vend": 5,
+            "capsule": 7,
+            "step": 6653
+          },
+          {
+            "vend": 6,
+            "capsule": 1,
+            "step": 7992
+          },
+          {
+            "vend": 7,
+            "capsule": 16,
+            "step": 9331
+          },
+          {
+            "vend": 8,
+            "capsule": 11,
+            "step": 10670
+          },
+          {
+            "vend": 9,
+            "capsule": 5,
+            "step": 12009
+          },
+          {
+            "vend": 10,
+            "capsule": 4,
+            "step": 13348
+          },
+          {
+            "vend": 11,
+            "capsule": 8,
+            "step": 14687
+          },
+          {
+            "vend": 12,
+            "capsule": 0,
+            "step": 16026
+          },
+          {
+            "vend": 13,
+            "capsule": 6,
+            "step": 17365
+          }
+        ],
+        "leftAbove": 6,
+        "onHood": 2,
+        "steps": 17887,
+        "endHash": "acb80a466d606272abad765e3be5bca0ed5331ca89ade14515632bd9e57c39f3"
+      },
+      {
+        "seed": 2,
+        "vends": 13,
+        "passes": 12,
+        "delivered": [
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "misses": [
+          {
+            "vend": 1,
+            "delivered": 0
+          }
+        ],
+        "beforeFirstVend": 0,
+        "crossings": [
+          {
+            "vend": 2,
+            "capsule": 2,
+            "step": 2636
+          },
+          {
+            "vend": 3,
+            "capsule": 3,
+            "step": 3975
+          },
+          {
+            "vend": 4,
+            "capsule": 17,
+            "step": 5314
+          },
+          {
+            "vend": 5,
+            "capsule": 7,
+            "step": 6653
+          },
+          {
+            "vend": 6,
+            "capsule": 1,
+            "step": 7992
+          },
+          {
+            "vend": 7,
+            "capsule": 16,
+            "step": 9331
+          },
+          {
+            "vend": 8,
+            "capsule": 4,
+            "step": 10670
+          },
+          {
+            "vend": 9,
+            "capsule": 0,
+            "step": 12009
+          },
+          {
+            "vend": 10,
+            "capsule": 8,
+            "step": 13348
+          },
+          {
+            "vend": 11,
+            "capsule": 9,
+            "step": 14687
+          },
+          {
+            "vend": 12,
+            "capsule": 12,
+            "step": 16026
+          },
+          {
+            "vend": 13,
+            "capsule": 5,
+            "step": 17365
+          }
+        ],
+        "leftAbove": 6,
+        "onHood": 2,
+        "steps": 17887,
+        "endHash": "ff0c22c835cf1a61554eae2ddda2d0ebc5408882d00d16b2959a089698536f46"
+      },
+      {
+        "seed": 3,
+        "vends": 13,
+        "passes": 12,
+        "delivered": [
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "misses": [
+          {
+            "vend": 1,
+            "delivered": 0
+          }
+        ],
+        "beforeFirstVend": 0,
+        "crossings": [
+          {
+            "vend": 2,
+            "capsule": 2,
+            "step": 2636
+          },
+          {
+            "vend": 3,
+            "capsule": 1,
+            "step": 3975
+          },
+          {
+            "vend": 4,
+            "capsule": 7,
+            "step": 5314
+          },
+          {
+            "vend": 5,
+            "capsule": 3,
+            "step": 6653
+          },
+          {
+            "vend": 6,
+            "capsule": 0,
+            "step": 7992
+          },
+          {
+            "vend": 7,
+            "capsule": 17,
+            "step": 9331
+          },
+          {
+            "vend": 8,
+            "capsule": 11,
+            "step": 10670
+          },
+          {
+            "vend": 9,
+            "capsule": 8,
+            "step": 12009
+          },
+          {
+            "vend": 10,
+            "capsule": 16,
+            "step": 13348
+          },
+          {
+            "vend": 11,
+            "capsule": 5,
+            "step": 14687
+          },
+          {
+            "vend": 12,
+            "capsule": 4,
+            "step": 16026
+          },
+          {
+            "vend": 13,
+            "capsule": 6,
+            "step": 17365
+          }
+        ],
+        "leftAbove": 6,
+        "onHood": 2,
+        "steps": 17887,
+        "endHash": "92104633aadcfbf706be882f5607ec2dbc67337018f4d93f049f8e0d99861e60"
+      },
+      {
+        "seed": 4,
+        "vends": 13,
+        "passes": 12,
+        "delivered": [
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "misses": [
+          {
+            "vend": 1,
+            "delivered": 0
+          }
+        ],
+        "beforeFirstVend": 0,
+        "crossings": [
+          {
+            "vend": 2,
+            "capsule": 2,
+            "step": 2636
+          },
+          {
+            "vend": 3,
+            "capsule": 3,
+            "step": 3975
+          },
+          {
+            "vend": 4,
+            "capsule": 17,
+            "step": 5314
+          },
+          {
+            "vend": 5,
+            "capsule": 5,
+            "step": 6653
+          },
+          {
+            "vend": 6,
+            "capsule": 4,
+            "step": 7992
+          },
+          {
+            "vend": 7,
+            "capsule": 1,
+            "step": 9331
+          },
+          {
+            "vend": 8,
+            "capsule": 8,
+            "step": 10670
+          },
+          {
+            "vend": 9,
+            "capsule": 7,
+            "step": 12009
+          },
+          {
+            "vend": 10,
+            "capsule": 0,
+            "step": 13348
+          },
+          {
+            "vend": 11,
+            "capsule": 16,
+            "step": 14687
+          },
+          {
+            "vend": 12,
+            "capsule": 6,
+            "step": 16026
+          },
+          {
+            "vend": 13,
+            "capsule": 9,
+            "step": 17365
+          }
+        ],
+        "leftAbove": 6,
+        "onHood": 2,
+        "steps": 17887,
+        "endHash": "8dd17dd453dca9c98bd971fa6416e91544293ae2c1de173c4ec54129d055468d"
+      },
+      {
+        "seed": 5,
+        "vends": 13,
+        "passes": 12,
+        "delivered": [
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "misses": [
+          {
+            "vend": 1,
+            "delivered": 0
+          }
+        ],
+        "beforeFirstVend": 0,
+        "crossings": [
+          {
+            "vend": 2,
+            "capsule": 2,
+            "step": 2636
+          },
+          {
+            "vend": 3,
+            "capsule": 1,
+            "step": 3975
+          },
+          {
+            "vend": 4,
+            "capsule": 7,
+            "step": 5314
+          },
+          {
+            "vend": 5,
+            "capsule": 3,
+            "step": 6653
+          },
+          {
+            "vend": 6,
+            "capsule": 0,
+            "step": 7992
+          },
+          {
+            "vend": 7,
+            "capsule": 17,
+            "step": 9331
+          },
+          {
+            "vend": 8,
+            "capsule": 11,
+            "step": 10670
+          },
+          {
+            "vend": 9,
+            "capsule": 8,
+            "step": 12009
+          },
+          {
+            "vend": 10,
+            "capsule": 16,
+            "step": 13348
+          },
+          {
+            "vend": 11,
+            "capsule": 5,
+            "step": 14687
+          },
+          {
+            "vend": 12,
+            "capsule": 4,
+            "step": 16026
+          },
+          {
+            "vend": 13,
+            "capsule": 6,
+            "step": 17365
+          }
+        ],
+        "leftAbove": 6,
+        "onHood": 2,
+        "steps": 17887,
+        "endHash": "bb0108fede1b725d2e7d7168c6850a967eb12f36209bffa05352b014a1895457"
+      },
+      {
+        "seed": 6,
+        "vends": 13,
+        "passes": 12,
+        "delivered": [
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "misses": [
+          {
+            "vend": 1,
+            "delivered": 0
+          }
+        ],
+        "beforeFirstVend": 0,
+        "crossings": [
+          {
+            "vend": 2,
+            "capsule": 2,
+            "step": 2636
+          },
+          {
+            "vend": 3,
+            "capsule": 3,
+            "step": 3975
+          },
+          {
+            "vend": 4,
+            "capsule": 5,
+            "step": 5314
+          },
+          {
+            "vend": 5,
+            "capsule": 17,
+            "step": 6653
+          },
+          {
+            "vend": 6,
+            "capsule": 1,
+            "step": 7992
+          },
+          {
+            "vend": 7,
+            "capsule": 16,
+            "step": 9331
+          },
+          {
+            "vend": 8,
+            "capsule": 4,
+            "step": 10670
+          },
+          {
+            "vend": 9,
+            "capsule": 0,
+            "step": 12009
+          },
+          {
+            "vend": 10,
+            "capsule": 7,
+            "step": 13348
+          },
+          {
+            "vend": 11,
+            "capsule": 6,
+            "step": 14687
+          },
+          {
+            "vend": 12,
+            "capsule": 8,
+            "step": 16026
+          },
+          {
+            "vend": 13,
+            "capsule": 11,
+            "step": 17365
+          }
+        ],
+        "leftAbove": 6,
+        "onHood": 2,
+        "steps": 17887,
+        "endHash": "51fb0b14be23c0eb2758b8ab389fe73904661a20c2fda06f77b7215092997ea3"
+      }
+    ],
+    "meanPasses": 12,
+    "mouth156MeanPasses": 11.333333333333334,
+    "mouth156Source": "trials8 seeds 1 to 6, passes among the first 13 vends",
+    "belowMouth156": false,
+    "bench": "mean 5.5 of 13, worst 2 (BUILD.md line 234, declared)"
+  }
+}

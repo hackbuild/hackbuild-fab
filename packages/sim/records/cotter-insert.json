@@ -1,0 +1,352 @@
+{
+ "record": "cotter-insert",
+ "card": "M02-T09",
+ "date": "2026-10-07",
+ "qualifier": "verdicts, pose counts, tilts and clearing poses are computed; wall times are measured on the named machine and are not gated",
+ "command": "npm run cotter:record -w packages/sim",
+ "machine": {
+  "cpu": "Apple M1",
+  "cores": 8,
+  "os": "darwin arm64",
+  "node": "v22.18.0",
+  "note": "shared with other builds while it ran; wall times include contention"
+ },
+ "oracle": {
+  "file": "designs/cotter/legacy/tools/hook_fit.py",
+  "sha256": "adb0f875c932e268726076e5b5bd4b857fa06fec9f0d6bcf3ad883b4f31739cd",
+  "env": {
+   "python": "3.14.8",
+   "shapely": "2.1.2",
+   "machine": "arm64",
+   "system": "Darwin"
+  }
+ },
+ "gate": "verdict equal to the oracle and to the scene's expectation; poses and max tilt are not gated against the oracle (card M02-T09 acceptance)",
+ "cases": [
+  {
+   "id": "verify-1",
+   "hole": 6.35,
+   "tb": 6.35,
+   "dims": {
+    "d": 5.4,
+    "Rb": 11.45,
+    "sweep": 52,
+    "ext": 2,
+    "gap": 0.6
+   },
+   "expect": "INSERTS",
+   "oracle": {
+    "verdict": "INSERTS",
+    "poses": 106,
+    "maxTiltDeg": 57,
+    "clearing": [
+     57,
+     88,
+     46
+    ],
+    "msg": "clear after 106 poses, max tilt 57 deg"
+   },
+   "port": {
+    "verdict": "INSERTS",
+    "stop": "clear",
+    "poses": 106,
+    "maxTiltDeg": 57,
+    "clearing": [
+     57,
+     88,
+     46
+    ]
+   },
+   "samePathPrefix": 43,
+   "portWallMs": 67
+  },
+  {
+   "id": "verify-2",
+   "hole": 6.35,
+   "tb": 4.8,
+   "dims": {
+    "d": 5.4,
+    "Rb": 7.95,
+    "sweep": 62,
+    "ext": 2,
+    "gap": 0.6
+   },
+   "expect": "INSERTS",
+   "oracle": {
+    "verdict": "INSERTS",
+    "poses": 92,
+    "maxTiltDeg": 72,
+    "clearing": [
+     72,
+     67,
+     45
+    ],
+    "msg": "clear after 92 poses, max tilt 72 deg"
+   },
+   "port": {
+    "verdict": "INSERTS",
+    "stop": "clear",
+    "poses": 92,
+    "maxTiltDeg": 72,
+    "clearing": [
+     72,
+     67,
+     45
+    ]
+   },
+   "samePathPrefix": 92,
+   "portWallMs": 52
+  },
+  {
+   "id": "verify-3",
+   "hole": 6.35,
+   "tb": 3.2,
+   "dims": {
+    "d": 5.4,
+    "Rb": 5.2,
+    "sweep": 77,
+    "ext": 2,
+    "gap": 0.6
+   },
+   "expect": "INSERTS",
+   "oracle": {
+    "verdict": "INSERTS",
+    "poses": 106,
+    "maxTiltDeg": 82,
+    "clearing": [
+     82,
+     53,
+     34
+    ],
+    "msg": "clear after 106 poses, max tilt 82 deg"
+   },
+   "port": {
+    "verdict": "INSERTS",
+    "stop": "clear",
+    "poses": 107,
+    "maxTiltDeg": 82,
+    "clearing": [
+     82,
+     53,
+     34
+    ]
+   },
+   "samePathPrefix": 13,
+   "portWallMs": 60
+  },
+  {
+   "id": "verify-4",
+   "hole": 6,
+   "tb": 6.35,
+   "dims": {
+    "d": 5.05,
+    "Rb": 11.275,
+    "sweep": 53,
+    "ext": 2,
+    "gap": 0.6
+   },
+   "expect": "INSERTS",
+   "oracle": {
+    "verdict": "INSERTS",
+    "poses": 100,
+    "maxTiltDeg": 56,
+    "clearing": [
+     56,
+     90,
+     43
+    ],
+    "msg": "clear after 100 poses, max tilt 56 deg"
+   },
+   "port": {
+    "verdict": "INSERTS",
+    "stop": "clear",
+    "poses": 100,
+    "maxTiltDeg": 56,
+    "clearing": [
+     56,
+     90,
+     43
+    ]
+   },
+   "samePathPrefix": 100,
+   "portWallMs": 91
+  },
+  {
+   "id": "verify-5",
+   "hole": 6,
+   "tb": 4.8,
+   "dims": {
+    "d": 5.05,
+    "Rb": 7.775,
+    "sweep": 63,
+    "ext": 2,
+    "gap": 0.6
+   },
+   "expect": "INSERTS",
+   "oracle": {
+    "verdict": "INSERTS",
+    "poses": 93,
+    "maxTiltDeg": 72,
+    "clearing": [
+     72,
+     65,
+     45
+    ],
+    "msg": "clear after 93 poses, max tilt 72 deg"
+   },
+   "port": {
+    "verdict": "INSERTS",
+    "stop": "clear",
+    "poses": 93,
+    "maxTiltDeg": 72,
+    "clearing": [
+     72,
+     65,
+     45
+    ]
+   },
+   "samePathPrefix": 93,
+   "portWallMs": 49
+  },
+  {
+   "id": "verify-6",
+   "hole": 7.1,
+   "tb": 6.35,
+   "dims": {
+    "d": 6.15,
+    "Rb": 11.825,
+    "sweep": 52,
+    "ext": 2,
+    "gap": 0.6
+   },
+   "expect": "INSERTS",
+   "oracle": {
+    "verdict": "INSERTS",
+    "poses": 110,
+    "maxTiltDeg": 57,
+    "clearing": [
+     57,
+     93,
+     44
+    ],
+    "msg": "clear after 110 poses, max tilt 57 deg"
+   },
+   "port": {
+    "verdict": "INSERTS",
+    "stop": "clear",
+    "poses": 110,
+    "maxTiltDeg": 57,
+    "clearing": [
+     57,
+     93,
+     44
+    ]
+   },
+   "samePathPrefix": 44,
+   "portWallMs": 60
+  },
+  {
+   "id": "verify-7",
+   "hole": 7.1,
+   "tb": 4.8,
+   "dims": {
+    "d": 6.15,
+    "Rb": 8.325,
+    "sweep": 61,
+    "ext": 2,
+    "gap": 0.6
+   },
+   "expect": "INSERTS",
+   "oracle": {
+    "verdict": "INSERTS",
+    "poses": 92,
+    "maxTiltDeg": 72,
+    "clearing": [
+     72,
+     68,
+     47
+    ],
+    "msg": "clear after 92 poses, max tilt 72 deg"
+   },
+   "port": {
+    "verdict": "INSERTS",
+    "stop": "clear",
+    "poses": 92,
+    "maxTiltDeg": 72,
+    "clearing": [
+     72,
+     68,
+     47
+    ]
+   },
+   "samePathPrefix": 92,
+   "portWallMs": 52
+  },
+  {
+   "id": "kit-2026-09-21",
+   "hole": 6.35,
+   "tb": 4.1,
+   "dims": {
+    "d": 5.4,
+    "Rb": 6.7,
+    "sweep": 68,
+    "ext": 2,
+    "gap": 0.6
+   },
+   "expect": "INSERTS",
+   "oracle": {
+    "verdict": "INSERTS",
+    "poses": 91,
+    "maxTiltDeg": 75,
+    "clearing": [
+     75,
+     61,
+     40
+    ],
+    "msg": "clear after 91 poses, max tilt 75 deg"
+   },
+   "port": {
+    "verdict": "INSERTS",
+    "stop": "clear",
+    "poses": 91,
+    "maxTiltDeg": 75,
+    "clearing": [
+     75,
+     61,
+     40
+    ]
+   },
+   "samePathPrefix": 91,
+   "portWallMs": 57
+  },
+  {
+   "id": "sharp",
+   "hole": 6.35,
+   "tb": 6.35,
+   "dims": {
+    "d": 5.4,
+    "Rb": 6,
+    "sweep": 52,
+    "ext": 3,
+    "gap": 0.6
+   },
+   "expect": "TRAPPED",
+   "oracle": {
+    "verdict": "TRAPPED",
+    "poses": 381,
+    "maxTiltDeg": 12,
+    "clearing": null,
+    "msg": "trapped, max tilt 12 deg"
+   },
+   "port": {
+    "verdict": "TRAPPED",
+    "stop": "exhausted",
+    "poses": 381,
+    "maxTiltDeg": 12,
+    "clearing": null
+   },
+   "samePathPrefix": 381,
+   "portWallMs": 77
+  }
+ ]
+}

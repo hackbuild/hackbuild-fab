@@ -1,0 +1,23 @@
+STAND
+ 60 s                       PASS  tilt 0.2deg  y209  travel -1mm  drift 1mm  peak 61% R.knee
+ hgt 192 (deep)             FAIL @0.9s  tilt 89.9deg  y43  travel 252mm  drift -0mm  peak 100% L.hipPitch
+ hgt 212 (tall)             PASS  tilt 0.2deg  y212  travel -1mm  drift 0mm  peak 56% R.knee
+ open loop (should fail)    FAIL @0.7s  tilt 90.0deg  y29  travel 255mm  drift 0mm  peak 100% L.hipPitch
+SQUAT
+ 30 s cycling               PASS  tilt 0.2deg  y190  travel 1mm  drift 0mm  peak 72% R.knee
+PUSH at 3 s
+ z 0.06 N.s                 PASS  tilt 1.8deg  y209  travel -0mm  drift 0mm  peak 100% L.ankPitch
+ z 0.12 N.s                 FAIL @3.5s  tilt 89.4deg  y29  travel 270mm  drift 1mm  peak 100% L.ankPitch
+ x 0.06 N.s                 PASS  tilt 2.7deg  y209  travel -0mm  drift 0mm  peak 78% L.ankPitch
+ x 0.12 N.s                 FAIL @3.5s  tilt 86.9deg  y46  travel -18mm  drift 291mm  peak 100% L.ankRoll
+WALK 25 s
+ T3.2 S38 sway23            FAIL @2.3s  tilt 90.0deg  y22  travel -200mm  drift 13mm  peak 100% L.hipRoll
+ T2.8 S38 sway23            FAIL @4.9s  tilt 90.0deg  y25  travel -129mm  drift 6mm  peak 100% L.hipRoll
+ T2.4 S38 sway23            PASS  tilt 2.3deg  y209  travel 590mm  drift -24mm  peak 100% R.ankPitch
+ T2 S38 sway23              PASS  tilt 4.2deg  y209  travel 709mm  drift 29mm  peak 100% L.hipPitch
+ T2.8 S20 sway23            PASS  tilt 2.9deg  y208  travel 282mm  drift -14mm  peak 100% L.hipRoll
+ T2.8 S50 sway23            PASS  tilt 2.0deg  y209  travel 684mm  drift 3mm  peak 100% R.ankPitch
+ T2.8 S38 sway18            FAIL @2.1s  tilt 90.0deg  y25  travel -182mm  drift -11mm  peak 100% L.hipRoll
+ T2.8 S38 sway28            FAIL @2.3s  tilt 90.0deg  y25  travel -173mm  drift 9mm  peak 100% L.hipRoll
+
+9/17 pass (the open-loop case is expected to fail)

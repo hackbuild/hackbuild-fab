@@ -1,0 +1,396 @@
+{
+  "record": "granular-funnel 30-trial runtime on the adopted Rapier, M02-T05 step 4",
+  "pin": "@dimforge/rapier3d-deterministic-compat 0.21.0",
+  "scene": "packages/sim/src/rapier/granular.ts with rows packages/sim/scenes/granular-funnel.world.json",
+  "command": "npm run bench:granular30 -w packages/sim -- --runs 3",
+  "machine": {
+    "cpu": "Apple M1",
+    "os": "darwin 21.6.0",
+    "arch": "arm64",
+    "translated": false,
+    "node": "v22.18.0",
+    "image": "local"
+  },
+  "date": "2026-10-07",
+  "qualifier": "wall times measured on the machine named; snapshotHash and ballsBelowMouth computed, ballsBelowMouth informational (D-075)",
+  "runs": 3,
+  "trialCount": 30,
+  "stepsPerTrial": 2400,
+  "runWallS": [
+    9.51,
+    5.9,
+    5.64
+  ],
+  "totalWallS": {
+    "p50": 5.9,
+    "max": 9.51
+  },
+  "trialWallMs": {
+    "p50": 195.4,
+    "p90": 333.5,
+    "max": 1561,
+    "samples": 90
+  },
+  "trials": {
+    "granular-funnel/balls18-t01#seed1": {
+      "seed": 1,
+      "steps": 2400,
+      "ballsBelowMouth": 18,
+      "snapshotHash": "264222948406569ef0cfa1a743d1bbaf111972ce38a59fb9537cafa0b0ca8f71",
+      "wallMs": [
+        1561,
+        192.5,
+        205.7
+      ],
+      "wallMsP50": 205.7
+    },
+    "granular-funnel/balls18-t02#seed2": {
+      "seed": 2,
+      "steps": 2400,
+      "ballsBelowMouth": 18,
+      "snapshotHash": "69caf4559e0c0e405b819fcdb9435b3abf948414b59211973f1f6a9a52d35833",
+      "wallMs": [
+        421.5,
+        195.6,
+        260.9
+      ],
+      "wallMsP50": 260.9
+    },
+    "granular-funnel/balls18-t03#seed3": {
+      "seed": 3,
+      "steps": 2400,
+      "ballsBelowMouth": 18,
+      "snapshotHash": "704f97c8bb8c0453ca58937897a19f88ca5920d6eec0f53027e478df39dda777",
+      "wallMs": [
+        416,
+        173.1,
+        283.6
+      ],
+      "wallMsP50": 283.6
+    },
+    "granular-funnel/balls18-t04#seed4": {
+      "seed": 4,
+      "steps": 2400,
+      "ballsBelowMouth": 18,
+      "snapshotHash": "72e3344eebf66b7bf92d3332d005e4c1c9e7a7b58a8a5e2510a47e2c228db5d8",
+      "wallMs": [
+        338.9,
+        180.3,
+        186.1
+      ],
+      "wallMsP50": 186.1
+    },
+    "granular-funnel/balls18-t05#seed5": {
+      "seed": 5,
+      "steps": 2400,
+      "ballsBelowMouth": 18,
+      "snapshotHash": "8eb007acc96c9a508ab22272886f9b9e725eb11cd7746404cf33e211b490b432",
+      "wallMs": [
+        338.4,
+        196.5,
+        180.5
+      ],
+      "wallMsP50": 196.5
+    },
+    "granular-funnel/balls18-t06#seed6": {
+      "seed": 6,
+      "steps": 2400,
+      "ballsBelowMouth": 18,
+      "snapshotHash": "842dc8f2aef08341ecf1bfd9303529a64dfe04b78325a8ad0f07103e383c3c42",
+      "wallMs": [
+        304.2,
+        165.7,
+        187.6
+      ],
+      "wallMsP50": 187.6
+    },
+    "granular-funnel/balls18-t07#seed7": {
+      "seed": 7,
+      "steps": 2400,
+      "ballsBelowMouth": 18,
+      "snapshotHash": "e48e1824b70b6bc5632cfb1d5e495e9637bcec35060d5563fbffb6097a225076",
+      "wallMs": [
+        281.5,
+        184.2,
+        176
+      ],
+      "wallMsP50": 184.2
+    },
+    "granular-funnel/balls18-t08#seed8": {
+      "seed": 8,
+      "steps": 2400,
+      "ballsBelowMouth": 18,
+      "snapshotHash": "63ed986117334f617ffd796cca322ccf6fd10c049057fe776e4f8b6dea650a03",
+      "wallMs": [
+        288.3,
+        178.2,
+        184.1
+      ],
+      "wallMsP50": 184.1
+    },
+    "granular-funnel/balls18-t09#seed9": {
+      "seed": 9,
+      "steps": 2400,
+      "ballsBelowMouth": 18,
+      "snapshotHash": "0b39b253c2ef4b9acbd6690f1d3a916e91ac704b7cf8ae91d6e52313da78f235",
+      "wallMs": [
+        275.7,
+        184.5,
+        180.4
+      ],
+      "wallMsP50": 184.5
+    },
+    "granular-funnel/balls18-t10#seed10": {
+      "seed": 10,
+      "steps": 2400,
+      "ballsBelowMouth": 18,
+      "snapshotHash": "31987d2768cf6616b119db8d9fc5f3e4afb7940a7f401e1e5898d108f9780879",
+      "wallMs": [
+        288.6,
+        206.1,
+        175.4
+      ],
+      "wallMsP50": 206.1
+    },
+    "granular-funnel/balls18-t11#seed11": {
+      "seed": 11,
+      "steps": 2400,
+      "ballsBelowMouth": 18,
+      "snapshotHash": "6e77594ec1a951f7754b21d306ddfbd5891e55a60eef779e3701c0fbeee33dae",
+      "wallMs": [
+        220.9,
+        183.3,
+        195.4
+      ],
+      "wallMsP50": 195.4
+    },
+    "granular-funnel/balls18-t12#seed12": {
+      "seed": 12,
+      "steps": 2400,
+      "ballsBelowMouth": 18,
+      "snapshotHash": "a0e7b2ec6e321eede7c705ed83ae11a09714b100d49310b5a900f6c6c8d3d1f8",
+      "wallMs": [
+        228.5,
+        265.5,
+        163.3
+      ],
+      "wallMsP50": 228.5
+    },
+    "granular-funnel/balls18-t13#seed13": {
+      "seed": 13,
+      "steps": 2400,
+      "ballsBelowMouth": 18,
+      "snapshotHash": "8dabd477f6cb8c0a5946a3849fdd493609fcd8031bd3595661d2b49646ac259b",
+      "wallMs": [
+        224.2,
+        191,
+        171.8
+      ],
+      "wallMsP50": 191
+    },
+    "granular-funnel/balls18-t14#seed14": {
+      "seed": 14,
+      "steps": 2400,
+      "ballsBelowMouth": 18,
+      "snapshotHash": "4510159f6686be0f611d3535c929b0b98f46c0a71184d70e8e19e0435830de0a",
+      "wallMs": [
+        200.2,
+        204.9,
+        179.1
+      ],
+      "wallMsP50": 200.2
+    },
+    "granular-funnel/balls18-t15#seed15": {
+      "seed": 15,
+      "steps": 2400,
+      "ballsBelowMouth": 18,
+      "snapshotHash": "a46e24cf12be3d922db75bfae59df2937421bc7488bd7783ee8f2ce19af0ca81",
+      "wallMs": [
+        193.4,
+        230.6,
+        207.9
+      ],
+      "wallMsP50": 207.9
+    },
+    "granular-funnel/balls18-t16#seed16": {
+      "seed": 16,
+      "steps": 2400,
+      "ballsBelowMouth": 18,
+      "snapshotHash": "18ba30d2da315c4670b4581a6d1cb86495265340043570859bb7410f065fe663",
+      "wallMs": [
+        390.6,
+        204,
+        163.2
+      ],
+      "wallMsP50": 204
+    },
+    "granular-funnel/balls18-t17#seed17": {
+      "seed": 17,
+      "steps": 2400,
+      "ballsBelowMouth": 18,
+      "snapshotHash": "cc3fd6c63475133b1dc81b931b8fc7e75a7b16dc7d9c549504e208662f76283f",
+      "wallMs": [
+        261.2,
+        197.1,
+        172.6
+      ],
+      "wallMsP50": 197.1
+    },
+    "granular-funnel/balls18-t18#seed18": {
+      "seed": 18,
+      "steps": 2400,
+      "ballsBelowMouth": 18,
+      "snapshotHash": "5edd6a315ff99dbe509834e74efc0f8f9ad81a8ca402e7930bcd87dd6a186d4e",
+      "wallMs": [
+        233.6,
+        191.2,
+        172.9
+      ],
+      "wallMsP50": 191.2
+    },
+    "granular-funnel/balls18-t19#seed19": {
+      "seed": 19,
+      "steps": 2400,
+      "ballsBelowMouth": 18,
+      "snapshotHash": "3797471dfc1734a1039f4ca25b59dd6f1998c478016957a7f179670e07b8fa76",
+      "wallMs": [
+        256.5,
+        167.2,
+        180.1
+      ],
+      "wallMsP50": 180.1
+    },
+    "granular-funnel/balls18-t20#seed20": {
+      "seed": 20,
+      "steps": 2400,
+      "ballsBelowMouth": 18,
+      "snapshotHash": "3d7c9b978916a6bd7271d8762dff6b961e2ade9e63b999b46ea735bfe984455a",
+      "wallMs": [
+        349.6,
+        171.4,
+        168.9
+      ],
+      "wallMsP50": 171.4
+    },
+    "granular-funnel/balls18-t21#seed21": {
+      "seed": 21,
+      "steps": 2400,
+      "ballsBelowMouth": 18,
+      "snapshotHash": "93e882c7f04eef8f5832418e020ffaf98b0ddc7af042bf2a6d817d50df5ca0a4",
+      "wallMs": [
+        203.1,
+        175.8,
+        164.4
+      ],
+      "wallMsP50": 175.8
+    },
+    "granular-funnel/balls18-t22#seed22": {
+      "seed": 22,
+      "steps": 2400,
+      "ballsBelowMouth": 18,
+      "snapshotHash": "8e3a6b14e4c025c67075241e6b0552c0b94ba013259091c7b220b8e5baafcf93",
+      "wallMs": [
+        322.4,
+        182.5,
+        185.1
+      ],
+      "wallMsP50": 185.1
+    },
+    "granular-funnel/balls18-t23#seed23": {
+      "seed": 23,
+      "steps": 2400,
+      "ballsBelowMouth": 18,
+      "snapshotHash": "c25d1c028862944dcf60700194a62ad98d4ea74c8b9bf9ef408bf056d77124d9",
+      "wallMs": [
+        195.7,
+        176,
+        196.9
+      ],
+      "wallMsP50": 195.7
+    },
+    "granular-funnel/balls18-t24#seed24": {
+      "seed": 24,
+      "steps": 2400,
+      "ballsBelowMouth": 17,
+      "snapshotHash": "8ef1a315b10b49363511416272562ddc9943ae5da14656237fa4fb570fed5322",
+      "wallMs": [
+        193.5,
+        181,
+        171
+      ],
+      "wallMsP50": 181
+    },
+    "granular-funnel/balls18-t25#seed25": {
+      "seed": 25,
+      "steps": 2400,
+      "ballsBelowMouth": 18,
+      "snapshotHash": "9070cee0ddccc10ea424ae3705c4831d8996010a60a982c0e8833e3835ebc291",
+      "wallMs": [
+        362.1,
+        190.5,
+        188.8
+      ],
+      "wallMsP50": 190.5
+    },
+    "granular-funnel/balls18-t26#seed26": {
+      "seed": 26,
+      "steps": 2400,
+      "ballsBelowMouth": 18,
+      "snapshotHash": "ebd45c2bac10023513d56925f30e47af8ecac7d3b08eccd4805ea72712b17d7d",
+      "wallMs": [
+        201.1,
+        187.7,
+        175.2
+      ],
+      "wallMsP50": 187.7
+    },
+    "granular-funnel/balls18-t27#seed27": {
+      "seed": 27,
+      "steps": 2400,
+      "ballsBelowMouth": 18,
+      "snapshotHash": "fccbea4811bc0db293b848a43c431ce156cb34aba71787ebc5934ca21a78cc1d",
+      "wallMs": [
+        212.4,
+        177.4,
+        173.6
+      ],
+      "wallMsP50": 177.4
+    },
+    "granular-funnel/balls18-t28#seed28": {
+      "seed": 28,
+      "steps": 2400,
+      "ballsBelowMouth": 18,
+      "snapshotHash": "c5cf89b5d396de6904c765140708d5ebfaeffe1f7e8e6213f0a54121567a8aeb",
+      "wallMs": [
+        354.5,
+        205.6,
+        199.9
+      ],
+      "wallMsP50": 205.6
+    },
+    "granular-funnel/balls18-t29#seed29": {
+      "seed": 29,
+      "steps": 2400,
+      "ballsBelowMouth": 18,
+      "snapshotHash": "d023a454898b05ea9f1ab44271c2aba33c894182e127e24f69fe969bba542501",
+      "wallMs": [
+        196.6,
+        333.5,
+        193
+      ],
+      "wallMsP50": 196.6
+    },
+    "granular-funnel/balls18-t30#seed30": {
+      "seed": 30,
+      "steps": 2400,
+      "ballsBelowMouth": 18,
+      "snapshotHash": "886318fbed6f8be499159acd0775f85f8f1ecb7c891910e8636b7c2beef2057c",
+      "wallMs": [
+        196.9,
+        225.2,
+        192.9
+      ],
+      "wallMsP50": 196.9
+    }
+  }
+}

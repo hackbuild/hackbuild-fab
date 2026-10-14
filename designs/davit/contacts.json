@@ -1,0 +1,374 @@
+{
+ "design": "davit",
+ "source": "Declared contact pairs, DATA.pairs (std) and DATA.pairsMini (mini) of designs/davit/legacy/davit.html (lineage davit.collide/r3-page): 29 arm pairs each, by name. hub is base x mount, declared for each pipe. Nothing outside this file is ever whitelisted. fit: slip never penetrates; press is designed interference (palm x pincap, a D2.35 pin in a D2.2 bore, README_R4.md) and is masked by class. constant: true marks a declared pair that stays inside the 1.2 mm touch distance in every pose of the gated set (packages/sim/records/davit-sweep.json constantInterference, computed); reason names the chain() line that makes it so (inferred from the source). CHK-ASM-11 passes such a pair only when it is marked (M04-T06 step 5).",
+ "models": {
+  "std": {
+   "pairs": [
+    {
+     "a": "crank",
+     "b": "upper",
+     "fit": "slip"
+    },
+    {
+     "a": "crank",
+     "b": "std_servo#0",
+     "fit": "slip"
+    },
+    {
+     "a": "crank",
+     "b": "std_horn#1",
+     "fit": "slip",
+     "constant": true,
+     "reason": "std_horn#1 is placed in the crank frame (davit.html chain() line 222) and never moves against crank; its seat touches in every pose"
+    },
+    {
+     "a": "crank",
+     "b": "mic_servo#2",
+     "fit": "slip",
+     "constant": true,
+     "reason": "mic_servo#2 is placed in the crank frame (davit.html chain() line 223) and never moves against crank; its seat touches in every pose"
+    },
+    {
+     "a": "fore",
+     "b": "upper",
+     "fit": "slip",
+     "constant": true,
+     "reason": "elbow joint: fore turns on upper about the elbow axis (davit.html chain() line 211), so the coaxial bearing faces stay inside touch distance in every pose"
+    },
+    {
+     "a": "mic_servo#2",
+     "b": "upper",
+     "fit": "slip"
+    },
+    {
+     "a": "mic_horn#3",
+     "b": "upper",
+     "fit": "slip",
+     "constant": true,
+     "reason": "mic_horn#3 is placed in the upper frame (davit.html chain() line 224) and never moves against upper; its seat touches in every pose"
+    },
+    {
+     "a": "std_servo#4",
+     "b": "upper",
+     "fit": "slip",
+     "constant": true,
+     "reason": "std_servo#4 is placed in the upper frame (davit.html chain() line 225) and never moves against upper; its seat touches in every pose"
+    },
+    {
+     "a": "fore",
+     "b": "palm",
+     "fit": "slip"
+    },
+    {
+     "a": "fore",
+     "b": "std_servo#4",
+     "fit": "slip"
+    },
+    {
+     "a": "fore",
+     "b": "std_horn#5",
+     "fit": "slip",
+     "constant": true,
+     "reason": "std_horn#5 is placed in the fore frame (davit.html chain() line 226) and never moves against fore; its seat touches in every pose"
+    },
+    {
+     "a": "fore",
+     "b": "mic_servo#6",
+     "fit": "slip",
+     "constant": true,
+     "reason": "mic_servo#6 is placed in the fore frame (davit.html chain() line 227) and never moves against fore; its seat touches in every pose"
+    },
+    {
+     "a": "jaw_idle",
+     "b": "palm",
+     "fit": "slip",
+     "constant": true,
+     "reason": "jaw_idle pivots on the palm (davit.html chain() line 215), so its pivot faces stay inside touch distance in every pose"
+    },
+    {
+     "a": "palm",
+     "b": "pincap",
+     "fit": "press",
+     "constant": true,
+     "reason": "pincap is placed in the palm frame with no joint (davit.html chain() line 216) and is a press fit in the palm (README_R4.md), so it never moves against the palm"
+    },
+    {
+     "a": "mic_servo#6",
+     "b": "palm",
+     "fit": "slip"
+    },
+    {
+     "a": "mic_horn#7",
+     "b": "palm",
+     "fit": "slip",
+     "constant": true,
+     "reason": "mic_horn#7 is placed in the palm frame (davit.html chain() line 228) and never moves against palm; its seat touches in every pose"
+    },
+    {
+     "a": "mic_servo#8",
+     "b": "palm",
+     "fit": "slip",
+     "constant": true,
+     "reason": "mic_servo#8 is placed in the palm frame (davit.html chain() line 229) and never moves against palm; its seat touches in every pose"
+    },
+    {
+     "a": "jaw_drive",
+     "b": "jaw_idle",
+     "fit": "slip"
+    },
+    {
+     "a": "jaw_drive",
+     "b": "mic_servo#8",
+     "fit": "slip",
+     "constant": true,
+     "reason": "grip joint: jaw_drive turns about the output axis of mic_servo#8 (davit.html chain() lines 214 and 229), so the coaxial faces stay inside touch distance in every pose"
+    },
+    {
+     "a": "jaw_drive",
+     "b": "mic_horn#9",
+     "fit": "slip",
+     "constant": true,
+     "reason": "mic_horn#9 is placed in the jaw_drive frame (davit.html chain() line 230) and never moves against jaw_drive; its seat touches in every pose"
+    },
+    {
+     "a": "jaw_idle",
+     "b": "pincap",
+     "fit": "slip"
+    },
+    {
+     "a": "std_horn#1",
+     "b": "std_servo#0",
+     "fit": "slip"
+    },
+    {
+     "a": "mic_horn#3",
+     "b": "mic_servo#2",
+     "fit": "slip"
+    },
+    {
+     "a": "std_horn#5",
+     "b": "std_servo#4",
+     "fit": "slip"
+    },
+    {
+     "a": "mic_horn#7",
+     "b": "mic_servo#6",
+     "fit": "slip"
+    },
+    {
+     "a": "mic_horn#9",
+     "b": "mic_servo#8",
+     "fit": "slip",
+     "constant": true,
+     "reason": "mic_horn#9 sits on the output spline of mic_servo#8 and turns about its axis (davit.html chain() lines 229 and 230)"
+    },
+    {
+     "a": "mic_horn#9",
+     "b": "palm",
+     "fit": "slip"
+    },
+    {
+     "a": "base",
+     "b": "crank",
+     "fit": "slip"
+    },
+    {
+     "a": "base",
+     "b": "std_servo#0",
+     "fit": "slip",
+     "constant": true,
+     "reason": "std_servo#0 is placed in the base frame (davit.html chain() line 221) and never moves against base; its seat touches in every pose"
+    }
+   ]
+  },
+  "mini": {
+   "pairs": [
+    {
+     "a": "crank",
+     "b": "upper",
+     "fit": "slip"
+    },
+    {
+     "a": "crank",
+     "b": "mic_servo#0",
+     "fit": "slip"
+    },
+    {
+     "a": "crank",
+     "b": "mic_horn#1",
+     "fit": "slip",
+     "constant": true,
+     "reason": "mic_horn#1 is placed in the crank frame (r4/sim_r4.html chain() line 225) and never moves against crank; its seat touches in every pose"
+    },
+    {
+     "a": "crank",
+     "b": "mic_servo#2",
+     "fit": "slip",
+     "constant": true,
+     "reason": "mic_servo#2 is placed in the crank frame (r4/sim_r4.html chain() line 226) and never moves against crank; its seat touches in every pose"
+    },
+    {
+     "a": "fore",
+     "b": "upper",
+     "fit": "slip"
+    },
+    {
+     "a": "mic_servo#2",
+     "b": "upper",
+     "fit": "slip"
+    },
+    {
+     "a": "mic_horn#3",
+     "b": "upper",
+     "fit": "slip",
+     "constant": true,
+     "reason": "mic_horn#3 is placed in the upper frame (r4/sim_r4.html chain() line 227) and never moves against upper; its seat touches in every pose"
+    },
+    {
+     "a": "mic_servo#4",
+     "b": "upper",
+     "fit": "slip",
+     "constant": true,
+     "reason": "mic_servo#4 is placed in the upper frame (r4/sim_r4.html chain() line 228) and never moves against upper; its seat touches in every pose"
+    },
+    {
+     "a": "fore",
+     "b": "palm",
+     "fit": "slip"
+    },
+    {
+     "a": "fore",
+     "b": "mic_servo#4",
+     "fit": "slip"
+    },
+    {
+     "a": "fore",
+     "b": "mic_horn#5",
+     "fit": "slip",
+     "constant": true,
+     "reason": "mic_horn#5 is placed in the fore frame (r4/sim_r4.html chain() line 229) and never moves against fore; its seat touches in every pose"
+    },
+    {
+     "a": "fore",
+     "b": "mic_servo#6",
+     "fit": "slip",
+     "constant": true,
+     "reason": "mic_servo#6 is placed in the fore frame (r4/sim_r4.html chain() line 230) and never moves against fore; its seat touches in every pose"
+    },
+    {
+     "a": "jaw_idle",
+     "b": "palm",
+     "fit": "slip",
+     "constant": true,
+     "reason": "jaw_idle pivots on the palm (r4/sim_r4.html chain() line 218), so its pivot faces stay inside touch distance in every pose"
+    },
+    {
+     "a": "palm",
+     "b": "pincap",
+     "fit": "press",
+     "constant": true,
+     "reason": "pincap is placed in the palm frame with no joint (r4/sim_r4.html chain() line 219) and is a press fit in the palm (README_R4.md), so it never moves against the palm"
+    },
+    {
+     "a": "mic_servo#6",
+     "b": "palm",
+     "fit": "slip"
+    },
+    {
+     "a": "mic_horn#7",
+     "b": "palm",
+     "fit": "slip",
+     "constant": true,
+     "reason": "mic_horn#7 is placed in the palm frame (r4/sim_r4.html chain() line 231) and never moves against palm; its seat touches in every pose"
+    },
+    {
+     "a": "mic_servo#8",
+     "b": "palm",
+     "fit": "slip",
+     "constant": true,
+     "reason": "mic_servo#8 is placed in the palm frame (r4/sim_r4.html chain() line 232) and never moves against palm; its seat touches in every pose"
+    },
+    {
+     "a": "jaw_drive",
+     "b": "jaw_idle",
+     "fit": "slip"
+    },
+    {
+     "a": "jaw_drive",
+     "b": "mic_servo#8",
+     "fit": "slip",
+     "constant": true,
+     "reason": "grip joint: jaw_drive turns about the output axis of mic_servo#8 (r4/sim_r4.html chain() lines 217 and 232), so the coaxial faces stay inside touch distance in every pose"
+    },
+    {
+     "a": "jaw_drive",
+     "b": "mic_horn#9",
+     "fit": "slip",
+     "constant": true,
+     "reason": "mic_horn#9 is placed in the jaw_drive frame (r4/sim_r4.html chain() line 233) and never moves against jaw_drive; its seat touches in every pose"
+    },
+    {
+     "a": "jaw_idle",
+     "b": "pincap",
+     "fit": "slip"
+    },
+    {
+     "a": "mic_horn#1",
+     "b": "mic_servo#0",
+     "fit": "slip"
+    },
+    {
+     "a": "mic_horn#3",
+     "b": "mic_servo#2",
+     "fit": "slip"
+    },
+    {
+     "a": "mic_horn#5",
+     "b": "mic_servo#4",
+     "fit": "slip"
+    },
+    {
+     "a": "mic_horn#7",
+     "b": "mic_servo#6",
+     "fit": "slip"
+    },
+    {
+     "a": "mic_horn#9",
+     "b": "mic_servo#8",
+     "fit": "slip",
+     "constant": true,
+     "reason": "mic_horn#9 sits on the output spline of mic_servo#8 and turns about its axis (r4/sim_r4.html chain() lines 232 and 233)"
+    },
+    {
+     "a": "mic_horn#9",
+     "b": "palm",
+     "fit": "slip"
+    },
+    {
+     "a": "base",
+     "b": "crank",
+     "fit": "slip"
+    },
+    {
+     "a": "base",
+     "b": "mic_servo#0",
+     "fit": "slip",
+     "constant": true,
+     "reason": "mic_servo#0 is placed in the base frame (r4/sim_r4.html chain() line 224) and never moves against base; its seat touches in every pose"
+    }
+   ]
+  }
+ },
+ "hub": {
+  "a": "base",
+  "b": "mount",
+  "pipes": [
+   "1in",
+   "125in",
+   "15in"
+  ],
+  "fit": "slip",
+  "constant": true,
+  "reason": "base and mount are both fixed to the pipe and never move (davit.html buildScene() lines 254 to 263), so the clamp seat touches in every pose"
+ }
+}

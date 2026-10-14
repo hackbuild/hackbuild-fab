@@ -1,0 +1,7 @@
+{
+  "note": "Final snapshotHash of seeds 1 and 2 of scene granular-funnel, recorded 2026-10-07 on Apple M1 arm64 and equal on x64 under Rosetta (records/granular30-*.json). Computed.",
+  "hashes": {
+    "seed1": "264222948406569ef0cfa1a743d1bbaf111972ce38a59fb9537cafa0b0ca8f71",
+    "seed2": "69caf4559e0c0e405b819fcdb9435b3abf948414b59211973f1f6a9a52d35833"
+  }
+}

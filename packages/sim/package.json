@@ -1,0 +1,41 @@
+{
+  "name": "@hackbuild/sim",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "author": "Moheeb Zara <hackbuildvideo@gmail.com>",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./rapier": {
+      "types": "./dist/rapier/index.d.ts",
+      "import": "./dist/rapier/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "test": "vitest run",
+    "pretest": "tsc -b",
+    "snapshots": "tsc -b ../.. && node ../../tools/compare-snapshots.mjs record --runs 2 --out \"${TMPDIR:-/tmp}/hbf-snapshots-local.json\"",
+    "pawl": "node scripts/pawl.mjs run",
+    "pawl:record": "node scripts/pawl.mjs run --record",
+    "pawl:legacy": "node scripts/pawl.mjs legacy",
+    "bench:granular30": "node bench/granular30.ts",
+    "ogee:oracle": "cd ../.. && uv run --project tools/py python packages/sim/scripts/ogee_sweep_oracle.py",
+    "slug:trials": "tsc -b && node scripts/slug.mjs record",
+    "slug": "node scripts/slug.mjs run",
+    "cotter:record": "HBF_COTTER_RECORD=1 vitest run cotter-insert",
+    "cotter:oracle": "cd ../.. && uv run --project tools/py python packages/sim/scripts/cotter_insert_oracle.py"
+  },
+  "dependencies": {
+    "@dimforge/rapier3d-deterministic-compat": "0.21.0",
+    "@hackbuild/mesh": "0.0.0",
+    "@hackbuild/spec": "0.1.0"
+  },
+  "devDependencies": {
+    "@hackbuild/profile": "0.0.0"
+  }
+}

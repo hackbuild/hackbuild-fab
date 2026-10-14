@@ -1,0 +1,25 @@
+{
+  "note": "World constants for the M02-T01 drop test, read from the canonical PAWL core (lineage.json pawl.core/final). Profile holds no gravity or timestep row as of 2026-10-06; these rows move there when one lands.",
+  "gravity": {
+    "id": "sim.gravity",
+    "value": 9.81,
+    "unit": "m/s2",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-06",
+      "source": "originals/pawl/files/src/core.mjs line 4 (G = 9.81) and line 114 (World gravity 0, minus G, 0), sha256 d1869500a5a871ff3f0bed2f55cb0a92367fc4f112d2494222aac44e03d1f9c8"
+    }
+  },
+  "timestep": {
+    "id": "sim.timestep",
+    "value": 0.0020833333333333333,
+    "unit": "s",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-06",
+      "source": "originals/pawl/files/src/core.mjs line 115 (world.timestep = opt.dt or 1/480), sha256 d1869500a5a871ff3f0bed2f55cb0a92367fc4f112d2494222aac44e03d1f9c8"
+    }
+  }
+}

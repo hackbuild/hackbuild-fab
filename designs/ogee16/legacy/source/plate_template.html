@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OGEE R16-P // build plate</title>
+<link href="https://fonts.googleapis.com/css2?family=VT323&family=Special+Elite&family=Permanent+Marker&display=swap" rel="stylesheet">
+<style>
+:root{
+  --pink:#FE0386; --cream:#f5f0e6; --ink:#1a1a1a; --void:#0a0a0a;
+  --paper:#fffdf7; --sunk:#efe9db; --edge:#e8e0d0;
+  --ink2:#444; --ink3:#6b6459; --ink4:#9a9184;
+  --slime:#a6e22e; --lit-warn:#ffb020;
+  --mono:'Special Elite',ui-monospace,monospace;
+  --inst:'VT323',ui-monospace,monospace;
+  --disp:'Permanent Marker',cursive;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--void);color:var(--ink);font:14px/1.5 var(--mono);
+  display:flex;flex-direction:column;overflow:hidden}
+#top{display:flex;align-items:center;gap:14px;background:var(--paper);
+  padding:7px 16px;border-bottom:3px solid var(--ink);flex:0 0 auto;
+  background-image:radial-gradient(var(--edge) 1px,transparent 1px);background-size:4px 4px}
+#top .wm{font-family:var(--disp);font-size:21px}
+#top .wm b{color:var(--pink);font-weight:400}
+#top .sub{font-family:var(--inst);font-size:18px;color:var(--ink3);letter-spacing:.07em}
+#top .sp{flex:1}
+.stat{font-family:var(--inst);font-size:18px;background:var(--void);color:var(--slime);
+  padding:0 10px;border:2px solid var(--ink)}
+.stat.warn{color:var(--lit-warn)}
+#main{flex:1;display:flex;min-height:0}
+#stage{flex:1;position:relative;background-color:var(--void);
+  background-image:linear-gradient(rgba(254,3,134,.10) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(254,3,134,.10) 1px,transparent 1px);
+  background-size:26px 26px}
+#stage canvas{display:block;position:absolute;inset:0;z-index:0}
+#hint{position:absolute;left:12px;bottom:10px;z-index:2;font-family:var(--inst);font-size:17px;
+  color:var(--ink4);pointer-events:none}
+#tabs{position:absolute;left:12px;top:12px;z-index:2;display:flex;gap:6px;flex-wrap:wrap;max-width:72%}
+#rail{width:400px;background:var(--paper);border-left:3px solid var(--ink);
+  overflow-y:auto;padding:14px;flex:0 0 auto;
+  background-image:radial-gradient(var(--edge) 1px,transparent 1px);background-size:4px 4px}
+.panel{background:var(--paper);border:2px solid var(--ink);box-shadow:5px 5px 0 var(--ink);
+  margin-bottom:15px}
+.panel > h2{margin:0;font-family:var(--inst);font-size:19px;letter-spacing:.12em;
+  background:var(--ink);color:var(--cream);padding:1px 10px;text-transform:uppercase}
+.panel > .body{padding:9px 11px}
+.hint{color:var(--ink3);font-size:12px;margin:0 0 8px}
+button{font:inherit;background:var(--paper);color:var(--ink);border:2px solid var(--ink);
+  box-shadow:3px 3px 0 var(--ink);padding:3px 9px;cursor:pointer;border-radius:0;font-size:13px}
+button:hover{box-shadow:5px 5px 0 var(--ink);transform:translate(-1px,-1px)}
+button:active{box-shadow:1px 1px 0 var(--ink);transform:translate(2px,2px)}
+button.on{background:var(--pink);color:var(--paper)}
+#tabs button{background:var(--ink);color:var(--cream);box-shadow:3px 3px 0 var(--void);
+  border-color:var(--void);font-family:var(--inst);font-size:17px;padding:0 10px}
+#tabs button.on{background:var(--pink);color:var(--void)}
+.row{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{font-family:var(--inst);font-size:16px;text-align:left;letter-spacing:.08em;
+  border-bottom:2px solid var(--ink);padding:1px 3px;text-transform:uppercase}
+td{padding:2px 3px;border-bottom:1px solid var(--edge)}
+td.n{text-align:right;font-variant-numeric:tabular-nums;color:var(--ink2)}
+tr.off td{color:var(--ink4);text-decoration:line-through}
+tr:hover td{background:var(--sunk)}
+.chip{display:inline-block;width:12px;height:12px;border:2px solid var(--ink);
+  vertical-align:-2px;margin-right:5px}
+input[type=range]{width:100%}
+@media (max-width:900px){#main{flex-direction:column}#rail{width:auto;border-left:none;
+  border-top:3px solid var(--ink)}#stage{min-height:52vh}}
+</style>
+</head>
+<body>
+<div id="top">
+  <span class="wm">hack<b>.</b>build</span>
+  <span class="sub">OGEE R16-P // BUILD PLATE // CREATOR 5 PRO 256 CUBE</span>
+  <span class="sp"></span>
+  <span class="stat" id="sPieces">0 PCS</span>
+  <span class="stat" id="sPlates">0 PLATES</span>
+  <span class="stat" id="sVol">0 CM3</span>
+</div>
+
+<div id="main">
+  <div id="stage">
+    <div id="tabs"></div>
+    <div id="hint">drag orbit &middot; scroll zoom &middot; shift-drag pan</div>
+  </div>
+  <div id="rail">
+    <div class="panel"><h2>parts</h2><div class="body">
+      <p class="hint">Click a row to drop that part off the plates. Quantities are
+      for one complete machine.</p>
+      <table id="tbl"></table>
+    </div></div>
+
+    <div class="panel"><h2>plate</h2><div class="body">
+      <p class="hint">256 cube, drawn to scale with the height cage. ONE PART TYPE
+      PER PLATE: more plates, but each is a single print profile with one set of
+      settings and one failure mode, and you can reprint a whole family without
+      disturbing anything else. Everything is inset 10mm from the bed edge
+      (dashed). Parts may turn 90 degrees but none is tipped: every orientation
+      was picked by scoring all 24 axis-aligned poses for bed contact, overhang
+      and height.</p>
+      <label style="font-size:12px;color:var(--ink3)">gap <span id="gapv">4</span> mm</label>
+      <input type="range" id="gap" min="2" max="16" value="4">
+      <label style="font-size:12px;color:var(--ink3)">drive</label>
+      <div class="row" id="drive">
+        <button onclick="setDrive('knobs')">knobs</button>
+        <button onclick="setDrive('servos')">servos</button>
+      </div>
+      <div class="row">
+        <button id="bAll">all on</button>
+        <button id="bOne">one of each</button>
+        <button id="bAuto">auto gap</button>
+        <button id="bTop">top view</button>
+        <button id="bIso">iso view</button>
+      </div>
+    </div></div>
+
+    <div class="panel"><h2>export</h2><div class="body">
+      <p class="hint">One STL per plate with every part already positioned, so it
+      drops into Orca at 0,0 with nothing to arrange. Or a single part alone.</p>
+      <div class="row" id="exPlates"></div>
+      <div class="row" id="exParts" style="margin-top:10px"></div>
+    </div></div>
+
+    <div class="panel"><h2>by hand</h2><div class="body">
+      <p class="hint" style="margin:0">No servos. Each bar keeps the crank the
+      servo used to turn; crank and shaft print as one piece, the shaft passes
+      out through a bore in the wall, and a knurled knob presses onto the D at
+      the end. Turn a row knob and a column knob together and that pixel latches.
+      Turn either alone and the rod lifts 4.249mm, short of the 7.6 it needs, and
+      drops back. The latch plate has a finger tab out through the -X wall: push
+      it 3mm and everything drops.</p>
+    </div></div>
+
+    <div class="panel"><h2>print notes</h2><div class="body">
+      <p class="hint" style="margin:0">Bars print lugs-up with no supports. The
+      frame prints as separate flat plates and tabs together exactly as the cut
+      version does; every profile is shrunk 0.075 all round, which thins each tab
+      and widens each slot in one move. Running
+      clearances are 0.30 rather than the laser version's 0.40. Pivot pins go in
+      head-down; the printed head replaces the cemented washer.</p>
+    </div></div>
+  </div>
+</div>
+
+<script>/*THREE*/</script>
+<script>
+// three r128 inlined above, so this opens straight off disk with no network.
+// r128 ships no OrbitControls; this is the part of it the page uses.
+function OrbitControls(cam, dom){
+  const t=new THREE.Vector3(); let r=1, th=0, ph=1, drag=null, px=0, py=0;
+  this.target=t;
+  const set=()=>{ const v=cam.position.clone().sub(t); r=v.length();
+    th=Math.atan2(v.y,v.x); ph=Math.acos(Math.max(-1,Math.min(1,v.z/r))); };
+  this.set=set;
+  this.update=()=>{ cam.position.set(t.x+r*Math.sin(ph)*Math.cos(th),
+    t.y+r*Math.sin(ph)*Math.sin(th), t.z+r*Math.cos(ph)); cam.up.set(0,0,1);
+    cam.lookAt(t); };
+  dom.addEventListener('pointerdown',e=>{drag=e.shiftKey?'pan':'orb';px=e.clientX;py=e.clientY;
+    dom.setPointerCapture(e.pointerId);});
+  dom.addEventListener('pointerup',()=>{drag=null;});
+  dom.addEventListener('pointermove',e=>{
+    if(!drag) return;
+    const dx=e.clientX-px, dy=e.clientY-py; px=e.clientX; py=e.clientY;
+    if(drag==='orb'){ th-=dx*0.008; ph=Math.max(0.05,Math.min(1.55,ph-dy*0.008)); }
+    else { const right=new THREE.Vector3(Math.sin(th),-Math.cos(th),0);
+      const up=new THREE.Vector3(0,0,1).cross(right).normalize();
+      t.addScaledVector(right,-dx*r*0.0016).addScaledVector(up,dy*r*0.0016); }
+  });
+  dom.addEventListener('wheel',e=>{e.preventDefault();
+    r=Math.max(80,Math.min(1400,r*(1+Math.sign(e.deltaY)*0.09)));},{passive:false});
+  set();
+}
+
+const PARTS = /*PARTS*/;
+const PLATE = 256, MAXH = 256;
+let gap = 4, cur = 0;
+const on = {}; PARTS.forEach(p => on[p.id] = p.qty);
+function setDrive(d){
+  drive=d;
+  for(const k in DRIVE) for(const id of DRIVE[k])
+    on[id] = (k===d) ? (PARTS.find(p=>p.id===id)||{qty:0}).qty : 0;
+  for(const b of document.querySelectorAll('#drive button'))
+    b.classList.toggle('on', b.textContent===d);
+  table(); draw();
+}
+
+function stl(b64){
+  const bin=atob(b64), len=bin.length, buf=new ArrayBuffer(len), u8=new Uint8Array(buf);
+  for(let i=0;i<len;i++) u8[i]=bin.charCodeAt(i);
+  const dv=new DataView(buf), n=dv.getUint32(80,true);
+  const pos=new Float32Array(n*9), nor=new Float32Array(n*9);
+  let o=84;
+  for(let f=0;f<n;f++){
+    const nx=dv.getFloat32(o,true),ny=dv.getFloat32(o+4,true),nz=dv.getFloat32(o+8,true);o+=12;
+    for(let v=0;v<3;v++){const k=(f*3+v)*3;
+      pos[k]=dv.getFloat32(o,true);pos[k+1]=dv.getFloat32(o+4,true);pos[k+2]=dv.getFloat32(o+8,true);
+      nor[k]=nx;nor[k+1]=ny;nor[k+2]=nz;o+=12;}
+    o+=2;
+  }
+  const g=new THREE.BufferGeometry();
+  g.setAttribute('position',new THREE.BufferAttribute(pos,3));
+  g.setAttribute('normal',new THREE.BufferAttribute(nor,3));
+  g.computeBoundingBox(); return g;
+}
+const G={}; for(const p of PARTS) G[p.id]=stl(p.stl);
+
+const COLOR = {svbracket_row:0xff5c4d, svbracket_col:0xff5c4d,
+  latchtower:0xff5c4d, crank:0x58a6ff, crank_latch:0x58a6ff, drivepin:0xff5c4d,
+  base:0x8a6cff, wall_xp:0xFE0386, wall_xn:0xFE0386,
+  wall_yp:0xFE0386, wall_yn:0xFE0386, rail:0xff5c4d, latchpull:0x58a6ff, latchpull:0x58a6ff,
+  face_asm:0xa6e22e, deck:0xffb020, latch_asm:0x58a6ff,
+  rowbar_asm:0xFE0386, colbar_asm:0xa6e22e, link:0xffb020, rod:0xf5f0e6, cap:0xffd166,
+  shaft_row:0xff5c4d, shaft_col:0xff5c4d, knob:0x58a6ff, pivot:0x9a9184};
+const MAT={}; for(const k in COLOR)
+  MAT[k]=new THREE.MeshStandardMaterial({color:COLOR[k],roughness:.55,metalness:.05});
+
+const view=document.getElementById('stage');
+const scene=new THREE.Scene();
+const cam=new THREE.PerspectiveCamera(38,1,1,4000);
+cam.position.set(380,-380,320); cam.up.set(0,0,1);
+const rnd=new THREE.WebGLRenderer({antialias:true,alpha:true});
+rnd.setPixelRatio(Math.min(devicePixelRatio,2)); view.appendChild(rnd.domElement);
+const ctl=new OrbitControls(cam,rnd.domElement); ctl.target.set(128,128,40);
+scene.add(new THREE.HemisphereLight(0xfff4e0,0x140f14,1.3));
+const dl=new THREE.DirectionalLight(0xfffdf7,1.5); dl.position.set(300,-260,420); scene.add(dl);
+const dl2=new THREE.DirectionalLight(0xFE0386,.4); dl2.position.set(-240,260,120); scene.add(dl2);
+function resize(){const w=view.clientWidth,h=view.clientHeight;
+  cam.aspect=w/h; cam.updateProjectionMatrix(); rnd.setSize(w,h);}
+addEventListener('resize',resize);
+
+// the bed: a slab, a 32mm pink rule, the plate outline and the 256 height cage
+{
+  const slab=new THREE.Mesh(new THREE.BoxGeometry(PLATE,PLATE,4),
+    new THREE.MeshStandardMaterial({color:0x14181d,roughness:.9}));
+  slab.position.set(PLATE/2,PLATE/2,-2); scene.add(slab);
+  const pts=[];
+  for(let g=0; g<=PLATE; g+=32){ pts.push(g,0,.1, g,PLATE,.1, 0,g,.1, PLATE,g,.1); }
+  const gg=new THREE.BufferGeometry();
+  gg.setAttribute('position',new THREE.Float32BufferAttribute(pts,3));
+  scene.add(new THREE.LineSegments(gg,
+    new THREE.LineBasicMaterial({color:0xFE0386,transparent:true,opacity:.32})));
+  const e=[0,0,.2, PLATE,0,.2, PLATE,PLATE,.2, 0,PLATE,.2, 0,0,.2];
+  const eg=new THREE.BufferGeometry();
+  eg.setAttribute('position',new THREE.Float32BufferAttribute(e,3));
+  scene.add(new THREE.Line(eg,new THREE.LineBasicMaterial({color:0xFE0386})));
+  const M=10, m=[M,M,.2, PLATE-M,M,.2, PLATE-M,PLATE-M,.2, M,PLATE-M,.2, M,M,.2];
+  const mg=new THREE.BufferGeometry();
+  mg.setAttribute('position',new THREE.Float32BufferAttribute(m,3));
+  scene.add(new THREE.Line(mg,new THREE.LineDashedMaterial(
+    {color:0x6b6459,dashSize:6,gapSize:4})).computeLineDistances());
+  const cage=new THREE.LineSegments(
+    new THREE.EdgesGeometry(new THREE.BoxGeometry(PLATE,PLATE,MAXH)),
+    new THREE.LineBasicMaterial({color:0x6b6459,transparent:true,opacity:.4}));
+  cage.position.set(PLATE/2,PLATE/2,MAXH/2); scene.add(cage);
+}
+const partsG=new THREE.Group(); scene.add(partsG);
+
+const GROUPS = /*GROUPS*/;
+const DRIVE = /*DRIVE*/;
+let drive='knobs';
+const MARGIN = 10;          // keep everything off the bed edges
+
+// Pack ONE group into as many plates as it needs. MaxRects best-short-side-fit,
+// a part may turn 90 degrees (free, they all print flat side down), and the
+// usable area is inset by MARGIN so nothing sits on the skirt line.
+function packOne(items){
+  const U = PLATE - 2*MARGIN - gap;
+  let free = [{x:0, y:0, w:U, h:U}];
+  const placed = [], left = [];
+  for(const p of items){
+    let best = null;
+    for(const f of free) for(const rot of [0,90]){
+      const w = (rot ? p.d : p.w) + gap, h = (rot ? p.w : p.d) + gap;
+      if(w > f.w || h > f.h) continue;
+      const s = Math.min(f.w-w, f.h-h), s2 = Math.max(f.w-w, f.h-h);
+      if(!best || s < best.s || (s === best.s && s2 < best.s2))
+        best = {f, rot, w, h, s, s2};
+    }
+    if(!best){ left.push(p); continue; }
+    const {f, rot, w, h} = best;
+    placed.push({p, x: MARGIN + f.x + gap/2, y: MARGIN + f.y + gap/2, rot});
+    const R = {x: f.x, y: f.y, w, h};
+    const nf = [];
+    for(const g of free){
+      if(g.x >= R.x+R.w || g.x+g.w <= R.x || g.y >= R.y+R.h || g.y+g.h <= R.y){
+        nf.push(g); continue; }
+      if(R.x > g.x)         nf.push({x:g.x, y:g.y, w:R.x-g.x, h:g.h});
+      if(R.x+R.w < g.x+g.w) nf.push({x:R.x+R.w, y:g.y, w:g.x+g.w-(R.x+R.w), h:g.h});
+      if(R.y > g.y)         nf.push({x:g.x, y:g.y, w:g.w, h:R.y-g.y});
+      if(R.y+R.h < g.y+g.h) nf.push({x:g.x, y:R.y+R.h, w:g.w, h:g.y+g.h-(R.y+R.h)});
+    }
+    free = nf.filter((a,i) => !nf.some((b,j) => j !== i &&
+      a.x >= b.x && a.y >= b.y && a.x+a.w <= b.x+b.w && a.y+a.h <= b.y+b.h &&
+      (a.w < b.w || a.h < b.h || i > j)));
+  }
+  return {placed, left};
+}
+
+const BYID = {}; for(const p of PARTS) BYID[p.id] = p;
+function pack(){
+  const plates = [];
+  for(const grp of GROUPS){
+    let items = [];
+    for(const it of grp.items){
+      const p = BYID[it.id]; if(!p || !on[p.id]) continue;
+      const n = Math.min(it.n, on[p.id]);
+      for(let k = 0; k < n; k++) items.push(p);
+    }
+    if(!items.length) continue;
+    // tallest first inside a group, so the big pieces get the clean rectangle
+    items.sort((a,b) => (b.w*b.d) - (a.w*a.d));
+    let rem = items, guard = 40;
+    while(rem.length && guard--){
+      const {placed, left} = packOne(rem);
+      if(!placed.length) break;
+      placed.label = grp.label;
+      plates.push(placed); rem = left;
+    }
+  }
+  return plates;
+}
+let plates=[];
+const fw=it=>it.rot?it.p.d:it.p.w, fd=it=>it.rot?it.p.w:it.p.d;
+function fill(pl){
+  const U = PLATE - 2*MARGIN;
+  return Math.round(100*pl.reduce((a,it)=>a+fw(it)*fd(it),0)/(U*U));
+}
+function tallest(pl){ return pl.reduce((a,it)=>Math.max(a,it.p.h),0); }
+// Largest gap that still hits the minimum plate count.
+function autoGap(){
+  const keep=gap; let best=keep, bestN=Infinity;
+  for(let g=2; g<=16; g++){
+    gap=g; const n=pack().length;
+    if(n<bestN){ bestN=n; best=g; } else if(n===bestN){ best=g; }
+  }
+  gap=keep; return {gap:best, plates:bestN};
+}
+
+function show(n){
+  cur=Math.max(0,Math.min(Math.max(plates.length-1,0),n));
+  while(partsG.children.length) partsG.remove(partsG.children[0]);
+  for(const it of plates[cur]||[]){
+    const m=new THREE.Mesh(G[it.p.id], MAT[it.p.id]);
+    if(it.rot){ m.rotation.z = Math.PI/2; m.position.set(it.x + it.p.d, it.y, 0); }
+    else      { m.position.set(it.x, it.y, 0); }
+    m.userData.id=it.p.id;
+    partsG.add(m);
+  }
+  for(const b of document.querySelectorAll('#tabs button'))
+    b.classList.toggle('on', +b.dataset.n===cur);
+}
+
+function draw(){
+  plates=pack();
+  const tabs=document.getElementById('tabs'); tabs.innerHTML='';
+  plates.forEach((pl,n)=>{
+    const b=document.createElement('button');
+    b.textContent=`${n+1}. ${pl.label||''} (${pl.length}) ${fill(pl)}% ${tallest(pl).toFixed(0)}mm`;
+    b.dataset.n=n;
+    b.onclick=()=>show(n); tabs.appendChild(b);
+  });
+  show(Math.min(cur,plates.length-1));
+  const pcs=PARTS.reduce((a,p)=>a+on[p.id],0);
+  const vol=PARTS.reduce((a,p)=>a+on[p.id]*p.vol,0);
+  document.getElementById('sPieces').textContent=pcs+' PCS';
+  document.getElementById('sPlates').textContent=plates.length+' PLATES';
+  const sv=document.getElementById('sVol');
+  sv.textContent=vol.toFixed(0)+' CM3'; sv.className='stat'+(vol>900?' warn':'');
+  buildExport();
+}
+
+function table(){
+  const t=document.getElementById('tbl');
+  t.innerHTML='<tr><th>part</th><th>qty</th><th>mm</th><th>cm3</th></tr>';
+  for(const p of PARTS){
+    const tr=document.createElement('tr');
+    if(!on[p.id]) tr.className='off';
+    tr.innerHTML=`<td><span class="chip" style="background:#${COLOR[p.id].toString(16).padStart(6,'0')}"></span>${p.label}</td>`
+      +`<td class="n">${on[p.id]}</td>`
+      +`<td class="n">${p.w.toFixed(0)}x${p.d.toFixed(0)}x${p.h.toFixed(0)}</td>`
+      +`<td class="n">${(on[p.id]*p.vol).toFixed(1)}</td>`;
+    tr.style.cursor='pointer';
+    tr.onclick=()=>{ on[p.id]=on[p.id]?0:p.qty; table(); draw(); };
+    t.appendChild(tr);
+  }
+}
+
+function b64bytes(b64){
+  const s=atob(b64), u=new Uint8Array(s.length);
+  for(let i=0;i<s.length;i++) u[i]=s.charCodeAt(i);
+  return u;
+}
+function writeSTL(items){
+  const src=items.map(it=>{
+    const u=b64bytes(it.part.stl), dv=new DataView(u.buffer);
+    return {dv, n:dv.getUint32(80,true), it};
+  });
+  const total=src.reduce((a,s)=>a+s.n,0);
+  const out=new ArrayBuffer(84+total*50), dv=new DataView(out);
+  new Uint8Array(out,0,80).set(
+    new TextEncoder().encode('OGEE R16-P // hack.build // generated in-browser').subarray(0,80));
+  dv.setUint32(80,total,true);
+  let o=84;
+  for(const s of src){
+    for(let f=0;f<s.n;f++){
+      const b=84+f*50;
+      const R = s.it.rot, ox = s.it.x + (R ? s.it.part.d : 0), oy = s.it.y;
+      const nx = s.dv.getFloat32(b,true), ny = s.dv.getFloat32(b+4,true);
+      dv.setFloat32(o,   R ? -ny : nx, true);
+      dv.setFloat32(o+4, R ?  nx : ny, true);
+      dv.setFloat32(o+8, s.dv.getFloat32(b+8,true), true);
+      o+=12;
+      for(let v=0;v<3;v++){
+        const lx = s.dv.getFloat32(b+12+v*12,   true);
+        const ly = s.dv.getFloat32(b+12+v*12+4, true);
+        dv.setFloat32(o,   (R ? -ly : lx) + ox, true);
+        dv.setFloat32(o+4, (R ?  lx : ly) + oy, true);
+        dv.setFloat32(o+8, s.dv.getFloat32(b+12+v*12+8, true), true);
+        o+=12;
+      }
+      dv.setUint16(o,0,true); o+=2;
+    }
+  }
+  return new Blob([out],{type:'application/octet-stream'});
+}
+function save(blob,name){
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob); a.download=name; a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href),4000);
+}
+function buildExport(){
+  const ep=document.getElementById('exPlates'); ep.innerHTML='';
+  plates.forEach((pl,n)=>{
+    const b=document.createElement('button');
+    b.textContent=`plate ${n+1} .stl`;
+    b.onclick=()=>save(writeSTL(pl.map(it=>({part:it.p,x:it.x,y:it.y,rot:it.rot}))),
+                       `ogee16p-plate${n+1}.stl`);
+    ep.appendChild(b);
+  });
+  const q=document.createElement('button'); q.textContent='every plate';
+  q.onclick=()=>plates.forEach((pl,n)=>setTimeout(()=>
+    save(writeSTL(pl.map(it=>({part:it.p,x:it.x,y:it.y,rot:it.rot}))),`ogee16p-plate${n+1}.stl`),n*400));
+  ep.appendChild(q);
+  const es=document.getElementById('exParts'); es.innerHTML='';
+  for(const p of PARTS){
+    const b=document.createElement('button'); b.textContent=p.id; b.style.fontSize='11px';
+    b.onclick=()=>save(writeSTL([{part:p,x:0,y:0,rot:0}]),`ogee16p-${p.id}.stl`);
+    es.appendChild(b);
+  }
+}
+
+document.getElementById('gap').oninput=e=>{
+  gap=+e.target.value; document.getElementById('gapv').textContent=gap; draw(); };
+document.getElementById('bAll').onclick=()=>{PARTS.forEach(p=>on[p.id]=p.qty);table();draw();};
+document.getElementById('bOne').onclick=()=>{PARTS.forEach(p=>on[p.id]=1);table();draw();};
+document.getElementById('bAuto').onclick=()=>{
+  const a=autoGap(); gap=a.gap;
+  document.getElementById('gap').value=gap;
+  document.getElementById('gapv').textContent=gap; draw(); };
+document.getElementById('bTop').onclick=()=>{
+  cam.position.set(128,127.9,470); ctl.target.set(128,128,0); ctl.set(); };
+document.getElementById('bIso').onclick=()=>{
+  cam.position.set(380,-380,320); ctl.target.set(128,128,40); ctl.set(); };
+
+setDrive('knobs'); resize();
+(function loop(){requestAnimationFrame(loop); ctl.update(); rnd.render(scene,cam);})();
+globalThis.__plate={PARTS,on,pack,writeSTL,show,draw,autoGap,fill,setDrive,
+  get drive(){return drive;},
+  set gap(g){gap=g;}, get gapv(){return gap;},
+  get plates(){return plates}, get cur(){return cur}, scene, partsG};
+</script>
+</body>
+</html>

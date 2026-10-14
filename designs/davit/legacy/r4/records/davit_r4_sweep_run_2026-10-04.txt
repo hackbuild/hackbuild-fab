@@ -1,0 +1,289 @@
+{
+ "pairs": 43,
+ "tier2": 38,
+ "fails": [
+  {
+   "pipe": "125in",
+   "a": "palm",
+   "b": "pincap",
+   "mind": 0.1,
+   "inter_mm3": 3.21,
+   "pose": {
+    "pitch": 0.0,
+    "roll": 0.0,
+    "elbow": 0.0,
+    "wrist": 0.0,
+    "grip": 3.0
+   }
+  }
+ ],
+ "close": [
+  {
+   "a": "crank",
+   "b": "hw0",
+   "pipe": "1in",
+   "mind": 0.02,
+   "inter": 0.0
+  },
+  {
+   "a": "hw1",
+   "b": "hw0",
+   "pipe": "1in",
+   "mind": 0.0,
+   "inter": 0.0
+  },
+  {
+   "a": "base",
+   "b": "crank",
+   "pipe": "1in",
+   "mind": 0.34,
+   "inter": 0.0
+  },
+  {
+   "a": "base",
+   "b": "hw0",
+   "pipe": "1in",
+   "mind": 0.35,
+   "inter": 0.0
+  },
+  {
+   "a": "mount",
+   "b": "base",
+   "pipe": "1in",
+   "mind": 0.07,
+   "inter": 0.0
+  },
+  {
+   "a": "crank",
+   "b": "upper",
+   "pipe": "125in",
+   "mind": 0.34,
+   "inter": 0.0
+  },
+  {
+   "a": "crank",
+   "b": "hw0",
+   "pipe": "125in",
+   "mind": 0.02,
+   "inter": 0.0
+  },
+  {
+   "a": "crank",
+   "b": "hw1",
+   "pipe": "125in",
+   "mind": 0.01,
+   "inter": 0.0
+  },
+  {
+   "a": "crank",
+   "b": "hw2",
+   "pipe": "125in",
+   "mind": 0.06,
+   "inter": 0.0
+  },
+  {
+   "a": "fore",
+   "b": "upper",
+   "pipe": "125in",
+   "mind": 0.45,
+   "inter": 0.0
+  },
+  {
+   "a": "hw2",
+   "b": "upper",
+   "pipe": "125in",
+   "mind": 0.75,
+   "inter": 0.0
+  },
+  {
+   "a": "hw3",
+   "b": "upper",
+   "pipe": "125in",
+   "mind": 0.2,
+   "inter": 0.0
+  },
+  {
+   "a": "hw4",
+   "b": "upper",
+   "pipe": "125in",
+   "mind": 0.21,
+   "inter": 0.0
+  },
+  {
+   "a": "fore",
+   "b": "palm",
+   "pipe": "125in",
+   "mind": 0.34,
+   "inter": 0.0
+  },
+  {
+   "a": "fore",
+   "b": "hw5",
+   "pipe": "125in",
+   "mind": 0.2,
+   "inter": 0.0
+  },
+  {
+   "a": "fore",
+   "b": "hw6",
+   "pipe": "125in",
+   "mind": 0.1,
+   "inter": 0.0
+  },
+  {
+   "a": "jaw_idle",
+   "b": "palm",
+   "pipe": "125in",
+   "mind": 0.37,
+   "inter": 0.0
+  },
+  {
+   "a": "palm",
+   "b": "pincap",
+   "pipe": "125in",
+   "mind": 0.1,
+   "inter": 3.21
+  },
+  {
+   "a": "hw6",
+   "b": "palm",
+   "pipe": "125in",
+   "mind": 0.75,
+   "inter": 0.0
+  },
+  {
+   "a": "hw7",
+   "b": "palm",
+   "pipe": "125in",
+   "mind": 0.2,
+   "inter": 0.0
+  },
+  {
+   "a": "hw8",
+   "b": "palm",
+   "pipe": "125in",
+   "mind": 0.2,
+   "inter": 0.0
+  },
+  {
+   "a": "jaw_drive",
+   "b": "jaw_idle",
+   "pipe": "125in",
+   "mind": 0.12,
+   "inter": 0.0
+  },
+  {
+   "a": "jaw_drive",
+   "b": "hw8",
+   "pipe": "125in",
+   "mind": 0.04,
+   "inter": 0.0
+  },
+  {
+   "a": "jaw_drive",
+   "b": "hw9",
+   "pipe": "125in",
+   "mind": 0.01,
+   "inter": 0.0
+  },
+  {
+   "a": "jaw_idle",
+   "b": "pincap",
+   "pipe": "125in",
+   "mind": 0.0,
+   "inter": 0.0
+  },
+  {
+   "a": "hw1",
+   "b": "hw0",
+   "pipe": "125in",
+   "mind": 0.0,
+   "inter": -0.0
+  },
+  {
+   "a": "hw3",
+   "b": "hw2",
+   "pipe": "125in",
+   "mind": 0.0,
+   "inter": 0.0
+  },
+  {
+   "a": "hw5",
+   "b": "hw4",
+   "pipe": "125in",
+   "mind": 0.0,
+   "inter": 0.0
+  },
+  {
+   "a": "hw7",
+   "b": "hw6",
+   "pipe": "125in",
+   "mind": 0.0,
+   "inter": 0.0
+  },
+  {
+   "a": "hw9",
+   "b": "hw8",
+   "pipe": "125in",
+   "mind": 0.01,
+   "inter": 0.0
+  },
+  {
+   "a": "base",
+   "b": "crank",
+   "pipe": "125in",
+   "mind": 0.34,
+   "inter": 0.0
+  },
+  {
+   "a": "base",
+   "b": "hw0",
+   "pipe": "125in",
+   "mind": 0.35,
+   "inter": 0.0
+  },
+  {
+   "a": "mount",
+   "b": "base",
+   "pipe": "125in",
+   "mind": 0.01,
+   "inter": 0.0
+  },
+  {
+   "a": "crank",
+   "b": "hw0",
+   "pipe": "15in",
+   "mind": 0.02,
+   "inter": -0.0
+  },
+  {
+   "a": "hw1",
+   "b": "hw0",
+   "pipe": "15in",
+   "mind": 0.0,
+   "inter": 0.0
+  },
+  {
+   "a": "base",
+   "b": "crank",
+   "pipe": "15in",
+   "mind": 0.34,
+   "inter": 0.0
+  },
+  {
+   "a": "base",
+   "b": "hw0",
+   "pipe": "15in",
+   "mind": 0.35,
+   "inter": 0.0
+  },
+  {
+   "a": "mount",
+   "b": "base",
+   "pipe": "15in",
+   "mind": 0.03,
+   "inter": 0.0
+  }
+ ]
+}
+$S/venv/bin/python sweep.py  28.62s user 0.55s system 81% cpu 36.014 total

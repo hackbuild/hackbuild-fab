@@ -1,0 +1,6 @@
+{
+  "note": "M02-T01 golden: one dynamic cuboid (collider half extents 0.01 m) at y 1 m, 480 steps of world.step() under fixtures/pawl-world.json, Rapier deterministic-compat 0.21.0. Recorded 2026-10-06 on an Apple M1, macOS 12.7.4, arm64, Node 22.18.0. All values computed. A change here is a determinism finding for M02-T04, never a re-record.",
+  "sha256": "8b86dd1660791aae9d2cda8410452898f0cc6fe32a6fad4d283c0904a135f013",
+  "bytes": 2651,
+  "yM": -3.907538890838623
+}
