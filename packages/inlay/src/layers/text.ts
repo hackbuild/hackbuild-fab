@@ -40,6 +40,12 @@ export interface TextLayer {
   dy: number;
   /** degrees counter-clockwise, straight mode */
   rot: number;
+  /**
+   * Straight mode: the line the dy offset places. Absent is "alphabetic",
+   * COLLAR's canvas default; "middle" centres each line's em box on it, as
+   * SPRUE sets straight text (sprue.html:1088). Arc mode ignores it.
+   */
+  baseline?: "alphabetic" | "middle";
   caps?: boolean;
   bold?: boolean;
   cut?: boolean;
@@ -66,6 +72,8 @@ export interface TextDraw {
   readonly align: "left" | "center";
   /** arc mode: the angle A of the character's middle, radians */
   readonly angle?: number;
+  /** straight mode: the layer's baseline, absent for alphabetic */
+  readonly baseline?: "middle";
 }
 
 /** Line height as a multiple of the size (collar.html:1053). */
@@ -102,7 +110,7 @@ export function layoutStraight(L: TextLayer, surface: Surface): TextDraw[] {
     const yy = -(L.dy || 0) + (li - (lines.length - 1) / 2) * lh;
     let x = -total / 2;
     runs.forEach((r, ri) => {
-      if (r.t) out.push({ text: r.t, slot: r.slot, x: L.dx || 0, y: -yy, rot, along: x, align: "left" });
+      if (r.t) out.push({ text: r.t, slot: r.slot, x: L.dx || 0, y: -yy, rot, along: x, align: "left", ...(L.baseline === "middle" ? { baseline: "middle" as const } : {}) });
       x += ws[ri]! + gapMM;
     });
   });
@@ -163,7 +171,7 @@ export function renderText(L: TextLayer, surface: Surface, grid: RasterGrid): La
     const draws = L.mode === "arc" ? layoutArc(L, surface) : layoutStraight(L, surface);
     for (const d of draws) {
       if (d.slot !== sl) continue;
-      surface.fillText(d.text, font, L.size, d.x, d.y, d.rot, { align: d.align, along: d.along });
+      surface.fillText(d.text, font, L.size, d.x, d.y, d.rot, { align: d.align, along: d.along, ...(d.baseline === undefined ? {} : { baseline: d.baseline }) });
     }
     out.push({ mask: readMask(surface, grid), slot: sl });
   }

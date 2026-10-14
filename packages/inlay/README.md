@@ -20,7 +20,8 @@ Built: M03, staged, not released.
 
 No DOM, no canvas and no `ImageData` constructor (D-045). Text, images and
 SVG reach the package through the `Surface` interface; ui-core supplies the
-canvas surface and geom a vector surface for node.
+canvas surface and geom a vector surface for node, which sets text in the
+vendored IBM Plex Mono 400 and 700 (`packages/geom/src/text`, OK-01).
 
 ## May import
 
@@ -53,6 +54,8 @@ subject. `test/lineage.test.ts` holds this table equal to `lineage.json`.
 
 ### Verified on this machine
 
+- 2026-10-14: `npx vitest run` in packages/inlay passes, 274 tests and 1 skipped in 15
+  files (measured), with `test/text-coin.test.ts` building coin-inlay with initials.
 - 2026-10-13: `npm test -w packages/inlay` passes, 270 tests and 1 skipped in 14 files
   (measured).
 - M03, 2026-10-08: COLLAR parity at res 512 through `tools/py/harness/collar_parity.py`

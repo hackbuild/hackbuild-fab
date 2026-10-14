@@ -22,7 +22,7 @@ import {
   type CheckId, type FeatureKindDef, type FeatureOf, type GeneratedGeometry, type KernelCtx, type Mm,
   type NonEmpty, type SchemaIssue, type SchemaLike, type SchemaResult,
 } from "@hackbuild/spec";
-import { vectorSurface } from "@hackbuild/geom";
+import { fillPolygonEvenOdd, vectorSurface } from "@hackbuild/geom";
 import type { RasterMask } from "@hackbuild/mesh";
 import { composeFace, type ComposedFace, type Layer } from "./face.js";
 import { hygiene } from "./hygiene/recipes.js";
@@ -203,9 +203,38 @@ function checkArt(f: InlayDecl): void {
   }
 }
 
+/**
+ * Art cells must sit over the host. The label grid is square, so a text
+ * run or a path wider than the blank paints cells past its edge, and the
+ * split would stand them beside the part as a loose body. The bed face is
+ * read in hand, so it is held against the outline mirrored in x, as the
+ * extrude mirrors it.
+ */
+function checkInsideHost(f: InlayDecl, ctx: KernelCtx): void {
+  const base = ctx.body.base;
+  if (base.route !== "prism") return;
+  const faces = artFaces(artOf(f));
+  for (const side of ["top", "bed"] as const) {
+    const g = faces[side].art;
+    const rings = side === "top" ? base.outline : base.outline.map((r) => r.map(([x, y]): [number, number] => [-x, y]));
+    const inside = fillPolygonEvenOdd({ w: g.w, h: g.h, res: g.res }, rings, "bottom");
+    let n = 0;
+    for (let p = 0; p < g.labels.length; p++) if (g.labels[p] !== 0 && g.labels[p] !== ctx.body.slot && inside[p] === 0) n++;
+    if (n > 0) {
+      const area = n / (g.res * g.res);
+      throw commandError({
+        code: "E_SCHEMA", path: `/features/${f.id}/layers/${side}`, got: `${n} art cells, ${area.toFixed(3)} mm2 (computed), outside the blank`,
+        expected: `art inside the outline of ${ctx.body.id}`, record: "kernels/art-inlay",
+        hint: `the ${side} art runs past the edge of ${ctx.body.id}; make the text or path smaller or move it toward the centre`,
+      });
+    }
+  }
+}
+
 function generateInlay(f: InlayDecl, ctx: KernelCtx): GeneratedGeometry {
   checkArt(f);
   const host = hostOf(f, ctx);
+  checkInsideHost(f, ctx);
   if (f.slot === host.slot) {
     throw commandError({ code: "E_SCHEMA", path: `/features/${f.id}/slot`, got: f.slot, expected: `a slot other than the host slot ${host.slot}`, hint: `art in the host slot is host material; pick another slot for ${f.id}` });
   }

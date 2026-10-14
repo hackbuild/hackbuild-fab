@@ -13,6 +13,13 @@
 // The view box centre (517, 503) sits on the coin centre and its 800 units
 // span markSpan mm; SVG y runs down, model y up, so the y scale is negative.
 //
+// Initials are a COLLAR text layer (collar.html:1010 to 1072, the inlay
+// TextLayer) on the back face in the pink slot, centred on the coin with
+// SPRUE's middle baseline (sprue.html:1088). They are set from the vendored
+// IBM Plex Mono table in packages/geom, the one face node carries. An empty
+// string adds no layer, so the art, its uri and every body equal the coin
+// without the param.
+//
 // Hygiene is the print-forge recipe (INLAY part2.js:206 to 217, lineage
 // inlay.parts/inlay-kind-recipe): it opens each slot at the min feature,
 // the one recipe whose output CHK-INL-01 can pass on art with sharp
@@ -36,7 +43,10 @@ const MARK = {
 } as const;
 
 /** Slots the art paints: the wrench, the arc and the back ring. */
-const SLOT = { body: 1, wrench: 2, arc: 3, ring: 3 } as const;
+const SLOT = { body: 1, wrench: 2, arc: 3, ring: 3, text: 2 } as const;
+
+/** The face the initials are set in: a family the node text route carries, bold. */
+const TEXT_FACE = { font: "IBM Plex Mono", bold: true } as const;
 
 /** SVG matrix for one mark path: path units to model mm, the view box centre at the origin, y up. */
 function markTransform(at: readonly [number, number], span: number): [number, number, number, number, number, number] {
@@ -73,7 +83,13 @@ export const build = defineBuild(chase, (p, k) => {
         { kind: "path", d: MARK.wrench.d, transform: markTransform(MARK.wrench.at, p.markSpan), slot: SLOT.wrench },
       ],
       // As read in hand with the coin turned over; the kind mirrors it at extrude.
-      bed: [{ kind: "ring", slot: SLOT.ring, r0: p.ringIn, r1: p.ringOut, seg: p.ringSeg, duty: p.ringDuty }],
+      bed: [
+        { kind: "ring", slot: SLOT.ring, r0: p.ringIn, r1: p.ringOut, seg: p.ringSeg, duty: p.ringDuty },
+        ...(p.initials === "" ? [] : [{
+          kind: "text", text: p.initials, slot: SLOT.text, font: TEXT_FACE.font, bold: TEXT_FACE.bold, size: p.textSize,
+          runGap: 0, mode: "straight", dx: 0, dy: 0, rot: 0, baseline: "middle",
+        }]),
+      ],
     },
     recipe: "print-forge",
     boost: p.boost,
