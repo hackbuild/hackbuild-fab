@@ -129,7 +129,12 @@ def shape_of(o):
 
 
 def fold(g):
-    """Fold the objects in file order by polarity: runs of one polarity are unioned, then added or cleared."""
+    """Fold the objects in file order by polarity: runs of one polarity are unioned, then added or cleared.
+
+    The result is in normal form. GEOS hands one overlay back with its parts
+    in a different order on macOS than on Linux, and an area summed in
+    another order moves in the last bit, so reparse.json differed between
+    platforms on one gerber; every area this script reports is taken in that form."""
     from shapely.geometry import Polygon
     from shapely.ops import unary_union
     acc = Polygon()
@@ -148,7 +153,12 @@ def fold(g):
     if run:
         u = unary_union(run)
         acc = acc.union(u) if dark else acc.difference(u)
-    return acc
+    return normal(acc)
+
+
+def normal(geom):
+    import shapely
+    return shapely.normalize(geom)
 
 
 def parse_all(fab, rep):
@@ -195,7 +205,8 @@ def vector_compare(fab, files, folded, rep):
         if got is None:
             rep.fail(f"{name}: no parsed layer to compare with its source")
             continue
-        sd = got.symmetric_difference(src).area
+        src = normal(src)
+        sd = normal(got.symmetric_difference(src)).area
         out[name] = {"parsed": got.area, "source": src.area, "symdiff": sd}
         rep.note(f"{name:<13} parsed {got.area:10.3f} mm2, source {src.area:10.3f} mm2, symmetric difference {sd:.6f} mm2")
         if sd > SYMDIFF_MM2:
@@ -438,7 +449,7 @@ def legacy_compare(zip_path, files, folded, rep):
                 warnings.simplefilter("ignore")
                 g = fold(GerberFile.open(old[name]))
             new = folded_layer(files, folded, name)
-            sd = new.symmetric_difference(g).area
+            sd = normal(new.symmetric_difference(g)).area
             out[name] = sd
             rep.note(f"legacy {name:<13} symmetric difference {sd:.6f} mm2")
             if sd > SYMDIFF_MM2:

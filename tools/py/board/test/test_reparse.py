@@ -129,7 +129,7 @@ def test_identity_ring_test_fills_holes(tmp_path):
 def test_islands_before_pour_lose_their_rings(tmp_path):
     """Smallest polygon first: the isolated rings go out before the pour's
     clears and are wiped, so the through pads lose their bottom land."""
-    script, lib = patched(tmp_path, SPINDLE, lib_edit=lambda n, t: t.replace("polys.sort(key=lambda q: q.area, reverse=True)", "polys.sort(key=lambda q: q.area)"))
+    script, lib = patched(tmp_path, SPINDLE, lib_edit=lambda n, t: t.replace("polys.sort(key=nm_area, reverse=True)", "polys.sort(key=nm_area)"))
     out = gen(str(script), tmp_path / "out", lib)
     code, text = reparse(out, "--no-raster")
     assert code == 1

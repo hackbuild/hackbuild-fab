@@ -14,11 +14,25 @@ Two rules from board-pcb.md hold the region writer:
 2. Polygons go out largest area first: an island inside another polygon's
    cleared interior must be drawn after that clear or the clear wipes it.
 
+Region geometry goes through snap before it is written. Shapely's arcs
+take their sines from the platform libm, and macOS libm and glibc differ
+in the last bit; GEOS overlay turns those bits into another ring start, a
+vertex repeated within 1 nm, or another order among polygons of equal
+area, and it orders its output parts differently by platform even on
+equal input. The bytes moved between macOS and Linux while the copper did
+not. snap rounds every vertex to the 1 nm grid the file carries, drops
+repeats and puts rings and polygons in normal form, and draw order ties
+break on an exact integer area, so one geometry writes one file on every
+platform.
+
 Coordinates are integer nanometres (%FSLAX46Y46%, %MOMM%). The header
 carries TF.GenerationSoftware hack.build,hbf,<version> and a
 TF.CreationDate from the epoch the caller passes, never the clock.
 """
 import datetime
+
+import numpy
+import shapely
 
 
 def iso_date(epoch):
@@ -52,9 +66,30 @@ def polygons_of(geom):
     return []
 
 
+def snap(geom):
+    """geom on the 1 nm grid in normal form: each vertex rounded as nm()
+    rounds it (half to even, which GEOS set_precision does not do), repeats
+    dropped, each ring started at its least vertex, polygons in GEOS normal
+    order. No vertex moves off the place nm() would have written it."""
+    on = shapely.transform(geom, lambda c: numpy.round(c * 1e6) / 1e6)
+    return shapely.normalize(shapely.remove_repeated_points(on, 0.0))
+
+
+def ring_area2(ring):
+    """Twice the ring's area in nm2, exact: the integer shoelace."""
+    cs = [(int(nm(x)), int(nm(y))) for x, y in ring.coords]
+    return abs(sum(x0 * y1 - x1 * y0 for (x0, y0), (x1, y1) in zip(cs, cs[1:])))
+
+
+def nm_area(poly):
+    """Twice the polygon's area in nm2, holes taken out, exact on every platform."""
+    return ring_area2(poly.exterior) - sum(ring_area2(r) for r in poly.interiors)
+
+
 def emit_regions(out, geom):
-    polys = polygons_of(geom)
-    polys.sort(key=lambda q: q.area, reverse=True)
+    polys = polygons_of(snap(geom))
+    # a stable sort on an exact key keeps normal order among equal areas
+    polys.sort(key=nm_area, reverse=True)
     for p in polys:
         if p.is_empty:
             continue

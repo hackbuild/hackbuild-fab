@@ -46,6 +46,15 @@ covers: [CHK-BRD-01, CHK-BRD-02, CHK-BRD-03, CHK-BRD-05, CHK-BRD-09, CHK-BRD-19,
 
 ### Verified on this machine
 
+- 2026-10-14 (CI parity on Linux): the direct library's region writer,
+  write_sources and reparse.py now put geometry in one form on every
+  platform (spindle-r1 README, same date). This board writes through
+  FlashGerber and reads no region writer, so `hbf parity --accept` moved
+  build.json defHash and buildHash only (build 05c147..67, was 976f6a..7a);
+  report.json, artifacts.json and reparse.json are byte equal and
+  recordHash did not move (computed). Accepted under owner delegation on
+  the equal geometry rule (D-273).
+
 - 2026-10-13 (D-185): chase.ts declares CERN-OHL-W-2.0, was CC-BY-SA-4.0.
   `npx --no-install hbf parity reference/boards/shunt-art --accept` re-recorded
   the goldens at build 976f6a..7a (was 701b35..ea). Only build.json (licence, defHash, buildHash) moved;

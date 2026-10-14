@@ -30,7 +30,7 @@ from direct.fab import fab_members, write_zip  # noqa: E402
 from direct.gerber import write_regions, write_stroke  # noqa: E402
 from direct.pad import Board, pad_poly, ring  # noqa: E402
 from direct.pour import bottom_pour, net_top, outline_poly  # noqa: E402
-from direct.record import StagedOut, args, nets_of, outline_ring, provenance, write_json, write_sources  # noqa: E402
+from direct.record import StagedOut, args, nets_of, outline_ring, provenance, ring_coords, write_json, write_sources  # noqa: E402
 from direct.textpoly import text_geometry  # noqa: E402
 
 PCB = "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/spindle/outputs/spindle/pcb.py"
@@ -400,15 +400,11 @@ def record():
             "parts": parts, "pads": pads, "nets": nets, "vias": vias, "holes": holes, "tracks": tracks,
             "jumpers": jumpers, "bridges": [], "reads": reads,
             # The GND pour on B.Cu before clearance and the antenna keepout (pcb.py lines 225 to 228), for the island check.
-            "zones": [{"net": "GND", "layer": "B.Cu", "clearance": POUR_CLR, "outline": ring_of(POUR)}],
-            "keepouts": [{"id": "antenna.u1", "kind": "antenna", "layers": ["B.Cu"], "outline": ring_of(ANT_KEEP),
+            "zones": [{"net": "GND", "layer": "B.Cu", "clearance": POUR_CLR, "outline": ring_coords(POUR)}],
+            "keepouts": [{"id": "antenna.u1", "kind": "antenna", "layers": ["B.Cu"], "outline": ring_coords(ANT_KEEP),
                           "forbids": ["pour"], "module": "esp32c3-supermini"}],
             "silk": [{"side": "top", "text": t, "x": x, "y": y, "size": sz, "anchor": an, "rot": 0, "mirror": False,
                       "font": "ibm-plex-mono-latin-700-normal"} for t, x, y, sz, an in SILK_TEXT]}
-
-
-def ring_of(poly):
-    return [list(q) for q in list(poly.exterior.coords)[:-1]]
 
 
 def main():

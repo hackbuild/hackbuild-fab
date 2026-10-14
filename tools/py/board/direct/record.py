@@ -26,9 +26,21 @@ def args(description):
     return ap.parse_args()
 
 
+def on_grid(v):
+    """v on the 1 nm grid. An arc vertex from shapely carries the platform
+    libm's last bit; the grid makes record.json one text on every platform."""
+    r = round(v * 1e6) / 1e6
+    return 0.0 if r == 0 else r
+
+
+def ring_coords(poly):
+    """The exterior ring as given, first point not repeated, on the 1 nm grid."""
+    return [[on_grid(x), on_grid(y)] for x, y in list(poly.exterior.coords)[:-1]]
+
+
 def outline_ring(poly):
-    """The outer ring counter-clockwise, first point not repeated, in the board frame."""
-    pts = [(float(x), float(y)) for x, y in orient(poly, 1.0).exterior.coords][:-1]
+    """The outer ring counter-clockwise, first point not repeated, in the board frame, on the 1 nm grid."""
+    pts = [(on_grid(x), on_grid(y)) for x, y in orient(poly, 1.0).exterior.coords][:-1]
     mx = min(p[0] for p in pts)
     my = min(p[1] for p in pts)
     if abs(mx) > ORIGIN_TOL_MM or abs(my) > ORIGIN_TOL_MM:
@@ -51,12 +63,15 @@ def nets_of(pads):
 
 def write_sources(folder, layers):
     """Each layer's source geometry as WKB, <folder>/<layer>.wkb, so the
-    reparse compares the parsed gerber with what was drawn (M08-T07)."""
+    reparse compares the parsed gerber with what was drawn (M08-T07).
+    The geometry is snapped as write_regions snaps it, so the source and the
+    gerber are one geometry and both are one set of bytes on every platform."""
     from shapely import wkb
+    from .gerber import snap
     os.makedirs(folder, exist_ok=True)
     for name, geom in sorted(layers.items()):
         with open(os.path.join(folder, f"{name}.wkb"), "wb") as f:
-            f.write(wkb.dumps(geom))
+            f.write(wkb.dumps(snap(geom)))
 
 
 def write_json(path, value):

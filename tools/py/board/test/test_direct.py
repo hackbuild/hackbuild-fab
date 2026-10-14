@@ -204,6 +204,33 @@ def test_region_writer_indexes_rings_and_orders_islands(tmp_path):
     assert len(dark) == 2 and len(clear) == 1
 
 
+def test_region_writer_bytes_follow_geometry_not_its_form(tmp_path):
+    """The platform cases from the CI run of 953cebd: one geometry handed
+    over with another ring start, a vertex repeated within 1 nm, a last-bit
+    move and parts in another order writes one file, and the WKB source
+    matches it."""
+    from shapely import wkb
+    from shapely.geometry import MultiPolygon, Polygon
+    from direct.gerber import write_regions
+    from direct.record import write_sources
+    sq = [(0.0, 0.0), (2.0, 0.0), (2.0, 2.0), (0.0, 2.0)]
+    tri = [(5.0, 0.0), (7.0, 0.0), (6.0, 1.0)]
+    twin = [(10.0, 0.0), (12.0, 0.0), (12.0, 2.0), (10.0, 2.0)]   # equal area to sq
+    a = MultiPolygon([Polygon(sq), Polygon(tri), Polygon(twin)])
+    nudged = [(5.0, 0.0), (7.0, 0.0), (7.0 + 2e-10, 0.0), (6.0, 1.0 + 4e-16)]
+    b = MultiPolygon([Polygon(twin[2:] + twin[:2]), Polygon(nudged), Polygon(sq[::-1])])
+    texts, srcs = [], []
+    for i, g in enumerate((a, b)):
+        p = tmp_path / f"{i}.gbr"
+        write_regions(str(p), g, "Copper,L1,Top", EPOCH, "0")
+        texts.append(p.read_bytes())
+        write_sources(str(tmp_path / f"s{i}"), {"F_Cu": g})
+        srcs.append((tmp_path / f"s{i}" / "F_Cu.wkb").read_bytes())
+    assert texts[0] == texts[1]
+    assert srcs[0] == srcs[1]
+    assert wkb.loads(srcs[0]).symmetric_difference(a).area < 1e-12
+
+
 def test_no_absolute_font_path():
     legacy = "/home/" + "claude"   # pcb.py line 348 read its font from there
     for root in (os.path.join(REPO, "tools", "py"), os.path.join(REPO, "reference", "boards")):

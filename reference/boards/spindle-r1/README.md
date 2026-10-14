@@ -50,6 +50,37 @@ covers: [CHK-BRD-01, CHK-BRD-02, CHK-BRD-05, CHK-BRD-06, CHK-BRD-07, CHK-BRD-09,
 
 ### Verified on this machine
 
+- 2026-10-14 (CI parity on Linux): the ubuntu-24.04 run of 953cebd failed
+  parity here (report.json, artifacts.json and reparse.json differ) while
+  macOS passed. Cause: shapely's arcs take sin and cos from the platform
+  libm, and macOS libm and glibc differ in the last bit (record.json
+  outline and zone arcs, computed); GEOS overlay turns those bits into
+  another ring start, a vertex repeated within 1 nm and another order
+  among polygons of equal area, and orders its output parts by platform
+  even on one input, so reparse areas summed in another order. Linux
+  amd64 and Linux arm64 wrote equal bytes; macOS arm64 differed (docker,
+  computed). Fix: tools/py/board/direct/gerber.py snap rounds every region
+  vertex to the 1 nm grid half to even as nm() does, drops repeats and
+  normalizes, draw order ties break on an exact integer area;
+  write_sources writes the same snapped geometry; record rings go on the
+  grid; reparse.py takes every area in normal form. After it, the fab
+  zip, every gerber, record.json, gates.json, source/*.wkb and the reparse
+  JSON are byte equal between macOS arm64 and Linux amd64 (docker,
+  computed). Geometry did not move: every layer's ring set equals the old
+  golden zip's up to ring start, direction and repeats, the parsed layers
+  of the old and new zips differ by 0.0 mm2 symmetric difference and 0.0
+  Hausdorff, recordHash and the board metrics are equal, and no mesh hash
+  or volume exists for a board (computed). `hbf parity --accept`
+  re-recorded the goldens at build c1e4e6..68 (was dd60cf..1c): build.json
+  moved defHash and buildHash (the library source is in defHash), the zip
+  sha256 moved to 465431..10, reparse.json layer symmetric differences
+  moved to 0.000000 mm2 (was at most 0.000087) as the source is now the
+  geometry the gerber carries, and the informational F_Cu raster
+  agreement moved to 98.85 percent (was 98.80) with the source drawn from
+  normalized rings; report.json moved worstSymdiffMm2 only. The 5V to GND
+  short and every other reparse line hold. Accepted under owner
+  delegation on the equal geometry rule (D-273).
+
 - 2026-10-13 (D-185): chase.ts declares CERN-OHL-W-2.0, was CC-BY-SA-4.0.
   `npx --no-install hbf parity reference/boards/spindle-r1 --accept` re-recorded
   the goldens at build dd60cf..1c (was eed1e8..83). Only build.json (licence, defHash, buildHash) moved;
