@@ -128,6 +128,20 @@ describe("vector surface", () => {
     expect(count(s.readAlpha(g))).toBe(0);
   });
 
+  test("a logo path with cubic and quadratic curves fills the KEYWAY rings; an arc is refused", () => {
+    // The finding's logo form: a circle of radius 7 about (50, 50) drawn as
+    // four cubics, then a quadratic lens. Expected cells come from the same
+    // path flattened at cubic 12 and quad 10 through flattenSvgPath.
+    const d = "M43 50C43 46 46 43 50 43C54 43 57 46 57 50C57 54 54 57 50 57C46 57 43 54 43 50Z M45 50Q50 40 55 50Z";
+    const m: [number, number, number, number, number, number] = [0.5, 0, 0, 0.5, -25, -25];
+    const s = vectorSurface(g);
+    s.fillPath(d, m);
+    const want = fillPolygonEvenOdd(g, flattenSvgPath(d, m, { curves: { cubic: 12, quad: 10 } }), "bottom");
+    expect([...s.readAlpha(g)]).toEqual([...want].map((v) => v * 255));
+    expect(count(want)).toBeGreaterThan(0);
+    expect(() => s.fillPath("M0 0A2 2 0 0 1 4 0Z", m)).toThrow(/E_SCHEMA \/svgPath/);
+  });
+
   test("text and images refuse in node; a foreign grid is E_SCHEMA", () => {
     const s = vectorSurface(g);
     expect(() => s.measure("a", "Permanent Marker")).toThrow(/E_KERNEL/);

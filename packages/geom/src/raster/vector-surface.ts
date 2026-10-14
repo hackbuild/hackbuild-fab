@@ -9,6 +9,14 @@ import { commandError, type Ring } from "@hackbuild/spec";
 import { fillPolygonEvenOdd, type RasterGrid } from "./fill.js";
 import { flattenSvgPath, type Affine } from "./svgpath.js";
 
+/**
+ * Points per curve segment for a filled path layer: the KEYWAY family's
+ * svgpath.py counts (cubic n 12, quadratic n 10; the rule svgpath.ts
+ * documents), so a logo with C, S, Q or T fills from the same rings the
+ * vinyl route cuts. Arcs stay refused, as svgpath.py raises on them.
+ */
+export const PATH_CURVE_POINTS = { cubic: 12, quad: 10 } as const;
+
 function noRoute(what: string, got: unknown): Error {
   return commandError({
     code: "E_KERNEL",
@@ -37,7 +45,7 @@ export class VectorSurface {
 
   /** Path units map to model mm, y up, through `transform`; each path fills even-odd on its own. */
   fillPath(svgPath: string, transform: Affine): void {
-    this.#paths.push(flattenSvgPath(svgPath, transform));
+    this.#paths.push(flattenSvgPath(svgPath, transform, { curves: PATH_CURVE_POINTS }));
   }
 
   drawImage(img: { readonly width: number; readonly height: number }): void {

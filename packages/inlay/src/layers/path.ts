@@ -9,7 +9,7 @@ import { readMask, type Affine, type LayerResult, type RasterGrid, type Surface 
 
 export interface PathLayer {
   kind: "path";
-  /** SVG path data; the commands geom flattens (M L H V Z, either case) */
+  /** SVG path data; the commands geom flattens (M L H V C S Q T Z, either case; arcs refused) */
   d: string;
   /** path units to model mm, SVG matrix order */
   transform: Affine;
