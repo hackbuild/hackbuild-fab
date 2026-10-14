@@ -19,4 +19,13 @@ export const chase = defineChase({
   build: { module: "./build.ts", fn: "build" },
   exports: [{ kind: "gerbers" }, { kind: "kicad" }],
   assertions: [],
+  // D-249: R1 as shipped shorts 5V to GND on B.Cu, the 5V bottom trace at
+  // y 20.00 (pcb.py lines 184 to 185) through the GND vias at x 9.80,
+  // 16.00, 30.60 and 36.20 (lines 197 to 200). This reference keeps the
+  // shipped board as the fixture that proves CHK-BRD-21 catches the short:
+  // the finding passes only while the measured short set is exactly this
+  // pair. reference/boards/spindle-r2 is the board without the short.
+  expect: [
+    { check: "CHK-BRD-21", target: "spindle-r1", verdict: "fail", set: ["5V|GND"] },
+  ],
 });

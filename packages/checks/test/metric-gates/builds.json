@@ -81,6 +81,36 @@
       ]
     },
     {
+      "build": "reference/boards/spindle-r2",
+      "part": "spindle-r2",
+      "metrics": [
+        {
+          "id": "board.nets",
+          "gate": "informational"
+        },
+        {
+          "id": "board.pads",
+          "gate": "informational"
+        },
+        {
+          "id": "board.holes",
+          "gate": "informational"
+        },
+        {
+          "id": "board.vias",
+          "gate": "informational"
+        },
+        {
+          "id": "board.npth",
+          "gate": "informational"
+        },
+        {
+          "id": "board.tightest",
+          "gate": "informational"
+        }
+      ]
+    },
+    {
       "build": "reference/boards/wiring-supermini",
       "part": "wiring-supermini",
       "metrics": []

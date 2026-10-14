@@ -28,10 +28,15 @@ covers: [CHK-BRD-01, CHK-BRD-02, CHK-BRD-05, CHK-BRD-06, CHK-BRD-07, CHK-BRD-09,
   their legacy positions (computed, `expected/cpl.json`).
 - As shipped the board shorts 5V to GND on B.Cu (the 5V trace at y 20.00
   through the GND vias at x 9.80, 16.00, 30.60 and 36.20, pcb.py lines 184
-  to 200); CHK-BRD-01 and CHK-BRD-21 fail on it and the reference keeps
-  the shipped design (DECISIONS.md correction entry of M08-T15; the owner
-  decides the fix). GPIO8 and GPIO9 are nets of one member each, which
-  CHK-BRD-09 fails.
+  to 200, D-249). The reference keeps the shipped design as the fixture
+  that proves the board checks catch a real short. chase.ts declares the
+  short as an expect set on CHK-BRD-21 (D-074): that finding passes only
+  while the measured short set is exactly 5V|GND, so it fails if the short
+  goes unseen or another pair appears. CHK-BRD-01 has no expect set and
+  fails on the reparse lines the short moves; the exit-m06-m08 CI job
+  requires that failure and its three lines. reference/boards/spindle-r2
+  is the board with the four vias removed. GPIO8 and GPIO9 are nets of
+  one member each, which CHK-BRD-09 fails.
 - Every part's pads were typed by hand in pcb.py, and pcb.py declares no
   body except the module's 18 x 22.52 mm, so every part reads inferred and
   a gerbers export stops at E_PROVENANCE until the M08-T03 row audit lifts
@@ -49,6 +54,18 @@ covers: [CHK-BRD-01, CHK-BRD-02, CHK-BRD-05, CHK-BRD-06, CHK-BRD-07, CHK-BRD-09,
 ## What is verified, and what is not
 
 ### Verified on this machine
+
+- 2026-10-14 (D-249 call): chase.ts gained the CHK-BRD-21 expect set
+  `5V|GND`. `hbf check.run reference/boards/spindle-r1 --only CHK-BRD-21`
+  exits 0, measured `5V|GND`, missing and extra empty (computed); `--only
+  CHK-BRD-01` exits 1 with 3 failed lines: the B_Cu piece of 34.15 mm2
+  joining 5V and GND through the holes at y 20.00, 2 holes off GND
+  touching the pour, 4 GND holes off the pour (computed). `hbf part.build`
+  exits 1 on CHK-BRD-01, CHK-BRD-06 and CHK-BRD-09 (computed). `hbf parity
+  --accept` re-recorded build.json (defHash, buildHash) and report.json
+  (the CHK-BRD-21 finding) at build 2d395a..ac; artifacts.json and
+  reparse.json are byte equal, so no copper moved (computed). Accepted
+  under owner delegation; a person has not accepted them (D-152).
 
 - 2026-10-14 (CI parity on Linux): the ubuntu-24.04 run of 953cebd failed
   parity here (report.json, artifacts.json and reparse.json differ) while
@@ -165,5 +182,4 @@ covers: [CHK-BRD-01, CHK-BRD-02, CHK-BRD-05, CHK-BRD-06, CHK-BRD-07, CHK-BRD-09,
   pour zone carries no filled polygon until KiCad refills it, as the
   legacy wrote it), CPL rotations
   against an assembler library, and the hand pads against vendor land
-  patterns. Whether the owner moves the four GND vias off the 5V trace or
-  routes 5V around them is a design decision this reference does not make.
+  patterns. The owner may fix R1 another way than spindle-r2 does (D-249).

@@ -212,6 +212,9 @@
       "path": "reference/boards/spindle-r1"
     },
     {
+      "path": "reference/boards/spindle-r2"
+    },
+    {
       "path": "reference/boards/wiring-supermini"
     },
     {

@@ -33,6 +33,7 @@ Numbers from the failure story:
 
 - `reference/boards/shunt-art`
 - `reference/boards/spindle-r1`
+- `reference/boards/spindle-r2`
 
 ## Version history
 
