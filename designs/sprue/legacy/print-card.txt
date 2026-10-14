@@ -1,0 +1,17 @@
+SPRUE print card
+============================================================
+material PETG, layer 0.24 mm, estimate at 8.5 mm3/s average
+
+coin: 2.40 mm thick = 10 layers, inlay 3 layers each face
+  white 2067 mm3, black 363 mm3, total 2430 mm3 (blank 2442 mm3), about 4.8 min each, 3.1 g
+pick: 1.20 mm thick = 5 layers, inlay 2 layers each face
+  white 658 mm3, black 53 mm3, total 711 mm3 (blank 718 mm3), about 1.4 min each, 0.9 g
+
+sprue_mix: 6 coins + 20 picks, 28803 mm3, 10 layers, about 12 tool swaps, rough estimate 60 min (37 g)
+sprue_coins: 12 coins + 0 picks, 29154 mm3, 10 layers, about 12 tool swaps, rough estimate 61 min (37 g)
+sprue_picks: 0 coins + 40 picks, 28452 mm3, 5 layers, about 8 tool swaps, rough estimate 59 min (36 g)
+
+The slicer's estimate is the real one. Tune with --coins / --picks and reslice.
+Flash Studio: open the 3mf as a project. If the filament list shows one colour,
+open both plate STLs together instead, say yes to one object with multiple parts,
+and set the _black part to extruder 2.

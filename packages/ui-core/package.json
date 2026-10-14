@@ -1,0 +1,29 @@
+{
+  "name": "@hackbuild/ui-core",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "author": "Moheeb Zara <hackbuildvideo@gmail.com>",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "test": "vitest run",
+    "pretest": "tsc -b",
+    "fixture": "tsdown test/artboard/fixture.entry.ts --no-config --format iife --platform browser --target es2022 --out-dir test/artboard/dist --clean --deps.always-bundle @hackbuild/inlay --deps.always-bundle @hackbuild/spec --deps.always-bundle @hackbuild/geom --log-level warn"
+  },
+  "dependencies": {
+    "@hackbuild/catalog": "0.0.0",
+    "@hackbuild/inlay": "0.0.0",
+    "@hackbuild/spec": "0.1.0",
+    "three": "0.186.1"
+  },
+  "devDependencies": {
+    "@hackbuild/circuit": "0.0.0"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "name": "hbf-eval-vtracer",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "author": "Moheeb Zara <hackbuildvideo@gmail.com>",
+  "description": "M03-T11 evaluation harness for vtracer. Never a dependency of packages/*.",
+  "dependencies": {
+    "@visioncortex/vtracer": "1.0.0-alpha.4"
+  }
+}

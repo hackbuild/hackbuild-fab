@@ -1,0 +1,18 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "composite": false,
+    "declaration": false,
+    "types": ["node"],
+    "skipLibCheck": true
+  },
+  "include": ["*.ts", "test/*.ts"],
+  "references": [
+    { "path": "../../packages/mesh" },
+    { "path": "../../packages/geom" },
+    { "path": "../../packages/profile" },
+    { "path": "../../packages/inlay" },
+    { "path": "../../packages/ui-core" }
+  ]
+}

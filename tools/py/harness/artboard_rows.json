@@ -1,0 +1,225 @@
+{
+  "about": "Rows of the M03-T12 handle table, driven through the art board fixture. Read by artboard_smoke.py (Playwright) and artboard_drive.mjs (puppeteer-core). A point expression returns canvas css px; a check returns null or what failed, polled for up to 3 s.",
+  "prelude": "window.H = { cv: () => document.querySelector('#board'), st: () => ARTBOARD.state(), L: (id) => ARTBOARD.state().layers.find((l) => l.id === id), ids: () => ARTBOARD.state().layers.map((l) => l.id), h: () => UI.FE.handles, mm: (x, y) => { const v = ARTBOARD.state().view; return [v.ox + x * v.scale, v.oy - y * v.scale]; }, tomm: (p) => { const v = ARTBOARD.state().view; return [(p[0] - v.ox) / v.scale, -(p[1] - v.oy) / v.scale]; }, pick: (id) => document.querySelector('[data-pick=\"' + id + '\"]').click(), at: (deg, r) => { const c = UI.FE.handles.centre, a = deg * Math.PI / 180; return [c[0] + r * Math.cos(a), c[1] - r * Math.sin(a)]; }, mid: () => { const k = UI.FE.handles.corners; return [(k[0][0] + k[2][0]) / 2, (k[0][1] + k[2][1]) / 2]; }, s: {}, types: new Set() }; document.querySelector('#board').addEventListener('pointerdown', (e) => H.types.add(e.pointerType), true); null",
+  "mouse": [
+    {
+      "row": "handles",
+      "steps": [
+        {"js": "H.pick('text')"},
+        {"check": "(() => { const h = UI.FE.handles; if (!h) return 'no handles for the selected text'; if (!h.bb || h.corners.length !== 4 || !h.top || !h.dot || !h.centre) return 'handles lack bb, corners, top, dot or centre'; const d = Math.hypot(h.dot[0] - h.top[0], h.dot[1] - h.top[1]); return Math.abs(d - 26) > 0.01 ? 'rotate dot ' + d + ' px from the top, want 26' : null; })()"}
+      ]
+    },
+    {
+      "row": "select",
+      "steps": [
+        {"click": "H.mm(H.L('image').dx, H.L('image').dy)"},
+        {"check": "H.st().sel === 'image' && document.querySelector('li.on[data-layer=\"image\"]') ? null : 'click on the image selected ' + H.st().sel + ' and the list shows ' + (document.querySelector('li.on') || {dataset: {}}).dataset.layer"},
+        {"js": "H.pick('ring')"},
+        {"check": "H.st().sel === 'ring' && document.querySelector('li.on[data-layer=\"ring\"]') ? null : 'list pick did not select the ring on the board'"}
+      ]
+    },
+    {
+      "row": "move",
+      "steps": [
+        {"js": "H.pick('text'); H.s.a = H.L('text'); null"},
+        {"drag": {"from": "H.h().centre", "to": "[H.h().centre[0] + 30, H.h().centre[1] - 20]"}},
+        {"check": "(() => { const L = H.L('text'), a = H.s.a; return L.dx === a.dx && L.dy === a.dy ? 'drag did not move the layer' : (L.dx * 4) % 1 || (L.dy * 4) % 1 ? 'move left the 0.25 mm grid: ' + L.dx + ', ' + L.dy : null; })()"}
+      ]
+    },
+    {
+      "row": "rotate",
+      "steps": [
+        {"js": "H.s.a = H.L('text'); null"},
+        {"drag": {"from": "H.h().dot", "to": "[H.h().dot[0] + 40, H.h().dot[1] + 40]"}},
+        {"check": "H.L('text').rot === H.s.a.rot ? 'rotate handle did nothing' : null"}
+      ]
+    },
+    {
+      "row": "scale",
+      "steps": [
+        {"js": "H.s.a = H.L('text'); null"},
+        {"drag": {"from": "H.h().corners[2]", "to": "(() => { const h = H.h(), c = h.corners[2], e = h.centre; return [c[0] + (c[0] - e[0]) * 0.5, c[1] + (c[1] - e[1]) * 0.5]; })()"}},
+        {"check": "H.L('text').size === H.s.a.size ? 'scale handle did nothing' : H.L('text').size <= H.s.a.size ? 'outward corner drag shrank the text' : null"}
+      ]
+    },
+    {
+      "row": "rotate snap at 3 degrees off 90",
+      "steps": [
+        {"drag": {"from": "H.h().dot", "to": "H.at(90 + 93, 60)"}},
+        {"check": "H.L('text').rot === 90 ? null : 'drag ending at 93 degrees committed ' + H.L('text').rot + ', want 90'"},
+        {"drag": {"from": "H.h().dot", "to": "H.at(90 + 52, 60)", "hold": ["Shift"]}},
+        {"check": "H.L('text').rot === 45 ? null : 'shift drag ending at 52 degrees committed ' + H.L('text').rot + ', want 45'"},
+        {"drag": {"from": "H.h().dot", "to": "H.at(90 + 93, 60)", "hold": ["Alt"]}},
+        {"check": "H.L('text').rot === 93 ? null : 'alt drag ending at 93 degrees committed ' + H.L('text').rot + ', want 93'"}
+      ]
+    },
+    {
+      "row": "centre snap and alt",
+      "steps": [
+        {"down": "H.h().centre"},
+        {"move": "[H.h().centre[0] + (0.3 - H.L('text').dx) * H.st().view.scale, H.h().centre[1]]"},
+        {"check": "(() => { const d = H.st().drag; return H.L('text').dx !== 0 ? 'dx ' + H.L('text').dx + ' within 0.6 mm of the centre did not snap to 0' : !d || !d.snapped || !d.snapped.x ? 'no centre guide while snapped' : null; })()"},
+        {"up": null},
+        {"down": "H.h().centre"},
+        {"move": "[H.h().centre[0] + (0.3 - H.L('text').dx) * H.st().view.scale, H.h().centre[1]]", "hold": ["Alt"]},
+        {"up": null, "hold": ["Alt"]},
+        {"check": "H.L('text').dx === 0.25 ? null : 'alt move to 0.3 mm gave dx ' + H.L('text').dx + ', want 0.25'"}
+      ]
+    },
+    {
+      "row": "shift axis lock",
+      "steps": [
+        {"js": "H.s.a = H.L('text'); null"},
+        {"drag": {"from": "H.h().centre", "to": "[H.h().centre[0] + 40, H.h().centre[1] - 15]", "hold": ["Shift"]}},
+        {"check": "H.L('text').dy !== H.s.a.dy ? 'shift drag moved the minor axis: dy ' + H.s.a.dy + ' to ' + H.L('text').dy : H.L('text').dx === H.s.a.dx ? 'shift drag did not move the major axis' : null"}
+      ]
+    },
+    {
+      "row": "wheel zoom",
+      "steps": [
+        {"js": "H.s.p = [H.st().view.w * 0.7, H.st().view.h * 0.3]; H.s.m = H.tomm(H.s.p); null"},
+        {"wheel": {"at": "H.s.p", "dy": -100}},
+        {"check": "(() => { const z = H.st().view.zoom, m = H.tomm(H.s.p); return Math.abs(z - 1.1) > 1e-9 ? 'one notch in gave zoom ' + z + ', want 1.1' : Math.hypot(m[0] - H.s.m[0], m[1] - H.s.m[1]) > 0.01 ? 'zoom moved the point under the cursor by ' + Math.hypot(m[0] - H.s.m[0], m[1] - H.s.m[1]) + ' mm' : null; })()"},
+        {"dblclick": "[3, 3]"},
+        {"check": "H.st().view.zoom === 1 && H.st().view.panX === 0 ? null : 'double click on an empty board did not reset the view'"}
+      ]
+    },
+    {
+      "row": "right and middle drag pan",
+      "steps": [
+        {"drag": {"from": "[40, 40]", "to": "[80, 60]", "button": "right"}},
+        {"check": "H.st().view.panX === 40 && H.st().view.panY === 20 ? null : 'right drag 40, 20 px panned ' + H.st().view.panX + ', ' + H.st().view.panY"},
+        {"drag": {"from": "[40, 40]", "to": "[30, 40]", "button": "middle"}},
+        {"check": "H.st().view.panX === 30 ? null : 'middle drag did not pan'"},
+        {"dblclick": "[3, 3]"}
+      ]
+    },
+    {
+      "row": "arrow and shift-arrow nudges",
+      "steps": [
+        {"js": "H.pick('text'); H.s.a = H.L('text'); null"},
+        {"press": ["ArrowRight"]},
+        {"check": "Math.abs(H.L('text').dx - H.s.a.dx - 0.25) < 1e-9 ? null : 'ArrowRight moved dx by ' + (H.L('text').dx - H.s.a.dx) + ', want 0.25'"},
+        {"press": ["Shift", "ArrowRight"]},
+        {"check": "Math.abs(H.L('text').dx - H.s.a.dx - 5.25) < 1e-9 ? null : 'shift ArrowRight moved dx by ' + (H.L('text').dx - H.s.a.dx - 0.25) + ', want 5'"}
+      ]
+    },
+    {
+      "row": "ctrl D duplicates",
+      "steps": [
+        {"js": "H.pick('text'); H.s.a = H.L('text'); H.s.n = H.ids().length; null"},
+        {"press": ["Control", "d"]},
+        {"check": "(() => { const ids = H.ids(), s = H.st(); if (ids.length !== H.s.n + 1) return 'ctrl D left ' + ids.length + ' layers'; const c = H.L(s.sel); return ids.indexOf(s.sel) !== ids.indexOf('text') + 1 ? 'duplicate not directly above its source' : c.dx !== H.s.a.dx + 2 || c.dy !== H.s.a.dy - 2 ? 'duplicate not offset 2 mm right and down' : c.text !== H.s.a.text ? 'duplicate text differs' : null; })()"}
+      ]
+    },
+    {
+      "row": "Delete and Backspace",
+      "steps": [
+        {"js": "H.s.n = H.ids().length; H.s.d = H.st().sel; null"},
+        {"press": ["Delete"]},
+        {"check": "H.ids().length === H.s.n - 1 && !H.ids().includes(H.s.d) ? null : 'Delete did not remove the selected layer'"},
+        {"js": "H.pick('image'); null"},
+        {"press": ["Backspace"]},
+        {"check": "H.ids().includes('image') ? 'Backspace did not remove the image' : H.st().sel !== null ? 'selection kept after delete' : null"}
+      ]
+    },
+    {
+      "row": "brackets reorder",
+      "steps": [
+        {"js": "H.pick('ring'); H.s.i = H.ids().indexOf('ring'); null"},
+        {"press": ["]"]},
+        {"check": "H.ids().indexOf('ring') === H.s.i + 1 ? null : '] did not raise the ring'"},
+        {"press": ["["]},
+        {"check": "H.ids().indexOf('ring') === H.s.i ? null : '[ did not lower the ring'"}
+      ]
+    },
+    {
+      "row": "drop at the cursor",
+      "steps": [
+        {"js": "(() => { H.s.n = H.ids().length; /* a synthetic DragEvent keeps whole px only */ const cv = H.cv(), r = cv.getBoundingClientRect(), cx = Math.round(r.left + r.width * 0.3), cy = Math.round(r.top + r.height * 0.7), p = [cx - r.left, cy - r.top]; H.s.m = H.tomm(p); const c = new OffscreenCanvas(32, 32), g = c.getContext('2d'); g.fillRect(4, 4, 24, 24); c.convertToBlob({ type: 'image/png' }).then((blob) => { const dt = new DataTransfer(); dt.items.add(new File([blob], 'drop.png', { type: 'image/png' })); const o = { bubbles: true, cancelable: true, clientX: cx, clientY: cy, dataTransfer: dt }; cv.dispatchEvent(new DragEvent('dragover', o)); cv.dispatchEvent(new DragEvent('drop', o)); }); return null; })()"},
+        {"check": "(() => { if (H.ids().length !== H.s.n + 1) return 'drop added no layer'; const s = H.st(), L = H.L(s.sel); if (!L || L.kind !== 'image') return 'the dropped image is not selected'; const e = Math.hypot(L.dx - H.s.m[0], L.dy - H.s.m[1]); return e > 0.01 ? 'image landed ' + e + ' mm from the cursor at ' + JSON.stringify(H.s.m) + ', view ' + JSON.stringify(s.view) + ', canvas ' + JSON.stringify(H.cv().getBoundingClientRect()) : null; })()"}
+      ]
+    },
+    {
+      "row": "double click on text",
+      "steps": [
+        {"js": "H.pick('text'); null"},
+        {"dblclick": "[H.h().centre[0], H.h().centre[1] - 3]"},
+        {"check": "document.activeElement && document.activeElement.dataset.text === 'text' ? null : 'double click on text did not focus its field'"},
+        {"js": "document.activeElement.blur(); null"}
+      ]
+    },
+    {
+      "row": "arc text drag",
+      "steps": [
+        {"js": "H.pick('arc'); null"},
+        {"drag": {"from": "H.mid()", "to": "H.mm(0, 10)"}},
+        {"check": "(() => { const L = H.L('arc'); return Math.abs(L.arcR - 10) > 0.05 || L.arcDeg !== 90 ? 'arc text drag gave arcR ' + L.arcR + ', arcDeg ' + L.arcDeg + '; want 10, 90' : L.dx !== 0 || L.dy !== 0 ? 'arc text drag wrote dx, dy' : null; })()"}
+      ]
+    },
+    {
+      "row": "ring drag keeps its width",
+      "steps": [
+        {"js": "H.pick('ring'); H.s.a = H.L('ring'); null"},
+        {"drag": {"from": "H.mm(3, 0)", "to": "H.mm(12, 0)"}},
+        {"check": "(() => { const L = H.L('ring'), w = H.s.a.r1 - H.s.a.r0; return Math.abs(L.r1 - L.r0 - w) > 1e-9 ? 'ring width changed' : Math.abs((L.r0 + L.r1) / 2 - 12) > 0.05 ? 'ring centre radius ' + (L.r0 + L.r1) / 2 + ', want 12' : null; })()"}
+      ]
+    },
+    {
+      "row": "raster",
+      "steps": [
+        {"js": "H.pick('text'); null"},
+        {"check": "H.st().raster && H.st().raster.mode === 'exact' ? null : 'no exact print raster after a build'"},
+        {"down": "H.h().centre"},
+        {"move": "[H.h().centre[0] + 12, H.h().centre[1]]"},
+        {"check": "(() => { const r = H.st().raster; return r && r.mode === 'preview' && r.res === 4 ? null : 'dragging shows ' + JSON.stringify(r) + ', want the 4 px/mm preview'; })()"},
+        {"up": null},
+        {"check": "H.st().raster && H.st().raster.mode === 'exact' ? null : 'release did not return to the exact raster'"}
+      ]
+    },
+    {
+      "row": "events",
+      "steps": [
+        {"check": "(() => { const e = ARTBOARD.events().map((x) => x.type); return ['select', 'touch', 'commit', 'focusText'].filter((t) => !e.includes(t)).map((t) => 'no ' + t + ' event').join(', ') || null; })()"}
+      ]
+    }
+  ],
+  "touch": [
+    {
+      "row": "touch select",
+      "steps": [
+        {"tap": "H.mm(H.L('text').dx, H.L('text').dy + 1)"},
+        {"check": "H.st().sel === 'text' ? null : 'tap selected ' + H.st().sel"}
+      ]
+    },
+    {
+      "row": "touch move",
+      "steps": [
+        {"js": "H.s.a = H.L('text'); null"},
+        {"swipe": {"from": "H.h().centre", "to": "[H.h().centre[0] + 30, H.h().centre[1] - 20]"}},
+        {"check": "H.L('text').dx === H.s.a.dx && H.L('text').dy === H.s.a.dy ? 'touch drag did not move the layer' : null"}
+      ]
+    },
+    {
+      "row": "touch rotate",
+      "steps": [
+        {"swipe": {"from": "H.h().dot", "to": "H.at(90 + 93, 60)"}},
+        {"check": "H.L('text').rot === 90 ? null : 'touch rotate to 93 degrees committed ' + H.L('text').rot"}
+      ]
+    },
+    {
+      "row": "touch scale",
+      "steps": [
+        {"js": "H.s.a = H.L('text'); null"},
+        {"swipe": {"from": "H.h().corners[2]", "to": "(() => { const h = H.h(), c = h.corners[2], e = h.centre; return [c[0] + (c[0] - e[0]) * 0.5, c[1] + (c[1] - e[1]) * 0.5]; })()"}},
+        {"check": "H.L('text').size > H.s.a.size ? null : 'touch scale did nothing'"}
+      ]
+    },
+    {
+      "row": "pointer events from touch",
+      "steps": [
+        {"check": "H.types.has('touch') && !H.types.has('mouse') ? null : 'pointer types seen: ' + [...H.types].join(', ')"}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>art board fixture</title>
+<style>
+  /* Tokens of record (RULES.md design law); the fixture has no hackbuild-ui install. */
+  :root {
+    --hb-pink: #FE0386;
+    --hb-paper: #f5f0e6;
+    --hb-ink: #1a1a1a;
+    --hb-void: #0a0a0a;
+    --fx-guide: rgba(245, 240, 230, 0.45);
+    --fx-readout: #a6e22e;
+    --fx-number-font: "VT323", monospace;
+    --fx-gap: 16px;
+  }
+  /* The fixture font: a local face behind a family name, so canvas text waits for a real face and never falls back silently (art-inlay.md, font determinism). */
+  @font-face {
+    font-family: "Fixture Sans";
+    src: local("Arial"), local("Helvetica"), local("Liberation Sans"), local("DejaVu Sans");
+    font-display: block;
+  }
+  * { box-sizing: border-box; border-radius: 0; }
+  html, body { margin: 0; background: var(--hb-paper); color: var(--hb-ink); font-family: "IBM Plex Mono", monospace; }
+  main { display: grid; grid-template-columns: minmax(0, 620px) 260px; gap: var(--fx-gap); padding: var(--fx-gap); }
+  h1 { grid-column: 1 / -1; margin: 0; font: 400 22px "Permanent Marker", "IBM Plex Mono", monospace; }
+  .stage { background: var(--hb-void); box-shadow: 5px 5px 0 var(--hb-pink); }
+  #board { display: block; width: 100%; aspect-ratio: 1; touch-action: none; }
+  aside { border: 2px solid var(--hb-ink); box-shadow: 5px 5px 0 var(--hb-ink); padding: 12px; background: var(--hb-paper); }
+  aside h2 { margin: 0 0 8px; font-size: 13px; text-transform: lowercase; }
+  ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  li { display: grid; gap: 4px; padding: 6px; border: 2px solid var(--hb-ink); }
+  li.on { background: var(--hb-ink); color: var(--hb-paper); }
+  li button { font: inherit; text-align: left; background: none; color: inherit; border: 0; padding: 0; cursor: pointer; }
+  li input { font: inherit; width: 100%; border: 2px solid var(--hb-ink); padding: 4px; background: var(--hb-paper); color: var(--hb-ink); }
+  p.hint { font-size: 12px; margin: 8px 0 0; }
+  @media (max-width: 720px) { main { grid-template-columns: minmax(0, 1fr); } }
+</style>
+</head>
+<body>
+<main>
+  <h1>art board</h1>
+  <div class="stage"><canvas id="board" aria-label="art board: drag to move, corners scale, the dot rotates"></canvas></div>
+  <aside>
+    <h2>layers, top first</h2>
+    <ol id="layers"></ol>
+    <p class="hint">arrows nudge 0.25 mm, shift 5 mm. delete removes, ctrl d duplicates, [ and ] reorder. wheel zooms, right drag pans. drop an image on the board.</p>
+  </aside>
+</main>
+<script src="dist/fixture.entry.iife.js"></script>
+</body>
+</html>

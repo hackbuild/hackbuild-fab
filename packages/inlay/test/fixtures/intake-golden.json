@@ -1,0 +1,543 @@
+{
+  "producedBy": "packages/inlay/scripts/intake-golden.mjs",
+  "sources": {
+    "homography": {
+      "id": "inlay.intake-homography/badge-replicator",
+      "sha256": "4ed2bde48f11bf561d5746293b9e5f9905566b5df7b8e6f5de1be95152e3aeb6"
+    },
+    "stack": {
+      "id": "inlay.intake-stack/badge-replicator",
+      "sha256": "1ad36175f59991d58cbd640675da03f35974668ecf4bbdceb3b9ab2d0ad4d60f"
+    },
+    "knockout": {
+      "id": "inlay.intake-knockout/badge-replicator",
+      "sha256": "44afaeaf8a03ffbbafa92a5916ac263a1af7e81f91bd65bf0de879b60e1c43df"
+    },
+    "composite": {
+      "id": "inlay.intake-compose/badge-replicator",
+      "sha256": "257f3d0215dea87ff86f85e70af2b54aab1c1396bf918dd5ac1bb0d876311d23"
+    },
+    "extract": {
+      "id": "inlay.intake-trim/badge-replicator",
+      "sha256": "65663823252a2e7cd8694e6c276f839353756a52405ad1620a98c77a2eab4aa2"
+    }
+  },
+  "cases": {
+    "homography.unit": [
+      94.7867298578199,
+      -5.011848341232227,
+      10,
+      3.815165876777251,
+      99.71563981042654,
+      20,
+      -0.04739336492890995,
+      -0.0023696682464454974,
+      1
+    ],
+    "homography.rect": [
+      1.2733064489184185,
+      -0.11522105758889079,
+      3.2,
+      0.10863421683181544,
+      1.327036358197937,
+      1.5,
+      0.00007338621914198537,
+      0.0013141900707053424,
+      1
+    ],
+    "gauss.zeroPivot": [
+      1000000000000,
+      2000000000000
+    ],
+    "gauss.pivoting": [
+      -0.20000000007999988,
+      0.7999999999199994,
+      -0.19999999987999958
+    ],
+    "warp.inside": {
+      "sha256": "6518e9eb1a82037401bc62fc3eacbad2b915c186473dbdb5955c20168003c1f6",
+      "length": 1728,
+      "sample": [
+        171,
+        118,
+        198,
+        255,
+        166,
+        65,
+        255,
+        102,
+        255
+      ]
+    },
+    "warp.overhang": {
+      "sha256": "182306288d5832ff657f75a25c1b03338fa545b5a4e5468ed443a759115fb597",
+      "length": 2728,
+      "sample": [
+        0,
+        0,
+        0,
+        255,
+        94,
+        69,
+        255,
+        173,
+        255
+      ]
+    },
+    "size": [
+      {
+        "width": 100,
+        "height": 103
+      },
+      {
+        "width": 64,
+        "height": 64
+      },
+      {
+        "width": 1600,
+        "height": 979
+      },
+      {
+        "width": 200,
+        "height": 150
+      }
+    ],
+    "reduce": [
+      [
+        12,
+        13,
+        5,
+        2.5,
+        42,
+        7
+      ],
+      [
+        12,
+        12,
+        3,
+        2,
+        42,
+        3
+      ],
+      [
+        10,
+        10,
+        1,
+        1,
+        42,
+        1
+      ],
+      [
+        12,
+        14,
+        5,
+        3,
+        42,
+        7
+      ],
+      [
+        10,
+        10,
+        1,
+        1,
+        42,
+        1
+      ],
+      [
+        74,
+        59,
+        5,
+        26.5,
+        42,
+        46.166666666666664
+      ],
+      [
+        74,
+        13,
+        5,
+        2.5,
+        42,
+        6.5
+      ],
+      [
+        12,
+        13,
+        5,
+        2.5,
+        42,
+        7
+      ],
+      [
+        74,
+        59,
+        5,
+        26.5,
+        42,
+        46.166666666666664
+      ]
+    ],
+    "stack.chunked": {
+      "sha256": "5792d9280d3ae9517150a70a0459b26b69af8bffc19cf08c97244bf93f9cc982",
+      "length": 294912,
+      "sample": [
+        61,
+        93,
+        89,
+        255,
+        99,
+        222,
+        255,
+        145,
+        255
+      ]
+    },
+    "stack.progress": [
+      0.4444444444444444,
+      0.8888888888888888,
+      1
+    ],
+    "stack.methods": [
+      {
+        "sha256": "5826f2d910a44a81d4e93ba32ecc76187355da0e377cb85a90e84692243c6e49",
+        "length": 572,
+        "sample": [
+          70,
+          158,
+          168,
+          255,
+          107,
+          66,
+          255,
+          255
+        ]
+      },
+      {
+        "sha256": "e41486813d0ec2e159df21fbc8445330bbc103e849b71025cf377c50ba9e1f21",
+        "length": 572,
+        "sample": [
+          70,
+          135,
+          88,
+          255,
+          101,
+          51,
+          255,
+          255
+        ]
+      },
+      {
+        "sha256": "aeb649eb575c5993c051843329918ebde943a991482670b55a9ced6fde482948",
+        "length": 572,
+        "sample": [
+          70,
+          112,
+          7,
+          255,
+          41,
+          36,
+          255,
+          255
+        ]
+      },
+      {
+        "sha256": "5826f2d910a44a81d4e93ba32ecc76187355da0e377cb85a90e84692243c6e49",
+        "length": 572,
+        "sample": [
+          70,
+          158,
+          168,
+          255,
+          107,
+          66,
+          255,
+          255
+        ]
+      },
+      {
+        "sha256": "aeb649eb575c5993c051843329918ebde943a991482670b55a9ced6fde482948",
+        "length": 572,
+        "sample": [
+          70,
+          112,
+          7,
+          255,
+          41,
+          36,
+          255,
+          255
+        ]
+      },
+      {
+        "sha256": "a254cd4a52d7a710ee0b56253ca47a39e8d058170d445321d7cc35a97840077d",
+        "length": 572,
+        "sample": [
+          70,
+          158,
+          139,
+          255,
+          129,
+          66,
+          255,
+          255
+        ]
+      },
+      {
+        "sha256": "73ff0b60608dd5fa5ecca57da5c78c510e715bb158e5e67d0f36560f723068de",
+        "length": 572,
+        "sample": [
+          70,
+          158,
+          146,
+          255,
+          125,
+          66,
+          255,
+          255
+        ]
+      },
+      {
+        "sha256": "5826f2d910a44a81d4e93ba32ecc76187355da0e377cb85a90e84692243c6e49",
+        "length": 572,
+        "sample": [
+          70,
+          158,
+          168,
+          255,
+          107,
+          66,
+          255,
+          255
+        ]
+      },
+      {
+        "sha256": "a254cd4a52d7a710ee0b56253ca47a39e8d058170d445321d7cc35a97840077d",
+        "length": 572,
+        "sample": [
+          70,
+          158,
+          139,
+          255,
+          129,
+          66,
+          255,
+          255
+        ]
+      }
+    ],
+    "knockout.default": {
+      "mode": "key",
+      "key": [
+        255,
+        0,
+        255
+      ],
+      "tolerance": 70,
+      "softness": 30,
+      "trim": true
+    },
+    "knockout.key": {
+      "width": 31,
+      "height": 23,
+      "data": {
+        "sha256": "8b969fed89f45b9867aac194f8e5a36f0142ea1af8224168cce5603765305d24",
+        "length": 2852,
+        "sample": [
+          255,
+          2,
+          247,
+          0,
+          3,
+          254,
+          0,
+          212,
+          0
+        ]
+      }
+    },
+    "knockout.keyHard": {
+      "width": 31,
+      "height": 23,
+      "data": {
+        "sha256": "ddb75efe1ef948ce27938e30a7024c5ddefb39ccbe59bc3d213470a97dffc674",
+        "length": 2852,
+        "sample": [
+          255,
+          2,
+          247,
+          0,
+          3,
+          254,
+          0,
+          212,
+          0
+        ]
+      }
+    },
+    "knockout.edgesKey": {
+      "width": 31,
+      "height": 23,
+      "data": {
+        "sha256": "4f91f995498dc9902f838d37102f8934b571948c7a088819347db8b135786df8",
+        "length": 2852,
+        "sample": [
+          255,
+          2,
+          247,
+          0,
+          3,
+          254,
+          0,
+          212,
+          0
+        ]
+      }
+    },
+    "knockout.edgesMode": {
+      "width": 31,
+      "height": 23,
+      "data": {
+        "sha256": "aa795e3da358ba0b58850f736cd614c35490b0541e4946900239cbc18cdf6a98",
+        "length": 2852,
+        "sample": [
+          255,
+          2,
+          247,
+          0,
+          3,
+          254,
+          0,
+          212,
+          0
+        ]
+      }
+    },
+    "knockout.applyNone": {
+      "width": 31,
+      "height": 23,
+      "data": {
+        "sha256": "c13ecd59b9e14585d6eb2e7267acf12714ee609f84406f119ff763a2f18a1c38",
+        "length": 2852,
+        "sample": [
+          255,
+          2,
+          247,
+          255,
+          3,
+          254,
+          255,
+          212,
+          0
+        ]
+      }
+    },
+    "knockout.border": [
+      [
+        255,
+        3,
+        251
+      ],
+      [
+        255,
+        0,
+        255
+      ]
+    ],
+    "bounds": [
+      {
+        "x": 3,
+        "y": 1,
+        "width": 21,
+        "height": 17
+      },
+      {
+        "x": 3,
+        "y": 1,
+        "width": 21,
+        "height": 17
+      },
+      {
+        "x": 7,
+        "y": 1,
+        "width": 17,
+        "height": 17
+      },
+      null
+    ],
+    "compose.stackKey": {
+      "width": 43,
+      "height": 53,
+      "data": {
+        "sha256": "8362b7daac466ff1c8b7f1ddeeac7585861a3dd83306cdc1bde27e26f0bf8970",
+        "length": 9116,
+        "sample": [
+          255,
+          58,
+          255,
+          0,
+          6,
+          253,
+          0,
+          8,
+          0
+        ]
+      }
+    },
+    "compose.stackEdgesTrimmed": {
+      "width": 43,
+      "height": 53,
+      "data": {
+        "sha256": "2d1d748bb5ab950eda8e017689c31f7cdec7d9f01a70faa388581f6f172b9416",
+        "length": 9116,
+        "sample": [
+          255,
+          58,
+          255,
+          0,
+          6,
+          253,
+          0,
+          8,
+          0
+        ]
+      }
+    },
+    "compose.plateEdges": {
+      "width": 21,
+      "height": 17,
+      "data": {
+        "sha256": "78155bcc066e5b6979b75434750795b2210380ea02870456037e9530f61332e9",
+        "length": 1428,
+        "sample": [
+          255,
+          75,
+          255,
+          18,
+          148,
+          81,
+          255,
+          196,
+          255
+        ]
+      }
+    },
+    "compose.noKnockout": {
+      "width": 64,
+      "height": 64,
+      "data": {
+        "sha256": "40e322d680a7c045d3c3223238bbecc5c9f8288fc860030e9723ba508b5f3acc",
+        "length": 16384,
+        "sample": [
+          255,
+          55,
+          255,
+          255,
+          7,
+          251,
+          255,
+          3,
+          255
+        ]
+      }
+    }
+  }
+}

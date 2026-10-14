@@ -1,0 +1,3185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>COLLAR - challenge coin bench</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Permanent+Marker&family=Special+Elite&family=VT323&display=swap" rel="stylesheet">
+<style>
+:root{
+  --pink:#FE0386; --cream:#f5f0e6; --ink:#1a1a1a; --void:#0a0a0a;
+  --raised:#fffdf7; --sunk:#efe9db; --edge:#e8e0d0;
+  --ink2:#444; --ink3:#6b6459; --ink4:#9a9184;
+  --slime:#a6e22e; --lit-warn:#ffb020; --lit-err:#ff5c4d; --lit-info:#58a6ff;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --marker:"Permanent Marker","IBM Plex Mono",monospace;
+  --elite:"Special Elite","IBM Plex Mono",monospace;
+  --term:"VT323","IBM Plex Mono",monospace;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; font-family:var(--mono); font-size:13px; color:var(--ink);
+  background:var(--cream);
+  background-image:radial-gradient(rgba(26,26,26,.045) 1px, transparent 1px);
+  background-size:4px 4px;
+  display:flex; flex-direction:column; overflow:hidden;
+}
+button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit}
+
+/* ---------- header ---------- */
+header{
+  background:var(--ink); color:var(--cream); border-bottom:3px solid var(--pink);
+  display:flex; align-items:center; gap:14px; padding:8px 14px; flex:none;
+}
+header .mark{width:28px;height:28px;flex:none}
+header h1{font-family:var(--marker);font-size:22px;font-weight:400;margin:0;letter-spacing:.5px}
+header h1 .p{color:var(--pink)}
+header .sub{font-family:var(--elite);font-size:12px;opacity:.55;margin-left:2px}
+header .spacer{flex:1}
+header .hdr-btns{display:flex;gap:6px}
+
+/* ---------- shell ---------- */
+main{flex:1;display:grid;grid-template-columns:330px 1fr 300px;min-height:0}
+@media (max-width:1180px){main{grid-template-columns:300px 1fr}#col-right{display:none}}
+@media (max-width:820px){
+  main{grid-template-columns:1fr;overflow:auto}
+  body{overflow:auto}
+  .col{overflow:visible;border-right:none;border-bottom:2px solid var(--ink)}
+  header{flex-wrap:wrap}
+  header .sub{display:none}
+  header .hdr-btns{flex-wrap:wrap}
+  .viewwrap{min-height:300px}
+  .faces{grid-template-columns:1fr}
+  .row{grid-template-columns:1fr auto}
+}
+
+.col{min-height:0;overflow-y:auto;border-right:2px solid var(--ink);background:var(--sunk)}
+#col-right{border-right:none;border-left:2px solid var(--ink)}
+#stage{min-height:0;display:flex;flex-direction:column;background:var(--cream)}
+
+/* ---------- tabs ---------- */
+.tabs{display:flex;background:var(--ink);flex:none}
+.tabs button{
+  flex:1;background:transparent;border:none;border-bottom:3px solid transparent;
+  color:var(--cream);padding:7px 4px;cursor:pointer;text-transform:uppercase;
+  letter-spacing:.08em;font-weight:600;font-size:11px;
+}
+.tabs button:hover{color:var(--pink)}
+.tabs button.on{border-bottom-color:var(--pink);color:var(--pink)}
+.pane{display:none;padding:10px 12px 24px}
+.pane.on{display:block}
+
+/* ---------- panel bits ---------- */
+.ph{
+  font-family:var(--term);font-size:17px;letter-spacing:.06em;text-transform:uppercase;
+  background:var(--ink);color:var(--cream);padding:2px 8px;margin:14px -12px 8px;
+}
+.ph:first-child{margin-top:0}
+.ph .n{color:var(--pink)}
+.row{display:grid;grid-template-columns:1fr auto;gap:6px;align-items:center;margin:5px 0}
+.row label{font-size:11px;min-width:0;overflow-wrap:anywhere;text-transform:uppercase;letter-spacing:.05em;color:var(--ink2)}
+.row .v{font-family:var(--term);font-size:15px;min-width:52px;text-align:right;color:var(--ink)}
+input[type=range]{width:100%;accent-color:var(--pink);height:18px;margin:0}
+input[type=number],input[type=text],select,textarea{
+  width:100%;background:var(--raised);border:2px solid var(--ink);border-radius:0;
+  padding:4px 6px;
+}
+input[type=number]{text-align:right}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--pink);outline-offset:-1px}
+input[type=checkbox]{accent-color:var(--pink);width:15px;height:15px}
+input[type=color]{width:100%;height:26px;padding:0;border:2px solid var(--ink);background:none;cursor:pointer}
+.full{grid-column:1/-1}
+.sl{display:grid;grid-template-columns:1fr 62px;gap:6px;align-items:center}
+
+button.b{
+  background:var(--ink);color:var(--cream);border:2px solid var(--ink);padding:5px 10px;
+  cursor:pointer;text-transform:uppercase;letter-spacing:.06em;font-weight:600;font-size:11px;
+  box-shadow:3px 3px 0 rgba(26,26,26,.25);
+}
+button.b:hover{background:var(--pink);border-color:var(--pink)}
+button.b:active{box-shadow:1px 1px 0 rgba(26,26,26,.25);transform:translate(2px,2px)}
+button.b.ghost{background:var(--raised);color:var(--ink)}
+button.b.ghost:hover{background:var(--pink);color:var(--cream)}
+button.b.pk{background:var(--pink);border-color:var(--pink);box-shadow:3px 3px 0 rgba(254,3,134,.35)}
+button.b:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
+.btnrow{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+.btnrow.eq button{flex:1}
+
+.chips{display:flex;flex-wrap:wrap;gap:4px;margin:6px 0;max-width:100%}
+.chip{max-width:100%;overflow:hidden;text-overflow:ellipsis}
+.chip{
+  background:var(--raised);border:2px solid var(--ink);padding:3px 7px;cursor:pointer;
+  font-size:10px;text-transform:uppercase;letter-spacing:.04em;font-weight:600;
+}
+.chip:hover{background:var(--edge)}
+.chip.on{background:var(--pink);color:var(--cream);border-color:var(--pink)}
+
+.note{font-family:var(--elite);font-size:11.5px;color:var(--ink3);line-height:1.45;margin:6px 0}
+.warn{border-left:3px solid var(--lit-warn);padding-left:7px}
+.bad{border-left:3px solid var(--lit-err);padding-left:7px}
+
+/* ---------- slots ---------- */
+.slot{display:grid;grid-template-columns:26px 1fr 54px;gap:6px;align-items:center;margin:5px 0}
+.slot .ix{font-family:var(--term);font-size:16px;text-align:center;background:var(--ink);color:var(--cream)}
+.slot input[type=text]{border-width:2px}
+
+/* ---------- art layers ---------- */
+.layer{border:2px solid var(--ink);background:var(--raised);margin:8px 0;padding:7px}
+.layer .lh{display:flex;align-items:center;gap:6px;margin-bottom:5px}
+.layer .lh .t{flex:1;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.05em;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.layer .lh button{background:none;border:none;cursor:pointer;padding:1px 4px;font-weight:700}
+.layer .lh button:hover{color:var(--pink)}
+.layer .body{display:none}
+.layer.open .body{display:block}
+.sw{width:14px;height:14px;border:2px solid var(--ink);flex:none}
+
+#drop{
+  border:3px dashed var(--ink);background:var(--raised);padding:16px 10px;text-align:center;
+  cursor:pointer;margin:8px 0;
+}
+#drop.hot{border-color:var(--pink);background:#fff}
+#drop .big{font-family:var(--marker);font-size:16px}
+#drop .sm{font-family:var(--elite);font-size:11px;color:var(--ink3);margin-top:3px}
+
+/* ---------- stage ---------- */
+.stagebar{
+  background:var(--ink);color:var(--cream);display:flex;align-items:center;gap:8px;
+  padding:4px 10px;flex:none;
+}
+.stagebar .t{font-family:var(--term);font-size:16px;letter-spacing:.06em}
+.stagebar .spacer{flex:1}
+.viewwrap{flex:1;position:relative;min-height:220px;background:var(--cream)}
+#gl{position:absolute;inset:0;width:100%;height:100%;display:block}
+#glmsg{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  font-family:var(--elite);color:var(--ink3);text-align:center;pointer-events:none;
+}
+.faces{
+  flex:none;display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:10px;
+  border-top:2px solid var(--ink);background:var(--sunk);
+}
+.facebox{text-align:center}
+.facebox .cap{
+  font-family:var(--term);font-size:15px;text-transform:uppercase;letter-spacing:.06em;
+  background:var(--ink);color:var(--cream);padding:1px 6px;margin-bottom:4px;
+}
+.facebox canvas{width:100%;max-width:280px;aspect-ratio:1;background:var(--raised);
+  border:2px solid var(--ink);image-rendering:auto;touch-action:none}
+.facehint{grid-column:1/-1;font-family:var(--elite);font-size:11px;color:var(--ink3);text-align:center;margin:2px 0 0}
+
+/* ---------- right column ---------- */
+.stat{display:flex;justify-content:space-between;gap:8px;padding:2px 0;border-bottom:1px dotted var(--edge)}
+.stat .k{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink3)}
+.stat .val{font-family:var(--term);font-size:15px}
+.stat .val.pk{color:var(--pink)}
+#log{
+  background:var(--void);color:var(--slime);font-family:var(--term);font-size:14px;
+  padding:6px 8px;height:150px;overflow-y:auto;border:2px solid var(--ink);white-space:pre-wrap;
+  line-height:1.25;
+}
+#log .e{color:var(--lit-err)}
+#log .w{color:var(--lit-warn)}
+#log .i{color:var(--lit-info)}
+
+/* ---------- status strip ---------- */
+footer{
+  background:var(--ink);color:var(--cream);display:flex;align-items:center;gap:12px;
+  padding:3px 12px;flex:none;font-family:var(--term);font-size:15px;letter-spacing:.04em;
+}
+footer .dot{width:8px;height:8px;background:var(--slime);border-radius:50%}
+footer .dot.busy{background:var(--lit-warn)}
+footer .dot.err{background:var(--lit-err)}
+footer .spacer{flex:1}
+footer .tag{font-family:var(--elite);font-size:11px;opacity:.5;letter-spacing:0}
+
+/* ---------- guided chrome ---------- */
+.tabs.steps button{display:flex;align-items:center;justify-content:center;gap:5px;padding:6px 3px}
+.tabs.steps b{
+  font-family:var(--term);font-size:14px;background:var(--cream);color:var(--ink);
+  width:17px;height:17px;line-height:17px;text-align:center;flex:none;font-weight:400;
+}
+.tabs.steps button.on b{background:var(--pink);color:var(--cream)}
+.tabs.steps button.done b{background:var(--slime);color:var(--ink)}
+
+.guide{
+  background:var(--edge);border-bottom:2px solid var(--ink);padding:7px 12px;
+  font-family:var(--elite);font-size:12px;line-height:1.45;color:var(--ink2);
+}
+.guide b{font-family:var(--mono);font-weight:700;color:var(--ink);text-transform:uppercase;
+  letter-spacing:.05em;font-size:11px;display:block;margin-bottom:2px}
+.nextrow{margin-top:18px;padding-top:12px;border-top:2px dashed var(--ink4)}
+
+.hint{
+  border:2px solid var(--ink);background:var(--raised);padding:9px 10px;margin:8px 0;
+  font-family:var(--elite);font-size:12px;line-height:1.5;color:var(--ink2);
+  box-shadow:4px 4px 0 rgba(254,3,134,.18);
+}
+details.fold{border-top:2px solid var(--ink4);margin:16px 0 0;padding-top:2px}
+details.fold>summary{
+  cursor:pointer;list-style:none;padding:6px 0;font-size:11px;font-weight:700;
+  text-transform:uppercase;letter-spacing:.06em;color:var(--ink3);display:flex;align-items:center;gap:6px;
+}
+details.fold>summary::-webkit-details-marker{display:none}
+details.fold>summary::before{content:"+";font-family:var(--term);font-size:16px;color:var(--pink)}
+details.fold[open]>summary::before{content:"-"}
+details.fold>summary:hover{color:var(--ink)}
+details.fold .inner{padding:2px 0 10px}
+.badge{
+  font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  background:var(--ink);color:var(--cream);padding:1px 4px;
+}
+.badge.rim{background:var(--pink)}
+.slot{grid-template-columns:26px 1fr 54px}
+.slotwrap{display:flex;align-items:center;gap:5px;margin:-2px 0 6px 32px;min-height:12px;flex-wrap:wrap}
+.slotwrap select{width:auto;padding:1px 4px;font-size:11px;border-width:2px}
+.hint b{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.05em;
+  color:var(--ink);display:block;margin-bottom:3px}
+.hint ol{margin:4px 0 0 16px;padding:0}
+.hint li{margin:3px 0}
+
+.autolbl{display:flex;align-items:center;gap:4px;font-size:11px;text-transform:uppercase;
+  letter-spacing:.05em;color:var(--cream);opacity:.85;cursor:pointer}
+
+/* ---------- welcome ---------- */
+.ovl{
+  position:fixed;inset:0;background:rgba(10,10,10,.72);z-index:50;
+  display:flex;align-items:center;justify-content:center;padding:20px;
+}
+.ovl .card{
+  background:var(--cream);border:3px solid var(--ink);box-shadow:10px 10px 0 var(--pink);
+  max-width:640px;width:100%;max-height:90vh;overflow:auto;padding:20px 22px 18px;
+}
+.ovl h2{font-family:var(--marker);font-size:30px;margin:0 0 2px}
+.ovl h2 span{color:var(--pink)}
+.ovl .lead{font-family:var(--elite);font-size:14px;color:var(--ink2);margin:0 0 14px;line-height:1.5}
+.ovl ol{margin:0 0 12px;padding-left:0;list-style:none;counter-reset:s}
+.ovl ol li{
+  counter-increment:s;display:grid;grid-template-columns:26px minmax(0,1fr);
+  grid-template-rows:auto auto;gap:2px 10px;margin:11px 0;font-size:12.5px;line-height:1.5;
+}
+.ovl ol li::before{
+  content:counter(s);grid-row:1/3;grid-column:1;align-self:start;
+  font-family:var(--term);font-size:16px;background:var(--ink);color:var(--cream);
+  width:24px;height:24px;line-height:24px;text-align:center;
+}
+.ovl ol li b{grid-column:2;grid-row:1;text-transform:uppercase;letter-spacing:.05em;font-size:11px}
+.ovl ol li span{grid-column:2;grid-row:2;font-family:var(--elite);color:var(--ink2)}
+.ovl .fine{font-family:var(--elite);font-size:11.5px;color:var(--ink3);line-height:1.5;margin:10px 0 14px}
+.hide{display:none!important}
+</style>
+</head>
+<body>
+
+<header>
+  <svg class="mark" viewBox="117 103 800 800" aria-hidden="true">
+    <path transform="translate(490,121)" fill="#f5f0e6" d="m0 0h38l34 3 29 5 25 6 26 8 21 8 20 9 20 10 23 14 19 13 12 10 11 9 16 15 9 9 7 8 9 10 15 20 18 27 13 23 13 28 10 26 8 26 6 27 4 27 2 25v29l-2 28-5 32-6 27-8 27-10 25-12 25-10 17-13 19-10 13-11 13-7 8-9 10-20 20-8 7-15 13-16 12-19 13-13 8-18 10-27 13-29 11-24 7-24 5-27 4-24 2h-25l-27-3-20-4-16-5-12-6-8-7-7-10-4-8-2-10v-13l4-13 7-12 11-11 14-8 12-3h16l24 3 23 1 25-1 22-3 30-7 18-6 25-11 22-12 21-14 10-8 13-11 13-13 9-11 10-13 10-15 12-22 9-20 10-30 6-27 3-19 2-26v-20l-3-29-6-26-8-24-8-18-11-21-14-21-11-14-9-10-7-8-16-16-11-9-15-12-17-11-14-8-16-8-14-6-24-8-22-5-21-3-12-1h-37l-25 3-20 4-20 6-21 8-24 12-19 12-12 9-11 9-10 9-17 17-9 11-14 19-11 18-11 21-10 26-6 21-4 19-2 15-1 14v25l2 22 3 20v10l-4 16-7 11-6 7-13 9-13 5-5 1h-14l-12-3-12-6-10-9-6-7-7-14-4-18-3-26-1-16v-36l3-30 5-28 8-29 11-29 13-28 14-24 14-21 10-14 13-16 12-14 30-30 11-9 15-12 24-16 21-12 23-11 27-10 23-7 27-6 27-4z"/>
+    <path transform="translate(498,314)" fill="#FE0386" d="m0 0h25l14 3 6 4 3 4 1 8-4 8-11 10-20 16-14 12-14 14-10 14-8 16-4 15-1 6v20l4 18 5 13 6 11 9 12 6 7 11 9 14 9 16 7 16 4 8 1h15l16-3 16-6 14-8 13-10 13-12 9-9 2-3h2l2-4 11-12 7-9 5-4 9-2 9 3 6 7 2 5 1 9-3 25-5 23-7 21-13 27-10 15-8 10-9 10-12 12-14 11-18 11-23 11-19 6-23 5-21 2h-17l-23-2-14-2h-19l-16 4-12 7-10 8-63 63-9 8-13 8-13 6-11 3h-20l-15-4-17-9-11-9-9-11-7-15-2-10v-16l3-13 6-11 11-14 16-16 7-8 69-69 6-9 4-13-1-9-7-24-3-21v-31l3-22 6-21 7-17 11-19 10-13 11-12 13-13 16-12 16-10 19-10 19-7 19-5z"/>
+  </svg>
+  <h1>COLLAR<span class="p">.</span></h1>
+  <span class="sub">challenge coin bench / flat inlay / slicer ready</span>
+  <span class="spacer"></span>
+  <div class="hdr-btns">
+    <label class="autolbl" title="Rebuild the mesh whenever you finish a change"><input type="checkbox" id="autoBuild" checked> auto rebuild</label>
+    <button class="b ghost" id="btnGuide" title="Show the four step walkthrough again">guide</button>
+    <button class="b ghost" id="btnPreset">presets</button>
+    <button class="b ghost" id="btnSave">save json</button>
+    <button class="b ghost" id="btnLoad">load json</button>
+    <button class="b pk" id="btnBuild" title="Rebuild the 3D mesh now">rebuild now</button>
+  </div>
+</header>
+
+<main>
+  <!-- ================= LEFT ================= -->
+  <div class="col" id="col-left">
+    <div class="tabs steps" id="tabsL">
+      <button data-p="pArt" class="on"><b>1</b><span>art</span></button>
+      <button data-p="pEdge"><b>2</b><span>edge</span></button>
+      <button data-p="pColour"><b>3</b><span>colour</span></button>
+      <button data-p="pPrint"><b>4</b><span>print</span></button>
+    </div>
+    <div class="guide" id="guide"></div>
+
+    <!-- ---- 1 art ---- -->
+    <div class="pane on" id="pArt">
+      <div class="ph">start from<span class="n">.</span></div>
+      <div class="chips" id="presetChips"></div>
+
+      <div class="ph">blank shape<span class="n">.</span></div>
+      <div class="chips" id="shapeChips"></div>
+      <div id="shapeParams">
+        <div class="row"><label>proportion</label><span class="v" id="vAspect">0.72</span></div>
+        <input type="range" id="aspect" min="0.3" max="1" step="0.02">
+        <div class="row"><label>corner radius</label><span class="v" id="vCorner">0.30</span></div>
+        <input type="range" id="corner" min="0.02" max="1" step="0.02">
+      </div>
+
+      <div class="ph">coin size<span class="n">.</span></div>
+      <div class="row"><label>diameter</label><span class="v" id="vDia">44.0</span></div>
+      <input type="range" id="dia" min="20" max="80" step="0.5">
+      <div class="row"><label>thickness</label><span class="v" id="vThk">3.6</span></div>
+      <input type="range" id="thk" min="1.6" max="8" step="0.2">
+
+      <div class="ph">faces<span class="n">.</span></div>
+      <div class="tabs" id="tabsFace" style="margin:0 -12px 10px">
+        <button data-f="front" class="on">front face</button>
+        <button data-f="back">back face</button>
+      </div>
+      <div id="drop">
+        <div class="big">drop art here</div>
+        <div class="sm">png / jpg / svg / webp &nbsp;or click to pick</div>
+      </div>
+      <div class="btnrow eq">
+        <button class="b ghost" id="btnAddText">add text</button>
+        <button class="b ghost" id="btnAddArc">add arc text</button>
+      </div>
+      <div class="btnrow eq">
+        <button class="b ghost" id="btnAddRing">add ring</button>
+        <button class="b ghost" id="btnClearFace">clear face</button>
+      </div>
+      <div id="layers"></div>
+
+      <details class="fold" id="foldHygiene">
+        <summary>fine tuning</summary>
+        <div class="inner">
+          <div class="row"><label>stroke boost</label><span class="v" id="vBoost">0.10</span></div>
+          <input type="range" id="boost" min="0" max="0.6" step="0.02">
+          <div class="row"><label>colour gap</label><span class="v" id="vGap">0.45</span></div>
+          <input type="range" id="gap" min="0" max="1.5" step="0.05">
+          <div class="row"><label>art keepout</label><span class="v" id="vKeep">1.4</span></div>
+          <input type="range" id="keep" min="0" max="6" step="0.2">
+          <div class="row full"><label><input type="checkbox" id="despeck" checked> drop specks under the min feature</label></div>
+          <div class="row"><label>min feature</label><span class="v" id="vMinF">0.90</span></div>
+          <input type="range" id="minF" min="0.3" max="2" step="0.05">
+          <p class="note">Stroke boost fattens thin art so a 0.4 nozzle can lay it down.
+          Colour gap holds body colour between two touching colours so the transition
+          does not smear. Keepout is how far art stays clear of the rim.</p>
+        </div>
+      </details>
+
+      <div class="btnrow nextrow"><button class="b pk nextstep" data-next="pEdge">next: cut the edge</button></div>
+    </div>
+
+    <!-- ---- 2 edge ---- -->
+    <div class="pane" id="pEdge">
+      <div class="ph">edge treatment<span class="n">.</span></div>
+      <div class="chips" id="edgePresets"></div>
+      <p class="note" id="edgeNote"></p>
+
+      <div class="row"><label>reed count</label><span class="v" id="vECount">40</span></div>
+      <input type="range" id="eCount" min="8" max="160" step="1">
+      <div class="row"><label>depth</label><span class="v" id="vEDepth">1.00</span></div>
+      <input type="range" id="eDepth" min="0.1" max="2.5" step="0.05">
+      <div class="row"><label>width</label><span class="v" id="vEWidth">2.80</span></div>
+      <input type="range" id="eWidth" min="0.3" max="6" step="0.1">
+      <div id="twistWrap">
+        <div class="row"><label>twist / lead</label><span class="v" id="vETwist">35</span></div>
+        <input type="range" id="eTwist" min="5" max="80" step="1">
+      </div>
+      <div id="openWrap">
+        <div class="row"><label>smooth arc</label><span class="v" id="vEGap">0</span></div>
+        <input type="range" id="eGap" min="0" max="180" step="5">
+      </div>
+
+      <div class="ph">rim band<span class="n">.</span></div>
+      <div class="row full"><label><input type="checkbox" id="rimOn"> give the rim its own colour</label></div>
+      <div class="row"><label>rim width</label><span class="v" id="vRimW">2.2</span></div>
+      <input type="range" id="rimW" min="0.6" max="6" step="0.1">
+      <p class="note" id="rimNote"></p>
+
+      <div class="ph">edge spots<span class="n">.</span></div>
+      <div class="row full"><label><input type="checkbox" id="dashOn"> break the rim into coloured segments</label></div>
+      <div id="dashWrap">
+        <div class="row"><label>segments</label><span class="v" id="vDashN">12</span></div>
+        <input type="range" id="dashN" min="2" max="48" step="1">
+        <div class="row"><label>segment width %</label><span class="v" id="vDashDuty">45</span></div>
+        <input type="range" id="dashDuty" min="5" max="95" step="1">
+        <div class="row"><label>rotate</label><span class="v" id="vDashPhase">0</span></div>
+        <input type="range" id="dashPhase" min="0" max="90" step="1">
+        <div class="row"><label>spot colour</label><select id="dashSlot" style="width:auto"></select></div>
+        <div class="row full"><label><input type="checkbox" id="dashAlt"> alternate with a third colour</label></div>
+        <div class="row" id="dashSlot2Row"><label>second spot</label><select id="dashSlot2" style="width:auto"></select></div>
+      </div>
+      <p class="note" id="dashNote"></p>
+
+      <div class="btnrow nextrow"><button class="b pk nextstep" data-next="pColour">next: pick the colours</button></div>
+    </div>
+
+    <!-- ---- 3 colour ---- -->
+    <div class="pane" id="pColour">
+      <div class="ph">how many colours<span class="n">.</span></div>
+      <div class="chips" id="slotCount"></div>
+      <div id="slots"></div>
+      <p class="note">Slot order is extruder order. Slot 1 goes in the first tool.</p>
+
+      <details class="fold" id="foldProfile">
+        <summary>slicer profile</summary>
+        <div class="inner">
+          <div class="row full"><label><input type="checkbox" id="writeFil" checked> write the filament setup into the 3mf</label></div>
+          <div class="row full"><label>filament preset name</label></div>
+          <input type="text" id="presetPattern" placeholder="Generic {TYPE}">
+          <p class="note">This is the filament preset each slot asks for in the exported
+          project. {TYPE} is replaced with the material. If your slicer names them with a
+          machine suffix, put it in, for example <code>Generic {TYPE} @FF C5P</code>.
+          Nothing printer or process scoped is written, so your own printer and process
+          profile stay selected. The filament settings themselves are generic ones though,
+          so if you have tuned presets you would rather keep, untick the box above and just
+          remap the colours in the slicer.</p>
+        </div>
+      </details>
+
+      <div class="ph">who gets what<span class="n">.</span></div>
+      <div class="row"><label>coin body</label><select id="baseSlot" style="width:auto"></select></div>
+      <div class="row" id="rimSlotRow"><label>rim band</label><select id="rimSlot" style="width:auto"></select></div>
+
+      <div class="ph">colour depth<span class="n">.</span></div>
+      <div class="row"><label>inlay depth</label><span class="v" id="vInlay">1.2</span></div>
+      <input type="range" id="inlay" min="0.2" max="2.4" step="0.2">
+      <p class="note" id="inlayNote"></p>
+
+      <div class="btnrow nextrow"><button class="b pk nextstep" data-next="pPrint">next: print settings</button></div>
+    </div>
+
+    <!-- ---- 4 print ---- -->
+    <div class="pane" id="pPrint">
+      <div class="ph">layers<span class="n">.</span></div>
+      <div class="row"><label>layer height</label><span class="v" id="vLayer">0.20</span></div>
+      <input type="range" id="layer" min="0.06" max="0.32" step="0.02">
+      <div class="row"><label>edge break</label><span class="v" id="vCham">0.5</span></div>
+      <input type="range" id="cham" min="0" max="2" step="0.1">
+      <p class="note" id="layerNote"></p>
+
+      <div class="ph">insert pocket<span class="n">.</span></div>
+      <div class="row full"><label><input type="checkbox" id="nfcOn"> sealed pocket for an NFC tag or magnet</label></div>
+      <div class="row"><label>tag diameter</label><span class="v" id="vTag">25.0</span></div>
+      <input type="range" id="tag" min="6" max="55" step="0.5">
+      <div class="row"><label>pocket dia</label><span class="v" id="vNfcD">26.0</span></div>
+      <input type="range" id="nfcD" min="8" max="60" step="0.5">
+      <div class="row"><label>pocket depth</label><span class="v" id="vNfcH">0.60</span></div>
+      <input type="range" id="nfcH" min="0.2" max="3" step="0.1">
+      <p class="note" id="nfcNote"></p>
+
+      <div class="ph">export<span class="n">.</span></div>
+      <div class="btnrow eq">
+        <button class="b pk" id="btn3mf" disabled>3mf project</button>
+        <button class="b" id="btnZip" disabled>stl bundle</button>
+      </div>
+      <div class="btnrow eq">
+        <button class="b ghost" id="btnCard" disabled>print card</button>
+        <button class="b ghost" id="btnPng" disabled>face png</button>
+      </div>
+      <p class="note" id="expNote">Build the mesh first.</p>
+
+      <details class="fold" id="foldPrinter">
+        <summary>printer profile</summary>
+        <div class="inner">
+          <div class="row full"><label>printer preset</label></div>
+          <input type="text" id="printerId" placeholder="leave blank to keep whatever is selected">
+          <div class="row full"><label>process preset</label></div>
+          <input type="text" id="processId" placeholder="leave blank to keep whatever is selected">
+          <div class="row"><label>printer model</label></div>
+          <input type="text" id="printerModel">
+          <div class="row"><label>nozzle variant</label></div>
+          <input type="text" id="printerVariant">
+          <p class="note">Names only, never the settings behind them, so a profile you
+          already have with the same name gets matched instead of overwritten. Leave the
+          first two blank and the slicer keeps whatever is selected, but then it may list
+          the file name in the printer dropdown instead of a real machine.</p>
+        </div>
+      </details>
+
+      <details class="fold">
+        <summary>mesh quality</summary>
+        <div class="inner">
+          <div class="row"><label>grid</label><span class="v" id="vRes">512</span></div>
+          <input type="range" id="res" min="384" max="1536" step="128">
+          <p class="note" id="resNote"></p>
+        </div>
+      </details>
+
+      <details class="fold">
+        <summary>how to slice this</summary>
+        <div class="inner">
+          <p class="note">Open the 3mf with File &gt; Open Project. It should arrive as one
+          object with a named part per colour and the extruders already set.</p>
+          <p class="note">If a slicer strips the colours, load the three STLs together and
+          answer yes to loading them as one object with multiple parts, then set the
+          filament per part.</p>
+          <p class="note">Ironing on for the top surface. No supports, no brim. Turn off arc
+          fitting on the outer wall or the reeds get smoothed away.</p>
+          <p class="note">Back face art is mirrored in the model on purpose. That face prints
+          against the bed and is read from the other side once you flip the coin, so it looks
+          backwards in a slicer bottom view and correct in your hand.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <!-- ================= STAGE ================= -->
+  <div id="stage">
+    <div class="stagebar">
+      <span class="t">viewport</span>
+      <span class="spacer"></span>
+      <div class="chips" style="margin:0" id="viewChips">
+        <button class="chip on" data-v="solid">solid</button>
+        <button class="chip" data-v="wire">wire</button>
+        <button class="chip" data-v="split">exploded</button>
+      </div>
+      <button class="b ghost" id="btnFlip">flip</button>
+      <button class="b ghost" id="btnHome">reset view</button>
+    </div>
+    <div class="viewwrap">
+      <canvas id="gl"></canvas>
+      <div id="glmsg">build the mesh to see it in 3D</div>
+    </div>
+    <div class="faces">
+      <div class="facebox"><div class="cap">front / top face</div><canvas id="cvF" width="520" height="520"></canvas></div>
+      <div class="facebox"><div class="cap">back / bed face</div><canvas id="cvB" width="520" height="520"></canvas></div>
+      <p class="facehint">click art to pick it up, drag to move, corner square to size, dot above to spin. arrow keys nudge, delete removes.</p>
+    </div>
+  </div>
+
+  <!-- ================= RIGHT ================= -->
+  <div class="col" id="col-right">
+    <div class="tabs"><button class="on" style="pointer-events:none">readout</button></div>
+    <div class="pane on">
+      <div class="ph">coin<span class="n">.</span></div>
+      <div id="statsCoin"></div>
+      <div class="ph">mesh<span class="n">.</span></div>
+      <div id="statsMesh"></div>
+      <div class="ph">slicer<span class="n">.</span></div>
+      <div id="statsSlicer"></div>
+      <div class="ph">log<span class="n">.</span></div>
+      <div id="log"></div>
+      <p class="note" id="tips"></p>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <span class="dot" id="dot"></span>
+  <span id="status">ready</span>
+  <span class="spacer"></span>
+  <span class="tag">make things. break things. repeat.</span>
+</footer>
+
+<div class="ovl hide" id="welcome">
+  <div class="card">
+    <h2>COLLAR<span>.</span></h2>
+    <p class="lead">A bench for designing 3D printed challenge coins. Everything it makes
+    is a flat flush colour inlay, so nothing is embossed and both faces finish level.
+    Four steps, left to right along the tabs.</p>
+    <ol>
+      <li><b>Art</b><span>Set how big the coin is, then drop a logo on each face or add text. A pipe in a text layer splits it into two colours: hack|.build.</span></li>
+      <li><b>Edge</b><span>Reeded, milled, knurled, beaded and the rest. This is the part that makes it read as a coin.</span></li>
+      <li><b>Colour</b><span>Say how many filaments you are using and what each one is. Art layers point at slot numbers, so you can decide the actual colours last.</span></li>
+      <li><b>Print</b><span>Layer height, optional sealed pocket for an NFC tag, then export the 3mf.</span></li>
+    </ol>
+    <p class="fine">The viewport rebuilds itself whenever you finish a change. Drag to orbit,
+    scroll to zoom. The two panels under it are the faces as they read in your hand.
+    Nothing is uploaded anywhere; this file does all of it locally.</p>
+    <div class="btnrow"><button class="b pk" id="wStart">start from a blank coin</button>
+    <button class="b ghost" id="wPreset">load the hack.build coin instead</button></div>
+  </div>
+</div>
+
+<input type="file" id="filePick" accept="image/*" multiple class="hide">
+<input type="file" id="jsonPick" accept=".json,application/json" class="hide">
+<script>
+"use strict";
+/* ============================================================ COLLAR
+   A challenge coin bench. Everything is a flat flush colour inlay: the body
+   carries pockets and each colour part drops into its pocket, so both faces
+   finish at the same Z and nothing is embossed.
+
+   The whole pipeline is raster in XY and exact in Z. Each face is composed on
+   a canvas, so images, live text and arc text all land in the same place with
+   no vector boolean library. The coin is then cut into Z slabs, every slab
+   gets a label grid, and the mesh is the set of quads where two labels differ.
+   Greedy meshing keeps the triangle count sane. Watertight by construction.
+   ============================================================ */
+
+const LOGO_ARC = "m0 0h38l34 3 29 5 25 6 26 8 21 8 20 9 20 10 23 14 19 13 12 10 11 9 16 15 9 9 7 8 9 10 15 20 18 27 13 23 13 28 10 26 8 26 6 27 4 27 2 25v29l-2 28-5 32-6 27-8 27-10 25-12 25-10 17-13 19-10 13-11 13-7 8-9 10-20 20-8 7-15 13-16 12-19 13-13 8-18 10-27 13-29 11-24 7-24 5-27 4-24 2h-25l-27-3-20-4-16-5-12-6-8-7-7-10-4-8-2-10v-13l4-13 7-12 11-11 14-8 12-3h16l24 3 23 1 25-1 22-3 30-7 18-6 25-11 22-12 21-14 10-8 13-11 13-13 9-11 10-13 10-15 12-22 9-20 10-30 6-27 3-19 2-26v-20l-3-29-6-26-8-24-8-18-11-21-14-21-11-14-9-10-7-8-16-16-11-9-15-12-17-11-14-8-16-8-14-6-24-8-22-5-21-3-12-1h-37l-25 3-20 4-20 6-21 8-24 12-19 12-12 9-11 9-10 9-17 17-9 11-14 19-11 18-11 21-10 26-6 21-4 19-2 15-1 14v25l2 22 3 20v10l-4 16-7 11-6 7-13 9-13 5-5 1h-14l-12-3-12-6-10-9-6-7-7-14-4-18-3-26-1-16v-36l3-30 5-28 8-29 11-29 13-28 14-24 14-21 10-14 13-16 12-14 30-30 11-9 15-12 24-16 21-12 23-11 27-10 23-7 27-6 27-4z";
+const LOGO_WRENCH = "m0 0h25l14 3 6 4 3 4 1 8-4 8-11 10-20 16-14 12-14 14-10 14-8 16-4 15-1 6v20l4 18 5 13 6 11 9 12 6 7 11 9 14 9 16 7 16 4 8 1h15l16-3 16-6 14-8 13-10 13-12 9-9 2-3h2l2-4 11-12 7-9 5-4 9-2 9 3 6 7 2 5 1 9-3 25-5 23-7 21-13 27-10 15-8 10-9 10-12 12-14 11-18 11-23 11-19 6-23 5-21 2h-17l-23-2-14-2h-19l-16 4-12 7-10 8-63 63-9 8-13 8-13 6-11 3h-20l-15-4-17-9-11-9-9-11-7-15-2-10v-16l3-13 6-11 11-14 16-16 7-8 69-69 6-9 4-13-1-9-7-24-3-21v-31l3-22 6-21 7-17 11-19 10-13 11-12 13-13 16-12 16-10 19-10 19-7 19-5z";
+const $ = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+const clamp = (v, a, b) => v < a ? a : v > b ? b : v;
+const fmt = (v, n = 2) => Number(v).toFixed(n);
+
+/* ------------------------------------------------------------ log */
+const LOG = {
+  el: null,
+  line(msg, cls) {
+    if (!this.el) this.el = $('#log');
+    const d = document.createElement('div');
+    if (cls) d.className = cls;
+    d.textContent = msg;
+    this.el.appendChild(d);
+    while (this.el.childNodes.length > 300) this.el.removeChild(this.el.firstChild);
+    this.el.scrollTop = this.el.scrollHeight;
+  },
+  say(m) { this.line('> ' + m); },
+  info(m) { this.line('> ' + m, 'i'); },
+  warn(m) { this.line('! ' + m, 'w'); },
+  err(m) { this.line('x ' + m, 'e'); }
+};
+function status(msg, kind) {
+  $('#status').textContent = msg;
+  const d = $('#dot');
+  d.className = 'dot' + (kind === 'busy' ? ' busy' : kind === 'err' ? ' err' : '');
+}
+
+/* ------------------------------------------------------------ state */
+const DEF_SLOTS = [
+  { name: 'black', color: '#1A1A1A', type: 'PETG' },
+  { name: 'cream', color: '#F5F0E6', type: 'PETG' },
+  { name: 'pink', color: '#FE0386', type: 'PETG' },
+  { name: 'spare', color: '#2B6CB0', type: 'PETG' }
+];
+
+const ST = {
+  dia: 44, thk: 3.6, cham: 0.5, inlay: 1.2, layer: 0.2, res: 512,
+  slots: DEF_SLOTS.map(s => ({ ...s })), nSlots: 3, base: 1,
+  presetPattern: 'Generic {TYPE} @FF C5P', writeFilaments: true,
+  printerId: 'Flashforge Creator 5 Pro 0.4 nozzle', processId: '0.24mm Standard @FF C5',
+  printerModel: 'Flashforge Creator 5 Pro', printerVariant: '0.4',
+  shape: { kind: 'round', aspect: 0.72, corner: 0.3 },
+  edge: { style: 'reeded', count: 40, depth: 1.0, width: 2.8, twist: 35, gapDeg: 0 },
+  rim: { on: true, w: 2.2, slot: 3, dashOn: false, dashN: 12, dashDuty: 45, dashSlot: 2, dashAlt: false, dashSlot2: 1, dashPhase: 0 },
+  nfc: { on: false, dia: 26, depth: 0.6, tag: 25 },
+  art: { boost: 0.10, gap: 0.45, keep: 1.4, despeck: true, minF: 0.90 },
+  faces: { front: [], back: [] },
+  face: 'front',
+  view: 'solid', flipped: false
+};
+let LAYER_ID = 1;
+
+const R = () => ST.dia / 2;
+const RF = () => R() - ST.cham;
+
+/* ------------------------------------------------------------ blank shapes
+   The planchet does not have to be round. Every shape is an implicit function
+   and the outline radius at an angle is found by bisection, so anything with a
+   sign test works and the edge treatments below still modulate it the same way.
+   Custom shapes are one of the most asked for options on a real coin. */
+const SHAPES = {
+  round: { label: 'round', f: (x, y, R) => Math.hypot(x, y) - R },
+  squircle: {
+    label: 'squircle',
+    f: (x, y, R) => Math.pow(Math.abs(x / R), 4) + Math.pow(Math.abs(y / R), 4) - 1
+  },
+  rounded: {
+    label: 'rounded square',
+    f: (x, y, R, p) => {
+      const a = R / Math.SQRT2, rc = Math.min(a, a) * p.corner;
+      return rrect(x, y, a, a, rc);
+    }
+  },
+  dogtag: {
+    label: 'dog tag',
+    f: (x, y, R, p) => {
+      const a = R, b = R * p.aspect;
+      return rrect(x, y, a, b, b);
+    }
+  },
+  bar: {
+    label: 'rounded bar',
+    f: (x, y, R, p) => {
+      const a = R, b = R * p.aspect;
+      return rrect(x, y, a, b, b * p.corner);
+    }
+  },
+  hex: { label: 'hexagon', f: (x, y, R) => ngon(x, y, R, 6) },
+  oct: { label: 'octagon', f: (x, y, R) => ngon(x, y, R, 8) },
+  tri: { label: 'triangle', f: (x, y, R) => ngon(x, y, R, 3) },
+  shield: {
+    label: 'shield',
+    f: (x, y, R, p) => {
+      const a = R * 0.82, top = R * 0.72;
+      if (y >= 0) return rrect(x, y - top * 0.35, a, top * 0.65, R * 0.18);
+      const t = -y / (R * 1.0);
+      const w = a * Math.sqrt(Math.max(0, 1 - t * t * t * 1.05));
+      return Math.abs(x) - w;
+    }
+  }
+};
+function rrect(x, y, a, b, rc) {
+  const qx = Math.abs(x) - (a - rc), qy = Math.abs(y) - (b - rc);
+  return Math.hypot(Math.max(qx, 0), Math.max(qy, 0)) + Math.min(Math.max(qx, qy), 0) - rc;
+}
+function ngon(x, y, R, n) {
+  let m = -1e9;
+  const ap = R * Math.cos(Math.PI / n);
+  for (let k = 0; k < n; k++) {
+    const a = Math.PI / 2 + 2 * Math.PI * k / n;
+    m = Math.max(m, x * Math.cos(a) + y * Math.sin(a) - ap);
+  }
+  return m;
+}
+function shapeR(theta) {
+  const sh = SHAPES[ST.shape.kind] || SHAPES.round, Rr = R();
+  if (ST.shape.kind === 'round') return Rr;
+  const c = Math.cos(theta), s = Math.sin(theta);
+  let lo = 0, hi = Rr * 1.05;
+  for (let i = 0; i < 26; i++) {
+    const m = (lo + hi) / 2;
+    if (sh.f(m * c, m * s, Rr, ST.shape) <= 0) lo = m; else hi = m;
+  }
+  return lo;
+}
+/* the outline is normalised so its widest point is the nominal diameter,
+   otherwise a squircle or a shield pokes out past the size you asked for */
+function shapeMinR() {
+  const l = baseLUT();
+  let m = 1e9;
+  for (const v of l) if (v < m) m = v;
+  return m;
+}
+
+const R_RIM_IN = () => ST.rim.on ? shapeMinR() - ST.rim.w : shapeMinR();
+const R_ART = () => Math.max(2, R_RIM_IN() - ST.art.keep);
+const hasDash = () => ST.rim.on && ST.rim.dashOn && ST.nSlots > 1;
+const MM_PER_PX = () => ST.dia / ST.res;
+const NFC_Z0 = () => {
+  // centre the pocket in the solid core, snapped down to a layer boundary
+  const c0 = ST.inlay, c1 = ST.thk - ST.inlay;
+  const z = (c0 + c1) / 2 - ST.nfc.depth / 2;
+  return Math.max(c0, Math.round(z / ST.layer) * ST.layer);
+};
+
+/* ------------------------------------------------------------ edge styles
+   Every style is r(theta, z). Styles flagged zDep force the coin to be sliced
+   at layer height so the pattern can vary up the rim. Reeded terminology is
+   the numismatic one: a reed is one ridge plus one flute, the ridge is the
+   land left standing and the flute is what gets cut away. */
+const tri1 = x => { const f = x - Math.floor(x); return 1 - Math.abs(2 * f - 1); };
+const val1 = x => { const d = Math.abs(x - Math.round(x)); return 1 - Math.min(1, 2 * d); };
+
+const EDGES = {
+  plain: {
+    label: 'plain', zDep: false, uses: [],
+    note: 'Smooth all the way round. The edge break is still applied.',
+    r: (t, z, p) => p.R
+  },
+  reeded: {
+    label: 'reeded', zDep: false, uses: ['count', 'depth', 'width'],
+    note: 'Round flutes cut into the rim, the dime and quarter treatment. Go deeper than feels right: anything under about 0.6 mm gets smoothed away by the outer wall and prints round.',
+    r: (t, z, p) => {
+      const pa = 2 * Math.PI / p.count;
+      const phi = t - Math.round(t / pa) * pa;
+      const rc = (p.width * p.width / 4 + p.depth * p.depth) / (2 * p.depth);
+      const at = p.R + rc - p.depth;
+      const c = Math.cos(phi), disc = at * at * c * c - at * at + rc * rc;
+      if (disc <= 0) return p.R;
+      return Math.min(p.R, at * c - Math.sqrt(disc));
+    }
+  },
+  milled: {
+    label: 'milled V', zDep: false, uses: ['count', 'depth', 'width'],
+    note: 'Sharp V flutes. Reads harder than round reeding at the same depth because the valley comes to a line.',
+    r: (t, z, p) => {
+      const pa = 2 * Math.PI / p.count;
+      const s = (t - Math.round(t / pa) * pa) * p.R;
+      const h = p.width / 2;
+      return Math.abs(s) >= h ? p.R : p.R - p.depth * (1 - Math.abs(s) / h);
+    }
+  },
+  square: {
+    label: 'square groove', zDep: false, uses: ['count', 'depth', 'width'],
+    note: 'Flat bottomed slots with flat lands between. The most nozzle friendly of the lot.',
+    r: (t, z, p) => {
+      const pa = 2 * Math.PI / p.count;
+      const s = (t - Math.round(t / pa) * pa) * p.R;
+      return Math.abs(s) <= p.width / 2 ? p.R - p.depth : p.R;
+    }
+  },
+  openreed: {
+    label: 'open reed', zDep: false, uses: ['count', 'depth', 'width', 'gapDeg'],
+    note: 'Reeded with a smooth arc left blank, the way mints leave room for edge numbering. Set the arc, then hand number the coins.',
+    r: (t, z, p) => {
+      let a = t + Math.PI / 2;
+      a = Math.atan2(Math.sin(a), Math.cos(a));
+      if (Math.abs(a) * 180 / Math.PI < p.gapDeg / 2) return p.R;
+      return EDGES.reeded.r(t, z, p);
+    }
+  },
+  knurl: {
+    label: 'diamond knurl', zDep: true, uses: ['count', 'depth', 'width', 'twist'],
+    note: 'Two crossing helical flute families, so the rim carries raised diamonds. Forces slab-per-layer slicing, which multiplies the triangle count.',
+    r: (t, z, p) => {
+      const pitch = 2 * Math.PI * p.R / p.count;
+      const T = Math.tan(p.twist * Math.PI / 180);
+      const s = t * p.R;
+      const a = (s + z * T) / pitch, b = (s - z * T) / pitch;
+      return p.R - p.depth * Math.max(val1(a), val1(b));
+    }
+  },
+  rope: {
+    label: 'rope', zDep: true, uses: ['count', 'depth', 'twist'],
+    note: 'One helical groove wrapping the rim like laid rope. Keep the lead shallow or the top and bottom faces cut into it.',
+    r: (t, z, p) => {
+      const pitch = 2 * Math.PI * p.R / p.count;
+      const T = Math.tan(p.twist * Math.PI / 180);
+      const a = (t * p.R + z * T) / pitch;
+      return p.R - p.depth * (0.5 - 0.5 * Math.cos(2 * Math.PI * (a - Math.floor(a))));
+    }
+  },
+  beaded: {
+    label: 'beaded', zDep: true, uses: ['count', 'depth', 'width'],
+    note: 'A single row of round dents, the pearl circle moved off the face and onto the edge.',
+    r: (t, z, p) => {
+      const pa = 2 * Math.PI / p.count;
+      const s = (t - Math.round(t / pa) * pa) * p.R;
+      const rb = Math.max(p.width / 2, 0.2), dz = z - p.thk / 2;
+      const q = 1 - (s * s + dz * dz) / (rb * rb);
+      return q <= 0 ? p.R : p.R - p.depth * Math.sqrt(q);
+    }
+  },
+  oblique: {
+    label: 'oblique line', zDep: true, uses: ['count', 'depth', 'twist'],
+    note: 'Dense slanted lines around the rim. The oblique cut edge, one of the most asked for upgrades on a struck coin.',
+    r: (t, z, p) => {
+      const pitch = 2 * Math.PI * p.R / p.count;
+      const T = Math.tan(p.twist * Math.PI / 180);
+      const a = (t * p.R + z * T) / pitch;
+      return p.R - p.depth * val1(a);
+    }
+  },
+  wave: {
+    label: 'wave', zDep: false, uses: ['count', 'depth'],
+    note: 'Long smooth crests and troughs cut into the rim rather than sharp flutes.',
+    r: (t, z, p) => p.R - p.depth * (0.5 - 0.5 * Math.cos(p.count * t))
+  },
+  petal: {
+    label: 'petal cut', zDep: true, uses: ['count', 'depth', 'width'],
+    note: 'Semicircular divots carved just under the rolling edge, sometimes called a slash cut. Leaves a plain band at the other face.',
+    r: (t, z, p) => {
+      const pa = 2 * Math.PI / p.count;
+      const s = (t - Math.round(t / pa) * pa) * p.R;
+      const rb = Math.max(p.width / 2, 0.2), dz = z - p.thk * 0.72;
+      const q = 1 - (s * s + dz * dz) / (rb * rb);
+      return q <= 0 ? p.R : p.R - p.depth * Math.sqrt(q);
+    }
+  },
+  lobed: {
+    label: 'scalloped blank', zDep: false, uses: ['count', 'depth'],
+    note: 'Not an edge treatment but a planchet shape: smooth lobes cut the outline into a flower. Keep the count low.',
+    r: (t, z, p) => p.R - p.depth * (0.5 - 0.5 * Math.cos(p.count * t))
+  }
+};
+
+const EDGE_PRESETS = [
+  { k: 'plain', n: 'plain', e: { style: 'plain' } },
+  { k: 'reedF', n: 'reeded fine', e: { style: 'reeded', count: 72, depth: 0.7, width: 1.5 } },
+  { k: 'reedM', n: 'reeded', e: { style: 'reeded', count: 40, depth: 1.0, width: 2.8 } },
+  { k: 'reedC', n: 'reeded coarse', e: { style: 'reeded', count: 24, depth: 1.4, width: 4.4 } },
+  { k: 'mill', n: 'milled V', e: { style: 'milled', count: 44, depth: 1.1, width: 3.0 } },
+  { k: 'sq', n: 'square groove', e: { style: 'square', count: 32, depth: 1.0, width: 2.0 } },
+  { k: 'open', n: 'open reed', e: { style: 'openreed', count: 40, depth: 1.0, width: 2.8, gapDeg: 70 } },
+  { k: 'knurl', n: 'diamond knurl', e: { style: 'knurl', count: 28, depth: 0.9, width: 2.4, twist: 40 } },
+  { k: 'rope', n: 'rope', e: { style: 'rope', count: 26, depth: 0.9, twist: 30 } },
+  { k: 'bead', n: 'beaded', e: { style: 'beaded', count: 30, depth: 0.9, width: 2.6 } },
+  { k: 'obl', n: 'oblique line', e: { style: 'oblique', count: 60, depth: 0.8, twist: 55 } },
+  { k: 'wave', n: 'wave', e: { style: 'wave', count: 18, depth: 1.2 } },
+  { k: 'petal', n: 'petal cut', e: { style: 'petal', count: 26, depth: 1.0, width: 3.0 } },
+  { k: 'lobe', n: 'scalloped blank', e: { style: 'lobed', count: 12, depth: 2.2 } }
+];
+
+function edgeParams(z) {
+  return { R: R(), thk: ST.thk, count: ST.edge.count, depth: ST.edge.depth, width: ST.edge.width, twist: ST.edge.twist, gapDeg: ST.edge.gapDeg };
+}
+/* Angular lookup so the per-pixel inner loop is a table read. Two tables: the
+   bare planchet outline, which the rim band follows so a coloured band stays an
+   even width on a non round blank, and the same outline with the edge treatment
+   cut into it. */
+const LUT_N = 8192;
+let _baseLUT = null, _baseKey = '';
+function baseLUT() {
+  const key = `${ST.shape.kind}|${ST.dia}|${ST.shape.aspect}|${ST.shape.corner}`;
+  if (key === _baseKey) return _baseLUT;
+  const out = new Float32Array(LUT_N);
+  let mx = 0;
+  for (let i = 0; i < LUT_N; i++) { out[i] = shapeR((i / LUT_N) * 2 * Math.PI - Math.PI); if (out[i] > mx) mx = out[i]; }
+  if (mx > 0) { const k = R() / mx; for (let i = 0; i < LUT_N; i++) out[i] *= k; }
+  _baseKey = key; _baseLUT = out;
+  return out;
+}
+function edgeLUT(z) {
+  const f = EDGES[ST.edge.style].r, p = edgeParams(z);
+  const base = baseLUT(), out = new Float32Array(LUT_N);
+  for (let i = 0; i < LUT_N; i++) {
+    p.R = base[i];
+    out[i] = f((i / LUT_N) * 2 * Math.PI - Math.PI, z, p);
+  }
+  return { base, cut: out };
+}
+
+/* ------------------------------------------------------------ scratch canvas */
+let SC = null, SCTX = null;
+function scratch(res) {
+  if (!SC || SC.width !== res) { SC = document.createElement('canvas'); SC.width = SC.height = res; SCTX = SC.getContext('2d', { willReadFrequently: true }); }
+  SCTX.setTransform(1, 0, 0, 1, 0, 0);
+  SCTX.clearRect(0, 0, res, res);
+  return SCTX;
+}
+function readMask(res) {
+  const d = SCTX.getImageData(0, 0, res, res).data;
+  const m = new Uint8Array(res * res);
+  for (let j = 0; j < res; j++) for (let i = 0; i < res; i++)
+    if (d[(j * res + i) * 4 + 3] > 120) m[(res - 1 - j) * res + i] = 1;
+  return m;
+}
+function mmTransform(ctx, res) {
+  // model mm, origin centre, +y up in model space maps to -y on the canvas
+  const k = res / ST.dia;
+  ctx.setTransform(k, 0, 0, k, res / 2, res / 2);
+}
+
+/* ------------------------------------------------------------ mask helpers */
+function dilate(mask, res, rPx) {
+  if (rPx < 1) return mask;
+  const r = Math.round(rPx), n = res * res, tmp = new Uint8Array(n), out = new Uint8Array(n);
+  for (let j = 0; j < res; j++) {
+    const row = j * res;
+    let cnt = 0;
+    for (let i = -r; i <= r; i++) if (i >= 0 && i < res && mask[row + i]) cnt++;
+    for (let i = 0; i < res; i++) {
+      tmp[row + i] = cnt > 0 ? 1 : 0;
+      const drop = i - r, add = i + r + 1;
+      if (drop >= 0 && mask[row + drop]) cnt--;
+      if (add < res && mask[row + add]) cnt++;
+    }
+  }
+  for (let i = 0; i < res; i++) {
+    let cnt = 0;
+    for (let j = -r; j <= r; j++) if (j >= 0 && j < res && tmp[j * res + i]) cnt++;
+    for (let j = 0; j < res; j++) {
+      out[j * res + i] = cnt > 0 ? 1 : 0;
+      const drop = j - r, add = j + r + 1;
+      if (drop >= 0 && tmp[drop * res + i]) cnt--;
+      if (add < res && tmp[add * res + i]) cnt++;
+    }
+  }
+  return out;
+}
+function despeckle(mask, res, minPx) {
+  const n = res * res, seen = new Uint8Array(n), stack = new Int32Array(n), comp = new Int32Array(1024);
+  for (let s = 0; s < n; s++) {
+    if (!mask[s] || seen[s]) continue;
+    let top = 0, cn = 0; stack[top++] = s; seen[s] = 1;
+    const cells = [];
+    while (top > 0) {
+      const p = stack[--top]; cells.push(p); cn++;
+      const i = p % res, j = (p - i) / res;
+      if (i > 0 && mask[p - 1] && !seen[p - 1]) { seen[p - 1] = 1; stack[top++] = p - 1; }
+      if (i < res - 1 && mask[p + 1] && !seen[p + 1]) { seen[p + 1] = 1; stack[top++] = p + 1; }
+      if (j > 0 && mask[p - res] && !seen[p - res]) { seen[p - res] = 1; stack[top++] = p - res; }
+      if (j < res - 1 && mask[p + res] && !seen[p + res]) { seen[p + res] = 1; stack[top++] = p + res; }
+    }
+    if (cn < minPx) for (const c of cells) mask[c] = 0;
+  }
+  return mask;
+}
+
+/* ------------------------------------------------------------ layer render
+   Each layer returns either a boolean coverage mask bound to one slot, or a
+   per pixel slot map when it is a palette image. Canvas does the hard part. */
+function renderLayer(L, res) {
+  const ctx = scratch(res), k = res / ST.dia;
+  if (L.kind === 'ring') {
+    const map = new Uint8Array(res * res);
+    const r0 = Math.min(L.r0, L.r1), r1 = Math.max(L.r0, L.r1);
+    const seg = Math.max(1, L.seg | 0), dutyA = (L.duty ?? 100) / 100;
+    for (let j = 0; j < res; j++) for (let i = 0; i < res; i++) {
+      const x = (i + 0.5 - res / 2) / k, y = (res / 2 - j - 0.5) / k;
+      const d = Math.hypot(x, y);
+      if (d < r0 || d > r1) continue;
+      if (seg > 1) {
+        const t = Math.atan2(y, x) + Math.PI, pa = 2 * Math.PI / seg;
+        const f = (t % pa) / pa;
+        if (f > dutyA) continue;
+      }
+      map[j * res + i] = 1;
+    }
+    return { mask: map, slot: L.slot };
+  }
+  if (L.kind === 'text') {
+    /* A pipe splits the string into coloured runs: hack|.build puts the tail in
+       the accent slot. runGap adds real air at each split, which is how you get
+       a dot to read instead of collapsing into the letter beside it. */
+    const weight = L.bold ? '700 ' : '';
+    const font = `${weight}${L.size}px ${L.font}`;
+    const txt0 = L.caps ? L.text.toUpperCase() : L.text;
+    const accent = L.accent || L.slot;
+    const gapMM = L.runGap || 0;
+    const lines = txt0.split('\n').map(line =>
+      line.split('|').map((t, i) => ({ t, slot: i % 2 ? accent : L.slot })));
+    const slots = [];
+    for (const ln of lines) for (const r of ln) if (r.t && !slots.includes(r.slot)) slots.push(r.slot);
+    const out = [];
+    for (const sl of slots) {
+      const c2 = scratch(res);
+      mmTransform(c2, res);
+      c2.font = font; c2.fillStyle = '#000'; c2.textBaseline = 'alphabetic';
+      if (L.mode === 'arc') {
+        c2.textAlign = 'center';
+        const chars = [];
+        lines[0].forEach((r, ri) => {
+          for (const ch of r.t) chars.push({ ch, slot: r.slot });
+          if (ri < lines[0].length - 1 && gapMM) chars.push({ ch: '', slot: r.slot, extra: gapMM });
+        });
+        const widths = chars.map(c => c.extra ? c.extra
+          : c2.measureText(c.ch === ' ' ? 'n' : c.ch).width * (L.track ?? 1));
+        const total = widths.reduce((a, b) => a + b, 0);
+        const Rb = Math.max(1, L.arcR), sign = L.flip ? 1 : -1, A0 = L.arcDeg * Math.PI / 180;
+        let cur = -total / 2;
+        chars.forEach((c, n) => {
+          const adv = widths[n];
+          if (c.slot === sl && c.ch && c.ch !== ' ') {
+            const A = A0 + sign * ((cur + adv / 2) / Rb);
+            c2.save();
+            c2.translate(Rb * Math.cos(A), -Rb * Math.sin(A));
+            c2.rotate(L.flip ? (-Math.PI / 2 - A) : (Math.PI / 2 - A));
+            c2.fillText(c.ch, 0, 0);
+            c2.restore();
+          }
+          cur += adv;
+        });
+      } else {
+        c2.textAlign = 'left';
+        const lh = L.size * 1.18;
+        lines.forEach((runs, li) => {
+          const ws = runs.map(r => c2.measureText(r.t).width);
+          const total = ws.reduce((a, b) => a + b, 0) + gapMM * (runs.length - 1);
+          const yy = -(L.dy || 0) + (li - (lines.length - 1) / 2) * lh;
+          let x = -total / 2;
+          runs.forEach((r, ri) => {
+            if (r.slot === sl && r.t) {
+              c2.save();
+              c2.translate(L.dx || 0, yy);
+              c2.rotate(-(L.rot || 0) * Math.PI / 180);
+              c2.fillText(r.t, x, 0);
+              c2.restore();
+            }
+            x += ws[ri] + gapMM;
+          });
+        });
+      }
+      out.push({ mask: readMask(res), slot: sl });
+    }
+    return out;
+  }
+  /* image */
+  if (!L.img) return null;
+  const iw = L.img.naturalWidth || L.img.width, ih = L.img.naturalHeight || L.img.height;
+  if (!iw || !ih) return null;
+  const artD = 2 * R_ART() * (L.scale ?? 1);
+  const s = (artD * k) / Math.max(iw, ih);
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.translate(res / 2 + L.dx * k, res / 2 - L.dy * k);
+  ctx.rotate(-(L.rot || 0) * Math.PI / 180);
+  if (L.mirror) ctx.scale(-1, 1);
+  ctx.drawImage(L.img, -iw * s / 2, -ih * s / 2, iw * s, ih * s);
+  const d = SCTX.getImageData(0, 0, res, res).data;
+  const n = res * res;
+  if (L.mode === 'palette') {
+    const map = new Uint8Array(n), pal = [];
+    for (let q = 0; q < ST.nSlots; q++) pal.push({ slot: q + 1, rgb: hex2rgb(ST.slots[q].color) });
+    for (let j = 0; j < res; j++) for (let i = 0; i < res; i++) {
+      const o = (j * res + i) * 4;
+      if (d[o + 3] < 120) continue;
+      let best = 0, bd = 1e9;
+      for (const p of pal) {
+        const dr = d[o] - p.rgb[0], dg = d[o + 1] - p.rgb[1], db = d[o + 2] - p.rgb[2];
+        const q = 0.30 * dr * dr + 0.59 * dg * dg + 0.11 * db * db;
+        if (q < bd) { bd = q; best = p.slot; }
+      }
+      if (best !== ST.base) map[(res - 1 - j) * res + i] = best;
+    }
+    return { map };
+  }
+  const map = new Uint8Array(n), thr = L.thr ?? 128, inv = !!L.invert;
+  for (let j = 0; j < res; j++) for (let i = 0; i < res; i++) {
+    const o = (j * res + i) * 4;
+    if (d[o + 3] < 120) continue;
+    let hit;
+    if (L.mode === 'alpha') hit = true;
+    else {
+      const lum = 0.299 * d[o] + 0.587 * d[o + 1] + 0.114 * d[o + 2];
+      hit = inv ? lum >= thr : lum <= thr;
+    }
+    if (hit) map[(res - 1 - j) * res + i] = 1;
+  }
+  return { mask: map, slot: L.slot };
+}
+
+function hex2rgb(h) {
+  h = h.replace('#', '');
+  if (h.length === 3) h = h.split('').map(c => c + c).join('');
+  return [parseInt(h.slice(0, 2), 16), parseInt(h.slice(2, 4), 16), parseInt(h.slice(4, 6), 16)];
+}
+
+/* compose one face into a slot map (0 = body colour) */
+function buildFace(which, res) {
+  const n = res * res, out = new Uint8Array(n);
+  const holes = new Uint8Array(n);
+  const layers = ST.faces[which].filter(L => !L.off);
+  for (const L of layers) {
+    if (L.cut) {
+      const cr = renderLayer(L, res);
+      if (!cr) continue;
+      for (const r of (Array.isArray(cr) ? cr : [cr])) {
+        if (!r) continue;
+        const m = r.map || r.mask;
+        for (let p = 0; p < n; p++) if (m[p]) holes[p] = 1;
+      }
+      continue;
+    }
+    const res0 = renderLayer(L, res);
+    if (!res0) continue;
+    for (const r of (Array.isArray(res0) ? res0 : [res0])) {
+      if (!r) continue;
+      if (r.map) { for (let p = 0; p < n; p++) if (r.map[p]) out[p] = r.map[p]; }
+      else { const sl = r.slot; for (let p = 0; p < n; p++) if (r.mask[p]) out[p] = sl; }
+    }
+  }
+  /* per slot hygiene: boost thin strokes, drop specks, hold a body gap */
+  const k = res / ST.dia;
+  const used = new Set(); for (let p = 0; p < n; p++) if (out[p]) used.add(out[p]);
+  const masks = new Map();
+  for (const s of used) {
+    const m = new Uint8Array(n);
+    for (let p = 0; p < n; p++) if (out[p] === s) m[p] = 1;
+    masks.set(s, m);
+  }
+  const boostPx = ST.art.boost * k / 2;
+  for (const [s, m] of masks) {
+    let mm = boostPx >= 1 ? dilate(m, res, boostPx) : m;
+    if (ST.art.despeck) {
+      /* area of a disc well under the min feature. A dot that IS the min
+         feature has to survive, or despeckle eats every full stop. */
+      const minPx = Math.max(1, Math.round(Math.PI * Math.pow(ST.art.minF * k / 2, 2) * 0.35));
+      mm = despeckle(mm.slice(), res, minPx);
+    }
+    masks.set(s, mm);
+  }
+  const gapPx = ST.art.gap * k / 2;
+  const finals = new Map();
+  if (gapPx >= 1 && masks.size > 1) {
+    for (const [s, m] of masks) {
+      const other = new Uint8Array(n);
+      for (const [s2, m2] of masks) if (s2 !== s) for (let p = 0; p < n; p++) if (m2[p]) other[p] = 1;
+      const grown = dilate(other, res, gapPx);
+      const f = new Uint8Array(n);
+      for (let p = 0; p < n; p++) if (m[p] && !grown[p]) f[p] = 1;
+      finals.set(s, f);
+    }
+  } else for (const [s, m] of masks) finals.set(s, m);
+
+  out.fill(0);
+  const rArt = R_ART();
+  for (const [s, m] of finals) {
+    for (let j = 0; j < res; j++) for (let i = 0; i < res; i++) {
+      const p = j * res + i;
+      if (!m[p]) continue;
+      const x = (i + 0.5 - res / 2) / k, y = (j + 0.5 - res / 2) / k;
+      if (x * x + y * y > rArt * rArt) continue;
+      out[p] = s;
+    }
+  }
+  /* a cut through goes all the way down, so it is not clipped to the art radius,
+     only kept a hair inside the outline so the coin keeps a wall */
+  let any = false;
+  for (let p = 0; p < n; p++) if (holes[p]) { any = true; break; }
+  return { art: out, holes: any ? holes : null };
+}
+
+/* ------------------------------------------------------------ slab plan */
+function planSlabs() {
+  const zs = new Set([0, ST.thk]);
+  const push = z => { if (z > 1e-6 && z < ST.thk - 1e-6) zs.add(Math.round(z * 1e4) / 1e4); };
+  push(ST.inlay); push(ST.thk - ST.inlay);
+  const step = ST.layer;
+  const nCh = Math.max(0, Math.ceil((ST.cham - 1e-9) / step));
+  for (let i = 1; i <= nCh; i++) { push(i * step); push(ST.thk - i * step); }
+  if (ST.nfc.on) { push(NFC_Z0()); push(NFC_Z0() + ST.nfc.depth); }
+  if (EDGES[ST.edge.style].zDep) for (let z = step; z < ST.thk; z += step) push(z);
+  const arr = Array.from(zs).sort((a, b) => a - b);
+  const out = [];
+  for (let i = 0; i < arr.length - 1; i++) if (arr[i + 1] - arr[i] > 1e-6) out.push([arr[i], arr[i + 1]]);
+  return out;
+}
+function insetAt(z) {
+  if (ST.cham <= 0) return 0;
+  const a = ST.cham - z, b = ST.cham - (ST.thk - z);
+  return Math.max(0, a, b);
+}
+
+function labelSlab(z0, z1, artF, artB, holes, D2, TH) {
+  const res = ST.res, n = res * res, L = new Uint8Array(n);
+  const zm = (z0 + z1) / 2;
+  const lut = edgeLUT(zm), inset = insetAt(zm);
+  const base = lut.base, cut = lut.cut;
+  const rimOn = ST.rim.on, rimW = ST.rim.w, rimSlot = ST.rim.slot, body = ST.base;
+  const topBand = zm >= ST.thk - ST.inlay, botBand = zm <= ST.inlay;
+  const nfcOn = ST.nfc.on, nfcR = ST.nfc.dia / 2;
+  const nz0 = NFC_Z0(), nz1 = nz0 + ST.nfc.depth;
+  const inPocketZ = nfcOn && zm > nz0 && zm < nz1;
+  const Rmax = R();
+  const dash = hasDash(), dN = Math.max(1, ST.rim.dashN | 0);
+  const dPitch = 2 * Math.PI / dN, dDuty = ST.rim.dashDuty / 100;
+  const dPhase = (ST.rim.dashPhase || 0) * Math.PI / 180;
+  const dSlot = ST.rim.dashSlot, dAlt = ST.rim.dashAlt, dSlot2 = ST.rim.dashSlot2;
+  for (let p = 0; p < n; p++) {
+    const d = D2[p];
+    if (d > Rmax) continue;
+    let idx = ((TH[p] + Math.PI) / (2 * Math.PI) * LUT_N) | 0;
+    if (idx < 0) idx = 0; else if (idx >= LUT_N) idx = LUT_N - 1;
+    if (d > cut[idx] - inset) continue;
+    if (holes && holes[p]) continue;
+    let lab = body;
+    if (rimOn && d >= base[idx] - rimW) {
+      lab = rimSlot;
+      if (dash) {
+        let a = TH[p] + Math.PI + dPhase;
+        const k = Math.floor(a / dPitch);
+        let f = a / dPitch - k;
+        if (f < dDuty) lab = (dAlt && (k & 1)) ? dSlot2 : dSlot;
+      }
+    } else if (topBand && artF[p]) lab = artF[p];
+    else if (botBand && artB[p]) lab = artB[p];
+    if (inPocketZ && d <= nfcR) lab = 0;
+    L[p] = lab;
+  }
+  return L;
+}
+
+/* ------------------------------------------------------------ greedy meshing */
+function greedy(mask, res, cb) {
+  for (let j = 0; j < res; j++) {
+    for (let i = 0; i < res; i++) {
+      if (!mask[j * res + i]) continue;
+      let w = 1;
+      while (i + w < res && mask[j * res + i + w]) w++;
+      let h = 1;
+      outer: while (j + h < res) {
+        const row = (j + h) * res + i;
+        for (let q = 0; q < w; q++) if (!mask[row + q]) break outer;
+        h++;
+      }
+      for (let jj = 0; jj < h; jj++) mask.fill(0, (j + jj) * res + i, (j + jj) * res + i + w);
+      cb(i, j, w, h);
+      i += w - 1;
+    }
+  }
+}
+
+class Part {
+  constructor() { this.q = []; }
+  quad(a, b, c, d, nx, ny, nz) { this.q.push([a, b, c, d, nx, ny, nz]); }
+}
+
+/* ---------------------------------------------------------------- T junction fix
+   Greedy merging leaves rectangles whose edges are subdivided by their
+   neighbours, so an edge can be shared by one long quad and two short ones and
+   the surface stops being manifold even though it has no holes. Slicers mostly
+   cope, but a mesh that passes a strict edge check is one less thing to argue
+   with. Every quad here is axis aligned, so the fix is exact: collect every
+   vertex that sits on each axis line, re insert the ones that fall inside an
+   edge, and fan the resulting boundary loop from the quad centre. The centre of
+   a rectangle is always interior, so no fan triangle is degenerate. */
+function conformQuads(quads) {
+  const K = 1e4, r = v => Math.round(v * K);
+  const vkey = p => `${r(p[0])},${r(p[1])},${r(p[2])}`;
+  const uniq = new Map();
+  for (const q of quads) for (let i = 0; i < 4; i++) uniq.set(vkey(q[i]), q[i]);
+  /* three axis lines through each vertex, keyed by the two fixed coordinates */
+  const lines = [new Map(), new Map(), new Map()];
+  const other = [[1, 2], [0, 2], [0, 1]];
+  for (const p of uniq.values()) {
+    for (let d = 0; d < 3; d++) {
+      const [u, v] = other[d], k = `${r(p[u])},${r(p[v])}`;
+      let set = lines[d].get(k);
+      if (!set) { set = []; lines[d].set(k, set); }
+      set.push(p[d]);
+    }
+  }
+  for (const m of lines) for (const [k, arr] of m) {
+    arr.sort((a, b) => a - b);
+    const out = [arr[0]];
+    for (let i = 1; i < arr.length; i++) if (arr[i] - out[out.length - 1] > 1e-5) out.push(arr[i]);
+    m.set(k, out);
+  }
+  const tris = [];
+  const eps = 1e-6;
+  for (const q of quads) {
+    const nx = q[4], ny = q[5], nz = q[6];
+    const loop = [];
+    for (let e = 0; e < 4; e++) {
+      const a = q[e], b = q[(e + 1) % 4];
+      loop.push(a);
+      let d = -1;
+      for (let k = 0; k < 3; k++) if (Math.abs(a[k] - b[k]) > eps) { d = d < 0 ? k : -2; }
+      if (d < 0) continue;
+      const [u, v] = other[d];
+      const arr = lines[d].get(`${r(a[u])},${r(a[v])}`);
+      if (!arr) continue;
+      const lo = Math.min(a[d], b[d]), hi = Math.max(a[d], b[d]), fwd = b[d] > a[d];
+      const mid = [];
+      for (const t of arr) if (t > lo + eps && t < hi - eps) mid.push(t);
+      if (!mid.length) continue;
+      if (!fwd) mid.reverse();
+      for (const t of mid) {
+        const p = a.slice();
+        p[d] = t;
+        loop.push(p);
+      }
+    }
+    if (loop.length === 4) {
+      tris.push([loop[0], loop[1], loop[2], nx, ny, nz]);
+      tris.push([loop[0], loop[2], loop[3], nx, ny, nz]);
+      continue;
+    }
+    const c = [0, 0, 0];
+    for (let i = 0; i < 4; i++) for (let k = 0; k < 3; k++) c[k] += q[i][k] / 4;
+    for (let i = 0; i < loop.length; i++)
+      tris.push([c, loop[i], loop[(i + 1) % loop.length], nx, ny, nz]);
+  }
+  return tris;
+}
+
+function packPart(quads) {
+  const tris = conformQuads(quads);
+  const pos = new Float32Array(tris.length * 9), nrm = new Float32Array(tris.length * 9);
+  let o = 0;
+  for (const t of tris) {
+    for (let v = 0; v < 3; v++) {
+      pos[o] = t[v][0]; pos[o + 1] = t[v][1]; pos[o + 2] = t[v][2];
+      nrm[o] = t[3]; nrm[o + 1] = t[4]; nrm[o + 2] = t[5];
+      o += 3;
+    }
+  }
+  return { pos, nrm, tris: tris.length };
+}
+
+function buildMesh(onProgress) {
+  const res = ST.res, n = res * res, k = res / ST.dia, mm = ST.dia / res;
+  const half = res / 2;
+  const X = i => (i - half) * mm, Y = j => (j - half) * mm;
+
+  const D2 = new Float32Array(n), TH = new Float32Array(n);
+  for (let j = 0; j < res; j++) for (let i = 0; i < res; i++) {
+    const x = (i + 0.5 - half) * mm, y = (j + 0.5 - half) * mm;
+    const p = j * res + i;
+    D2[p] = Math.hypot(x, y); TH[p] = Math.atan2(y, x);
+  }
+  const F = buildFace('front', res);
+  const B = buildFace('back', res);
+  const artF = F.art;
+  /* the bed face is read from the other side, so it is mirrored in the model */
+  const artB = new Uint8Array(n);
+  for (let j = 0; j < res; j++) for (let i = 0; i < res; i++) artB[j * res + i] = B.art[j * res + (res - 1 - i)];
+  let holes = null;
+  if (F.holes || B.holes) {
+    holes = new Uint8Array(n);
+    for (let j = 0; j < res; j++) for (let i = 0; i < res; i++) {
+      const p = j * res + i;
+      if (F.holes && F.holes[p]) holes[p] = 1;
+      if (B.holes && B.holes[j * res + (res - 1 - i)]) holes[p] = 1;
+    }
+  }
+
+  const bands = planSlabs();
+  let slabs = bands.map(([z0, z1]) => ({ z0, z1, L: labelSlab(z0, z1, artF, artB, holes, D2, TH) }));
+  /* collapse consecutive slabs whose labels match, so walls come out tall */
+  const merged = [slabs[0]];
+  for (let s = 1; s < slabs.length; s++) {
+    const prev = merged[merged.length - 1], cur = slabs[s];
+    let same = true;
+    const a = prev.L, b = cur.L;
+    for (let p = 0; p < n; p++) if (a[p] !== b[p]) { same = false; break; }
+    if (same) prev.z1 = cur.z1; else merged.push(cur);
+  }
+  slabs = merged;
+  if (onProgress) onProgress(slabs.length);
+
+  const parts = new Map();
+  const part = s => { let p = parts.get(s); if (!p) { p = new Part(); parts.set(s, p); } return p; };
+  const EMPTY = new Uint8Array(n);
+
+  /* horizontal faces at every slab boundary, including the two outer ones */
+  for (let s = 0; s <= slabs.length; s++) {
+    const below = s > 0 ? slabs[s - 1].L : EMPTY;
+    const above = s < slabs.length ? slabs[s].L : EMPTY;
+    const z = s < slabs.length ? slabs[s].z0 : slabs[slabs.length - 1].z1;
+    const slots = new Set();
+    for (let p = 0; p < n; p++) { const a = below[p], b = above[p]; if (a !== b) { if (a) slots.add(a); if (b) slots.add(-b); } }
+    for (const sg of slots) {
+      const up = sg > 0, sl = Math.abs(sg), m = new Uint8Array(n);
+      for (let p = 0; p < n; p++) {
+        const a = below[p], b = above[p];
+        if (a === b) continue;
+        if (up ? a === sl : b === sl) m[p] = 1;
+      }
+      const P = part(sl);
+      greedy(m, res, (i, j, w, h) => {
+        const x0 = X(i), x1 = X(i + w), y0 = Y(j), y1 = Y(j + h);
+        if (up) P.quad([x0, y0, z], [x1, y0, z], [x1, y1, z], [x0, y1, z], 0, 0, 1);
+        else P.quad([x0, y0, z], [x0, y1, z], [x1, y1, z], [x1, y0, z], 0, 0, -1);
+      });
+    }
+  }
+
+  /* Vertical walls. Runs merge along the wall direction inside a slab, then
+     across slabs when the run is identical and the z ranges touch, which is the
+     common case: the rim boundary and the art boundaries do not move up the
+     coin, only the chamfered outline does. Without the second merge the same
+     wall gets re-emitted once per slab. */
+  const pend = new Map();
+  const flushWall = v => {
+    const [dir, line, i0, i1, a, b, z0, z1] = v;
+    if (dir === 0) {
+      const x = X(line), y0 = Y(i0), y1 = Y(i1);
+      if (a) part(a).quad([x, y0, z0], [x, y1, z0], [x, y1, z1], [x, y0, z1], 1, 0, 0);
+      if (b) part(b).quad([x, y0, z0], [x, y0, z1], [x, y1, z1], [x, y1, z0], -1, 0, 0);
+    } else {
+      const y = Y(line), x0 = X(i0), x1 = X(i1);
+      if (a) part(a).quad([x0, y, z0], [x0, y, z1], [x1, y, z1], [x1, y, z0], 0, 1, 0);
+      if (b) part(b).quad([x0, y, z0], [x1, y, z0], [x1, y, z1], [x0, y, z1], 0, -1, 0);
+    }
+  };
+  for (const sb of slabs) {
+    const L = sb.L, cur = new Map();
+    for (let i = 0; i <= res; i++) {
+      let j = 0;
+      while (j < res) {
+        const a = i > 0 ? L[j * res + i - 1] : 0, b = i < res ? L[j * res + i] : 0;
+        if (a === b) { j++; continue; }
+        let j2 = j + 1;
+        while (j2 < res) {
+          const a2 = i > 0 ? L[j2 * res + i - 1] : 0, b2 = i < res ? L[j2 * res + i] : 0;
+          if (a2 !== a || b2 !== b) break;
+          j2++;
+        }
+        cur.set(`0|${i}|${j}|${j2}|${a}|${b}`, [0, i, j, j2, a, b]);
+        j = j2;
+      }
+    }
+    for (let j = 0; j <= res; j++) {
+      let i = 0;
+      while (i < res) {
+        const a = j > 0 ? L[(j - 1) * res + i] : 0, b = j < res ? L[j * res + i] : 0;
+        if (a === b) { i++; continue; }
+        let i2 = i + 1;
+        while (i2 < res) {
+          const a2 = j > 0 ? L[(j - 1) * res + i2] : 0, b2 = j < res ? L[j * res + i2] : 0;
+          if (a2 !== a || b2 !== b) break;
+          i2++;
+        }
+        cur.set(`1|${j}|${i}|${i2}|${a}|${b}`, [1, j, i, i2, a, b]);
+        i = i2;
+      }
+    }
+    for (const [k, v] of cur) {
+      const p = pend.get(k);
+      if (p && Math.abs(p[7] - sb.z0) < 1e-6) p[7] = sb.z1;
+      else { if (p) flushWall(p); pend.set(k, [...v, sb.z0, sb.z1]); }
+    }
+    for (const k of Array.from(pend.keys())) if (!cur.has(k)) { flushWall(pend.get(k)); pend.delete(k); }
+  }
+  for (const v of pend.values()) flushWall(v);
+
+  const out = [];
+  for (let s = 1; s <= ST.nSlots; s++) {
+    const P = parts.get(s);
+    if (!P || !P.q.length) continue;
+    const packed = packPart(P.q);
+    out.push({
+      slot: s, name: ST.slots[s - 1].name, color: ST.slots[s - 1].color,
+      pos: packed.pos, nrm: packed.nrm, tris: packed.tris, quads: P.q.length
+    });
+  }
+  return { parts: out, slabs: slabs.length, mm, volume: estimateVolume(slabs, n, mm) };
+}
+
+function estimateVolume(slabs, n, mm) {
+  const vols = {};
+  for (const sb of slabs) {
+    const h = sb.z1 - sb.z0, a = mm * mm * h;
+    const c = new Float64Array(8);
+    for (let p = 0; p < n; p++) { const l = sb.L[p]; if (l) c[l] += a; }
+    for (let s = 1; s < 8; s++) if (c[s]) vols[s] = (vols[s] || 0) + c[s];
+  }
+  return vols;
+}
+
+/* ============================================================ exporters */
+
+function saveBlob(blob, name) {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = name;
+  document.body.appendChild(a); a.click();
+  setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 2000);
+}
+
+function stlBinary(part) {
+  const tris = part.tris, buf = new ArrayBuffer(84 + tris * 50), dv = new DataView(buf);
+  const head = `COLLAR ${part.name} ${tris} facets`;
+  for (let i = 0; i < Math.min(head.length, 79); i++) dv.setUint8(i, head.charCodeAt(i));
+  dv.setUint32(80, tris, true);
+  let o = 84;
+  const P = part.pos, N = part.nrm;
+  for (let t = 0; t < tris; t++) {
+    const b = t * 9;
+    dv.setFloat32(o, N[b], true); dv.setFloat32(o + 4, N[b + 1], true); dv.setFloat32(o + 8, N[b + 2], true);
+    o += 12;
+    for (let v = 0; v < 3; v++) {
+      dv.setFloat32(o, P[b + v * 3], true);
+      dv.setFloat32(o + 4, P[b + v * 3 + 1], true);
+      dv.setFloat32(o + 8, P[b + v * 3 + 2], true);
+      o += 12;
+    }
+    dv.setUint16(o, 0, true); o += 2;
+  }
+  return new Blob([buf], { type: 'model/stl' });
+}
+
+/* vertex weld so the 3MF stays a sensible size */
+function weld(part) {
+  const map = new Map(), verts = [], tris = [];
+  const P = part.pos, n = P.length / 3;
+  for (let v = 0; v < n; v++) {
+    const x = P[v * 3], y = P[v * 3 + 1], z = P[v * 3 + 2];
+    const key = `${Math.round(x * 1e4)},${Math.round(y * 1e4)},${Math.round(z * 1e4)}`;
+    let id = map.get(key);
+    if (id === undefined) { id = verts.length / 3; map.set(key, id); verts.push(x, y, z); }
+    tris.push(id);
+  }
+  return { verts, tris };
+}
+
+/* ---- Orca / Bambu flavoured project 3MF -------------------------------
+   Orca derived slicers only treat Metadata/model_settings.config as
+   authoritative when the Application metadata tag starts with BambuStudio- or
+   OrcaSlicer-. Get that wrong and the importer logs "not from Bambu Lab, load
+   geometry data only" and throws the colour assignment away. Flash Studio,
+   Orca-Flashforge, OrcaSlicer and Bambu Studio all read what is written here. */
+const NS_CORE = 'http://schemas.microsoft.com/3dmanufacturing/core/2015/02';
+const NS_PROD = 'http://schemas.microsoft.com/3dmanufacturing/production/2015/06';
+const NS_BBS = 'http://schemas.bambulab.com/package/2021';
+const APP_TAG = 'BambuStudio-01.10.01.50';
+const SUF_OBJ = '-61cb-4c03-9d28-80fed5dfa1dc';
+const SUF_SUB = '-81cb-4c03-9d28-80fed5dfa1dc';
+const SUF_COMP = '-b206-40ff-9872-83e8017abed1';
+const SUF_ITEM = '-b1ec-4553-aec9-835e5b724bb4';
+const UUID_BUILD = '2c7c17d8-22b5-4d84-8835-1976022ea369';
+const hex8 = v => v.toString(16).padStart(8, '0');
+
+function make3mfXML(parts, name, place) {
+  const n = parts.length, asm = n + 1, out = [];
+  out.push('<?xml version="1.0" encoding="UTF-8"?>');
+  out.push(`<model unit="millimeter" xml:lang="en-US" xmlns="${NS_CORE}" xmlns:BambuStudio="${NS_BBS}" xmlns:p="${NS_PROD}" requiredextensions="p">`);
+  out.push(` <metadata name="Application">${APP_TAG}</metadata>`);
+  out.push(' <metadata name="OrcaSlicer">2.1.1</metadata>');
+  out.push(' <metadata name="BambuStudio:3mfVersion">1</metadata>');
+  for (const k of ['Copyright', 'CreationDate', 'Description', 'Designer', 'DesignerCover', 'DesignerUserId', 'License', 'ModificationDate', 'Origin'])
+    out.push(` <metadata name="${k}"></metadata>`);
+  out.push(` <metadata name="Title">${name}</metadata>`);
+  out.push(' <resources>');
+  parts.forEach((p, i) => {
+    const w = weld(p);
+    out.push(`  <object id="${i + 1}" p:UUID="${hex8(i + (1 << 16))}${SUF_SUB}" type="model">`);
+    out.push('   <mesh>');
+    out.push('    <vertices>');
+    for (let v = 0; v < w.verts.length; v += 3)
+      out.push(`     <vertex x="${w.verts[v].toFixed(5)}" y="${w.verts[v + 1].toFixed(5)}" z="${w.verts[v + 2].toFixed(5)}"/>`);
+    out.push('    </vertices>');
+    out.push('    <triangles>');
+    for (let t = 0; t < w.tris.length; t += 3)
+      out.push(`     <triangle v1="${w.tris[t]}" v2="${w.tris[t + 1]}" v3="${w.tris[t + 2]}"/>`);
+    out.push('    </triangles>');
+    out.push('   </mesh>');
+    out.push('  </object>');
+  });
+  out.push(`  <object id="${asm}" p:UUID="${hex8(1)}${SUF_OBJ}" type="model">`);
+  out.push('   <components>');
+  for (let i = 0; i < n; i++)
+    out.push(`    <component objectid="${i + 1}" p:UUID="${hex8(i + (1 << 16))}${SUF_COMP}" transform="1 0 0 0 1 0 0 0 1 0 0 0"/>`);
+  out.push('   </components>');
+  out.push('  </object>');
+  out.push(' </resources>');
+  out.push(` <build p:UUID="${UUID_BUILD}">`);
+  out.push(`  <item objectid="${asm}" p:UUID="${hex8(1)}${SUF_ITEM}" transform="1 0 0 0 1 0 0 0 1 ${place[0].toFixed(4)} ${place[1].toFixed(4)} ${place[2].toFixed(4)}" printable="1" auto_drop="1"/>`);
+  out.push(' </build>');
+  out.push('</model>');
+  return out.join('\n');
+}
+
+function make3mfConfig(parts, name, place) {
+  const asm = parts.length + 1, out = [];
+  out.push('<?xml version="1.0" encoding="UTF-8"?>');
+  out.push('<config>');
+  out.push(`  <object id="${asm}">`);
+  out.push(`    <metadata key="name" value="${name}"/>`);
+  out.push('    <metadata key="extruder" value="1"/>');
+  parts.forEach((p, i) => {
+    out.push(`    <part id="${i + 1}" subtype="normal_part">`);
+    out.push(`      <metadata key="name" value="${p.name} (slot ${p.slot})"/>`);
+    out.push('      <metadata key="matrix" value="1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1"/>');
+    out.push('      <metadata key="source_file" value=""/>');
+    out.push(`      <metadata key="extruder" value="${p.slot}"/>`);
+    out.push('      <mesh_stat edges_fixed="0" degenerate_facets="0" facets_removed="0" facets_reversed="0" backwards_edges="0"/>');
+    out.push('    </part>');
+  });
+  out.push('  </object>');
+  out.push('  <plate>');
+  out.push('    <metadata key="plater_id" value="1"/>');
+  out.push('    <metadata key="plater_name" value=""/>');
+  out.push('    <metadata key="locked" value="false"/>');
+  out.push('    <metadata key="filament_map_mode" value="Auto For Flush"/>');
+  out.push(`    <metadata key="filament_maps" value="${parts.map((p, i) => i + 1).join(' ')}"/>`);
+  out.push('    <model_instance>');
+  out.push(`      <metadata key="object_id" value="${asm}"/>`);
+  out.push('      <metadata key="instance_id" value="0"/>');
+  out.push('      <metadata key="identify_id" value="1"/>');
+  out.push('    </model_instance>');
+  out.push('  </plate>');
+  out.push('  <assemble>');
+  out.push(`   <assemble_item object_id="${asm}" instance_id="0" transform="1 0 0 0 1 0 0 0 1 ${place[0].toFixed(4)} ${place[1].toFixed(4)} ${place[2].toFixed(4)}" offset="0 0 0"/>`);
+  out.push('  </assemble>');
+  out.push('</config>');
+  return out.join('\n');
+}
+
+const CONTENT_TYPES = `<?xml version="1.0" encoding="UTF-8"?>
+<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">
+ <Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>
+ <Default Extension="model" ContentType="application/vnd.ms-package.3dmanufacturing-3dmodel+xml"/>
+ <Default Extension="config" ContentType="text/xml"/>
+ <Default Extension="png" ContentType="image/png"/>
+ <Default Extension="txt" ContentType="text/plain"/>
+ <Default Extension="stl" ContentType="model/stl"/>
+</Types>
+`;
+const RELS = `<?xml version="1.0" encoding="UTF-8"?>
+<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
+ <Relationship Target="/3D/3dmodel.model" Id="rel-1" Type="http://schemas.microsoft.com/3dmanufacturing/2013/01/3dmodel"/>
+</Relationships>
+`;
+
+/* ---- ZIP writer, deflate when the browser exposes it, store otherwise ---- */
+const CRC_T = (() => {
+  const t = new Uint32Array(256);
+  for (let i = 0; i < 256; i++) { let c = i; for (let k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1; t[i] = c >>> 0; }
+  return t;
+})();
+function crc32(u8) {
+  let c = 0xFFFFFFFF;
+  for (let i = 0; i < u8.length; i++) c = CRC_T[(c ^ u8[i]) & 0xFF] ^ (c >>> 8);
+  return (c ^ 0xFFFFFFFF) >>> 0;
+}
+async function deflateRaw(u8) {
+  if (typeof CompressionStream === 'undefined') return null;
+  try {
+    const cs = new CompressionStream('deflate-raw');
+    const w = cs.writable.getWriter();
+    w.write(u8); w.close();
+    const ab = await new Response(cs.readable).arrayBuffer();
+    return new Uint8Array(ab);
+  } catch (e) { return null; }
+}
+async function makeZip(entries) {
+  const enc = new TextEncoder(), locals = [], central = [];
+  let offset = 0;
+  for (const e of entries) {
+    const raw = typeof e.data === 'string' ? enc.encode(e.data) : new Uint8Array(e.data);
+    const nameB = enc.encode(e.name);
+    const crc = crc32(raw);
+    let body = e.store ? null : await deflateRaw(raw);
+    let method = 8;
+    if (!body || body.length >= raw.length) { body = raw; method = 0; }
+    const lh = new Uint8Array(30 + nameB.length);
+    const lv = new DataView(lh.buffer);
+    lv.setUint32(0, 0x04034b50, true); lv.setUint16(4, 20, true); lv.setUint16(6, 0, true);
+    lv.setUint16(8, method, true); lv.setUint16(10, 0, true); lv.setUint16(12, 0x2821, true);
+    lv.setUint32(14, crc, true); lv.setUint32(18, body.length, true); lv.setUint32(22, raw.length, true);
+    lv.setUint16(26, nameB.length, true); lv.setUint16(28, 0, true);
+    lh.set(nameB, 30);
+    locals.push(lh, body);
+    const ch = new Uint8Array(46 + nameB.length);
+    const cv = new DataView(ch.buffer);
+    cv.setUint32(0, 0x02014b50, true); cv.setUint16(4, 20, true); cv.setUint16(6, 20, true);
+    cv.setUint16(8, 0, true); cv.setUint16(10, method, true);
+    cv.setUint16(12, 0, true); cv.setUint16(14, 0x2821, true);
+    cv.setUint32(16, crc, true); cv.setUint32(20, body.length, true); cv.setUint32(24, raw.length, true);
+    cv.setUint16(28, nameB.length, true);
+    cv.setUint32(42, offset, true);
+    ch.set(nameB, 46);
+    central.push(ch);
+    offset += lh.length + body.length;
+  }
+  let cdSize = 0; for (const c of central) cdSize += c.length;
+  const end = new Uint8Array(22), ev = new DataView(end.buffer);
+  ev.setUint32(0, 0x06054b50, true);
+  ev.setUint16(8, central.length, true); ev.setUint16(10, central.length, true);
+  ev.setUint32(12, cdSize, true); ev.setUint32(16, offset, true);
+  return new Blob([...locals, ...central, end], { type: 'application/zip' });
+}
+
+/* ---- filament block for project_settings.config ------------------------
+   Orca decides how many filaments a project has from the length of
+   filament_colour, and several loaders index the other per filament vectors
+   without checking they are the same length. A config that declares three
+   colours but leaves the rest at one entry gets rejected or silently reset,
+   which is why a 3mf can arrive with the right part assignments and still only
+   one filament in the list. So every per filament key gets written N times.
+
+   The template below is the filament scoped key set lifted from a real project
+   saved out of Flash Studio, minus the ones COLLAR computes per slot. Nothing
+   printer scoped or process scoped is written, so opening a coin does not
+   disturb whatever printer and process profile is already selected. */
+const FILAMENT_TEMPLATE = {"activate_air_filtration":"1","activate_air_filtration_during_print":"1","activate_air_filtration_on_completion":"1","activate_chamber_temp_control":"0","adaptive_pressure_advance":"0","adaptive_pressure_advance_bridges":"0","adaptive_pressure_advance_model":"0,0,0\n0,0,0","adaptive_pressure_advance_overhangs":"0","additional_cooling_fan_speed":"0","additional_fan_full_speed_layer":"0","chamber_temperature":"0","close_additional_fan_first_x_layers":"1","close_fan_the_first_x_layers":"2","complete_print_exhaust_fan_speed":"40","dont_slow_down_outer_wall":"0","during_print_exhaust_fan_speed":"40","enable_overhang_bridge_fan":"1","enable_pressure_advance":"1","fan_cooling_layer_time":"30","fan_max_speed":"50","fan_min_speed":"30","filament_adaptive_volumetric_speed":"0","filament_adhesiveness_category":"300","filament_change_extrusion_role_gcode":"","filament_change_length":"0","filament_cooling_before_tower":"10","filament_cooling_final_speed":"3.4","filament_cooling_initial_speed":"2.2","filament_cooling_moves":"4","filament_deretraction_speed":"nil","filament_diameter":"1.75","filament_end_gcode":"; filament end gcode\n","filament_extruder_variant":"Direct Drive Standard","filament_flow_ratio":"1","filament_flush_temp":"0","filament_flush_volumetric_speed":"0","filament_ironing_flow":"nil","filament_ironing_inset":"nil","filament_ironing_spacing":"nil","filament_ironing_speed":"nil","filament_is_support":"0","filament_loading_speed":"28","filament_loading_speed_start":"3","filament_long_retractions_when_cut":"nil","filament_minimal_purge_on_wipe_tower":"15","filament_multitool_ramming":"0","filament_multitool_ramming_flow":"10","filament_multitool_ramming_volume":"10","filament_notes":"","filament_printable":"3","filament_ramming_parameters":"120 100 6.6 6.8 7.2 7.6 7.9 8.2 8.7 9.4 9.9 10.0| 0.05 6.6 0.45 6.8 0.95 7.8 1.45 8.3 1.95 9.7 2.45 10 2.95 7.6 3.45 7.6 3.95 7.6 4.45 7.6 4.95 7.6","filament_retract_before_wipe":"nil","filament_retract_lift_above":"nil","filament_retract_lift_below":"nil","filament_retract_lift_enforce":"nil","filament_retract_restart_extra":"nil","filament_retract_when_changing_layer":"nil","filament_retraction_distances_when_cut":"nil","filament_retraction_length":"nil","filament_retraction_minimum_travel":"nil","filament_retraction_speed":"nil","filament_shrink":"100%","filament_shrinkage_compensation_z":"100%","filament_soluble":"0","filament_stamping_distance":"0","filament_stamping_loading_speed":"0","filament_start_gcode":"; filament start gcode","filament_toolchange_delay":"0","filament_tower_interface_pre_extrusion_dist":"10","filament_tower_interface_pre_extrusion_length":"0","filament_tower_interface_print_temp":"-1","filament_tower_interface_purge_volume":"20","filament_tower_ironing_area":"4","filament_unloading_speed":"90","filament_unloading_speed_start":"100","filament_wipe":"nil","filament_wipe_distance":"nil","filament_z_hop":"nil","filament_z_hop_types":"nil","first_x_layer_fan_speed":"0","full_fan_speed_layer":"0","idle_temperature":"0","internal_bridge_fan_speed":"-1","ironing_fan_speed":"-1","long_retractions_when_ec":"0","overhang_fan_speed":"100","overhang_fan_threshold":"95%","pellet_flow_coefficient":"0.4157","pressure_advance":"0.06","reduce_fan_stop_start_freq":"1","required_nozzle_HRC":"3","retraction_distances_when_ec":"10","slow_down_for_layer_cooling":"1","slow_down_layer_time":"8","slow_down_min_speed":"20","support_material_interface_fan_speed":"-1","textured_cool_plate_temp":"0","textured_cool_plate_temp_initial_layer":"0","volumetric_speed_coefficients":""};
+
+const MATERIALS = {
+  PLA:  { nozzle: 220, bed: 55, cool: 35, density: 1.24, cost: 20, vitrify: 45, maxVol: 21, lo: 190, hi: 240 },
+  PETG: { nozzle: 250, bed: 80, cool: 0, density: 1.27, cost: 30, vitrify: 70, maxVol: 12, lo: 220, hi: 260 },
+  ABS:  { nozzle: 255, bed: 95, cool: 0, density: 1.04, cost: 25, vitrify: 90, maxVol: 16, lo: 230, hi: 270 },
+  ASA:  { nozzle: 260, bed: 95, cool: 0, density: 1.05, cost: 30, vitrify: 95, maxVol: 14, lo: 240, hi: 280 },
+  TPU:  { nozzle: 235, bed: 35, cool: 35, density: 1.22, cost: 40, vitrify: 40, maxVol: 3.6, lo: 200, hi: 250 },
+  PC:   { nozzle: 270, bed: 100, cool: 0, density: 1.20, cost: 45, vitrify: 110, maxVol: 12, lo: 250, hi: 290 },
+  PA:   { nozzle: 280, bed: 100, cool: 0, density: 1.14, cost: 60, vitrify: 100, maxVol: 12, lo: 260, hi: 300 },
+  PVA:  { nozzle: 220, bed: 60, cool: 45, density: 1.24, cost: 90, vitrify: 45, maxVol: 8, lo: 190, hi: 240 }
+};
+const MATERIAL_LIST = Object.keys(MATERIALS);
+
+function projectSettings(parts) {
+  const slots = parts.map(p => ST.slots[p.slot - 1]);
+  const n = slots.length;
+  const rep = v => new Array(n).fill(String(v));
+  const per = f => slots.map(s => String(f(MATERIALS[s.type] || MATERIALS.PETG, s)));
+
+  /* Naming the printer and process presets is what stops the slicer inventing an
+     external preset called after the file and listing that in the printer
+     dropdown. Only the ids go in, never the settings behind them, so an existing
+     profile of the same name is matched instead of overwritten. */
+  const cfg = { from: 'project', version: '01.10.01.50', name: 'project_settings' };
+  if (ST.printerId) {
+    cfg.printer_settings_id = ST.printerId;
+    cfg.printer_technology = 'FFF';
+    if (ST.printerModel) cfg.printer_model = ST.printerModel;
+    if (ST.printerVariant) cfg.printer_variant = ST.printerVariant;
+  }
+  if (ST.processId) cfg.print_settings_id = ST.processId;
+  for (const k of Object.keys(FILAMENT_TEMPLATE)) cfg[k] = rep(FILAMENT_TEMPLATE[k]);
+
+  const nameFor = s => (ST.presetPattern || 'Generic {TYPE}').replace('{TYPE}', s.type || 'PETG');
+  Object.assign(cfg, {
+    filament_colour: slots.map(s => s.color.toUpperCase()),
+    filament_multi_colour: slots.map(s => s.color.toUpperCase()),
+    default_filament_colour: rep(''),
+    filament_colour_type: rep('1'),
+    filament_type: slots.map(s => s.type || 'PETG'),
+    filament_settings_id: slots.map(nameFor),
+    filament_vendor: rep('Generic'),
+    filament_ids: rep(''),
+    filament_self_index: slots.map((s, i) => String(i + 1)),
+    filament_map: rep('1'),
+    filament_density: per(m => m.density),
+    filament_cost: per(m => m.cost),
+    temperature_vitrification: per(m => m.vitrify),
+    filament_max_volumetric_speed: per(m => m.maxVol),
+    nozzle_temperature: per(m => m.nozzle),
+    nozzle_temperature_initial_layer: per(m => m.nozzle),
+    nozzle_temperature_range_low: per(m => m.lo),
+    nozzle_temperature_range_high: per(m => m.hi),
+    hot_plate_temp: per(m => m.bed),
+    hot_plate_temp_initial_layer: per(m => m.bed),
+    textured_plate_temp: per(m => m.bed),
+    textured_plate_temp_initial_layer: per(m => m.bed),
+    eng_plate_temp: per(m => m.bed),
+    eng_plate_temp_initial_layer: per(m => m.bed),
+    cool_plate_temp: per(m => m.cool),
+    cool_plate_temp_initial_layer: per(m => m.cool),
+    supertack_plate_temp: per(m => m.cool),
+    supertack_plate_temp_initial_layer: per(m => m.cool)
+  });
+  return JSON.stringify(cfg, null, 4);
+}
+
+const SLICE_INFO = `<?xml version="1.0" encoding="UTF-8"?>
+<config>
+  <header>
+    <header_item key="X-BBL-Client-Type" value="slicer"/>
+    <header_item key="X-BBL-Client-Version" value="01.10.01.50"/>
+  </header>
+</config>
+`;
+
+async function export3mf(mesh, name) {
+  const parts = mesh.parts;
+  const place = [128, 128, 0];
+  const entries = [
+    { name: '[Content_Types].xml', data: CONTENT_TYPES },
+    { name: '_rels/.rels', data: RELS },
+    { name: '3D/3dmodel.model', data: make3mfXML(parts, name, place) },
+    { name: 'Metadata/model_settings.config', data: make3mfConfig(parts, name, place) },
+    { name: 'Metadata/slice_info.config', data: SLICE_INFO },
+    { name: 'Metadata/filament_sequence.json', data: JSON.stringify({ plate_1: { nozzle_sequence: [], optimal_assignment: [], sequence: [] } }) },
+    { name: 'Metadata/collar_print_card.txt', data: printCard(mesh) }
+  ];
+  if (ST.writeFilaments)
+    entries.splice(4, 0, { name: 'Metadata/project_settings.config', data: projectSettings(parts) });
+  return makeZip(entries);
+}
+
+function printCard(mesh) {
+  const L = [];
+  const pause = pauseInfo();
+  L.push('COLLAR print card');
+  L.push('='.repeat(52));
+  L.push(`blank            ${fmt(ST.dia, 1)} mm dia x ${fmt(ST.thk, 2)} mm, ${fmt(ST.cham, 2)} mm edge break`);
+  L.push(`inlay depth      ${fmt(ST.inlay, 2)} mm  (${Math.round(ST.inlay / ST.layer)} layers at ${fmt(ST.layer, 2)})`);
+  L.push(`edge             ${EDGES[ST.edge.style].label}`);
+  if (EDGES[ST.edge.style].uses.includes('count'))
+    L.push(`                 ${ST.edge.count} reeds, ${fmt(ST.edge.depth, 2)} mm deep, ${fmt(ST.edge.width, 2)} mm wide, pitch ${fmt(2 * Math.PI * R() / ST.edge.count, 2)} mm`);
+  if (ST.rim.on) L.push(`rim band         ${fmt(ST.rim.w, 2)} mm full thickness in slot ${ST.rim.slot}`);
+  L.push('');
+  L.push('filament map');
+  for (const p of mesh.parts) {
+    const v = (mesh.volume[p.slot] || 0);
+    const mat = ST.slots[p.slot - 1].type || 'PETG';
+    const den = (MATERIALS[mat] || MATERIALS.PETG).density;
+    L.push(`  slot ${p.slot}  ${p.color}  ${mat.padEnd(5)} ${String(p.name).padEnd(18)} ${fmt(v / 1000, 2)} cm3  ~${fmt(v * den / 1000, 2)} g`);
+  }
+  const tot = Object.values(mesh.volume).reduce((a, b) => a + b, 0);
+  L.push(`  total                        ${fmt(tot / 1000, 2)} cm3  ~${fmt(tot * 1.27 / 1000, 2)} g`);
+  L.push('');
+  if (ST.nfc.on) {
+    L.push('insert pocket');
+    L.push(`  ${fmt(ST.nfc.dia, 1)} mm wide for a ${fmt(ST.nfc.tag, 1)} mm tag, ${fmt(ST.nfc.depth, 2)} mm tall`);
+    L.push(`  floor Z ${fmt(NFC_Z0(), 2)}   ceiling Z ${fmt(NFC_Z0() + ST.nfc.depth, 2)}`);
+    L.push(`  floor wall ${fmt(NFC_Z0() - ST.inlay, 2)} mm   roof wall ${fmt(ST.thk - ST.inlay - NFC_Z0() - ST.nfc.depth, 2)} mm`);
+    L.push('');
+    L.push('pause to drop the tag in');
+    L.push(`  pause before the layer starting Z ${fmt(pause.z, 2)} mm, layer ${pause.layer}`);
+    L.push('  Preview tab, vertical layer slider, right click the plus dot, Add pause.');
+    L.push('  Greyed out unless print order is by layer not by object, and unless');
+    L.push('  the cursor is on the plus dot itself.');
+    L.push('');
+  }
+  L.push('slicing notes');
+  L.push(`  layer height ${fmt(ST.layer, 2)} mm, no supports, no brim`);
+  L.push('  ironing on for the top surface so the colour seams read as one face');
+  L.push('  the back face is the bed side, so a smooth plate gives a glossy back');
+  L.push('  turn off arc fitting on the outer wall or the reeds get smoothed away');
+  L.push('  back face art is mirrored in the model on purpose: it is read from the');
+  L.push('  other side once you flip the coin, so it looks backwards in a bottom view');
+  L.push('');
+  L.push(`mesh             ${mesh.parts.reduce((a, p) => a + p.tris, 0)} triangles, ${mesh.slabs} slabs, ${fmt(mesh.mm, 3)} mm grid`);
+  return L.join('\n');
+}
+
+function pauseInfo() {
+  const top = NFC_Z0() + ST.nfc.depth;
+  return { z: top, layer: Math.round(top / ST.layer) + 1 };
+}
+
+/* ============================================================ viewport */
+const VS = `attribute vec3 aP;attribute vec3 aN;uniform mat4 uMV,uP;uniform vec3 uOff;
+varying vec3 vN;varying vec3 vE;
+void main(){vec4 mv=uMV*vec4(aP+uOff,1.0);vN=mat3(uMV)*aN;vE=mv.xyz;gl_Position=uP*mv;}`;
+const FS = `precision mediump float;varying vec3 vN;varying vec3 vE;uniform vec3 uC;uniform float uW;
+void main(){
+  vec3 n=normalize(vN);
+  vec3 l1=normalize(vec3(0.35,0.55,0.85)), l2=normalize(vec3(-0.6,-0.35,0.4));
+  float d=max(dot(n,l1),0.0)*0.72+max(dot(n,l2),0.0)*0.24+0.20;
+  vec3 c=uC*d;
+  float rim=pow(1.0-max(dot(n,normalize(-vE)),0.0),3.0)*0.14;
+  c+=vec3(rim);
+  if(uW>0.5)c=uC*0.55+vec3(0.2);
+  gl_FragColor=vec4(min(c,vec3(1.0)),1.0);
+}`;
+
+const VIEW = {
+  gl: null, prog: null, bufs: [], rx: -0.9, ry: 0.55, dist: 1.0, ok: false,
+  init() {
+    const c = $('#gl');
+    const gl = c.getContext('webgl', { antialias: true, alpha: true, preserveDrawingBuffer: true });
+    if (!gl) { $('#glmsg').textContent = 'no webgl here, the 2D face previews still work'; return; }
+    this.gl = gl;
+    const sh = (t, s) => { const o = gl.createShader(t); gl.shaderSource(o, s); gl.compileShader(o); if (!gl.getShaderParameter(o, gl.COMPILE_STATUS)) LOG.err('shader: ' + gl.getShaderInfoLog(o)); return o; };
+    const p = gl.createProgram();
+    gl.attachShader(p, sh(gl.VERTEX_SHADER, VS));
+    gl.attachShader(p, sh(gl.FRAGMENT_SHADER, FS));
+    gl.linkProgram(p);
+    this.prog = p;
+    this.loc = {
+      aP: gl.getAttribLocation(p, 'aP'), aN: gl.getAttribLocation(p, 'aN'),
+      uMV: gl.getUniformLocation(p, 'uMV'), uP: gl.getUniformLocation(p, 'uP'),
+      uC: gl.getUniformLocation(p, 'uC'), uW: gl.getUniformLocation(p, 'uW'),
+      uOff: gl.getUniformLocation(p, 'uOff')
+    };
+    gl.enable(gl.DEPTH_TEST);
+    this.ok = true;
+    this.bindDrag(c);
+    new ResizeObserver(() => this.draw()).observe(c);
+  },
+  bindDrag(c) {
+    let down = false, lx = 0, ly = 0;
+    const dn = e => { down = true; lx = e.clientX; ly = e.clientY; };
+    const mv = e => {
+      if (!down) return;
+      this.ry += (e.clientX - lx) * 0.01; this.rx += (e.clientY - ly) * 0.01;
+      this.rx = clamp(this.rx, -Math.PI / 2 + .01, Math.PI / 2 - .01);
+      lx = e.clientX; ly = e.clientY; this.draw();
+    };
+    const up = () => { down = false; };
+    c.addEventListener('mousedown', dn); window.addEventListener('mousemove', mv); window.addEventListener('mouseup', up);
+    c.addEventListener('wheel', e => { e.preventDefault(); this.dist = clamp(this.dist * (1 + Math.sign(e.deltaY) * 0.09), 0.45, 4); this.draw(); }, { passive: false });
+    c.addEventListener('touchstart', e => { if (e.touches[0]) dn(e.touches[0]); }, { passive: true });
+    c.addEventListener('touchmove', e => { if (e.touches[0]) { mv(e.touches[0]); e.preventDefault(); } }, { passive: false });
+    c.addEventListener('touchend', up);
+  },
+  load(mesh) {
+    if (!this.ok) return;
+    const gl = this.gl;
+    for (const b of this.bufs) { gl.deleteBuffer(b.p); gl.deleteBuffer(b.n); }
+    this.bufs = [];
+    for (const part of mesh.parts) {
+      const bp = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, bp); gl.bufferData(gl.ARRAY_BUFFER, part.pos, gl.STATIC_DRAW);
+      const bn = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, bn); gl.bufferData(gl.ARRAY_BUFFER, part.nrm, gl.STATIC_DRAW);
+      this.bufs.push({ p: bp, n: bn, count: part.pos.length / 3, color: hex2rgb(part.color).map(v => v / 255), slot: part.slot });
+    }
+    $('#glmsg').classList.add('hide');
+    this.draw();
+  },
+  draw() {
+    if (!this.ok || !this.bufs.length) return;
+    const gl = this.gl, c = gl.canvas;
+    const w = c.clientWidth || 600, h = c.clientHeight || 400, dpr = Math.min(devicePixelRatio || 1, 2);
+    c.width = Math.max(1, w * dpr); c.height = Math.max(1, h * dpr);
+    gl.viewport(0, 0, c.width, c.height);
+    gl.clearColor(0.961, 0.941, 0.902, 1); gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+    gl.useProgram(this.prog);
+    const rad = ST.dia * this.dist * 0.62;
+    const asp = c.width / c.height;
+    const P = ortho(-rad * asp, rad * asp, -rad, rad, -600, 600);
+    let MV = mul(rotX(this.rx + (ST.flipped ? Math.PI : 0)), rotZ(this.ry));
+    MV = mul(MV, trans(0, 0, -ST.thk / 2));
+    gl.uniformMatrix4fv(this.loc.uP, false, P);
+    gl.uniformMatrix4fv(this.loc.uMV, false, MV);
+    gl.uniform1f(this.loc.uW, ST.view === 'wire' ? 1 : 0);
+    for (const b of this.bufs) {
+      const off = ST.view === 'split' ? [0, 0, (b.slot - 1) * ST.thk * 0.9] : [0, 0, 0];
+      gl.uniform3fv(this.loc.uOff, off);
+      gl.uniform3fv(this.loc.uC, b.color);
+      gl.bindBuffer(gl.ARRAY_BUFFER, b.p); gl.enableVertexAttribArray(this.loc.aP); gl.vertexAttribPointer(this.loc.aP, 3, gl.FLOAT, false, 0, 0);
+      gl.bindBuffer(gl.ARRAY_BUFFER, b.n); gl.enableVertexAttribArray(this.loc.aN); gl.vertexAttribPointer(this.loc.aN, 3, gl.FLOAT, false, 0, 0);
+      gl.drawArrays(ST.view === 'wire' ? gl.LINE_STRIP : gl.TRIANGLES, 0, b.count);
+    }
+  }
+};
+function ortho(l, r, b, t, n, f) {
+  return new Float32Array([2 / (r - l), 0, 0, 0, 0, 2 / (t - b), 0, 0, 0, 0, -2 / (f - n), 0, -(r + l) / (r - l), -(t + b) / (t - b), -(f + n) / (f - n), 1]);
+}
+function rotX(a) { const c = Math.cos(a), s = Math.sin(a); return new Float32Array([1, 0, 0, 0, 0, c, s, 0, 0, -s, c, 0, 0, 0, 0, 1]); }
+function rotZ(a) { const c = Math.cos(a), s = Math.sin(a); return new Float32Array([c, s, 0, 0, -s, c, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]); }
+function trans(x, y, z) { return new Float32Array([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x, y, z, 1]); }
+function mul(a, b) {
+  const o = new Float32Array(16);
+  for (let i = 0; i < 4; i++) for (let j = 0; j < 4; j++) {
+    let s = 0; for (let k = 0; k < 4; k++) s += a[k * 4 + j] * b[i * 4 + k];
+    o[i * 4 + j] = s;
+  }
+  return o;
+}
+
+/* ============================================================ 2D face view */
+function previewLabels(which, res) {
+  const F = buildFace(which, res);
+  const art = F.art, holes = F.holes;
+  const n = res * res, out = new Uint8Array(n);
+  const mm = ST.dia / res, half = res / 2;
+  const zm = which === 'front' ? ST.thk - ST.inlay / 2 : ST.inlay / 2;
+  const lut = edgeLUT(zm), inset = insetAt(zm);
+  const dash = hasDash(), dN = Math.max(1, ST.rim.dashN | 0);
+  const dPitch = 2 * Math.PI / dN, dDuty = ST.rim.dashDuty / 100;
+  const dPhase = (ST.rim.dashPhase || 0) * Math.PI / 180;
+  for (let j = 0; j < res; j++) for (let i = 0; i < res; i++) {
+    const x = (i + 0.5 - half) * mm, y = (j + 0.5 - half) * mm;
+    const d = Math.hypot(x, y), p = j * res + i;
+    const th = Math.atan2(y, x);
+    let idx = ((th + Math.PI) / (2 * Math.PI) * LUT_N) | 0;
+    idx = clamp(idx, 0, LUT_N - 1);
+    if (d > lut.cut[idx] - inset) continue;
+    if (holes && holes[p]) continue;
+    let lab = ST.base;
+    if (ST.rim.on && d >= lut.base[idx] - ST.rim.w) {
+      lab = ST.rim.slot;
+      if (dash) {
+        let a = th + Math.PI + dPhase;
+        const k = Math.floor(a / dPitch);
+        if (a / dPitch - k < dDuty) lab = (ST.rim.dashAlt && (k & 1)) ? ST.rim.dashSlot2 : ST.rim.dashSlot;
+      }
+    } else if (art[p]) lab = art[p];
+    out[p] = lab;
+  }
+  return out;
+}
+
+function drawFace(which, canvas) {
+  const res = 420;
+  const labels = previewLabels(which, res);
+  const cx = canvas.getContext('2d');
+  const img = cx.createImageData(res, res);
+  const cols = ST.slots.map(s => hex2rgb(s.color));
+  const bg = [239, 233, 219];
+  for (let j = 0; j < res; j++) for (let i = 0; i < res; i++) {
+    const p = j * res + i, o = ((res - 1 - j) * res + i) * 4;
+    const l = labels[p];
+    const c = l ? cols[l - 1] : bg;
+    img.data[o] = c[0]; img.data[o + 1] = c[1]; img.data[o + 2] = c[2];
+    img.data[o + 3] = l ? 255 : 255;
+  }
+  const tmp = document.createElement('canvas'); tmp.width = tmp.height = res;
+  tmp.getContext('2d').putImageData(img, 0, 0);
+  cx.setTransform(1, 0, 0, 1, 0, 0);
+  cx.clearRect(0, 0, canvas.width, canvas.height);
+  cx.fillStyle = '#efe9db'; cx.fillRect(0, 0, canvas.width, canvas.height);
+  cx.imageSmoothingEnabled = true;
+  cx.drawImage(tmp, 0, 0, canvas.width, canvas.height);
+  if (ST.nfc.on) {
+    const k = canvas.width / ST.dia;
+    cx.strokeStyle = 'rgba(26,26,26,.45)'; cx.setLineDash([5, 4]); cx.lineWidth = 1.5;
+    cx.beginPath(); cx.arc(canvas.width / 2, canvas.height / 2, ST.nfc.dia / 2 * k, 0, 7); cx.stroke();
+    cx.setLineDash([]);
+  }
+  drawHandles(which, canvas, cx);
+}
+
+/* ---- direct manipulation overlay ------------------------------------------
+   Click art on a face to select it, drag to move, pull the corner to size, use
+   the dot above to spin it. Arc text has no x and y so dragging it sets the
+   radius and the centre angle instead, which is what you actually want. */
+const HANDLE = 9, ROTGAP = 22;
+
+function mmToPx(canvas, x, y) {
+  const k = canvas.width / ST.dia;
+  return [canvas.width / 2 + x * k, canvas.height / 2 - y * k];
+}
+function pxToMM(canvas, px, py) {
+  const k = canvas.width / ST.dia;
+  return [(px - canvas.width / 2) / k, (canvas.height / 2 - py) / k];
+}
+
+function drawHandles(which, canvas, cx) {
+  if (!SEL || SEL.face !== which) return;
+  const L = ST.faces[which].find(l => l.id === SEL.id);
+  if (!L) return;
+  const b = layerBBox(L);
+  if (!b) return;
+  const [x0, y1] = mmToPx(canvas, b.x0, b.y1);
+  const [x1, y0] = mmToPx(canvas, b.x1, b.y0);
+  cx.save();
+  cx.strokeStyle = '#FE0386'; cx.lineWidth = 2; cx.setLineDash([6, 4]);
+  cx.strokeRect(x0, y1, x1 - x0, y0 - y1);
+  cx.setLineDash([]);
+  cx.fillStyle = '#FE0386';
+  cx.fillRect(x1 - HANDLE / 2, y0 - HANDLE / 2, HANDLE, HANDLE);
+  cx.beginPath();
+  cx.moveTo((x0 + x1) / 2, y1);
+  cx.lineTo((x0 + x1) / 2, y1 - ROTGAP);
+  cx.stroke();
+  cx.beginPath();
+  cx.arc((x0 + x1) / 2, y1 - ROTGAP, HANDLE / 2 + 1, 0, 7);
+  cx.fill();
+  cx.restore();
+}
+
+const BBOX = new Map();
+function layerSig(L) {
+  const o = { ...L };
+  delete o.img; delete o.open; delete o.src;
+  return JSON.stringify(o) + '|' + ST.dia + '|' + ST.art.keep + '|' + ST.rim.w + '|' + ST.shape.kind + '|' + ST.shape.aspect;
+}
+function layerBBox(L) {
+  const sig = layerSig(L), hit = BBOX.get(L.id);
+  if (hit && hit.sig === sig) return hit.b;
+  const res = 160, out = renderLayer(L, res);
+  let i0 = 1e9, i1 = -1e9, j0 = 1e9, j1 = -1e9;
+  for (const r of (Array.isArray(out) ? out : [out])) {
+    if (!r) continue;
+    const m = r.map || r.mask;
+    for (let j = 0; j < res; j++) for (let i = 0; i < res; i++) {
+      if (!m[j * res + i]) continue;
+      if (i < i0) i0 = i; if (i > i1) i1 = i;
+      if (j < j0) j0 = j; if (j > j1) j1 = j;
+    }
+  }
+  let b = null;
+  if (i1 >= i0) {
+    const mm = ST.dia / res, h = res / 2;
+    b = { x0: (i0 - h) * mm, x1: (i1 + 1 - h) * mm, y0: (j0 - h) * mm, y1: (j1 + 1 - h) * mm };
+  }
+  BBOX.set(L.id, { sig, b });
+  return b;
+}
+function layerAt(which, x, y) {
+  const list = ST.faces[which];
+  for (let i = list.length - 1; i >= 0; i--) {
+    const L = list[i];
+    if (L.off) continue;
+    const b = layerBBox(L);
+    if (!b) continue;
+    const pad = ST.dia * 0.012;
+    if (x >= b.x0 - pad && x <= b.x1 + pad && y >= b.y0 - pad && y <= b.y1 + pad) return L;
+  }
+  return null;
+}
+
+/* ============================================================ UI */
+let MESH = null;
+let dirty = true, previewTimer = null;
+let autoTimer = null, building = false, queued = false, lastBuildMs = 0;
+let SEL = null, DRAG = null;
+
+const GUIDE = {
+  pArt: ['step 1 of 4 &middot; art', 'Size the coin, then put something on each face. Drop an image or add text. Layers stack, later ones paint over earlier ones.'],
+  pEdge: ['step 2 of 4 &middot; edge', 'Pick a treatment and push the depth up until it reads. Anything shallower than about 0.6 mm prints round.'],
+  pColour: ['step 3 of 4 &middot; colour', 'Art points at slot numbers, so the actual filaments get decided here. Slot order is extruder order.'],
+  pPrint: ['step 4 of 4 &middot; print', 'Layer height, optional insert pocket, then export. The readout on the right carries the pause layer.']
+};
+function setGuide(pane) {
+  const g = GUIDE[pane];
+  $('#guide').innerHTML = `<b>${g[0]}</b>${g[1]}`;
+}
+
+const FONTS = ['Permanent Marker', 'Special Elite', 'IBM Plex Mono', 'VT323',
+  'Impact', 'Arial Black', 'Georgia', 'Times New Roman', 'Courier New',
+  'Helvetica', 'Verdana', 'sans-serif', 'serif', 'monospace'];
+
+/* ---------- slider binding ---------- */
+function bindRange(id, get, set, fmtN = 1, after) {
+  const el = $('#' + id), out = $('#v' + id[0].toUpperCase() + id.slice(1));
+  const show = () => { if (out) out.textContent = fmt(get(), fmtN); };
+  el.value = get();
+  show();
+  el.addEventListener('input', () => {
+    set(parseFloat(el.value));
+    show();
+    if (after) after();
+    touch();
+  });
+  el.addEventListener('change', commit);
+  return { el, show: () => { el.value = get(); show(); } };
+}
+const BOUND = {};
+
+function touch(delay) {
+  dirty = true;
+  refreshStats();
+  refreshNotes();
+  if (previewTimer) clearTimeout(previewTimer);
+  previewTimer = setTimeout(drawBothFaces, delay || 90);
+  if (!MESH) $('#expNote').textContent = 'Build the mesh first.';
+  else $('#expNote').textContent = autoOn() ? 'Design changed, the viewport is catching up. Exports always rebuild first if they need to.'
+    : 'Design changed. Hit rebuild now, or let the export do it for you.';
+}
+
+const autoOn = () => $('#autoBuild') && $('#autoBuild').checked;
+
+/* A change is locked in when you let go of a slider, tick a box, pick from a
+   menu, or add or drop a layer. That is what triggers the rebuild, not every
+   frame of a drag. */
+function commit() {
+  touch();
+  if (typeof renderSlots === 'function' && $('#slots')) renderSlots();
+  if (!autoOn()) return;
+  if (autoTimer) clearTimeout(autoTimer);
+  autoTimer = setTimeout(() => {
+    if (building) { queued = true; return; }
+    doBuild(true);
+  }, 320);
+}
+
+function drawBothFaces() {
+  try {
+    drawFace('front', $('#cvF'));
+    drawFace('back', $('#cvB'));
+  } catch (e) { LOG.err('preview: ' + e.message); }
+}
+
+/* ---------- slots ---------- */
+function setSlotCount(n) {
+  ST.nSlots = clamp(n, 2, 4);
+  ST.base = Math.min(ST.base, ST.nSlots);
+  ST.rim.slot = Math.min(ST.rim.slot, ST.nSlots);
+  for (const f of ['front', 'back']) for (const L of ST.faces[f]) {
+    L.slot = Math.min(L.slot || 1, ST.nSlots);
+    if (L.accent) L.accent = Math.min(L.accent, ST.nSlots);
+  }
+  syncSlotSelects(); renderSlots(); renderLayerList(); commit();
+}
+
+/* which faces actually paint with a slot, shown as a badge beside it */
+function usedBy(slot) {
+  const hit = [];
+  for (const f of ['front', 'back']) {
+    for (const L of ST.faces[f]) {
+      if (L.off) continue;
+      if ((L.kind === 'image' && L.mode === 'palette') || L.slot === slot || L.accent === slot) { hit.push(f); break; }
+    }
+  }
+  return hit.length === 2 ? 'both faces' : hit.length ? hit[0] + ' face' : '';
+}
+
+function renderSlots() {
+  const cnt = $('#slotCount');
+  if (cnt) {
+    cnt.innerHTML = '';
+    for (const n of [2, 3, 4]) {
+      const b = document.createElement('button');
+      b.className = 'chip' + (ST.nSlots === n ? ' on' : '');
+      b.textContent = n + ' colours';
+      b.onclick = () => setSlotCount(n);
+      cnt.appendChild(b);
+    }
+  }
+  const box = $('#slots');
+  box.innerHTML = '';
+  for (let i = 0; i < ST.nSlots; i++) {
+    const s = ST.slots[i];
+    const d = document.createElement('div');
+    d.className = 'slot';
+    d.innerHTML = `<div class="ix">${i + 1}</div>
+      <input type="text" value="${s.name}" data-k="name" data-i="${i}">
+      <input type="color" value="${s.color}" data-k="color" data-i="${i}">`;
+    box.appendChild(d);
+    const w = document.createElement('div');
+    w.className = 'slotwrap';
+    const mat = document.createElement('select');
+    for (const m of MATERIAL_LIST) {
+      const o = document.createElement('option');
+      o.value = m; o.textContent = m;
+      mat.appendChild(o);
+    }
+    mat.value = s.type || 'PETG';
+    mat.onchange = () => { ST.slots[i].type = mat.value; touch(); };
+    w.appendChild(mat);
+    const tags = [];
+    if (ST.base === i + 1) tags.push('<span class="badge">body</span>');
+    if (ST.rim.on && ST.rim.slot === i + 1) tags.push('<span class="badge rim">rim</span>');
+    const u = usedBy(i + 1);
+    if (u) tags.push(`<span class="badge" style="background:var(--ink3)">${u}</span>`);
+    const t = document.createElement('span');
+    t.innerHTML = tags.join(' ');
+    w.appendChild(t);
+    box.appendChild(w);
+  }
+  box.querySelectorAll('input').forEach(inp => {
+    inp.addEventListener('input', () => {
+      const i = +inp.dataset.i;
+      ST.slots[i][inp.dataset.k] = inp.value;
+      renderLayerList(); touch();
+    });
+    inp.addEventListener('change', commit);
+  });
+}
+function slotOptions(sel, val) {
+  sel.innerHTML = '';
+  for (let i = 1; i <= ST.nSlots; i++) {
+    const o = document.createElement('option');
+    o.value = i; o.textContent = `${i} ${ST.slots[i - 1].name}`;
+    sel.appendChild(o);
+  }
+  sel.value = val;
+}
+function syncSlotSelects() {
+  slotOptions($('#baseSlot'), ST.base);
+  slotOptions($('#rimSlot'), ST.rim.slot);
+  slotOptions($('#dashSlot'), ST.rim.dashSlot);
+  slotOptions($('#dashSlot2'), ST.rim.dashSlot2);
+  $('#rimSlotRow').classList.toggle('hide', !ST.rim.on);
+}
+
+/* ---------- blank shape ---------- */
+function renderShapeChips() {
+  const box = $('#shapeChips');
+  box.innerHTML = '';
+  for (const k of Object.keys(SHAPES)) {
+    const b = document.createElement('button');
+    b.className = 'chip' + (ST.shape.kind === k ? ' on' : '');
+    b.textContent = SHAPES[k].label;
+    b.onclick = () => { ST.shape.kind = k; renderShapeChips(); syncShapeParams(); commit(); };
+    box.appendChild(b);
+  }
+  syncShapeParams();
+}
+function syncShapeParams() {
+  const k = ST.shape.kind;
+  const usesAspect = k === 'dogtag' || k === 'bar';
+  const usesCorner = k === 'rounded' || k === 'bar';
+  $('#shapeParams').classList.toggle('hide', !usesAspect && !usesCorner);
+  $('#aspect').previousElementSibling.classList.toggle('hide', !usesAspect);
+  $('#aspect').classList.toggle('hide', !usesAspect);
+  $('#corner').previousElementSibling.classList.toggle('hide', !usesCorner);
+  $('#corner').classList.toggle('hide', !usesCorner);
+}
+
+/* ---------- edge ---------- */
+function renderEdgePresets() {
+  const box = $('#edgePresets');
+  box.innerHTML = '';
+  for (const p of EDGE_PRESETS) {
+    const b = document.createElement('button');
+    b.className = 'chip' + (matchesPreset(p) ? ' on' : '');
+    b.textContent = p.n;
+    b.onclick = () => {
+      Object.assign(ST.edge, { count: ST.edge.count, depth: ST.edge.depth, width: ST.edge.width, twist: ST.edge.twist, gapDeg: ST.edge.gapDeg }, p.e);
+      syncEdgeUI(); renderEdgePresets(); commit();
+    };
+    box.appendChild(b);
+  }
+}
+function matchesPreset(p) {
+  if (p.e.style !== ST.edge.style) return false;
+  for (const k of Object.keys(p.e)) if (k !== 'style' && Math.abs(ST.edge[k] - p.e[k]) > 1e-6) return false;
+  return true;
+}
+function syncDashUI() {
+  $('#dashWrap').classList.toggle('hide', !ST.rim.dashOn);
+  $('#dashSlot2Row').classList.toggle('hide', !ST.rim.dashAlt);
+  slotOptions($('#dashSlot'), ST.rim.dashSlot);
+  slotOptions($('#dashSlot2'), ST.rim.dashSlot2);
+  $('#dashOn').checked = ST.rim.dashOn;
+  $('#dashAlt').checked = ST.rim.dashAlt;
+  const n = $('#dashNote');
+  if (!ST.rim.on) {
+    n.textContent = 'Turn the rim band on above first. Segments live in the rim.';
+    n.className = 'note warn';
+  } else {
+    const arc = 2 * Math.PI * (shapeMinR() - ST.rim.w / 2) / Math.max(1, ST.rim.dashN);
+    n.textContent = `Casino chip style: the rim band gets broken into ${ST.rim.dashN} segments, each about ${fmt(arc * ST.rim.dashDuty / 100, 1)} mm of arc. They run the full thickness, so they read on the edge and as spots on both faces.`;
+    n.className = 'note';
+  }
+}
+
+function syncEdgeUI() {
+  ['eCount', 'eDepth', 'eWidth', 'eTwist', 'eGap'].forEach(k => BOUND[k] && BOUND[k].show());
+  const uses = EDGES[ST.edge.style].uses;
+  $('#twistWrap').classList.toggle('hide', !uses.includes('twist'));
+  $('#openWrap').classList.toggle('hide', !uses.includes('gapDeg'));
+  $('#eCount').closest('.pane').querySelectorAll('#eCount,#eDepth,#eWidth').forEach(el => {
+    const key = { eCount: 'count', eDepth: 'depth', eWidth: 'width' }[el.id];
+    const row = el.previousElementSibling;
+    const off = !uses.includes(key);
+    el.classList.toggle('hide', off);
+    if (row) row.classList.toggle('hide', off);
+  });
+  $('#edgeNote').textContent = EDGES[ST.edge.style].note;
+  syncDashUI();
+}
+
+/* ---------- art layers ---------- */
+function faceList() { return ST.faces[ST.face]; }
+
+function addLayer(L) {
+  L.id = LAYER_ID++;
+  L.open = true;
+  faceList().push(L);
+  SEL = { face: ST.face, id: L.id };
+  renderLayerList();
+  commit();
+}
+function newTextLayer(arc) {
+  return {
+    kind: 'text', text: arc ? 'MAKE THINGS' : 'hack|.build', slot: 2, accent: 3,
+    font: 'Permanent Marker', size: arc ? 4.2 : 7.5, mode: arc ? 'arc' : 'straight',
+    dx: 0, dy: 0, rot: 0, arcR: R_ART() - 2, arcDeg: 90, flip: false,
+    track: 1.05, runGap: 0.6, caps: false, bold: false
+  };
+}
+function newRingLayer() {
+  return { kind: 'ring', slot: 3, r0: R_ART() - 1.4, r1: R_ART(), seg: 1, duty: 60 };
+}
+
+function renderLayerList() {
+  const badges = $('#slots');
+  const box = $('#layers');
+  box.innerHTML = '';
+  const list = faceList();
+  if (!list.length) {
+    const p = document.createElement('div');
+    p.className = 'hint';
+    p.innerHTML = `<b>${ST.face} face is empty</b>
+      Drop an image on the box above, or press add text. Layers stack, later ones
+      paint over earlier ones. A pipe splits a text layer into two colours:
+      <code>hack|.build</code> puts the tail in the accent slot.`;
+    box.appendChild(p);
+    return;
+  }
+  list.forEach((L, idx) => {
+    const d = document.createElement('div');
+    d.className = 'layer' + (L.open ? ' open' : '');
+    const title = layerTitle(L);
+    const sw = L.cut ? 'repeating-linear-gradient(45deg,#1a1a1a 0 3px,#fff 3px 6px)'
+      : L.kind === 'image' && L.mode === 'palette' ? 'linear-gradient(90deg,#FE0386,#f5f0e6)'
+        : ST.slots[(L.slot || 1) - 1].color;
+    d.innerHTML = `<div class="lh">
+      <span class="sw" style="background:${sw}"></span>
+      <span class="t">${title}</span>
+      <button data-a="up" title="up">^</button>
+      <button data-a="off" title="mute">${L.off ? 'o' : '*'}</button>
+      <button data-a="del" title="delete">x</button>
+      </div><div class="body"></div>`;
+    const body = d.querySelector('.body');
+    body.appendChild(layerEditor(L, d.querySelector('.lh .t')));
+    d.querySelector('.lh .t').onclick = () => {
+      L.open = !L.open;
+      SEL = L.open ? { face: ST.face, id: L.id } : null;
+      renderLayerList();
+      drawBothFaces();
+    };
+    d.querySelector('[data-a=up]').onclick = () => { if (idx > 0) { list.splice(idx - 1, 0, list.splice(idx, 1)[0]); renderLayerList(); commit(); } };
+    d.querySelector('[data-a=off]').onclick = () => { L.off = !L.off; renderLayerList(); commit(); };
+    d.querySelector('[data-a=del]').onclick = () => { list.splice(idx, 1); renderLayerList(); commit(); };
+    box.appendChild(d);
+  });
+}
+
+function ctl(label, node) {
+  const w = document.createElement('div');
+  w.className = 'row';
+  const l = document.createElement('label'); l.textContent = label;
+  w.appendChild(l); w.appendChild(node);
+  return w;
+}
+function num(L, key, min, max, step, cb) {
+  const w = document.createElement('div');
+  w.className = 'sl';
+  const r = document.createElement('input');
+  r.type = 'range'; r.min = min; r.max = max; r.step = step; r.value = L[key] ?? 0;
+  const n = document.createElement('input');
+  n.type = 'number'; n.min = min; n.max = max; n.step = step; n.value = L[key] ?? 0;
+  const sync = v => { L[key] = parseFloat(v); r.value = L[key]; n.value = L[key]; if (cb) cb(); touch(); };
+  r.oninput = () => sync(r.value);
+  n.oninput = () => sync(n.value);
+  r.onchange = commit;
+  n.onchange = commit;
+  w.appendChild(r); w.appendChild(n);
+  return w;
+}
+function sel(L, key, opts, cb) {
+  const s = document.createElement('select');
+  s.style.width = 'auto';
+  for (const o of opts) {
+    const e = document.createElement('option');
+    e.value = typeof o === 'object' ? o.v : o;
+    e.textContent = typeof o === 'object' ? o.n : o;
+    s.appendChild(e);
+  }
+  s.value = L[key];
+  s.onchange = () => { L[key] = isNaN(+s.value) || typeof opts[0] === 'string' ? s.value : +s.value; if (cb) cb(); commit(); };
+  return s;
+}
+function chk(L, key, cb) {
+  const c = document.createElement('input');
+  c.type = 'checkbox'; c.checked = !!L[key];
+  c.onchange = () => { L[key] = c.checked; if (cb) cb(); commit(); };
+  return c;
+}
+/* Typing must not rebuild the layer list, or the input is torn out from under
+   the cursor and you have to click back in for every letter. The header title is
+   patched in place instead, the face preview is debounced harder than a slider,
+   and the rebuild waits for the field to be committed. */
+function txt(L, key, titleEl) {
+  const t = document.createElement('input');
+  t.type = 'text'; t.value = L[key] ?? '';
+  t.oninput = () => {
+    L[key] = t.value;
+    if (titleEl) titleEl.textContent = layerTitle(L);
+    touch(240);
+  };
+  t.onchange = commit;
+  return t;
+}
+function layerTitle(L) {
+  return L.kind === 'text' ? `text  ${String(L.text).replace('|', '').slice(0, 16)}`
+    : L.kind === 'ring' ? 'ring'
+      : `image  ${(L.name || '').slice(0, 16)}`;
+}
+
+function layerEditor(L, titleEl) {
+  const f = document.createDocumentFragment();
+  const slotOpts = [];
+  for (let i = 1; i <= ST.nSlots; i++) slotOpts.push({ v: i, n: `${i} ${ST.slots[i - 1].name}` });
+
+  f.appendChild(ctl('cut right through', chk(L, 'cut', () => renderLayerList())));
+  if (L.kind === 'image') {
+    f.appendChild(ctl('colour mode', sel(L, 'mode', [
+      { v: 'mono', n: 'mono threshold' }, { v: 'alpha', n: 'silhouette' }, { v: 'palette', n: 'match palette' }
+    ], () => renderLayerList())));
+    if (L.mode !== 'palette') f.appendChild(ctl('slot', sel(L, 'slot', slotOpts, () => renderLayerList())));
+    if (L.mode === 'mono') {
+      f.appendChild(ctl('threshold', num(L, 'thr', 0, 255, 1)));
+      f.appendChild(ctl('invert', chk(L, 'invert')));
+    }
+    f.appendChild(ctl('scale', num(L, 'scale', 0.05, 1.6, 0.01)));
+    f.appendChild(ctl('offset x', num(L, 'dx', -30, 30, 0.1)));
+    f.appendChild(ctl('offset y', num(L, 'dy', -30, 30, 0.1)));
+    f.appendChild(ctl('rotate', num(L, 'rot', -180, 180, 1)));
+    f.appendChild(ctl('mirror', chk(L, 'mirror')));
+  } else if (L.kind === 'text') {
+    f.appendChild(ctl('text', txt(L, 'text', titleEl)));
+    f.appendChild(ctl('slot', sel(L, 'slot', slotOpts, () => renderLayerList())));
+    f.appendChild(ctl('accent slot', sel(L, 'accent', slotOpts)));
+    f.appendChild(ctl('split gap', num(L, 'runGap', 0, 4, 0.05)));
+    f.appendChild(ctl('font', sel(L, 'font', FONTS)));
+    f.appendChild(ctl('size', num(L, 'size', 1, 30, 0.1)));
+    f.appendChild(ctl('caps', chk(L, 'caps')));
+    f.appendChild(ctl('bold', chk(L, 'bold')));
+    f.appendChild(ctl('layout', sel(L, 'mode', [{ v: 'straight', n: 'straight' }, { v: 'arc', n: 'on an arc' }], () => renderLayerList())));
+    if (L.mode === 'arc') {
+      f.appendChild(ctl('arc radius', num(L, 'arcR', 2, 60, 0.1)));
+      f.appendChild(ctl('centre angle', num(L, 'arcDeg', -180, 180, 1)));
+      f.appendChild(ctl('tracking', num(L, 'track', 0.6, 2.2, 0.01)));
+      f.appendChild(ctl('bottom of seal', chk(L, 'flip')));
+    } else {
+      f.appendChild(ctl('offset x', num(L, 'dx', -30, 30, 0.1)));
+      f.appendChild(ctl('offset y', num(L, 'dy', -30, 30, 0.1)));
+      f.appendChild(ctl('rotate', num(L, 'rot', -180, 180, 1)));
+    }
+  } else {
+    f.appendChild(ctl('slot', sel(L, 'slot', slotOpts, () => renderLayerList())));
+    f.appendChild(ctl('inner r', num(L, 'r0', 0, 40, 0.1)));
+    f.appendChild(ctl('outer r', num(L, 'r1', 0, 40, 0.1)));
+    f.appendChild(ctl('segments', num(L, 'seg', 1, 120, 1)));
+    f.appendChild(ctl('duty %', num(L, 'duty', 5, 100, 1)));
+  }
+  return f;
+}
+
+/* ---------- image intake ---------- */
+function loadFiles(files) {
+  const list = Array.from(files).filter(f => /image\//.test(f.type) || /\.svg$/i.test(f.name));
+  if (!list.length) { LOG.warn('nothing image shaped in that drop'); return; }
+  let pending = list.length;
+  for (const file of list) {
+    const fr = new FileReader();
+    fr.onload = () => {
+      const img = new Image();
+      img.onload = () => {
+        addLayer({
+          kind: 'image', name: file.name, img, src: fr.result,
+          mode: /svg/i.test(file.type) ? 'palette' : 'mono',
+          slot: ST.nSlots >= 2 ? 2 : 1, thr: 128, invert: false,
+          scale: 1, dx: 0, dy: 0, rot: 0, mirror: false
+        });
+        LOG.say(`art in: ${file.name} ${img.naturalWidth}x${img.naturalHeight}`);
+        if (--pending === 0) { status('art loaded'); commit(); }
+      };
+      img.onerror = () => { LOG.err('could not decode ' + file.name); pending--; };
+      img.src = fr.result;
+    };
+    fr.readAsDataURL(file);
+  }
+}
+
+/* ---------- direct manipulation on the face previews ---------- */
+function selectLayer(face, L) {
+  SEL = L ? { face, id: L.id } : null;
+  if (L) {
+    ST.face = face;
+    $$('#tabsFace button').forEach(x => x.classList.toggle('on', x.dataset.f === face));
+    for (const l of ST.faces[face]) l.open = (l === L);
+    renderLayerList();
+  }
+  drawBothFaces();
+}
+
+function bindCanvas(which, canvas) {
+  canvas.style.cursor = 'default';
+  const hitHandle = (L, px, py) => {
+    const b = layerBBox(L);
+    if (!b) return null;
+    const [x0, y1] = mmToPx(canvas, b.x0, b.y1);
+    const [x1, y0] = mmToPx(canvas, b.x1, b.y0);
+    const near = (ax, ay, r) => Math.hypot(px - ax, py - ay) <= r;
+    if (near((x0 + x1) / 2, y1 - ROTGAP, HANDLE)) return 'rotate';
+    if (near(x1, y0, HANDLE)) return 'scale';
+    if (px >= x0 && px <= x1 && py >= y1 && py <= y0) return 'move';
+    return null;
+  };
+  const local = e => {
+    const r = canvas.getBoundingClientRect();
+    return [(e.clientX - r.left) * canvas.width / r.width, (e.clientY - r.top) * canvas.height / r.height];
+  };
+
+  canvas.addEventListener('pointerdown', e => {
+    const [px, py] = local(e);
+    const [mx, my] = pxToMM(canvas, px, py);
+    let L = SEL && SEL.face === which ? ST.faces[which].find(l => l.id === SEL.id) : null;
+    let mode = L ? hitHandle(L, px, py) : null;
+    if (!mode) {
+      L = layerAt(which, mx, my);
+      if (!L) { SEL = null; drawBothFaces(); return; }
+      selectLayer(which, L);
+      mode = 'move';
+    } else if (SEL.face !== which) return;
+    canvas.setPointerCapture(e.pointerId);
+    DRAG = {
+      which, L, mode, mx, my,
+      dx: L.dx || 0, dy: L.dy || 0, rot: L.rot || 0,
+      scale: L.scale ?? 1, size: L.size ?? 1,
+      arcR: L.arcR ?? 1, arcDeg: L.arcDeg ?? 90,
+      r0: L.r0 ?? 0, r1: L.r1 ?? 0,
+      d0: Math.hypot(mx, my) || 0.001,
+      a0: Math.atan2(my, mx)
+    };
+    e.preventDefault();
+  });
+
+  canvas.addEventListener('pointermove', e => {
+    const [px, py] = local(e);
+    if (!DRAG) {
+      const L = SEL && SEL.face === which ? ST.faces[which].find(l => l.id === SEL.id) : null;
+      const m = L ? hitHandle(L, px, py) : null;
+      const [mx, my] = pxToMM(canvas, px, py);
+      canvas.style.cursor = m === 'rotate' ? 'grab' : m === 'scale' ? 'nwse-resize'
+        : m ? 'move' : (layerAt(which, mx, my) ? 'pointer' : 'default');
+      return;
+    }
+    if (DRAG.which !== which) return;
+    const [mx, my] = pxToMM(canvas, px, py);
+    const L = DRAG.L;
+    if (DRAG.mode === 'move') {
+      if (L.kind === 'text' && L.mode === 'arc') {
+        L.arcR = clamp(Math.hypot(mx, my), 2, R_ART() + ST.art.keep);
+        L.arcDeg = Math.round(Math.atan2(my, mx) * 180 / Math.PI);
+      } else if (L.kind === 'ring') {
+        const w = Math.abs(DRAG.r1 - DRAG.r0);
+        const c = clamp(Math.hypot(mx, my), w / 2, R_ART());
+        L.r0 = Math.max(0, c - w / 2); L.r1 = c + w / 2;
+      } else {
+        L.dx = +(DRAG.dx + (mx - DRAG.mx)).toFixed(2);
+        L.dy = +(DRAG.dy + (my - DRAG.my)).toFixed(2);
+      }
+    } else if (DRAG.mode === 'scale') {
+      const f = clamp(Math.hypot(mx, my) / DRAG.d0, 0.15, 6);
+      if (L.kind === 'image') L.scale = +clamp(DRAG.scale * f, 0.05, 1.6).toFixed(3);
+      else if (L.kind === 'text') L.size = +clamp(DRAG.size * f, 1, 40).toFixed(2);
+      else { L.r1 = +clamp(DRAG.r1 * f, 0.4, R_ART()).toFixed(2); L.r0 = +clamp(DRAG.r0 * f, 0, L.r1 - 0.2).toFixed(2); }
+    } else {
+      const da = (Math.atan2(my, mx) - DRAG.a0) * 180 / Math.PI;
+      if (L.kind === 'text' && L.mode === 'arc') L.arcDeg = Math.round(DRAG.arcDeg + da);
+      else L.rot = Math.round(DRAG.rot - da);
+    }
+    touch(40);
+    e.preventDefault();
+  });
+
+  const end = () => {
+    if (!DRAG) return;
+    DRAG = null;
+    renderLayerList();
+    commit();
+  };
+  canvas.addEventListener('pointerup', end);
+  canvas.addEventListener('pointercancel', end);
+}
+
+/* ---------- stats ---------- */
+function statRow(k, v, pk) {
+  return `<div class="stat"><span class="k">${k}</span><span class="val${pk ? ' pk' : ''}">${v}</span></div>`;
+}
+function refreshStats() {
+  const lay = n => Math.round(n / ST.layer);
+  $('#statsCoin').innerHTML =
+    statRow('diameter', fmt(ST.dia, 1) + ' mm') +
+    statRow('thickness', fmt(ST.thk, 2) + ' mm') +
+    statRow('inlay', `${fmt(ST.inlay, 2)} / ${lay(ST.inlay)} layers`) +
+    statRow('core between', fmt(ST.thk - 2 * ST.inlay, 2) + ' mm', ST.thk - 2 * ST.inlay < 0.4) +
+    statRow('art radius', fmt(R_ART(), 2) + ' mm') +
+    (ST.rim.on ? statRow('rim band', fmt(ST.rim.w, 2) + ' mm') : '') +
+    (EDGES[ST.edge.style].uses.includes('count')
+      ? statRow('reed pitch', fmt(2 * Math.PI * R() / ST.edge.count, 2) + ' mm') : '') +
+    statRow('grid', fmt(MM_PER_PX(), 3) + ' mm/px');
+
+  if (MESH) {
+    const tot = Object.values(MESH.volume).reduce((a, b) => a + b, 0);
+    let h = statRow('triangles', MESH.parts.reduce((a, p) => a + p.tris, 0).toLocaleString()) +
+      statRow('slabs', MESH.slabs) +
+      statRow('volume', fmt(tot / 1000, 2) + ' cm3') +
+      statRow('mass petg', '~' + fmt(tot * 1.27 / 1000, 2) + ' g', true);
+    for (const p of MESH.parts)
+      h += statRow(`slot ${p.slot} ${p.name}`, fmt((MESH.volume[p.slot] || 0) * 1.27 / 1000, 2) + ' g');
+    $('#statsMesh').innerHTML = h;
+  } else {
+    $('#statsMesh').innerHTML = statRow('state', 'not built');
+  }
+
+  let sl = statRow('layer height', fmt(ST.layer, 2) + ' mm') +
+    statRow('total layers', lay(ST.thk));
+  if (ST.nfc.on) {
+    const p = pauseInfo();
+    sl += statRow('pocket floor', 'Z ' + fmt(NFC_Z0(), 2)) +
+      statRow('pocket roof', 'Z ' + fmt(NFC_Z0() + ST.nfc.depth, 2)) +
+      statRow('pause before', 'layer ' + p.layer, true);
+  }
+  $('#statsSlicer').innerHTML = sl;
+}
+
+function refreshNotes() {
+  const lay = n => Math.round(n / ST.layer);
+  const core = ST.thk - 2 * ST.inlay;
+  const n = [];
+  if (Math.abs(ST.inlay / ST.layer - lay(ST.inlay)) > 0.02)
+    n.push(`Inlay is ${fmt(ST.inlay, 2)} mm, which is not a whole number of ${fmt(ST.layer, 2)} mm layers. The slicer will round it.`);
+  if (ST.inlay < 0.8) n.push('Under about 0.8 mm the body colour tints the inlay through the plastic. Six layers is a safe floor.');
+  $('#inlayNote').textContent = n.join(' ') || `${lay(ST.inlay)} layers of colour over the body. Core between the two inlays is ${fmt(core, 2)} mm.`;
+  $('#inlayNote').className = 'note' + (core < 0.4 ? ' bad' : n.length ? ' warn' : '');
+
+  $('#resNote').textContent = `${fmt(MM_PER_PX(), 3)} mm per pixel. Art edges are stepped at that size, well under a 0.4 nozzle. Higher only costs triangles and rebuild time. If auto rebuild starts feeling slow, come back here and drop it.`;
+
+  const rimRoot = R() - ST.edge.depth;
+  const rimIn = R_RIM_IN();
+  if (ST.rim.on && EDGES[ST.edge.style].uses.includes('depth')) {
+    const clear = rimRoot - rimIn;
+    $('#rimNote').textContent = clear < 0.4
+      ? `The flutes cut to r ${fmt(rimRoot, 2)} but the rim only reaches in to r ${fmt(rimIn, 2)}. Widen the rim or go shallower or the body colour shows in the valleys.`
+      : `Flute roots stay ${fmt(clear, 2)} mm clear of the body colour.`;
+    $('#rimNote').className = 'note' + (clear < 0.4 ? ' bad' : '');
+  } else {
+    $('#rimNote').textContent = 'A coloured rim also reads as a ring framing both faces, since it runs the full thickness.';
+    $('#rimNote').className = 'note';
+  }
+
+  $('#layerNote').textContent = `Coin is ${lay(ST.thk)} layers tall. Inlay lands on ${lay(ST.inlay)}.`;
+
+  if (ST.nfc.on) {
+    const floor = NFC_Z0() - ST.inlay, roof = ST.thk - ST.inlay - NFC_Z0() - ST.nfc.depth;
+    const slop = ST.nfc.dia - ST.nfc.tag;
+    const bad = floor < 0.3 || roof < 0.3;
+    const p = pauseInfo();
+    $('#nfcNote').textContent = bad
+      ? `Only ${fmt(floor, 2)} mm of floor and ${fmt(roof, 2)} mm of roof around the pocket. Thicken the coin or shrink the pocket.`
+      : `${fmt(slop, 2)} mm of slop round a ${fmt(ST.nfc.tag, 1)} mm tag. Floor ${fmt(floor, 2)} mm, roof ${fmt(roof, 2)} mm. Pause before layer ${p.layer}, the one starting Z ${fmt(p.z, 2)}.`;
+    $('#nfcNote').className = 'note' + (bad ? ' bad' : '');
+  } else {
+    $('#nfcNote').textContent = 'A sealed void inside the coin. Print pauses at the ceiling, you drop the tag in, the next layer bridges over it.';
+    $('#nfcNote').className = 'note';
+  }
+
+  const tips = [];
+  if (ST.edge.depth < 0.6 && EDGES[ST.edge.style].uses.includes('depth'))
+    tips.push('Reeds under 0.6 mm deep print round. Ask me how I know.');
+  if (ST.art.gap === 0 && ST.nSlots > 2) tips.push('Colour gap at zero lets two colours butt straight up against each other.');
+  $('#tips').textContent = tips.join(' ');
+}
+
+/* ---------- build ---------- */
+function buildNow(quiet) {
+  const t0 = performance.now();
+  MESH = buildMesh(n => { if (!quiet) LOG.say(`${n} slabs after merge`); });
+  lastBuildMs = Math.round(performance.now() - t0);
+  const tris = MESH.parts.reduce((a, p) => a + p.tris, 0);
+  if (!quiet) LOG.info(`mesh ok: ${tris.toLocaleString()} triangles in ${lastBuildMs} ms`);
+  VIEW.load(MESH);
+  dirty = false;
+  ['#btn3mf', '#btnZip', '#btnCard', '#btnPng'].forEach(s => $(s).disabled = false);
+  $('#expNote').textContent = `Ready. ${tris.toLocaleString()} triangles. The 3mf is the one to open, the STL bundle is the fallback.`;
+  refreshStats();
+  return tris;
+}
+
+function doBuild(auto) {
+  if (building) { queued = true; return; }
+  building = true;
+  status(auto ? 'catching up' : 'building mesh', 'busy');
+  $('#btnBuild').disabled = true;
+  setTimeout(() => {
+    try {
+      const tris = buildNow(!!auto);
+      status(`${tris.toLocaleString()} tris in ${lastBuildMs} ms`);
+      if (auto && lastBuildMs > 2500) {
+        LOG.warn(`rebuild took ${lastBuildMs} ms. Drop the grid on the blank tab, or untick auto rebuild.`);
+      }
+    } catch (e) {
+      LOG.err('build failed: ' + e.message);
+      console.error(e);
+      status('build failed', 'err');
+    }
+    building = false;
+    $('#btnBuild').disabled = false;
+    if (queued) { queued = false; doBuild(true); }
+  }, 20);
+}
+
+/* exports never hand out a stale mesh */
+function ensureMesh() {
+  if (MESH && !dirty) return true;
+  status('rebuilding before export', 'busy');
+  try { buildNow(false); status('mesh up to date'); return true; }
+  catch (e) { LOG.err('build failed: ' + e.message); status('build failed', 'err'); return false; }
+}
+
+/* ---------- presets ---------- */
+function logoSVG() {
+  return 'data:image/svg+xml;base64,' + btoa(
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="117 103 800 800"><path transform="translate(490,121)" fill="#F5F0E6" d="${LOGO_ARC}"/><path transform="translate(498,314)" fill="#FE0386" d="${LOGO_WRENCH}"/></svg>`);
+}
+
+function blankState() {
+  Object.assign(ST, {
+    dia: 44, thk: 3.6, cham: 0.5, inlay: 1.2, layer: 0.2, res: 512,
+    nSlots: 3, base: 1, face: 'front', presetPattern: 'Generic {TYPE}', writeFilaments: true
+  });
+  ST.slots = DEF_SLOTS.map(x => ({ ...x }));
+  ST.shape = { kind: 'round', aspect: 0.72, corner: 0.3 };
+  ST.edge = { style: 'plain', count: 40, depth: 1.0, width: 2.8, twist: 35, gapDeg: 0 };
+  ST.rim = { on: false, w: 2.2, slot: 3, dashOn: false, dashN: 12, dashDuty: 45, dashSlot: 2, dashAlt: false, dashSlot2: 1, dashPhase: 0 };
+  ST.nfc = { on: false, dia: 26, depth: 0.6, tag: 25 };
+  ST.art = { boost: 0.10, gap: 0.45, keep: 1.4, despeck: true, minF: 0.90 };
+  ST.faces.front = [];
+  ST.faces.back = [];
+}
+
+const PRESETS = {
+  'blank coin': () => { blankState(); return null; },
+  'hack.build coin': () => {
+    Object.assign(ST, {
+      dia: 44, thk: 3.6, cham: 0.5, inlay: 1.2, layer: 0.2,
+      nSlots: 3, base: 1,
+      edge: { style: 'reeded', count: 40, depth: 1.0, width: 2.8, twist: 35, gapDeg: 0 },
+      rim: { on: true, w: 2.2, slot: 3 },
+      art: { boost: 0.10, gap: 0.45, keep: 1.4, despeck: true, minF: 0.90 }
+    });
+    ST.slots = [
+      { name: 'black', color: '#1A1A1A', type: 'PETG' },
+      { name: 'cream', color: '#F5F0E6', type: 'PETG' },
+      { name: 'pink', color: '#FE0386', type: 'PETG' },
+      { name: 'spare', color: '#2B6CB0', type: 'PETG' }
+    ];
+    const img = new Image();
+    img.src = logoSVG();
+    ST.faces.front = [{
+      id: LAYER_ID++, kind: 'image', name: 'hack.build mark', img, src: img.src,
+      mode: 'palette', slot: 2, scale: 1, dx: 0, dy: 0, rot: 0, open: false
+    }];
+    ST.faces.back = [{
+      id: LAYER_ID++, kind: 'text', text: 'hack|.build', slot: 2, accent: 3,
+      font: 'Permanent Marker', size: 8.4, mode: 'straight', dx: 0, dy: 0, rot: 0,
+      runGap: 0.7, caps: false, bold: false, open: false
+    }];
+    return img;
+  },
+  'seal + tagline': () => {
+    blankState();
+    ST.nSlots = 3; ST.base = 1;
+    ST.rim = { on: false, w: 2.2, slot: 3 };
+    ST.edge = { style: 'reeded', count: 72, depth: 0.7, width: 1.5, twist: 35, gapDeg: 0 };
+    ST.art.keep = 0.8;
+    ST.faces.front = [
+      { id: LAYER_ID++, kind: 'ring', slot: 2, r0: R_ART() - 5.4, r1: R_ART(), seg: 1, duty: 100, open: false },
+      { id: LAYER_ID++, kind: 'text', text: 'MAKE THINGS', slot: 1, accent: 1, font: 'Permanent Marker', size: 4.6, mode: 'arc', arcR: R_ART() - 4.6, arcDeg: 90, flip: false, track: 1.05, runGap: 0, dx: 0, dy: 0, open: false },
+      { id: LAYER_ID++, kind: 'text', text: 'BREAK THINGS', slot: 1, accent: 1, font: 'Permanent Marker', size: 4.6, mode: 'arc', arcR: R_ART() - 0.8, arcDeg: -90, flip: true, track: 1.05, runGap: 0, dx: 0, dy: 0, open: false }
+    ];
+    ST.faces.back = [{ id: LAYER_ID++, kind: 'text', text: 'REPEAT|.', slot: 2, accent: 3, font: 'Permanent Marker', size: 9, mode: 'straight', dx: 0, dy: 0, rot: 0, runGap: 0.5, open: false }];
+    return null;
+  },
+  'nfc tag coin': () => {
+    blankState();
+    ST.thk = 4.2; ST.inlay = 1.2;
+    ST.nfc = { on: true, dia: 26, depth: 0.6, tag: 25 };
+    ST.edge = { style: 'milled', count: 44, depth: 1.1, width: 3.0, twist: 35, gapDeg: 0 };
+    ST.rim = { on: true, w: 2.2, slot: 3 };
+    return null;
+  },
+  'casino chip': () => {
+    blankState();
+    ST.dia = 40; ST.thk = 3.4; ST.inlay = 1.2;
+    ST.nSlots = 3;
+    ST.slots[0] = { name: 'body', color: '#1B3A6B', type: 'PETG' };
+    ST.slots[1] = { name: 'spot', color: '#F5F0E6', type: 'PETG' };
+    ST.slots[2] = { name: 'accent', color: '#C3251F', type: 'PETG' };
+    ST.edge = { style: 'square', count: 24, depth: 0.7, width: 2.2, twist: 35, gapDeg: 0 };
+    ST.rim = { on: true, w: 4.5, slot: 1, dashOn: true, dashN: 12, dashDuty: 45, dashSlot: 2, dashAlt: true, dashSlot2: 3, dashPhase: 0 };
+    ST.faces.front = [{
+      id: LAYER_ID++, kind: 'text', text: '25', slot: 2, accent: 2,
+      font: 'Permanent Marker', size: 14, mode: 'straight', dx: 0, dy: 0, rot: 0,
+      runGap: 0, caps: false, bold: false, open: false
+    }];
+    return null;
+  },
+  'big 50mm medallion': () => {
+    blankState();
+    ST.dia = 50; ST.thk = 4.0; ST.inlay = 1.4; ST.cham = 0.8;
+    ST.edge = { style: 'knurl', count: 30, depth: 0.9, width: 2.4, twist: 40, gapDeg: 0 };
+    ST.rim = { on: true, w: 2.6, slot: 3 };
+    return null;
+  }
+};
+
+function hasWork() { return ST.faces.front.length > 0 || ST.faces.back.length > 0; }
+
+function applyPreset(name, force) {
+  if (!force && hasWork() && !confirm(`Load "${name}"? This replaces the whole design. Save json first if you want it back.`)) return;
+  const img = PRESETS[name]();
+  const done = () => { syncAll(); LOG.info('preset: ' + name); };
+  if (img && !img.complete) img.onload = done; else done();
+}
+
+function syncAll() {
+  for (const k of Object.keys(BOUND)) BOUND[k].show();
+  $('#rimOn').checked = ST.rim.on;
+  $('#nfcOn').checked = ST.nfc.on;
+  $('#despeck').checked = ST.art.despeck;
+  if ($('#presetPattern')) $('#presetPattern').value = ST.presetPattern;
+  if ($('#writeFil')) $('#writeFil').checked = ST.writeFilaments;
+  for (const id of ['printerId', 'processId', 'printerModel', 'printerVariant'])
+    if ($('#' + id)) $('#' + id).value = ST[id];
+  renderSlots(); syncSlotSelects(); renderShapeChips(); syncEdgeUI(); renderEdgePresets(); renderLayerList();
+  commit();
+}
+
+/* ---------- save / load ---------- */
+function serialize() {
+  const clean = f => ST.faces[f].map(L => {
+    const o = { ...L };
+    delete o.img; delete o.open;
+    return o;
+  });
+  return JSON.stringify({
+    collar: 1, dia: ST.dia, thk: ST.thk, cham: ST.cham, inlay: ST.inlay, layer: ST.layer,
+    res: ST.res, slots: ST.slots, nSlots: ST.nSlots, base: ST.base,
+    presetPattern: ST.presetPattern, writeFilaments: ST.writeFilaments,
+    printerId: ST.printerId, processId: ST.processId,
+    printerModel: ST.printerModel, printerVariant: ST.printerVariant,
+    shape: ST.shape,
+    edge: ST.edge, rim: ST.rim, nfc: ST.nfc, art: ST.art,
+    faces: { front: clean('front'), back: clean('back') }
+  }, null, 2);
+}
+function deserialize(txt) {
+  const d = JSON.parse(txt);
+  if (!d.collar) throw new Error('not a COLLAR file');
+  ['dia', 'thk', 'cham', 'inlay', 'layer', 'res', 'nSlots', 'base', 'presetPattern', 'writeFilaments', 'printerId', 'processId', 'printerModel', 'printerVariant'].forEach(k => { if (d[k] != null) ST[k] = d[k]; });
+  ['slots', 'edge', 'rim', 'nfc', 'art', 'shape'].forEach(k => { if (d[k]) ST[k] = d[k]; });
+  let pending = 0;
+  for (const f of ['front', 'back']) {
+    ST.faces[f] = (d.faces?.[f] || []).map(L => {
+      const o = { ...L, id: LAYER_ID++, open: false };
+      if (o.kind === 'image' && o.src) {
+        pending++;
+        const img = new Image();
+        img.onload = () => { if (--pending === 0) { syncAll(); } };
+        img.onerror = () => { pending--; };
+        img.src = o.src;
+        o.img = img;
+      }
+      return o;
+    });
+  }
+  syncAll();
+}
+
+/* ============================================================ init */
+function boot() {
+  LOG.say('COLLAR up. raster in XY, exact in Z.');
+
+  /* ranges */
+  BOUND.dia = bindRange('dia', () => ST.dia, v => ST.dia = v, 1);
+  BOUND.thk = bindRange('thk', () => ST.thk, v => ST.thk = v, 2);
+  BOUND.cham = bindRange('cham', () => ST.cham, v => ST.cham = v, 2);
+  BOUND.inlay = bindRange('inlay', () => ST.inlay, v => ST.inlay = v, 2);
+  BOUND.res = bindRange('res', () => ST.res, v => ST.res = v, 0);
+  BOUND.eCount = bindRange('eCount', () => ST.edge.count, v => ST.edge.count = v, 0, renderEdgePresets);
+  BOUND.eDepth = bindRange('eDepth', () => ST.edge.depth, v => ST.edge.depth = v, 2, renderEdgePresets);
+  BOUND.eWidth = bindRange('eWidth', () => ST.edge.width, v => ST.edge.width = v, 2, renderEdgePresets);
+  BOUND.eTwist = bindRange('eTwist', () => ST.edge.twist, v => ST.edge.twist = v, 0, renderEdgePresets);
+  BOUND.eGap = bindRange('eGap', () => ST.edge.gapDeg, v => ST.edge.gapDeg = v, 0, renderEdgePresets);
+  BOUND.rimW = bindRange('rimW', () => ST.rim.w, v => ST.rim.w = v, 2, syncDashUI);
+  BOUND.dashN = bindRange('dashN', () => ST.rim.dashN, v => ST.rim.dashN = v, 0, syncDashUI);
+  BOUND.dashDuty = bindRange('dashDuty', () => ST.rim.dashDuty, v => ST.rim.dashDuty = v, 0, syncDashUI);
+  BOUND.dashPhase = bindRange('dashPhase', () => ST.rim.dashPhase, v => ST.rim.dashPhase = v, 0);
+  BOUND.aspect = bindRange('aspect', () => ST.shape.aspect, v => ST.shape.aspect = v, 2);
+  BOUND.corner = bindRange('corner', () => ST.shape.corner, v => ST.shape.corner = v, 2);
+  BOUND.boost = bindRange('boost', () => ST.art.boost, v => ST.art.boost = v, 2);
+  BOUND.gap = bindRange('gap', () => ST.art.gap, v => ST.art.gap = v, 2);
+  BOUND.keep = bindRange('keep', () => ST.art.keep, v => ST.art.keep = v, 1);
+  BOUND.minF = bindRange('minF', () => ST.art.minF, v => ST.art.minF = v, 2);
+  BOUND.layer = bindRange('layer', () => ST.layer, v => ST.layer = v, 2);
+  BOUND.nfcD = bindRange('nfcD', () => ST.nfc.dia, v => ST.nfc.dia = v, 1);
+  BOUND.nfcH = bindRange('nfcH', () => ST.nfc.depth, v => ST.nfc.depth = v, 2);
+  BOUND.tag = bindRange('tag', () => ST.nfc.tag, v => ST.nfc.tag = v, 1);
+
+  $('#rimOn').onchange = e => { ST.rim.on = e.target.checked; syncSlotSelects(); renderSlots(); syncDashUI(); commit(); };
+  $('#dashOn').onchange = e => { ST.rim.dashOn = e.target.checked; syncDashUI(); commit(); };
+  $('#dashAlt').onchange = e => { ST.rim.dashAlt = e.target.checked; syncDashUI(); commit(); };
+  $('#dashSlot').onchange = e => { ST.rim.dashSlot = +e.target.value; renderSlots(); commit(); };
+  $('#dashSlot2').onchange = e => { ST.rim.dashSlot2 = +e.target.value; renderSlots(); commit(); };
+  $('#nfcOn').onchange = e => { ST.nfc.on = e.target.checked; commit(); };
+  $('#despeck').onchange = e => { ST.art.despeck = e.target.checked; commit(); };
+  $('#writeFil').checked = ST.writeFilaments;
+  $('#writeFil').onchange = e => { ST.writeFilaments = e.target.checked; };
+  $('#presetPattern').value = ST.presetPattern;
+  $('#presetPattern').oninput = e => { ST.presetPattern = e.target.value || 'Generic {TYPE}'; };
+  for (const [id, key] of [['printerId', 'printerId'], ['processId', 'processId'],
+                           ['printerModel', 'printerModel'], ['printerVariant', 'printerVariant']]) {
+    const el = $('#' + id);
+    el.value = ST[key];
+    el.oninput = e => { ST[key] = e.target.value.trim(); };
+  }
+  $('#baseSlot').onchange = e => { ST.base = +e.target.value; renderSlots(); commit(); };
+  $('#rimSlot').onchange = e => { ST.rim.slot = +e.target.value; renderSlots(); commit(); };
+
+  /* tabs */
+  const goStep = pane => {
+    $$('#tabsL button').forEach(x => {
+      const on = x.dataset.p === pane;
+      x.classList.toggle('on', on);
+      if (on) x.classList.remove('done'); else x.classList.add('done');
+    });
+    $$('#col-left .pane').forEach(p => p.classList.toggle('on', p.id === pane));
+    setGuide(pane);
+    $('#col-left').scrollTop = 0;
+  };
+  $$('#tabsL button').forEach(b => b.onclick = () => goStep(b.dataset.p));
+  $$('.nextstep').forEach(b => b.onclick = () => goStep(b.dataset.next));
+  $$('#tabsFace button').forEach(b => b.onclick = () => {
+    $$('#tabsFace button').forEach(x => x.classList.toggle('on', x === b));
+    ST.face = b.dataset.f;
+    renderLayerList();
+  });
+  $$('#viewChips button').forEach(b => b.onclick = () => {
+    $$('#viewChips button').forEach(x => x.classList.toggle('on', x === b));
+    ST.view = b.dataset.v; VIEW.draw();
+  });
+  $('#btnFlip').onclick = () => { ST.flipped = !ST.flipped; VIEW.draw(); };
+  $('#btnHome').onclick = () => { VIEW.rx = -0.9; VIEW.ry = 0.55; VIEW.dist = 1.0; VIEW.draw(); };
+
+  /* art intake */
+  const drop = $('#drop');
+  drop.onclick = () => $('#filePick').click();
+  $('#filePick').onchange = e => { loadFiles(e.target.files); e.target.value = ''; };
+  ['dragenter', 'dragover'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add('hot'); }));
+  ['dragleave', 'drop'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.remove('hot'); }));
+  drop.addEventListener('drop', e => loadFiles(e.dataTransfer.files));
+  window.addEventListener('dragover', e => e.preventDefault());
+  window.addEventListener('drop', e => { e.preventDefault(); if (e.dataTransfer?.files?.length) loadFiles(e.dataTransfer.files); });
+
+  $('#btnAddText').onclick = () => addLayer(newTextLayer(false));
+  $('#btnAddArc').onclick = () => addLayer(newTextLayer(true));
+  $('#btnAddRing').onclick = () => addLayer(newRingLayer());
+  $('#btnClearFace').onclick = () => { ST.faces[ST.face] = []; renderLayerList(); commit(); };
+
+  /* build + export */
+  $('#btnBuild').onclick = doBuild;
+  $('#btn3mf').onclick = async () => {
+    if (!ensureMesh()) return;
+    status('packing 3mf', 'busy');
+    const blob = await export3mf(MESH, 'collar-coin');
+    saveBlob(blob, `collar-coin-${Math.round(ST.dia)}mm.3mf`);
+    LOG.info(`3mf out, ${(blob.size / 1024).toFixed(0)} kB`);
+    status('3mf exported');
+  };
+  $('#btnZip').onclick = async () => {
+    if (!ensureMesh()) return;
+    status('packing stls', 'busy');
+    const entries = MESH.parts.map(p => ({
+      name: `collar-coin-slot${p.slot}-${String(p.name).replace(/[^\w-]/g, '')}.stl`,
+      data: stlBinary(p), store: true
+    }));
+    for (const e of entries) e.data = new Uint8Array(await e.data.arrayBuffer());
+    entries.push({ name: 'print-card.txt', data: printCard(MESH) });
+    entries.push({ name: 'collar-design.json', data: serialize() });
+    const blob = await makeZip(entries);
+    saveBlob(blob, `collar-coin-${Math.round(ST.dia)}mm-stl.zip`);
+    LOG.info(`stl bundle out, ${(blob.size / 1024).toFixed(0)} kB`);
+    status('stls exported');
+  };
+  $('#btnCard').onclick = () => ensureMesh() && saveBlob(new Blob([printCard(MESH)], { type: 'text/plain' }), 'collar-print-card.txt');
+  $('#btnPng').onclick = () => {
+    const c = document.createElement('canvas');
+    c.width = 1200; c.height = 620;
+    const x = c.getContext('2d');
+    x.fillStyle = '#f5f0e6'; x.fillRect(0, 0, c.width, c.height);
+    x.drawImage($('#cvF'), 40, 50, 520, 520);
+    x.drawImage($('#cvB'), 640, 50, 520, 520);
+    x.fillStyle = '#1a1a1a'; x.font = '600 22px monospace';
+    x.fillText('front', 40, 40); x.fillText('back (as it reads in hand)', 640, 40);
+    c.toBlob(b => saveBlob(b, 'collar-faces.png'));
+  };
+
+  /* presets + json */
+  const pc = $('#presetChips');
+  for (const k of Object.keys(PRESETS)) {
+    const b = document.createElement('button');
+    b.className = 'chip';
+    b.textContent = k;
+    b.onclick = () => applyPreset(k);
+    pc.appendChild(b);
+  }
+  $('#btnPreset').onclick = () => {
+    $('#tabsL button[data-p=pArt]').click();
+    $('#col-left').scrollTop = 0;
+  };
+  $('#btnSave').onclick = () => saveBlob(new Blob([serialize()], { type: 'application/json' }), 'collar-design.json');
+  $('#btnLoad').onclick = () => $('#jsonPick').click();
+  $('#jsonPick').onchange = e => {
+    const f = e.target.files[0]; if (!f) return;
+    const fr = new FileReader();
+    fr.onload = () => { try { deserialize(fr.result); LOG.info('design loaded'); } catch (err) { LOG.err(err.message); } };
+    fr.readAsText(f);
+    e.target.value = '';
+  };
+
+  const wel = $('#welcome');
+  const hideWel = () => wel.classList.add('hide');
+  $('#btnGuide').onclick = () => wel.classList.remove('hide');
+  $('#wStart').onclick = () => { hideWel(); if (hasWork()) applyPreset('blank coin'); };
+  $('#wPreset').onclick = () => { hideWel(); applyPreset('hack.build coin', true); };
+  wel.addEventListener('click', e => { if (e.target === wel) hideWel(); });
+  window.addEventListener('keydown', e => { if (e.key === 'Escape') hideWel(); });
+
+  setGuide('pArt');
+  bindCanvas('front', $('#cvF'));
+  bindCanvas('back', $('#cvB'));
+  window.addEventListener('keydown', e => {
+    if (!SEL || /input|textarea|select/i.test(e.target.tagName)) return;
+    const L = ST.faces[SEL.face].find(l => l.id === SEL.id);
+    if (!L) return;
+    const step = e.shiftKey ? 1 : 0.2;
+    const nudge = (ax, ay) => {
+      if (L.kind === 'text' && L.mode === 'arc') { L.arcR = clamp(L.arcR + ay * step, 2, R_ART() + ST.art.keep); L.arcDeg += ax * (e.shiftKey ? 5 : 1); }
+      else { L.dx = +((L.dx || 0) + ax * step).toFixed(2); L.dy = +((L.dy || 0) + ay * step).toFixed(2); }
+      renderLayerList(); commit(); e.preventDefault();
+    };
+    if (e.key === 'ArrowLeft') nudge(-1, 0);
+    else if (e.key === 'ArrowRight') nudge(1, 0);
+    else if (e.key === 'ArrowUp') nudge(0, 1);
+    else if (e.key === 'ArrowDown') nudge(0, -1);
+    else if (e.key === 'Delete' || e.key === 'Backspace') {
+      const list = ST.faces[SEL.face];
+      list.splice(list.indexOf(L), 1);
+      SEL = null; renderLayerList(); commit(); e.preventDefault();
+    }
+  });
+
+  VIEW.init();
+  const start = () => {
+    applyPreset('blank coin', true);
+    wel.classList.remove('hide');
+    status('ready');
+  };
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(start).catch(start);
+  else start();
+}
+document.addEventListener('DOMContentLoaded', boot);
+</script>
+</body>
+</html>

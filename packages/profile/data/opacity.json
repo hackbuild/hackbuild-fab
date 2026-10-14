@@ -1,0 +1,50 @@
+{
+  "note": "Inlay floors (M03-T07, M03-T08, D-145). Rows load into the constants table; constant(id) reads them. No coupon has measured any of them (D-082, D-083), so all three are inferred from failed prints.",
+  "constants": [
+    {
+      "id": "opacity.lightOverDark",
+      "value": 1.2,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "failure",
+        "date": "2026-10-06",
+        "machine": "ffc5p",
+        "conditions": {
+          "layer": 0.24
+        },
+        "source": "print-reality.md lines 23 to 26 (lineage knowledge.print-reality/inlay-skill): light over dark needs about 1.2 mm in PETG at 0.24 layers; python hackbuild coin v1 printed pink and white at 0.8 over black and read grey, fixed at 1.2 (benches-coins-inlay.md 1.1)"
+      }
+    },
+    {
+      "id": "opacity.darkOverLight",
+      "value": 2,
+      "unit": "layers",
+      "provenance": {
+        "tier": "inferred",
+        "method": "failure",
+        "date": "2026-10-06",
+        "machine": "ffc5p",
+        "conditions": {
+          "layer": 0.24
+        },
+        "source": "print-reality.md line 22 (lineage knowledge.print-reality/inlay-skill): dark over light hides in two layers in PETG at 0.24 layers; SPRUE white body, black inlay (print-reality.md lines 27 to 28)"
+      }
+    },
+    {
+      "id": "inlay.minFeature",
+      "value": 0.6,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "failure",
+        "date": "2026-10-06",
+        "machine": "ffc5p",
+        "conditions": {
+          "layer": 0.24
+        },
+        "source": "print-reality.md lines 36 to 37 (lineage knowledge.print-reality/inlay-skill): with a 0.4 nozzle nothing thinner than about 0.6 mm prints reliably; default min feature 0.6. CHK-INL-01 reads it as the stroke floor (M03-T08)"
+      }
+    }
+  ]
+}

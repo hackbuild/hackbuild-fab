@@ -1,0 +1,14 @@
+{
+  "note": "Per-input quantize mode for M03-T11. palette lists the design's slot colours, body slot first; the hex values are read from the named source line. mono uses Otsu (M03-T03).",
+  "inputs": {
+    "01-hackbuild-mark.png": { "mode": "mono", "source": "hackbuild-mark.svg, ink paths only" },
+    "02-collar-hackbuild.png": { "mode": "palette", "palette": ["#1A1A1A", "#F5F0E6", "#FE0386"], "source": "collar.html PRESETS 'hack.build coin', slots 1 to 3" },
+    "03-collar-seal-tagline.png": { "mode": "palette", "palette": ["#1A1A1A", "#F5F0E6", "#FE0386"], "source": "collar.html line 636 DEF_SLOTS, nSlots 3" },
+    "04-collar-casino-chip.png": { "mode": "palette", "palette": ["#1B3A6B", "#F5F0E6", "#C3251F"], "source": "collar.html PRESETS 'casino chip', slots 1 to 3" },
+    "05-python-coin-preview.png": { "mode": "palette", "palette": ["#1A1A1A", "#F5F0E6", "#FE0386"], "source": "python hackbuild coin, the COLLAR hack.build slots" },
+    "06-sprue-face-previews.png": { "mode": "mono", "source": "sprue.py two colour coin and pick" },
+    "08-sprue-snare.png": { "mode": "mono", "source": "sprue.py line 278 motif_snare" },
+    "09-sprue-bolt.png": { "mode": "mono", "source": "sprue.py line 312 motif_bolt" },
+    "10-sprue-phx-faces.png": { "mode": "mono", "source": "sprue.html PRESETS.phx" }
+  }
+}

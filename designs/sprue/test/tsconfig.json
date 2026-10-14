@@ -1,0 +1,16 @@
+{
+  "extends": "../../../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "composite": false,
+    "declaration": false,
+    "lib": ["ES2023", "DOM"],
+    "types": [],
+    "skipLibCheck": true
+  },
+  "include": ["*.ts"],
+  "references": [
+    { "path": "../../../packages/inlay" },
+    { "path": "../../../packages/ui-core" }
+  ]
+}
