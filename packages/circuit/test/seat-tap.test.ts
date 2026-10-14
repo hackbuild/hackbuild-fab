@@ -138,6 +138,20 @@ describe("seat taps end read paths at the board pin (K-04)", () => {
     expect(isThrownCommandError(err) && err.hbf.code).toBe("E_REF");
   });
 
+  test("an outline end on a tapped net is no terminal: the path still ends at the tap", () => {
+    // A stub from K1's column runs off the plate's top edge (y 12), one
+    // touch from the contact; the seat tap is three conductors away. The
+    // board pin is the only terminal of a tapped net, so the stub prices
+    // nothing and the key chain still starts at the bump.
+    const base = draftOf(true);
+    const stub: ConductorFeature = { kind: "conductor", id: "c.stubK1", material: "cpla", net: "K1", width: W, t: T, region: { centreline: [[20, 4], [20, 12]], face: FACE(Z0) } };
+    const draft: PartDraft = { ...base, features: [...base.features, stub] };
+    const p = pressedPath(draft, "port.K1", profile);
+    expect(p.terminals).toEqual(["port.K1", "port.GND"]);
+    expect(p.legs.map((l) => l.conductor)).toEqual(["c.bumpK1", "c.sigK1", "c.colK1", "c.colG1", "c.busA", "c.bumpG"]);
+    expect(p.taps[0]?.pin).toBe("GP8");
+  });
+
   test("the hookup must read the pin the seat lands on the net", () => {
     const draft = draftOf(true);
     expect(tapMismatch(draft.features, "K1", { mcu: "rp2040", pin: "GP8" })).toBeNull();

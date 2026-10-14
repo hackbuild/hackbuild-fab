@@ -231,6 +231,43 @@ def test_region_writer_bytes_follow_geometry_not_its_form(tmp_path):
     assert wkb.loads(srcs[0]).symmetric_difference(a).area < 1e-12
 
 
+def test_region_writer_orders_equal_areas_by_normal_form(tmp_path):
+    """Two congruent triangles, one moved by (0.1, 2.7) mm: exact areas
+    equal (210000000000 nm2 twice over, computed), float areas 0.105 and
+    0.10499999999999998 mm2 (GEOS, computed). The draw order is the normal
+    order of the snapped geometry, never the float area's last bit."""
+    from shapely.geometry import MultiPolygon, Polygon
+    from direct.gerber import nm, nm_area, polygons_of, snap, write_regions
+    tri = [(0.0, 0.0), (0.3, 0.0), (0.1, 0.7)]
+    moved = [(x + 0.1, y + 2.7) for x, y in tri]
+    g = MultiPolygon([Polygon(tri), Polygon(moved)])
+    normal = polygons_of(snap(g))
+    assert [nm_area(p) for p in normal] == [210000000000, 210000000000]
+    assert normal[0].area != normal[1].area
+    p = tmp_path / "eq.gbr"
+    write_regions(str(p), g, "Copper,L1,Top", EPOCH, "0")
+    starts = [ln for ln in p.read_text().splitlines() if ln.endswith("D02*")]
+    want = [f"X{nm(q.exterior.coords[0][0])}Y{nm(q.exterior.coords[0][1])}D02*" for q in normal]
+    assert starts == want
+
+
+def test_record_rings_sit_on_the_nm_grid():
+    """record.json is one text on every platform: a vertex carrying a last
+    bit (0.1 + 0.2 is 0.30000000000000004 in IEEE double) is written on the
+    1 nm grid, and a residue under half a nanometre is written 0.0, never
+    -0.0 or 1e-12."""
+    import json
+    import math
+    from shapely.geometry import Polygon
+    from direct.record import outline_ring, ring_coords
+    poly = Polygon([(0.0, -1e-12), (0.1 + 0.2, 0.0), (0.1 + 0.2, 2.0000000000000004), (0.0, 2.0)])
+    ring = ring_coords(poly)
+    assert ring == [[0.0, 0.0], [0.3, 0.0], [0.3, 2.0], [0.0, 2.0]]
+    assert all(math.copysign(1.0, v) == 1.0 for pt in ring for v in pt)
+    assert json.dumps(ring) == "[[0.0, 0.0], [0.3, 0.0], [0.3, 2.0], [0.0, 2.0]]"
+    assert json.dumps(outline_ring(poly)) == "[[0.0, 0.0], [0.3, 0.0], [0.3, 2.0], [0.0, 2.0]]"
+
+
 def test_no_absolute_font_path():
     legacy = "/home/" + "claude"   # pcb.py line 348 read its font from there
     for root in (os.path.join(REPO, "tools", "py"), os.path.join(REPO, "reference", "boards")):

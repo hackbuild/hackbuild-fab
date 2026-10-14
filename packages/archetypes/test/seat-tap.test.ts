@@ -42,6 +42,27 @@ describe("rp2040-zero-seat ports are net taps", () => {
     }
   });
 
+  test("the tap follows the catalog pin, not the seat's pad: an inset off the row moves the bump and leaves the tap", () => {
+    // At inset 1.0 every pad moves 0.38 mm in both plan axes from PIP's
+    // 1.38 (zeroPads measures both the row and the first pad from the board
+    // edge); the board's pins do not move, so each tap stays on the catalog
+    // centre and the bump centre sits 0.38 x sqrt 2 mm off it (computed).
+    const out = seatApply({ draft, face, profile, params: { ...SEAT_DEFAULTS, inset: 1.0 } }, "rp2040-zero-seat");
+    const list = out.features.filter((f): f is PortFeature => f.kind === "port");
+    expect(list.length).toBeGreaterThan(0);
+    for (const p of list) {
+      const t = p.tap!;
+      const [u, v] = pinAt(t.pin);
+      expect(t.at[0], p.id).toBeCloseTo(10 - v, 9);
+      expect(t.at[1], p.id).toBeCloseTo(20 + u, 9);
+      const bump = out.features.find((f) => f.id === t.conductor);
+      if (bump === undefined || bump.kind !== "conductor" || !("path" in bump.region)) throw new Error(`no bump ring ${t.conductor}`);
+      const ring = bump.region.path;
+      const cx = ring.reduce((a, q) => a + q[0], 0) / ring.length, cy = ring.reduce((a, q) => a + q[1], 0) / ring.length;
+      expect(Math.hypot(cx - t.at[0], cy - t.at[1]), p.id).toBeCloseTo(Math.hypot(1.38 - 1.0, 1.38 - 1.0), 6);
+    }
+  });
+
   test("a socket seat taps the socket at its bore floor with the header pin length", () => {
     for (const p of ports("socket")) {
       const t = p.tap!;
