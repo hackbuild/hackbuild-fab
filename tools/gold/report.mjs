@@ -29,7 +29,11 @@
 // fails the job.
 //
 // Usage: node tools/gold/report.mjs [--only G-03,G-14..G-18] [--bench <id>]
-//          [--out <file>] [--calibrate] [--root <dir>] [--rules <TESTING.md>]
+//          [--origin fab|legacy] [--out <file>] [--calibrate] [--root <dir>]
+//          [--rules <TESTING.md>]
+// --origin keeps the benches gold.json records with that origin: the
+// zero-fail run grades fab bakes only, and a legacy page is graded
+// report-only against the calibration (D-265).
 // Exit: 0 when no applicable rule in scope is fail, over target or not run; 1 otherwise;
 // 2 on bad input; 70 on an internal error. With --calibrate, 1 only when a
 // rule expected to pass on a gold bench grades fail or not run.
@@ -293,7 +297,12 @@ export function run(argv, env = {}) {
   for (const b of benches) for (const id of Object.keys(b.rules ?? {})) if (!known.has(id)) throw new BadInput(`${inputs.goldFile}: ${b.id} lists ${id}, which TESTING.md 8.5 lacks`);
   const pick = arg("--bench");
   if (pick !== null) benches = benches.filter((b) => b.id === pick);
-  if (benches.length === 0) throw new BadInput(pick === null ? "no benches: gold.json is missing and no test names a bench" : `no bench ${pick} in the inputs`);
+  const origin = arg("--origin");
+  if (origin !== null) {
+    if (origin !== "fab" && origin !== "legacy") throw new BadInput(`--origin ${origin}: fab or legacy`);
+    benches = benches.filter((b) => b.origin === origin);
+  }
+  if (benches.length === 0) throw new BadInput(pick === null && origin === null ? "no benches: gold.json is missing and no test names a bench" : `no bench ${pick ?? `of origin ${origin}`} in the inputs`);
 
   const out = benches.map((b) => {
     const rows = gradeRows({ rules, bench: b, gold: b, inputs, root });

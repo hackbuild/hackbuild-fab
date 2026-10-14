@@ -146,6 +146,27 @@ test("--only lets a fail outside the list exit 0 and a fail inside it exit 1", (
   }
 });
 
+test("--origin fab grades the fab bakes only; a legacy page with fails stays out of the zero-fail run (D-265)", () => {
+  const dir = root();
+  try {
+    edit(dir, "out/smoke/gold.json", (j) => ({ ...j, benches: [{ ...j.benches[0], origin: "fab" }, { id: "lg", origin: "legacy", buildHash: null, rules: {} }] }));
+    edit(dir, "out/smoke/gold-playwright.json", (j) => {
+      const s0 = j.suites[0];
+      const g03 = s0.specs.find((x) => x.title.startsWith("G-03 "));
+      s0.specs.push({ ...g03, title: g03.title.replace("[fx]", "[lg]"), tests: [{ ...g03.tests[0], annotations: [{ type: "bench", description: "lg" }], results: [{ status: "failed", errors: [{ message: "chip after input without change" }] }] }] });
+      return j;
+    });
+    assert.equal(run(dir, "--only", "G-03").code, 1, "the legacy fail counts without --origin");
+    const fab = run(dir, "--only", "G-03", "--origin", "fab");
+    assert.equal(fab.code, 0, fab.out + fab.err);
+    const rep = JSON.parse(readFileSync(path.join(dir, "out/gold/report.json"), "utf8"));
+    assert.deepEqual(rep.benches.map((b) => b.bench), ["fx"]);
+    assert.equal(run(dir, "--origin", "kit").code, 2);
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
+
 test("a timeout grades not run with hang; a skip carries its reason; person rows wait on looked.json", () => {
   const dir = root();
   try {

@@ -153,7 +153,7 @@ export function writeApplicability(benches: GoldBench[]): void {
   const body = {
     about: "gold applicability, written by tools/smoke/gold/gold.ts (TESTING.md 8.5); a rule absent from rules applies",
     benches: benches.map((b) => ({
-      id: b.id, rel: b.under.rel, sha256: b.under.sha256, buildHash: null,
+      id: b.id, origin: b.origin, rel: b.under.rel, sha256: b.under.sha256, buildHash: null,
       rules: Object.fromEntries(Object.entries(b.na).sort().map(([id, reason]) => [id, { applies: false, reason }])),
     })),
   };

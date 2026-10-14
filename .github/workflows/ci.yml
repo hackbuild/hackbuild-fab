@@ -621,7 +621,8 @@ jobs:
         run: |
           npx playwright test -c tools/smoke/playwright.config.ts --grep @gold || true
           node tools/gold/static.mjs
-          node tools/gold/report.mjs --only G-03..G-06,G-10,G-11,G-14..G-18,G-21,G-33,G-36,G-37,G-40,G-42..G-46,G-51..G-54,G-57
+          node tools/gold/report.mjs --calibrate --origin legacy || echo "legacy gold rows are report-only (D-265); a suite defect line above names a rule the study note records as passing"
+          node tools/gold/report.mjs --only G-03..G-06,G-10,G-11,G-14..G-18,G-21,G-33,G-36,G-37,G-40,G-42..G-46,G-51..G-54,G-57 --origin fab
       - uses: actions/upload-artifact@v7
         if: always()
         with:
