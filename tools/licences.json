@@ -3577,6 +3577,191 @@
     },
     {
       "ecosystem": "npm",
+      "name": "@modelcontextprotocol/server",
+      "version": "2.3.0",
+      "published": "Apache-2.0",
+      "audited": "Apache-2.0 AND MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@modelcontextprotocol/server\"].license; LICENSE: relicensing from MIT to Apache-2.0, contributions without consent stay MIT; read 2026-10-13",
+      "use": "core: hbf mcp server (M12-T01)",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-040",
+        "D-108"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@modelcontextprotocol/core",
+      "version": "2.3.0",
+      "published": "Apache-2.0",
+      "audited": "Apache-2.0 AND MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@modelcontextprotocol/core\"].license; LICENSE: relicensing from MIT to Apache-2.0, contributions without consent stay MIT; read 2026-10-13",
+      "use": "core: mcp protocol types, transitive of server",
+      "load": "bundled",
+      "status": "adopted",
+      "decision": [
+        "D-040",
+        "D-108"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@modelcontextprotocol/client",
+      "version": "2.3.0",
+      "published": "Apache-2.0",
+      "audited": "Apache-2.0 AND MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@modelcontextprotocol/client\"].license; LICENSE: relicensing from MIT to Apache-2.0, contributions without consent stay MIT; read 2026-10-13",
+      "use": "tools/mcp/client.mjs and the core mcp tests",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-040",
+        "D-108"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "cross-spawn",
+      "version": "7.0.6",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/cross-spawn\"].license and the package licence file, read 2026-10-13",
+      "use": "dev toolchain, transitive of @modelcontextprotocol/client",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "eventsource",
+      "version": "3.0.7",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/eventsource\"].license and the package licence file, read 2026-10-13",
+      "use": "dev toolchain, transitive of @modelcontextprotocol/client",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "eventsource-parser",
+      "version": "3.1.1",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/eventsource-parser\"].license and the package licence file, read 2026-10-13",
+      "use": "dev toolchain, transitive of @modelcontextprotocol/client",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "isexe",
+      "version": "2.0.0",
+      "published": "ISC",
+      "audited": "ISC",
+      "evidence": "package-lock.json packages[\"node_modules/isexe\"].license and the package licence file, read 2026-10-13",
+      "use": "dev toolchain, transitive of @modelcontextprotocol/client",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "jose",
+      "version": "6.2.12",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/jose\"].license and the package licence file, read 2026-10-13",
+      "use": "dev toolchain, transitive of @modelcontextprotocol/client",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "path-key",
+      "version": "3.1.1",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/path-key\"].license and the package licence file, read 2026-10-13",
+      "use": "dev toolchain, transitive of @modelcontextprotocol/client",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "pkce-challenge",
+      "version": "5.0.1",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/pkce-challenge\"].license and the package licence file, read 2026-10-13",
+      "use": "dev toolchain, transitive of @modelcontextprotocol/client",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "shebang-command",
+      "version": "2.0.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/shebang-command\"].license and the package licence file, read 2026-10-13",
+      "use": "dev toolchain, transitive of @modelcontextprotocol/client",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "shebang-regex",
+      "version": "3.0.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/shebang-regex\"].license and the package licence file, read 2026-10-13",
+      "use": "dev toolchain, transitive of @modelcontextprotocol/client",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "which",
+      "version": "2.0.2",
+      "published": "ISC",
+      "audited": "ISC",
+      "evidence": "package-lock.json packages[\"node_modules/which\"].license and the package licence file, read 2026-10-13",
+      "use": "dev toolchain, transitive of @modelcontextprotocol/client",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
       "name": "@jridgewell/gen-mapping",
       "version": "0.3.13",
       "published": "MIT",

@@ -8,47 +8,30 @@
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import {
-  type ArtifactBytes, type Assembly, type BuildInputs, type BuildWarning, type CheckResult, type Hash, type CommandInput, type CommandOutput, type InferredRead,
+  type ArtifactBytes, type Assembly, type BuildInputs, type CheckResult, type Hash, type CommandInput, type CommandOutput,
   type NextCall,
 } from "@hackbuild/spec";
 import { createProfileLookup } from "@hackbuild/profile";
-import { CHECK_MODULES, PAGE_MILESTONE, conductorPackageChecks, kernelsAt, registerChecks, runArtifactChecks, runRegistry, runSkeleton, skeletonChecks, type InterferenceDecl, type KernelViews } from "@hackbuild/checks";
+import { CHECK_MODULES, PAGE_MILESTONE, conductorPackageChecks, kernelsAt, registerChecks, runArtifactChecks, runRegistry, skeletonChecks, type InterferenceDecl, type KernelViews } from "@hackbuild/checks";
 import type { MeshData } from "@hackbuild/mesh";
 import { sceneDef } from "@hackbuild/sim";
-import { M00_PART_CHECKS, constraintVersions, registryHashOf, runPartChecks } from "../checks.js";
+import { constraintVersions, registryHashOf } from "../checks.js";
 import { sourceDateEpoch } from "../epoch.js";
 import { cmdError, didYouMean } from "../errors.js";
 import { hashOf } from "../jcs.js";
 import { countsOf, findingsOf, worst, type CommandOut } from "../result.js";
 import type { CoreCtx } from "../registry.js";
 import {
-  buildPart, checkDefs, checkVersions, declares3mf, export3mf, fixCalls, loadDesign, loadWorkspace, registryDefs, runBuildRegistry, runChecks, workspaceRoot, type Built, type Values,
+  buildPart, checkVersions, declares3mf, export3mf, fixCalls, loadDesign, loadWorkspace, rebuildOf, workspaceRoot, type Built, type Values,
 } from "./build.js";
+import { runAllChecks as runPipelineAll, type AllChecked } from "@hackbuild/pipeline";
 import { baseArgs, buildTarget } from "./part-build.js";
 import { sceneDeps } from "./sim.run.js";
 import { isBoardDesign } from "../board.js";
 import { resolveTarget } from "../load-build.js";
 import { boardArtifactKind, runBoardArtifactCheck, runBoardCheckRun } from "./board.js";
 
-export interface AllChecked {
-  readonly results: readonly CheckResult[];
-  readonly readsInferred: readonly InferredRead[];
-  readonly warnings: readonly BuildWarning[];
-}
-
-/** Every check id core runs: the registered skeleton checks, the checks of the kernels the chase lists, the M00 Part IR checks and the registry checks of the build levels. */
-export function allCheckIds(built: Built): string[] {
-  return [...checkDefs(built.design).map((d) => d.id as string), ...M00_PART_CHECKS, ...registryDefs(built.design).map((d) => d.id as string)];
-}
-
-/**
- * The checks export.run gates the written package on: CHK-3MF-06 and -07,
- * and CHK-3MF-08 where the design resolves it (the circuit kernel, M05-T20),
- * so a package whose conductor objects carry beams never leaves the gate.
- */
-export function packageCheckIds(built: Built): string[] {
-  return ["CHK-3MF-06", "CHK-3MF-07", ...(allCheckIds(built).includes("CHK-3MF-08") ? ["CHK-3MF-08"] : [])];
-}
+export { allCheckIds, packageCheckIds, type AllChecked } from "@hackbuild/pipeline";
 
 /** The checks a run resolved, to their versions, for reportHash (M04-T08 step 1); `only` narrows them as it narrows the run. */
 export function reportChecks(built: Built, only?: readonly string[]): Record<string, string> {
@@ -63,48 +46,12 @@ export function reportOrigin(built: Built): { chase: string; target: string; bui
 
 /**
  * The skeleton checks, the M00 Part IR checks and the registry checks of
- * the build levels on one build; `only` narrows each. export.run gates on
- * these results, so a registry block fail (CHK-PRT-16 and kin) stops an
- * export (D-109).
+ * the build levels on one build; `only` narrows each (packages/pipeline
+ * runAllChecks). export.run gates on these results, so a registry block
+ * fail (CHK-PRT-16 and kin) stops an export (D-109).
  */
-export async function runAllChecks(built: Built, artifacts: readonly ArtifactBytes[], only: readonly string[] | undefined): Promise<AllChecked> {
-  const ids = allCheckIds(built);
-  (only ?? []).forEach((id, i) => {
-    if (!ids.includes(id)) throw cmdError({ code: "E_REF", path: `/only/${i}`, got: id, didYouMean: didYouMean(id, ids), hint: "name a check the registry runs" });
-  });
-  const m00 = new Set<string>(M00_PART_CHECKS);
-  const registered = new Set<string>(registryDefs(built.design).map((d) => d.id as string));
-  const skeletonOnly = only?.filter((id) => !m00.has(id) && !registered.has(id));
-  const m00Only = only?.filter((id) => m00.has(id));
-  const registryOnly = only?.filter((id) => registered.has(id));
-  const skeleton = only === undefined || (skeletonOnly ?? []).length > 0
-    ? await runChecks(built, artifacts, skeletonOnly)
-    : { results: [], readsInferred: [], warnings: [] };
-  const part = only === undefined || (m00Only ?? []).length > 0
-    ? runPartChecks(built.design.ws.checksSeed, {
-      partId: built.part.id,
-      parts: built.meshed.slots.map((s, i) => ({ name: (s as { name?: string }).name ?? `slot${s.slot}#${i}`, mesh: s.mesh })),
-      solidVolumeMm3: built.part.solid.volumeMm3,
-      ...(built.part.unionVolumeMm3 === undefined ? {} : { unionVolumeMm3: built.part.unionVolumeMm3 }),
-    }, m00Only)
-    : [];
-  const registry = only === undefined || (registryOnly ?? []).length > 0
-    ? await runBuildRegistry(built, [...skeleton.results, ...part], registryOnly)
-    : { results: [], readsInferred: [], warnings: [] };
-  const readsInferred = mergeReads([...skeleton.readsInferred, ...registry.readsInferred]);
-  const warnings = [...skeleton.warnings, ...registry.warnings.filter((w) => !skeleton.warnings.some((x) => x.code === w.code && x.text === w.text))];
-  return { results: [...skeleton.results, ...part, ...registry.results], readsInferred, warnings };
-}
-
-/** Inferred reads merged by row, check ids unioned and sorted, rows sorted. */
-function mergeReads(reads: readonly InferredRead[]): InferredRead[] {
-  const by = new Map<string, Set<string>>();
-  for (const r of reads) {
-    const s = by.get(r.row) ?? new Set<string>();
-    for (const c of r.movesChecks) s.add(c);
-    by.set(r.row, s);
-  }
-  return [...by.entries()].sort(([a], [b]) => (a < b ? -1 : 1)).map(([row, s]) => ({ row, movesChecks: [...s].sort() }));
+export function runAllChecks(built: Built, artifacts: readonly ArtifactBytes[], only: readonly string[] | undefined): Promise<AllChecked> {
+  return runPipelineAll(built, artifacts, only, rebuildOf(built.design));
 }
 
 function readArtifact(file: string, cwd: string): ArtifactBytes {

@@ -20,7 +20,7 @@ import { cmdError, didYouMean } from "../errors.js";
 import { fullProfile } from "../load-build.js";
 import { countsOf, errorResult, findingsOf, worst, type CommandOut } from "../result.js";
 import type { CoreCtx } from "../registry.js";
-import { askGate, gatePrompt } from "../tty-gate.js";
+import { askHost } from "../tty-gate.js";
 import { loadWorkspace } from "../commands/build.js";
 import { SHEET_EXPORTERS, type SheetExporter } from "./index.js";
 import { laserName, nameSet, plateName } from "./names.js";
@@ -171,10 +171,10 @@ export async function runSceneExport(input: ExportInput, ctx: CoreCtx): Promise<
   if (input.dryRun === true) {
     return { ...evidence, verdict: worst(results), stage: "gate", errors: [], artifacts: [], next: [], result: { ...summary, artifacts: [], warnings: [] } };
   }
-  const answer = await askGate(gatePrompt({
+  const answer = await askHost(ctx, {
     kind: input.kind, machine: built.machine, chase: built.scene, buildHash: built.layoutHash,
     fail: counts.fail, warn: counts.warn, path: `${shown}${path.sep} (${built.files.length} files)`,
-  }), ctx.gate);
+  });
   if (answer === "unavailable") {
     throw cmdError({
       code: "E_GATE_UNAVAILABLE", path: "/", personRuns: scenePersonLine(input, ctx.cli.out),

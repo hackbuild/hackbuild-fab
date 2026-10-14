@@ -1,0 +1,23 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": "src",
+    "skipLibCheck": true
+  },
+  "include": [
+    "src"
+  ],
+  "references": [
+    { "path": "../profile" },
+    { "path": "../catalog" },
+    { "path": "../geom" },
+    { "path": "../mesh" },
+    { "path": "../3mf" },
+    { "path": "../circuit" },
+    { "path": "../inlay" },
+    { "path": "../mechanisms" },
+    { "path": "../archetypes" },
+    { "path": "../checks" }
+  ]
+}

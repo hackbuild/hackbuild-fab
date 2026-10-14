@@ -30,6 +30,9 @@
       "path": "../packages/checks"
     },
     {
+      "path": "../packages/pipeline"
+    },
+    {
       "path": "../packages/constraints"
     },
     {

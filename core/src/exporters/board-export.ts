@@ -21,7 +21,7 @@ import { boardViews } from "../board-views.js";
 import { cmdError } from "../errors.js";
 import { countsOf, findingsOf, worst, type CommandOut } from "../result.js";
 import type { CoreCtx } from "../registry.js";
-import { askGate, gatePrompt } from "../tty-gate.js";
+import { askHost } from "../tty-gate.js";
 import type { Design, Values } from "../commands/build.js";
 import type { BoardExporter } from "./board-exporter.js";
 import { renderParsed } from "./gerbers.js";
@@ -98,11 +98,11 @@ export async function runBoardExport(design: Design, input: CommandInput<"export
   if (exporter.fabrication) {
     const counts = countsOf(pre);
     const pngs = files.filter((f) => f.kind === "png").map((f) => rel(path.join(built.outDir, "render", f.name)));
-    const answer = await askGate(gatePrompt({
+    const answer = await askHost(ctx, {
       kind: exporter.id, machine: "a pcb fab", chase: design.chase.meta.id, buildHash: built.part.buildHash,
       fail: counts.fail, warn: counts.warn, path: rel(folder),
       notes: [`${files.map((f) => f.name).join(", ")}`, ...(pngs.length === 0 ? [] : [`look at ${pngs.join(" and ")} first: they are drawn from the parsed gerbers, what the fab will image`])],
-    }), ctx.gate);
+    });
     if (answer === "unavailable") {
       throw cmdError({
         code: "E_GATE_UNAVAILABLE", path: "/", personRuns: boardPersonLine(input, ctx.cli.out),

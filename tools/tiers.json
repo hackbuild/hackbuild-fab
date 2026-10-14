@@ -4,7 +4,7 @@
     "S": ["spec"],
     "0": ["profile", "catalog", "geom", "mesh"],
     "1": ["3mf", "sim", "circuit", "copper", "board", "nest", "inlay", "motion", "wiring", "constraints", "mechanisms", "archetypes"],
-    "2": ["checks", "project", "reference", "knowledge", "chase"],
+    "2": ["checks", "project", "reference", "knowledge", "chase", "pipeline"],
     "3": ["ui-core", "ui", "link"],
     "app": ["core", "apps/fab", "apps/sketch", "apps/blocks"]
   },
@@ -32,11 +32,12 @@
     "reference": ["spec", "profile", "catalog", "geom", "mesh", "3mf", "sim", "circuit", "copper", "board", "nest", "inlay", "motion", "wiring", "constraints", "mechanisms", "archetypes"],
     "knowledge": ["spec", "profile", "catalog", "geom", "mesh", "3mf", "sim", "circuit", "copper", "board", "nest", "inlay", "motion", "wiring", "constraints", "mechanisms", "archetypes"],
     "chase": ["spec", "profile", "catalog", "geom", "mesh", "3mf", "sim", "circuit", "copper", "board", "nest", "inlay", "motion", "wiring", "constraints", "mechanisms", "archetypes", "checks", "project", "reference"],
+    "pipeline": ["spec", "profile", "catalog", "geom", "mesh", "3mf", "circuit", "inlay", "mechanisms", "archetypes", "checks"],
     "ui-core": ["spec", "profile", "catalog", "geom", "mesh", "3mf", "sim", "circuit", "copper", "board", "nest", "inlay", "motion", "wiring", "constraints", "mechanisms", "archetypes", "checks", "project", "reference", "knowledge", "chase"],
     "ui": ["spec", "checks", "ui-core"],
     "link": ["spec", "profile", "catalog", "motion", "checks"],
     "kernel": ["spec", "profile", "catalog", "geom", "mesh", "3mf", "sim", "circuit", "copper", "board", "nest", "inlay", "motion", "wiring", "constraints", "mechanisms", "archetypes", "checks", "project", "reference", "knowledge", "chase"],
-    "core": ["spec", "profile", "catalog", "geom", "mesh", "3mf", "sim", "circuit", "copper", "board", "nest", "inlay", "motion", "wiring", "constraints", "mechanisms", "archetypes", "checks", "project", "reference", "knowledge", "chase", "kernel"],
+    "core": ["spec", "profile", "catalog", "geom", "mesh", "3mf", "sim", "circuit", "copper", "board", "nest", "inlay", "motion", "wiring", "constraints", "mechanisms", "archetypes", "checks", "project", "reference", "knowledge", "chase", "pipeline", "kernel"],
     "apps/fab": ["*"],
     "apps/sketch": ["*"],
     "apps/blocks": ["*"]
@@ -49,7 +50,7 @@
       "note": "M00-T01 step 3 and M00-T09 wrote these edges; PACKAGES.md 5.1 and D-027 say 3mf imports no workspace package. Reported, not failed, until the owner records which side wins. Remove this entry when packages/3mf carries its own types.ts and audit; the gate fails on an exception no edge still uses."
     }
   ],
-  "sameTier": [["geom", "profile"], ["mesh", "profile"], ["mesh", "geom"], ["catalog", "profile"], ["catalog", "mesh"], ["ui", "ui-core"]],
+  "sameTier": [["geom", "profile"], ["mesh", "profile"], ["mesh", "geom"], ["catalog", "profile"], ["catalog", "mesh"], ["pipeline", "checks"], ["ui", "ui-core"]],
   "headless": ["S", "0", "1", "2", "kernel"],
   "forbid": [
     {
