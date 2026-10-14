@@ -1,6 +1,7 @@
 // The COLLAR NFC pause fixture against the owner print cards (M03-T09 step
 // 7). Card arithmetic only: every fixture value equals the card text, read
-// from the lineage source and checked by sha256; ceiling minus floor is the
+// from the committed copy of the lineage source (the nfc-card copy row) and
+// checked against the canonical row's sha256; ceiling minus floor is the
 // pocket height; pocket minus tag is the clearance; the pause layer sits on
 // the grid the case names. The layer grid comes from profile when profile
 // has the preset, else from the uniform grid the fixture names.
@@ -13,7 +14,7 @@ import { layerIndex, layerTop, loadProfile } from "@hackbuild/profile";
 import { D062, NFC_CASES, type NfcCase } from "./nfc-pause.fixture";
 
 const ROOT = fileURLToPath(new URL("../../../", import.meta.url));
-const rows = JSON.parse(readFileSync(ROOT + "lineage.json", "utf8")) as { id: string; source: string; sha256: string }[];
+const rows = JSON.parse(readFileSync(ROOT + "lineage.json", "utf8")) as { id: string; kind: string; source: string; sha256: string; dest: string | null }[];
 
 const EPS = 1e-9;
 const mm2 = (x: number): number => Math.round(x * 100) / 100;
@@ -21,7 +22,11 @@ const mm2 = (x: number): number => Math.round(x * 100) / 100;
 function cardText(c: NfcCase): string {
   const row = rows.find((r) => r.id === c.lineage);
   if (row === undefined) throw new Error(`lineage.json has no row ${c.lineage}`);
-  const buf = readFileSync(row.source);
+  // the card's bytes are committed beside this test so a hosted runner reads them
+  const copy = rows.find((r) => r.kind === "copy" && r.source === row.source && r.dest?.startsWith("designs/collar/test/fixtures/") === true);
+  if (copy?.dest == null) throw new Error(`lineage.json has no committed copy of ${c.lineage}`);
+  expect(copy.sha256).toBe(row.sha256);
+  const buf = readFileSync(ROOT + copy.dest);
   expect(createHash("sha256").update(buf).digest("hex")).toBe(row.sha256);
   return buf.toString("utf8");
 }
