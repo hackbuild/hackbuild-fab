@@ -1,0 +1,128 @@
+# Bench UI: the single file app pattern
+
+Every bench is one HTML file that runs from `file://` with no server, in the hack.build
+app shell, with numbered steps, a stage on the left and a paper rail on the right.
+`assets/bench/` is the worked template (INLAY bench); `build_bench.py` assembles it.
+Read `assets/bench/part3.js` for the wiring, this file for the contract.
+
+## Shell
+
+- header: ink bar, 3 px pink rule under it, the canonical mark at about 28 px, Permanent
+  Marker title with a pink span (`INLAY<span>.</span>bench`), Special Elite tagline at
+  reduced opacity, right side utility buttons (undo, redo, open, save, guide).
+- steps bar: four numbered tabs on ink, active tab pink underline, visited tabs get a
+  green number tile. Below it a guide bar on sunk paper: `STEP N NAME` in VT323 pink,
+  then one sentence naming the goal of the step. That sentence replaces per pane hint
+  cards (COLLAR v3 cut those as noise).
+- stage: void `#0a0a0a` with the 26 px pink graph rule, three.js canvas, camera preset
+  chips top left (iso, top, front, under, explode), colour legend top right, welcome
+  overlay on top.
+- rail: 340 px paper, panels with 2 px ink border and 5 px ink block shadow, VT323 heads
+  on full bleed ink bars, 10 px uppercase tracked labels, every range as slider + number,
+  advanced things in `<details class="fold">`, a next step button at the end of each pane.
+- status strip: ink bar, VT323, dims / tris / build ms on the left, chips on the right
+  (fits bed, mesh current or stale, warnings). Warnings live here, not in alerts.
+- colours: pink #FE0386, cream #f5f0e6, paper #fffdf7, sunk #efe9db, edge #e8e0d0, ink
+  #1a1a1a, void #0a0a0a, ok #1f9d55, warn #c77700, err #c3251f, on void: slime #a6e22e,
+  amber #ffb020. Radius zero. No emoji, no em or en dashes in any string, no four point
+  sparkles. Font Awesome or inline SVG if an icon is needed.
+- responsive: rail 290 px under 820, stacked under 640, header wraps. Test scrollWidth at
+  390 / 768 / 1280.
+
+## Step order
+
+The order that matched how Moheeb designs: 1 ART (what goes on the faces), 2 SHAPE
+(blank, size, thickness, rim, inlay depth), 3 COLOUR (how many filaments, slot names,
+swatches, material, body and rim roles, slicer profile fold), 4 PRINT (layer height,
+hygiene, resolution, auto rebuild, plate copies and bed, export, readout). Cases
+(COAMING) use DECK / SHELL / STYLE / PRINT with the same shape.
+
+## Commit model
+
+`touch()` = live 2D preview only. `commit()` = the change is locked in: bump the
+revision, snapshot for undo, refresh the preview, and schedule a debounced (320 ms)
+rebuild. Wire sliders to `input` for touch and `change` for commit; selects, checkboxes
+and text field change events commit; every layer add / delete / mute / reorder commits.
+Builds queue rather than overlap. `ensureMesh()` rebuilds before ANY export if the
+design is dirty, so a stale mesh can never ship. An auto rebuild checkbox turns the
+scheduling off; a rebuild button forces one. A build over 2.5 s logs a warning
+suggesting a lower grid.
+
+## Blank start, presets, welcome
+
+`blankState()` is a full factory reset and the app boots into it. The welcome overlay
+offers blank vs the worked example; the guide button reopens it. Presets call
+`blankState()` first so they never inherit what was on screen; loading a preset over
+existing art asks for confirmation. A bare blank must export fine as a single part 3MF.
+
+## Undo / redo, open / save
+
+Snapshot the design portion of the state (not `ui`) as JSON, 450 ms debounced, 80
+deep. ctrl Z / ctrl shift Z / ctrl Y. Save = design JSON download; open = file picker or
+drop a .json anywhere. Design JSON carries image layers as data URLs and rehydrates them;
+export, mutate, import must restore the state byte for byte (the smoke test checks it).
+
+## Viewer
+
+three.js (r128 UMD from cdnjs, or inlined with `--vendor` for offline), own orbit: left
+drag orbit, right or middle drag pan, wheel zoom, double click refit. Flat shaded
+MeshStandardMaterial per slot in the slot colour; pure white shows as #f4f1ea in the
+viewer only. Live recolour when a swatch changes without a rebuild. Explode toggle offsets
+parts in z. Raster prisms skip EdgesGeometry (edge lines make inlaid text look striped).
+Plate goes glassy when the camera dips below (COAMING). Keep the scene bright; dark
+scenes that hide detail have been rejected.
+
+Pause the render loop while zipping an export. In software GL a frame between deflate
+chunks costs seconds; the INLAY bench export went from 172 s to 1.4 s in headless
+Chromium with `VIEW.paused = true`.
+
+## Face editor (the part users judge first)
+
+The stage splits on the ART step: viewer left, face canvas right. The canvas shows the
+exact print raster whenever a build is current and a 4 px/mm quick composition while a
+drag is in progress or the mesh is stale (the corner label says which). On the selected
+layer: pink dashed bbox from the rendered mask bounds (`layerBBox`, cached by a signature
+of the layer's fields), four corner scale squares, a rotate dot on a stem above the top
+edge. Interactions: drag inside moves (0.25 mm steps, centre snap guides in slime within
+0.6 mm, shift locks an axis, alt disables snaps), corners scale about the centre (text
+size, shape w/h/t, image width), the dot rotates with 0 / 90 / 180 snaps within 4
+degrees and shift for 15 degree steps, click on any layer's box selects it, click empty
+deselects, wheel zooms about the cursor, right or middle drag pans, double click a text
+layer focuses its text field, double click empty resets the view, arrows nudge (shift 5
+mm), Delete removes, ctrl D duplicates, [ ] reorder. Cursor changes per hit target.
+Selection stays in sync with the layer list both ways. `UI.FE` is exposed so the
+harness can read handle positions and drive them with the mouse; do that in every bench
+test, a handle that draws but does not respond is the kind of thing that gets called
+"not as good as before".
+
+## Exports (all of them, every bench)
+
+- 3MF project via `Orca3MF.build(cfg).zip()` (references/3mf-dialect.md)
+- per colour STL zip with the print card and design JSON inside
+- print card text: printer, process, layer, per slot colour / type / grams, objects and
+  parts, pause layer for insert pockets, the STL fallback instruction
+- faces PNG (the exact label grids in slot colours)
+- design JSON (round trips)
+- expose `BENCH.exportBytes(kind)` returning base64 so playwright can pull the files out
+  and audit them
+
+## file:// rules
+
+- no module scripts, no blob or module Workers (file:// blocks them); plain scripts that
+  put an API on `globalThis`. Try a Worker, fall back inline.
+- top level `const` in a classic script is NOT a window property; expose test hooks
+  explicitly (`globalThis.BENCH = BENCH`).
+- CDN script tags work from file:// online; inline three, JSZip and the fonts with
+  `build_bench.py --vendor node_modules --fonts` for the shipped copy so it is
+  deterministic offline. Keep the parts as source and ship a `-src.zip` beside the html.
+- relative `<script src>` next to the html also works from file://, but a single file is
+  the deliverable.
+
+## Test harness (scripts/smoke_bench.py)
+
+Headless Chromium with `--use-gl=swiftshader --enable-webgl --ignore-gpu-blocklist`:
+boot, pick the worked example, wait for a clean build, screenshot every step, drive a
+numeric field and a slider, drag on the face canvas, export 3MF / STL / JSON through
+`BENCH.exportBytes`, round trip the JSON, blank start, check scrollWidth at three widths,
+assert zero console errors. Then `validate_3mf.py --overlap` on the pulled 3MF. Run it
+after every change to the kernel, the composer or the exporter.

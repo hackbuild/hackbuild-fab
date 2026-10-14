@@ -1,0 +1,111 @@
+{
+  "archetypes": 29,
+  "canon": {
+    "archetypes": {
+      "aliases": 2,
+      "byStatus": {
+        "candidate": 97,
+        "proven": 11,
+        "unproven": 1
+      },
+      "registered": 109
+    },
+    "mechanisms": {
+      "byStatus": {
+        "candidate": 88,
+        "typed": 19
+      },
+      "registered": 107
+    }
+  },
+  "checks": {
+    "block": 77,
+    "byLevel": {
+      "artifact": 7,
+      "assembly": 12,
+      "feature": 24,
+      "net": 7,
+      "page": 2,
+      "part": 18,
+      "project": 3,
+      "sheet": 6,
+      "source": 7
+    },
+    "entered": 83,
+    "enteredAndSeeded": [
+      "CHK-NET-29"
+    ],
+    "enteredWithSeeded": 168,
+    "registered": {
+      "block": 144,
+      "total": 157,
+      "warn": 13
+    },
+    "total": 86,
+    "warn": 9
+  },
+  "decisions": {
+    "decided": 209,
+    "first": 1,
+    "last": 269,
+    "neverIssued": [
+      176
+    ],
+    "owner": 51,
+    "ownerQueue": 51,
+    "superseded": 8,
+    "total": 268
+  },
+  "external": {
+    "bench.catalogue": "157 tools, 16 groups, 153 placeable",
+    "brand.fe0386Folders": "32",
+    "davit.pairsPerPipe": "29 arm pairs plus 1 hub pair",
+    "gold.filamentKeys": "127; 17 differ per slot",
+    "hackbuildUi.hbClasses": "161",
+    "handoff.knowledge": "26 files, 36,223 words",
+    "handoff.references.words": "40,049",
+    "handoff.scaffold.files": "117",
+    "handoff.spec.commands": "28",
+    "owner.sliced3mf": "25 (24 on the 0.4 preset)",
+    "pip.noteElements": "16",
+    "registry.catalogueJoin": "18 of 59",
+    "registry.chatJoin": "56 of 59",
+    "seedTemplate.filamentKeys": "97 (68 plus 29); 37 missing, 7 extra",
+    "slug.chkSites": "45",
+    "sprue.filamentKeys": "21"
+  },
+  "knowledge": {
+    "files": 110,
+    "words": 419715
+  },
+  "mechanismShape": {
+    "idFamilyProvenanceOnly": 5,
+    "noInputsGovernsDerived": 11
+  },
+  "mechanisms": 24,
+  "references": {
+    "words": 17277
+  },
+  "seed": {
+    "files": 64,
+    "imported": 41,
+    "skipped": 23
+  },
+  "spec": {
+    "commands": 30,
+    "mcpTools": 19
+  },
+  "tools": {
+    "domain": {
+      "device": 6,
+      "electrical": 23,
+      "mechanical": 29,
+      "meta": 1
+    },
+    "total": 59
+  },
+  "ui": {
+    "hbClasses": 203,
+    "spec": "file:../../tools/vendor/hackbuild-ui-0.3.0-b3962ab.tgz"
+  }
+}

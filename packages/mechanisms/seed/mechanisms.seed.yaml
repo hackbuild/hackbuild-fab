@@ -1,0 +1,132 @@
+# seed/mechanisms.seed.yaml
+# Seed of the mechanism registry. TUMBLER's 18 modules plus KNURL, OGEE and
+# PINTLE entries. Each entry: derived equations, failure modes, processes,
+# provenance. Generators live in packages/mechanisms.
+
+- id: coincidence-and
+  family: logic
+  dof: 1
+  inputs: {t, w, stroke, notch_depth}
+  governs: [notched bar mounted backwards inverts the input]
+  processes: [laser, fdm]
+  provenance: TUMBLER 2026-08
+- id: inhibit
+  family: logic
+  dof: 1
+  note: the AND bar reversed
+  provenance: TUMBLER 2026-08
+- id: wedge-or
+  family: logic
+  provenance: TUMBLER 2026-08
+- id: teeter-not
+  family: logic
+  provenance: TUMBLER 2026-08
+- id: differential-xor
+  family: logic
+  note: a bar with two holes at opposite phases, two moving parts
+  provenance: TUMBLER 2026-08
+- id: tumbler-coded-and
+  family: logic
+  note: shell comb with channels open at bottom for loading, key rail with open keyway
+  provenance: TUMBLER 2026-08
+- id: detent-latch
+  family: memory
+  provenance: TUMBLER 2026-08
+- id: snap-flexure
+  family: memory
+  governs: [beam formed by two crescent holes so it stays attached, rise over thickness > 2.31 for bistability]
+  provenance: TUMBLER 2026-08
+- id: ratchet-pawl
+  family: memory
+  provenance: TUMBLER 2026-08
+- id: shift-drum
+  family: memory
+  governs: [bores keyed, slot part of the bore hole]
+  provenance: TUMBLER 2026-08
+- id: geneva-external
+  family: intermittent
+  dof: 1
+  inputs: {n_slots, crank_r, pin_r, plate_t}
+  derived:
+    centre_distance: cr / sin(pi/n)
+    wheel_radius: c * cos(pi/n)
+    dwell_fraction: (n-2)/(2n)
+  governs: [slots open to the rim, locking disc scallops clear the crank at every angle]
+  failure_modes: [pin shears at entry without lead-in, hub severed by bore plus pin hole]
+  processes: [laser, fdm]
+  provenance: TUMBLER 2026-08, KNURL 2026-09 (3-slot, shipped and printed)
+- id: spur-pair
+  family: gears
+  provenance: TUMBLER 2026-08
+- id: whiffletree-dac
+  family: motion
+  governs: [input slots positioned by their own stroke]
+  provenance: TUMBLER 2026-08
+- id: living-hinge
+  family: kerf
+  governs: [under 13 degrees per row]
+  processes: [laser]
+  provenance: TUMBLER 2026-08
+- id: finger-joint
+  family: kerf
+  governs: [tab +1 kerf, slot -1 kerf]
+  processes: [laser]
+  provenance: TUMBLER 2026-08
+- id: tesla-valve
+  family: fluid
+  note: islands are separate parts pinned to the lid
+  provenance: TUMBLER 2026-08
+- id: coanda-gate
+  family: fluid
+  governs: [splitter at 8 to 12 nozzle widths, chamber is one connected hole including control stubs]
+  provenance: TUMBLER 2026-08
+- id: membrane-valve
+  family: fluid
+  note: 4-layer Quake stack, two flow slots plus seat land
+  provenance: TUMBLER 2026-08
+- id: count-wheel-detent
+  family: memory
+  inputs: {flutes, strip_w, strip_t, free_len, bump_h}
+  governs: [detent is a SEPARATE flat strip; an integral beam fused along its length is ~10x too stiff]
+  derived:
+    click_force: 3 E I x / L^3 with I = t w^3 / 12
+  processes: [fdm]
+  provenance: KNURL 2026-09 (printed, ~0.97 N at 0.63% strain)
+- id: displacement-coincidence-latch
+  family: intermittent
+  dof: 2
+  inputs: {stroke, r_latch, camlift, lug_tot, ramp_a}
+  governs:
+    - margin + overshoot = stroke/2 - camlift - lug_tot
+    - ramp_a >= 40 deg against acrylic friction 0.45
+    - half select never commits
+    - crown struck from the rocker's own origin is exact at any tilt
+    - link horizontal at rest, or L^2 = S^2 + dz^2 jams it
+  failure_modes: [force coincidence (dead), bistable TPU (creep), square pegs (cam not bearing)]
+  processes: [laser, fdm]
+  provenance: OGEE R7 to R17 2026-08
+- id: pin-free-balance-beam
+  family: linkage
+  note: cylinder on a flat slot floor plus boss in a coplanar slot, complementary, no pins
+  governs: [crown_top = (z_col + z_row)/2 + crown_r exactly]
+  processes: [laser]
+  provenance: OGEE R17 STIPPLE 2026-08
+- id: slew-ring-joint
+  family: joint
+  note: servo spline carries torque only; a printed slew ring at radius takes radial load and moment
+  processes: [fdm]
+  provenance: PINTLE 2026-08
+- id: aileron-differential
+  family: joint
+  governs: [horn sum is tilt, difference is roll, reach is set by the horn not the plate]
+  provenance: STANCHION 2026-08
+- id: capsule-pocket-rotor
+  family: metering
+  inputs: {capsule_d, n_pockets, rotor_h, mouth_w}
+  governs:
+    - the pocket is the only metering element
+    - moving rotor face within ~2 mm of the funnel mouth to shear arches
+    - mouth >= 2 capsule diameters or spheres arch
+    - a hood covers the exit half of the ceiling or the hopper drains
+  processes: [laser]
+  provenance: SLUG 2026-08 (126/128 vends across 8 trials)

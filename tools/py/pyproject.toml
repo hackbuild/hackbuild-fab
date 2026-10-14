@@ -1,0 +1,45 @@
+# Python tools for hackbuild-fab (D-140). Declares only what the imported
+# seed scripts import; kiutils stays out (GPL-3.0, D-043). Every command
+# runs from the repo root as `uv run --project tools/py ...`.
+[project]
+name = "hackbuild-fab-tools"
+version = "0.0.0"
+description = "Python tools for hackbuild-fab: 3MF writer and validator, board helpers, bench build and smoke."
+license = "MIT"
+authors = [{ name = "Moheeb Zara", email = "hackbuildvideo@gmail.com" }]
+requires-python = ">=3.14,<3.15"
+dependencies = [
+  "numpy==2.5.3",
+  "trimesh==5.1.1",
+  "shapely==2.1.2",
+  "manifold3d==3.5.4",
+  # 2.5.0 ships no linux aarch64 wheel and no sdist; validate_3mf.py reports
+  # the lib3mf rule not run where this marker drops it (D-153).
+  "lib3mf==2.5.0; platform_machine != 'aarch64'",
+  "pytest==9.1.1",
+  # OGEE16 check_sweep.py oracle (M02-T07): trimesh.proximity and the
+  # bounds checks need scipy and rtree; pins taken 2026-10-07.
+  "scipy==1.18.1",
+  "rtree==1.4.1",
+  # KEYWAY family oracle (M05-T13): svgpath.py outlines the Plex Mono woff2
+  # through fontTools, which needs brotli for woff2; the rerun's versions.
+  "fonttools==4.66.1",
+  "brotli==1.2.0",
+  # DXF reader for the M07 corpus inventory, the OGEE16 cutfiles.py rerun
+  # (M07-T01) and the writer audit (M07-T06); 1.4.4 is the version the
+  # M07 Records table ran.
+  "ezdxf==1.4.4",
+  # Board reparse (M08-T01, D-090): gerbonara for the vector compare and
+  # Excellon read, pygerber for the raster; versions of 2026-10-09, equal
+  # to the PyPI latest and to the M08 Records table. kiutils (GPL-3.0) and
+  # easyeda2kicad (AGPL-3.0) stay out (D-043).
+  "gerbonara==1.6.3",
+  "pygerber==2.4.3",
+]
+
+[project.optional-dependencies]
+# tools/py/bench/smoke_bench.py and tools/py/harness/artboard_smoke.py only
+bench = ["playwright==1.63.0"]
+
+[tool.uv]
+package = false

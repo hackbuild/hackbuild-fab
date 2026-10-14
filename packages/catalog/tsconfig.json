@@ -1,0 +1,20 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": ".",
+    "resolveJsonModule": true
+  },
+  "include": [
+    "src",
+    "data/*.json"
+  ],
+  "references": [
+    {
+      "path": "../profile"
+    },
+    {
+      "path": "../mesh"
+    }
+  ]
+}

@@ -1,0 +1,257 @@
+{
+  "files": [],
+  "references": [
+    {
+      "path": "spec"
+    },
+    {
+      "path": "packages/profile"
+    },
+    {
+      "path": "packages/geom"
+    },
+    {
+      "path": "packages/mesh"
+    },
+    {
+      "path": "packages/catalog"
+    },
+    {
+      "path": "packages/3mf"
+    },
+    {
+      "path": "packages/sim"
+    },
+    {
+      "path": "packages/circuit"
+    },
+    {
+      "path": "packages/copper"
+    },
+    {
+      "path": "packages/board"
+    },
+    {
+      "path": "packages/nest"
+    },
+    {
+      "path": "packages/inlay"
+    },
+    {
+      "path": "packages/motion"
+    },
+    {
+      "path": "packages/wiring"
+    },
+    {
+      "path": "packages/constraints"
+    },
+    {
+      "path": "packages/mechanisms"
+    },
+    {
+      "path": "packages/archetypes"
+    },
+    {
+      "path": "packages/checks"
+    },
+    {
+      "path": "packages/project"
+    },
+    {
+      "path": "packages/reference"
+    },
+    {
+      "path": "packages/knowledge"
+    },
+    {
+      "path": "packages/chase"
+    },
+    {
+      "path": "packages/ui-core"
+    },
+    {
+      "path": "packages/ui"
+    },
+    {
+      "path": "packages/link"
+    },
+    {
+      "path": "kernel"
+    },
+    {
+      "path": "core"
+    },
+    {
+      "path": "reference/keys/flex-pair"
+    },
+    {
+      "path": "designs/collar"
+    },
+    {
+      "path": "designs/sprue"
+    },
+    {
+      "path": "designs/sprue/test"
+    },
+    {
+      "path": "designs/blocks"
+    },
+    {
+      "path": "designs/pip"
+    },
+    {
+      "path": "reference/exports/orca-3mf-roundtrip"
+    },
+    {
+      "path": "reference/electrical/trace-width-budget"
+    },
+    {
+      "path": "reference/electrical/blocks-pullup-band"
+    },
+    {
+      "path": "reference/keys/click-spring-window"
+    },
+    {
+      "path": "reference/fit/ogee16-r16p"
+    },
+    {
+      "path": "reference/cosmetic/coin-inlay"
+    },
+    {
+      "path": "reference/copper/keyway"
+    },
+    {
+      "path": "reference/copper/splice-ladder"
+    },
+    {
+      "path": "reference/copper/vernier"
+    },
+    {
+      "path": "reference/copper/quadrant"
+    },
+    {
+      "path": "reference/copper/spline"
+    },
+    {
+      "path": "reference/copper/tessera"
+    },
+    {
+      "path": "reference/copper/fret"
+    },
+    {
+      "path": "reference/copper/stave"
+    },
+    {
+      "path": "reference/sheet/slug-sheets"
+    },
+    {
+      "path": "reference/sheet/ogee16-r16p-plates"
+    },
+    {
+      "path": "reference/joints/finger"
+    },
+    {
+      "path": "reference/mechanisms/coanda-gate"
+    },
+    {
+      "path": "reference/mechanisms/coincidence-and"
+    },
+    {
+      "path": "reference/mechanisms/detent-latch"
+    },
+    {
+      "path": "reference/mechanisms/differential-xor"
+    },
+    {
+      "path": "reference/mechanisms/inhibit"
+    },
+    {
+      "path": "reference/mechanisms/living-hinge"
+    },
+    {
+      "path": "reference/mechanisms/membrane-valve"
+    },
+    {
+      "path": "reference/mechanisms/ratchet-pawl"
+    },
+    {
+      "path": "reference/mechanisms/shift-drum"
+    },
+    {
+      "path": "reference/mechanisms/snap-flexure"
+    },
+    {
+      "path": "reference/mechanisms/spur-pair"
+    },
+    {
+      "path": "reference/mechanisms/teeter-not"
+    },
+    {
+      "path": "reference/mechanisms/tesla-valve"
+    },
+    {
+      "path": "reference/mechanisms/tumbler-coded-and"
+    },
+    {
+      "path": "reference/mechanisms/wedge-or"
+    },
+    {
+      "path": "reference/mechanisms/whiffletree"
+    },
+    {
+      "path": "reference/boards/shunt-art"
+    },
+    {
+      "path": "reference/boards/spindle-r1"
+    },
+    {
+      "path": "reference/boards/wiring-supermini"
+    },
+    {
+      "path": "reference/boards/wiring-tang-r5"
+    },
+    {
+      "path": "reference/conductors/blocks-stud"
+    },
+    {
+      "path": "reference/conductors/blocks-stud-applied"
+    },
+    {
+      "path": "reference/conductors/blocks-wire"
+    },
+    {
+      "path": "reference/electrical/capricate-touch"
+    },
+    {
+      "path": "reference/electrical/pip-buried-route"
+    },
+    {
+      "path": "reference/electrical/pip-drive"
+    },
+    {
+      "path": "reference/joints/balance-beam"
+    },
+    {
+      "path": "reference/seats/rp2040-zero-pressfit"
+    },
+    {
+      "path": "reference/sensors/finger-pot"
+    },
+    {
+      "path": "reference/sensors/membrane-slider"
+    },
+    {
+      "path": "reference/sensors/membrane-slider-gib"
+    },
+    {
+      "path": "reference/sensors/membrane-slider-thinpot"
+    },
+    {
+      "path": "reference/sensors/rotary-pot"
+    },
+    {
+      "path": "reference/sheet/capsule-rotor-cage"
+    }
+  ]
+}

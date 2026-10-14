@@ -1,0 +1,3720 @@
+{
+  "note": "Seed of the checks registry. Each entry cites the failure that created it. run() bodies live in packages/checks; this file is the contract and the provenance.",
+  "checks": [
+    {
+      "id": "CHK-PRT-01",
+      "version": "1.0.1",
+      "title": "every part is a closed manifold, two faces per undirected edge",
+      "appliesTo": {
+        "level": "part"
+      },
+      "severity": "block",
+      "precondition": true,
+      "needs": [
+        "mesh"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "COLLAR 2026-08",
+        "date": "2026-08",
+        "what": "directed-edge balancing passed coincident faces; trimesh disagreed",
+        "knowledge": "knowledge:01-invariants#mesh-and-manifoldness",
+        "evidence": null,
+        "also": [
+          {
+            "project": "CRESSET 2026-08-30",
+            "date": "2026-08-30",
+            "what": "the shipped example carried four-face edges while the README claimed 0; PLINTH fixDiag gives 0",
+            "numbers": {
+              "fourFaceEdges": "40 + 16 + 1",
+              "qualifier": "computed from the shipped 3MF (CHECKS.md 7.7)"
+            },
+            "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-cases/cresset/cresset-132mm.3mf"
+          }
+        ]
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-PRT-02",
+      "version": "1.0.0",
+      "title": "stacked prisms in one part z-overlap 0.01 to 0.02",
+      "appliesTo": {
+        "level": "part"
+      },
+      "severity": "block",
+      "precondition": true,
+      "needs": [
+        "mesh"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "COAMING 2026-08",
+        "date": "2026-08",
+        "what": "coincident rings fused into 4-face edges",
+        "knowledge": "knowledge:01-invariants#mesh-and-manifoldness",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-PRT-03",
+      "version": "2.0.0",
+      "title": "parts of one object never overlap and sum to the solid",
+      "appliesTo": {
+        "level": "assembly"
+      },
+      "severity": "block",
+      "precondition": true,
+      "needs": [
+        "mesh"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "COLLAR 2026-08",
+        "date": "2026-08",
+        "what": "validate_3mf --overlap",
+        "knowledge": "knowledge:01-invariants#mesh-and-manifoldness",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-PRT-04",
+      "version": "2.0.0",
+      "title": "wall thickness is a whole multiple of line width",
+      "appliesTo": {
+        "level": "part"
+      },
+      "severity": "block",
+      "needs": [
+        "mesh",
+        "profile"
+      ],
+      "legalKind": "multipleOf",
+      "origin": {
+        "project": "STYLUS 2026-08",
+        "date": "2026-08",
+        "what": "sub-line-width wall above a skirt read as empty layers in Flash Studio",
+        "knowledge": "knowledge:01-invariants#printability",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-PRT-05",
+      "version": "1.0.0",
+      "title": "vertical dims are whole multiples of layer height",
+      "appliesTo": {
+        "level": "part"
+      },
+      "severity": "warn",
+      "needs": [
+        "mesh",
+        "profile"
+      ],
+      "legalKind": "multipleOf",
+      "origin": {
+        "project": "LOCKET rev C 2026-08",
+        "date": "2026-08",
+        "what": "quantization audit against the 2-layer rule",
+        "knowledge": "knowledge:01-invariants#printability",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-PRT-06",
+      "version": "1.0.0",
+      "title": "no slab starts in mid air in print pose",
+      "appliesTo": {
+        "level": "part"
+      },
+      "severity": "block",
+      "needs": [
+        "mesh"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "STYLUS 2026-08",
+        "date": "2026-08",
+        "what": "conductive TPU plug printed disconnected",
+        "knowledge": "knowledge:projects/printed-circuits#stylus",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-PRT-07",
+      "version": "1.0.0",
+      "title": "islands at layer height, run at 0.24 and 0.20",
+      "appliesTo": {
+        "level": "part"
+      },
+      "severity": "block",
+      "needs": [
+        "mesh"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "STYLUS 2026-08",
+        "date": "2026-08",
+        "what": "islands.py",
+        "knowledge": "knowledge:01-invariants#printability",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-PRT-08",
+      "version": "1.0.1",
+      "title": "horizontal bores are teardropped with the peak up",
+      "appliesTo": {
+        "level": "feature",
+        "kinds": [
+          "bore"
+        ]
+      },
+      "severity": "block",
+      "needs": [
+        "mesh"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "DETENT rev D 2026-07-30",
+        "date": "2026-07-30",
+        "what": "two composed rotations sent the peak to -Z",
+        "knowledge": "knowledge:designs/detent#53-teardrops-that-know-which-way-is-up-wcut-teardrop-gable-p-lines-223-to-269",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-robots-machines/unzipped/detentfiles/DETENT-build-notes.md"
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-PRT-09",
+      "version": "1.0.0",
+      "title": "longest unsupported bridge under 9 mm",
+      "appliesTo": {
+        "level": "part"
+      },
+      "severity": "warn",
+      "needs": [
+        "mesh"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "SLATE 2026-08",
+        "date": "2026-08",
+        "what": "a 15.4x109 slot left over from a removed feature",
+        "numbers": {
+          "slotMm": "15.4 x 109",
+          "longestBridgeAfterFixMm": 8.8,
+          "qualifier": "computed by the SLATE print audit (knowledge/projects/inlay-and-print.md, SLATE)"
+        },
+        "knowledge": "knowledge:projects/inlay-and-print#slate",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-PRT-10",
+      "version": "1.0.0",
+      "title": "inner and outer wall lines parallel on every cone",
+      "appliesTo": {
+        "level": "feature",
+        "kinds": [
+          "boss"
+        ]
+      },
+      "severity": "block",
+      "needs": [
+        "mesh"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "STYLUS 2026-08",
+        "date": "2026-08",
+        "what": "non-parallel cone left a sub-line-width wall",
+        "knowledge": "knowledge:01-invariants#printability",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-PRT-11",
+      "version": "1.0.0",
+      "title": "print pose is a reorientation: volume matches assembly twin",
+      "appliesTo": {
+        "level": "part"
+      },
+      "severity": "block",
+      "precondition": true,
+      "needs": [
+        "mesh"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "OGEE R16-P 2026-08",
+        "date": "2026-08",
+        "what": "latch pull print export never cut its mortise; four parts shrunk in one pose only",
+        "knowledge": "knowledge:01-invariants#3mf-and-export",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-PRT-12",
+      "version": "2.0.1",
+      "title": "bed contact face excluded from overhang",
+      "appliesTo": {
+        "level": "part"
+      },
+      "severity": "warn",
+      "needs": [
+        "mesh"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "PAWL 2026-07",
+        "date": "2026-07",
+        "what": "flat cover read 41.7% overhang",
+        "numbers": {
+          "overhangPctFlatCover": 41.7,
+          "qualifier": "computed by PAWL fdm.py with the bed contact faces counted (knowledge/designs/pawl.md 5.8)"
+        },
+        "knowledge": "knowledge:designs/pawl#58-checkers-fsrc",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-FIT-01",
+      "version": "1.0.0",
+      "title": "every mating pair is in its fit class band on the REAL gap",
+      "appliesTo": {
+        "level": "assembly"
+      },
+      "severity": "block",
+      "needs": [
+        "profile"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "OGEE R16-P 2026-08",
+        "date": "2026-08",
+        "what": "seven of seventeen pairs out of band",
+        "knowledge": "knowledge:designs/ogee16#48-fits-table-fitspy",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-FIT-02",
+      "version": "1.0.0",
+      "title": "snap fit passes catch AND closure",
+      "appliesTo": {
+        "level": "feature",
+        "kinds": [
+          "snap"
+        ]
+      },
+      "severity": "block",
+      "needs": [
+        "mesh",
+        "profile"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "OGEE R16-P 2026-08",
+        "date": "2026-08",
+        "what": "barb had to close 1.4 to pass a 1.0 slot; could not go in",
+        "knowledge": "knowledge:00-constants#fit-classes",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-FIT-03",
+      "version": "1.0.0",
+      "title": "a mixed-process pair uses PSLIP/PGUIDE, not SLIP",
+      "appliesTo": {
+        "level": "feature",
+        "kinds": [
+          "tabSlot"
+        ]
+      },
+      "severity": "block",
+      "needs": [
+        "profile"
+      ],
+      "legalKind": "set",
+      "origin": {
+        "project": "OGEE R16 sheets 2026-08",
+        "date": "2026-08",
+        "what": "printed lug in cut slot had 0.25 real",
+        "numbers": {
+          "realClearanceMm": 0.25,
+          "qualifier": "computed: a printed 3.0 lug in a 3.40 cut slot, the printed part about 0.15 over (knowledge/kernels/sheet-design.md)"
+        },
+        "knowledge": "knowledge:kernels/sheet-design#fits-cut-to-printed",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-FIT-04",
+      "version": "2.0.0",
+      "title": "checker constants are derived from params, never copied",
+      "appliesTo": {
+        "level": "source"
+      },
+      "severity": "block",
+      "needs": [],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "OGEE R16-P 2026-08",
+        "date": "2026-08",
+        "what": "fits.py reported 0.55 after FIT_SLIDE went to 0.75; three times",
+        "numbers": {
+          "reportedMm": 0.55,
+          "drawnMm": 0.75,
+          "qualifier": "computed: fits.py hardcoded FIT_SLIDE and reported 0.55 while printed.scad drew 0.75 (knowledge/designs/ogee16.md 4.8)"
+        },
+        "knowledge": "knowledge:designs/ogee16#48-fits-table-fitspy",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-FIT-05",
+      "version": "1.0.0",
+      "title": "a bore that is a bearing has land L/D >= 0.8",
+      "appliesTo": {
+        "level": "feature",
+        "kinds": [
+          "bore"
+        ]
+      },
+      "severity": "warn",
+      "needs": [
+        "mesh"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "OGEE R16-P 2026-08",
+        "date": "2026-08",
+        "what": "3 mm plate bearing, L/D 0.375, shaft walked 29 mm",
+        "numbers": {
+          "bearingLdBefore": 0.375,
+          "bearingLdAfter": 1,
+          "qualifier": "computed from 3/8 and 8/8 (knowledge/designs/ogee16.md 4.4)"
+        },
+        "knowledge": "knowledge:designs/ogee16#44-crank-to-yoke-drive-canon-candidate-crank-yoke",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-ASM-01",
+      "version": "1.0.1",
+      "title": "every screw has driver reach along driverAxis",
+      "appliesTo": {
+        "level": "feature",
+        "kinds": [
+          "screw"
+        ]
+      },
+      "severity": "block",
+      "needs": [
+        "mesh"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "DAVIT R4 2026-08-02",
+        "date": "2026-08-02",
+        "what": "roll and wrist horn screws undrivable behind a D2.8 waist",
+        "knowledge": "knowledge:designs/davit#53-horn-capture-joint-slibpy-174-to-197-spartsr4py-67-to-78",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-robots-machines/unzipped/davit_r4/README_R4.md"
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-ASM-02",
+      "version": "1.0.1",
+      "title": "every part can reach its position past parts installed before it",
+      "appliesTo": {
+        "level": "assembly"
+      },
+      "severity": "block",
+      "needs": [
+        "mesh",
+        "sim"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "OGEE R16-P 2026-08",
+        "date": "2026-08",
+        "what": "fused rod and cap made the face unassemblable",
+        "knowledge": "knowledge:01-invariants#assembly-and-reach",
+        "evidence": null,
+        "also": [
+          {
+            "project": "BUCK 2026-10-06",
+            "date": "2026-10-06",
+            "what": "the jaw's servo stub pocket, horn groove and screw head pocket are swept along the 135 deg insertion path, checked by intersection volume at 1.5, 4, 8, 14 and 22 mm of travel; every BUCK check reads 0",
+            "numbers": {
+              "qualifier": "measured 2026-10-06 on the buck and stag presets (CHECKS.md 7.7)"
+            },
+            "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/buck/files/src/engine.js"
+          }
+        ]
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-ASM-03",
+      "version": "1.0.1",
+      "title": "servo pockets are provably insertable to an open face",
+      "appliesTo": {
+        "level": "feature",
+        "kinds": [
+          "horn"
+        ]
+      },
+      "severity": "block",
+      "needs": [
+        "mesh"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "PAWL mk2, STANCHION 2026-07",
+        "date": "2026-07",
+        "what": "sealed pocket on four faces",
+        "knowledge": "knowledge:designs/pawl#12-why-this-revision",
+        "evidence": null,
+        "also": [
+          {
+            "project": "BUCK 2026-10-06",
+            "date": "2026-10-06",
+            "what": "the servo stub pocket is swept along the 135 deg insertion path and checked by intersection volume at 1.5, 4, 8, 14 and 22 mm of travel; every BUCK check reads 0",
+            "numbers": {
+              "qualifier": "measured 2026-10-06 on the buck and stag presets (CHECKS.md 7.7)"
+            },
+            "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/buck/files/src/engine.js"
+          }
+        ]
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-ASM-04",
+      "version": "1.0.0",
+      "title": "bought bodies (body AND flange) clash-checked in every pose",
+      "appliesTo": {
+        "level": "assembly"
+      },
+      "severity": "block",
+      "needs": [
+        "sim"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "OGEE R16-P 2026-08",
+        "date": "2026-08",
+        "what": "servos invisible to a part-only audit",
+        "knowledge": "knowledge:kernels/motion-latch#servo-orientation-is-usually-forced-and-the-reason-is-the-flange",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-ASM-05",
+      "version": "2.0.1",
+      "title": "anything with a rotational DOF gets a swept-volume check",
+      "appliesTo": {
+        "level": "assembly",
+        "joints": [
+          "prismatic",
+          "planar"
+        ]
+      },
+      "severity": "block",
+      "needs": [
+        "sim"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "OGEE R16-P 2026-08",
+        "date": "2026-08",
+        "what": "every pin head swept into its own servo",
+        "numbers": {
+          "sweptMm3PerBarCrank": 682,
+          "qualifier": "computed, per-step sum over 25 steps in check_sweep.py and the M02 port; the bench 577 is retired by D-233"
+        },
+        "knowledge": "knowledge:01-invariants#motion-and-latching",
+        "evidence": "designs/ogee16/legacy/source/check_sweep.py"
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-ASM-06",
+      "version": "2.0.0",
+      "title": "whitelisted pair gets a clearance-through-travel check",
+      "appliesTo": {
+        "level": "assembly",
+        "joints": [
+          "prismatic",
+          "planar"
+        ]
+      },
+      "severity": "block",
+      "needs": [
+        "sim"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "OGEE R16-P 2026-08",
+        "date": "2026-08",
+        "what": "pin never engaged its yoke; clash audit blind",
+        "knowledge": "knowledge:03-diagnostics#mechanism",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-ASM-07",
+      "version": "1.0.1",
+      "title": "closest approach reported with numbers, flag under 3 mm",
+      "appliesTo": {
+        "level": "assembly"
+      },
+      "severity": "warn",
+      "needs": [
+        "sim"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "OGEE R16-P 2026-08",
+        "date": "2026-08",
+        "what": "2.40 mm read as contact in a render",
+        "knowledge": "knowledge:03-diagnostics#sim-and-viewer",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-ASM-08",
+      "version": "1.0.0",
+      "title": "mesh origin on the rotation axis; bores land on pivots at five states",
+      "appliesTo": {
+        "level": "part"
+      },
+      "severity": "block",
+      "needs": [
+        "mesh"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "OGEE R14 2026-08",
+        "date": "2026-08",
+        "what": "link swung about a point 48 mm below its pins; zero at rest",
+        "knowledge": "knowledge:designs/ogee16#42-link-with-a-crown-struck-from-its-own-origin",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-ASM-09",
+      "version": "2.0.0",
+      "title": "revolute joint between two sheet parts declares bought round stock (JointDecl.stock)",
+      "appliesTo": {
+        "level": "assembly",
+        "joints": [
+          "revolute"
+        ]
+      },
+      "severity": "block",
+      "needs": [],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "OGEE R12 2026-08",
+        "date": "2026-08",
+        "what": "square peg contact radius 1.500 to 2.121; a cam not a bearing",
+        "numbers": {
+          "contactRadiusMm": "1.500 to 2.121",
+          "qualifier": "computed: half side and half diagonal of the square peg (knowledge/03-diagnostics.md, Mechanism)"
+        },
+        "knowledge": "knowledge:03-diagnostics#mechanism",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-SHT-01",
+      "version": "1.0.1",
+      "title": "every profile is one connected piece; refuse to nest otherwise",
+      "appliesTo": {
+        "level": "sheet"
+      },
+      "severity": "block",
+      "needs": [
+        "geom"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "OGEE R12, R17 2026-08",
+        "date": "2026-08",
+        "what": "deck severed into five strips; keeper cut in half",
+        "knowledge": "knowledge:kernels/sheet-design#connectivity-the-check-that-refuses",
+        "evidence": null,
+        "also": [
+          {
+            "project": "STIPPLE R17 2026-08",
+            "date": "2026-08",
+            "what": "STIPPLE R17 added beside OGEE R17 for the one-piece profile rule",
+            "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-ogee-stipple-mech/stipple/stipple (1).html"
+          }
+        ]
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-SHT-02",
+      "version": "1.0.0",
+      "title": "ring count >= hole count per part",
+      "appliesTo": {
+        "level": "sheet"
+      },
+      "severity": "block",
+      "needs": [
+        "geom"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "OGEE R16 sheets 2026-08",
+        "date": "2026-08",
+        "what": "latch bracket 1 outline where 4 expected",
+        "knowledge": "knowledge:kernels/sheet-design#connectivity-the-check-that-refuses",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-SHT-03",
+      "version": "2.0.0",
+      "title": "DXF reloads closed with an independent parser",
+      "appliesTo": {
+        "level": "sheet"
+      },
+      "severity": "block",
+      "needs": [
+        "geom"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "OGEE R16 sheets 2026-08",
+        "date": "2026-08",
+        "what": "closure flag, repeated vertex, $ACADVER",
+        "knowledge": "knowledge:01-invariants#3mf-and-export",
+        "evidence": null,
+        "also": [
+          {
+            "project": "DXF corpus 2026-10-04",
+            "date": "2026-10-04",
+            "what": "every shipped DXF emitter fails a reload rule: SLUG sheets carry no $ACADVER and POLYLINE, OGEE16 cutfiles.py and COFFER write millimetres under $INSUNITS 6 (metres), the OpenSCAD export writes loose LINE, COTTER repeats no first vertex",
+            "evidence": "packages/nest/records/dxf-inventory.json"
+          }
+        ]
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-SHT-04",
+      "version": "2.0.1",
+      "title": "kerf lives in one place, from the coupon",
+      "appliesTo": {
+        "level": "source"
+      },
+      "severity": "block",
+      "needs": [
+        "profile"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "OGEE R12 2026-08",
+        "date": "2026-08",
+        "what": "no recorded failure: the OGEE R12 to R15 apps hold no kerf text, and the OGEE16 notes state the rule (set KERF from the coupon, never change part geometry for kerf) with no failure behind it",
+        "knowledge": "knowledge:kernels/sheet-design#fits-cut-to-cut",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-SHT-05",
+      "version": "1.0.1",
+      "title": "sag under self weight below the margin it must hold",
+      "appliesTo": {
+        "level": "part"
+      },
+      "severity": "block",
+      "needs": [
+        "sim"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "OGEE R13, R17 2026-08",
+        "date": "2026-08",
+        "what": "single strip drooped 0.95 against 0.775 margin",
+        "numbers": {
+          "sagMm": 0.95,
+          "halfSelectMarginMm": 0.775,
+          "qualifier": "computed (knowledge/kernels/sheet-design.md; the margin in knowledge/designs/ogee16.md 4.1)"
+        },
+        "knowledge": "knowledge:kernels/sheet-design#sheet-stiffness-the-thing-that-kills-a-shrink",
+        "evidence": null,
+        "also": [
+          {
+            "project": "STIPPLE R17 2026-08",
+            "date": "2026-08",
+            "what": "R17 reference comb sag against the margin it must hold",
+            "numbers": {
+              "sagMm": 0.073,
+              "marginMm": 0.785,
+              "qualifier": "sag computed by the downloads read on 2026-10-04, no record saved; margin 0.7853 in stipple_latch.json"
+            },
+            "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-ogee-stipple-mech/derived/stipple_latch.json"
+          }
+        ]
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-SHT-06",
+      "version": "1.0.0",
+      "title": "living hinge rows at or under 13 degrees each",
+      "appliesTo": {
+        "level": "feature",
+        "kinds": [
+          "flexCut"
+        ]
+      },
+      "severity": "block",
+      "needs": [],
+      "legalKind": "interval",
+      "origin": {
+        "project": "TUMBLER 2026-08",
+        "date": "2026-08",
+        "what": "no recorded failure: the TUMBLER living hinge module flags rows over 13 degrees or ligaments under 0.6 mm as a bench rule, and no failed hinge is on record",
+        "knowledge": "knowledge:designs/tumbler#45-the-18-modules",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-SHT-07",
+      "version": "1.0.1",
+      "title": "crank hub not severed by bore plus pin hole",
+      "appliesTo": {
+        "level": "sheet"
+      },
+      "severity": "block",
+      "needs": [
+        "geom"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "OGEE R17 2026-08",
+        "date": "2026-08",
+        "what": "hole at radius r spans r plus or minus d/2",
+        "knowledge": "knowledge:kernels/sheet-design#connectivity-the-check-that-refuses",
+        "evidence": null,
+        "also": [
+          {
+            "project": "STIPPLE R17 2026-08",
+            "date": "2026-08",
+            "what": "STIPPLE R17 added beside OGEE R17 for the crank hub rule",
+            "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-ogee-stipple-mech/stipple/stipple (1).html"
+          }
+        ]
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-NET-01",
+      "version": "1.0.0",
+      "title": "single island per net (union-find over overlap and z)",
+      "appliesTo": {
+        "level": "net"
+      },
+      "severity": "block",
+      "needs": [
+        "circuit",
+        "geom"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "STYLUS 2026-08",
+        "date": "2026-08",
+        "what": "most archetypes electrically broken",
+        "knowledge": "knowledge:01-invariants#electrical",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-NET-02",
+      "version": "1.0.0",
+      "title": "edge-level clearance, not vertex-level",
+      "appliesTo": {
+        "level": "net"
+      },
+      "severity": "block",
+      "needs": [
+        "geom"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "TANG 2026-08",
+        "date": "2026-08",
+        "what": "triangle edge crossed an obstruction a vertex test missed",
+        "knowledge": "knowledge:01-invariants#electrical",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-NET-03",
+      "version": "1.0.1",
+      "title": "makesContact backed by fit() with real numbers",
+      "appliesTo": {
+        "level": "feature",
+        "kinds": [
+          "contact"
+        ]
+      },
+      "severity": "block",
+      "needs": [
+        "mesh"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "STYLUS 2026-08",
+        "date": "2026-08",
+        "what": "pot wiper arms beside the tracks; never touched",
+        "knowledge": "knowledge:01-invariants#electrical",
+        "evidence": null,
+        "also": [
+          {
+            "project": "BAFFLE R3 2026-09",
+            "date": "2026-09",
+            "what": "neither mating interface is proven by geometry here ... continuity has to be measured on the assembly",
+            "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-baffle-inlay-coin/baffle/extracted/baffle-r3-model.from-baffle-36.js"
+          }
+        ]
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-NET-04",
+      "version": "1.0.0",
+      "title": "every landing conductor has an explicit containment constraint",
+      "appliesTo": {
+        "level": "feature",
+        "kinds": [
+          "conductor"
+        ]
+      },
+      "severity": "block",
+      "needs": [
+        "geom"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "STYLUS 2026-08",
+        "date": "2026-08",
+        "what": "collector post overlapped body frame by post area times EZ",
+        "knowledge": "knowledge:kernels/copper-routing#contact-and-containment",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-NET-05",
+      "version": "2.0.0",
+      "title": "printed button reads LOW when pressed: pullup range inside the interval set by path resistance and the MCU VIL max",
+      "appliesTo": {
+        "level": "feature",
+        "kinds": [
+          "port"
+        ]
+      },
+      "severity": "block",
+      "needs": [
+        "circuit",
+        "profile"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "BLOCKS 2026-08",
+        "date": "2026-08",
+        "what": "BOSS sim at 50 kohm and one 0.5 VIO threshold read 2.05 V as HIGH; RP2040 band 0.8 to 2.0 V",
+        "knowledge": "knowledge:designs/boss#514-the-undefined-band-verdict-origin",
+        "evidence": null
+      },
+      "status": "entered",
+      "constraint": "circuit/pullup-low-read"
+    },
+    {
+      "id": "CHK-NET-06",
+      "version": "1.0.1",
+      "title": "ADC source impedance under about 100 kohm or flagged",
+      "appliesTo": {
+        "level": "net"
+      },
+      "severity": "warn",
+      "needs": [
+        "circuit"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "TANG R5 2026-08-17",
+        "date": "2026-08-17",
+        "what": "the sim's conductive PLA panel says source impedance is what limits sample rate; the SNS pad reads through a 47k pullup with about 12k of series lead",
+        "knowledge": "knowledge:04-heuristics#electrical",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-gudgeon-tang-keyway/tang/tang_r5_sim (13).html"
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-NET-07",
+      "version": "1.0.0",
+      "title": "no copper under a module body on a single layer",
+      "appliesTo": {
+        "level": "net"
+      },
+      "severity": "block",
+      "needs": [
+        "geom"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "SPINDLE v4 2026-08",
+        "date": "2026-08",
+        "what": "no recorded failure: the rule is a SPINDLE v5 gate (no trace buffer may cross the module body box); the failure on record for v4 is a module buried mid-board behind a GND ring with USB unreachable",
+        "knowledge": "knowledge:01-invariants#electrical",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-NET-08",
+      "version": "1.0.0",
+      "title": "copper >= 1.0 mm from the cut outline",
+      "appliesTo": {
+        "level": "sheet"
+      },
+      "severity": "block",
+      "needs": [
+        "geom"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "SPINDLE 2026-08",
+        "date": "2026-08",
+        "what": "no recorded failure: SPINDLE v5 gates copper at 1.0 mm from the shared outline and reached 1.02 mm tightest (computed by gen_board.py)",
+        "numbers": {
+          "tightestMm": 1.02,
+          "qualifier": "computed by SPINDLE v5 gen_board.py (seed origin)"
+        },
+        "knowledge": "knowledge:01-invariants#electrical",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-NET-09",
+      "version": "1.0.0",
+      "title": "vinyl mask one piece, follows outline, 1.2 mm border, 100% per edge",
+      "appliesTo": {
+        "level": "sheet"
+      },
+      "severity": "block",
+      "needs": [
+        "geom"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "SPINDLE 2026-08",
+        "date": "2026-08",
+        "what": "no recorded failure: SPINDLE v5 reports its vinyl mask as one piece with 37 openings and every edge strip covered above 99.9 percent (computed by layers.py)",
+        "numbers": {
+          "maskOpenings": 37,
+          "edgeCoverPct": "above 99.9",
+          "qualifier": "computed by SPINDLE v5 layers.py (knowledge/designs/spindle.md 4.4)"
+        },
+        "knowledge": "knowledge:designs/spindle#44-three-registered-layers-off-one-outline-lay",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-NET-10",
+      "version": "1.0.1",
+      "title": "port interfaces compatible at every connection",
+      "appliesTo": {
+        "level": "feature",
+        "kinds": [
+          "port"
+        ]
+      },
+      "severity": "block",
+      "needs": [
+        "circuit"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "BLOCKS 2026-08",
+        "date": "2026-08",
+        "what": "composition typing, after TypedSchematics",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-BRD-01",
+      "version": "1.0.1",
+      "title": "gerbers reparse to source geometry with an independent parser",
+      "appliesTo": {
+        "level": "artifact"
+      },
+      "severity": "block",
+      "needs": [
+        "board"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "SPINDLE R1 2026-08",
+        "date": "2026-08",
+        "what": "ring identity test wrote every hole as filled copper",
+        "knowledge": "knowledge:02-ordering-rules#gerber-emission-order",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-BRD-02",
+      "version": "1.0.0",
+      "title": "drill inside its own pad with margin",
+      "appliesTo": {
+        "level": "feature",
+        "kinds": [
+          "pad"
+        ]
+      },
+      "severity": "block",
+      "needs": [
+        "board"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "SPINDLE R1 2026-08",
+        "date": "2026-08",
+        "what": "drilled at pad centre, row spacing 17.5 not 15.24",
+        "numbers": {
+          "drilledRowMm": 17.5,
+          "moduleRowMm": 15.24,
+          "qualifier": "computed: drilling at the pad centre against the module row (knowledge/kernels/board-pcb.md; knowledge/designs/spindle.md section 6)"
+        },
+        "knowledge": "knowledge:kernels/board-pcb#drill-position-is-not-pad-centre",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-BRD-03",
+      "version": "1.0.0",
+      "title": "back-mounted asymmetric parts checked for chirality",
+      "appliesTo": {
+        "level": "assembly"
+      },
+      "severity": "block",
+      "needs": [
+        "board"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "TACK 2026-08",
+        "date": "2026-08",
+        "what": "SOT-23 B/E swap",
+        "knowledge": "knowledge:kernels/board-pcb#footprint-and-chirality",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-BRD-04",
+      "version": "1.0.0",
+      "title": "every GPIO audited for strapping and boot activity",
+      "appliesTo": {
+        "level": "net"
+      },
+      "severity": "block",
+      "needs": [
+        "board"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "SPINDLE, ARMATURE 2026-08",
+        "date": "2026-08",
+        "what": "U0TXD strobes the laser at boot",
+        "knowledge": "knowledge:03-diagnostics#firmware-and-rigs",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-BRD-05",
+      "version": "1.0.1",
+      "title": "BOM, CPL and netlist cross-checked by designator",
+      "appliesTo": {
+        "level": "artifact"
+      },
+      "severity": "block",
+      "needs": [
+        "board"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "SPINDLE R1 2026-08",
+        "date": "2026-08",
+        "what": "stale BOM described headers that no longer existed",
+        "knowledge": "knowledge:kernels/board-pcb#board-level-gates-that-earn-their-keep",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-BRD-06",
+      "version": "1.0.1",
+      "title": "inferred provenance refused at fabrication export",
+      "appliesTo": {
+        "level": "project"
+      },
+      "severity": "block",
+      "needs": [
+        "board"
+      ],
+      "legalKind": "set",
+      "origin": {
+        "project": "board-forge 2026-08",
+        "date": "2026-08",
+        "what": "the number one cause of dead boards",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-MOT-01",
+      "version": "1.0.0",
+      "title": "every joint within limits over the programmed path",
+      "appliesTo": {
+        "level": "assembly"
+      },
+      "severity": "block",
+      "needs": [
+        "motion",
+        "sim"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "PAWL 2026-07",
+        "date": "2026-07",
+        "what": "the first PAWL build fell over in sim: a stance above 212.5 put the leg IK on the locked knee singularity, and the stance band was clamped",
+        "knowledge": "knowledge:designs/pawl#53-closed-form-leg-ik-and-the-stance-band-c-67-to-89",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-MOT-02",
+      "version": "1.0.0",
+      "title": "programmed-path sweep clash-free",
+      "appliesTo": {
+        "level": "assembly"
+      },
+      "severity": "block",
+      "needs": [
+        "sim"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "DAVIT 2026-08",
+        "date": "2026-08",
+        "what": "DAVIT tested collision per slider pose with an explicit skip between left and right arms, and right arm only mask calibration missed the left arm's mirrored hub contacts",
+        "knowledge": "knowledge:designs/davit#511-two-level-sphere-proxy-collision-with-calibrated-masks-spacksimpy-47-to-143-h-482-to-600",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-MOT-03",
+      "version": "1.0.1",
+      "title": "every rule enforceable in sim AND firmware; table hash equal",
+      "appliesTo": {
+        "level": "source"
+      },
+      "severity": "block",
+      "needs": [
+        "motion"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "BEAM PRD 2026-08",
+        "date": "2026-08",
+        "what": "DETENT field audit: app and firmware disagreed; connect pushed app defaults over the honed device setup, and firmware parseArgs capped at 6 truncated an 8 coefficient command",
+        "knowledge": "knowledge:01-invariants#motion-and-latching",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-MOT-04",
+      "version": "1.0.1",
+      "title": "half select never commits (addressing property)",
+      "appliesTo": {
+        "level": "assembly"
+      },
+      "severity": "block",
+      "needs": [
+        "motion"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "OGEE R16 2026-08",
+        "date": "2026-08",
+        "what": "OGEE R16: a single 3 mm strip bar sagged 0.95 mm at the far station (computed), more than the 0.775 mm one bar margin that keeps a half select from latching; bars went to two laminated layers (0.168 mm)",
+        "numbers": {
+          "sagMm": 0.95,
+          "halfSelectMarginMm": 0.775,
+          "laminatedSagMm": 0.168,
+          "qualifier": "computed (seed origin; knowledge/kernels/sheet-design.md)"
+        },
+        "knowledge": "knowledge:kernels/sheet-design#sheet-stiffness-the-thing-that-kills-a-shrink",
+        "evidence": null,
+        "also": [
+          {
+            "project": "TAPPET R1 2026-08-11",
+            "date": "2026-08-11",
+            "what": "the half-select property stated as two signed margins, half-select clearance and full-select overshoot, each checked against print tolerance",
+            "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-sweep/tappet/tappet (3).html"
+          }
+        ]
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-MOT-05",
+      "version": "2.0.0",
+      "title": "latch identity holds: margin + overshoot = (fullRise - halfRise) - camlift - lugTot; equals stroke/2 - camlift - lugTot when halfRise = stroke/2",
+      "appliesTo": {
+        "level": "part",
+        "assertions": [
+          "identity"
+        ]
+      },
+      "severity": "block",
+      "needs": [
+        "motion"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "OGEE R17b 2026-08",
+        "date": "2026-08",
+        "what": "pinning the well forced STROKE 4.8 to 5.0",
+        "numbers": {
+          "identityR16Mm": 2.175,
+          "identityR17Mm": 1.1853,
+          "identityR17bMm": 1.2853,
+          "qualifier": "computed from stipple_latch.json and kin.py (CHECKS.md section 7.7)"
+        },
+        "knowledge": "knowledge:projects/mechanisms#ogee-seventeen-revisions",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-ogee-stipple-mech/derived/stipple_latch.json"
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-MOT-06",
+      "version": "1.0.0",
+      "title": "sim never decides an outcome; state commits at command",
+      "appliesTo": {
+        "level": "project"
+      },
+      "severity": "block",
+      "needs": [
+        "motion"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "OGEE R16 2026-08",
+        "date": "2026-08",
+        "what": "nothing latched under swiftshader",
+        "knowledge": "knowledge:kernels/motion-latch#motion-ir",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-3MF-01",
+      "version": "1.0.1",
+      "title": "Application tag starts with BambuStudio- or OrcaSlicer-",
+      "appliesTo": {
+        "level": "artifact"
+      },
+      "severity": "block",
+      "needs": [
+        "3mf"
+      ],
+      "legalKind": "set",
+      "origin": {
+        "project": "challenge-coin 2026-08",
+        "date": "2026-08",
+        "what": "colours silently dropped",
+        "knowledge": "knowledge:03-diagnostics#printing",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-3MF-02",
+      "version": "1.0.1",
+      "title": "every per-filament key exactly N long",
+      "appliesTo": {
+        "level": "artifact"
+      },
+      "severity": "block",
+      "needs": [
+        "3mf"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "COLLAR v4 2026-08",
+        "date": "2026-08",
+        "what": "filament list collapsed to one",
+        "knowledge": "knowledge:01-invariants#3mf-and-export",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-3MF-03",
+      "version": "1.0.1",
+      "title": "no printer or process scoped keys; preset names only",
+      "appliesTo": {
+        "level": "artifact"
+      },
+      "severity": "block",
+      "needs": [
+        "3mf"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "STYLUS 2026-08",
+        "date": "2026-08",
+        "what": "layer_height in project_settings crashed Flash Studio",
+        "knowledge": "knowledge:kernels/3mf-dialect#the-key-template",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-3MF-04",
+      "version": "2.0.0",
+      "title": "non-structure inserts inset 1 um by true edge normal",
+      "appliesTo": {
+        "level": "part"
+      },
+      "severity": "block",
+      "needs": [
+        "3mf",
+        "geom"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "COLLAR 2026-08",
+        "date": "2026-08",
+        "what": "homothety pushed spirals into the wall",
+        "knowledge": "knowledge:kernels/3mf-dialect#geometry-rules",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-3MF-05",
+      "version": "1.0.0",
+      "title": "holed bands overlap full bands, never the reverse",
+      "appliesTo": {
+        "level": "part"
+      },
+      "severity": "block",
+      "needs": [
+        "3mf"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "COLLAR 2026-08",
+        "date": "2026-08",
+        "what": "no recorded failure: COLLAR has no spirals or bands (benches-coins-inlay.md item 8), and knowledge/02-ordering-rules.md states the band order with no failure behind it",
+        "knowledge": "knowledge:kernels/3mf-dialect#geometry-rules",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-INL-01",
+      "version": "2.0.0",
+      "title": "no stroke below line width",
+      "appliesTo": {
+        "level": "feature",
+        "kinds": [
+          "inlay"
+        ]
+      },
+      "severity": "block",
+      "needs": [
+        "inlay",
+        "profile"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "SPRUE 2026-08",
+        "date": "2026-08",
+        "what": "no recorded failure: knowledge/kernels/art-inlay.md lists it under checks that belong to inlay and nobody writes",
+        "knowledge": "knowledge:kernels/art-inlay#checks-that-belong-to-inlay-and-nobody-writes",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-INL-02",
+      "version": "1.0.1",
+      "title": "despeckle at 0.35 x min-feature disc area",
+      "appliesTo": {
+        "level": "part"
+      },
+      "severity": "warn",
+      "needs": [
+        "inlay"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "COLLAR v3 2026-08",
+        "date": "2026-08",
+        "what": "despeckle at the full disc ate the full stop of hack.build",
+        "knowledge": "knowledge:designs/collar#45-art-hygiene",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-INL-03",
+      "version": "2.0.0",
+      "title": "inlay depth meets opacity floor for the filament pair",
+      "appliesTo": {
+        "level": "feature",
+        "kinds": [
+          "inlay"
+        ]
+      },
+      "severity": "block",
+      "needs": [
+        "inlay",
+        "profile"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "python hackbuild coin v1 2026-08",
+        "date": "2026-08",
+        "what": "0.8 inlay over black tinted pink and white grey; 1.2 fixed it",
+        "numbers": {
+          "failedMm": 0.8,
+          "fixedMm": 1.2,
+          "qualifier": "inferred: the drawn inlay depths of coin v1 and v2 (knowledge/designs/coin.md 1.1); the tint is the owner print observation"
+        },
+        "knowledge": "knowledge:designs/coin#11-every-revision-and-why-this-one-is-canonical",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-INL-04",
+      "version": "1.0.1",
+      "title": "bed-face art mirrored in X at extrude",
+      "appliesTo": {
+        "level": "part"
+      },
+      "severity": "block",
+      "needs": [
+        "inlay"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "python hackbuild coin v1 2026-08",
+        "date": "2026-08",
+        "what": "back wordmark printed backwards",
+        "knowledge": "knowledge:designs/coin#11-every-revision-and-why-this-one-is-canonical",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-LNT-01",
+      "version": "2.0.0",
+      "title": "no em or en dash anywhere in source, prose or UI",
+      "appliesTo": {
+        "level": "source"
+      },
+      "severity": "block",
+      "needs": [],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "BEAM PRD 2026-08",
+        "date": "2026-08",
+        "what": "no recorded failure in BEAM PRD, which states the ban as a lint rule; the skills that ban dashes carried them in their own text, 139 in the clasp and explainer references imported at M-1 (computed)",
+        "numbers": {
+          "dashesInImportedSkills": 139,
+          "qualifier": "computed at M-1 over the clasp and explainer references (seed origin)"
+        },
+        "knowledge": "knowledge:02-ordering-rules#lints",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-LNT-02",
+      "version": "2.0.0",
+      "title": "no emoji; no four-point sparkle glyph",
+      "appliesTo": {
+        "level": "source"
+      },
+      "severity": "block",
+      "needs": [],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "hackbuild design system 2026-08",
+        "date": "2026-08",
+        "what": "four point sparkle glyphs read as an AI signature and were rejected by name (table-forge); no emoji failure is on record",
+        "knowledge": "knowledge:05-taste#hackbuild-visual-language",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-LNT-03",
+      "version": "2.0.1",
+      "title": "no hand-maintained list another file determines",
+      "appliesTo": {
+        "level": "source"
+      },
+      "severity": "block",
+      "needs": [],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "OGEE R16-P 2026-08",
+        "date": "2026-08",
+        "what": "NEED list silently dropped seven servo meshes",
+        "knowledge": "knowledge:02-ordering-rules#lints",
+        "evidence": null,
+        "also": [
+          {
+            "project": "OGEE build-it 2026-08-18",
+            "date": "2026-08-18",
+            "what": "PARTS_TBL gives 99 pieces, the scene places 124, the blurb says 124 and a check row says 115",
+            "numbers": {
+              "partsTblPieces": 99,
+              "scenePlaced": 124,
+              "checkRowSays": 115,
+              "qualifier": "computed by the OGEE build-it run"
+            },
+            "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-ogee-stipple-mech/derived/ogee_buildit_run.json"
+          }
+        ]
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-LNT-04",
+      "version": "2.0.0",
+      "title": "no two assignments on one line with a comment between",
+      "appliesTo": {
+        "level": "source"
+      },
+      "severity": "block",
+      "needs": [],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "OGEE R15 2026-08",
+        "date": "2026-08",
+        "what": "DRIVE_Y commented out, four parts parked at -1.5",
+        "knowledge": "knowledge:02-ordering-rules#lints",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-3MF-06",
+      "version": "2.0.0",
+      "title": "every component p:path resolves to a model part in the package, other than the root model, and the referenced object id exists in that part",
+      "appliesTo": {
+        "level": "artifact"
+      },
+      "severity": "block",
+      "needs": [
+        "3mf"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "CASK 2026-09",
+        "date": "2026-09",
+        "what": "self-referential p:path never resolved; object loaded with no volumes; empty plate, no error",
+        "knowledge": "knowledge:kernels/3mf-dialect#ppath-on-a-root-component-the-empty-plate-bug",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-cases/cask/cask_cap_hackbuild.3mf"
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-3MF-07",
+      "version": "2.0.0",
+      "title": "per-filament vectors in project_settings.config have one element per filament and each element has the key's per-slot type; overhang_fan_threshold elements are percent strings matching ^[0-9]+%$, never bare numbers or nil",
+      "appliesTo": {
+        "level": "artifact"
+      },
+      "severity": "block",
+      "needs": [
+        "3mf"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "CASK 2026-09",
+        "date": "2026-09",
+        "what": "Flash Studio warned on the enum default",
+        "knowledge": "knowledge:kernels/3mf-dialect#two-more-key-facts-from-cask",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-cases/cask/cask_cap_hackbuild.3mf"
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-SHP-01",
+      "version": "1.0.1",
+      "title": "chamfer half-spaces applied before union, never after",
+      "appliesTo": {
+        "level": "feature",
+        "kinds": [
+          "chamfer"
+        ]
+      },
+      "severity": "block",
+      "precondition": true,
+      "needs": [
+        "mesh"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "DETENT rev D 2026-07-30",
+        "date": "2026-07-30",
+        "what": "unbounded half-space cut a neighbouring sub-solid",
+        "knowledge": "knowledge:01-invariants#printability",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-robots-machines/unzipped/detentfiles/CONTEXT.md"
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-SHP-02",
+      "version": "1.0.0",
+      "title": "a round or edge profile on a printed edge is at least one line width deep",
+      "appliesTo": {
+        "level": "feature",
+        "kinds": [
+          "round",
+          "edgeProfile"
+        ]
+      },
+      "severity": "warn",
+      "needs": [
+        "mesh",
+        "profile"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "KNURL 2026-09",
+        "date": "2026-09",
+        "what": "64 reeds at 0.5 deep printed practically round; 40 at 1.0 deep read",
+        "knowledge": "knowledge:03-diagnostics#printing",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-SHP-03",
+      "version": "1.0.1",
+      "title": "window roof carries itself: gabled or cone at 45 or steeper, or flat under 9 mm",
+      "appliesTo": {
+        "level": "feature",
+        "kinds": [
+          "window"
+        ]
+      },
+      "severity": "block",
+      "needs": [
+        "mesh"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "DAVIT R4, DETENT rev D 2026-07-30",
+        "date": "2026-07-30",
+        "what": "gabled web windows and 45 cone roofs need no support",
+        "knowledge": "knowledge:05-taste#part-styling",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-robots-machines/unzipped/detentfiles/DETENT-build-notes.md"
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-SHP-04",
+      "version": "1.0.0",
+      "title": "a web meets its neighbour with real overlap, never a tangency",
+      "appliesTo": {
+        "level": "feature",
+        "kinds": [
+          "web"
+        ]
+      },
+      "severity": "block",
+      "precondition": true,
+      "needs": [
+        "geom"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "OGEE R16-M 2026-08",
+        "date": "2026-08",
+        "what": "tangent weld became six bodies after the print shrink",
+        "knowledge": "knowledge:03-diagnostics#printing",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-SHP-05",
+      "version": "1.0.0",
+      "title": "an imported part with inferred provenance is refused at fabrication export",
+      "appliesTo": {
+        "level": "part"
+      },
+      "severity": "block",
+      "needs": [],
+      "legalKind": "set",
+      "origin": {
+        "project": "catalog rule 2026-09",
+        "date": "2026-09",
+        "what": "same gate as bought parts",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-KEY-01",
+      "version": "2.1.0",
+      "title": "flex cone contact gap at least 1.2 and about 45 percent of cone height",
+      "appliesTo": {
+        "level": "feature",
+        "kinds": [
+          "contact"
+        ]
+      },
+      "severity": "block",
+      "needs": [
+        "mesh"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "PIP 2026-09",
+        "date": "2026-09",
+        "what": "a pressed cone travels about half its height",
+        "knowledge": "knowledge:designs/pip#51-flex-cone-key-canon-flex-cone-key",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-KEY-02",
+      "version": "2.0.0",
+      "title": "flex cap bridge at most 4.5 unsupported",
+      "appliesTo": {
+        "level": "feature",
+        "kinds": [
+          "pocket"
+        ]
+      },
+      "severity": "block",
+      "needs": [
+        "mesh"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "PIP 2026-09",
+        "date": "2026-09",
+        "what": "conductive TPU spanning the hole",
+        "knowledge": "knowledge:designs/pip#51-flex-cone-key-canon-flex-cone-key",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-KEY-03",
+      "version": "1.0.1",
+      "title": "split between contact halves at least 0.6",
+      "appliesTo": {
+        "level": "feature",
+        "kinds": [
+          "contact"
+        ]
+      },
+      "severity": "block",
+      "needs": [
+        "geom"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "PIP 2026-09",
+        "date": "2026-09",
+        "what": "exposed; a string across it reads as a press",
+        "knowledge": "knowledge:designs/pip#51-flex-cone-key-canon-flex-cone-key",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-KEY-04",
+      "version": "2.0.1",
+      "title": "click spring rise Q inside the FE-backed window: snaps, drop at least click.dropMin, strain at the stop within the bend-direction limit, not bistable",
+      "appliesTo": {
+        "level": "feature",
+        "kinds": [
+          "spring"
+        ]
+      },
+      "severity": "block",
+      "needs": [
+        "sim",
+        "profile"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "PIP 2026-09",
+        "date": "2026-09",
+        "what": "0.6 beam reached 2.7 to 3.3 percent",
+        "numbers": {
+          "beamStrainPct": "2.7 to 3.3",
+          "qualifier": "inferred: empirical from HAFT print failures (knowledge/designs/pip.md 5.2)"
+        },
+        "knowledge": "knowledge:designs/pip#52-click-spring-key-canon-click-spring-key",
+        "evidence": null
+      },
+      "status": "seed",
+      "constraint": "sim/click-spring-window"
+    },
+    {
+      "id": "CHK-KEY-05",
+      "version": "1.0.1",
+      "title": "click spring tip lands over each floor pad by at least 0.5 past the snap",
+      "appliesTo": {
+        "level": "feature",
+        "kinds": [
+          "contact"
+        ]
+      },
+      "severity": "block",
+      "needs": [
+        "sim"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "PIP 2026-09",
+        "date": "2026-09",
+        "what": "pads split by 0.60",
+        "knowledge": "knowledge:designs/pip#52-click-spring-key-canon-click-spring-key",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-KEY-06",
+      "version": "1.0.1",
+      "title": "no mesh vertex sits exactly on a cavity face",
+      "appliesTo": {
+        "level": "part"
+      },
+      "severity": "block",
+      "precondition": true,
+      "needs": [
+        "mesh"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "PIP 2026-09",
+        "date": "2026-09",
+        "what": "a flex cone kink on a cavity face exported a broken shell",
+        "knowledge": "knowledge:03-diagnostics#printed-circuit-floors-and-folding-decks",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-NET-11",
+      "version": "1.0.1",
+      "title": "trace layer built per net from one outline offset; post and via radii clear of half the trace width",
+      "appliesTo": {
+        "level": "net"
+      },
+      "severity": "block",
+      "needs": [
+        "geom"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "PIP 2026-09",
+        "date": "2026-09",
+        "what": "union of capsules left lumps; a via radius at half the trace width broke traces in the sweep",
+        "knowledge": "knowledge:03-diagnostics#printed-circuit-floors-and-folding-decks",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-NET-12",
+      "version": "1.0.2",
+      "title": "unrouted connections and tight spots surface as warnings, never silently",
+      "appliesTo": {
+        "level": "project"
+      },
+      "severity": "block",
+      "needs": [
+        "circuit"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "PIP 2026-09",
+        "date": "2026-09",
+        "what": "routing problems were silent",
+        "knowledge": "knowledge:projects/printed-circuits#haft",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-NET-29",
+      "version": "1.0.0",
+      "title": "charge-release path settles inside the wait: pathOhm at most rejectOhm",
+      "appliesTo": {
+        "level": "net"
+      },
+      "severity": "block",
+      "needs": [
+        "circuit"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "PIP 2026-09",
+        "date": "2026-09",
+        "what": "computed settle 78 us passed a 200 us wait while the printed keys crossed at 113 to 2431 us (measured by the owner)",
+        "numbers": {
+          "settleUs": "78 (computed)",
+          "keyCrossingUs": "113 to 2431 (measured by the owner)"
+        },
+        "knowledge": "knowledge:designs/pip#510-electrical-model-and-the-charge-and-release-read-read-model-charge-release",
+        "evidence": null
+      },
+      "status": "entered",
+      "constraint": "circuit/charge-release-settle"
+    },
+    {
+      "id": "CHK-UI-01",
+      "version": "1.0.2",
+      "title": "no sideways overflow at 390, 768, 1280 on every step",
+      "appliesTo": {
+        "level": "page"
+      },
+      "severity": "block",
+      "needs": [],
+      "legalKind": "interval",
+      "origin": {
+        "project": "PIP 2026-09",
+        "date": "2026-09",
+        "what": "9 px overflow at 390; cams wrap, card fits, rows wrap, legend hidden under 640",
+        "knowledge": "knowledge:projects/printed-circuits#haft",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-UI-02",
+      "version": "1.0.2",
+      "title": "plate view switches to a high camera; section view cuts the near half",
+      "appliesTo": {
+        "level": "page"
+      },
+      "severity": "warn",
+      "needs": [],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "PIP 2026-09",
+        "date": "2026-09",
+        "what": "plate kept the last angle and hid the bezel; section showed no cut face",
+        "knowledge": "knowledge:projects/printed-circuits#haft",
+        "evidence": null
+      },
+      "status": "seed"
+    },
+    {
+      "id": "CHK-PRT-13",
+      "version": "2.0.1",
+      "title": "overhang in print pose at most the profile limit, separate from islands",
+      "appliesTo": {
+        "level": "part"
+      },
+      "severity": "block",
+      "needs": [
+        "mesh",
+        "profile"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "DETENT rev C 2026-07-30",
+        "date": "2026-07-30",
+        "what": "verify.py printed the 45 deg overhang area as information and gated only islands, so an inverted laser teardrop shipped",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/detent/files/revD/archive-revC/verify_revC.py"
+      },
+      "status": "entered",
+      "enteredBy": "M04-T12"
+    },
+    {
+      "id": "CHK-PRT-14",
+      "version": "1.0.0",
+      "title": "longest unsupported first-layer run per solid in print pose",
+      "appliesTo": {
+        "level": "part"
+      },
+      "severity": "warn",
+      "needs": [
+        "mesh",
+        "profile"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "SLATE 2026-08",
+        "date": "2026-08",
+        "what": "the print audit named the longest unsupported first-layer run; no implementation is in the harvest or the downloads",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-cases.md"
+      },
+      "status": "entered",
+      "enteredBy": "M04-T12",
+      "pending": "M11"
+    },
+    {
+      "id": "CHK-PRT-15",
+      "version": "1.0.0",
+      "title": "layer height and first layer height equal the written process preset; every feature z, Z snap and pauseBefore.z lies on a layer top, firstLayer + n x layer",
+      "appliesTo": {
+        "level": "part"
+      },
+      "severity": "block",
+      "needs": [
+        "mesh",
+        "profile",
+        "3mf"
+      ],
+      "legalKind": "multipleOf",
+      "origin": {
+        "project": "COLLAR 2026-08",
+        "date": "2026-08",
+        "what": "layer height defaulted to 0.2 under the 0.24mm Standard @FF C5 preset, so the NFC floor at 1.8 landed mid layer",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-baffle-inlay-coin/collar/collar-print-card (1).txt"
+      },
+      "status": "entered",
+      "enteredBy": "M04-T12"
+    },
+    {
+      "id": "CHK-PRT-16",
+      "version": "1.0.0",
+      "title": "every print fits the machine's build volume in print pose, listed before export",
+      "appliesTo": {
+        "level": "part"
+      },
+      "severity": "block",
+      "needs": [
+        "mesh",
+        "profile"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "COTTER 2026-09",
+        "date": "2026-09",
+        "what": "platePlan() lists oversize prints apart and the BOM warns on parts too big for the bed",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/latest/cotter-sparger.md"
+      },
+      "status": "entered",
+      "enteredBy": "M04-T12"
+    },
+    {
+      "id": "CHK-FIT-06",
+      "version": "1.0.0",
+      "title": "snap beam strain at full engagement within the material limit for its bend direction",
+      "appliesTo": {
+        "level": "feature",
+        "kinds": [
+          "snap"
+        ]
+      },
+      "severity": "block",
+      "needs": [
+        "mesh",
+        "profile"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "PIP 2026-09",
+        "date": "2026-09",
+        "what": "the click beam failed at 2.7 to 3.3 percent strain; the strain formula is PLINTH's",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-cases/plinth"
+      },
+      "status": "entered",
+      "enteredBy": "M04-T12",
+      "pending": "M06"
+    },
+    {
+      "id": "CHK-FIT-07",
+      "version": "1.0.0",
+      "title": "a printed conductive socket on a printed stud: diametral interference 0.08 to 0.2, at least 3 collet fingers, axial squeeze 0.06 to 0.2",
+      "appliesTo": {
+        "level": "feature"
+      },
+      "severity": "block",
+      "needs": [
+        "mesh",
+        "profile"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "BAFFLE R3 2026-09-18",
+        "date": "2026-09-18",
+        "what": "the printed conductive tile socket got collet slots only after the first tile print",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-baffle-inlay-coin/baffle/baffle-tile-tile (1).3mf"
+      },
+      "status": "entered",
+      "enteredBy": "M04-T12"
+    },
+    {
+      "id": "CHK-SHT-08",
+      "version": "1.0.0",
+      "title": "assembled cut outlines at kerf 0 interfere at most the collision budget",
+      "appliesTo": {
+        "level": "sheet"
+      },
+      "severity": "block",
+      "needs": [
+        "geom"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "COTTER 2026-09",
+        "date": "2026-09",
+        "what": "test/laser_fit.mjs assembles the cut outlines at kerf 0 against a 4 mm3 collision budget",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/latest/cotter-sparger.md"
+      },
+      "status": "entered",
+      "enteredBy": "M04-T12",
+      "pending": "M07"
+    },
+    {
+      "id": "CHK-SHT-09",
+      "version": "1.0.0",
+      "title": "living hinge radius at least the declared minHingeRadius",
+      "appliesTo": {
+        "level": "feature",
+        "kinds": [
+          "flexCut"
+        ]
+      },
+      "severity": "block",
+      "needs": [
+        "geom"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "SKETCH 2026-09-14",
+        "date": "2026-09-14",
+        "what": "material ply3 declares minHingeRadius 14 and the living hinge never reads it",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-robots-b.md"
+      },
+      "status": "entered",
+      "enteredBy": "M04-T12",
+      "pending": "M07"
+    },
+    {
+      "id": "CHK-SHT-10",
+      "version": "1.0.0",
+      "title": "a box corner column assembled at kerf 0 is solid material within 99.5 to 100.5 percent",
+      "appliesTo": {
+        "level": "sheet"
+      },
+      "severity": "warn",
+      "needs": [
+        "geom"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "COTTER 2026-09",
+        "date": "2026-09",
+        "what": "test/laser_fit.mjs requires the l_bin front corner column at 100 plus or minus 0.5 percent wood",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/latest/cotter-sparger.md"
+      },
+      "status": "entered",
+      "enteredBy": "M04-T12",
+      "pending": "M07"
+    },
+    {
+      "id": "CHK-SHT-11",
+      "version": "1.0.1",
+      "title": "finger joint tab and recess one kerf off the pitch, measured on the cut outline",
+      "appliesTo": {
+        "level": "feature",
+        "kinds": [
+          "finger"
+        ]
+      },
+      "severity": "block",
+      "needs": [
+        "geom"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "TUMBLER 2026-08",
+        "date": "2026-08",
+        "what": "no recorded failure: fingerEdgePts widens each outward finger by one kerf and narrows each other segment by one kerf (tumbler.html lines 322 to 331), the rule the FINGER JOINT module prints as tab and slot; no cut joint is on record",
+        "knowledge": "knowledge:designs/tumbler#45-the-18-modules",
+        "evidence": null
+      },
+      "status": "entered",
+      "enteredBy": "M06-T02"
+    },
+    {
+      "id": "CHK-NET-13",
+      "version": "1.0.0",
+      "title": "printed conductor slope under 45 deg; vertical runs warn",
+      "appliesTo": {
+        "level": "feature",
+        "kinds": [
+          "conductor"
+        ]
+      },
+      "severity": "warn",
+      "needs": [
+        "mesh",
+        "circuit"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "TCB, CHI 2021-05",
+        "date": "2021-05",
+        "what": "vertical printed traces read about 7x the resistance of flat ones (measured by the TCB authors)",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/synthesis/plan-deltas.md"
+      },
+      "status": "entered",
+      "enteredBy": "M04-T12"
+    },
+    {
+      "id": "CHK-NET-14",
+      "version": "1.0.0",
+      "title": "every copper net survives an erode of half the minimum feature (buffer -0.55 for 1.10 mm)",
+      "appliesTo": {
+        "level": "net"
+      },
+      "severity": "block",
+      "needs": [
+        "geom"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "KEYWAY 2026-08",
+        "date": "2026-08",
+        "what": "all seven boards of the family gate every copper net on an erode of half the 1.10 mm minimum feature",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-conductive-b.md"
+      },
+      "status": "entered",
+      "enteredBy": "M04-T12",
+      "pending": "M05"
+    },
+    {
+      "id": "CHK-NET-15",
+      "version": "1.0.0",
+      "title": "slider ratio strictly monotone over 41 samples; span inside 0.10 to 0.90",
+      "appliesTo": {
+        "level": "net"
+      },
+      "severity": "block",
+      "needs": [
+        "geom"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "VERNIER, TESSERA 2026-08",
+        "date": "2026-08",
+        "what": "the slider gate samples the ratio 41 times and requires it strictly monotone with its span inside 0.10 to 0.90",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-conductive-b.md"
+      },
+      "status": "entered",
+      "enteredBy": "M04-T12",
+      "pending": "M05"
+    },
+    {
+      "id": "CHK-NET-16",
+      "version": "1.0.0",
+      "title": "wedge end overlap clears the opposite escape",
+      "appliesTo": {
+        "level": "net"
+      },
+      "severity": "block",
+      "needs": [
+        "geom"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "VERNIER 2026-08",
+        "date": "2026-08",
+        "what": "a wedge end overlap failed the opposite escape by 0.4 mm",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-conductive-b.md"
+      },
+      "status": "entered",
+      "enteredBy": "M04-T12",
+      "pending": "M05"
+    },
+    {
+      "id": "CHK-NET-17",
+      "version": "1.0.0",
+      "title": "arc electrode ends offset at least 5 deg",
+      "appliesTo": {
+        "level": "net"
+      },
+      "severity": "block",
+      "needs": [
+        "geom"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "SPLINE 2026-08",
+        "date": "2026-08",
+        "what": "arc electrode ends offset 2 deg: the gate caught 0.485 mm",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-conductive-b.md"
+      },
+      "status": "entered",
+      "enteredBy": "M04-T12",
+      "pending": "M05"
+    },
+    {
+      "id": "CHK-NET-18",
+      "version": "1.0.0",
+      "title": "sensor film bridges only COM and its own zone, and covers both combs",
+      "appliesTo": {
+        "level": "sheet"
+      },
+      "severity": "block",
+      "needs": [
+        "geom"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "KEYWAY 2026-08",
+        "date": "2026-08",
+        "what": "the sensor film gate requires it to bridge only COM and its own zone, 260 of 260 per zone in the run",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-conductive-b.md"
+      },
+      "status": "entered",
+      "enteredBy": "M04-T12",
+      "pending": "M05"
+    },
+    {
+      "id": "CHK-NET-19",
+      "version": "1.0.0",
+      "title": "wiper stray contact under 0.01 mm2",
+      "appliesTo": {
+        "level": "sheet"
+      },
+      "severity": "block",
+      "needs": [
+        "geom"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "KEYWAY 2026-08",
+        "date": "2026-08",
+        "what": "the wiper stray contact gate reads 0.000 mm2 in the run",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-conductive-b.md"
+      },
+      "status": "entered",
+      "enteredBy": "M04-T12",
+      "pending": "M05"
+    },
+    {
+      "id": "CHK-NET-20",
+      "version": "1.0.0",
+      "title": "dielectric covers live copper outside the wiring zone, under 0.5 mm2 bare",
+      "appliesTo": {
+        "level": "sheet"
+      },
+      "severity": "block",
+      "needs": [
+        "geom"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "KEYWAY 2026-08",
+        "date": "2026-08",
+        "what": "the capacitive boards gate bare live copper outside the wiring zone under 0.5 mm2",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-conductive-b.md"
+      },
+      "status": "entered",
+      "enteredBy": "M04-T12",
+      "pending": "M05"
+    },
+    {
+      "id": "CHK-NET-21",
+      "version": "1.0.0",
+      "title": "adjacent clip pads stagger rows or alternate depth by at least 4 mm",
+      "appliesTo": {
+        "level": "sheet"
+      },
+      "severity": "block",
+      "needs": [
+        "geom"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "KEYWAY, QUADRANT 2026-08",
+        "date": "2026-08",
+        "what": "adjacent clip jaws sat 14.0 mm apart; the boards stagger rows or alternate depth",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-conductive-b.md"
+      },
+      "status": "entered",
+      "enteredBy": "M04-T12",
+      "pending": "M05"
+    },
+    {
+      "id": "CHK-NET-22",
+      "version": "1.0.0",
+      "title": "lane graph acyclic and ranked; same-lane spans disjoint",
+      "appliesTo": {
+        "level": "sheet"
+      },
+      "severity": "block",
+      "needs": [
+        "geom"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "TESSERA 2026-08",
+        "date": "2026-08",
+        "what": "the lane graph gate requires it acyclic and ranked with same-lane spans disjoint",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-conductive-b.md"
+      },
+      "status": "entered",
+      "enteredBy": "M04-T12",
+      "pending": "M05"
+    },
+    {
+      "id": "CHK-NET-23",
+      "version": "1.0.0",
+      "title": "weedable: eroding every shape by 0.75 mm leaves one skeleton per net",
+      "appliesTo": {
+        "level": "net"
+      },
+      "severity": "block",
+      "needs": [
+        "geom"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "SPLICE rev C 2026-07-31",
+        "date": "2026-07-31",
+        "what": "the rev C README states that eroding every shape by 0.75 mm leaves one connected skeleton per net, with no code behind it",
+        "evidence": "knowledge/designs/splice.md"
+      },
+      "status": "entered",
+      "enteredBy": "M04-T12",
+      "pending": "M05"
+    },
+    {
+      "id": "CHK-NET-24",
+      "version": "1.0.0",
+      "title": "mask mode declared and honoured: soldermask or dielectric faceplate",
+      "appliesTo": {
+        "level": "sheet"
+      },
+      "severity": "block",
+      "needs": [
+        "geom"
+      ],
+      "legalKind": "set",
+      "origin": {
+        "project": "SPINDLE 2026-08",
+        "date": "2026-08",
+        "what": "the copper row of plan-deltas R54 splits soldermask from a dielectric faceplate; CHK-NET-09 carries the SPINDLE story",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/synthesis/plan-deltas.md"
+      },
+      "status": "entered",
+      "enteredBy": "M04-T12",
+      "pending": "M05"
+    },
+    {
+      "id": "CHK-NET-25",
+      "version": "1.0.0",
+      "title": "encoder disc phase: quadrature or Gray code as declared",
+      "appliesTo": {
+        "level": "feature",
+        "kinds": [
+          "port"
+        ]
+      },
+      "severity": "block",
+      "needs": [
+        "circuit"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "FEELER 2026-08",
+        "date": "2026-08",
+        "what": "the quadrature marks are step/2 long with B offset step/2, 180 electrical degrees, while the SIM uses step/4",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-conductive-a.md"
+      },
+      "status": "entered",
+      "enteredBy": "M04-T12",
+      "pending": "M06"
+    },
+    {
+      "id": "CHK-NET-26",
+      "version": "1.0.0",
+      "title": "apartExcept: removing the named part separates the terminals",
+      "appliesTo": {
+        "level": "net"
+      },
+      "severity": "block",
+      "needs": [
+        "circuit"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "FEELER 2026-08",
+        "date": "2026-08",
+        "what": "the pot collector may share only its strip; apartExcept rebuilds the union find without it and the taps must land on distinct nets",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-conductive-a.md"
+      },
+      "status": "entered",
+      "enteredBy": "M04-T12"
+    },
+    {
+      "id": "CHK-NET-27",
+      "version": "1.0.0",
+      "title": "makesContact executed by the actuated sim move and a touch test",
+      "appliesTo": {
+        "level": "feature",
+        "kinds": [
+          "contact"
+        ]
+      },
+      "severity": "block",
+      "needs": [
+        "circuit",
+        "sim"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "FEELER 2026-08",
+        "date": "2026-08",
+        "what": "makesContact records a gap that closes when actuated and was never tested on geometry, so the wiper bug went through",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-conductive-a.md"
+      },
+      "status": "entered",
+      "enteredBy": "M04-T12"
+    },
+    {
+      "id": "CHK-NET-28",
+      "version": "1.0.1",
+      "title": "capacitive electrode path at most 30 kohm (Capricate SNR 5:1)",
+      "appliesTo": {
+        "level": "net"
+      },
+      "severity": "block",
+      "needs": [
+        "circuit"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "Capricate, UIST 2015-11",
+        "date": "2015-11",
+        "what": "capacitive SNR fell under 5:1 above a 30 kohm electrode path (measured by the Capricate authors)",
+        "numbers": {
+          "resistorsKohm": "20 to 120 in steps of 10 (measured by others)",
+          "electrodesMm": "5, 10, 15, 20 (measured by others)"
+        },
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/web-hci-fab-research/capricate.txt"
+      },
+      "status": "entered",
+      "enteredBy": "M04-T12",
+      "constraint": "circuit/capacitive-path-ceiling"
+    },
+    {
+      "id": "CHK-NET-30",
+      "version": "1.0.0",
+      "title": "printed track swing: element resistance over element plus lead and drive resistance at least a declared fraction, default 30 percent",
+      "appliesTo": {
+        "level": "net"
+      },
+      "severity": "warn",
+      "needs": [
+        "circuit",
+        "profile"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "BAFFLE R3 2026-09-14",
+        "date": "2026-09-14",
+        "what": "the model's own check wants the element at least 30 percent of the loop resistance; TANG R6 cPLA arc read 6.9 percent",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-baffle-inlay-coin/baffle/extracted/baffle-r3-model.from-baffle-36.js"
+      },
+      "status": "entered",
+      "enteredBy": "M04-T12"
+    },
+    {
+      "id": "CHK-NET-31",
+      "version": "1.0.0",
+      "title": "every declared connection is made by name",
+      "appliesTo": {
+        "level": "part"
+      },
+      "severity": "block",
+      "needs": [
+        "geom"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "KEYWAY 2026-08",
+        "date": "2026-08",
+        "what": "no recorded failure: the generator counts 20 named connections (comb spines, clip pad centres, slider spines and collector) and refuses below 20, lines 205 to 214; 20 of 20 in the 2026-10-04 rerun",
+        "knowledge": "knowledge:designs/keyway#8-tests-and-harness",
+        "evidence": "reference/copper/keyway/legacy/gen_keyway.py"
+      },
+      "status": "entered",
+      "enteredBy": "M05-T14",
+      "pending": "M05"
+    },
+    {
+      "id": "CHK-NET-32",
+      "version": "1.0.0",
+      "title": "art in the copper weeds: islands at least 0.70 mm apart, every counter survives a 0.3 mm erode",
+      "appliesTo": {
+        "level": "net"
+      },
+      "severity": "block",
+      "needs": [
+        "geom"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "KEYWAY 2026-08",
+        "date": "2026-08",
+        "what": "no recorded failure: brand art moved behind a flag after the weeding test; the generator gates art islands at 0.70 mm and counters at a 0.3 mm erode, lines 231 to 237; 15.17 mm with the brand off, 0.85 mm with it on",
+        "knowledge": "knowledge:designs/keyway#56-brand-art-as-a-switch",
+        "evidence": "reference/copper/keyway/legacy/gen_keyway.py"
+      },
+      "status": "entered",
+      "enteredBy": "M05-T14",
+      "pending": "M05"
+    },
+    {
+      "id": "CHK-NET-33",
+      "version": "1.0.0",
+      "title": "both wedges of a slider keep at least 1.8 mm of copper across the travel",
+      "appliesTo": {
+        "level": "net"
+      },
+      "severity": "block",
+      "needs": [
+        "geom"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "KEYWAY 2026-08",
+        "date": "2026-08",
+        "what": "no recorded failure: the generator samples 41 cuts over 67.9 mm of travel and refuses a wedge under 1.8 mm, line 245; trapezoids replaced triangles, which pin the ratio to the rails (knowledge/designs/keyway.md 5.3)",
+        "knowledge": "knowledge:designs/keyway#53-graded-wedge-slider-with-top-copper-wiper",
+        "evidence": "reference/copper/keyway/legacy/gen_keyway.py"
+      },
+      "status": "entered",
+      "enteredBy": "M05-T14",
+      "pending": "M05"
+    },
+    {
+      "id": "CHK-NET-34",
+      "version": "1.0.0",
+      "title": "a spacer window over a force zone exposes more than 15 mm2 of each comb",
+      "appliesTo": {
+        "level": "sheet"
+      },
+      "severity": "block",
+      "needs": [
+        "geom"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "KEYWAY 2026-08",
+        "date": "2026-08",
+        "what": "no recorded failure: the lower spacer's windows let the Velostat tent onto both combs; the generator gates each at 15 mm2, line 274; 197 and 247 mm2 per zone in the rerun",
+        "knowledge": "knowledge:designs/keyway#51-interdigitated-force-comb-four-zones",
+        "evidence": "reference/copper/keyway/legacy/gen_keyway.py"
+      },
+      "status": "entered",
+      "enteredBy": "M05-T14",
+      "pending": "M05"
+    },
+    {
+      "id": "CHK-NET-35",
+      "version": "1.0.0",
+      "title": "the top wiper lands on its collector: film 1.5 mm off the collector, tail over 8 mm2, holding slot over the film for more than 99.5 percent",
+      "appliesTo": {
+        "level": "sheet"
+      },
+      "severity": "block",
+      "needs": [
+        "geom"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "KEYWAY 2026-08",
+        "date": "2026-08",
+        "what": "no recorded failure: the wiper trick folds the top copper onto the SC pad past the spacer, lines 277 to 284; 2.70 mm clear, 34.8 mm2 landed, the slot fully over the film in the rerun",
+        "knowledge": "knowledge:designs/keyway#53-graded-wedge-slider-with-top-copper-wiper",
+        "evidence": "reference/copper/keyway/legacy/gen_keyway.py"
+      },
+      "status": "entered",
+      "enteredBy": "M05-T14",
+      "pending": "M05"
+    },
+    {
+      "id": "CHK-NET-36",
+      "version": "1.0.0",
+      "title": "every sensor film lies inside the outline keepout",
+      "appliesTo": {
+        "level": "sheet"
+      },
+      "severity": "block",
+      "needs": [
+        "geom"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "KEYWAY 2026-08",
+        "date": "2026-08",
+        "what": "no recorded failure: the generator holds the Velostat inside the 1.0 mm keepout of the shared outline, line 285",
+        "knowledge": "knowledge:designs/keyway#55-material-stack",
+        "evidence": "reference/copper/keyway/legacy/gen_keyway.py"
+      },
+      "status": "entered",
+      "enteredBy": "M05-T14",
+      "pending": "M05"
+    },
+    {
+      "id": "CHK-NET-37",
+      "version": "1.0.0",
+      "title": "each spacer sheet is one connected piece",
+      "appliesTo": {
+        "level": "sheet"
+      },
+      "severity": "block",
+      "needs": [
+        "geom"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "KEYWAY 2026-08",
+        "date": "2026-08",
+        "what": "no recorded failure: both cardstock spacers must lift and place whole, line 286; a window that eats the frame would split a spacer",
+        "knowledge": "knowledge:designs/keyway#55-material-stack",
+        "evidence": "reference/copper/keyway/legacy/gen_keyway.py"
+      },
+      "status": "entered",
+      "enteredBy": "M05-T14",
+      "pending": "M05"
+    },
+    {
+      "id": "CHK-NET-38",
+      "version": "1.0.0",
+      "title": "every layer document of a cut stack reports one width and height",
+      "appliesTo": {
+        "level": "artifact"
+      },
+      "severity": "block",
+      "needs": [
+        "geom"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "KEYWAY 2026-08",
+        "date": "2026-08",
+        "what": "the generator ran this gate after writing every file and after its refusal check, so it could never block emission (lines 382 to 383, knowledge/designs/keyway.md 7.2); 8 layers at 110 x 174 mm in the rerun",
+        "knowledge": "knowledge:designs/keyway#7-known-limits-and-failure-lessons",
+        "evidence": "reference/copper/keyway/legacy/gen_keyway.py"
+      },
+      "status": "entered",
+      "enteredBy": "M05-T14",
+      "pending": "M05"
+    },
+    {
+      "id": "CHK-NET-40",
+      "version": "1.0.0",
+      "title": "every electrode plate is solid copper, at least its declared area, and as many as declared",
+      "appliesTo": {
+        "level": "sheet"
+      },
+      "severity": "block",
+      "needs": [
+        "geom"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "VERNIER 2026-08",
+        "date": "2026-08",
+        "what": "no recorded failure: an inset box pokes its corners outside a rounded plate and fails a good one, so the gate tests the plate inset by 0.6 mm (pad_rr.buffer(-0.6), lines 232 to 234); SPLINE, TESSERA, FRET and STAVE floor the smallest plate at 120, 400, 450 and 600 mm2, a fingertip being about 100",
+        "knowledge": "knowledge:designs/vernier#51-capacitive-plates-six-buttons",
+        "evidence": "reference/copper/vernier/legacy/gen_vernier.py"
+      },
+      "status": "entered",
+      "enteredBy": "M05-T17",
+      "pending": "M05"
+    },
+    {
+      "id": "CHK-NET-41",
+      "version": "1.0.0",
+      "title": "slider travel and arc sweep inside the board's declared range",
+      "appliesTo": {
+        "level": "sheet"
+      },
+      "severity": "block",
+      "needs": [
+        "geom"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "VERNIER 2026-08",
+        "date": "2026-08",
+        "what": "no recorded failure: the wedge pair slider travel must exceed 60 mm (lines 255 to 256); QUADRANT, SPLINE, TESSERA and FRET gate their arc sweep at over 100, 40 to 100, 25 to 70 and over 70 mm",
+        "knowledge": "knowledge:designs/vernier#54-wedge-pair-sliders-three-straight-bands",
+        "evidence": "reference/copper/vernier/legacy/gen_vernier.py"
+      },
+      "status": "entered",
+      "enteredBy": "M05-T17",
+      "pending": "M05"
+    },
+    {
+      "id": "CHK-NET-42",
+      "version": "1.0.0",
+      "title": "declared zones stay apart: sliders in their band, routing channels and the wiring zone clear of the keys",
+      "appliesTo": {
+        "level": "sheet"
+      },
+      "severity": "block",
+      "needs": [
+        "geom"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "TESSERA 2026-08",
+        "date": "2026-08",
+        "what": "no recorded failure: the five channel strips and the slider band stay clear of every tile and the arc stays inside its band (lines 292 to 295, 329 to 330 and 334 to 336); STAVE ends its wiring zone before the keys (gen_stave.py lines 255 to 256)",
+        "knowledge": "knowledge:designs/tessera#51-voronoi-tiles-with-snapped-channels",
+        "evidence": "reference/copper/tessera/legacy/gen_tessera.py"
+      },
+      "status": "entered",
+      "enteredBy": "M05-T17",
+      "pending": "M05"
+    },
+    {
+      "id": "CHK-NET-43",
+      "version": "1.0.0",
+      "title": "channel count equals the controller budget (one MPR121 is 12, two are 24)",
+      "appliesTo": {
+        "level": "sheet"
+      },
+      "severity": "block",
+      "needs": [
+        "geom"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "VERNIER 2026-08",
+        "date": "2026-08",
+        "what": "no recorded failure: exactly 12 terminals and 12 nets, one MPR121 or 12 ESP32-S3 touch pins (line 268); SPLINE, TESSERA and FRET assert 18, 18 and 21 of the 24 channels of two MPR121 on one bus",
+        "knowledge": "knowledge:kernels/copper-routing#channel-budgets",
+        "evidence": "reference/copper/vernier/legacy/gen_vernier.py"
+      },
+      "status": "entered",
+      "enteredBy": "M05-T17",
+      "pending": "M05"
+    },
+    {
+      "id": "CHK-NET-44",
+      "version": "1.0.0",
+      "title": "isomorphic key lattice: one interval set per physical move, no duplicate notes, range and diatonic coverage",
+      "appliesTo": {
+        "level": "sheet"
+      },
+      "severity": "block",
+      "needs": [
+        "geom"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "FRET 2026-08",
+        "date": "2026-08",
+        "what": "no recorded failure: every physically adjacent key pair is walked and the intervals asserted {2} up a column, {7} up-right and {5} down-right, with no duplicated note, at least 24 semitones of range and 6 of the 7 diatonic degrees (lines 318 to 339), the best verification in the family",
+        "knowledge": "knowledge:designs/fret#53-isomorphic-interval-gates",
+        "evidence": "reference/copper/fret/legacy/gen_fret.py"
+      },
+      "status": "entered",
+      "enteredBy": "M05-T17",
+      "pending": "M05"
+    },
+    {
+      "id": "CHK-NET-45",
+      "version": "1.0.0",
+      "title": "board width fits the stock width with margin",
+      "appliesTo": {
+        "level": "sheet"
+      },
+      "severity": "block",
+      "needs": [
+        "geom"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "STAVE 2026-08",
+        "date": "2026-08",
+        "what": "no recorded failure: the tape gate runs first so a wider board fails loudly, 96 mm in 101.6 mm tape with 4 mm to spare (lines 201 to 203)",
+        "knowledge": "knowledge:designs/stave#54-tape-width-gate-first-in-the-list",
+        "evidence": "reference/copper/stave/legacy/gen_stave.py"
+      },
+      "status": "entered",
+      "enteredBy": "M05-T17",
+      "pending": "M05"
+    },
+    {
+      "id": "CHK-BRD-07",
+      "version": "1.0.0",
+      "title": "routing complete: zero unrouted, every vertex inside outline, routed width at least declared",
+      "appliesTo": {
+        "level": "project"
+      },
+      "severity": "block",
+      "needs": [
+        "board"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "AUGER 2026-07",
+        "date": "2026-07",
+        "what": "58 nets unroutable and 1178 of 1322 segments at 0.1 mm",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-boards-tools/auger"
+      },
+      "status": "entered",
+      "enteredBy": "M04-T12"
+    },
+    {
+      "id": "CHK-BRD-08",
+      "version": "1.0.0",
+      "title": "netlist pin completeness on two-terminal parts",
+      "appliesTo": {
+        "level": "project"
+      },
+      "severity": "block",
+      "needs": [
+        "board"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "ARMATURE 2026-08",
+        "date": "2026-08",
+        "what": "ARMATURE R1 would have failed four of the five netlist lints: pin completeness, nodes without components and single-node nets, duplicate supplier codes, port voltage",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-copper-pcb-a.md"
+      },
+      "status": "entered",
+      "enteredBy": "M04-T12"
+    },
+    {
+      "id": "CHK-BRD-09",
+      "version": "1.0.0",
+      "title": "no node without a component; no single-node net",
+      "appliesTo": {
+        "level": "project"
+      },
+      "severity": "block",
+      "needs": [
+        "board"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "ARMATURE 2026-08",
+        "date": "2026-08",
+        "what": "ARMATURE R1 would have failed four of the five netlist lints: pin completeness, nodes without components and single-node nets, duplicate supplier codes, port voltage",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-copper-pcb-a.md"
+      },
+      "status": "entered",
+      "enteredBy": "M04-T12"
+    },
+    {
+      "id": "CHK-BRD-10",
+      "version": "1.0.0",
+      "title": "no duplicate supplier code on different values",
+      "appliesTo": {
+        "level": "project"
+      },
+      "severity": "block",
+      "needs": [
+        "board"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "ARMATURE 2026-08",
+        "date": "2026-08",
+        "what": "ARMATURE R1 would have failed four of the five netlist lints: pin completeness, nodes without components and single-node nets, duplicate supplier codes, port voltage",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-copper-pcb-a.md"
+      },
+      "status": "entered",
+      "enteredBy": "M04-T12",
+      "pending": "M08"
+    },
+    {
+      "id": "CHK-BRD-11",
+      "version": "1.0.0",
+      "title": "port-type voltage matches the rail (Qwiic on a 5 V rail fails)",
+      "appliesTo": {
+        "level": "project"
+      },
+      "severity": "block",
+      "needs": [
+        "board"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "ARMATURE 2026-08",
+        "date": "2026-08",
+        "what": "ARMATURE R1 would have failed four of the five netlist lints: pin completeness, nodes without components and single-node nets, duplicate supplier codes, port voltage",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-copper-pcb-a.md"
+      },
+      "status": "entered",
+      "enteredBy": "M04-T12",
+      "pending": "M08"
+    },
+    {
+      "id": "CHK-BRD-12",
+      "version": "1.0.0",
+      "title": "regulator feedback divider sets the declared output from the part's Vref",
+      "appliesTo": {
+        "level": "project"
+      },
+      "severity": "block",
+      "needs": [
+        "board"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "GROMMET rev A 2026-07-28",
+        "date": "2026-07-28",
+        "what": "R4 100k over R5 16.9k on the TPS61088 FB against a declared 5.1 V",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-boards-tools/grommet/files (23)/grommet.tsx"
+      },
+      "status": "entered",
+      "enteredBy": "M04-T12",
+      "pending": "M08"
+    },
+    {
+      "id": "CHK-BRD-13",
+      "version": "1.0.0",
+      "title": "no GPIO driven onto a node pulled above VDDIO",
+      "appliesTo": {
+        "level": "project"
+      },
+      "severity": "block",
+      "needs": [
+        "board"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "GROMMET rev A 2026-07-28",
+        "date": "2026-07-28",
+        "what": "Pi GPIO26 drives KILL while R6 100k pulls it to VSYS",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-boards-tools/grommet/files (23)/grommet.tsx"
+      },
+      "status": "entered",
+      "enteredBy": "M04-T12",
+      "pending": "M08"
+    },
+    {
+      "id": "CHK-BRD-14",
+      "version": "1.0.0",
+      "title": "amplifier output connected to its load",
+      "appliesTo": {
+        "level": "project"
+      },
+      "severity": "block",
+      "needs": [
+        "board"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "AUGER 2026-07",
+        "date": "2026-07",
+        "what": "the U8 amplifier output was left unconnected to its load",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-boards-tools/auger"
+      },
+      "status": "entered",
+      "enteredBy": "M04-T12",
+      "pending": "M08"
+    },
+    {
+      "id": "CHK-BRD-15",
+      "version": "1.0.0",
+      "title": "HAT ID EEPROM present or waived; back-power protection when a HAT drives 5 V",
+      "appliesTo": {
+        "level": "project"
+      },
+      "severity": "block",
+      "needs": [
+        "board"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "LUG 2026-07",
+        "date": "2026-07",
+        "what": "LUG carries no HAT ID EEPROM and no back-power protection between the Pi USB 5 V and the boost output on header pins 2 and 4",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-copper-pcb-b.md"
+      },
+      "status": "entered",
+      "enteredBy": "M04-T12",
+      "pending": "M08"
+    },
+    {
+      "id": "CHK-BRD-16",
+      "version": "1.0.0",
+      "title": "polarity mark on every polarised part",
+      "appliesTo": {
+        "level": "artifact"
+      },
+      "severity": "block",
+      "needs": [
+        "board"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "SHIM 2026-08-11",
+        "date": "2026-08-11",
+        "what": "the guide dropped the polarity marks D2.K and C2.+",
+        "evidence": "knowledge/designs/shim.md"
+      },
+      "status": "entered",
+      "enteredBy": "M04-T12",
+      "pending": "M08"
+    },
+    {
+      "id": "CHK-BRD-17",
+      "version": "1.0.0",
+      "title": "silk clearance from exact font metrics",
+      "appliesTo": {
+        "level": "artifact"
+      },
+      "severity": "block",
+      "needs": [
+        "board"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "SHUNT 2026-08",
+        "date": "2026-08",
+        "what": "estimated silk widths 15 percent narrow hid 3 collisions",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-copper-pcb-a.md"
+      },
+      "status": "entered",
+      "enteredBy": "M04-T12",
+      "pending": "M08"
+    },
+    {
+      "id": "CHK-BRD-18",
+      "version": "1.0.0",
+      "title": "silk reparse distinguishes the mirror image",
+      "appliesTo": {
+        "level": "artifact"
+      },
+      "severity": "block",
+      "needs": [
+        "board"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "SHUNT 2026-08",
+        "date": "2026-08",
+        "what": "the silk reparse gate requires the mirrored text to match under 98 percent, so the test can see a mirror",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-copper-pcb-a.md"
+      },
+      "status": "entered",
+      "enteredBy": "M04-T12",
+      "pending": "M08"
+    },
+    {
+      "id": "CHK-BRD-19",
+      "version": "1.0.0",
+      "title": "lead landing through an independently derived transform",
+      "appliesTo": {
+        "level": "assembly"
+      },
+      "severity": "block",
+      "needs": [
+        "board"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "SHUNT 2026-08",
+        "date": "2026-08",
+        "what": "check3d_shunt.mjs proves 55 lead landings at 0.000 mm through an independently derived transform",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-copper-pcb-a.md"
+      },
+      "status": "entered",
+      "enteredBy": "M04-T12"
+    },
+    {
+      "id": "CHK-BRD-20",
+      "version": "1.0.0",
+      "title": "solder jumpers at their declared default join no two fed supply nets",
+      "appliesTo": {
+        "level": "project"
+      },
+      "severity": "block",
+      "needs": [
+        "board"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "TRUNNION rev A 2026-08-01",
+        "date": "2026-08-01",
+        "what": "SJ1 normally closed joins the SuperMini 5 V pin to the V5 rail that J5 feeds: \"Never feed J5 while the SJ1 bridge is intact and USB is plugged in\"; SPINDLE JP1 defaults open for the same hazard (D-088)",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-copper-pcb-b.md"
+      },
+      "status": "entered",
+      "enteredBy": "M08-T12"
+    },
+    {
+      "id": "CHK-BRD-22",
+      "version": "1.0.0",
+      "title": "KiCad board reads back to the record by kicadts",
+      "appliesTo": {
+        "level": "artifact"
+      },
+      "severity": "block",
+      "needs": [
+        "board"
+      ],
+      "legalKind": "set",
+      "origin": {
+        "project": "SPINDLE R1 2026-08-01",
+        "date": "2026-08-01",
+        "what": "kicad_out.py wrote a KiCad 7 board whose README readback (kiutils) gave 55 of 55 pads, offsets exact, 15 vias and 19 nets one island each; the readback script was never harvested (D-180) and kiutils is GPL-3.0 (D-090)",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/spindle/files/README.md"
+      },
+      "status": "entered",
+      "enteredBy": "M08-T08"
+    },
+    {
+      "id": "CHK-BRD-21",
+      "version": "1.0.0",
+      "title": "one island per net; no copper joins two nets unless declared a bridge",
+      "appliesTo": {
+        "level": "project"
+      },
+      "severity": "block",
+      "needs": [
+        "board"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "SPINDLE R1 2026-08-01",
+        "date": "2026-08-01",
+        "what": "the shipped board shorts 5V to GND on B.Cu: the 5V bottom trace at y 20.00 (pcb.py lines 184 to 185) runs through the GND vias at x 9.80, 16.00, 30.60 and 36.20 (lines 197 to 200), one bottom piece of 34.15 mm2 (computed, M08-T07 reparse); the legacy DRC unioned the uncleared pour and no rule read bottom copper between nets",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/spindle/outputs/spindle/pcb.py"
+      },
+      "status": "entered",
+      "enteredBy": "M08-T12"
+    },
+    {
+      "id": "CHK-ASM-10",
+      "version": "1.0.1",
+      "title": "insertion proven by motion search",
+      "appliesTo": {
+        "level": "assembly",
+        "assertions": [
+          "insertable"
+        ]
+      },
+      "severity": "block",
+      "needs": [
+        "sim"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "COTTER 2026-09",
+        "date": "2026-09",
+        "what": "hook_fit.py proves each hook inserts by a best-first motion search over 7 hole and board pairs; a sharp bend traps",
+        "evidence": "designs/cotter/legacy/tools/hook_fit.py",
+        "also": [
+          {
+            "project": "BUCK 2026-10-06",
+            "date": "2026-10-06",
+            "what": "the jaw is inserted along a 135 deg path checked by intersection volume at 1.5, 4, 8, 14 and 22 mm of travel; every BUCK check reads 0",
+            "numbers": {
+              "qualifier": "measured 2026-10-06 on the buck and stag presets (CHECKS.md 7.7)"
+            },
+            "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/buck/files/src/engine.js"
+          }
+        ]
+      },
+      "status": "entered",
+      "enteredBy": "M04-T12"
+    },
+    {
+      "id": "CHK-ASM-11",
+      "version": "1.0.1",
+      "title": "every pair of bodies clear in every declared pose, except declared touch pairs under their squeeze ceiling; volumes reported",
+      "appliesTo": {
+        "level": "assembly"
+      },
+      "severity": "block",
+      "needs": [
+        "mesh",
+        "sim"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "OGEE R16-P 2026-08",
+        "date": "2026-08",
+        "what": "audit_print.py reads a boolean that throws as 0 mm3, so a crashed intersection reads as clear",
+        "evidence": "designs/ogee16/legacy/source/audit_print.py",
+        "also": [
+          {
+            "project": "BUCK 2026-10-06",
+            "date": "2026-10-06",
+            "what": "the jaw is checked against head, mount and servo at 0, 50 and 100 percent of its 22 deg swing with volumes reported; every BUCK check reads 0 mm3",
+            "numbers": {
+              "qualifier": "measured 2026-10-06 on the buck and stag presets (CHECKS.md 7.7)"
+            },
+            "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/buck/files/src/engine.js"
+          }
+        ]
+      },
+      "status": "entered",
+      "enteredBy": "M04-T12"
+    },
+    {
+      "id": "CHK-ART-01",
+      "version": "1.0.0",
+      "title": "export completeness: unique resolved object names, no undefined, null or NaN in part names; STL entry count equals object count",
+      "appliesTo": {
+        "level": "artifact"
+      },
+      "severity": "block",
+      "needs": [
+        "3mf"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "TENON 2026-09",
+        "date": "2026-09",
+        "what": "five objects named tenon-undefined and four STLs lost to one overwritten name",
+        "evidence": "tools/corpus/3mf/known-bad/tenon-undefined.3mf"
+      },
+      "status": "entered",
+      "enteredBy": "M04-T12"
+    },
+    {
+      "id": "CHK-ART-02",
+      "version": "1.0.0",
+      "title": "an artifact rebuilds from its shipped source to the same mesh hash",
+      "appliesTo": {
+        "level": "artifact"
+      },
+      "severity": "block",
+      "needs": [
+        "3mf",
+        "mesh"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "NACELLE 2026-08-02",
+        "date": "2026-08-02",
+        "what": "the SCAD builds the Aug 2 console body 200 x 230 x 73 while the shipped STL is the Aug 3 CRT body 170 x 233 x 193.2",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-cases/nacelle/nacelle_viewer.html"
+      },
+      "status": "entered",
+      "enteredBy": "M04-T12"
+    },
+    {
+      "id": "CHK-ART-03",
+      "version": "1.0.0",
+      "title": "derived artifacts match their generator (pin maps, BUILD tables, sim payloads)",
+      "appliesTo": {
+        "level": "artifact"
+      },
+      "severity": "block",
+      "needs": [],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "SPINDLE 2026-08",
+        "date": "2026-08",
+        "what": "the pin map labels GPIO21 while the code drives GPIO20",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-copper-pcb-b.md"
+      },
+      "status": "entered",
+      "enteredBy": "M04-T12",
+      "pending": "M09"
+    },
+    {
+      "id": "CHK-ART-04",
+      "version": "1.0.0",
+      "title": "every parameter a bench echoes equals its source parameter",
+      "appliesTo": {
+        "level": "page"
+      },
+      "severity": "block",
+      "needs": [],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "SLUG 2026-08",
+        "date": "2026-08",
+        "what": "tie_r2 is 52 in slug.scad and 70 in params.json and the slug.html P table",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-robots-b.md"
+      },
+      "status": "entered",
+      "enteredBy": "M04-T12",
+      "pending": "M09"
+    },
+    {
+      "id": "CHK-ART-05",
+      "version": "1.0.0",
+      "title": "QR module at least 1.9 mm in every artifact that carries a code",
+      "appliesTo": {
+        "level": "artifact"
+      },
+      "severity": "block",
+      "needs": [
+        "inlay"
+      ],
+      "legalKind": "interval",
+      "origin": {
+        "project": "COTTER 2026-09",
+        "date": "2026-09",
+        "what": "the QR tile and kit cards warn per module when a QR module is under 1.9 mm",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/latest/cotter-sparger.md"
+      },
+      "status": "entered",
+      "enteredBy": "M04-T12",
+      "pending": "M09"
+    },
+    {
+      "id": "CHK-ART-06",
+      "version": "1.0.0",
+      "title": "a printed QR is raised or flush in a contrasting slot, never debossed in one colour",
+      "appliesTo": {
+        "level": "artifact"
+      },
+      "severity": "block",
+      "needs": [
+        "inlay"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "COTTER 2026-09",
+        "date": "2026-09",
+        "what": "mono kits deboss the QR 0.6 mm in one colour and the per-module warning says it will not scan",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/latest/cotter-sparger.md"
+      },
+      "status": "entered",
+      "enteredBy": "M04-T12",
+      "pending": "M09"
+    },
+    {
+      "id": "CHK-ART-07",
+      "version": "1.0.0",
+      "title": "no placeholder URL in card or metadata text: no example.com, example.org, localhost, or a bare home page where a design page is declared",
+      "appliesTo": {
+        "level": "artifact"
+      },
+      "severity": "block",
+      "needs": [],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "COTTER 2026-09",
+        "date": "2026-09",
+        "what": "a waiver card still pointed at the home page",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/latest/cotter-sparger.md"
+      },
+      "status": "entered",
+      "enteredBy": "M04-T12"
+    },
+    {
+      "id": "CHK-3MF-08",
+      "version": "1.0.0",
+      "title": "no object that holds a conductor body or shares a face with one has interlocking_beam on, whether set per object or inherited from the project",
+      "appliesTo": {
+        "level": "artifact"
+      },
+      "severity": "block",
+      "needs": [
+        "3mf"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "research 2026-10",
+        "date": "2026-10",
+        "what": "Orca, Prusa and Cura generate interlocking beams where two filaments meet and interleave them up to interlocking_depth cells deep, which eats a conductor's cross section; no printed failure on record, loss inferred (research/3dp-landscape.md section 3 and section 11 idea 8)",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/research/3dp-landscape.md"
+      },
+      "status": "entered",
+      "enteredBy": "M05-T20"
+    },
+    {
+      "id": "CHK-3MF-10",
+      "version": "1.0.0",
+      "title": "adaptive_pressure_advance_model holds no literal backslash n; the value is a real multi-line string or a list",
+      "appliesTo": {
+        "level": "artifact"
+      },
+      "severity": "block",
+      "needs": [
+        "3mf"
+      ],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "CASK 2026-09-05",
+        "date": "2026-09-05",
+        "what": "every slot of adaptive_pressure_advance_model held a literal backslash n where the template has a line break",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-cases/cask/cask_cap_hackbuild.3mf"
+      },
+      "status": "entered",
+      "enteredBy": "M04-T12"
+    },
+    {
+      "id": "CHK-DEV-01",
+      "version": "1.0.0",
+      "title": "CLASP payload at most 65439 bytes, or 65535 minus the encoded PUBLISH overhead of the actual address",
+      "appliesTo": {
+        "level": "source"
+      },
+      "severity": "block",
+      "needs": [],
+      "legalKind": "interval",
+      "origin": {
+        "project": "LOUVER 2026-09-14",
+        "date": "2026-09-14",
+        "what": "LOUVER.ino line 134 enforces 65439 bytes, 65535 minus 96; 65535 minus 61 holds only for a short address",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/louver-clasp/outputs/LOUVER/LOUVER.ino"
+      },
+      "status": "entered",
+      "enteredBy": "M04-T12",
+      "pending": "M13"
+    },
+    {
+      "id": "CHK-DEV-02",
+      "version": "1.0.0",
+      "title": "one-shot signals never declared as Param",
+      "appliesTo": {
+        "level": "source"
+      },
+      "severity": "block",
+      "needs": [],
+      "legalKind": "boolean",
+      "origin": {
+        "project": "LOUVER, SPROCKET 2026-08",
+        "date": "2026-08",
+        "what": "a one-shot declared as a Param is replayed from the SNAPSHOT, so a rebooting camera acts on a snap command from an hour ago",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-tools-devices.md"
+      },
+      "status": "entered",
+      "enteredBy": "M04-T12",
+      "pending": "M13"
+    },
+    {
+      "id": "CHK-DEV-03",
+      "version": "1.0.0",
+      "title": "heartbeat cadence under half the dead-man time: 0 to deadmanMs / 2, and heartbeatMs at least 300 (the washer.html floor), so a deadmanMs under 600 fails at check time (never an arm refusal)",
+      "appliesTo": {
+        "level": "source"
+      },
+      "severity": "block",
+      "needs": [],
+      "legalKind": "interval",
+      "origin": {
+        "project": "SPROCKET 2026-08-02",
+        "date": "2026-08-02",
+        "what": "the page sends a heartbeat every 400 ms so the 1200 ms dead-man stays fed while the chassis idles",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-robots-b.md"
+      },
+      "status": "entered",
+      "enteredBy": "M04-T12",
+      "pending": "M13"
+    }
+  ],
+  "candidates": [
+    {
+      "title": "single body per part",
+      "origin": {
+        "project": "DAVIT R4 2026-08-02",
+        "date": "2026-08-02",
+        "what": "items 1 and 9: 4 detached gear teeth and a 22 mm3 splinter body",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-robots-machines/unzipped/davit_r4/README_R4.md"
+      },
+      "waitsOn": "a body count rule; overlaps CHK-PRT-01 and CHK-SHP-04"
+    },
+    {
+      "title": "minimum load-path section",
+      "origin": {
+        "project": "DAVIT R4 2026-08-02",
+        "date": "2026-08-02",
+        "what": "item 2: fore yoke sections 42.5 to 224 and 54 to 299 mm2",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-robots-machines/unzipped/davit_r4/README_R4.md"
+      },
+      "waitsOn": "a limit source"
+    },
+    {
+      "title": "minimum wall to a pocket",
+      "origin": {
+        "project": "DAVIT R4 2026-08-02",
+        "date": "2026-08-02",
+        "what": "item 4: 0.95 mm walls to the servo pockets, 2.65 mm in R4",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-robots-machines/unzipped/davit_r4/README_R4.md"
+      },
+      "waitsOn": "a limit source"
+    },
+    {
+      "title": "no sealed void",
+      "origin": {
+        "project": "DAVIT R4 2026-08-02",
+        "date": "2026-08-02",
+        "what": "item 6: a sealed 2.24 cm3 internal box in the palm",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-robots-machines/unzipped/davit_r4/README_R4.md"
+      },
+      "waitsOn": "a rule written in CHECKS.md"
+    }
+  ]
+}

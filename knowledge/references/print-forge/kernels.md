@@ -1,0 +1,147 @@
+# Kernels: how the geometry gets made
+
+Three routes, each proven on shipped work. Pick by what the object is, not by taste.
+Every route ends in the same contract: per colour parts that are each strictly manifold,
+never overlap each other, and sum to the solid.
+
+| Route | Best for | Shipped in | Where it lives |
+|---|---|---|---|
+| A. Raster in XY, exact in Z | flat things whose surfaces are ART: coins, tiles, picks, plaques, lids, labels, anything where a canvas paints the colour map | COLLAR, PLINTH, CRESSET, COAMING art zones, the INLAY bench | `assets/rastermesh.js` |
+| B. Constructive prisms | cases, trays, hinges, walls with ports, anything with true vertical faces and holes | COAMING, FEELER, SCABBARD, LOCKET, SLATE | write per project (earcut + prism stack), pattern below |
+| C. 2D regions + solid booleans in python | batch plates, generators driven from the command line, anything with a real font outline or SVG art that should stay vector | challenge coin, SPRUE | `scripts/demo_coin.py` (shapely + manifold3d) |
+
+A and B mix inside one bench: COAMING keeps vector laminae for walls, window rings and
+chamfers and rasters only the art zones, then unions by stacking prisms.
+
+## Route A: label grid slabs (rastermesh.js)
+
+Compose each face on a 2D canvas so text, images and arc text land in the same place with
+zero vector boolean code. Cut the part into Z slabs; each slab is a `Uint8` label grid
+(0 = air, 1..n = filament slot). The mesh of slot S is exactly the set of cell faces where
+S meets a different label, so parts never overlap and sum to the solid by construction.
+
+```js
+const vol = RasterMesh.volume(W, H, px, x0, y0);   // px = mm per cell, cell (0,0) at (x0,y0), rows run y UP
+vol.addSlab(backLabels, 0, inlay)                  // bed face art
+   .addSlab(coreLabels, inlay, thk - inlay)        // body + rim only
+   .addSlab(frontLabels, thk - inlay, thk);        // top face art
+vol.fixPinches();                                  // returns cells flipped; warn if > 0.2 percent of the grid
+const meshes = vol.mesh();                         // {slot: {positions, indices, tris}}
+```
+
+What the kernel does and why each step exists:
+
+1. Faces only where labels differ, in all six directions, across slabs too. So the cap
+   between two same slot slabs is not emitted (no coincident internal faces).
+2. Caps merge into greedy rectangles, walls into runs along a row or column and full slab
+   height. Typical 44 mm coin at 8 px/mm: about 120k triangles for three parts.
+3. Conformance: every rectangle edge is walked on the lattice and any vertex of THIS mesh
+   that lies on it is inserted, then the polygon is fanned from its centroid. Without this
+   the parts are hole free but not manifold (COLLAR measured 13k to 30k dangling T junction
+   edges). The centroid fan avoids degenerate triangles that a corner fan produces on
+   collinear edge points.
+4. Pinch repair before meshing: a voxel set that meets itself corner to corner or edge to
+   edge has a non manifold vertex or edge no matter how it is meshed. Every 2x2x2 window
+   (padded with air) must have both the L cells and the not-L cells face connected, for
+   every label L present including air. Violations are healed by flipping one cell
+   (bridge a B cell to L, or dissolve the smaller component). Invisible at grid resolution.
+   `validate_3mf.py` runs a vertex fan check precisely because edge pairing alone passes
+   these.
+5. Slabs are contiguous and exact in Z, so inlay floors and ceilings sit on real layer
+   boundaries. Slab per layer only when an edge profile varies with z (COLLAR's knurl,
+   rope and beaded edges flag `zDep` and force that).
+
+Label grid conventions the helpers assume: row 0 is the BOTTOM (y up), matching the
+mesh. Canvas rows run down, so flip on stamp (`q = ((H - 1 - j) * W + i) * 4 + 3`). Getting
+this wrong prints text upside down and the preview will agree with the mesh, so you will
+not see it; the INLAY bench had exactly that bug once.
+
+Hygiene helpers (`RasterMesh.dilate / open / despeckle / gap / mirrorX`) are in
+art-engine.md.
+
+Resolution: COLLAR default grid 512 across the coin, INLAY bench 8 px/mm (about a second
+per build). Rebuilds over 2.5 s should warn and suggest a lower grid. Keep a working grid
+for interaction and an export grid (PLINTH: 640 interactive, 1024 idle refine, 1152
+export).
+
+Edge profiles (COLLAR): `r(theta, z)` functions in an EDGES registry sampled into an
+8192 entry angular LUT per slab so the per pixel loop is a table read. Reeded, milled V,
+square groove, open reed, diamond knurl, rope, beaded, scalloped, oblique line, wave,
+petal. Blank shapes as implicit functions resolved by bisection and normalised so the
+widest point equals the nominal size; the rim band follows the outline (base LUT minus
+rim width), not a circle.
+
+## Route B: constructive prisms (COAMING / FEELER / SCABBARD / SLATE)
+
+No CSG. A part is a stack of overlapping watertight prisms in one mesh; the slicer
+unions them. Every hole is a hole in an outline. Walls that need apertures are extruded
+in their own plane (px / py prisms, outlines in y,z extruded along x) so ports and vents
+are region holes, never booleans.
+
+Rules earned the hard way:
+
+- Same mesh stacked prisms must overlap 0.01 to 0.02 mm in Z at every interface, or
+  trimesh fuses the coincident rings into 4 face edges and calls it non manifold. COAMING's
+  bezel stack was the offender. Raster boxes inside a prism scheme: a same slot box
+  adjacent along an edge OR at a diagonal (a shared vertical edge once vertices merge)
+  gets 0.012 overlap; body boxes at a zone border bleed 0.03 into the lamina.
+- `dedupe()` must strip consecutive duplicates AND collinear midpoints: earcut skips
+  collinear boundary vertices, so caps T junction against per vertex wall skins.
+- earcut breaks on hole inside hole (window inside a ring band: pass only the band), on
+  holes sharing support lines, and on pinched self touching loops. Glyphs: trace
+  `gridContours` with same cell corner pairing to get multiple positive CCW loops per glyph
+  whose union is the ink (no negative holes), `splitSimple()` any loop visiting a vertex
+  twice, inset each loop 0.022 to 0.038, and give each glyph its own lamina column so
+  earcut never sees more than about three loops at once.
+- Use a full linked list earcut port. Naive ear clipping gets stuck on bridge duplicated
+  vertices and silently doubles cap area. earcut output is raw data indices (divide by
+  dim) and its winding must be normalised by summing signed area.
+- Caps from a bridged triangulation, walls from the ORIGINAL loops, so bridge edges never
+  become geometry (FEELER).
+- Vent and feature holes must be clamped inside the wall outline (drop rows that breach;
+  fall back to one centred slot).
+- `fixWind()` flips any prism whose signed volume is negative. Audit = coordinate keyed
+  edge pairing per prism, run in page via playwright evaluate.
+- three's ExtrudeGeometry uses earcut too: holes that overlap, touch at a tangent point,
+  or cross the outer boundary produce sliver triangles that z-fight across the whole face.
+  Verify by rasterising field triangles against each hole rather than by eye (SCABBARD).
+- Manifold check must require exactly two faces per UNDIRECTED edge. Directed edge
+  balancing passes on coincident faces and trimesh disagrees (FEELER).
+- Hinges and latches: every part loaded along its layers, never across them (SLATE r5).
+  Print in place is traded for zero supports when the hinge would otherwise need them.
+  Pivots outside the case roof nothing; barrel knuckles with 45 degree flats wherever they
+  would overhang; separate pin printed lying on its flat, slit and barbed.
+- Radial budgets (pad pitch, escape lane, disc diameter) solved in ORDER or pads and
+  traces land at different x (FEELER pot). A lane router with a partial order beats
+  hoping.
+
+## Route C: python, shapely 2D + manifold3d (challenge coin, SPRUE)
+
+Regions per colour per Z band in shapely (fonts via fontTools outlines, SVG via
+svgpathtools), `Manifold.extrude(CrossSection)` per band, booleans to cut pockets out of
+the body, then `orca3mf.py`. Fastest way to a batch plate, and the art stays vector until
+the last step.
+
+- Build the shared primitives ONCE and derive every part from them; never simplify parts
+  independently after differencing or the shared boundary drifts and parts overlap
+  (0.59 mm3 in the first demo run).
+- Text kerning around a period: Permanent Marker's k tail overlaps the dot in x, so a
+  vertical cut split fails; find the dot as the smallest outline between the "hack" and
+  "hack." widths and push it plus the tail right by PERIOD_KERN (challenge coin R2). In
+  canvas benches the pipe split with a split gap slider is the same fix.
+- Mirror the bed facing face in X at extrude time, keep the design function returning it
+  as read.
+- Validate every part watertight, zero pairwise intersection volume, parts summing to the
+  solid, 3MF round trip through trimesh and lib3mf. `validate_3mf.py --overlap --solid`.
+
+## Sweep and property tests (any route)
+
+- Perturb every parameter and assert the triangle set changes (SCABBARD's sweep.js). This
+  is how "the parametrics do nothing" gets caught before the user does. Only parameters
+  that are legitimately gated (keychain off, feature disabled) may read dead, and say so.
+- Net checkers for electrical parts (FEELER): union find over polygon overlap plus z
+  intersection; declared taps resolve into nets; `makesContact` is only a claim, anything
+  that must physically touch needs a `fit()` with real numbers.
+- Print audit (SLATE): walk each part layer by layer in print orientation and classify
+  unsupported regions as bridge, ledge or overhang; report the longest run. 8.8 mm was
+  the accepted maximum bridge on PETG.

@@ -1,0 +1,6 @@
+{
+  "commit": false,
+  "access": "public",
+  "baseBranch": "main",
+  "privatePackages": { "version": false, "tag": false }
+}

@@ -1,0 +1,408 @@
+{
+  "note": "Seed of profile. Materials and machines with provenance. materials.json from print-forge is alongside in seed/3mf for the slicer-facing fields.",
+  "materials": [
+    {
+      "id": "pla",
+      "process": [
+        "fdm"
+      ],
+      "creep": "high",
+      "provenance": {
+        "tier": "vendor",
+        "source": "print-forge materials.json"
+      }
+    },
+    {
+      "id": "petg",
+      "process": [
+        "fdm"
+      ],
+      "creep": "low",
+      "processLossAt024": {
+        "holeUnder": 0.25,
+        "outerOver": 0.15
+      },
+      "provenance": {
+        "tier": "measured",
+        "source": "OGEE R16-P PETG pass 2026-08"
+      }
+    },
+    {
+      "id": "tpu95",
+      "process": [
+        "fdm"
+      ],
+      "creep": "low",
+      "provenance": {
+        "tier": "vendor",
+        "source": "print-forge materials.json"
+      }
+    },
+    {
+      "id": "cpla",
+      "process": [
+        "fdm"
+      ],
+      "resistivityOhmCm": 30,
+      "resistivityAnisotropy": {
+        "along": 15,
+        "across": 30,
+        "through": 115
+      },
+      "creep": "high",
+      "provenance": {
+        "tier": "inferred",
+        "source": "Proto-pasta published numbers used as the working value; the spool in the shop is YOUSU, not Proto-pasta. Measure a printed coupon."
+      },
+      "brand": "Yousu conductive PLA"
+    },
+    {
+      "id": "ctpu",
+      "process": [
+        "fdm"
+      ],
+      "resistivityOhmCm": 1500,
+      "creep": "low",
+      "provenance": {
+        "tier": "inferred",
+        "source": "working value across BLOCKS, GIB, TANG R6; the spool is YOUSU, not Eel. GUDGEON measured about 4 kohm per cm on cPLA. Measure a coupon."
+      },
+      "brand": "Yousu conductive TPU"
+    },
+    {
+      "id": "electrifi",
+      "process": [
+        "fdm"
+      ],
+      "resistivityOhmCm": 0.01,
+      "creep": "unknown",
+      "provenance": {
+        "tier": "inferred",
+        "source": "Multi3D marketing; get datasheet"
+      }
+    },
+    {
+      "id": "ply3",
+      "process": [
+        "laser"
+      ],
+      "modulusMPa": 10000,
+      "provenance": {
+        "tier": "inferred",
+        "source": "SLUG 3mm rev"
+      }
+    },
+    {
+      "id": "acrylic3",
+      "process": [
+        "laser"
+      ],
+      "modulusMPa": 3200,
+      "frictionStatic": {
+        "acrylic3": 0.45
+      },
+      "provenance": {
+        "tier": "inferred",
+        "source": "OGEE R12 ramp analysis"
+      }
+    },
+    {
+      "id": "copper-tape",
+      "process": [
+        "vinyl"
+      ],
+      "thicknessMm": 0.07,
+      "provenance": {
+        "tier": "vendor",
+        "source": "KEYWAY"
+      }
+    },
+    {
+      "id": "velostat",
+      "process": [
+        "vinyl"
+      ],
+      "thicknessMm": 0.1,
+      "provenance": {
+        "tier": "vendor",
+        "source": "KEYWAY 4 mil"
+      }
+    },
+    {
+      "id": "petg-click",
+      "process": [
+        "fdm"
+      ],
+      "strainMax": 0.025,
+      "creep": "low",
+      "provenance": {
+        "tier": "measured",
+        "source": "HAFT click spring solver; a 0.6 beam reached 2.7 to 3.3 percent and failed"
+      }
+    }
+  ],
+  "machines": [
+    {
+      "id": "ffc5p",
+      "name": "FlashForge Creator 5 Pro",
+      "process": "fdm",
+      "envelope": [
+        256,
+        256,
+        256
+      ],
+      "nozzle": 0.4,
+      "layerHeights": [
+        0.2,
+        0.24
+      ],
+      "toolheads": 4,
+      "processLoss": {
+        "holeUnder": 0.15,
+        "outerOver": 0.1
+      },
+      "slicer": {
+        "app": "BambuStudio-01.10.01.50",
+        "printer": "Flashforge Creator 5 Pro 0.4 nozzle",
+        "process": "0.24mm Standard @FF C5",
+        "filament": "Generic {TYPE} @FF C5P"
+      },
+      "provenance": {
+        "tier": "measured",
+        "source": "OGEE R16-P fits 2026-08"
+      }
+    },
+    {
+      "id": "centauri",
+      "name": "Elegoo Centauri Carbon",
+      "process": "fdm",
+      "envelope": [
+        256,
+        256,
+        256
+      ],
+      "nozzle": 0.4,
+      "provenance": {
+        "tier": "vendor",
+        "source": "NACELLE"
+      }
+    },
+    {
+      "id": "laser1220",
+      "process": "laser",
+      "envelope": {
+        "sheet": [
+          1220,
+          610
+        ]
+      },
+      "kerf": null,
+      "provenance": {
+        "tier": "inferred",
+        "source": "shop; cut the coupon"
+      }
+    },
+    {
+      "id": "sheet600",
+      "process": "laser",
+      "envelope": {
+        "sheet": [
+          600,
+          400
+        ]
+      },
+      "kerf": null,
+      "provenance": {
+        "tier": "inferred",
+        "source": "SLUG, OGEE sheets"
+      }
+    },
+    {
+      "id": "cricut",
+      "process": "vinyl",
+      "envelope": {
+        "sheet": [
+          101.6,
+          10058
+        ]
+      },
+      "provenance": {
+        "tier": "vendor",
+        "source": "STAVE tape roll"
+      }
+    }
+  ],
+  "fits": [
+    {
+      "class": "SLIDE",
+      "realLo": 0.25,
+      "realHi": 0.4,
+      "drawnHint": [
+        0.5,
+        0.75
+      ],
+      "note": "moves every actuation; hand test raised OGEE to 0.75 drawn"
+    },
+    {
+      "class": "LOCATE",
+      "realLo": 0.0,
+      "realHi": 0.15,
+      "drawnHint": [
+        0.25,
+        0.4
+      ]
+    },
+    {
+      "class": "PRESS",
+      "realLo": -0.15,
+      "realHi": -0.05,
+      "drawnHint": [
+        0.05,
+        0.15
+      ]
+    },
+    {
+      "class": "SNAP",
+      "realLo": -1.3,
+      "realHi": -0.15,
+      "note": "banded on interference; approach angle is the constraint"
+    },
+    {
+      "class": "LAP",
+      "realLo": 0.15,
+      "realHi": 0.15,
+      "note": "laser tab in laser slot"
+    },
+    {
+      "class": "SLIP",
+      "realLo": 0.4,
+      "realHi": 0.4,
+      "note": "laser sliding in laser"
+    },
+    {
+      "class": "PSLIP",
+      "realLo": 0.3,
+      "realHi": 0.55,
+      "note": "cut slot taking a printed part; loss model is neither side's"
+    },
+    {
+      "class": "GUIDE",
+      "realLo": 0.3,
+      "realHi": 0.55,
+      "drawnHint": [
+        0.55,
+        0.8
+      ]
+    },
+    {
+      "class": "PGUIDE",
+      "realLo": 0.3,
+      "realHi": 0.55
+    }
+  ],
+  "constants": [
+    {
+      "id": "28byj48.halfStepsPerRev",
+      "value": 4075.7728,
+      "provenance": {
+        "tier": "measured",
+        "source": "DETENT, SLUG"
+      }
+    },
+    {
+      "id": "sg90.flangeSpan",
+      "value": 32.2,
+      "provenance": {
+        "tier": "vendor",
+        "source": "published; not a measured unit"
+      }
+    },
+    {
+      "id": "sg90.body",
+      "value": [
+        22.8,
+        12.2,
+        22.5
+      ],
+      "provenance": {
+        "tier": "vendor",
+        "source": "published"
+      }
+    },
+    {
+      "id": "sg90.shaftFromEnd",
+      "value": 6.1,
+      "provenance": {
+        "tier": "vendor",
+        "source": "published; flange centred on CASE not shaft"
+      }
+    },
+    {
+      "id": "esp32c3.supermini.padCentres",
+      "value": 8.75,
+      "provenance": {
+        "tier": "verified",
+        "source": "SPINDLE against photo and KiCad symbol"
+      }
+    },
+    {
+      "id": "fingertip.mm",
+      "value": [
+        10,
+        16
+      ],
+      "provenance": {
+        "tier": "inferred",
+        "source": "COFFER"
+      }
+    },
+    {
+      "id": "plate.minArea",
+      "value": 120,
+      "provenance": {
+        "tier": "inferred",
+        "source": "COFFER finger-scale gate"
+      }
+    },
+    {
+      "id": "plate.minInscribed",
+      "value": 4.5,
+      "provenance": {
+        "tier": "inferred",
+        "source": "COFFER"
+      }
+    },
+    {
+      "id": "despeckle.factor",
+      "value": 0.35,
+      "provenance": {
+        "tier": "measured",
+        "source": "SPRUE, the period survives"
+      }
+    },
+    {
+      "id": "livingHinge.maxDegPerRow",
+      "value": 13,
+      "provenance": {
+        "tier": "inferred",
+        "source": "TUMBLER"
+      }
+    },
+    {
+      "id": "buckledBeam.riseOverT",
+      "value": 2.31,
+      "provenance": {
+        "tier": "inferred",
+        "source": "TUMBLER"
+      }
+    },
+    {
+      "id": "capsule.archBelowDiameters",
+      "value": 2.0,
+      "provenance": {
+        "tier": "measured",
+        "source": "SLUG 6 trials"
+      }
+    }
+  ]
+}

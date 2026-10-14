@@ -1,0 +1,17 @@
+{
+  "name": "@hackbuild/spec",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Contracts for hackbuild-fab: Part IR, feature kinds, checks, constraints, profile, chase, commands, errors.",
+  "license": "MIT",
+  "author": "Moheeb Zara <hackbuildvideo@gmail.com>",
+  "sideEffects": false,
+  "exports": {
+    ".": "./index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run --root .. spec/test"
+  }
+}

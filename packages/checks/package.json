@@ -1,0 +1,41 @@
+{
+  "name": "@hackbuild/checks",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "author": "Moheeb Zara <hackbuildvideo@gmail.com>",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./voice": {
+      "types": "./voice/rules.d.mts",
+      "import": "./voice/rules.mjs"
+    }
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "pretest": "tsc -b",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@hackbuild/3mf": "0.0.0",
+    "@hackbuild/board": "0.0.0",
+    "@hackbuild/catalog": "0.0.0",
+    "@hackbuild/circuit": "0.0.0",
+    "@hackbuild/constraints": "0.0.0",
+    "@hackbuild/copper": "0.0.0",
+    "@hackbuild/geom": "0.0.0",
+    "@hackbuild/inlay": "0.0.0",
+    "@hackbuild/mesh": "0.0.0",
+    "@hackbuild/profile": "0.0.0",
+    "@hackbuild/sim": "0.0.0",
+    "@hackbuild/spec": "0.1.0",
+    "jszip": "3.10.1"
+  },
+  "devDependencies": {
+    "@hackbuild/motion": "0.0.0"
+  }
+}

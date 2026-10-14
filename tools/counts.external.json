@@ -1,0 +1,133 @@
+[
+  {
+    "key": "handoff.knowledge",
+    "label": "handoff knowledge files",
+    "value": "26 files, 36,223 words",
+    "path": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/plan-to-refine/handoff/hbf/knowledge",
+    "method": "`cat hbf/knowledge/*.md hbf/knowledge/*/*.md | wc -w`, after the M-1-T00 step 0 restore (the edited worked-sessions.md gave 36,451)",
+    "date": "2026-10-04"
+  },
+  {
+    "key": "handoff.references.words",
+    "label": "handoff reference words",
+    "value": "40,049",
+    "path": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/plan-to-refine/handoff/hbf/seed/references",
+    "method": "`cat hbf/seed/references/*.md hbf/seed/references/*/*.md | wc -w`",
+    "date": "2026-10-04"
+  },
+  {
+    "key": "handoff.scaffold.files",
+    "label": "handoff scaffold files",
+    "value": "117",
+    "path": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/plan-to-refine/handoff/hbf/scaffold",
+    "method": "`find hbf/scaffold -type f | wc -l`",
+    "date": "2026-10-04"
+  },
+  {
+    "key": "handoff.spec.commands",
+    "label": "commands in handoff `spec/chase.ts`",
+    "value": "28",
+    "path": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/plan-to-refine/handoff/hbf/spec/chase.ts",
+    "method": "members of `interface Commands` in hbf/spec/chase.ts (plan-deltas.md 1.4)",
+    "date": "2026-10-04"
+  },
+  {
+    "key": "pip.noteElements",
+    "label": "`.note` elements in pip.html",
+    "value": "16",
+    "path": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/pip.html",
+    "method": "`grep -o 'class=\"note\"' x/pip-controller/pip.html | wc -l`",
+    "date": "2026-10-04"
+  },
+  {
+    "key": "davit.pairsPerPipe",
+    "label": "DAVIT pairs per pipe",
+    "value": "29 arm pairs plus 1 hub pair",
+    "note": "27 in-arm, 2 base to arm (base|crank and base|std_servo#0); the hub pair is base|mount",
+    "path": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/davit/outputs/davit.html",
+    "method": "JSON array after `\"pairs\":[` in corpus/benches/davit/outputs/davit.html, plus base|mount per pipe (verified-claims.md C6 row 78)",
+    "date": "2026-10-04"
+  },
+  {
+    "key": "sprue.filamentKeys",
+    "label": "SPRUE per-filament keys",
+    "value": "21",
+    "note": "24 keys in all with version and two preset names",
+    "path": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/sprue/outputs/sprue/sprue.py",
+    "method": "keys on sprue.py lines 748 to 772 less version, printer_settings_id and print_settings_id (verified-claims.md C2 row 29)",
+    "date": "2026-10-04"
+  },
+  {
+    "key": "slug.chkSites",
+    "label": "SLUG `chk()` call sites",
+    "value": "45",
+    "path": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/slug/outputs/slug/audit.py",
+    "method": "Python AST count of `chk(...)` calls in corpus/benches/slug/outputs/slug/audit.py (`grep -c` gives 46 with the definition)",
+    "date": "2026-10-04"
+  },
+  {
+    "key": "brand.fe0386Folders",
+    "label": "folders containing #FE0386",
+    "value": "32",
+    "path": "/Users/obsidian/Projects/hackbuild/fab-work-directory",
+    "method": "in corpus: `grep -rl 'FE0386' benches | cut -d/ -f2 | sort -u | wc -l`",
+    "date": "2026-10-04"
+  },
+  {
+    "key": "hackbuildUi.hbClasses",
+    "label": "hackbuild-ui 0.2.0 `.hb-` classes",
+    "value": "161",
+    "path": "/Users/obsidian/Projects/hackbuild/hackbuild-bench/node_modules/@virgilvox/hackbuild-ui",
+    "method": "`grep -o '\\.hb-[a-zA-Z0-9_-]*' dist/styles/hackbuild.css | sort -u | wc -l` in @virgilvox/hackbuild-ui 0.2.0 (repos/hackbuild-bench/node_modules)",
+    "date": "2026-10-04"
+  },
+  {
+    "key": "gold.filamentKeys",
+    "label": "gold filament keys",
+    "value": "127; 17 differ per slot",
+    "note": "by COLLAR's split (collar.html:1745, 99 verbatim plus 28 set in projectSettings) 9 verbatim keys differ; by the seed's 29-key computed list (hbf/seed/3mf/filament_template.json), 98 plus 29 with 8 differing",
+    "path": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/collar-coin/uploads/hackbuild-coin-nfc.3mf",
+    "method": "gold `project_settings.config`",
+    "date": "2026-10-04"
+  },
+  {
+    "key": "seedTemplate.filamentKeys",
+    "label": "seed filament template keys",
+    "value": "97 (68 plus 29); 37 missing, 7 extra",
+    "path": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/plan-to-refine/handoff/hbf/seed/3mf/filament_template.json",
+    "method": "key diff against gold; the repo recheck is `uv run --project tools/py tools/py/harvest_filament_template.py --check` (M-1-T08)",
+    "date": "2026-10-04"
+  },
+  {
+    "key": "owner.sliced3mf",
+    "label": "owner sliced 3MFs",
+    "value": "25 (24 on the 0.4 preset)",
+    "path": "/Users/obsidian/Projects/hackbuild/3d",
+    "method": "`find` over `repos/3d` and `instruments/tang-small`",
+    "date": "2026-10-04"
+  },
+  {
+    "key": "bench.catalogue",
+    "label": "BENCH catalogue",
+    "value": "157 tools, 16 groups, 153 placeable",
+    "path": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-boards-tools/hackbuild-tools-2/MANIFEST.json",
+    "method": "`evidence/x/downloads/dl-boards-tools/hackbuild-tools-2/MANIFEST.json` (copy of ~/Downloads/hackbuild-tools 2/MANIFEST.json, sha256 7199d6cd; the older 144-tool manifest is `dl-boards-tools/hackbuild-tools/MANIFEST.json`)",
+    "date": "2026-10-04"
+  },
+  {
+    "key": "registry.catalogueJoin",
+    "label": "registry to catalogue by chat URL",
+    "value": "18 of 59",
+    "path": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-boards-tools/hackbuild-tools-2/MANIFEST.json",
+    "method": "chat URL join",
+    "date": "2026-10-04"
+  },
+  {
+    "key": "registry.chatJoin",
+    "label": "registry to 54-chat corpus",
+    "value": "56 of 59",
+    "path": "/Users/obsidian/Projects/hackbuild/fab-work-directory",
+    "method": "CHATS.tsv join",
+    "date": "2026-10-04"
+  }
+]

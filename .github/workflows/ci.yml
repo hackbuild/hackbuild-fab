@@ -1,0 +1,629 @@
+name: ci
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  house-rules:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      # lint-voice reads every .3mf and .zip through the built packages/3mf
+      # reader and blocks each one as not scanned when dist is absent
+      - run: npm ci
+      - run: npx tsc -b
+      - name: hook and lint tests
+        run: ls tools/test/commit-msg.test.mjs tools/test/lint-voice.test.mjs tools/test/settings.test.mjs > /dev/null && node --test tools/test/commit-msg.test.mjs tools/test/lint-voice.test.mjs tools/test/settings.test.mjs
+      - name: workflow and owner-files tests
+        run: node --test .github/scripts/*.test.mjs
+      - name: lint-voice
+        run: node tools/lint-voice.mjs
+      - name: lint-commits
+        env:
+          BEFORE: ${{ github.event.before }}
+          BASE_REF: ${{ github.base_ref }}
+        run: node tools/lint-commits.mjs
+      - name: lint-authors
+        run: node tools/lint-authors.mjs
+      - name: lint-plan-types
+        # warn mode until the M00 exit, then drop --warn so a copied spec type blocks (M-S-T01)
+        run: node --test tools/test/lint-plan-types.test.mjs && node tools/lint-plan-types.mjs --warn
+      - name: the committed plan-types report is the one the lint writes
+        run: git diff --exit-code tools/reports/plan-types.txt
+  typecheck:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - name: board stack pinned exactly (M08-T01, R-07)
+        run: node --test tools/test/pins-exact.test.mjs && node tools/pins-exact.mjs
+      - run: npx tsc -b
+      - run: npx tsc -p tools/tsconfig.json
+      - name: package and core test files (outside every tsc -b project)
+        run: npx tsc -p tsconfig.tests.json
+      - run: npx vitest run spec/test
+  derived:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: node --test tools/test/counts.test.mjs
+      - run: node tools/counts.mjs
+      - run: npx tsc -b
+      - run: node tools/gen-check-pages.mjs
+      - name: tree is clean after regeneration
+        run: |
+          git status --porcelain
+          test -z "$(git status --porcelain)"
+  tiers:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+      - run: node tools/tiers.mjs
+      - run: node --test tools/test/tiers.test.mjs
+  unit:
+    # level 1 of TESTING.md (D-152), M00-T01 step 8
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - name: owner-file tests not run here
+        run: node .github/scripts/owner-files.mjs report
+      - run: npm test --workspaces --if-present -- $(node .github/scripts/owner-files.mjs excludes)
+      - name: every tools node test (a test reading a gitignored or host-only file skips with its reason)
+        run: npx tsc -b && node --test tools/test/*.test.mjs packages/*/seed/test/*.test.mjs knowledge/test/*.test.mjs
+  property:
+    # level 2 of TESTING.md (D-152), M00-T06 step 5: the 100-design sweep
+    # with live count 0; the nightly FC_RUNS=2000 job is outside M00
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm run sweep -w packages/mesh
+        env:
+          FC_RUNS: 100
+  seed:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - uses: astral-sh/setup-uv@v10.2.0
+      - run: npm ci
+      - name: seed conformance
+        run: npx vitest run tools/test/seed-conformance.test.ts
+      - name: healer, board seed and lineage tests
+        run: ls packages/mesh/seed/test/heal.test.mjs packages/board/seed/test/check3d.test.mjs tools/test/lineage.test.mjs > /dev/null && node --test packages/mesh/seed/test/heal.test.mjs packages/board/seed/test/check3d.test.mjs tools/test/lineage.test.mjs
+      - name: filament template matches the gold round trip
+        run: uv run --project tools/py tools/py/harvest_filament_template.py --check
+  exit-a:
+    # M-S exit A: package, reference and core tests, the hbf commands and the
+    # seed validator on a fresh export (M-S-T09). npm ci builds core (prepare).
+    # The epoch is pinned to the print card's, so no step reads the HEAD
+    # commit time (core/src/epoch.ts); parity pins its own from build.json.
+    runs-on: ubuntu-24.04
+    env:
+      SOURCE_DATE_EPOCH: "315532800"
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - uses: astral-sh/setup-uv@v10.2.0
+      - run: npm ci
+      - run: npx tsc -b
+      - name: owner-file tests not run here
+        run: node .github/scripts/owner-files.mjs report
+      - name: package, reference and core tests
+        run: npx vitest run packages reference core $(node .github/scripts/owner-files.mjs excludes)
+      - run: npx --no-install hbf part.build reference/keys/flex-pair --json
+      - run: npx --no-install hbf check.run reference/keys/flex-pair --json
+      - name: export without a terminal is refused, exit 3 (D-109)
+        run: |
+          set +e
+          npx --no-install hbf export.run reference/keys/flex-pair --kind 3mf --json < /dev/null
+          test $? -eq 3
+      - name: export answered at a pseudo-terminal (the gate test path of M00-T13)
+        run: |
+          printf 'y\n' | script -qec "npx --no-install hbf export.run reference/keys/flex-pair --kind 3mf --machine ffc5p" /dev/null
+          test -f reference/keys/flex-pair/out/x01_flex-pair.3mf
+      - name: seed validator on the export
+        # the file name is partName(slug, 1, "3mf") of core/src/exporters/names.ts
+        run: uv run --project tools/py tools/py/validate_3mf.py --overlap reference/keys/flex-pair/out/x01_flex-pair.3mf
+      - run: npx --no-install hbf parity reference/keys/flex-pair
+  contract:
+    # level 3 of TESTING.md 4.3 (D-152), M00-T13 step 14: every registered
+    # CommandDef has a valid example and a description that passes the
+    # standard; the registry row (FeatureKindDef, CheckDef) joins at M04.
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npx vitest run spec/test core/test/contract.test.ts
+  corpus:
+    # TESTING.md 6 and 15.1, M00-T10: every 3MF corpus row through the
+    # Python validator and the TypeScript mirror; a row outside its
+    # expectation or a verdict disagreement fails the job. The mirror runs
+    # on the compiled package, so tsc runs first.
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - uses: astral-sh/setup-uv@v10.2.0
+      - run: npm ci
+      - run: npx tsc -b
+      - name: the flex-pair agreement input equals the current build
+        run: node tools/corpus/3mf/dump-input.mjs --check
+      - name: corpus runner
+        run: uv run --project tools/py tools/corpus/3mf/run.py
+      - name: reports and synthetic fixtures are regenerated, never typed
+        run: |
+          uv run --project tools/py tools/corpus/3mf/make_known_bad.py --check
+          git status --porcelain tools/corpus/3mf
+          test -z "$(git status --porcelain tools/corpus/3mf)"
+      - name: every tools/py test (runner, writer agreement, validator, harvesters, SPRUE parity, bytes)
+        # The whole directory, never a file list, so a new test file runs without a CI edit. An input
+        # absent on the runner skips with its reason (-rs prints it).
+        run: uv run --project tools/py pytest -q -rs tools/py/test tools/py/board/test
+      - name: KEYWAY family oracle, the seven generators from the repo alone (M05-T13 exit row)
+        run: |
+          uv run --project tools/py tools/py/copper/test_oracle.py
+          test -z "$(git status --porcelain reference/copper)"
+  parity:
+    # levels 4 and 5 of TESTING.md (D-152), M00-T11 step 10, compare mode
+    # only: the COLLAR port against the legacy dump and the export
+    # reference against its goldens. Never --accept here. The dump reruns
+    # the legacy bench and must reproduce the committed label grids and
+    # part volumes. The epoch is pinned as in exit-a.
+    runs-on: ubuntu-24.04
+    env:
+      SOURCE_DATE_EPOCH: "315532800"
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npx tsc -b
+      - name: legacy COLLAR dump reproduces the committed grids
+        run: |
+          node tools/legacy/collar-dump.mjs "$RUNNER_TEMP/collar.json"
+          node -e 'const a=require("./tools/corpus/collar/legacy-defaults.json"),b=require(process.argv[1]);const k=(d)=>JSON.stringify([d.labelsSha256,d.rows.map((r)=>[r.parts,r.heal,r.perFilament])]);if(k(a)!==k(b)){console.error("legacy dump differs from tools/corpus/collar/legacy-defaults.json");process.exit(1)}' "$RUNNER_TEMP/collar.json"
+      - run: npx vitest run tools/parity $(node .github/scripts/owner-files.mjs excludes)
+      # before the reference loop: a board reference runs its generator through uv (core/src/board.ts)
+      - uses: astral-sh/setup-uv@v10.2.0
+      - name: every reference against its goldens, query goldens included (M01-T11), surface chases too (M05-T14, M05-T15)
+        # every reference runs; each failure is printed and the step fails after the loop
+        run: |
+          status=0
+          failed=""
+          for d in reference/*/*/; do
+            test -f "${d}chase.ts" || test -f "${d}chase.surface.ts" || continue
+            if ! npx --no-install hbf parity "${d%/}"; then
+              echo "parity failed: ${d%/}"
+              failed="$failed ${d%/}"
+              status=1
+            fi
+          done
+          test -z "$failed" || echo "failing references:$failed"
+          exit $status
+      - name: the OGEE R16-P fits table (M01 exit row, M01-T09)
+        run: npx --no-install hbf fits.table reference/fit/ogee16-r16p --json
+      - name: M03 exit rows in node (M03-T14), the NFC pause fixture, every design test and the coin-inlay checks
+        run: |
+          npx vitest run designs/collar/test/nfc-pause.test.ts
+          npx vitest run designs $(node .github/scripts/owner-files.mjs excludes)
+          npx --no-install hbf check.run reference/cosmetic/coin-inlay --json
+      - name: M03 browser rows (M03-T10, M03-T12), SPRUE parity and the art board smoke in Playwright Chromium
+        # COLLAR parity (M03-T09) reads its fonts, mark and 3MFs from lineage
+        # sources outside the repo, so it runs on the owner's machine only
+        # (tools/test/ci-exit-rows.test.mjs NOT_IN_CI).
+        run: |
+          uv run --project tools/py --extra bench python -m playwright install --with-deps chromium
+          uv run --project tools/py --extra bench tools/py/harness/sprue_parity.py designs/sprue/legacy/sprue.html designs/sprue/test/parity.html
+          uv run --project tools/py --extra bench tools/py/harness/artboard_smoke.py packages/ui-core/test/artboard/fixture.html "$RUNNER_TEMP/artboard"
+  exit-m06-m08:
+    # M06 and M08 Exit rows run as commands: the AILERON differential
+    # derivation, the mockups quarantine grep, the SPINDLE board build, the
+    # SHUNT board checks, the SPINDLE gerbers refused at E_PROVENANCE without
+    # a terminal (exit 4) and the SuperMini pin map. A board build spawns uv.
+    runs-on: ubuntu-24.04
+    env:
+      SOURCE_DATE_EPOCH: "315532800"
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - uses: astral-sh/setup-uv@v10.2.0
+      - run: npm ci
+      - run: npx tsc -b
+      - run: npx --no-install hbf mech.derive aileron-differential --params '{"tilt":10,"roll":10}' --json
+      - name: no canon package or reference cites the quarantined mockups (M06-T06, M06-T14)
+        run: '! grep -rn "fab-knowledge/mockups" packages/mechanisms packages/archetypes reference'
+      - run: npx --no-install hbf part.build reference/boards/spindle-r1 --json
+      - run: npx --no-install hbf check.run reference/boards/shunt-art --only CHK-BRD-19 --json
+      - run: npx --no-install hbf check.run reference/boards/shunt-art --only CHK-BRD-09,CHK-BRD-21 --json
+      - name: SPINDLE R1 gerbers without a terminal stop at the provenance gate, exit 4 (D-102)
+        run: |
+          set +e
+          npx --no-install hbf export.run reference/boards/spindle-r1 --kind gerbers < /dev/null
+          test $? -eq 4
+      - run: npx --no-install hbf catalog.pins esp32c3-supermini --json
+  dxf-audit:
+    # M07-T15 step 1 (D-138, CHK-SHT-03): every DXF the nest suites write is
+    # held to its committed bytes (packages/nest/test/out, dxf.test.ts and
+    # slug-sheets.test.ts), then audited in ezdxf; the SLUG sheets exported
+    # through export.run at the gate are audited the same way; the corpus of
+    # shipped emitters fails exactly the rules its manifest lists. The OGEE
+    # plates exported at the gate pass the 3MF validator with --overlap (M07
+    # Exit, T08). The epoch is pinned as in exit-a.
+    runs-on: ubuntu-24.04
+    env:
+      SOURCE_DATE_EPOCH: "315532800"
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - uses: astral-sh/setup-uv@v10.2.0
+      - run: npm ci
+      - run: npx tsc -b
+      - name: the nest suites hold every written DXF and SVG twin to its committed bytes
+        run: npx vitest run packages/nest/test/dxf.test.ts packages/nest/test/slug-sheets.test.ts
+      - name: ezdxf audit of the DXF files the nest suites write
+        run: uv run --project tools/py tools/py/audit_dxf.py packages/nest/test/out
+      - name: SLUG sheets exported at a pseudo-terminal gate, then audited
+        run: |
+          out="$RUNNER_TEMP/slug-dxf"
+          printf 'y\n' | script -qec "npx --no-install hbf export.run --scene slug-sheets --kind dxf --out $out" /dev/null
+          test "$(ls "$out"/*.dxf | wc -l)" -eq 10
+          uv run --project tools/py tools/py/audit_dxf.py "$out"
+      - name: corpus DXF files fail exactly their listed rules
+        run: uv run --project tools/py tools/py/audit_dxf.py tools/corpus/dxf --expect tools/corpus/dxf/MANIFEST.json
+      - name: every OGEE R16-P plate 3MF passes --overlap, both drives
+        run: |
+          for drive in knobs servos; do
+            out="$RUNNER_TEMP/plates-$drive"
+            printf 'y\n' | script -qec "npx --no-install hbf export.run --scene ogee16-r16p-plates --kind 3mf --params '{\"drive\":\"$drive\"}' --out $out" /dev/null
+            n=0
+            for f in "$out"/*.3mf; do
+              uv run --project tools/py tools/py/validate_3mf.py --overlap "$f" || exit 1
+              n=$((n + 1))
+            done
+            echo "$drive: $n plates"
+            test "$n" -gt 0
+          done
+  vtracer-eval:
+    # M03-T11 exit row: vtracer 1.0.0-alpha.4 against the in-house route over
+    # the ten pinned corpus inputs. tools/eval only, never a package
+    # dependency. run.mjs exits 2 while a route A binding is missing, so a
+    # partial table never reads as a pass.
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npx tsc -b
+      - run: npm ci --prefix tools/eval/vtracer
+      - name: corpus bytes equal their pins
+        run: cd tools/corpus/inlay/vtracer && sha256sum -c SHA256SUMS
+      - run: node tools/eval/vtracer/run.mjs tools/corpus/inlay/vtracer
+  determinism:
+    # TESTING.md 7 and 15.1, M00-T14 (D-052, D-056, D-175). Node legs build
+    # every reference, the M00-T05 route fixtures and the ring set, and the
+    # 3MF corpus inputs, and write meshHashes.json and artifactHashes.json;
+    # each writer must reproduce its own bytes under two time zones. The
+    # macos-14 leg follows TESTING.md 7 (the owner builds on Apple silicon).
+    # Browser legs hash the route fixtures and ring set in Playwright
+    # Chromium and WebKit from file://. lib3mf is absent on the arm leg by
+    # marker (M00-T01 step 4); no step here reads it.
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { leg: x64, os: ubuntu-24.04, kind: node }
+          - { leg: arm64, os: ubuntu-24.04-arm, kind: node }
+          - { leg: macos, os: macos-14, kind: node }
+          - { leg: chromium, os: ubuntu-24.04, kind: browser }
+          - { leg: webkit, os: ubuntu-24.04, kind: browser }
+    runs-on: ${{ matrix.os }}
+    env:
+      SOURCE_DATE_EPOCH: "1791072000"
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - uses: astral-sh/setup-uv@v10.2.0
+        if: matrix.kind == 'node'
+      - run: npm ci
+      - run: npx tsc -b
+      - name: mesh, artifact and render hashes
+        if: matrix.kind == 'node'
+        run: |
+          mkdir -p "$RUNNER_TEMP/det"
+          node tools/determinism/hashes.mjs --out "$RUNNER_TEMP/det" > "$RUNNER_TEMP/det/hashes.json"
+      - name: each writer reproduces its own bytes, TZ=UTC and TZ=America/Phoenix
+        if: matrix.kind == 'node'
+        run: node tools/determinism/writer-bytes.mjs --out "$RUNNER_TEMP/det/writerHashes.json"
+      - name: python writer bytes, TZ=UTC
+        if: matrix.kind == 'node'
+        run: uv run --project tools/py pytest -q tools/py/test/test_bytes.py
+        env:
+          TZ: UTC
+      - name: python writer bytes, TZ=America/Phoenix
+        if: matrix.kind == 'node'
+        run: uv run --project tools/py pytest -q tools/py/test/test_bytes.py
+        env:
+          TZ: America/Phoenix
+      - name: nest and motion suites against their committed records, on this leg (M07-T15 step 2)
+        # layoutHash, endHash, plan JSON and DXF bytes are pinned in
+        # packages/nest/records, packages/motion/records and
+        # packages/nest/test/out; each leg must reproduce them (D-056)
+        if: matrix.kind == 'node'
+        run: |
+          npm test -w packages/nest
+          npm test -w packages/motion
+      - name: rapier snapshot hashes, every scene run twice on this runner (M02-T04)
+        if: matrix.leg == 'x64' || matrix.leg == 'arm64'
+        run: |
+          mkdir -p "$RUNNER_TEMP/det"
+          node tools/compare-snapshots.mjs record --runs 2 --out "$RUNNER_TEMP/det/snapshots-${{ matrix.leg }}.json"
+      - name: browser hashes from file://
+        if: matrix.kind == 'browser'
+        run: |
+          npx playwright install --with-deps ${{ matrix.leg }}
+          mkdir -p "$RUNNER_TEMP/det"
+          DETERMINISM_OUT="$RUNNER_TEMP/det" npx playwright test tools/determinism/browser.spec.ts --browser=${{ matrix.leg }}
+      - uses: actions/upload-artifact@v7
+        with:
+          name: determinism-${{ matrix.leg }}
+          path: ${{ runner.temp }}/det
+          if-no-files-found: error
+  determinism-compare:
+    # The one context branch protection requires (REPOS.md 8.1). Prints
+    # every id whose hash differs and the pair; zip ids are recorded only
+    # (M00-T14 step 4).
+    needs: determinism
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+      - uses: actions/download-artifact@v8
+        with:
+          pattern: determinism-*
+          path: det
+      - name: compare the legs
+        run: |
+          status=0
+          for leg in arm64 macos; do
+            for f in meshHashes.json artifactHashes.json writerHashes.json; do
+              echo "x64 against $leg: $f"
+              node tools/determinism/compare.mjs "det/determinism-x64/$f" "det/determinism-$leg/$f" || status=1
+            done
+          done
+          for engine in chromium webkit; do
+            echo "node x64 against $engine"
+            node tools/determinism/compare.mjs --subset det/determinism-x64/meshHashes.json "det/determinism-$engine/meshHashes.$engine.json" || status=1
+          done
+          echo "rapier snapshots, x64 against arm64 (M02-T04); off BuildInputs until M02-T05 admits them"
+          node tools/compare-snapshots.mjs compare det/determinism-x64/snapshots-x64.json det/determinism-arm64/snapshots-arm64.json || status=1
+          exit $status
+  cold:
+    # M04-T10 (D-051, D-056): every reference rebuilds to its expected
+    # buildHash, meshHashes and reportHash from a git archive of HEAD at
+    # another path, under TZ Pacific/Chatham, LANG tr_TR.UTF-8 and a fresh
+    # HOME, then again in the checkout after .hbf is removed; no stored
+    # object may hold the temporary path or a home path.
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npx tsc -b
+      - run: node --test tools/test/cold-rebuild.test.mjs
+      - run: node tools/cold-rebuild.mjs
+  bake:
+    # M09-T13 (D-129): every bake.json bakes; the PIP legacy manifest
+    # reproduces pip.html byte for byte; the baker's own fixtures fail where
+    # they must (vendor hit twice, dash in a design block, network @import,
+    # over budget).
+    runs-on: ubuntu-24.04
+    env:
+      SOURCE_DATE_EPOCH: "315532800"
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm ci --prefix designs/pip/legacy
+      - run: node --test tools/bake/test/bake.test.mjs
+      - run: npm run bake:all
+      - name: THIRD-PARTY-NOTICES.txt equals a fresh generation from the bake licence manifests (LICENSING.md 1.2, M09-T14)
+        run: node tools/licences.mjs --notices --check
+      - name: PIP manifest bake equals the shipped pip.html
+        run: |
+          test "$(shasum -a 256 dist/legacy/pip-legacy.html | cut -d' ' -f1)" = a1fa88bd6ffa603c76059567c8b27c804536e39e7c07ec56c58daad55b001263
+          test "$(wc -c < dist/legacy/pip-legacy.html | tr -d ' ')" = 1924558
+          cmp dist/legacy/pip-legacy.html designs/pip/legacy/pip.html
+      - uses: actions/upload-artifact@v7
+        with:
+          name: bake
+          path: dist
+          if-no-files-found: error
+  bake-determinism:
+    # M09-T13 step 7: two cold runs, node_modules and dist deleted between
+    # them, give equal SHA256SUMS.
+    runs-on: ubuntu-24.04
+    env:
+      SOURCE_DATE_EPOCH: "315532800"
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+      - name: first cold run
+        run: |
+          npm ci && npm ci --prefix designs/pip/legacy && npm run bake:all
+          cat dist/*/SHA256SUMS > "$RUNNER_TEMP/sums-1"
+      - name: second cold run
+        run: |
+          rm -rf node_modules designs/pip/legacy/node_modules dist packages/*/dist spec/dist kernel/dist core/dist
+          find . -name '*.tsbuildinfo' -not -path './.git/*' -delete
+          npm ci && npm ci --prefix designs/pip/legacy && npm run bake:all
+          cat dist/*/SHA256SUMS > "$RUNNER_TEMP/sums-2"
+      - run: diff "$RUNNER_TEMP/sums-1" "$RUNNER_TEMP/sums-2"
+  browser:
+    # M09-T14 (D-004, D-125, D-129, D-212, D-213): the smoke suite on every
+    # bake (overflow, pink budget, touch-only pass at 390, network, workers,
+    # console, DOM voice lint, 44 px targets, the legacy report), then the
+    # gold specs and the gold report over the bench-layer rules of the M09
+    # Exit table. System Chrome with swiftshader, as M03 runs it; the
+    # flex-pair bake takes the node build host (tools/smoke/host-build.ts).
+    needs: bake
+    runs-on: ubuntu-24.04
+    env:
+      SOURCE_DATE_EPOCH: "315532800"
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npx tsc -b
+      - uses: actions/download-artifact@v8
+        with:
+          name: bake
+          path: dist
+      - run: npx playwright install --with-deps chrome
+      - run: npm test -w packages/ui -- range
+      - run: node --test tools/gold/report.test.mjs
+      - run: npx playwright test -c tools/smoke/playwright.config.ts
+      - name: gold specs, then the report grades them
+        run: |
+          npx playwright test -c tools/smoke/playwright.config.ts --grep @gold || true
+          node tools/gold/static.mjs
+          node tools/gold/report.mjs --only G-03..G-06,G-10,G-11,G-14..G-18,G-21,G-33,G-36,G-37,G-40,G-42..G-46,G-51..G-54,G-57
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: smoke
+          path: |
+            out/smoke/*.json
+            out/gold/report.json
+          if-no-files-found: warn
+  ui-css:
+    # M09-T13 step 5 (D-116): the inlined hackbuild-ui CSS equals the lock.
+    needs: bake
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - uses: actions/download-artifact@v8
+        with:
+          name: bake
+          path: dist
+      - run: node tools/bake/check-ui-css.mjs
+  size:
+    # M09-T13 (D-129): every bake at most 16777216 bytes (the baker fails
+    # over budget too); prints each size so the run records it.
+    needs: bake
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          name: bake
+          path: dist
+      - run: |
+          status=0
+          for f in dist/*/*.html; do
+            n=$(wc -c < "$f" | tr -d ' ')
+            echo "$f $n bytes"
+            if [ "$n" -gt 16777216 ]; then echo "$f over 16777216 bytes"; status=1; fi
+          done
+          exit $status
+  owner-files:
+    # The test files .github/scripts/owner-files.mjs derives as reading the
+    # owner's originals or benches, which no hosted runner holds. Manual
+    # only, on the owner's machine; HBF_ORIGINALS falls back to the
+    # originals of record when the repository variable is unset
+    # (tools/test-support/originals-root.ts). A self-hosted runner needs
+    # runner 2.327.1 or later for the node24 actions.
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: [self-hosted, macOS]
+    env:
+      SOURCE_DATE_EPOCH: "315532800"
+      HBF_ORIGINALS: ${{ vars.HBF_ORIGINALS }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npx tsc -b
+      - run: node .github/scripts/owner-files.mjs report
+      - name: every owner-file test
+        run: npx vitest run $(node .github/scripts/owner-files.mjs list)

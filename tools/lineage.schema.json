@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/hackbuild/hackbuild-fab/tools/lineage.schema.json",
+  "title": "lineage",
+  "description": "One row per copy of a kernel or legacy file. Ports start from the canonical row of a subject (D-156).",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": ["id", "kind", "source", "sha256", "fixes", "dest"],
+    "additionalProperties": false,
+    "properties": {
+      "id": {
+        "type": "string",
+        "pattern": "^[a-z0-9.-]+/[a-z0-9./-]+$",
+        "description": "<subject>/<copy>, unique; subject names the kernel or design slug"
+      },
+      "kind": {
+        "enum": ["canonical", "copy"],
+        "description": "canonical is the one copy a port starts from; one canonical row per subject"
+      },
+      "source": {
+        "type": "string",
+        "minLength": 1,
+        "description": "absolute path of the file as harvested, or the repo path when the copy only exists in the repo"
+      },
+      "sha256": {
+        "type": "string",
+        "pattern": "^[0-9a-f]{64}$",
+        "description": "sha256 of the source file's bytes"
+      },
+      "fixes": {
+        "type": "array",
+        "items": { "type": "string", "minLength": 1 },
+        "description": "one line per fix this copy carries over the others, each with file and line"
+      },
+      "dest": {
+        "type": ["string", "null"],
+        "description": "repo path where the port or copy lands; null when the repo keeps no copy"
+      }
+    }
+  }
+}

@@ -1,0 +1,244 @@
+# seed/circuits.seed.yaml
+# Seed of the circuit canon. Every proven printed, copper and board archetype
+# in the corpus. Each entry: what it emits into Part IR, its hookup, its sense
+# model, materials, channel budget, known limits, provenance.
+# Generators live in packages/circuits. archetype.apply consumes these.
+
+- id: force-comb
+  family: printed-or-copper
+  senses: [force, velocity, aftertouch]
+  emits: [conductor, conductor, contact, pad, pad]
+  params: {fingers: 11, finger_w: 1.8, gap: 1.2, pitch: 3.0}
+  stack: [copper or cpla, velostat, spacer]
+  hookup: interdigitated comb, one half sense one half common, velostat over it; velocity from the SLOPE of the reading, baseline logged at boot
+  limits: [weeding pain is set by gap not trace; bare it reads as self capacitance only]
+  provenance: KEYWAY 2026-08, TANG 2026-08
+- id: capacitive-plate
+  family: printed-or-copper
+  senses: [touch]
+  emits: [conductor, pad]
+  params: {area_min: 120, inscribed_min: 4.5}
+  hookup: one plate one channel; vinyl faceplate is the dielectric, bare copper oxidises
+  limits: [ON or OFF only; no velocity, no aftertouch. claiming otherwise is the easiest lie in this domain]
+  provenance: VERNIER 2026-08, COFFER 2026-08
+- id: wedge-pair-slider
+  family: printed-or-copper
+  senses: [position, presence]
+  emits: [conductor, conductor, pad, pad]
+  params: {travel: 64, span: [0.2, 0.8]}
+  hookup: A thick-to-thin, B mirrored; position = A/(A+B); pair sum is the presence test
+  limits: [trapezoids not triangles or the ratio pins to 1.0/0.0; each wedge widened at its thick end so its escape clears the other]
+  provenance: KEYWAY, VERNIER, STAVE 2026-08
+- id: arc-slider
+  family: copper
+  senses: [angle]
+  emits: [conductor, conductor, pad, pad]
+  hookup: wedge pair in polar space; report ANGLE not distance; scale CC by radius to match a straight slider
+  limits: [5 degree end offset so escapes clear; a shallow big-radius arc is too wide for a channel window]
+  provenance: QUADRANT, SPLINE, TESSERA 2026-08
+- id: graded-slider-wiper
+  family: copper
+  senses: [position, pressure]
+  emits: [conductor, conductor, conductor, pad, pad, pad]
+  stack: [copper, velostat, spacer with slot, top copper wiper]
+  hookup: SA SB graded sheet, SC wiper landing pad with air under it; position from sheet potential, pressure on a second pass with both ends high
+  provenance: KEYWAY 2026-08
+- id: resolver-dial
+  family: copper
+  senses: [absolute-angle]
+  emits: [conductor x4, pad x4]
+  hookup: four radial bands with widths varying sinusoidally at 90 degree phase; angle = atan2(D2-D4, D1-D3); no seam, no dead reckoning
+  limits: [55 degree blind sector where the traces leave; mask it in firmware]
+  provenance: COFFER D1 2026-08
+- id: hex-key
+  family: copper
+  senses: [touch]
+  emits: [conductor, pad]
+  params: {across_flats: 17.3}
+  hookup: pointy-top hexes around a routing void with ground spokes as guards; Wicki-Hayden isomorphic layout available (FRET)
+  provenance: COFFER K6, FRET 2026-08
+- id: printed-rotary-pot
+  family: printed
+  senses: [angle]
+  emits: [conductor, conductor, conductor, contact, pocket, port x3]
+  params: {arc_r: 6.5, arc_t: 1.0, sweep: 300, collector_r: 9.5, shaft_d: 6}
+  materials: {arc: ctpu, collector: cpla, rotor_spider: ctpu}
+  hookup: cTPU arc on cPLA end pads, cPLA collector ring, cTPU spider rotor with a signal arm and two balance arms, 0.48 preload about 0.49 N per leaf
+  limits: [a cPLA arc (14k) against 40k of printed leads swings 10 percent; cTPU (709k) swings 73; a rigid wiper scratches the track, the arm must be a leaf spring; wear not drift is the lifetime limit; all three terminals out of one end is impossible single-layer for a LINEAR pot]
+  provenance: TANG R6 2026-09, STYLUS 2026-08
+- id: printed-membrane-slider
+  family: printed
+  senses: [position]
+  emits: [conductor, conductor, contact, port x3]
+  materials: {track: ctpu, wiper: cpla, skin: tpu}
+  hookup: 0.8 TPU skin plus 0.8 cTPU strip is the track, cPLA strip flush in the deck is the wiper; printed on its side so the membrane is a vertical wall with a 0.6 in-plane air gap, no bridging
+  limits: [about 2.2 N to make contact; slide track 358k swings 74 percent]
+  provenance: TANG R6 2026-09, GIB 2026-09, STYLUS THINPOT 2026-08
+- id: finger-pot
+  family: printed
+  senses: [position]
+  emits: [conductor, pad x3]
+  hookup: the finger is the wiper (about 300 kohm skin); track plus collector, bus on ONE side only
+  provenance: GIB 2026-09
+- id: ladder-keypad
+  family: printed
+  senses: [key]
+  emits: [conductor xN, contact xN, port x2]
+  hookup: nx by ny dome keys on ONE analogue pin; each key's top pad is a node of a boustrophedon chain of equal printed serpentine resistors; common on a buried plane with printed vias; cuttable trim bridges on every leg
+  limits: [equal SERIES resistors give equal steps; equal-step PARALLEL ladders need N-squared ratios and cannot be printed]
+  provenance: STYLUS 2026-08
+- id: dome-button
+  family: printed
+  senses: [press]
+  emits: [conductor, contact, pocket]
+  materials: {dome: tpu, plug: ctpu}
+  hookup: cTPU plug in a TPU dome over a cPLA pad
+  limits: [plug radius at most 0.4 rimR, 0.4 to 1.0 thick; in-place contact gap 35 to 50 percent of cavity and never under 1.2; budget half the cavity as usable stroke; anything hanging in mid air prints as its own posed part]
+  provenance: STYLUS 2026-08 (four printed passes)
+- id: scan-six-pads
+  family: printed-or-copper
+  senses: [force x6]
+  emits: [conductor x7, port x7]
+  hookup: one shared SENSE spine on an analog pin (47k pullup, 1 nF), six DRIVE tails on digital pins; read pad k by driving k LOW and floating the rest; settle 200 us; NO GHOSTING because only the selected pad has a path to ground; 600 Hz scan
+  limits: [a row/column matrix does not work here because sense groups by row but COM cannot group by column single-layer]
+  provenance: TANG R5.26 2026-08
+- id: face-as-board
+  family: printed
+  senses: []
+  emits: [conductor xN, pad xN, pocket]
+  hookup: a 3.12 plate printed pad side down; L1 underside 0 to 0.72, PLA 0.48, L2 buried 1.2 to 1.92, PLA 0.48, top pad inlays 2.4 to 3.12; 1.6 square vias; a socket for a Teensy or PIN/TAPE bars
+  provenance: TANG R6 2026-09
+- id: blocks-stud
+  family: printed
+  emits: [conductor, contact, port]
+  params: {pitch: 8, stud: [4.8, 1.8], ring: [4.6, 6.6, 2.4]}
+  materials: {ring: ctpu, flange_post_stud: cpla, body: petg}
+  hookup: cTPU socket ring under a cPLA flange, post and stud; two buried cPLA trace layers 1.0 x 0.72 with 0.48 PETG between
+  limits: [pin to stud 5 to 50 kohm; a printed button on a 45k pullup lands in the undefined band]
+  provenance: BLOCKS 2026-09
+- id: blocks-wire
+  family: printed
+  emits: [conductor, port x2]
+  materials: {jacket: tpu, core: ctpu}
+  hookup: any length and shape, pre-printed spiral to save bed space, pegs at the ends; prints at the length the virtual build needs
+  limits: [about 1 Mohm per 80 mm]
+  provenance: BLOCKS 2026-09
+- id: blocks-board-seat
+  family: printed
+  emits: [pocket, contact xN, port xN]
+  hookup: press mode 0.9 bores into cPLA cups; snap mode 0.48 proud bumps, rails, lid frame with window and USB notch, TPU pressers, barbed hooks; boards C3 SuperMini, Pico, Teensy 4.0, custom
+  provenance: BLOCKS 2026-09
+- id: coffer-port
+  family: copper
+  emits: [pad x6, pad x3, conductor]
+  hookup: per hex edge 6 signal pads at u +/-3, +/-8.5, +/-14 and 3 ground tabs at u 0, +/-21; u mirrors across a seam; ground ring can be cut ONCE per tile
+  provenance: COFFER 2026-08
+- id: astable-blinky
+  family: board-or-copper
+  emits: [pad xN, conductor xN]
+  hookup: two-transistor astable, 100k and 10 uF about 0.72 Hz, CR2032, one resistor per LED pair
+  limits: [NE555 will not oscillate on a 3 V coin cell; pink LED Vf marginal at 3 V]
+  provenance: TACK, SHIM 2026-08
+- id: c3-carrier
+  family: board-or-copper
+  emits: [pad xN, conductor xN, port xN]
+  hookup: module flush with the top edge so USB overhangs; VERTICAL flanking headers land VCC and GND straight across with no fan; a channel under the castellated module is free routing on two layers
+  limits: [GPIO21 strobes the boot log, laser on GPIO20; GPIO2 needs its strap held at reset; USB must be at a board edge]
+  provenance: SPINDLE v5 and R1, TRUNNION 2026-08
+- id: mosfet-low-side-gate
+  family: board-or-copper
+  emits: [pad x3, conductor x3, port x2]
+  hookup: AO3400A with a 100k gate pulldown so the load cannot fire while the pin floats through reset
+  provenance: SPINDLE R1, TRUNNION 2026-08
+- id: three-source-power-oring
+  family: board
+  emits: [pad xN, port x3]
+  hookup: USB-C plus VIN buck plus 1S LiPo charge and boost, Schottky-ORed into VSYS; boost trimmed 300 mV UNDER the wired rails plus a transistor pulling boost EN down when USB or VIN is present; charger input a separate node so the pack cannot charge itself
+  provenance: ARMATURE 2026-08
+- id: printed-pullup-meander
+  family: printed
+  emits: [conductor, port x2]
+  materials: {meander: cpla}
+  hookup: a printed serpentine as the pullup so PIN mode needs no discrete resistor; ratiometric so lead resistance only scales the swing
+  provenance: TANG R6 2026-09
+- id: tilt-stick
+  family: printed
+  senses: [direction-4, direction-8]
+  emits: [conductor xN, contact xN, port xN]
+  materials: {stem: tpu, band: ctpu, wall_traces: cpla}
+  params: {body: [18.2, 18.2, 10.6], top: 18.3, contact_deg: 14, stop_deg: 16, pullup: 470k}
+  hookup: a TPU stem on a NECK anchored under a PETG ring; a conductive TPU band that lies FLAT against the well wall at full tilt, bridging one of four low wall pads to the COMMON RING above them; the thumb cap presses on after the bezel; 4 way and 8 way; solo and BLOCKS variants
+  limits: [prints in place with no support on four heads; spring-back is exponential over about 60 ms, not frame counted; band clearance must be checked by radial sampling not bbox, with a riser that lifts the band when geometry alone is too close]
+  provenance: TOGGLE 2026-09
+- id: click-spring-key
+  family: printed
+  senses: [press-tactile]
+  emits: [pocket, contact, conductor x2, pad x2]
+  materials: {spring: petg, tip: ctpu, cap: tpu}
+  params: {span: 22, beam: 0.5, rise_x_t: 2.0, width: 1.6, tip_over_pad: 0.5, pad_split: 0.6}
+  geometry:
+    - a DOUBLE COSINE beam spring printed FLAT in PETG
+    - a conductive TPU tip locked into its shuttle by a DOVETAIL
+    - drops into a slot under the key standing on edge; the bezel holds its end blocks down
+    - a TPU cap with a flange sits on its stem
+    - the beams snap through; the tip is set to reach the two floor pads just past the snap
+  solver: corotational beam model, checked against linear theory to five digits; draws the force curve live from the typed numbers
+  numbers: 2.3 N peak, 76 percent force drop after the snap, contact at 1.24 mm, 2.3 percent strain at the stop
+  fits:
+    - slot width over spring 0.15 to 0.6 diametral, drops in on edge
+    - slot length over spring at least 0.15
+    - travel to contact over 0.6, snap peaks at dPeak
+    - tip over each pad over 0.5, pads split by 0.60
+    - beam thickness at least 0.4; 0.5 prints as a single line under Orca's default thin wall handling
+  limits:
+    - PETG fatigues above about 2.5 percent strain; a 0.6 beam reached 2.7 to 3.3 and failed
+    - rise about 2.4 x t makes the spring LATCH; under 2.0 it stops snapping; the bench warns at both
+    - face pitch 16 so four spring slots find directions that do not collide
+  provenance: HAFT 2026-09-18
+- id: flex-cone-key
+  family: printed
+  senses: [press]
+  emits: [pocket, contact, conductor x2]
+  materials: {cone: tpu, cap: ctpu, columns: cpla}
+  params: {face: 10, cone_h: 4, cone_deg: 40, to_contact: 1.8, cap_layers: 3, col_split: 0.8}
+  geometry:
+    - a TPU cone at 40 degrees on a FOOT RING buried one layer into the body
+    - a 3 layer conductive TPU cap bridged over the cone's hole
+    - two conductive PLA HALF COLUMNS under it split by 0.8 mm
+    - the column tops sit at 45 percent of the cone height below the cap, never under 1.2 mm, because a pressed cone only travels about half its height
+    - pressing lands the cap on both halves
+  fits:
+    - contact gap at least 1.2, as a percent of the cone
+    - cap bridge (the hole) at most 4.5, unsupported conductive TPU
+    - split between halves at least 0.6, exposed, a string across it reads as a press
+    - column to cone wall over 0.5 at the top of the column
+    - face through bezel hole, diametral, the bezel drops over the key
+    - stands proud of the bezel at least 0.8
+  limits: [a vertex of the cone must not sit exactly on a cavity face; inset the kink points into the key well; flex each key a few times after printing to free the cone]
+  provenance: HAFT 2026-09-18, STYLUS 2026-08
+- id: touch-comb-key
+  family: printed
+  senses: [touch]
+  emits: [conductor x2, port x2]
+  materials: {combs: cpla, boss: petg}
+  geometry: interdigitated conductive PLA combs FLUSH with the bezel top on a PETG boss; a fingertip bridges the sense comb to the 3V3 comb; nothing moves
+  provenance: HAFT 2026-09-18, GUDGEON 2026-09
+- id: rp2040-zero-seat
+  family: printed
+  emits: [pocket, contact xN, port xN, window]
+  geometry:
+    - press fit: conductive bumps under the castellations of every USED pad (the pad table is BAFFLE's); every other pad lands on bare PETG; the board sits component side up, USB toward the notch in the cable edge; a window under it clears the parts on its back; two RIBS under the bezel press the board down 0.3 mm onto the bumps
+    - wire cups: cups to melt a hot wire into, following the board's pad ORDER so their traces do not cross, 5.2 mm spacing so a trace fits between two cups, six per row
+  firmware: emitted with the pin map; 470k pullup per key as the fallback if the float read misbehaves on real hardware; Joystick library calls unconfirmed until arduino-cli with the Philhower core compiles it
+  provenance: HAFT 2026-09-18, BAFFLE 2026-08, GUDGEON 2026-09
+- id: buried-trace-stack
+  family: printed
+  emits: [conductor xN, pocket]
+  materials: {traces: cpla, insulation: petg}
+  geometry: two buried conductive layers 1.0 wide by 0.72 tall with 0.48 PETG between; each trace layer built FLAT per net (strokes, posts and vias together, lightly smoothed) from one outline offset, never a union of capsules; post and via radii stay clear of half the trace width; a 0.0001 mm cleanup pass on every part
+  fits:
+    - net to net measured at least 0.3, usually the insulation between the two layers
+    - insulation between layers at least 0.48, two layers of PETG
+    - PETG over layer 2 at least 0.48, what separates a trace from a key pad
+  limits: [a single buried layer cannot fan a header row to a key grid; two layers with printed vias route cleanly; the router must not add margin beyond the real gap check or 2.54 mm pads read as conflicts; unfinished routing and tight spots must surface as WARNINGS never silence]
+  provenance: HAFT 2026-09-18, GUDGEON 2026-09, BLOCKS 2026-09

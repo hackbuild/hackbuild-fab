@@ -1,0 +1,45 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": "src"
+  },
+  "include": [
+    "src"
+  ],
+  "references": [
+    {
+      "path": "../circuit"
+    },
+    {
+      "path": "../3mf"
+    },
+    {
+      "path": "../inlay"
+    },
+    {
+      "path": "../mesh"
+    },
+    {
+      "path": "../geom"
+    },
+    {
+      "path": "../profile"
+    },
+    {
+      "path": "../sim"
+    },
+    {
+      "path": "../constraints"
+    },
+    {
+      "path": "../copper"
+    },
+    {
+      "path": "../board"
+    },
+    {
+      "path": "../catalog"
+    }
+  ]
+}

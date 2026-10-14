@@ -1,0 +1,322 @@
+[
+  {
+    "source": "seed/3mf/build_orca3mf_js.py",
+    "sha256": "d5c5912fa632bc8461feeb5e255b4abf1d2b103efc9510f48f6581695961060d",
+    "dest": "tools/py/build_orca3mf_js.py"
+  },
+  {
+    "source": "seed/3mf/demo_coin.py",
+    "sha256": "65ac4a80d0b675954657d1aa705e51c615d61c98e20cb6f146886032aeeb620f",
+    "dest": "tools/py/demo_coin.py"
+  },
+  {
+    "source": "seed/3mf/filament_template.json",
+    "sha256": "e0a31f61eb7c6f33a822f915551332ad9573b1d6f1b8f601a8851ea0be309dab",
+    "dest": "tools/corpus/3mf/seed-97.json"
+  },
+  {
+    "source": "seed/3mf/harvest_filament_keys.py",
+    "sha256": "6733b0d0aebd6e85c07c2c646056cfa6262b93d28194db2f52c75157c88a7907",
+    "dest": "tools/py/harvest_filament_keys.py"
+  },
+  {
+    "source": "seed/3mf/materials.json",
+    "sha256": "57d9df4d4ed4cd963347336f11cc075617328566269da0382d818b2e89e5fe43",
+    "dest": "packages/3mf/seed/materials.json"
+  },
+  {
+    "source": "seed/3mf/orca3mf.js",
+    "sha256": "d1bf7d051e47f9633f069024353bd01ebf0bc5298b36fccbbefa966f7ad8a16a",
+    "dest": "packages/3mf/seed/orca3mf.js"
+  },
+  {
+    "source": "seed/3mf/orca3mf.py",
+    "sha256": "91e3595f7c90cbcc58986cca5b1bae47f8217860207176e0c80d0e7f6999ba40",
+    "dest": "tools/py/orca3mf.py"
+  },
+  {
+    "source": "seed/3mf/orca3mf.template.js",
+    "sha256": "ed06a60440e664f47421f9e1ada83f823e3f894fe03ff6e3f4320875fd736f06",
+    "dest": "packages/3mf/seed/orca3mf.template.js"
+  },
+  {
+    "source": "seed/3mf/validate_3mf.py",
+    "sha256": "cdc2c7d5fc170240e36e1e52bcdd3d5af03036607c242a8e48b9c0d00896aecf",
+    "dest": "tools/py/validate_3mf.py"
+  },
+  {
+    "source": "seed/bench/build_bench.py",
+    "sha256": "c629db509bd26ac56e875f33bbc86aae617890275040f44d32c88fedd4256ef6",
+    "dest": "tools/py/bench/build_bench.py"
+  },
+  {
+    "source": "seed/bench/part1.html",
+    "sha256": "d339b11207a902c23f638c76a37ec02595ad790231846ca93e9f3db43ccf0995",
+    "dest": "packages/ui-core/seed/bench/part1.html"
+  },
+  {
+    "source": "seed/bench/part2.js",
+    "sha256": "b207f95f8bf4c01d212ec56014f1f52f6bf1dfc2f996bc2cd60fe798d816e651",
+    "dest": "packages/ui-core/seed/bench/part2.js"
+  },
+  {
+    "source": "seed/bench/part3.js",
+    "sha256": "91a1dab64f49dc755c79348cbb8c2f61fd4a2a11279d7bfbe257ad10a0287c73",
+    "dest": "packages/ui-core/seed/bench/part3.js"
+  },
+  {
+    "source": "seed/bench/smoke_bench.py",
+    "sha256": "0d8d9dd3a8191d64c018da059d64f7b9a7f28ce864cc44e6470d10af06af5401",
+    "dest": "tools/py/bench/smoke_bench.py"
+  },
+  {
+    "source": "seed/board/check3d.mjs",
+    "sha256": "4d0620ad47469fd989d48428070ed913d83fa58f72aa86b08e0574b773bcd40c",
+    "dest": "packages/board/seed/check3d.mjs"
+  },
+  {
+    "source": "seed/board/kicad_fetch.py",
+    "sha256": "04e642ed8ad30514939146254882305477e1b5bd62ed2803925e87bccd65e515",
+    "dest": "tools/py/board/kicad_fetch.py"
+  },
+  {
+    "source": "seed/board/price.py",
+    "sha256": "a3fe3d11fd583a30eabad8ef32ca5498e13ca3a7694eeb3b4b475e02cafb4e29",
+    "dest": "tools/py/board/price.py"
+  },
+  {
+    "source": "seed/board/sim-template.html",
+    "sha256": "c6ad218e89bb1f33c895890fe0cf9e1d02b0f221d35d22a085be2dfa2f79c820",
+    "dest": "packages/board/seed/sim-template.html"
+  },
+  {
+    "source": "seed/board/step2mesh.mjs",
+    "sha256": "31dc1ee8f52327881992edbd78259597e841ab46f4d18bf53b31f499c3be1a9b",
+    "dest": "packages/board/seed/step2mesh.mjs"
+  },
+  {
+    "source": "seed/board/viewer-template.html",
+    "sha256": "1e98dd4d23b8434f91c9c634994c01acb2bb0cd50bbd640d62acf8d80a894c7a",
+    "dest": "packages/board/seed/viewer-template.html"
+  },
+  {
+    "source": "seed/board/wrl.py",
+    "sha256": "7d59cf9c748a9ca2e71d6a66fb346ddf5fbe0bd37c323b43a73aeea5e1d87f8b",
+    "dest": "tools/py/board/wrl.py"
+  },
+  {
+    "source": "seed/brand/animations.md",
+    "sha256": "a87a699507a04fe440e4d01eb732e4f1ed0bb16fb30e02887ed054921abba507",
+    "skipped": "unpatched skill copy carrying the wrong pink and paper hex values; the design system comes from @virgilvox/hackbuild-ui at M09 (R37)"
+  },
+  {
+    "source": "seed/brand/design-system.md",
+    "sha256": "8affd1ea8a41c52df5b51aed3b5fa94af1f7ed1466e9e97f3f316d3666aa546f",
+    "skipped": "unpatched skill copy carrying the wrong pink and paper hex values; the design system comes from @virgilvox/hackbuild-ui at M09 (R37)"
+  },
+  {
+    "source": "seed/brand/design-tokens.md",
+    "sha256": "b2ea0cb0137d8905dd2905ef82764ca5a45b6bafab5c6c226e421ac7b86e2aa0",
+    "skipped": "unpatched skill copy carrying the wrong pink and paper hex values; the design system comes from @virgilvox/hackbuild-ui at M09 (R37)"
+  },
+  {
+    "source": "seed/brand/hackbuild-base.css",
+    "sha256": "fe6c7f4128ecd8d8f52e3939dbe634a56adf1350d74aed5da1cd2de1d615b411",
+    "skipped": "unpatched skill copy carrying the wrong pink and paper hex values; the design system comes from @virgilvox/hackbuild-ui at M09 (R37)"
+  },
+  {
+    "source": "seed/brand/hackbuild-mark.svg",
+    "sha256": "c0b0c1f6d2f065f4630788e34488c5949eb205fc31505db46681bf851c9c8c02",
+    "skipped": "unpatched skill copy carrying the wrong pink and paper hex values; the design system comes from @virgilvox/hackbuild-ui at M09 (R37)"
+  },
+  {
+    "source": "seed/brand/logos.md",
+    "sha256": "bc18a0b8cae588746991ae3b3b0467798b14f249acf8e996f7810cd6b44de27d",
+    "skipped": "unpatched skill copy carrying the wrong pink and paper hex values; the design system comes from @virgilvox/hackbuild-ui at M09 (R37)"
+  },
+  {
+    "source": "seed/checks.seed.json",
+    "sha256": "23cd8c372a2586c824f545c3f067528c14fb570b3a03a86e9868917c4cf1133d",
+    "dest": "packages/checks/seed/checks.seed.json"
+  },
+  {
+    "source": "seed/circuits.seed.yaml",
+    "sha256": "eaa0d835156c550c701a2ec4c2d87952ccd739f66176f341cb2a710c96ced46f",
+    "dest": "packages/archetypes/seed/archetypes.seed.yaml"
+  },
+  {
+    "source": "seed/mechanisms.seed.yaml",
+    "sha256": "1e4a1429c86d504b53aebc680dd299d894c0123b60c19e1f1574afe4a7e87caf",
+    "dest": "packages/mechanisms/seed/mechanisms.seed.yaml"
+  },
+  {
+    "source": "seed/mesh/rastermesh.js",
+    "sha256": "a99a159b91c9d392987b22393f04caf035762fe5301013c601c6e5f3a6697fe0",
+    "dest": "packages/mesh/seed/rastermesh.js"
+  },
+  {
+    "source": "seed/profile.seed.json",
+    "sha256": "86d194e97db270062216184092540f0e85ebc3dc3657e92aa5b36052d45f80f9",
+    "dest": "packages/profile/seed/profile.seed.json"
+  },
+  {
+    "source": "seed/references/board-forge-SKILL.md",
+    "sha256": "0aab4545f1b4aa30c8ea59cc693bbdda4c17528fd902ade8cc8bb9ca0a390034",
+    "skipped": "assistant skill file, kept in the owner's unpublished archive and out of the public tree"
+  },
+  {
+    "source": "seed/references/board-forge/board-viewer.md",
+    "sha256": "03cb9cf682c12bae8630dd44285b15b888db1fe6155761b3566d26fb0bdbb2fb",
+    "skipped": "assistant skill file, kept in the owner's unpublished archive and out of the public tree"
+  },
+  {
+    "source": "seed/references/board-forge/datasheets.md",
+    "sha256": "7d7c37e72f91703175b6d082df7358d67be6618bf744b4978f15ce0b0f0731f9",
+    "skipped": "assistant skill file, kept in the owner's unpublished archive and out of the public tree"
+  },
+  {
+    "source": "seed/references/board-forge/design-review.md",
+    "sha256": "b6b5535b898c147dea73180428693f3c65edee675302be7636ce374e15050cc2",
+    "skipped": "assistant skill file, kept in the owner's unpublished archive and out of the public tree"
+  },
+  {
+    "source": "seed/references/board-forge/doc-figures.md",
+    "sha256": "ffe7d3494ad1f1daa43eb6137b83534a6dd6a1d9a85d2c5e539e1b4e6f8fa54f",
+    "skipped": "assistant skill file, kept in the owner's unpublished archive and out of the public tree"
+  },
+  {
+    "source": "seed/references/board-forge/ecosystem.md",
+    "sha256": "47c3f00ff0f288b7ca59c4802825ea6972dcf54d3543ff94f37fb09586bbdcff",
+    "skipped": "assistant skill file, kept in the owner's unpublished archive and out of the public tree"
+  },
+  {
+    "source": "seed/references/board-forge/figures-pinout.md",
+    "sha256": "066b6cadcfb0850823fb9138011ea7d5136dfbc47c679f5f2598019d577d7cd6",
+    "skipped": "assistant skill file, kept in the owner's unpublished archive and out of the public tree"
+  },
+  {
+    "source": "seed/references/board-forge/figures-power-tree.md",
+    "sha256": "fd219789d0025e61b6361955bc45bddbd19fed28e794da7e4c99608e9a326d8f",
+    "skipped": "assistant skill file, kept in the owner's unpublished archive and out of the public tree"
+  },
+  {
+    "source": "seed/references/board-forge/figures-tokens.md",
+    "sha256": "8cc92e786af62456279e8796d179ef6889312b1b6a7d9b860911c9a3d7665730",
+    "skipped": "assistant skill file, kept in the owner's unpublished archive and out of the public tree"
+  },
+  {
+    "source": "seed/references/board-forge/hackbuild-theme.md",
+    "sha256": "32344f88cd64868dfb8cd9c40f041a6aca41c7e31d9b082db68dafdf370db028",
+    "skipped": "assistant skill file, kept in the owner's unpublished archive and out of the public tree"
+  },
+  {
+    "source": "seed/references/board-forge/parts-sourcing.md",
+    "sha256": "5dbd3cdcd2c32cbba8f3811452913f4337361d7571bf305b37c94ee697fc5708",
+    "skipped": "assistant skill file, kept in the owner's unpublished archive and out of the public tree"
+  },
+  {
+    "source": "seed/references/board-forge/svg-datasheet-viewer.md",
+    "sha256": "3adbc6c2f1cc90eead3c8ee53291235c8c772c67f6d500c8f42a95b3e0c8d863",
+    "skipped": "assistant skill file, kept in the owner's unpublished archive and out of the public tree"
+  },
+  {
+    "source": "seed/references/board-forge/tscircuit-pipeline.md",
+    "sha256": "87f49462687f1f97e3fea0a86bfd0f678927779a29308c6410d1c7211c21a4f3",
+    "skipped": "assistant skill file, kept in the owner's unpublished archive and out of the public tree"
+  },
+  {
+    "source": "seed/references/board-forge/vinyl-copper.md",
+    "sha256": "fb463eb86f2c8313a838316d9e088ed1717caaea093f41b41acb9ed242502fbc",
+    "skipped": "assistant skill file, kept in the owner's unpublished archive and out of the public tree"
+  },
+  {
+    "source": "seed/references/clasp-SKILL.md",
+    "sha256": "ae7b8f5a495df49e4138fb73a05e0132b37d258ed0073f0a953020f01f8b15d6",
+    "skipped": "assistant skill file, kept in the owner's unpublished archive and out of the public tree"
+  },
+  {
+    "source": "seed/references/clasp/addresses-and-patterns.md",
+    "sha256": "aa036294129d5a401e563596f76095e56cdec269dd656d0c2b0119dba93b820a",
+    "dest": "knowledge/references/clasp/addresses-and-patterns.md"
+  },
+  {
+    "source": "seed/references/clasp/bridges.md",
+    "sha256": "46a4604e0557f902ac992368a43e65580983e8391c4df2a8f79cc884079f32da",
+    "dest": "knowledge/references/clasp/bridges.md"
+  },
+  {
+    "source": "seed/references/clasp/browser-cdn.md",
+    "sha256": "34f6b0d7f3f1672a5316b004bdd939d0e9f7dde1c14088ff445fa7e655e6a73b",
+    "dest": "knowledge/references/clasp/browser-cdn.md"
+  },
+  {
+    "source": "seed/references/clasp/cheatsheet.md",
+    "sha256": "426b2c9748f548616b17ff4e43dc0a381f2dfe32c8f3071edc7e76a2854beb5c",
+    "dest": "knowledge/references/clasp/cheatsheet.md"
+  },
+  {
+    "source": "seed/references/clasp/node-sdk.md",
+    "sha256": "af756477d40a61b1be56b8e412794bb555be8626300c38702946c912ba861de8",
+    "dest": "knowledge/references/clasp/node-sdk.md"
+  },
+  {
+    "source": "seed/references/clasp/protocol.md",
+    "sha256": "011ec881cc6308b95f743b5215765af729a9db7b182933dc1a16a0908019873b",
+    "dest": "knowledge/references/clasp/protocol.md"
+  },
+  {
+    "source": "seed/references/clasp/recipes.md",
+    "sha256": "7907c7e8f639bd02859a84156900cd6a766065c96d1495e20f5da1fb2cdb95bd",
+    "dest": "knowledge/references/clasp/recipes.md"
+  },
+  {
+    "source": "seed/references/conduyt-SKILL.md",
+    "sha256": "57adf5164b3aed5438906a25aaee195558e9a269c934ba1390759ca72600ad61",
+    "skipped": "assistant skill file, kept in the owner's unpublished archive and out of the public tree"
+  },
+  {
+    "source": "seed/references/explainer/explainer-patterns.md",
+    "sha256": "ae0b1f254c6294099a73f7ff2cf0b882218ccdd4eda4c864fc7ed38fc3d155e4",
+    "dest": "knowledge/references/explainer/explainer-patterns.md"
+  },
+  {
+    "source": "seed/references/print-forge-SKILL.md",
+    "sha256": "db632e612cb3b6dbe9a5dce75b4da547ba2bc7983403f86d9b85e408d17894c6",
+    "skipped": "assistant skill file, kept in the owner's unpublished archive and out of the public tree"
+  },
+  {
+    "source": "seed/references/print-forge/3mf-dialect.md",
+    "sha256": "098dcf19661bb350c29f0797bc2a4efe236c26988e1f14d04a209817607f55b0",
+    "dest": "knowledge/references/print-forge/3mf-dialect.md"
+  },
+  {
+    "source": "seed/references/print-forge/art-engine.md",
+    "sha256": "633c53ab70ebda301b36c72751f9310ab8975d513f3a252c35fea51ab5139605",
+    "dest": "knowledge/references/print-forge/art-engine.md"
+  },
+  {
+    "source": "seed/references/print-forge/bench-ui.md",
+    "sha256": "d2fe328b32753191af4762f8c8793a397ce44472fc7eca90bc110c993e61fc76",
+    "dest": "knowledge/references/print-forge/bench-ui.md"
+  },
+  {
+    "source": "seed/references/print-forge/kernels.md",
+    "sha256": "9025da42bcfdeac08836f02d4e26c0cf0da446c1dc8f0cfb57097b114ae5b9ba",
+    "dest": "knowledge/references/print-forge/kernels.md"
+  },
+  {
+    "source": "seed/references/print-forge/lineage.md",
+    "sha256": "044dca20d86af378c78e5edebdd1c52c5706a2fe482ac7a4d9fb61f82172f01d",
+    "dest": "knowledge/references/print-forge/lineage.md"
+  },
+  {
+    "source": "seed/references/print-forge/print-reality.md",
+    "sha256": "4b042b60c3f0f3ad1553a2a3d381923e2d93a59ff23e0611c329ec5420e24b49",
+    "dest": "knowledge/references/print-forge/print-reality.md"
+  },
+  {
+    "source": "seed/references/print-forge/validation.md",
+    "sha256": "5b93003f727f64f00610529f4f757805cd9d2b5196142164818a4845a954a992",
+    "dest": "knowledge/references/print-forge/validation.md"
+  }
+]

@@ -1,0 +1,25 @@
+node_modules/
+.hbf/
+dist/
+*.tsbuildinfo
+__pycache__/
+.venv/
+.DS_Store
+.hbf-notes/
+reference/*/*/out/
+/out/
+*.tmp.mjs
+# assistant skill files kept in the owner archive, outside the public tree
+knowledge/references/*-SKILL.md
+knowledge/references/board-forge/
+# test runners, coverage, local secrets
+test-results/
+playwright-report/
+coverage/
+.env
+.env.*
+!.env.example
+*.key
+
+# SPRUE upload with no known author, kept on disk only (D-269)
+tools/corpus/inlay/vtracer/07-user-art-reference.png

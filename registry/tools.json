@@ -1,0 +1,1416 @@
+{
+  "version": 1,
+  "note": "Compiled from project records, without a filesystem scan. The BENCH v5 catalogue counted 157 entries across 16 groups; this file carries the roughly 55 with enough recorded detail to migrate (inferred). An entry absent here is absent from this compilation only. file and file_sha256 are null until someone places the HTML by hand. STYLUS was called FEELER in the earlier records; the old name is kept as an alias. chats names the working sessions each entry came from by slug; their transcripts sit in the owner's unpublished archive.",
+  "groups": [
+    "inlay",
+    "printed-circuit",
+    "copper",
+    "board",
+    "mechanism",
+    "robot",
+    "device",
+    "machine",
+    "case",
+    "sheet",
+    "meta"
+  ],
+  "kernels": [
+    "shape",
+    "motion",
+    "circuit",
+    "fab",
+    "board",
+    "inlay",
+    "device"
+  ],
+  "statuses": [
+    "live",
+    "reference",
+    "shipped",
+    "in-progress",
+    "needs-fix",
+    "planned",
+    "concept",
+    "superseded"
+  ],
+  "tools": [
+    {
+      "slug": "collar",
+      "name": "COLLAR",
+      "group": "inlay",
+      "kernels": [
+        "shape",
+        "fab",
+        "inlay"
+      ],
+      "blurb": "Challenge coin bench. Edge preset registry as r(theta,z) LUTs, drag-in art with the full handle set, raster-in-XY exact-in-Z kernel, the 127-key filament template, shapes and cutouts and casino edge.",
+      "status": "live",
+      "file": null,
+      "file_sha256": null,
+      "path": "designs/collar/legacy/",
+      "source": "chat-attachment",
+      "chats": [
+        "collar-coin",
+        "print-forge"
+      ],
+      "files": [
+        {
+          "name": "collar.html",
+          "sha256": "ef0864ab66ca40e2930d12aba4cab3159aa470f743eee533d052fc99f844fd46",
+          "bytes": 149897
+        }
+      ]
+    },
+    {
+      "slug": "sprue",
+      "name": "SPRUE",
+      "group": "inlay",
+      "kernels": [
+        "shape",
+        "fab",
+        "inlay"
+      ],
+      "blurb": "Batch plate generator for two-colour flush-inlay coins and 351 guitar picks. Python (sprue.py) plus browser bench (sprue.html). Otsu threshold, min black / min white gap sliders, fill the bed.",
+      "status": "reference",
+      "file": null,
+      "file_sha256": null,
+      "path": "designs/sprue/legacy/",
+      "source": "chat-attachment",
+      "chats": [
+        "sprue",
+        "print-forge"
+      ]
+    },
+    {
+      "slug": "coaming",
+      "name": "COAMING",
+      "group": "inlay",
+      "kernels": [
+        "shape",
+        "fab",
+        "inlay"
+      ],
+      "blurb": "Cyberdeck case maker. Seven archetypes (fold default), assembled and print-bed views, stage face editor, always-editable part dims, constructive prisms with no CSG, COLLAR art engine on rectangular zones.",
+      "status": "reference",
+      "file": null,
+      "file_sha256": null,
+      "path": "designs/coaming/legacy/",
+      "source": "chat-attachment",
+      "chats": [
+        "coaming",
+        "print-forge"
+      ]
+    },
+    {
+      "slug": "slate",
+      "name": "SLATE",
+      "group": "inlay",
+      "kernels": [
+        "shape",
+        "fab",
+        "inlay"
+      ],
+      "blurb": "Clapperboard case for a card game. Barrel hinge r5, gooseneck latch, print audit finding the longest unsupported run of each first layer.",
+      "status": "shipped",
+      "file": null,
+      "file_sha256": null,
+      "path": "designs/slate/legacy/",
+      "source": "chat-attachment",
+      "chats": [
+        "slate",
+        "print-forge"
+      ]
+    },
+    {
+      "slug": "cask",
+      "name": "CASK",
+      "group": "inlay",
+      "kernels": [
+        "shape",
+        "fab",
+        "inlay"
+      ],
+      "blurb": "Round LCD case (Pi plus display) with a bayonet cap, 5in and 4in variants.",
+      "status": "shipped",
+      "file": null,
+      "file_sha256": null,
+      "path": "designs/cask/legacy/",
+      "source": "chat-attachment",
+      "chats": [
+        "cask-enclosure",
+        "cask-cap"
+      ]
+    },
+    {
+      "slug": "sash",
+      "name": "SASH",
+      "group": "inlay",
+      "kernels": [
+        "shape",
+        "fab",
+        "inlay"
+      ],
+      "blurb": "Social battery / availability / drink tally slider badge. First print feedback open: glyphs too small, slide plate can escape at full bars.",
+      "status": "needs-fix",
+      "file": null,
+      "file_sha256": null,
+      "path": "designs/sash/legacy/",
+      "source": "chat-attachment",
+      "chats": [
+        "sash"
+      ]
+    },
+    {
+      "slug": "knurl",
+      "name": "KNURL",
+      "group": "mechanism",
+      "kernels": [
+        "shape",
+        "motion",
+        "fab",
+        "inlay"
+      ],
+      "blurb": "Mechanical tasbih. 33-flute count wheel, separate flat detent strip, 3-slot Geneva star for rounds, flush inlaid numerals through a cartouche window. First print fixed star interference and a snapped Geneva pin.",
+      "status": "shipped",
+      "file": null,
+      "file_sha256": null,
+      "path": "designs/knurl/legacy/",
+      "source": "chat-attachment",
+      "chats": [
+        "knurl"
+      ]
+    },
+    {
+      "slug": "challenge-coin",
+      "name": "hack.build coin",
+      "group": "inlay",
+      "kernels": [
+        "shape",
+        "fab",
+        "inlay"
+      ],
+      "blurb": "The original python coin generator. Superseded by COLLAR but still the source of the Application-tag fix and the NFC pocket variant.",
+      "status": "superseded",
+      "file": null,
+      "file_sha256": null,
+      "path": "designs/challenge-coin/legacy/",
+      "source": "chat-attachment",
+      "chats": [
+        "collar-coin"
+      ]
+    },
+    {
+      "slug": "scabbard",
+      "name": "SCABBARD",
+      "group": "inlay",
+      "kernels": [
+        "shape",
+        "fab",
+        "inlay"
+      ],
+      "blurb": "One-piece USB drive shell shaped like the SATCHEL mark, plus a plug cap.",
+      "status": "shipped",
+      "file": null,
+      "file_sha256": null,
+      "path": "designs/scabbard/legacy/",
+      "source": "chat-attachment",
+      "chats": [
+        "scabbard"
+      ]
+    },
+    {
+      "slug": "plinth",
+      "name": "PLINTH / SYNC32",
+      "group": "inlay",
+      "kernels": [
+        "shape",
+        "fab",
+        "inlay"
+      ],
+      "blurb": "Retro console case for a Pi Pico build. Analytic SDF of a rounded rect so chamfer, wall, cavity, lip and snap groove are all thresholds.",
+      "status": "shipped",
+      "file": null,
+      "file_sha256": null,
+      "path": "designs/plinth/legacy/",
+      "source": "chat-attachment",
+      "chats": [
+        "plinth"
+      ]
+    },
+    {
+      "slug": "locket",
+      "name": "LOCKET",
+      "group": "case",
+      "kernels": [
+        "shape",
+        "fab",
+        "inlay"
+      ],
+      "blurb": "Folding Pi cyberdeck, print-in-place hinge, 11 revisions A to K. Parametric across screen and keyboard libraries, live configurator, belt holster.",
+      "status": "live",
+      "file": null,
+      "file_sha256": null,
+      "path": "designs/locket/legacy/",
+      "source": "chat-attachment",
+      "chats": [
+        "locket"
+      ],
+      "files": [
+        {
+          "name": "locket_r2_sim.html",
+          "sha256": "afa0e593a71af9af06a13d9929ff48b0bc840e3b6be4d3265dc39c3edffd3244",
+          "bytes": 1847901
+        }
+      ]
+    },
+    {
+      "slug": "nacelle",
+      "name": "NACELLE",
+      "group": "case",
+      "kernels": [
+        "shape",
+        "fab"
+      ],
+      "blurb": "Glow-in-the-dark screen plus scifi console body with a LEGO stud rail for mounting WASHER or DETENT.",
+      "status": "in-progress",
+      "file": null,
+      "file_sha256": null,
+      "path": "designs/nacelle/legacy/",
+      "source": "chat-attachment",
+      "chats": [
+        "nacelle"
+      ]
+    },
+    {
+      "slug": "cresset",
+      "name": "CRESSET",
+      "group": "case",
+      "kernels": [
+        "shape",
+        "fab"
+      ],
+      "blurb": "HeatSync logo shaped console case. Superseded by PLINTH.",
+      "status": "superseded",
+      "file": null,
+      "file_sha256": null,
+      "path": "designs/cresset/legacy/",
+      "source": "chat-attachment",
+      "chats": [
+        "plinth"
+      ]
+    },
+    {
+      "slug": "blocks",
+      "name": "BLOCKS",
+      "group": "printed-circuit",
+      "kernels": [
+        "shape",
+        "circuit",
+        "fab"
+      ],
+      "blurb": "LEGO style modular printed electronics. Conductive studs, board seats, printed TPU wires, component bricks, MNA DC solver with piecewise LED, 3D drag and drop with stacking.",
+      "status": "live",
+      "file": null,
+      "file_sha256": null,
+      "path": "designs/blocks/legacy/",
+      "source": "chat-attachment",
+      "chats": [
+        "blocks"
+      ],
+      "files": [
+        {
+          "name": "blocks.html",
+          "sha256": "96bf187a3c56fcc04cca7491c4a2ff22c1d4ed1e87954c7694d953c04faf8b6c",
+          "bytes": 1201487
+        }
+      ]
+    },
+    {
+      "slug": "stylus",
+      "name": "STYLUS",
+      "group": "printed-circuit",
+      "kernels": [
+        "shape",
+        "circuit",
+        "fab",
+        "motion"
+      ],
+      "blurb": "22 archetypes of multimaterial printed sensor. Geometric net checker with joined/apart/apartExcept/makesContact, per-archetype SIM models, HOOKUP schematics, assembly declarations.",
+      "status": "reference",
+      "file": null,
+      "file_sha256": null,
+      "path": "designs/stylus/legacy/",
+      "source": "chat-attachment",
+      "chats": [
+        "stylus-1",
+        "stylus-2",
+        "sensor-catalogue"
+      ],
+      "aliases": [
+        "FEELER"
+      ]
+    },
+    {
+      "slug": "gib",
+      "name": "GIB",
+      "group": "printed-circuit",
+      "kernels": [
+        "shape",
+        "circuit",
+        "fab"
+      ],
+      "blurb": "Printed linear slider bench. Three sense modes (touch, membrane pot, finger pot), two body modes, physics readouts from editable resistivity.",
+      "status": "shipped",
+      "file": null,
+      "file_sha256": null,
+      "path": "designs/gib/legacy/",
+      "source": "chat-attachment",
+      "chats": [
+        "gib"
+      ]
+    },
+    {
+      "slug": "tang",
+      "name": "TANG",
+      "group": "printed-circuit",
+      "kernels": [
+        "shape",
+        "circuit",
+        "fab"
+      ],
+      "blurb": "Slide instrument. R6 fully multimaterial: membrane slider neck, face as a printed circuit board with two buried layers and vias, printed pots with a cTPU spider rotor, no resistors.",
+      "status": "reference",
+      "file": null,
+      "file_sha256": null,
+      "path": "designs/tang/legacy/",
+      "source": "chat-attachment",
+      "chats": [
+        "tang-lasercut"
+      ]
+    },
+    {
+      "slug": "baffle",
+      "name": "BAFFLE",
+      "group": "printed-circuit",
+      "kernels": [
+        "shape",
+        "circuit",
+        "fab"
+      ],
+      "blurb": "One-piece printed instrument, ESP32-C3 plus NS4168 amp plus speaker inside. R3 in progress: six hex keys, longer slider, audio jack, generalised USB opening.",
+      "status": "in-progress",
+      "file": null,
+      "file_sha256": null,
+      "path": "designs/baffle/legacy/",
+      "source": "chat-attachment",
+      "chats": [
+        "baffle"
+      ]
+    },
+    {
+      "slug": "keyway",
+      "name": "KEYWAY",
+      "group": "copper",
+      "kernels": [
+        "circuit",
+        "fab"
+      ],
+      "blurb": "Cricut copper MIDI control surface. 2x2 force pads plus graded slider, 8-layer material stack, 45 gates.",
+      "status": "reference",
+      "file": null,
+      "file_sha256": null,
+      "path": "designs/keyway/legacy/",
+      "source": "chat-attachment",
+      "chats": [
+        "copper-family"
+      ]
+    },
+    {
+      "slug": "vernier",
+      "name": "VERNIER",
+      "group": "copper",
+      "kernels": [
+        "circuit",
+        "fab"
+      ],
+      "blurb": "Capacitive control surface, no Velostat. 6 pads plus 3 wedge sliders, 12 nets, craft-store parts list.",
+      "status": "shipped",
+      "file": null,
+      "file_sha256": null,
+      "path": "designs/vernier/legacy/",
+      "source": "chat-attachment",
+      "chats": [
+        "copper-family"
+      ]
+    },
+    {
+      "slug": "quadrant",
+      "name": "QUADRANT",
+      "group": "copper",
+      "kernels": [
+        "circuit",
+        "fab"
+      ],
+      "blurb": "Radial capacitive surface. 6 annular sector pads plus 3 concentric arc sliders, 12 contacts in one row.",
+      "status": "shipped",
+      "file": null,
+      "file_sha256": null,
+      "path": "designs/quadrant/legacy/",
+      "source": "chat-attachment",
+      "chats": [
+        "copper-family"
+      ]
+    },
+    {
+      "slug": "spline",
+      "name": "SPLINE",
+      "group": "copper",
+      "kernels": [
+        "circuit",
+        "fab"
+      ],
+      "blurb": "12-blade radial surface, 18 nets. Radial stub escapes through the hub void.",
+      "status": "shipped",
+      "file": null,
+      "file_sha256": null,
+      "path": "designs/spline/legacy/",
+      "source": "chat-attachment",
+      "chats": [
+        "copper-family"
+      ]
+    },
+    {
+      "slug": "tessera",
+      "name": "TESSERA",
+      "group": "copper",
+      "kernels": [
+        "circuit",
+        "fab"
+      ],
+      "blurb": "Voronoi tile surface, 18 nets. Column boundaries snapped to straight channels which ARE the routing.",
+      "status": "shipped",
+      "file": null,
+      "file_sha256": null,
+      "path": "designs/tessera/legacy/",
+      "source": "chat-attachment",
+      "chats": [
+        "copper-family"
+      ]
+    },
+    {
+      "slug": "fret",
+      "name": "FRET",
+      "group": "copper",
+      "kernels": [
+        "circuit",
+        "fab"
+      ],
+      "blurb": "Wicki-Hayden isomorphic hex keyboard, 21 nets. Zigzag ribbon routing between interlocked columns. The playable one.",
+      "status": "shipped",
+      "file": null,
+      "file_sha256": null,
+      "path": "designs/fret/legacy/",
+      "source": "chat-attachment",
+      "chats": [
+        "copper-family"
+      ]
+    },
+    {
+      "slug": "stave",
+      "name": "STAVE",
+      "group": "copper",
+      "kernels": [
+        "circuit",
+        "fab"
+      ],
+      "blurb": "Chevron scale strip, 8 keys from one slab, sized to a 4 inch copper tape roll.",
+      "status": "live",
+      "file": null,
+      "file_sha256": null,
+      "path": "designs/stave/legacy/",
+      "source": "chat-attachment",
+      "chats": [
+        "copper-family"
+      ],
+      "files": [
+        {
+          "name": "stave_sim.html",
+          "sha256": "4077a6f66bd2187aecdacc17fdc32eefef871df54079f424cb56bb2807691fdd",
+          "bytes": 125120
+        }
+      ]
+    },
+    {
+      "slug": "coffer",
+      "name": "COFFER",
+      "group": "copper",
+      "kernels": [
+        "circuit",
+        "fab"
+      ],
+      "blurb": "Five interlocking hex tiles that ground-bridge across seams, plus an ESP32-C3 carrier tile. The port standard is on all six edges of every tile.",
+      "status": "shipped",
+      "file": null,
+      "file_sha256": null,
+      "path": "designs/coffer/legacy/",
+      "source": "chat-attachment",
+      "chats": [
+        "coffer"
+      ]
+    },
+    {
+      "slug": "shim",
+      "name": "SHIM",
+      "group": "copper",
+      "kernels": [
+        "circuit",
+        "fab"
+      ],
+      "blurb": "Circuit business card, CR2032 astable, vinyl-cut copper on a Keystone 3002.",
+      "status": "shipped",
+      "file": null,
+      "file_sha256": null,
+      "path": "designs/shim/legacy/",
+      "source": "chat-attachment",
+      "chats": [
+        "shim"
+      ]
+    },
+    {
+      "slug": "spindle",
+      "name": "SPINDLE",
+      "group": "board",
+      "kernels": [
+        "circuit",
+        "board",
+        "fab"
+      ],
+      "blurb": "Dual stepper driver breakout for DETENT. Vinyl-cut copper v5 plus an orderable 2-layer PCB R1 with full gerber verification.",
+      "status": "reference",
+      "file": null,
+      "file_sha256": null,
+      "path": "designs/spindle/legacy/",
+      "source": "chat-attachment",
+      "chats": [
+        "spindle"
+      ]
+    },
+    {
+      "slug": "armature",
+      "name": "ARMATURE",
+      "group": "board",
+      "kernels": [
+        "circuit",
+        "board"
+      ],
+      "blurb": "ESP32-S3 motion and power carrier. 3-source power ORing, 2x DRV8833, gate header, WS2812 chains. Not yet routed.",
+      "status": "in-progress",
+      "file": null,
+      "file_sha256": null,
+      "path": "designs/armature/legacy/",
+      "source": "chat-attachment",
+      "chats": [
+        "armature"
+      ]
+    },
+    {
+      "slug": "tack",
+      "name": "TACK",
+      "group": "board",
+      "kernels": [
+        "circuit",
+        "board"
+      ],
+      "blurb": "hack.build blinky pin. 36 mm round 2-layer with the real logo as mask opening and silk art.",
+      "status": "shipped",
+      "file": null,
+      "file_sha256": null,
+      "path": "designs/tack/legacy/",
+      "source": "chat-attachment",
+      "chats": [
+        "tack"
+      ]
+    },
+    {
+      "slug": "shunt",
+      "name": "SHUNT",
+      "group": "board",
+      "kernels": [
+        "circuit",
+        "board"
+      ],
+      "blurb": "Counterfeit Jumperless shitpost PCB. Full fab set with independent reparse, real silk type from woff2.",
+      "status": "shipped",
+      "file": null,
+      "file_sha256": null,
+      "path": "designs/shunt/legacy/",
+      "source": "chat-attachment",
+      "chats": [
+        "shunt"
+      ]
+    },
+    {
+      "slug": "trunnion",
+      "name": "TRUNNION",
+      "group": "board",
+      "kernels": [
+        "circuit",
+        "board"
+      ],
+      "blurb": "ESP32-C3 carrier with 2 servo headers and a transistor-gated laser output. Orderable and copper-tape versions.",
+      "status": "live",
+      "file": null,
+      "file_sha256": null,
+      "path": "designs/trunnion/legacy/",
+      "source": "chat-attachment",
+      "chats": [
+        "trunnion"
+      ],
+      "files": [
+        {
+          "name": "splicec-3d.html",
+          "sha256": "11c95b6fa0f6b2402d25e4d3a1504e1b733f8e8985536602a814c211645db011",
+          "bytes": 856878
+        }
+      ]
+    },
+    {
+      "slug": "ghost-pcb",
+      "name": "ghost detector",
+      "group": "board",
+      "kernels": [
+        "circuit",
+        "board"
+      ],
+      "blurb": "Ghostbusters-style wand-shaped handheld PCB. Feature list stated, not built.",
+      "status": "live",
+      "file": null,
+      "file_sha256": null,
+      "path": "designs/ghost-pcb/legacy/",
+      "source": "chat-attachment",
+      "chats": [
+        "ghost-pcb"
+      ],
+      "files": [
+        {
+          "name": "auger-viewer.html",
+          "sha256": "8dcff79f69bb4b17ddc933daec8b3154ab8ae9cbff2f9f01bc62514909bde086",
+          "bytes": 2856502
+        },
+        {
+          "name": "auger-rev-a.zip",
+          "sha256": "428ff90f1c307b1c09f3813efb84724d4e0e01e8fc0be3b17a710602fde3f49f",
+          "bytes": 993068
+        }
+      ]
+    },
+    {
+      "slug": "round-pi-board",
+      "name": "round Pi carrier",
+      "group": "board",
+      "kernels": [
+        "circuit",
+        "board"
+      ],
+      "blurb": "Carrier for a 4in round LCD with a low-profile Pi, LiPo power, speakers, GPIO breakout.",
+      "status": "concept",
+      "file": null,
+      "file_sha256": null,
+      "path": "designs/round-pi-board/legacy/",
+      "source": "chat-attachment",
+      "chats": [
+        "round-pi-board"
+      ]
+    },
+    {
+      "slug": "ogee",
+      "name": "OGEE",
+      "group": "mechanism",
+      "kernels": [
+        "shape",
+        "motion",
+        "fab"
+      ],
+      "blurb": "The 4x4 mechanically multiplexed pin display. 17 revisions. R16 lasercut is the shipped design, R16-P the printed hand-cranked variant, R16-M minimal, R16-C cloth.",
+      "status": "reference",
+      "file": null,
+      "file_sha256": null,
+      "path": "designs/ogee/legacy/",
+      "source": "chat-attachment",
+      "chats": [
+        "ogee-concept",
+        "ogee-printed",
+        "ogee-r16"
+      ]
+    },
+    {
+      "slug": "stipple",
+      "name": "STIPPLE",
+      "group": "mechanism",
+      "kernels": [
+        "shape",
+        "motion",
+        "fab"
+      ],
+      "blurb": "OGEE R17, 10x10 miniature. On-edge comb bars, the pin-free floating balance beam joint, 1.5 mm sheet.",
+      "status": "shipped",
+      "file": null,
+      "file_sha256": null,
+      "path": "designs/stipple/legacy/",
+      "source": "chat-attachment",
+      "chats": [
+        "ogee-r16"
+      ]
+    },
+    {
+      "slug": "ogee16-app",
+      "name": "OGEE app",
+      "group": "mechanism",
+      "kernels": [
+        "shape",
+        "motion",
+        "fab"
+      ],
+      "blurb": "Consolidated distribution HTML carrying all three builds with STL and DXF export. Outlines plus a prism/bisect kernel instead of meshes.",
+      "status": "shipped",
+      "file": null,
+      "file_sha256": null,
+      "path": "designs/ogee16-app/legacy/",
+      "source": "chat-attachment",
+      "chats": [
+        "ogee-r16"
+      ]
+    },
+    {
+      "slug": "heddle",
+      "name": "HEDDLE",
+      "group": "mechanism",
+      "kernels": [
+        "shape",
+        "motion",
+        "fab"
+      ],
+      "blurb": "Printed mechanical metamaterial as an addressable display, flat sheet, PETG plus TPU. Draft concept, not approved.",
+      "status": "concept",
+      "file": null,
+      "file_sha256": null,
+      "path": "designs/heddle/legacy/",
+      "source": "chat-attachment",
+      "chats": [
+        "sensor-catalogue"
+      ]
+    },
+    {
+      "slug": "slug",
+      "name": "SLUG",
+      "group": "mechanism",
+      "kernels": [
+        "shape",
+        "motion",
+        "fab"
+      ],
+      "blurb": "Lasercut gashapon capsule vending machine. Coin acceptor, 28BYJ-48 rotor at exactly 4:1, headless multi-trial physics that caught the arching.",
+      "status": "shipped",
+      "file": null,
+      "file_sha256": null,
+      "path": "designs/slug/legacy/",
+      "source": "chat-attachment",
+      "chats": [
+        "slug"
+      ]
+    },
+    {
+      "slug": "tumbler",
+      "name": "TUMBLER",
+      "group": "mechanism",
+      "kernels": [
+        "shape",
+        "motion",
+        "fab"
+      ],
+      "blurb": "Parametric gallery of 18 lasercut and printable mechanical logic modules plus a bench for laying out logic circuits.",
+      "status": "shipped",
+      "file": null,
+      "file_sha256": null,
+      "path": "designs/tumbler/legacy/",
+      "source": "chat-attachment",
+      "chats": [
+        "tumbler"
+      ]
+    },
+    {
+      "slug": "davit",
+      "name": "DAVIT",
+      "group": "robot",
+      "kernels": [
+        "shape",
+        "motion",
+        "fab"
+      ],
+      "blurb": "Pair of pipe-mounted robot arms with grippers. R4 is 9g-only, skeletal truss style, two-level sphere collision proxies with calibrated whitelists.",
+      "status": "shipped",
+      "file": null,
+      "file_sha256": null,
+      "path": "designs/davit/legacy/",
+      "source": "chat-attachment",
+      "chats": [
+        "davit",
+        "jib"
+      ]
+    },
+    {
+      "slug": "pawl",
+      "name": "PAWL",
+      "group": "robot",
+      "kernels": [
+        "shape",
+        "motion"
+      ],
+      "blurb": "16 DOF 1/6 scale stepper biped. Rapier sim, five checkers, the render-and-look process fix came from here.",
+      "status": "shipped",
+      "file": null,
+      "file_sha256": null,
+      "path": "designs/pawl/legacy/",
+      "source": "chat-attachment",
+      "chats": [
+        "pawl"
+      ]
+    },
+    {
+      "slug": "spool",
+      "name": "SPOOL",
+      "group": "robot",
+      "kernels": [
+        "shape",
+        "motion"
+      ],
+      "blurb": "12-joint 3.7g servo humanoid with a universal saddle and yoke module.",
+      "status": "shipped",
+      "file": null,
+      "file_sha256": null,
+      "path": "designs/spool/legacy/",
+      "source": "chat-attachment",
+      "chats": [
+        "spool"
+      ]
+    },
+    {
+      "slug": "pintle",
+      "name": "PINTLE",
+      "group": "robot",
+      "kernels": [
+        "shape",
+        "motion"
+      ],
+      "blurb": "9g servo pancake joint module, printed slew ring that de-cantilevers the servo output.",
+      "status": "shipped",
+      "file": null,
+      "file_sha256": null,
+      "path": "designs/pintle/legacy/",
+      "source": "chat-attachment",
+      "chats": [
+        "pintle"
+      ]
+    },
+    {
+      "slug": "stanchion",
+      "name": "STANCHION",
+      "group": "robot",
+      "kernels": [
+        "shape",
+        "motion"
+      ],
+      "blurb": "Tracked mast robot. Aileron-differential stereo camera head, one mount pattern everywhere (PAD and HORN on the same face of every bracket).",
+      "status": "shipped",
+      "file": null,
+      "file_sha256": null,
+      "path": "designs/stanchion/legacy/",
+      "source": "chat-attachment",
+      "chats": [
+        "stanchion"
+      ]
+    },
+    {
+      "slug": "sprocket",
+      "name": "SPROCKET",
+      "group": "robot",
+      "kernels": [
+        "motion",
+        "device"
+      ],
+      "blurb": "Devastator-style tracked robot on a NULLLAB Maker-ESP32. BLE firmware plus a hack.build control app with CLASP.",
+      "status": "shipped",
+      "file": null,
+      "file_sha256": null,
+      "path": "designs/sprocket/legacy/",
+      "source": "chat-attachment",
+      "chats": [
+        "sprocket"
+      ]
+    },
+    {
+      "slug": "detent",
+      "name": "DETENT",
+      "group": "device",
+      "kernels": [
+        "motion",
+        "device"
+      ],
+      "blurb": "Two-mirror stepper laser scanner. Firmware plus control app, four-corner homography calibration, trapezoidal planner with junction lookahead, becoming the BEAM monorepo.",
+      "status": "reference",
+      "file": null,
+      "file_sha256": null,
+      "path": "designs/detent/legacy/",
+      "source": "chat-attachment",
+      "chats": [
+        "detent-hw",
+        "detent-fw"
+      ]
+    },
+    {
+      "slug": "beam",
+      "name": "BEAM",
+      "group": "device",
+      "kernels": [
+        "motion",
+        "device"
+      ],
+      "blurb": "The DETENT software as a monorepo: beam-core, beam-sources, beam-link, apps/studio. PRD complete.",
+      "status": "planned",
+      "file": null,
+      "file_sha256": null,
+      "path": "designs/beam/legacy/",
+      "source": "chat-attachment",
+      "chats": [
+        "detent-fw"
+      ]
+    },
+    {
+      "slug": "washer",
+      "name": "WASHER",
+      "group": "device",
+      "kernels": [
+        "motion",
+        "device"
+      ],
+      "blurb": "Pan/tilt laser rig. ESP32 firmware, laser-rig.html, round-LCD UI variant, standalone pattern firmware.",
+      "status": "shipped",
+      "file": null,
+      "file_sha256": null,
+      "path": "designs/washer/legacy/",
+      "source": "chat-attachment",
+      "chats": [
+        "washer"
+      ]
+    },
+    {
+      "slug": "kerf",
+      "name": "KERF",
+      "group": "device",
+      "kernels": [
+        "device"
+      ],
+      "blurb": "Single-file WebUSB RTL-SDR receiver, plus a spirit box mode and in-browser WebGPU Whisper.",
+      "status": "shipped",
+      "file": null,
+      "file_sha256": null,
+      "path": "designs/kerf/legacy/",
+      "source": "chat-attachment",
+      "chats": [
+        "kerf"
+      ]
+    },
+    {
+      "slug": "hasp",
+      "name": "HASP",
+      "group": "device",
+      "kernels": [
+        "device"
+      ],
+      "blurb": "Single-file WebUSB Ubertooth One app.",
+      "status": "shipped",
+      "file": null,
+      "file_sha256": null,
+      "path": "designs/hasp/legacy/",
+      "source": "chat-attachment",
+      "chats": [
+        "hasp-bench"
+      ]
+    },
+    {
+      "slug": "louver",
+      "name": "LOUVER",
+      "group": "device",
+      "kernels": [
+        "device"
+      ],
+      "blurb": "ESP32-CAM (AI-Thinker v1.7, OV2640) camera node with CLASP firmware.",
+      "status": "shipped",
+      "file": null,
+      "file_sha256": null,
+      "path": "designs/louver/legacy/",
+      "source": "chat-attachment",
+      "chats": [
+        "louver-rec",
+        "louver-orig"
+      ]
+    },
+    {
+      "slug": "plenum",
+      "name": "PLENUM",
+      "group": "machine",
+      "kernels": [
+        "shape",
+        "motion"
+      ],
+      "blurb": "Sub-ambient cooled blue diode head. Enclosed Class 1 gantry, chilled glycol cold plate with dry-purged plenum, design tool.",
+      "status": "shipped",
+      "file": null,
+      "file_sha256": null,
+      "path": "designs/plenum/legacy/",
+      "source": "chat-attachment",
+      "chats": [
+        "plenum-quench"
+      ]
+    },
+    {
+      "slug": "quench",
+      "name": "QUENCH",
+      "group": "machine",
+      "kernels": [
+        "shape"
+      ],
+      "blurb": "Portable plasma cut planner. Energy-balance cut speed model, kerf and bevel window, battery and air budget.",
+      "status": "shipped",
+      "file": null,
+      "file_sha256": null,
+      "path": "designs/quench/legacy/",
+      "source": "chat-attachment",
+      "chats": [
+        "plenum-quench"
+      ]
+    },
+    {
+      "slug": "sketch",
+      "name": "SKETCH",
+      "group": "sheet",
+      "kernels": [
+        "shape",
+        "fab"
+      ],
+      "blurb": "Lasercut project design tool at sketch.hack.build. Plate and joint as primitives, op log doubling as a TypeScript script, NFP nesting. Plan shipped, not built.",
+      "status": "live",
+      "file": null,
+      "file_sha256": null,
+      "path": "designs/sketch/legacy/",
+      "source": "chat-attachment",
+      "chats": [
+        "sketch"
+      ],
+      "files": [
+        {
+          "name": "sketch.html",
+          "sha256": "39b5ebce5ce14ac50233f16f3875e5bbcf32136c8ba47fb1e28558243b8a98d5",
+          "bytes": 247124
+        }
+      ]
+    },
+    {
+      "slug": "bench",
+      "name": "BENCH",
+      "group": "meta",
+      "kernels": [],
+      "blurb": "The tool catalogue itself. 157 entries across 16 groups as of v5. Becomes the registry.",
+      "status": "reference",
+      "file": null,
+      "file_sha256": null,
+      "path": "designs/bench/legacy/",
+      "source": "chat-attachment",
+      "chats": [
+        "bench",
+        "design-system-1"
+      ]
+    },
+    {
+      "slug": "toggle",
+      "name": "TOGGLE",
+      "group": "printed-circuit",
+      "kernels": [
+        "shape",
+        "circuit",
+        "fab",
+        "motion"
+      ],
+      "blurb": "Low profile parametric multimaterial thumbstick, prints in place on four heads. TPU stem with a conductive band bridging wall traces when tilted. Solo and BLOCKS variants, 4 and 8 way.",
+      "status": "shipped",
+      "file": null,
+      "file_sha256": null,
+      "path": "designs/toggle/legacy/",
+      "source": "chat-attachment",
+      "chats": [
+        "toggle"
+      ]
+    },
+    {
+      "slug": "haft",
+      "name": "HAFT",
+      "group": "printed-circuit",
+      "kernels": [
+        "shape",
+        "circuit",
+        "fab",
+        "motion"
+      ],
+      "blurb": "Fully printed game controller. Button groups pick flex, clicky or touch; RP2040-Zero on press-fit bumps or wire cups; click spring solved by a beam solver; drive pad; six exports; five-test suite.",
+      "status": "shipped",
+      "file": null,
+      "file_sha256": null,
+      "path": "designs/haft/legacy/",
+      "source": "chat-attachment",
+      "chats": [
+        "haft"
+      ]
+    },
+    {
+      "slug": "gudgeon",
+      "name": "GUDGEON",
+      "group": "case",
+      "kernels": [
+        "shape",
+        "circuit",
+        "fab",
+        "inlay"
+      ],
+      "blurb": "Print-in-place folding pocket cyberdeck for a GC9A01 round screen and RP2040-Zero with a printed circuit deck face, two buried layers, printed vias, touch pads, finger slider, three body shapes, art editor on three zones.",
+      "status": "shipped",
+      "file": null,
+      "file_sha256": null,
+      "path": "designs/gudgeon/legacy/",
+      "source": "chat-attachment",
+      "chats": [],
+      "search_terms": "GUDGEON folding round screen cyberdeck GC9A01"
+    }
+  ],
+  "chats": {
+    "collar-coin": {
+      "covers": "challenge-coin R1/R2 then COLLAR v1 to v5",
+      "confidence": "verified"
+    },
+    "print-forge": {
+      "covers": "the print-forge skill, orca3mf, validate_3mf, inlay-bench",
+      "confidence": "verified"
+    },
+    "coaming": {
+      "covers": "COAMING archetype expansion, FOLDING DECK, COLLAR art engine port",
+      "confidence": "verified"
+    },
+    "sprue": {
+      "covers": "sprue.py then sprue.html",
+      "confidence": "verified"
+    },
+    "slate": {
+      "covers": "SLATE, six hinge designs, the print audit",
+      "confidence": "verified"
+    },
+    "knurl": {
+      "covers": "KNURL, the first print fixes, the art research",
+      "confidence": "verified"
+    },
+    "stylus-1": {
+      "covers": "STYLUS v1, 14 to 20 archetypes, the net checker, the pot rebuild",
+      "confidence": "verified"
+    },
+    "stylus-2": {
+      "covers": "STYLUS 22 archetypes, THINPOT, LADDER, the dome saga, HOOKUP panels",
+      "confidence": "verified"
+    },
+    "sensor-catalogue": {
+      "covers": "the source catalogue STYLUS was built from",
+      "confidence": "referenced"
+    },
+    "blocks": {
+      "covers": "BLOCKS (shipped as BOSS), the router, the MNA solver, 20 example 3MFs",
+      "confidence": "verified"
+    },
+    "copper-family": {
+      "covers": "KEYWAY, VERNIER, QUADRANT, SPLINE, TESSERA, FRET, STAVE, all seven",
+      "confidence": "verified"
+    },
+    "tang-lasercut": {
+      "covers": "TANG lasercut era, copper v1 to v4, the interdigitated hex combs",
+      "confidence": "verified"
+    },
+    "ogee-concept": {
+      "covers": "where the idea started, why the charlieplex analogy breaks",
+      "confidence": "verified"
+    },
+    "ogee-printed": {
+      "covers": "OGEE R4 to R11, the bistable cell, ogee.html",
+      "confidence": "verified"
+    },
+    "ogee-r16": {
+      "covers": "R16, R16-P, R16-M, the sheets page, the cloth sim, the pivot pin, check_sweep",
+      "confidence": "verified"
+    },
+    "detent-hw": {
+      "covers": "DETENT printed parts rev A to C, detent.html",
+      "confidence": "verified"
+    },
+    "detent-fw": {
+      "covers": "DETENT firmware and app, the field audit, the speed pass, the BEAM PRD",
+      "confidence": "verified"
+    },
+    "slug": {
+      "covers": "SLUG, the drum cage, the hood, the headless physics trials",
+      "confidence": "verified"
+    },
+    "davit": {
+      "covers": "DAVIT and DAVIT MINI, the crank truss, the collision system",
+      "confidence": "verified"
+    },
+    "jib": {
+      "covers": "JIB, the lasercut arm variant",
+      "confidence": "verified"
+    },
+    "locket": {
+      "covers": "LOCKET R1, the magnets, the hinge clamp, the ray-cast port audit",
+      "confidence": "verified"
+    },
+    "spindle": {
+      "covers": "SPINDLE v5 copper, SPINDLE R1 PCB, the gerber bugs, the KiCad export",
+      "confidence": "verified"
+    },
+    "gib": {
+      "covers": "GIB, the three sense modes, the three-terminal layout rounds",
+      "confidence": "verified"
+    },
+    "kerf": {
+      "covers": "KERF, the ADS-B decoder, the waterfall palettes, Whisper",
+      "confidence": "verified"
+    },
+    "cask-enclosure": {
+      "covers": "CASK v0.1, cask.scad, the shell plus bayonet twist-lock cap plus fit gauge",
+      "confidence": "verified"
+    },
+    "cask-cap": {
+      "covers": "the 4in and 5in CASK caps with flush inlay art, the p:path component bug",
+      "confidence": "verified"
+    },
+    "sash": {
+      "covers": "SASH, the keeper rib fix, the glyph legibility rework",
+      "confidence": "verified"
+    },
+    "scabbard": {
+      "covers": "SCABBARD r1 and r2, the SATCHEL logo pack, the parametric sweep",
+      "confidence": "verified"
+    },
+    "plinth": {
+      "covers": "CRESSET first, then PLINTH / SYNC32 rebuilt from scratch",
+      "confidence": "verified"
+    },
+    "nacelle": {
+      "covers": "NACELLE, the CRT body, the LEGO rig rail, the WASHER adapter",
+      "confidence": "verified"
+    },
+    "baffle": {
+      "covers": "BAFFLE, the snap lid and clamp, the slider topology fix, the hex keys",
+      "confidence": "verified"
+    },
+    "coffer": {
+      "covers": "COFFER K6 S3 A3 D1 M1, the port standard, the finger-scale gate, cover stickers",
+      "confidence": "verified"
+    },
+    "shim": {
+      "covers": "SHIM rev A, the non-planarity proof and the switch-as-bridge trick",
+      "confidence": "verified"
+    },
+    "armature": {
+      "covers": "ARMATURE R1, the three-source power ORing, the 3D sim and check3d",
+      "confidence": "verified"
+    },
+    "tack": {
+      "covers": "TACK rev A, the mask-opening wrench, the chirality lesson",
+      "confidence": "verified"
+    },
+    "shunt": {
+      "covers": "SHUNT R1, the mirror bugs, the fab set, real silk type",
+      "confidence": "verified"
+    },
+    "trunnion": {
+      "covers": "TRUNNION orderable PCB, SPLICE rev C copper tape, SPLICE-C; the canonical logo geometry",
+      "confidence": "verified"
+    },
+    "ghost-pcb": {
+      "covers": "AUGER rev B, tscircuit board plus case plus firmware sim viewer",
+      "confidence": "verified"
+    },
+    "round-pi-board": {
+      "covers": "GROMMET 108mm round carrier, then LUG the 65x56.5 HAT",
+      "confidence": "verified"
+    },
+    "tumbler": {
+      "covers": "TUMBLER v1, v2 and v2.1, all 18 modules plus the bench",
+      "confidence": "verified"
+    },
+    "pawl": {
+      "covers": "PAWL, the seven checkers, render.py and the look-at-it lesson",
+      "confidence": "verified"
+    },
+    "spool": {
+      "covers": "SPOOL, the saddle and yoke module, the seat check, heat-set inserts",
+      "confidence": "verified"
+    },
+    "pintle": {
+      "covers": "PINTLE R1 to R6 plus DERRICK, the five-module arm",
+      "confidence": "verified"
+    },
+    "stanchion": {
+      "covers": "STANCHION, the one mount pattern, the aileron differential, the v2 viewer",
+      "confidence": "verified"
+    },
+    "sprocket": {
+      "covers": "SPROCKET firmware and app, the CLASP codec cross-check, the drive audit",
+      "confidence": "verified"
+    },
+    "washer": {
+      "covers": "WASHER, laser-rig.html, the motion planner rewrite, the stroke font rebuild",
+      "confidence": "verified"
+    },
+    "hasp-bench": {
+      "covers": "HASP's 12 panels, and the app.hack.build device-first bench",
+      "confidence": "verified"
+    },
+    "louver-rec": {
+      "covers": "the long-run recording firmware brief; points back at the original LOUVER",
+      "confidence": "verified"
+    },
+    "louver-orig": {
+      "covers": "the original LOUVER CLASP firmware, MessagePack codec, PSRAM ring buffer",
+      "confidence": "referenced"
+    },
+    "plenum-quench": {
+      "covers": "both QUENCH and PLENUM, plus the declined multi-bank design and why",
+      "confidence": "verified"
+    },
+    "sketch": {
+      "covers": "SKETCH, the full plan, the RABBET rename",
+      "confidence": "verified"
+    },
+    "bench": {
+      "covers": "BENCH itself: the 157-tool catalogue, bench.html, hackbuild-tools.zip, AND the hack.build design system v1.0 package",
+      "confidence": "verified"
+    },
+    "design-system-1": {
+      "covers": "the earlier design system pass, Jan 2026",
+      "confidence": "verified"
+    },
+    "toggle": {
+      "covers": "TOGGLE, six kernel files, four presets, the pinch healer fix in part2e",
+      "confidence": "verified"
+    },
+    "haft": {
+      "covers": "HAFT, the newest bench in the lineage, the four switch designs with numbers, the five-test suite, the drive pad, the 390 fix",
+      "confidence": "verified"
+    }
+  }
+}

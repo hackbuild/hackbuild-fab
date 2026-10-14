@@ -1,0 +1,17 @@
+{
+  "attribution": { "commit": "", "pr": "" },
+  "permissions": {
+    "ask": [
+      "mcp__hbf__export_run",
+      "Bash(npx --no-install hbf export.run*)",
+      "Bash(npx hbf export.run*)",
+      "Bash(hbf export.run*)",
+      "Bash(script *)"
+    ],
+    "deny": [
+      "Bash(git commit*--trailer*)",
+      "Read(./.hbf/gate.key)",
+      "Read(./.hbf/http.token)"
+    ]
+  }
+}
