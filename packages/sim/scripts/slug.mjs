@@ -68,7 +68,7 @@ function record() {
   const base = r8.rows.slice(0, m58.trials).map((t) => t.delivered.slice(0, vends).filter((n) => n === 1).length);
   const rec = {
     card: "M02-T08",
-    note: "Pass counts are computed; wallMs is measured on the machine below. The runner behind BUILD.md's 126 of 128 is absent, so the protocol is the card's (M02-T08 step 4) and the expectation stays unverified until a run reproduces it.",
+    note: "Pass counts and hashes are computed and equal on x64 and arm64: the solver takes sine, cosine, tangent and atan2 from src/trig.ts (CI-03). wallMs is measured on the machine below. The runner behind BUILD.md's 126 of 128 is absent, so the protocol is the card's (M02-T08 step 4) and the expectation stays unverified until a run reproduces it.",
     date: new Date().toISOString().slice(0, 10),
     machine: machine(),
     program: "packages/sim/src/capsule/vend.ts with scenes packages/sim/scenes/slug.ts and slug-mouth58.ts",

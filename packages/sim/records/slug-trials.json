@@ -1,7 +1,7 @@
 {
   "card": "M02-T08",
-  "note": "Pass counts are computed; wallMs is measured on the machine below. The runner behind BUILD.md's 126 of 128 is absent, so the protocol is the card's (M02-T08 step 4) and the expectation stays unverified until a run reproduces it.",
-  "date": "2026-10-07",
+  "note": "Pass counts and hashes are computed and equal on x64 and arm64: the solver takes sine, cosine, tangent and atan2 from src/trig.ts (CI-03). wallMs is measured on the machine below. The runner behind BUILD.md's 126 of 128 is absent, so the protocol is the card's (M02-T08 step 4) and the expectation stays unverified until a run reproduces it.",
+  "date": "2026-10-14",
   "machine": {
     "cpu": "Apple M1",
     "os": "darwin 21.6.0",
@@ -10,21 +10,21 @@
     "node": "v22.18.0"
   },
   "program": "packages/sim/src/capsule/vend.ts with scenes packages/sim/scenes/slug.ts and slug-mouth58.ts",
-  "exitRow": "unverified, measured 91 of 128",
+  "exitRow": "unverified, measured 90 of 128",
   "trials8": {
     "result": {
       "runs": 128,
-      "passes": 91,
-      "worst": "seed 1 vend 13: 0 delivered",
+      "passes": 90,
+      "worst": "seed 1 vend 12: 0 delivered",
       "seed": 1,
-      "snapshotHash": "50e70943e50c3826505769470d2e20ee228c27b6f1420b657f738636130509c9",
-      "wallMs": 7828.0885419999995
+      "snapshotHash": "32447a603bb988f99476f18c9255a1496abd4c705cdcdf57f78b917f39110daa",
+      "wallMs": 11707.923916
     },
     "rows": [
       {
         "seed": 1,
         "vends": 16,
-        "passes": 12,
+        "passes": 11,
         "delivered": [
           1,
           1,
@@ -37,13 +37,17 @@
           1,
           1,
           1,
-          1,
+          0,
           0,
           0,
           0,
           0
         ],
         "misses": [
+          {
+            "vend": 12,
+            "delivered": 0
+          },
           {
             "vend": 13,
             "delivered": 0
@@ -90,22 +94,22 @@
           },
           {
             "vend": 6,
-            "capsule": 13,
+            "capsule": 12,
             "step": 7992
           },
           {
             "vend": 7,
-            "capsule": 10,
+            "capsule": 13,
             "step": 9331
           },
           {
             "vend": 8,
-            "capsule": 14,
+            "capsule": 10,
             "step": 10670
           },
           {
             "vend": 9,
-            "capsule": 6,
+            "capsule": 8,
             "step": 12009
           },
           {
@@ -117,17 +121,12 @@
             "vend": 11,
             "capsule": 3,
             "step": 14687
-          },
-          {
-            "vend": 12,
-            "capsule": 12,
-            "step": 16026
           }
         ],
-        "leftAbove": 6,
-        "onHood": 5,
+        "leftAbove": 7,
+        "onHood": 6,
         "steps": 21904,
-        "endHash": "cd7b692d704df715c8f7c3ff030a86c64d135fabbd97bd92e5c449c17b9bd5e6"
+        "endHash": "b407e146f34fab7262722db1a0194453db7e6bfd8552a4d8299f1bbf426d8d26"
       },
       {
         "seed": 2,
@@ -234,7 +233,7 @@
         "leftAbove": 7,
         "onHood": 6,
         "steps": 21904,
-        "endHash": "1574c266b69b9e9861f9995d4b50617b83671f5b1645a6c162f19e9c5a2cace4"
+        "endHash": "fe53bc97e36ed9b0920b98fb87f8e3fb606e94b84d5405abe9c8ce8d7d971440"
       },
       {
         "seed": 3,
@@ -341,12 +340,12 @@
         "leftAbove": 7,
         "onHood": 6,
         "steps": 21904,
-        "endHash": "e4aa46e12b7c3caaf6d3024e56f295ab399d370464a320fe700de3f91b918d87"
+        "endHash": "14736c40e09ba5dbcf9185cc637180853970c462d0268f2264e9de45d3cc66ff"
       },
       {
         "seed": 4,
         "vends": 16,
-        "passes": 11,
+        "passes": 12,
         "delivered": [
           1,
           1,
@@ -359,17 +358,13 @@
           1,
           1,
           1,
-          0,
+          1,
           0,
           0,
           0,
           0
         ],
         "misses": [
-          {
-            "vend": 12,
-            "delivered": 0
-          },
           {
             "vend": 13,
             "delivered": 0
@@ -421,34 +416,39 @@
           },
           {
             "vend": 7,
-            "capsule": 17,
+            "capsule": 12,
             "step": 9331
           },
           {
             "vend": 8,
-            "capsule": 9,
+            "capsule": 17,
             "step": 10670
           },
           {
             "vend": 9,
-            "capsule": 12,
+            "capsule": 1,
             "step": 12009
           },
           {
             "vend": 10,
-            "capsule": 10,
+            "capsule": 13,
             "step": 13348
           },
           {
             "vend": 11,
-            "capsule": 3,
+            "capsule": 16,
             "step": 14687
+          },
+          {
+            "vend": 12,
+            "capsule": 10,
+            "step": 16026
           }
         ],
-        "leftAbove": 7,
-        "onHood": 6,
+        "leftAbove": 6,
+        "onHood": 5,
         "steps": 21904,
-        "endHash": "f77e48eee37bdb29fbbe9f2b46c2b311964a16fee035985eb58393f150f4a412"
+        "endHash": "6c642d30a000be2accfebcacc84cb7076359c00d5e9ba5435a6be7475fbcfa7d"
       },
       {
         "seed": 5,
@@ -538,24 +538,24 @@
           },
           {
             "vend": 9,
-            "capsule": 1,
+            "capsule": 14,
             "step": 12009
           },
           {
             "vend": 10,
-            "capsule": 5,
+            "capsule": 1,
             "step": 13348
           },
           {
             "vend": 11,
-            "capsule": 14,
+            "capsule": 5,
             "step": 14687
           }
         ],
         "leftAbove": 7,
         "onHood": 6,
         "steps": 21904,
-        "endHash": "6810dd0c40b50ece35166fe790115f536eeb7bb817f71732ea26a75f94746453"
+        "endHash": "ec252518b804ee8e5b506392bc9e1610153133f57a561f59db9d11ea60eeae08"
       },
       {
         "seed": 6,
@@ -631,44 +631,44 @@
           },
           {
             "vend": 7,
-            "capsule": 6,
+            "capsule": 10,
             "step": 9331
           },
           {
             "vend": 8,
-            "capsule": 8,
+            "capsule": 12,
             "step": 10670
           },
           {
             "vend": 9,
-            "capsule": 10,
+            "capsule": 1,
             "step": 12009
           },
           {
             "vend": 10,
-            "capsule": 13,
+            "capsule": 6,
             "step": 13348
           },
           {
             "vend": 11,
-            "capsule": 16,
+            "capsule": 3,
             "step": 14687
           },
           {
             "vend": 12,
-            "capsule": 17,
+            "capsule": 16,
             "step": 16026
           }
         ],
         "leftAbove": 6,
-        "onHood": 6,
+        "onHood": 5,
         "steps": 21904,
-        "endHash": "a83a99dd6c6f1c952fa6b83bde1205fbdff713f6fcf74a062a24926aa3f52ba6"
+        "endHash": "012a90efe445513331df5c9fb699cb4926366dc10c674f28b17936a5d3e6d46c"
       },
       {
         "seed": 7,
         "vends": 16,
-        "passes": 12,
+        "passes": 11,
         "delivered": [
           1,
           1,
@@ -681,13 +681,17 @@
           1,
           1,
           1,
-          1,
+          0,
           0,
           0,
           0,
           0
         ],
         "misses": [
+          {
+            "vend": 12,
+            "delivered": 0
+          },
           {
             "vend": 13,
             "delivered": 0
@@ -749,7 +753,7 @@
           },
           {
             "vend": 9,
-            "capsule": 4,
+            "capsule": 15,
             "step": 12009
           },
           {
@@ -761,17 +765,12 @@
             "vend": 11,
             "capsule": 1,
             "step": 14687
-          },
-          {
-            "vend": 12,
-            "capsule": 6,
-            "step": 16026
           }
         ],
-        "leftAbove": 6,
-        "onHood": 5,
+        "leftAbove": 7,
+        "onHood": 6,
         "steps": 21904,
-        "endHash": "bf13af38781868d88a7e57a6397bc34c7c5155aa31b062e0ec0b97dcee6e6513"
+        "endHash": "46422c1b7a591bf70179ad744a5040bc5af19fa60f87702bc62a412dedf4271f"
       },
       {
         "seed": 8,
@@ -878,24 +877,24 @@
         "leftAbove": 7,
         "onHood": 6,
         "steps": 21904,
-        "endHash": "50e70943e50c3826505769470d2e20ee228c27b6f1420b657f738636130509c9"
+        "endHash": "32447a603bb988f99476f18c9255a1496abd4c705cdcdf57f78b917f39110daa"
       }
     ]
   },
   "trials30": {
     "result": {
       "runs": 480,
-      "passes": 335,
-      "worst": "seed 1 vend 13: 0 delivered",
+      "passes": 332,
+      "worst": "seed 1 vend 12: 0 delivered",
       "seed": 1,
-      "snapshotHash": "c3201b5ef51eed1758fcb8d80255d5247f8e2a8c7f5a493f005d177772ba412f",
-      "wallMs": 27031.000041
+      "snapshotHash": "b5a431fb15bdcc57a15c8122ffb94ab978064f304014b00c0be765d1fb962803",
+      "wallMs": 35771.518416
     },
     "rows": [
       {
         "seed": 1,
         "vends": 16,
-        "passes": 12,
+        "passes": 11,
         "delivered": [
           1,
           1,
@@ -908,13 +907,17 @@
           1,
           1,
           1,
-          1,
+          0,
           0,
           0,
           0,
           0
         ],
         "misses": [
+          {
+            "vend": 12,
+            "delivered": 0
+          },
           {
             "vend": 13,
             "delivered": 0
@@ -961,22 +964,22 @@
           },
           {
             "vend": 6,
-            "capsule": 13,
+            "capsule": 12,
             "step": 7992
           },
           {
             "vend": 7,
-            "capsule": 10,
+            "capsule": 13,
             "step": 9331
           },
           {
             "vend": 8,
-            "capsule": 14,
+            "capsule": 10,
             "step": 10670
           },
           {
             "vend": 9,
-            "capsule": 6,
+            "capsule": 8,
             "step": 12009
           },
           {
@@ -988,17 +991,12 @@
             "vend": 11,
             "capsule": 3,
             "step": 14687
-          },
-          {
-            "vend": 12,
-            "capsule": 12,
-            "step": 16026
           }
         ],
-        "leftAbove": 6,
-        "onHood": 5,
+        "leftAbove": 7,
+        "onHood": 6,
         "steps": 21904,
-        "endHash": "cd7b692d704df715c8f7c3ff030a86c64d135fabbd97bd92e5c449c17b9bd5e6"
+        "endHash": "b407e146f34fab7262722db1a0194453db7e6bfd8552a4d8299f1bbf426d8d26"
       },
       {
         "seed": 2,
@@ -1105,7 +1103,7 @@
         "leftAbove": 7,
         "onHood": 6,
         "steps": 21904,
-        "endHash": "1574c266b69b9e9861f9995d4b50617b83671f5b1645a6c162f19e9c5a2cace4"
+        "endHash": "fe53bc97e36ed9b0920b98fb87f8e3fb606e94b84d5405abe9c8ce8d7d971440"
       },
       {
         "seed": 3,
@@ -1212,12 +1210,12 @@
         "leftAbove": 7,
         "onHood": 6,
         "steps": 21904,
-        "endHash": "e4aa46e12b7c3caaf6d3024e56f295ab399d370464a320fe700de3f91b918d87"
+        "endHash": "14736c40e09ba5dbcf9185cc637180853970c462d0268f2264e9de45d3cc66ff"
       },
       {
         "seed": 4,
         "vends": 16,
-        "passes": 11,
+        "passes": 12,
         "delivered": [
           1,
           1,
@@ -1230,17 +1228,13 @@
           1,
           1,
           1,
-          0,
+          1,
           0,
           0,
           0,
           0
         ],
         "misses": [
-          {
-            "vend": 12,
-            "delivered": 0
-          },
           {
             "vend": 13,
             "delivered": 0
@@ -1292,34 +1286,39 @@
           },
           {
             "vend": 7,
-            "capsule": 17,
+            "capsule": 12,
             "step": 9331
           },
           {
             "vend": 8,
-            "capsule": 9,
+            "capsule": 17,
             "step": 10670
           },
           {
             "vend": 9,
-            "capsule": 12,
+            "capsule": 1,
             "step": 12009
           },
           {
             "vend": 10,
-            "capsule": 10,
+            "capsule": 13,
             "step": 13348
           },
           {
             "vend": 11,
-            "capsule": 3,
+            "capsule": 16,
             "step": 14687
+          },
+          {
+            "vend": 12,
+            "capsule": 10,
+            "step": 16026
           }
         ],
-        "leftAbove": 7,
-        "onHood": 6,
+        "leftAbove": 6,
+        "onHood": 5,
         "steps": 21904,
-        "endHash": "f77e48eee37bdb29fbbe9f2b46c2b311964a16fee035985eb58393f150f4a412"
+        "endHash": "6c642d30a000be2accfebcacc84cb7076359c00d5e9ba5435a6be7475fbcfa7d"
       },
       {
         "seed": 5,
@@ -1409,24 +1408,24 @@
           },
           {
             "vend": 9,
-            "capsule": 1,
+            "capsule": 14,
             "step": 12009
           },
           {
             "vend": 10,
-            "capsule": 5,
+            "capsule": 1,
             "step": 13348
           },
           {
             "vend": 11,
-            "capsule": 14,
+            "capsule": 5,
             "step": 14687
           }
         ],
         "leftAbove": 7,
         "onHood": 6,
         "steps": 21904,
-        "endHash": "6810dd0c40b50ece35166fe790115f536eeb7bb817f71732ea26a75f94746453"
+        "endHash": "ec252518b804ee8e5b506392bc9e1610153133f57a561f59db9d11ea60eeae08"
       },
       {
         "seed": 6,
@@ -1502,44 +1501,44 @@
           },
           {
             "vend": 7,
-            "capsule": 6,
+            "capsule": 10,
             "step": 9331
           },
           {
             "vend": 8,
-            "capsule": 8,
+            "capsule": 12,
             "step": 10670
           },
           {
             "vend": 9,
-            "capsule": 10,
+            "capsule": 1,
             "step": 12009
           },
           {
             "vend": 10,
-            "capsule": 13,
+            "capsule": 6,
             "step": 13348
           },
           {
             "vend": 11,
-            "capsule": 16,
+            "capsule": 3,
             "step": 14687
           },
           {
             "vend": 12,
-            "capsule": 17,
+            "capsule": 16,
             "step": 16026
           }
         ],
         "leftAbove": 6,
-        "onHood": 6,
+        "onHood": 5,
         "steps": 21904,
-        "endHash": "a83a99dd6c6f1c952fa6b83bde1205fbdff713f6fcf74a062a24926aa3f52ba6"
+        "endHash": "012a90efe445513331df5c9fb699cb4926366dc10c674f28b17936a5d3e6d46c"
       },
       {
         "seed": 7,
         "vends": 16,
-        "passes": 12,
+        "passes": 11,
         "delivered": [
           1,
           1,
@@ -1552,13 +1551,17 @@
           1,
           1,
           1,
-          1,
+          0,
           0,
           0,
           0,
           0
         ],
         "misses": [
+          {
+            "vend": 12,
+            "delivered": 0
+          },
           {
             "vend": 13,
             "delivered": 0
@@ -1620,7 +1623,7 @@
           },
           {
             "vend": 9,
-            "capsule": 4,
+            "capsule": 15,
             "step": 12009
           },
           {
@@ -1632,17 +1635,12 @@
             "vend": 11,
             "capsule": 1,
             "step": 14687
-          },
-          {
-            "vend": 12,
-            "capsule": 6,
-            "step": 16026
           }
         ],
-        "leftAbove": 6,
-        "onHood": 5,
+        "leftAbove": 7,
+        "onHood": 6,
         "steps": 21904,
-        "endHash": "bf13af38781868d88a7e57a6397bc34c7c5155aa31b062e0ec0b97dcee6e6513"
+        "endHash": "46422c1b7a591bf70179ad744a5040bc5af19fa60f87702bc62a412dedf4271f"
       },
       {
         "seed": 8,
@@ -1749,7 +1747,7 @@
         "leftAbove": 7,
         "onHood": 6,
         "steps": 21904,
-        "endHash": "50e70943e50c3826505769470d2e20ee228c27b6f1420b657f738636130509c9"
+        "endHash": "32447a603bb988f99476f18c9255a1496abd4c705cdcdf57f78b917f39110daa"
       },
       {
         "seed": 9,
@@ -1844,19 +1842,19 @@
           },
           {
             "vend": 10,
-            "capsule": 1,
+            "capsule": 0,
             "step": 13348
           },
           {
             "vend": 11,
-            "capsule": 11,
+            "capsule": 3,
             "step": 14687
           }
         ],
         "leftAbove": 7,
         "onHood": 6,
         "steps": 21904,
-        "endHash": "08fd538da9a596e579db30ec2d90d8596a584d5d69b15bb18297e2ccb6c24d69"
+        "endHash": "19bfda2baf93f96ebeab312dc49e05b1d0586f89c460feb04d5fc9f869830aa1"
       },
       {
         "seed": 10,
@@ -1963,7 +1961,7 @@
         "leftAbove": 7,
         "onHood": 6,
         "steps": 21904,
-        "endHash": "7bf0712787ad58e3d35636578fb4009ae39528eb6f4c781c10c215ef21551e6f"
+        "endHash": "181a24c6479a5cee1e70ef488aceee5dec4b71c1674012ac2ee7ba57b40b8e96"
       },
       {
         "seed": 11,
@@ -2058,19 +2056,19 @@
           },
           {
             "vend": 10,
-            "capsule": 1,
+            "capsule": 0,
             "step": 13348
           },
           {
             "vend": 11,
-            "capsule": 11,
+            "capsule": 3,
             "step": 14687
           }
         ],
         "leftAbove": 7,
         "onHood": 6,
         "steps": 21904,
-        "endHash": "a0b59f9865b428cf19dabf54b54cbd6373e76ecf74f3eec3bb283dcd176f400e"
+        "endHash": "d583f46e91bc686dcc5c2fb3238ee9403b0e7f76a16084e62815154fd104d9d5"
       },
       {
         "seed": 12,
@@ -2150,17 +2148,17 @@
           },
           {
             "vend": 7,
-            "capsule": 6,
+            "capsule": 13,
             "step": 9331
           },
           {
             "vend": 8,
-            "capsule": 13,
+            "capsule": 10,
             "step": 10670
           },
           {
             "vend": 9,
-            "capsule": 10,
+            "capsule": 8,
             "step": 12009
           },
           {
@@ -2177,7 +2175,7 @@
         "leftAbove": 7,
         "onHood": 6,
         "steps": 21904,
-        "endHash": "31466ba6ad705f58567af6e5f51c89bc270f1559121977e38d8a63023609228c"
+        "endHash": "43607a417f7b282d3e15d33552dbce1b48f558f216ff2e2517daf546d2af2c40"
       },
       {
         "seed": 13,
@@ -2284,7 +2282,7 @@
         "leftAbove": 7,
         "onHood": 6,
         "steps": 21904,
-        "endHash": "70d078deec74730db501a4d90e427cf694fae7f6d0d317e472889add1f8145ae"
+        "endHash": "77be6998161c405b0bc16737fa303e35c58b7dc92beafb3235f7fa0ee20e2124"
       },
       {
         "seed": 14,
@@ -2379,24 +2377,24 @@
           },
           {
             "vend": 10,
-            "capsule": 1,
+            "capsule": 12,
             "step": 13348
           },
           {
             "vend": 11,
-            "capsule": 3,
+            "capsule": 1,
             "step": 14687
           }
         ],
         "leftAbove": 7,
         "onHood": 6,
         "steps": 21904,
-        "endHash": "5349ceb7f664bb10f133119bf2f10a21a5f561294db9fed51f1a1d32b684c379"
+        "endHash": "36d4632bc0d0f257e2e9d7ef0ef954999360b27eae9fbdf5b0d751b75f19e70b"
       },
       {
         "seed": 15,
         "vends": 16,
-        "passes": 12,
+        "passes": 11,
         "delivered": [
           1,
           1,
@@ -2409,13 +2407,17 @@
           1,
           1,
           1,
-          1,
+          0,
           0,
           0,
           0,
           0
         ],
         "misses": [
+          {
+            "vend": 12,
+            "delivered": 0
+          },
           {
             "vend": 13,
             "delivered": 0
@@ -2477,29 +2479,24 @@
           },
           {
             "vend": 9,
-            "capsule": 16,
+            "capsule": 6,
             "step": 12009
           },
           {
             "vend": 10,
-            "capsule": 6,
+            "capsule": 16,
             "step": 13348
           },
           {
             "vend": 11,
             "capsule": 17,
             "step": 14687
-          },
-          {
-            "vend": 12,
-            "capsule": 11,
-            "step": 16026
           }
         ],
-        "leftAbove": 6,
-        "onHood": 5,
+        "leftAbove": 7,
+        "onHood": 6,
         "steps": 21904,
-        "endHash": "2e3869fa7690d1262b8a37ac23651f543fa466d2d2212bf986c5c33f98f5b746"
+        "endHash": "4279620190c9cc71a327f5e0a32e0046cfcf56642867c6ff413532dd01d848f9"
       },
       {
         "seed": 16,
@@ -2579,22 +2576,22 @@
           },
           {
             "vend": 7,
-            "capsule": 13,
+            "capsule": 6,
             "step": 9331
           },
           {
             "vend": 8,
-            "capsule": 11,
+            "capsule": 12,
             "step": 10670
           },
           {
             "vend": 9,
-            "capsule": 10,
+            "capsule": 13,
             "step": 12009
           },
           {
             "vend": 10,
-            "capsule": 12,
+            "capsule": 16,
             "step": 13348
           },
           {
@@ -2606,7 +2603,7 @@
         "leftAbove": 7,
         "onHood": 6,
         "steps": 21904,
-        "endHash": "31610a707f2c5f40785a2be97a130acce85d43edefd5afb5290473ee9943bcbb"
+        "endHash": "bd74084641d1d8b914674147c22573a5afcece8689f9862c37495e94a9fea403"
       },
       {
         "seed": 17,
@@ -2696,29 +2693,29 @@
           },
           {
             "vend": 9,
-            "capsule": 1,
+            "capsule": 15,
             "step": 12009
           },
           {
             "vend": 10,
-            "capsule": 15,
+            "capsule": 1,
             "step": 13348
           },
           {
             "vend": 11,
-            "capsule": 12,
+            "capsule": 17,
             "step": 14687
           }
         ],
         "leftAbove": 7,
         "onHood": 6,
         "steps": 21904,
-        "endHash": "000ae400fa58c1179dddf2065a5181d9c53a361e4bc1a90344d7d8f3ee8e0808"
+        "endHash": "0844438c2f09cff0064259c33e2462d4f126dfe1adf5c916c488f9b381c4e5a1"
       },
       {
         "seed": 18,
         "vends": 16,
-        "passes": 12,
+        "passes": 11,
         "delivered": [
           1,
           1,
@@ -2731,13 +2728,17 @@
           1,
           1,
           1,
-          1,
+          0,
           0,
           0,
           0,
           0
         ],
         "misses": [
+          {
+            "vend": 12,
+            "delivered": 0
+          },
           {
             "vend": 13,
             "delivered": 0
@@ -2789,7 +2790,7 @@
           },
           {
             "vend": 7,
-            "capsule": 10,
+            "capsule": 6,
             "step": 9331
           },
           {
@@ -2799,29 +2800,24 @@
           },
           {
             "vend": 9,
-            "capsule": 1,
+            "capsule": 15,
             "step": 12009
           },
           {
             "vend": 10,
-            "capsule": 6,
+            "capsule": 10,
             "step": 13348
           },
           {
             "vend": 11,
             "capsule": 3,
             "step": 14687
-          },
-          {
-            "vend": 12,
-            "capsule": 16,
-            "step": 16026
           }
         ],
-        "leftAbove": 6,
-        "onHood": 5,
+        "leftAbove": 7,
+        "onHood": 6,
         "steps": 21904,
-        "endHash": "d9bb7519d6683f7e2bfd0ed4407de951fe1010f75d8bc4e212772af7cc9a6cdb"
+        "endHash": "9b5fa2c7a91b7914b9d28dd330d1df974fd983b28b48b1cbce1f95ef85183d9a"
       },
       {
         "seed": 19,
@@ -2891,27 +2887,27 @@
           },
           {
             "vend": 5,
-            "capsule": 4,
+            "capsule": 1,
             "step": 6653
           },
           {
             "vend": 6,
-            "capsule": 16,
+            "capsule": 9,
             "step": 7992
           },
           {
             "vend": 7,
-            "capsule": 0,
+            "capsule": 13,
             "step": 9331
           },
           {
             "vend": 8,
-            "capsule": 14,
+            "capsule": 12,
             "step": 10670
           },
           {
             "vend": 9,
-            "capsule": 9,
+            "capsule": 10,
             "step": 12009
           },
           {
@@ -2928,7 +2924,7 @@
         "leftAbove": 7,
         "onHood": 6,
         "steps": 21904,
-        "endHash": "b71afee5482ac2b541fcd4c0ff1a7fa2a660a22bfc541cc7c2cd1854c680427a"
+        "endHash": "9041a20160e88a73c67709458331d4a86a54f3d53c0b44e2e3dbdbe05e6ad4ea"
       },
       {
         "seed": 20,
@@ -3023,19 +3019,19 @@
           },
           {
             "vend": 10,
-            "capsule": 6,
+            "capsule": 16,
             "step": 13348
           },
           {
             "vend": 11,
-            "capsule": 16,
+            "capsule": 6,
             "step": 14687
           }
         ],
         "leftAbove": 7,
         "onHood": 6,
         "steps": 21904,
-        "endHash": "6c53d5b59997e42972e5085b05ef828d0af7e64a707d7a7a778f38b603573a36"
+        "endHash": "b5d829bcf35bc6a35d0d06247cb33940d8690a6ef339619ec76efb421d62d8d7"
       },
       {
         "seed": 21,
@@ -3110,7 +3106,7 @@
           },
           {
             "vend": 6,
-            "capsule": 1,
+            "capsule": 6,
             "step": 7992
           },
           {
@@ -3120,29 +3116,29 @@
           },
           {
             "vend": 8,
-            "capsule": 12,
+            "capsule": 9,
             "step": 10670
           },
           {
             "vend": 9,
-            "capsule": 9,
+            "capsule": 0,
             "step": 12009
           },
           {
             "vend": 10,
-            "capsule": 6,
+            "capsule": 12,
             "step": 13348
           },
           {
             "vend": 11,
-            "capsule": 0,
+            "capsule": 3,
             "step": 14687
           }
         ],
         "leftAbove": 7,
         "onHood": 6,
         "steps": 21904,
-        "endHash": "58fb86795581e1e6ce33bfd0d417ab3907bad346008fd32b7af16f638bbf7bd4"
+        "endHash": "6275b0a3955bd0d48047b8a52c9e2d69a887434ac4df2dc13aa9990136ac59d3"
       },
       {
         "seed": 22,
@@ -3237,19 +3233,19 @@
           },
           {
             "vend": 10,
-            "capsule": 17,
+            "capsule": 1,
             "step": 13348
           },
           {
             "vend": 11,
-            "capsule": 3,
+            "capsule": 17,
             "step": 14687
           }
         ],
         "leftAbove": 7,
         "onHood": 6,
         "steps": 21904,
-        "endHash": "cd570c4233d6c35a9fccce99e50b1f5bdcfa2c4fdea09ac8a314f57da49fc6bf"
+        "endHash": "82bd6d918f0400d7a0d674b7707bf9f79034ca569b8bf99471d4f2d06b1da021"
       },
       {
         "seed": 23,
@@ -3356,7 +3352,7 @@
         "leftAbove": 7,
         "onHood": 6,
         "steps": 21904,
-        "endHash": "b4f64fae77d545864c20a28408f1092b59f6e65550eba9921fcb881e11260f93"
+        "endHash": "bdfbb7771eb34364f95252269e22376a5404f35ccc81fd828ada6d66f626d548"
       },
       {
         "seed": 24,
@@ -3431,39 +3427,39 @@
           },
           {
             "vend": 6,
-            "capsule": 13,
+            "capsule": 12,
             "step": 7992
           },
           {
             "vend": 7,
-            "capsule": 10,
+            "capsule": 0,
             "step": 9331
           },
           {
             "vend": 8,
-            "capsule": 14,
+            "capsule": 10,
             "step": 10670
           },
           {
             "vend": 9,
-            "capsule": 15,
+            "capsule": 14,
             "step": 12009
           },
           {
             "vend": 10,
-            "capsule": 1,
+            "capsule": 6,
             "step": 13348
           },
           {
             "vend": 11,
-            "capsule": 17,
+            "capsule": 3,
             "step": 14687
           }
         ],
         "leftAbove": 7,
         "onHood": 6,
         "steps": 21904,
-        "endHash": "afb5ca46690960b025026884c6f7f3197dbd8746b7c2d2fd6ba4b41000418fc0"
+        "endHash": "cdf1dfc05402f38eadf5bce905fa3631ee14180f076cea4f08f8e3ba220bcd27"
       },
       {
         "seed": 25,
@@ -3543,12 +3539,12 @@
           },
           {
             "vend": 7,
-            "capsule": 17,
+            "capsule": 9,
             "step": 9331
           },
           {
             "vend": 8,
-            "capsule": 9,
+            "capsule": 1,
             "step": 10670
           },
           {
@@ -3558,7 +3554,7 @@
           },
           {
             "vend": 10,
-            "capsule": 10,
+            "capsule": 17,
             "step": 13348
           },
           {
@@ -3570,7 +3566,7 @@
         "leftAbove": 7,
         "onHood": 6,
         "steps": 21904,
-        "endHash": "c7ebb1a9a8d460c35b7614f3cdabeba89db905f1cf2c5029949414bdffcfac12"
+        "endHash": "0c5837a61755abc2812c4a16bf0eaf7537e47d541aa5bc4b904c91753da70a46"
       },
       {
         "seed": 26,
@@ -3645,39 +3641,39 @@
           },
           {
             "vend": 6,
-            "capsule": 0,
+            "capsule": 12,
             "step": 7992
           },
           {
             "vend": 7,
-            "capsule": 10,
+            "capsule": 13,
             "step": 9331
           },
           {
             "vend": 8,
-            "capsule": 12,
+            "capsule": 15,
             "step": 10670
           },
           {
             "vend": 9,
-            "capsule": 13,
+            "capsule": 10,
             "step": 12009
           },
           {
             "vend": 10,
-            "capsule": 1,
+            "capsule": 9,
             "step": 13348
           },
           {
             "vend": 11,
-            "capsule": 3,
+            "capsule": 16,
             "step": 14687
           }
         ],
         "leftAbove": 7,
         "onHood": 6,
         "steps": 21904,
-        "endHash": "2212c20701f3115d5daaea072b3c5cbb10546c9d4ebb12ca2ddfbbda682c6c9f"
+        "endHash": "8d2d43550479f8af25f9f8e63c584e9768080958c3f35f6c71e3cf910b856637"
       },
       {
         "seed": 27,
@@ -3784,7 +3780,7 @@
         "leftAbove": 7,
         "onHood": 6,
         "steps": 21904,
-        "endHash": "afe4ade04ea65f9d7ffa4b7d500132eff7ec117110b48033a0dcbe38531aa4e0"
+        "endHash": "5737e3e215bbecf2e17436ad18bc38c953ca603dfca3e0a19b4bf96351b0d78f"
       },
       {
         "seed": 28,
@@ -3879,19 +3875,19 @@
           },
           {
             "vend": 10,
-            "capsule": 1,
+            "capsule": 0,
             "step": 13348
           },
           {
             "vend": 11,
-            "capsule": 11,
+            "capsule": 3,
             "step": 14687
           }
         ],
         "leftAbove": 7,
         "onHood": 6,
         "steps": 21904,
-        "endHash": "8433361c021dd4164fca2dc536c1addc6b98646f3a5963b7e34d675676904c94"
+        "endHash": "15d8272fc001275c5adac05147069569edf504d2eeb17a177ce2d27a763a070a"
       },
       {
         "seed": 29,
@@ -3998,7 +3994,7 @@
         "leftAbove": 7,
         "onHood": 6,
         "steps": 21904,
-        "endHash": "fa8a7af92ee43a1708ae37371987e86f9e41ca9d7ccdbdcd53104fabb6b24fa9"
+        "endHash": "de2df7bf60e97d67b168d8337e3dd24a7d7d78ff54ca8631af35e73d7563e00b"
       },
       {
         "seed": 30,
@@ -4105,18 +4101,18 @@
         "leftAbove": 7,
         "onHood": 6,
         "steps": 21904,
-        "endHash": "c3201b5ef51eed1758fcb8d80255d5247f8e2a8c7f5a493f005d177772ba412f"
+        "endHash": "b5a431fb15bdcc57a15c8122ffb94ab978064f304014b00c0be765d1fb962803"
       }
     ]
   },
   "mouth58": {
     "result": {
       "runs": 78,
-      "passes": 72,
+      "passes": 69,
       "worst": "seed 1 vend 1: 0 delivered",
       "seed": 1,
-      "snapshotHash": "51fb0b14be23c0eb2758b8ab389fe73904661a20c2fda06f77b7215092997ea3",
-      "wallMs": 4401.045708000005
+      "snapshotHash": "2bde4657532caf381b60043163a2918808d7962a03210308bfe96d84e94335d9",
+      "wallMs": 5582.092125000003
     },
     "rows": [
       {
@@ -4178,27 +4174,27 @@
           },
           {
             "vend": 8,
-            "capsule": 11,
+            "capsule": 4,
             "step": 10670
           },
           {
             "vend": 9,
-            "capsule": 5,
+            "capsule": 0,
             "step": 12009
           },
           {
             "vend": 10,
-            "capsule": 4,
+            "capsule": 11,
             "step": 13348
           },
           {
             "vend": 11,
-            "capsule": 8,
+            "capsule": 5,
             "step": 14687
           },
           {
             "vend": 12,
-            "capsule": 0,
+            "capsule": 8,
             "step": 16026
           },
           {
@@ -4210,12 +4206,12 @@
         "leftAbove": 6,
         "onHood": 2,
         "steps": 17887,
-        "endHash": "acb80a466d606272abad765e3be5bca0ed5331ca89ade14515632bd9e57c39f3"
+        "endHash": "8438a8ed3359ad6340a58bcd6eb69abd19091eb11bc090b32e495e2dd91bdd82"
       },
       {
         "seed": 2,
         "vends": 13,
-        "passes": 12,
+        "passes": 9,
         "delivered": [
           0,
           1,
@@ -4227,13 +4223,25 @@
           1,
           1,
           1,
-          1,
-          1,
-          1
+          0,
+          0,
+          0
         ],
         "misses": [
           {
             "vend": 1,
+            "delivered": 0
+          },
+          {
+            "vend": 11,
+            "delivered": 0
+          },
+          {
+            "vend": 12,
+            "delivered": 0
+          },
+          {
+            "vend": 13,
             "delivered": 0
           }
         ],
@@ -4283,27 +4291,12 @@
             "vend": 10,
             "capsule": 8,
             "step": 13348
-          },
-          {
-            "vend": 11,
-            "capsule": 9,
-            "step": 14687
-          },
-          {
-            "vend": 12,
-            "capsule": 12,
-            "step": 16026
-          },
-          {
-            "vend": 13,
-            "capsule": 5,
-            "step": 17365
           }
         ],
-        "leftAbove": 6,
-        "onHood": 2,
+        "leftAbove": 9,
+        "onHood": 6,
         "steps": 17887,
-        "endHash": "ff0c22c835cf1a61554eae2ddda2d0ebc5408882d00d16b2959a089698536f46"
+        "endHash": "c99d196bff571985d7a2f91471464b0dc5708de30db0e1610146976ea10e9667"
       },
       {
         "seed": 3,
@@ -4396,7 +4389,7 @@
         "leftAbove": 6,
         "onHood": 2,
         "steps": 17887,
-        "endHash": "92104633aadcfbf706be882f5607ec2dbc67337018f4d93f049f8e0d99861e60"
+        "endHash": "a3eeb28a227cc0e62e1089c1806fa82b0a9ad6cf289893275a67613a944bd412"
       },
       {
         "seed": 4,
@@ -4447,49 +4440,49 @@
           },
           {
             "vend": 6,
-            "capsule": 4,
+            "capsule": 7,
             "step": 7992
           },
           {
             "vend": 7,
-            "capsule": 1,
+            "capsule": 16,
             "step": 9331
           },
           {
             "vend": 8,
-            "capsule": 8,
+            "capsule": 6,
             "step": 10670
           },
           {
             "vend": 9,
-            "capsule": 7,
+            "capsule": 4,
             "step": 12009
           },
           {
             "vend": 10,
-            "capsule": 0,
+            "capsule": 11,
             "step": 13348
           },
           {
             "vend": 11,
-            "capsule": 16,
+            "capsule": 1,
             "step": 14687
           },
           {
             "vend": 12,
-            "capsule": 6,
+            "capsule": 10,
             "step": 16026
           },
           {
             "vend": 13,
-            "capsule": 9,
+            "capsule": 8,
             "step": 17365
           }
         ],
         "leftAbove": 6,
-        "onHood": 2,
+        "onHood": 4,
         "steps": 17887,
-        "endHash": "8dd17dd453dca9c98bd971fa6416e91544293ae2c1de173c4ec54129d055468d"
+        "endHash": "4ba3880f0765eaa968443d077ecfa02d96d6e10007f7c05de11349c9187f9f9e"
       },
       {
         "seed": 5,
@@ -4582,7 +4575,7 @@
         "leftAbove": 6,
         "onHood": 2,
         "steps": 17887,
-        "endHash": "bb0108fede1b725d2e7d7168c6850a967eb12f36209bffa05352b014a1895457"
+        "endHash": "4025c547830504f233a04d8ee1faffd4f94ffa53e3bcec462b0345d759ae0956"
       },
       {
         "seed": 6,
@@ -4643,27 +4636,27 @@
           },
           {
             "vend": 8,
-            "capsule": 4,
+            "capsule": 7,
             "step": 10670
           },
           {
             "vend": 9,
-            "capsule": 0,
+            "capsule": 6,
             "step": 12009
           },
           {
             "vend": 10,
-            "capsule": 7,
+            "capsule": 4,
             "step": 13348
           },
           {
             "vend": 11,
-            "capsule": 6,
+            "capsule": 8,
             "step": 14687
           },
           {
             "vend": 12,
-            "capsule": 8,
+            "capsule": 0,
             "step": 16026
           },
           {
@@ -4675,10 +4668,10 @@
         "leftAbove": 6,
         "onHood": 2,
         "steps": 17887,
-        "endHash": "51fb0b14be23c0eb2758b8ab389fe73904661a20c2fda06f77b7215092997ea3"
+        "endHash": "2bde4657532caf381b60043163a2918808d7962a03210308bfe96d84e94335d9"
       }
     ],
-    "meanPasses": 12,
+    "meanPasses": 11.5,
     "mouth156MeanPasses": 11.333333333333334,
     "mouth156Source": "trials8 seeds 1 to 6, passes among the first 13 vends",
     "belowMouth156": false,

@@ -5,9 +5,15 @@
 // keeps the page's order of operations, so a port step and a legacy step
 // agree to the last bit; three.js Vector3 calls are written out as the
 // arithmetic three.js r160 performs. Every number is a CapsuleModel field
-// the scene supplies with provenance.
+// the scene supplies with provenance. Sine, cosine, tangent and atan2 come
+// from ../trig.js, the fdlibm port, where the page calls Math: V8 gives
+// those one ulp apart on x64 and arm64 and the trials would differ by
+// machine (CI-03). Math.hypot and Math.sqrt stay: V8 builds them from IEEE
+// double operations alone, and 994578 hypot and 361859 sqrt calls of one
+// trial gave equal bits on both (computed 2026-10-14).
 
 import { commandError, type Provenance } from "@hackbuild/spec";
+import { atan2, cos, sin, tan } from "../trig.js";
 
 /** A mutable point or velocity, mm or mm/s. */
 export interface Vec {
@@ -98,8 +104,8 @@ const deg = (r: number): number => r * 180 / Math.PI;
 
 /** Vector3.applyAxisAngle about +z as three.js r160 computes it (quaternion, then the cross-product form). */
 function rotZ(v: Vec, angle: number): Vec {
-  const halfAngle = angle / 2, s = Math.sin(halfAngle);
-  const qx = 0 * s, qy = 0 * s, qz = 1 * s, qw = Math.cos(halfAngle);
+  const halfAngle = angle / 2, s = sin(halfAngle);
+  const qx = 0 * s, qy = 0 * s, qz = 1 * s, qw = cos(halfAngle);
   const vx = v.x, vy = v.y, vz = v.z;
   const tx = 2 * (qy * vz - qz * vy);
   const ty = 2 * (qz * vx - qx * vz);
@@ -128,10 +134,10 @@ export interface FunnelPanel {
 export function funnelPanel(g: FunnelRows, p: 0 | 2 | 3, zCeilTop: number): FunnelPanel {
   const dz = g.zFunTop - zCeilTop;
   const run = p === 0 ? g.yf - (g.thr[1] + g.fb) : p === 2 ? (g.thr[0] - g.fb) - g.xl : g.xr - (g.thr[0] + g.fb);
-  const ang = Math.atan2(dz, run);
-  const r0 = g.fb + (g.t / 2) / Math.sin(ang);
-  const uw = (run - (g.t / 2) / Math.sin(ang)) / Math.cos(ang);
-  const len = uw - (g.t / 2) * Math.tan(ang);
+  const ang = atan2(dz, run);
+  const r0 = g.fb + (g.t / 2) / sin(ang);
+  const uw = (run - (g.t / 2) / sin(ang)) / cos(ang);
+  const len = uw - (g.t / 2) * tan(ang);
   return { run, ang, r0, uw, len };
 }
 
@@ -140,8 +146,8 @@ function funnelPlanes(g: CapsuleGeometryRows, zCeilTop: number): FunnelPlane[] {
   return g.funnelFaces.map(({ face, rzDeg }) => {
     const { ang: a, r0, len } = funnelPanel(g, face, zCeilTop);
     const rz = rad(rzDeg);
-    const n = rotZ({ x: 0, y: -Math.sin(a), z: Math.cos(a) }, rz);
-    const d = rotZ({ x: 0, y: Math.cos(a), z: Math.sin(a) }, rz);
+    const n = rotZ({ x: 0, y: -sin(a), z: cos(a) }, rz);
+    const d = rotZ({ x: 0, y: cos(a), z: sin(a) }, rz);
     const o = rotZ({ x: 0, y: r0, z: 0 }, rz);
     o.x += g.thr[0]; o.y += g.thr[1]; o.z += zCeilTop;
     const h = g.t / 2;
@@ -315,7 +321,7 @@ export function inHood(g: CapsuleGeometry, x: number, y: number): boolean {
   const h = g.rows.hood;
   const r = Math.hypot(x, y);
   if (r > h.r) return false;
-  let a = deg(Math.atan2(y, x));
+  let a = deg(atan2(y, x));
   if (a < 0) a += 360;
   return a >= h.a0 && a <= h.a1;
 }
@@ -345,7 +351,7 @@ export function plateTopRect(c: Capsule, zTop: number, cx: number, cy: number, h
 /** Plan centre of pocket i at rotor angle rotorDeg (slug.html lines 803 to 806). */
 export function pocketCentre(g: CapsuleGeometry, rotorDeg: number, i: number): [number, number] {
   const a = rad(rotorDeg + i * 360 / g.rows.nPock);
-  return [g.rows.pockRc * Math.cos(a), g.rows.pockRc * Math.sin(a)];
+  return [g.rows.pockRc * cos(a), g.rows.pockRc * sin(a)];
 }
 
 /** Nearest pocket to (x, y), first index on a tie (slug.html lines 807 to 811). */

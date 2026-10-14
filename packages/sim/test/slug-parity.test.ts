@@ -3,7 +3,11 @@
 // src/capsule. Both draw spawn velocities from the same seeded generator
 // (the legacy module's Math.random is replaced for its reset) and are
 // driven by the page's loop body at frame dt = DT. Expected values come
-// from the legacy page itself, never from the port.
+// from the legacy page itself, never from the port. Both sides take sine,
+// cosine, tangent and atan2 from src/trig.ts: the legacy module reads Math
+// at call time, and this file points those four at the fdlibm port for its
+// run, so the comparison is of the page's arithmetic on every machine
+// (CI-03).
 
 import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
@@ -16,6 +20,7 @@ import { capsuleGeometry } from "../src/capsule/geometry.js";
 import { capsuleWorld, resetWorld, type CapsuleWorld } from "../src/capsule/solver.js";
 import { driveStep, runSlugTrial } from "../src/capsule/vend.js";
 import { createPrng } from "../src/prng.js";
+import * as trig from "../src/trig.js";
 import { SLUG_SCENE } from "../scenes/slug.js";
 
 const SIM = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -83,9 +88,16 @@ function worstGap(L: Legacy, w: CapsuleWorld): number {
   return worst;
 }
 
+const TRIG = ["sin", "cos", "tan", "atan2"] as const;
+const mathTrig = Object.fromEntries(TRIG.map((k) => [k, Math[k]])) as Pick<Math, (typeof TRIG)[number]>;
+
 let dir = "";
-afterAll(() => { if (dir !== "") rmSync(dir, { recursive: true, force: true }); });
+afterAll(() => {
+  Object.assign(Math, mathTrig);
+  if (dir !== "") rmSync(dir, { recursive: true, force: true });
+});
 beforeAll(() => {
+  Object.assign(Math, { sin: trig.sin, cos: trig.cos, tan: trig.tan, atan2: trig.atan2 });
   dir = mkdtempSync(path.join(tmpdir(), "hbf-slug-"));
   legacyModule = path.join(dir, "slug-app.mjs");
   const r = spawnSync(process.execPath, [EXTRACT, "--out", legacyModule], { encoding: "utf8" });
