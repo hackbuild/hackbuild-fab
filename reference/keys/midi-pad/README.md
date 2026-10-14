@@ -81,9 +81,42 @@ difference of about 3 percent in ohm).
   118899 ohm, still over the line (computed by hand from the solve's legs):
   the four through legs (bump, seat post, disc, T2 post) take 65382 ohm at
   any lead width.
+- The hookup fits the hold capacitor (parts below). GIB's practice for a
+  printed wiper over 100 kohm is the same part: "add a 100 nF capacitor
+  from W to ground and sample slowly" (`originals/gib/files/src/src/part2.js`
+  line 544; BLOCKS `parts.js` line 702 gives the band). PIP reads no analog
+  pin, so it has no practice here.
+- Moving the terminals was ruled out on these numbers (computed from the
+  build and the 6944 ohm per mm of lead per mm of width that 500 ohm cm
+  over 0.72 mm gives). Straight down from the GP26 post the lead is at
+  least 20.78 mm (4.68 to the body edge, 16.10 to T2 in the base), 102864
+  ohm at 3.85 mm: the T1 post sits in that line anyway. Turning the fader
+  a quarter turn so the three terminals face the seat side by side puts the
+  T2 post 13.00 mm into the base: 17.68 mm of lead, 109231 ohm at 2.8 mm
+  and 97272 ohm at 3.85 mm. That is 2.7 percent under the line on a path
+  that is a lower bound (the seat press contact has no ContactRow) over
+  inferred rows, and it hangs the 96 mm fader off the body's long edge and
+  runs the far terminal's lead under the T2 pad. The capacitor is the
+  margin the layout cannot give.
+- No pull-down on T2. THINPOT's hookup adds 100 kohm from T2 to ground so
+  an untouched strip reads zero (`feeler_thinpot.html` line 4202); GIB asks
+  any no-touch pull-down to be at least 20 times the wiper source (line
+  544), 2.78 Mohm here (computed). With the capacitor and no pull-down an
+  untouched fader holds its last reading.
 - 3V3 to T1: 149559 ohm. The track joins 3V3 and GND into one piece
   (NET_SHORT, gap G4), so the divider span is not computed by the tool.
 - CHK-NET-26 passes on the track: cut it and 3V3 and GND fall apart.
+
+## Parts
+
+| part | count | where | why |
+|---|---|---|---|
+| RP2040-Zero | 1 | pressed into the seat, USB to the cable edge | the reader (catalog `rp2040-zero`) |
+| capacitor, 100 nF ceramic | 1 | GP26 to GND on the RP2040-Zero top face; the seat bumps press the castellations from below | ADC hold for the 138968 ohm wiper source (CHK-NET-06, read.adc.holdCapNf, inferred) |
+
+The printed part is one piece on the four slots; nothing else is fitted.
+CHK-NET-06 keeps its warn: the check measures the source against the line
+and does not read a fitted part, so the warn is the reminder to fit it.
 
 ## Seat landing (CHK-NET-46, computed)
 
@@ -137,6 +170,11 @@ difference of about 3 percent in ohm).
   pass, 5 warn, 0 fail, 141 skip; circuit_solve verdict warn, 102 pass, 12
   warn, 0 fail, 37 skip (evidence `fab-knowledge:evals/2026-10-14/midi-pad/`).
 - view_render iso and plate looked at by the builder, not by a person.
+
+- 2026-10-14: after the hold capacitor joined the parts list (README only;
+  chase.ts and build.ts unchanged), `hbf parity reference/keys/midi-pad`
+  exit 0 at build dc7800..a1, all five files equal, CHK-NET-06 still warn
+  at 138968 ohm in the query-solve golden (computed).
 
 ### Measured on a printed body
 
