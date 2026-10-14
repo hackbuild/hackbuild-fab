@@ -1,0 +1,117 @@
+{
+  "id": "n20-6v-100rpm",
+  "name": "N20 gear motor, 6 V, 100 rpm",
+  "kind": "actuator",
+  "drive": "dc-gear",
+  "note": "SPARGER W is the one bench with N20 numbers. Part frame: origin on the shaft axis at the gearbox face, +z out of the shaft; the body is centred on the shaft as sparger_w.py ghost_n20 draws it (lines 279 to 285).",
+  "fields": {
+    "dims.body": {
+      "value": [
+        12,
+        10
+      ],
+      "unit": "mm",
+      "provenance": {
+        "tier": "vendor",
+        "method": "listing",
+        "date": "2026-10-09",
+        "source": "originals/sparger-w/files/source/sparger_w.py line 48 (n20 w, h); line 278 \"bought parts, as dimensioned by their sellers\" (listing, D-102)"
+      }
+    },
+    "dims.gearbox": {
+      "value": 9,
+      "unit": "mm",
+      "provenance": {
+        "tier": "vendor",
+        "method": "listing",
+        "date": "2026-10-09",
+        "source": "originals/sparger-w/files/source/sparger_w.py line 48 (n20 gearbox length); line 278 \"bought parts, as dimensioned by their sellers\" (listing, D-102)"
+      }
+    },
+    "dims.motor": {
+      "value": 15.2,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "benches disagree on motor length (D-104, R70); every bench value is listed under conflicts; the SG90 caliper session is on the D-082 list"
+      },
+      "conflicts": [
+        {
+          "value": 15.2,
+          "source": "originals/sparger-w/files/source/sparger_w.py line 48"
+        },
+        {
+          "value": 15,
+          "source": "originals/sparger-w/files/README.md line 24"
+        }
+      ]
+    },
+    "dims.tail": {
+      "value": 2,
+      "unit": "mm",
+      "provenance": {
+        "tier": "vendor",
+        "method": "listing",
+        "date": "2026-10-09",
+        "source": "originals/sparger-w/files/source/sparger_w.py line 48 (n20 tail); line 278 \"bought parts, as dimensioned by their sellers\" (listing, D-102)"
+      }
+    },
+    "dims.shaft": {
+      "value": [
+        3,
+        2.5,
+        10
+      ],
+      "unit": "mm",
+      "provenance": {
+        "tier": "vendor",
+        "method": "listing",
+        "date": "2026-10-09",
+        "source": "originals/sparger-w/files/source/sparger_w.py line 48 (shaft_d, shaft_flat, n20_shaft); line 278 \"bought parts, as dimensioned by their sellers\" (listing, D-102)"
+      }
+    },
+    "dims.faceHolePitch": {
+      "value": 9,
+      "unit": "mm",
+      "provenance": {
+        "tier": "vendor",
+        "method": "listing",
+        "date": "2026-10-09",
+        "source": "originals/sparger-w/files/source/sparger_w.py line 48 (n20_holes); line 278 \"bought parts, as dimensioned by their sellers\" (listing, D-102)"
+      }
+    },
+    "mout": {
+      "value": {
+        "at": [
+          0,
+          0,
+          0
+        ],
+        "dir": [
+          0,
+          0,
+          1
+        ]
+      },
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/sparger-w/files/source/sparger_w.py lines 279 to 285: the shaft on the body axis as the ghost draws it; no drawing cited"
+      }
+    },
+    "dyn.rpmAt6V": {
+      "value": 100,
+      "unit": "rpm",
+      "provenance": {
+        "tier": "vendor",
+        "method": "listing",
+        "date": "2026-10-09",
+        "source": "originals/sparger-w/files/source/sim_w_template.html line 552 \"N20 gear motor, 6 V, 100 rpm\" (listing)"
+      }
+    }
+  }
+}

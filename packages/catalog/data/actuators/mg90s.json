@@ -1,0 +1,210 @@
+{
+  "id": "mg90s",
+  "name": "TowerPro MG90S class metal gear micro servo",
+  "kind": "actuator",
+  "drive": "servo",
+  "note": "No bench gives MG90S its own case dimensions; DAVIT MIC and BUCK SG90 are labelled SG90 / MG90S class and supply the geometry. Frame as sg90.",
+  "fields": {
+    "dims.length": {
+      "value": 22.8,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/davit/files/src/lib.py line 121 (MIC \"SG90 / MG90S class\"), originals/buck/files/src/engine.js line 12 (\"SG90 / MG90 9g micro\") agree; no drawing cited"
+      }
+    },
+    "dims.width": {
+      "value": 12.4,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/davit/files/src/lib.py line 121, originals/buck/files/src/engine.js line 12 agree; no drawing cited"
+      }
+    },
+    "dims.tabSpan": {
+      "value": 32.4,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "benches disagree on tab span (D-104, R70); every bench value is listed under conflicts; the SG90 caliper session is on the D-082 list"
+      },
+      "conflicts": [
+        {
+          "value": 32.4,
+          "source": "originals/davit/files/src/lib.py line 123"
+        },
+        {
+          "value": 32.3,
+          "source": "originals/buck/files/src/engine.js line 12"
+        }
+      ]
+    },
+    "dims.holePitch": {
+      "value": 28,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "benches disagree on mount hole pitch (D-104, R70); every bench value is listed under conflicts; the SG90 caliper session is on the D-082 list"
+      },
+      "conflicts": [
+        {
+          "value": 28,
+          "source": "originals/davit/files/src/lib.py line 124"
+        },
+        {
+          "value": 27.8,
+          "source": "originals/buck/files/src/engine.js line 12"
+        }
+      ]
+    },
+    "dims.shaftOffset": {
+      "value": 5.4,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "benches disagree on shaft offset (D-104, R70); every bench value is listed under conflicts; the SG90 caliper session is on the D-082 list"
+      },
+      "conflicts": [
+        {
+          "value": 5.4,
+          "source": "originals/davit/files/src/lib.py line 125, from the case centre"
+        },
+        {
+          "value": 6,
+          "source": "originals/buck/files/src/engine.js line 13, from the end"
+        }
+      ]
+    },
+    "mout": {
+      "value": {
+        "at": [
+          5.4,
+          0,
+          0
+        ],
+        "dir": [
+          0,
+          0,
+          1
+        ]
+      },
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/davit/files/src/lib.py line 125 shaft_off 5.4 from the case centre"
+      }
+    },
+    "dyn.slew": {
+      "value": 300,
+      "unit": "deg/s",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/washer/files/rig/laser-rig.html line 3834 SERVOS.micro9gm (\"9g metal gear (MG90S)\")"
+      }
+    },
+    "dyn.accel": {
+      "value": 2600,
+      "unit": "deg/s2",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/washer/files/rig/laser-rig.html line 3834"
+      }
+    },
+    "dyn.deadband": {
+      "value": 6,
+      "unit": "us",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/washer/files/rig/laser-rig.html line 3834"
+      }
+    },
+    "dyn.frameHz": {
+      "value": 50,
+      "unit": "Hz",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/washer/files/rig/laser-rig.html line 3834"
+      }
+    },
+    "dyn.lash": {
+      "value": 0.3,
+      "unit": "deg",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/washer/files/rig/laser-rig.html line 3834"
+      }
+    },
+    "dyn.band": {
+      "value": 5,
+      "unit": "deg",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/washer/files/rig/laser-rig.html line 3834"
+      }
+    },
+    "dyn.stall48": {
+      "value": 2.1,
+      "unit": "kg cm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/jib/files/jib.html line 100 (mic MG90S at 4.8 V)"
+      }
+    },
+    "dyn.stall60": {
+      "value": 2.6,
+      "unit": "kg cm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "benches disagree on stall at 6.0 V (D-104, R70); every bench value is listed under conflicts; the SG90 caliper session is on the D-082 list"
+      },
+      "conflicts": [
+        {
+          "value": 2.6,
+          "source": "originals/jib/files/jib.html line 100"
+        },
+        {
+          "value": 2.2,
+          "source": "originals/derrick/files/src/arm_build.py line 166 (\"about\"), originals/davit/files/src/lib.py line 131"
+        }
+      ]
+    },
+    "dyn.mass": {
+      "value": 13.4,
+      "unit": "g",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/jib/files/jib.html line 99, originals/davit/files/src/lib.py line 131"
+      }
+    }
+  }
+}

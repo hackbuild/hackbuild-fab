@@ -1,0 +1,104 @@
+{
+  "id": "mpi3501",
+  "name": "MPI3501 3.5 inch SPI 480x320 display (MPI3501, MPI3508, MHS35 class)",
+  "kind": "display",
+  "note": "Part frame: board centre, +y toward the 26 pin socket edge, +z out of the glass. lcdwiki gives the board and active area; the stack, socket gap and active offset are LOCKET bench values.",
+  "fields": {
+    "dims.pcb": {
+      "value": [
+        85.42,
+        55.6
+      ],
+      "unit": "mm",
+      "provenance": {
+        "tier": "vendor",
+        "method": "datasheet",
+        "date": "2026-10-09",
+        "source": "lcdwiki.com/3.5inch_RPi_Display (MPI3501 spec table, page last edited 2025-08-20, read 2026-10-09, copy in fab-knowledge/evidence/m08-catalog/datasheets sha256 f7dfa66bbe17df4925b47a8760f3341c2e6be056c94888427b541f73c879ffa0) Product Size 85.42*55.60(mm); originals/locket/files/src/build.py line 25 and originals/coaming/files/coaming.html line 1814 agree"
+      }
+    },
+    "dims.active": {
+      "value": [
+        73.44,
+        48.96
+      ],
+      "unit": "mm",
+      "provenance": {
+        "tier": "vendor",
+        "method": "datasheet",
+        "date": "2026-10-09",
+        "source": "lcdwiki.com/3.5inch_RPi_Display (MPI3501 spec table, page last edited 2025-08-20, read 2026-10-09, copy in fab-knowledge/evidence/m08-catalog/datasheets sha256 f7dfa66bbe17df4925b47a8760f3341c2e6be056c94888427b541f73c879ffa0) Active Area 48.96x73.44(mm); originals/locket/files/src/build.py line 26 and originals/coaming/files/coaming.html line 1814 agree"
+      }
+    },
+    "dims.pcbT": {
+      "value": 1.6,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/locket/files/src/build.py line 25 pcb_t; originals/locket/files/early-friction-hinge/params.scad line 41 agree; no drawing cited"
+      }
+    },
+    "dims.glassStack": {
+      "value": 3.6,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "panel stack above the pcb"
+      },
+      "conflicts": [
+        {
+          "value": 3.6,
+          "source": "originals/locket/files/src/build.py line 25 (glass)"
+        },
+        {
+          "value": 4.5,
+          "source": "originals/locket/files/early-friction-hinge/params.scad line 42 (\"ASSUMED panel stack above pcb, measure\")"
+        }
+      ]
+    },
+    "dims.activeOffset": {
+      "value": 1.6,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "active area shift toward the socket edge"
+      },
+      "conflicts": [
+        {
+          "value": 1.6,
+          "source": "originals/locket/files/src/build.py line 26 (act_off)"
+        },
+        {
+          "value": 1.2,
+          "source": "originals/locket/files/early-friction-hinge/params.scad line 47 (\"ASSUMED\")"
+        }
+      ]
+    },
+    "dims.socketGap": {
+      "value": 11,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "board to board gap of a seated 2x13 socket"
+      },
+      "conflicts": [
+        {
+          "value": 11,
+          "source": "originals/locket/files/src/build.py line 26, originals/coaming/files/coaming.html line 1814"
+        },
+        {
+          "value": 11.2,
+          "source": "originals/locket/files/early-friction-hinge/params.scad line 112"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "name": "hackbuild-fab",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "author": "Moheeb Zara <hackbuildvideo@gmail.com>",
+  "engines": {
+    "node": "^22.18.0 || >=24.11.0"
+  },
+  "workspaces": [
+    "spec",
+    "packages/*",
+    "kernel",
+    "core",
+    "designs/blocks"
+  ],
+  "scripts": {
+    "prepare": "git config core.hooksPath .githooks",
+    "lint": "node tools/lint-voice.mjs",
+    "typecheck": "tsc -b && tsc -p tools/tsconfig.json && tsc -p tsconfig.tests.json",
+    "pretest": "tsc -b",
+    "test": "vitest run && node --test tools/test/*.test.mjs packages/*/seed/test/*.test.mjs knowledge/test/*.test.mjs",
+    "derived": "node tools/counts.mjs && git diff --exit-code -- docs/plan/counts.json docs/plan/PLAN.md",
+    "tiers": "node tools/tiers.mjs",
+    "check": "npm run lint && node tools/lint-authors.mjs && npm run typecheck && npm test && npm run tiers && npm run derived",
+    "bake:all": "tsc -b packages/ui && node tools/bake/bake.mjs --all"
+  },
+  "devDependencies": {
+    "@changesets/cli": "3.0.3",
+    "@fontsource/ibm-plex-mono": "5.3.0",
+    "@fontsource/libre-baskerville": "5.3.0",
+    "@fontsource/permanent-marker": "5.3.0",
+    "@fontsource/special-elite": "5.3.0",
+    "@fontsource/vt323": "5.3.0",
+    "@playwright/test": "1.63.0",
+    "@types/node": "22.20.5",
+    "@types/three": "0.186.0",
+    "@vitejs/plugin-vue": "6.0.10",
+    "earcut": "2.2.4",
+    "fast-check": "4.10.2",
+    "happy-dom": "21.0.1",
+    "tsdown": "0.23.0",
+    "typescript": "7.0.2",
+    "vite": "8.3.2",
+    "vitest": "5.0.3",
+    "yaml": "2.9.1",
+    "zod": "4.6.5"
+  },
+  "overrides": {
+    "format-si-unit": {
+      "typescript": "7.0.2"
+    },
+    "kicadts": {
+      "typescript": "7.0.2"
+    }
+  }
+}

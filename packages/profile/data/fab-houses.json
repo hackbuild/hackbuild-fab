@@ -1,0 +1,22 @@
+{
+  "note": "Board fabrication facts that change what a board chase may declare (PROFILE.md 8.2, plan-deltas R61). One row per fact with the date it was checked; a house can change its service list without notice, so the board exporter copies each row it reads, with its date, onto the fab notes. A row forbids a declaration unless the chase names the service in unless.",
+  "rows": [
+    {
+      "id": "pcbway.mask.pink",
+      "house": "PCBWay",
+      "fact": "pink soldermask only through the Advanced PCB service, not the standard prototype order",
+      "checked": "2026-10-04",
+      "forbids": { "mask": "pink" },
+      "unless": { "service": "advanced-pcb" },
+      "provenance": { "tier": "vendor", "method": "listing", "date": "2026-10-04", "source": "PCBWay orderonline.aspx (fab-knowledge/synthesis/verified-claims.md C13 line 178, read by 2026-10-04)" }
+    },
+    {
+      "id": "jlcpcb.mask.pink",
+      "house": "JLCPCB",
+      "fact": "no pink soldermask in the published capabilities",
+      "checked": "2026-10-04",
+      "forbids": { "mask": "pink" },
+      "provenance": { "tier": "vendor", "method": "listing", "date": "2026-10-04", "source": "JLCPCB capabilities page (fab-knowledge/synthesis/verified-claims.md C13 line 178, read by 2026-10-04)" }
+    }
+  ]
+}

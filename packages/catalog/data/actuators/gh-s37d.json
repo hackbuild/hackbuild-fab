@@ -1,0 +1,144 @@
+{
+  "id": "gh-s37d",
+  "name": "PES GH-S37D 3.7 g micro servo",
+  "kind": "actuator",
+  "drive": "servo",
+  "note": "SPOOL is the one bench (spool_parts.py line 2 \"PES GH-S37D 3.7 g servos\"). Frame as sg90.",
+  "fields": {
+    "dims.case": {
+      "value": [
+        20.3,
+        9,
+        22.04
+      ],
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/spool/files/src/spool_parts.py line 23 (L, W, H); no source stated"
+      }
+    },
+    "dims.bossD": {
+      "value": 7.6,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/spool/files/src/spool_parts.py line 24 (BOSS_D); originals/spool/files/BUILD.md lines 165 to 166: \"scaled from the drawing rather than measured\", drawing not named"
+      }
+    },
+    "dims.bossH": {
+      "value": 3.46,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/spool/files/src/spool_parts.py line 24 (BOSS_H); no source stated"
+      }
+    },
+    "dims.splineD": {
+      "value": 4.8,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/spool/files/src/spool_parts.py line 24 (SPLINE_D); no source stated"
+      }
+    },
+    "dims.tabSpan": {
+      "value": 31.6,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/spool/files/src/spool_parts.py line 25 (FLG_SPAN); no source stated"
+      }
+    },
+    "dims.flangeZ": {
+      "value": 15.3,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/spool/files/src/spool_parts.py line 25 (FLG_BOT); originals/spool/files/BUILD.md lines 165 to 166: \"scaled from the drawing rather than measured\", drawing not named"
+      }
+    },
+    "dims.holePitch": {
+      "value": 27.2,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/spool/files/src/spool_parts.py line 26 (FLG_PITCH); originals/spool/files/BUILD.md lines 165 to 166: \"scaled from the drawing rather than measured\", drawing not named"
+      }
+    },
+    "dims.holeD": {
+      "value": 2,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/spool/files/src/spool_parts.py line 26 (FLG_HOLE); no source stated"
+      }
+    },
+    "dims.shaftFromEnd": {
+      "value": 6,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/spool/files/src/spool_parts.py line 27 (SHAFT_END); originals/spool/files/BUILD.md lines 165 to 166: \"scaled from the drawing rather than measured\", drawing not named"
+      }
+    },
+    "mout": {
+      "value": {
+        "at": [
+          4.15,
+          0,
+          0
+        ],
+        "dir": [
+          0,
+          0,
+          1
+        ]
+      },
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/spool/files/src/spool_parts.py lines 23 and 27: L / 2 less SHAFT_END, 20.30 / 2 less 6.00, computed from inferred fields"
+      }
+    },
+    "dyn.stall": {
+      "value": 4.9,
+      "unit": "N cm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/spool/files/src/spool_parts.py line 29 (STALL_NCM); no source stated"
+      }
+    },
+    "dyn.mass": {
+      "value": 3.7,
+      "unit": "g",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/spool/files/src/spool_parts.py line 29 (MASS); no source stated"
+      }
+    }
+  }
+}

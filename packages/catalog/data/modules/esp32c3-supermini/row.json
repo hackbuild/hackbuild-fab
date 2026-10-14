@@ -1,0 +1,61 @@
+{
+  "id": "esp32c3-supermini",
+  "name": "ESP32-C3 SuperMini",
+  "kind": "module",
+  "mcu": "esp32-c3",
+  "note": "Pads and pin names parse at load from the KiCad files beside this row (SPINDLE gen_board.py pattern). Tier vendor per D-096 until calipers; the footprint and symbol are drawn in this repo by packages/catalog/scripts/draw-supermini.mjs from the module dims and silkscreen pin map. SPINDLE built from the community library mrtnvgr/KiCad_ESP32-C3-SuperMini, which carries no licence (GitHub API license null, read 2026-10-13), so those files stay out of the repo; lineage.json records where they live.",
+  "fields": {
+    "pads": {
+      "from": {
+        "kind": "kicad",
+        "mod": "supermini.kicad_mod",
+        "sym": "supermini.kicad_sym",
+        "count": 16
+      },
+      "unit": "mm",
+      "provenance": {
+        "tier": "vendor",
+        "method": "listing",
+        "date": "2026-10-09",
+        "source": "supermini.kicad_mod sha256 a803f8c2e1d938b602ce31a6ffe74c7bfbabaa68dad73c85c70ab92cf617ee64, drawn by packages/catalog/scripts/draw-supermini.mjs from the module dims (2 rows of 8, 2.54 mm pitch, 15.24 mm row-to-row, benches/spindle/outputs/spindle/README.md lines 42 to 43) and the 1.14 mm pad and 0.84 mm drill SPINDLE built with; pads parse equal to the SPINDLE footprint (measured 2026-10-13); D-096 sets SuperMini pads to vendor"
+      }
+    },
+    "pins": {
+      "from": {
+        "kind": "kicad-sym",
+        "sym": "supermini.kicad_sym",
+        "count": 16
+      },
+      "unit": "none",
+      "provenance": {
+        "tier": "vendor",
+        "method": "listing",
+        "date": "2026-10-09",
+        "source": "supermini.kicad_sym sha256 152248260c115ba152f1fc28df3a96205705a6f644f8418e68a9566510b75d9c, drawn by packages/catalog/scripts/draw-supermini.mjs; pin map verified against the module silkscreen (benches/spindle/outputs/spindle/pcb.py line 7) and parses equal to the SPINDLE symbol (measured 2026-10-13)"
+      }
+    },
+    "dims.body": {
+      "value": [
+        22.52,
+        18
+      ],
+      "unit": "mm",
+      "provenance": {
+        "tier": "vendor",
+        "method": "listing",
+        "date": "2026-10-09",
+        "source": "benches/spindle/outputs/spindle/README.md lines 42 to 43 \"Confirmed: 22.52 x 18 mm body, 2 rows of 8, 2.54 mm pitch, 15.24 mm row-to-row\"; gen_board.py line 35 MOD_W, MOD_L"
+      }
+    },
+    "dims.hybridPadCentre": {
+      "value": 8.75,
+      "unit": "mm",
+      "provenance": {
+        "tier": "vendor",
+        "method": "listing",
+        "date": "2026-10-04",
+        "source": "moved from profile constant esp32c3.supermini.padCentres (seed: SPINDLE against photo and KiCad symbol; PROFILE.md 2.4 vendor, listing; D-096): centre of the SPINDLE R1 hybrid pad spanning the castellation at 11.20 and the hole row at 7.62 (knowledge/kernels/board-pcb.md)"
+      }
+    }
+  }
+}

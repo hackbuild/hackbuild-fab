@@ -1,0 +1,44 @@
+{
+  "id": "sn74ahct1g125",
+  "name": "SN74AHCT1G125 buffer",
+  "kind": "other",
+  "note": "LUG U6; fixture only, never enters data/ (M08-T03 step 8)",
+  "fields": {
+    "pins": {
+      "value": [
+        {
+          "n": 1,
+          "name": "OE_N",
+          "role": "unknown"
+        },
+        {
+          "n": 2,
+          "name": "A",
+          "role": "unknown"
+        },
+        {
+          "n": 3,
+          "name": "GND",
+          "role": "unknown"
+        },
+        {
+          "n": 4,
+          "name": "Y",
+          "role": "unknown"
+        },
+        {
+          "n": 5,
+          "name": "VCC",
+          "role": "unknown"
+        }
+      ],
+      "unit": "none",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "lug.tsx pin maps written from knowledge: benches/round-pi-board/outputs/lug.tsx lines 30 to 30 (U6_PINS, SN74AHCT1G125 SOT-23-5) and lines 10 to 11; sha256 ff88947cb61584f220eb8d2495e882ea1c2ca785972c3de872f165fe4d7a644d"
+      }
+    }
+  }
+}

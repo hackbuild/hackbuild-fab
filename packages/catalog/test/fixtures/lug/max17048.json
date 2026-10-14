@@ -1,0 +1,59 @@
+{
+  "id": "max17048",
+  "name": "MAX17048 fuel gauge",
+  "kind": "other",
+  "note": "LUG U2; fixture only, never enters data/ (M08-T03 step 8)",
+  "fields": {
+    "pins": {
+      "value": [
+        {
+          "n": 1,
+          "name": "CTG",
+          "role": "unknown"
+        },
+        {
+          "n": 2,
+          "name": "QSTRT",
+          "role": "unknown"
+        },
+        {
+          "n": 3,
+          "name": "SCL",
+          "role": "unknown"
+        },
+        {
+          "n": 4,
+          "name": "SDA",
+          "role": "unknown"
+        },
+        {
+          "n": 5,
+          "name": "ALRT_N",
+          "role": "unknown"
+        },
+        {
+          "n": 6,
+          "name": "GND",
+          "role": "unknown"
+        },
+        {
+          "n": 7,
+          "name": "CELL",
+          "role": "unknown"
+        },
+        {
+          "n": 8,
+          "name": "VDD",
+          "role": "unknown"
+        }
+      ],
+      "unit": "none",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "lug.tsx pin maps written from knowledge: benches/round-pi-board/outputs/lug.tsx lines 21 to 21 (U2_PINS, MAX17048 SON-8) and lines 10 to 11; sha256 ff88947cb61584f220eb8d2495e882ea1c2ca785972c3de872f165fe4d7a644d"
+      }
+    }
+  }
+}

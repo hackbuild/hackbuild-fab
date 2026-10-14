@@ -1,0 +1,236 @@
+{
+ "note": "hbf catalog.pins esp32c3-supermini --json, result field, written 2026-10-09 (M08-T13); the wiring package reads no catalog, so its tests read this answer",
+ "result": {
+  "pins": [
+   {
+    "n": 1,
+    "name": "GPIO0",
+    "role": "gpio",
+    "at": [
+     7.62,
+     -8.89,
+     0
+    ]
+   },
+   {
+    "n": 2,
+    "name": "GPIO1",
+    "role": "gpio",
+    "at": [
+     7.62,
+     -6.35,
+     0
+    ]
+   },
+   {
+    "n": 3,
+    "name": "GPIO2",
+    "role": "gpio",
+    "strapping": true,
+    "at": [
+     7.62,
+     -3.81,
+     0
+    ]
+   },
+   {
+    "n": 4,
+    "name": "GPIO3",
+    "role": "gpio",
+    "at": [
+     7.62,
+     -1.27,
+     0
+    ]
+   },
+   {
+    "n": 5,
+    "name": "GPIO4",
+    "role": "gpio",
+    "bootActivity": "MTMS, JTAG interface",
+    "at": [
+     7.62,
+     1.27,
+     0
+    ]
+   },
+   {
+    "n": 6,
+    "name": "3V3",
+    "role": "3v3",
+    "at": [
+     7.62,
+     3.81,
+     0
+    ]
+   },
+   {
+    "n": 7,
+    "name": "GND",
+    "role": "gnd",
+    "at": [
+     7.62,
+     6.35,
+     0
+    ]
+   },
+   {
+    "n": 8,
+    "name": "5V",
+    "role": "5v",
+    "at": [
+     7.62,
+     8.89,
+     0
+    ]
+   },
+   {
+    "n": 9,
+    "name": "GPIO5",
+    "role": "gpio",
+    "bootActivity": "MTDI, JTAG interface",
+    "at": [
+     -7.62,
+     8.89,
+     0
+    ]
+   },
+   {
+    "n": 10,
+    "name": "GPIO6",
+    "role": "gpio",
+    "bootActivity": "MTCK, JTAG interface",
+    "at": [
+     -7.62,
+     6.35,
+     0
+    ]
+   },
+   {
+    "n": 11,
+    "name": "GPIO7",
+    "role": "gpio",
+    "bootActivity": "MTDO, JTAG interface",
+    "at": [
+     -7.62,
+     3.81,
+     0
+    ]
+   },
+   {
+    "n": 12,
+    "name": "GPIO8",
+    "role": "gpio",
+    "strapping": true,
+    "at": [
+     -7.62,
+     1.27,
+     0
+    ]
+   },
+   {
+    "n": 13,
+    "name": "GPIO9",
+    "role": "gpio",
+    "strapping": true,
+    "at": [
+     -7.62,
+     -1.27,
+     0
+    ]
+   },
+   {
+    "n": 14,
+    "name": "GPIO10",
+    "role": "gpio",
+    "at": [
+     -7.62,
+     -3.81,
+     0
+    ]
+   },
+   {
+    "n": 15,
+    "name": "GPIO20",
+    "role": "gpio",
+    "bootActivity": "U0RXD: an input at reset, not driven",
+    "at": [
+     -7.62,
+     -6.35,
+     0
+    ]
+   },
+   {
+    "n": 16,
+    "name": "GPIO21",
+    "role": "gpio",
+    "bootActivity": "U0TXD: ROM messages print to UART0 at every reset by default",
+    "at": [
+     -7.62,
+     -8.89,
+     0
+    ]
+   }
+  ],
+  "mcu": {
+   "id": "esp32-c3",
+   "name": "Espressif ESP32-C3",
+   "vddV": 3.3,
+   "pullup": {
+    "kind": "typical",
+    "typOhm": 45000
+   },
+   "vilMaxV": 0.825,
+   "vihMinV": 2.475,
+   "tier": "vendor",
+   "source": "ESP32-C3 datasheet v2.4 p. 55: VIL max 0.25 VDD, VIH min 0.75 VDD, pullup 45 kohm typical",
+   "inputCap": {
+    "value": 7,
+    "unit": "pF",
+    "qualifier": "inferred",
+    "basis": "inferred",
+    "source": "pip-controller src/layout.js:46 cpin, assumed 7 pF for an RP2040 pin; no ESP32-C3 figure recorded"
+   },
+   "leakage": {
+    "value": 1,
+    "unit": "nA",
+    "qualifier": "inferred",
+    "basis": "inferred",
+    "source": "pip-controller src/layout.js:46 leak, assumed for an RP2040 pin; no ESP32-C3 figure recorded"
+   },
+   "provenance": {
+    "tier": "vendor",
+    "method": "datasheet",
+    "date": "2026-10-04",
+    "source": "ESP32-C3 datasheet v2.4 p. 55: VIL max 0.25 VDD, VIH min 0.75 VDD, pullup 45 kohm typical"
+   }
+  },
+  "tier": "vendor",
+  "provenance": {
+   "strapping": {
+    "tier": "vendor",
+    "method": "datasheet",
+    "date": "2026-10-09",
+    "source": "Espressif ESP32-C3 Series Datasheet v2.4 (espressif.com esp32-c3_datasheet_en.pdf, sha256 833fc000b4b3c3d39c496fcbd597fed5806956503ce7390b19cc8ae82f19f968, read 2026-10-09) section 3, Table 3-1 p. 30 (default configuration of strapping pins) and Table 3-3 p. 31 (chip boot mode control)"
+   },
+   "bootActivity": {
+    "tier": "vendor",
+    "method": "datasheet",
+    "date": "2026-10-09",
+    "source": "Espressif ESP32-C3 Series Datasheet v2.4 (espressif.com esp32-c3_datasheet_en.pdf, sha256 833fc000b4b3c3d39c496fcbd597fed5806956503ce7390b19cc8ae82f19f968, read 2026-10-09) Table 2-4 p. 20 (GPIO21 F0 U0TXD type O, GPIO20 F0 U0RXD type I), section 2.3.3 p. 23 (GPIO4 to GPIO7 JTAG, GPIO20 and GPIO21 UART0), Table 3-4 p. 32 (UART0 ROM printing enabled at the default eFuse)"
+   },
+   "pins": {
+    "tier": "vendor",
+    "method": "listing",
+    "date": "2026-10-09",
+    "source": "supermini.kicad_sym sha256 152248260c115ba152f1fc28df3a96205705a6f644f8418e68a9566510b75d9c, drawn by packages/catalog/scripts/draw-supermini.mjs; pin map verified against the module silkscreen (benches/spindle/outputs/spindle/pcb.py line 7) and parses equal to the SPINDLE symbol (measured 2026-10-13)"
+   },
+   "pads": {
+    "tier": "vendor",
+    "method": "listing",
+    "date": "2026-10-09",
+    "source": "supermini.kicad_mod sha256 a803f8c2e1d938b602ce31a6ffe74c7bfbabaa68dad73c85c70ab92cf617ee64, drawn by packages/catalog/scripts/draw-supermini.mjs from the module dims (2 rows of 8, 2.54 mm pitch, 15.24 mm row-to-row, benches/spindle/outputs/spindle/README.md lines 42 to 43) and the 1.14 mm pad and 0.84 mm drill SPINDLE built with; pads parse equal to the SPINDLE footprint (measured 2026-10-13); D-096 sets SuperMini pads to vendor"
+   }
+  }
+ }
+}

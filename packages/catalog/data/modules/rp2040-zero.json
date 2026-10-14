@@ -1,0 +1,313 @@
+{
+  "id": "rp2040-zero",
+  "name": "Waveshare RP2040-Zero",
+  "kind": "module",
+  "mcu": "rp2040",
+  "note": "Pad centres ported from PIP layout.js zeroPads: top view, USB toward +y, origin at the board centre. n is PIP's num (left 1 to 9, tail 10 to 14, right 15 to 23). Pad sizes are not in the corpus, so the row carries pin centres and no pads field.",
+  "fields": {
+    "pins": {
+      "value": [
+        {
+          "n": 1,
+          "name": "5V",
+          "role": "5v",
+          "at": [
+            -7.62,
+            9.95,
+            0
+          ]
+        },
+        {
+          "n": 2,
+          "name": "GND",
+          "role": "gnd",
+          "at": [
+            -7.62,
+            7.41,
+            0
+          ]
+        },
+        {
+          "n": 3,
+          "name": "3V3",
+          "role": "3v3",
+          "at": [
+            -7.62,
+            4.87,
+            0
+          ]
+        },
+        {
+          "n": 4,
+          "name": "GP29",
+          "role": "gpio",
+          "at": [
+            -7.62,
+            2.33,
+            0
+          ]
+        },
+        {
+          "n": 5,
+          "name": "GP28",
+          "role": "gpio",
+          "at": [
+            -7.62,
+            -0.21,
+            0
+          ]
+        },
+        {
+          "n": 6,
+          "name": "GP27",
+          "role": "gpio",
+          "at": [
+            -7.62,
+            -2.75,
+            0
+          ]
+        },
+        {
+          "n": 7,
+          "name": "GP26",
+          "role": "gpio",
+          "at": [
+            -7.62,
+            -5.29,
+            0
+          ]
+        },
+        {
+          "n": 8,
+          "name": "GP15",
+          "role": "gpio",
+          "at": [
+            -7.62,
+            -7.83,
+            0
+          ]
+        },
+        {
+          "n": 9,
+          "name": "GP14",
+          "role": "gpio",
+          "at": [
+            -7.62,
+            -10.37,
+            0
+          ]
+        },
+        {
+          "n": 10,
+          "name": "GP13",
+          "role": "gpio",
+          "at": [
+            -5.08,
+            -10.37,
+            0
+          ]
+        },
+        {
+          "n": 11,
+          "name": "GP12",
+          "role": "gpio",
+          "at": [
+            -2.54,
+            -10.37,
+            0
+          ]
+        },
+        {
+          "n": 12,
+          "name": "GP11",
+          "role": "gpio",
+          "at": [
+            0,
+            -10.37,
+            0
+          ]
+        },
+        {
+          "n": 13,
+          "name": "GP10",
+          "role": "gpio",
+          "at": [
+            2.54,
+            -10.37,
+            0
+          ]
+        },
+        {
+          "n": 14,
+          "name": "GP9",
+          "role": "gpio",
+          "at": [
+            5.08,
+            -10.37,
+            0
+          ]
+        },
+        {
+          "n": 15,
+          "name": "GP8",
+          "role": "gpio",
+          "at": [
+            7.62,
+            -10.37,
+            0
+          ]
+        },
+        {
+          "n": 16,
+          "name": "GP7",
+          "role": "gpio",
+          "at": [
+            7.62,
+            -7.83,
+            0
+          ]
+        },
+        {
+          "n": 17,
+          "name": "GP6",
+          "role": "gpio",
+          "at": [
+            7.62,
+            -5.29,
+            0
+          ]
+        },
+        {
+          "n": 18,
+          "name": "GP5",
+          "role": "gpio",
+          "at": [
+            7.62,
+            -2.75,
+            0
+          ]
+        },
+        {
+          "n": 19,
+          "name": "GP4",
+          "role": "gpio",
+          "at": [
+            7.62,
+            -0.21,
+            0
+          ]
+        },
+        {
+          "n": 20,
+          "name": "GP3",
+          "role": "gpio",
+          "at": [
+            7.62,
+            2.33,
+            0
+          ]
+        },
+        {
+          "n": 21,
+          "name": "GP2",
+          "role": "gpio",
+          "at": [
+            7.62,
+            4.87,
+            0
+          ]
+        },
+        {
+          "n": 22,
+          "name": "GP1",
+          "role": "gpio",
+          "at": [
+            7.62,
+            7.41,
+            0
+          ]
+        },
+        {
+          "n": 23,
+          "name": "GP0",
+          "role": "gpio",
+          "at": [
+            7.62,
+            9.95,
+            0
+          ]
+        }
+      ],
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/pip/files/pip-controller/src/layout.js lines 8 to 21 (zeroPads) and line 39 (board L 23.5, W 18.0, pitch 2.54, inset 1.38); originals/pip/files/pip-controller/docs/assembly.md lines 90 to 91 \"The pad table is BAFFLE's\"; no drawing cited"
+      }
+    },
+    "dims.body": {
+      "value": [
+        23.5,
+        18
+      ],
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/pip/files/pip-controller/src/layout.js line 39; originals/baffle-r3/files/src/model.js lines 61 to 71 and originals/gudgeon/files/extracted/04_part2c_state.js line 14 agree"
+      }
+    },
+    "dims.thickness": {
+      "value": 1,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "board thickness"
+      },
+      "conflicts": [
+        {
+          "value": 1,
+          "source": "originals/pip/files/pip-controller/src/layout.js line 39, originals/baffle-r3/files/src/model.js line 61"
+        },
+        {
+          "value": 1.2,
+          "source": "originals/buck/files/later/buck (2).html line 963"
+        }
+      ]
+    },
+    "dims.inset": {
+      "value": 1.38,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "castellation centre inset from the edge"
+      },
+      "conflicts": [
+        {
+          "value": 1.38,
+          "source": "originals/pip/files/pip-controller/src/layout.js line 39"
+        },
+        {
+          "value": 1.27,
+          "source": "originals/gudgeon/files/extracted/05_part2d_circuit.js lines 7 to 18 (\"Waveshare drawing; confirm on the board with calipers\", drawing not named)"
+        }
+      ]
+    },
+    "dims.pitch": {
+      "value": 2.54,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/pip/files/pip-controller/src/layout.js line 39; GUDGEON 05_part2d_circuit.js agrees"
+      }
+    }
+  }
+}

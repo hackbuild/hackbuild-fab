@@ -1,0 +1,383 @@
+{
+  "id": "sg90",
+  "name": "TowerPro SG90 class 9 g micro servo",
+  "kind": "actuator",
+  "drive": "servo",
+  "note": "Part frame: origin at the case centre on the flange plane, +x along the case length toward the shaft end, +z out of the spline. No bench cites a dimensioned drawing; every geometry field is inferred and the export gate refuses it until measured.",
+  "fields": {
+    "dims.length": {
+      "value": 22.8,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "benches disagree on case length (D-104, R70); every bench value is listed under conflicts; the SG90 caliper session is on the D-082 list"
+      },
+      "conflicts": [
+        {
+          "value": 22.8,
+          "source": "originals/davit/files/src/lib.py line 121 (DAVIT MIC), originals/pintle/files/src/pintle_parts.py line 22, originals/stanchion/files/src/cad.py line 41, originals/buck/files/src/engine.js line 12, originals/ogee16/files/src/source/params.scad line 143; profile seed constants sg90.* (\"published; not a measured unit\"), retired to this row (PROFILE.md 2.4, D-104)"
+        },
+        {
+          "value": 23,
+          "source": "originals/cask/files/cask.scad line 146 (\"sg90, measured off the usual clones\", no coupon)"
+        },
+        {
+          "value": 22.5,
+          "source": "originals/washer/files/rig/laser-rig.html line 2594 (proxy \"near enough for the eye\")"
+        }
+      ]
+    },
+    "dims.width": {
+      "value": 12.2,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "benches disagree on case width, 12.2 against 12.4 (D-104, R70); every bench value is listed under conflicts; the SG90 caliper session is on the D-082 list"
+      },
+      "conflicts": [
+        {
+          "value": 12.2,
+          "source": "originals/pintle/files/src/pintle_parts.py line 22, originals/stanchion/files/src/cad.py line 41, originals/ogee16/files/src/source/params.scad line 143; profile seed constants sg90.* (\"published; not a measured unit\"), retired to this row (PROFILE.md 2.4, D-104)"
+        },
+        {
+          "value": 12.4,
+          "source": "originals/davit/files/src/lib.py line 121, originals/jib/files/jib.html line 91 (mic.W), originals/buck/files/src/engine.js line 12, originals/cask/files/cask.scad line 146"
+        },
+        {
+          "value": 11.8,
+          "source": "originals/washer/files/rig/laser-rig.html line 2594 (proxy)"
+        }
+      ]
+    },
+    "dims.height": {
+      "value": 22.5,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "benches disagree on case height (D-104, R70); every bench value is listed under conflicts; the SG90 caliper session is on the D-082 list"
+      },
+      "conflicts": [
+        {
+          "value": 22.5,
+          "source": "originals/stanchion/files/src/cad.py line 41, originals/ogee16/files/src/source/params.scad line 143; profile seed constants sg90.* (\"published; not a measured unit\"), retired to this row (PROFILE.md 2.4, D-104)"
+        },
+        {
+          "value": 22.7,
+          "source": "originals/pintle/files/src/pintle_parts.py line 22, originals/buck/files/src/engine.js line 12, originals/washer/files/rig/laser-rig.html line 2594"
+        },
+        {
+          "value": 22.8,
+          "source": "originals/cask/files/cask.scad line 146"
+        }
+      ]
+    },
+    "dims.tabSpan": {
+      "value": 32.2,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "benches disagree on tab span, 32.2 against 32.4 (D-104, R70); every bench value is listed under conflicts; the SG90 caliper session is on the D-082 list"
+      },
+      "conflicts": [
+        {
+          "value": 32.2,
+          "source": "originals/pintle/files/src/pintle_parts.py line 23, originals/stanchion/files/src/cad.py line 41, originals/ogee16/files/src/source/params.scad line 144, originals/washer/files/rig/laser-rig.html line 2596; profile seed constants sg90.* (\"published; not a measured unit\"), retired to this row (PROFILE.md 2.4, D-104)"
+        },
+        {
+          "value": 32.4,
+          "source": "originals/davit/files/src/lib.py line 123"
+        },
+        {
+          "value": 32.3,
+          "source": "originals/buck/files/src/engine.js line 12 (flL)"
+        }
+      ]
+    },
+    "dims.holePitch": {
+      "value": 27.8,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "benches disagree on mount hole pitch, 27.8 against 28.0 (D-104, R70); every bench value is listed under conflicts; the SG90 caliper session is on the D-082 list"
+      },
+      "conflicts": [
+        {
+          "value": 27.8,
+          "source": "originals/pintle/files/src/pintle_parts.py line 27, originals/cask/files/cask.scad line 146, originals/ogee16/files/src/source/params.scad line 144, originals/buck/files/src/engine.js line 12"
+        },
+        {
+          "value": 28,
+          "source": "originals/davit/files/src/lib.py line 124"
+        }
+      ]
+    },
+    "dims.holeD": {
+      "value": 2,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "benches disagree on tab hole diameter (D-104, R70); every bench value is listed under conflicts; the SG90 caliper session is on the D-082 list"
+      },
+      "conflicts": [
+        {
+          "value": 2,
+          "source": "originals/pintle/files/src/pintle_parts.py line 27"
+        },
+        {
+          "value": 2.2,
+          "source": "originals/ogee16/files/src/source/params.scad line 144"
+        }
+      ]
+    },
+    "dims.tabThickness": {
+      "value": 2.5,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "benches disagree on tab thickness (D-104, R70); every bench value is listed under conflicts; the SG90 caliper session is on the D-082 list"
+      },
+      "conflicts": [
+        {
+          "value": 2.5,
+          "source": "originals/pintle/files/src/pintle_parts.py line 23, originals/stanchion/files/src/cad.py line 41, originals/ogee16/files/src/source/params.scad line 145, originals/buck/files/src/engine.js line 12"
+        },
+        {
+          "value": 2.4,
+          "source": "originals/davit/files/src/lib.py line 122, originals/jib/files/jib.html line 91 (mic.flange)"
+        }
+      ]
+    },
+    "dims.flangeZ": {
+      "value": 15.9,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "benches disagree on flange underside above the case bottom (D-104, R70); every bench value is listed under conflicts; the SG90 caliper session is on the D-082 list"
+      },
+      "conflicts": [
+        {
+          "value": 15.9,
+          "source": "originals/stanchion/files/src/cad.py line 42, originals/ogee16/files/src/source/params.scad line 146, originals/buck/files/src/engine.js line 12"
+        },
+        {
+          "value": 15.8,
+          "source": "originals/pintle/files/src/pintle_parts.py line 23"
+        },
+        {
+          "value": 16,
+          "source": "originals/davit/files/src/lib.py line 121 (H_below)"
+        }
+      ]
+    },
+    "dims.shaftOffset": {
+      "value": 5.9,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "benches disagree on shaft offset, 5.3 to 6.1 across benches, measured from different faces (D-104, R70); every bench value is listed under conflicts; the SG90 caliper session is on the D-082 list"
+      },
+      "conflicts": [
+        {
+          "value": 5.4,
+          "source": "originals/davit/files/src/lib.py line 125, from the case centre (\"shaft is 6.0 from the near end of a 22.8 case\")"
+        },
+        {
+          "value": 5.3,
+          "source": "originals/jib/files/jib.html line 91 (mic.shaft_off)"
+        },
+        {
+          "value": 5.9,
+          "source": "originals/pintle/files/src/pintle_parts.py line 24, from the shaft-end case face"
+        },
+        {
+          "value": 5.9,
+          "source": "originals/washer/files/rig/laser-rig.html line 2593, proxy, from the end"
+        },
+        {
+          "value": 6.1,
+          "source": "originals/stanchion/files/src/cad.py line 42 (sg_shaft_off); profile seed constants sg90.* (\"published; not a measured unit\"), retired to this row (PROFILE.md 2.4, D-104) shaftFromEnd"
+        },
+        {
+          "value": 6,
+          "source": "originals/buck/files/src/engine.js line 13 (shaftOff)"
+        },
+        {
+          "value": 5.5,
+          "source": "originals/ogee16/files/src/source/params.scad line 148 (SV_SHAFT_OFF)"
+        }
+      ]
+    },
+    "dims.splineD": {
+      "value": 4.8,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/davit/files/src/lib.py line 126, originals/pintle/files/src/pintle_parts.py line 26, originals/stanchion/files/src/cad.py line 42, originals/ogee16/files/src/source/params.scad line 148 agree; no drawing cited"
+      }
+    },
+    "mout": {
+      "value": {
+        "at": [
+          5.5,
+          0,
+          0
+        ],
+        "dir": [
+          0,
+          0,
+          1
+        ]
+      },
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "shaft on the case centreline at the case half length less the shaft offset: 22.8 / 2 less 5.9 (dims.length, dims.shaftOffset), computed from inferred fields; +z out of the spline"
+      }
+    },
+    "dyn.slew": {
+      "value": 240,
+      "unit": "deg/s",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/washer/files/rig/laser-rig.html line 3833 SERVOS.micro9g (\"9g micro (SG90 / MG90S)\")"
+      }
+    },
+    "dyn.accel": {
+      "value": 1800,
+      "unit": "deg/s2",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/washer/files/rig/laser-rig.html line 3833"
+      }
+    },
+    "dyn.deadband": {
+      "value": 8,
+      "unit": "us",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/washer/files/rig/laser-rig.html line 3833"
+      }
+    },
+    "dyn.frameHz": {
+      "value": 50,
+      "unit": "Hz",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/washer/files/rig/laser-rig.html line 3833"
+      }
+    },
+    "dyn.lash": {
+      "value": 0.55,
+      "unit": "deg",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/washer/files/rig/laser-rig.html line 3833"
+      }
+    },
+    "dyn.band": {
+      "value": 6,
+      "unit": "deg",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/washer/files/rig/laser-rig.html line 3833"
+      }
+    },
+    "dyn.pulse": {
+      "value": [
+        500,
+        2500
+      ],
+      "unit": "us",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/washer/files/rig/PanTiltLaser.ino lines 220 to 221, firmware default window"
+      }
+    },
+    "dyn.stall48": {
+      "value": 1.8,
+      "unit": "kg cm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/davit/files/src/lib.py line 131, originals/jib/files/jib.html line 100, originals/derrick/files/src/arm_build.py line 166 (\"about\"); JIB line 85 \"typical and editable, brands vary\""
+      }
+    },
+    "dyn.stall60": {
+      "value": 2.1,
+      "unit": "kg cm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "benches disagree on stall at 6.0 V (D-104, R70); every bench value is listed under conflicts; the SG90 caliper session is on the D-082 list"
+      },
+      "conflicts": [
+        {
+          "value": 2.1,
+          "source": "originals/jib/files/jib.html line 100 (SG90)"
+        },
+        {
+          "value": 2.2,
+          "source": "originals/davit/files/src/lib.py line 131 (MIC, SG90 / MG90S class)"
+        }
+      ]
+    },
+    "dyn.mass": {
+      "value": 9,
+      "unit": "g",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "benches disagree on mass (D-104, R70); every bench value is listed under conflicts; the SG90 caliper session is on the D-082 list"
+      },
+      "conflicts": [
+        {
+          "value": 9,
+          "source": "originals/jib/files/jib.html line 99, originals/derrick/files/src/arm_build.py line 13"
+        },
+        {
+          "value": 13.4,
+          "source": "originals/davit/files/src/lib.py line 131 (MIC, SG90 / MG90S class)"
+        }
+      ]
+    }
+  }
+}

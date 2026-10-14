@@ -1,0 +1,1 @@
+{"expect":{"changed":["membrane-slider-thinpot.0.base","membrane-slider-thinpot.0.collector-strip","membrane-slider-thinpot.0.membrane","membrane-slider-thinpot.0.track"],"metricDelta":{"membrane-slider-thinpot.0.thinpot.R.track":27777.777777778},"unchanged":[]},"from":100,"pointer":"/params/0/fields/0/default","to":120}

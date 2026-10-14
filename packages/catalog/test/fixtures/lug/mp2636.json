@@ -1,0 +1,144 @@
+{
+  "id": "mp2636",
+  "name": "MP2636 charger and boost",
+  "kind": "other",
+  "note": "LUG U1; fixture only, never enters data/ (M08-T03 step 8)",
+  "fields": {
+    "pins": {
+      "value": [
+        {
+          "n": 1,
+          "name": "STAT1",
+          "role": "unknown"
+        },
+        {
+          "n": 2,
+          "name": "STAT2",
+          "role": "unknown"
+        },
+        {
+          "n": 3,
+          "name": "CE_N",
+          "role": "unknown"
+        },
+        {
+          "n": 4,
+          "name": "MODE",
+          "role": "unknown"
+        },
+        {
+          "n": 5,
+          "name": "ISET",
+          "role": "unknown"
+        },
+        {
+          "n": 6,
+          "name": "VSET",
+          "role": "unknown"
+        },
+        {
+          "n": 7,
+          "name": "SW1",
+          "role": "unknown"
+        },
+        {
+          "n": 8,
+          "name": "SW2",
+          "role": "unknown"
+        },
+        {
+          "n": 9,
+          "name": "SW3",
+          "role": "unknown"
+        },
+        {
+          "n": 10,
+          "name": "PGND1",
+          "role": "unknown"
+        },
+        {
+          "n": 11,
+          "name": "PGND2",
+          "role": "unknown"
+        },
+        {
+          "n": 12,
+          "name": "PGND3",
+          "role": "unknown"
+        },
+        {
+          "n": 13,
+          "name": "BAT1",
+          "role": "unknown"
+        },
+        {
+          "n": 14,
+          "name": "BAT2",
+          "role": "unknown"
+        },
+        {
+          "n": 15,
+          "name": "BAT3",
+          "role": "unknown"
+        },
+        {
+          "n": 16,
+          "name": "VIN1",
+          "role": "unknown"
+        },
+        {
+          "n": 17,
+          "name": "VIN2",
+          "role": "unknown"
+        },
+        {
+          "n": 18,
+          "name": "VOUT1",
+          "role": "unknown"
+        },
+        {
+          "n": 19,
+          "name": "VOUT2",
+          "role": "unknown"
+        },
+        {
+          "n": 20,
+          "name": "EN",
+          "role": "unknown"
+        },
+        {
+          "n": 21,
+          "name": "NTC",
+          "role": "unknown"
+        },
+        {
+          "n": 22,
+          "name": "AGND",
+          "role": "unknown"
+        },
+        {
+          "n": 23,
+          "name": "VDD",
+          "role": "unknown"
+        },
+        {
+          "n": 24,
+          "name": "PG_N",
+          "role": "unknown"
+        },
+        {
+          "n": 25,
+          "name": "PAD",
+          "role": "unknown"
+        }
+      ],
+      "unit": "none",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "lug.tsx pin maps written from knowledge: benches/round-pi-board/outputs/lug.tsx lines 15 to 20 (U1_PINS, MP2636 charger + boost, QFN-24 4x4) and lines 10 to 11; sha256 ff88947cb61584f220eb8d2495e882ea1c2ca785972c3de872f165fe4d7a644d"
+      }
+    }
+  }
+}

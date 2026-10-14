@@ -1,0 +1,36 @@
+{
+  "name": "@hackbuild/board",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "author": "Moheeb Zara <hackbuildvideo@gmail.com>",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "pretest": "tsc -b",
+    "test": "vitest run --exclude \"seed/**\""
+  },
+  "dependencies": {
+    "@hackbuild/spec": "0.1.0",
+    "@tscircuit/props": "0.0.698",
+    "circuit-json": "0.0.525",
+    "kicadts": "0.0.58",
+    "sucrase": "3.35.1",
+    "zod": "4.6.5"
+  },
+  "hbf": {
+    "pinsBlocked": {
+      "@tscircuit/core": "0.0.2121",
+      "circuit-json-to-gerber": "0.0.112",
+      "circuit-to-svg": "0.0.447",
+      "tscircuit": "0.0.2806"
+    },
+    "blockedBy": "not installed: circuit-to-svg from 0.0.437 and jscad-electronics 0.0.210 declare engines node 24.x, which engine-strict refuses on the node 22.18.0 floor (D-039); the owner picks node 24.11 or an older set (M08-T01)"
+  }
+}

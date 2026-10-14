@@ -1,0 +1,196 @@
+{
+  "reference": "spindle-r1",
+  "date": "2026-10-09",
+  "tolerance": "0.01 mm",
+  "library": "github.com/KiCad/kicad-footprints at 7ebfa6b23cc292a56f751b7b5f4a0e12eeef69dd (2020-10-02, frozen v5 mirror)",
+  "source": "benches/spindle/outputs/spindle/pcb.py sha256 650351218717462917332d02c7cfb70883ad3a66ffad24b0e2756b90ce8a3176; footprint names from kicad_out.py FPDESC lines 83 to 98",
+  "rows": [
+    {
+      "ref": "J1",
+      "footprint": "PinHeader_1x06_P2.54mm_Vertical",
+      "libraryFile": "PinHeader_1x06_P2.54mm_Vertical.kicad_mod",
+      "librarySha256": "465c2eaa07f7809d9dd8a4b745f58bbc84da05fe205ca476320a270fb6fa8c04",
+      "handPads": "pcb.py line 99",
+      "quarterTurn": 0,
+      "tier": "community",
+      "method": "listing",
+      "differences": []
+    },
+    {
+      "ref": "J2",
+      "footprint": "PinHeader_1x06_P2.54mm_Vertical",
+      "libraryFile": "PinHeader_1x06_P2.54mm_Vertical.kicad_mod",
+      "librarySha256": "465c2eaa07f7809d9dd8a4b745f58bbc84da05fe205ca476320a270fb6fa8c04",
+      "handPads": "pcb.py line 99",
+      "quarterTurn": 0,
+      "tier": "community",
+      "method": "listing",
+      "differences": []
+    },
+    {
+      "ref": "J6",
+      "footprint": "PinHeader_1x06_P2.54mm_Vertical",
+      "libraryFile": "PinHeader_1x06_P2.54mm_Vertical.kicad_mod",
+      "librarySha256": "465c2eaa07f7809d9dd8a4b745f58bbc84da05fe205ca476320a270fb6fa8c04",
+      "handPads": "pcb.py line 121",
+      "quarterTurn": 90,
+      "tier": "inferred",
+      "method": "derived",
+      "differences": [
+        "pin 1 size 1.6 x 1.6 against 1.7 x 1.7 mm",
+        "pin 2 size 1.6 x 1.6 against 1.7 x 1.7 mm",
+        "pin 3 size 1.6 x 1.6 against 1.7 x 1.7 mm",
+        "pin 4 size 1.6 x 1.6 against 1.7 x 1.7 mm",
+        "pin 5 size 1.6 x 1.6 against 1.7 x 1.7 mm",
+        "pin 6 size 1.6 x 1.6 against 1.7 x 1.7 mm"
+      ]
+    },
+    {
+      "ref": "J4",
+      "footprint": "PinHeader_1x02_P2.54mm_Vertical",
+      "libraryFile": "PinHeader_1x02_P2.54mm_Vertical.kicad_mod",
+      "librarySha256": "5184fc4dddb8da027c0a5d4e63eefed1993cc0c2632e1a291ce63d3b5b8026ad",
+      "handPads": "pcb.py lines 132, 133",
+      "quarterTurn": 90,
+      "tier": "community",
+      "method": "listing",
+      "differences": []
+    },
+    {
+      "ref": "J3",
+      "footprint": "TerminalBlock_P5.08mm_2pol (not in the library; nearest TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal)",
+      "libraryFile": "TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal.kicad_mod",
+      "librarySha256": "43274479460f20ae82c604b02e1775b712a225ad94ef79896a8abd6a4535e237",
+      "handPads": "pcb.py lines 130, 131",
+      "quarterTurn": 0,
+      "tier": "inferred",
+      "method": "derived",
+      "differences": [
+        "pin 1 size 3 x 3 against 2.6 x 2.6 mm",
+        "pin 2 size 3 x 3 against 2.6 x 2.6 mm"
+      ]
+    },
+    {
+      "ref": "J5",
+      "footprint": "TerminalBlock_P5.08mm_2pol (not in the library; nearest TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal)",
+      "libraryFile": "TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal.kicad_mod",
+      "librarySha256": "43274479460f20ae82c604b02e1775b712a225ad94ef79896a8abd6a4535e237",
+      "handPads": "pcb.py lines 147, 148",
+      "quarterTurn": 0,
+      "tier": "inferred",
+      "method": "derived",
+      "differences": [
+        "pin 1 size 3 x 3 against 2.6 x 2.6 mm",
+        "pin 2 size 3 x 3 against 2.6 x 2.6 mm"
+      ]
+    },
+    {
+      "ref": "Q1",
+      "footprint": "SOT-23",
+      "libraryFile": "SOT-23.kicad_mod",
+      "librarySha256": "db5b998f0d36708205a4b8edc0db1501deb0246a81b52e9cb036cfd58b7570d3",
+      "handPads": "pcb.py lines 142, 143, 144",
+      "quarterTurn": 90,
+      "tier": "inferred",
+      "method": "derived",
+      "differences": [
+        "pin 1 size 1 x 1.2 against 0.8 x 0.9 mm",
+        "pin 2 size 1 x 1.2 against 0.8 x 0.9 mm",
+        "pin 3 position off 0.2 mm (computed)",
+        "pin 3 size 1 x 1.2 against 0.8 x 0.9 mm"
+      ]
+    },
+    {
+      "ref": "R2",
+      "footprint": "R_0805_2012Metric",
+      "libraryFile": "R_0805_2012Metric.kicad_mod",
+      "librarySha256": "34ef5a7238e8aa2622071b1ded0ce1aaaf9fd5fd2fa2d5e9914f8ee250ac3f7c",
+      "handPads": "pcb.py lines 140, 141",
+      "quarterTurn": 0,
+      "tier": "inferred",
+      "method": "derived",
+      "differences": [
+        "pin 1 size 1 x 1.4 against 1.025 x 1.4 mm",
+        "pin 2 position off 0.075 mm (computed)",
+        "pin 2 size 1 x 1.4 against 1.025 x 1.4 mm"
+      ]
+    },
+    {
+      "ref": "R3",
+      "footprint": "R_0805_2012Metric",
+      "libraryFile": "R_0805_2012Metric.kicad_mod",
+      "librarySha256": "34ef5a7238e8aa2622071b1ded0ce1aaaf9fd5fd2fa2d5e9914f8ee250ac3f7c",
+      "handPads": "pcb.py lines 145, 146",
+      "quarterTurn": 90,
+      "tier": "inferred",
+      "method": "derived",
+      "differences": [
+        "pin 1 size 1 x 1.4 against 1.4 x 1.025 mm",
+        "pin 2 position off 0.075 mm (computed)",
+        "pin 2 size 1 x 1.4 against 1.4 x 1.025 mm"
+      ]
+    },
+    {
+      "ref": "R4",
+      "footprint": "R_0805_2012Metric",
+      "libraryFile": "R_0805_2012Metric.kicad_mod",
+      "librarySha256": "34ef5a7238e8aa2622071b1ded0ce1aaaf9fd5fd2fa2d5e9914f8ee250ac3f7c",
+      "handPads": "pcb.py lines 126, 127",
+      "quarterTurn": 0,
+      "tier": "inferred",
+      "method": "derived",
+      "differences": [
+        "pin 1 size 1 x 1.4 against 1.025 x 1.4 mm",
+        "pin 2 position off 0.075 mm (computed)",
+        "pin 2 size 1 x 1.4 against 1.025 x 1.4 mm"
+      ]
+    },
+    {
+      "ref": "C1",
+      "footprint": "CP_Radial_D6.3mm_P5.08mm (not in the library; nearest CP_Radial_D6.3mm_P2.50mm)",
+      "libraryFile": "CP_Radial_D6.3mm_P2.50mm.kicad_mod",
+      "librarySha256": "e91ac6acfa06b50541b44f7cddc1aa27b8a36969c31727d79a9a221c6884ac5d",
+      "handPads": "pcb.py lines 136, 137",
+      "quarterTurn": 0,
+      "tier": "inferred",
+      "method": "derived",
+      "differences": [
+        "pin 1 size 1.7 x 1.7 against 1.6 x 1.6 mm",
+        "pin 1 drill 0.9 against 0.8 mm",
+        "pin 2 position off 2.58 mm (computed)",
+        "pin 2 size 1.7 x 1.7 against 1.6 x 1.6 mm",
+        "pin 2 drill 0.9 against 0.8 mm"
+      ]
+    },
+    {
+      "ref": "C2",
+      "footprint": "C_0805_2012Metric",
+      "libraryFile": "C_0805_2012Metric.kicad_mod",
+      "librarySha256": "99fff2e6692af4126feb9f9ebdfd454834bf414b13d04be0d075dffc23cfbd02",
+      "handPads": "pcb.py lines 134, 135",
+      "quarterTurn": 0,
+      "tier": "inferred",
+      "method": "derived",
+      "differences": [
+        "pin 1 size 1 x 1.4 against 1 x 1.45 mm",
+        "pin 2 size 1 x 1.4 against 1 x 1.45 mm"
+      ]
+    },
+    {
+      "ref": "JP1",
+      "footprint": "SolderJumper_2_Open (not in the library; nearest SolderJumper-2_P1.3mm_Open_Pad1.0x1.5mm)",
+      "libraryFile": "SolderJumper-2_P1.3mm_Open_Pad1.0x1.5mm.kicad_mod",
+      "librarySha256": "71b3a4448c88e21c19a9d5c6b9876a733efe3ccf07c00d3f7c88a54044a8b36b",
+      "handPads": "pcb.py lines 149, 150",
+      "quarterTurn": 0,
+      "tier": "inferred",
+      "method": "derived",
+      "differences": [
+        "pin 1 size 1.2 x 1.8 against 1 x 1.5 mm",
+        "pin 2 position off 0.3 mm (computed)",
+        "pin 2 size 1.2 x 1.8 against 1 x 1.5 mm"
+      ]
+    }
+  ],
+  "verdict": "CHK-BRD-06 fails: a hand pad stays inferred until a person fixes the row; gerbers return exit 4"
+}

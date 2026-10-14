@@ -1,0 +1,333 @@
+{
+  "id": "teensy40",
+  "name": "Teensy 4.0 (BLOCKS seat)",
+  "kind": "module",
+  "note": "BLOCKS seat row: tier inferred until a drawing is cited (R70). n is the BLOCKS boardPins order (parts.js lines 49 to 50), left column then right, never a vendor pin number.",
+  "fields": {
+    "dims.body": {
+      "value": [
+        17.78,
+        35.56,
+        1.6
+      ],
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "BLOCKS seat row, originals/blocks/files/src-extracted/parts.js line 39 (sha256 8822104bf031a6c803218f98791346e7015448f00af774f21a0cc13a42686b1f); no drawing cited (knowledge/designs/blocks.md, plan-deltas R70)"
+      }
+    },
+    "dims.pitch": {
+      "value": 2.54,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "BLOCKS seat row, originals/blocks/files/src-extracted/parts.js line 39 (sha256 8822104bf031a6c803218f98791346e7015448f00af774f21a0cc13a42686b1f); no drawing cited (knowledge/designs/blocks.md, plan-deltas R70)"
+      }
+    },
+    "dims.rowX": {
+      "value": 7.62,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "BLOCKS seat row, originals/blocks/files/src-extracted/parts.js line 39 (sha256 8822104bf031a6c803218f98791346e7015448f00af774f21a0cc13a42686b1f); no drawing cited (knowledge/designs/blocks.md, plan-deltas R70)"
+      }
+    },
+    "pins": {
+      "value": [
+        {
+          "n": 1,
+          "name": "GND",
+          "role": "gnd",
+          "at": [
+            -7.62,
+            16.51,
+            0
+          ]
+        },
+        {
+          "n": 2,
+          "name": "0",
+          "role": "gpio",
+          "at": [
+            -7.62,
+            13.97,
+            0
+          ]
+        },
+        {
+          "n": 3,
+          "name": "1",
+          "role": "gpio",
+          "at": [
+            -7.62,
+            11.43,
+            0
+          ]
+        },
+        {
+          "n": 4,
+          "name": "2",
+          "role": "gpio",
+          "at": [
+            -7.62,
+            8.89,
+            0
+          ]
+        },
+        {
+          "n": 5,
+          "name": "3",
+          "role": "gpio",
+          "at": [
+            -7.62,
+            6.35,
+            0
+          ]
+        },
+        {
+          "n": 6,
+          "name": "4",
+          "role": "gpio",
+          "at": [
+            -7.62,
+            3.81,
+            0
+          ]
+        },
+        {
+          "n": 7,
+          "name": "5",
+          "role": "gpio",
+          "at": [
+            -7.62,
+            1.27,
+            0
+          ]
+        },
+        {
+          "n": 8,
+          "name": "6",
+          "role": "gpio",
+          "at": [
+            -7.62,
+            -1.27,
+            0
+          ]
+        },
+        {
+          "n": 9,
+          "name": "7",
+          "role": "gpio",
+          "at": [
+            -7.62,
+            -3.81,
+            0
+          ]
+        },
+        {
+          "n": 10,
+          "name": "8",
+          "role": "gpio",
+          "at": [
+            -7.62,
+            -6.35,
+            0
+          ]
+        },
+        {
+          "n": 11,
+          "name": "9",
+          "role": "gpio",
+          "at": [
+            -7.62,
+            -8.89,
+            0
+          ]
+        },
+        {
+          "n": 12,
+          "name": "10",
+          "role": "gpio",
+          "at": [
+            -7.62,
+            -11.43,
+            0
+          ]
+        },
+        {
+          "n": 13,
+          "name": "11",
+          "role": "gpio",
+          "at": [
+            -7.62,
+            -13.97,
+            0
+          ]
+        },
+        {
+          "n": 14,
+          "name": "12",
+          "role": "gpio",
+          "at": [
+            -7.62,
+            -16.51,
+            0
+          ]
+        },
+        {
+          "n": 15,
+          "name": "Vin",
+          "role": "vin",
+          "at": [
+            7.62,
+            16.51,
+            0
+          ]
+        },
+        {
+          "n": 16,
+          "name": "GND",
+          "role": "gnd",
+          "at": [
+            7.62,
+            13.97,
+            0
+          ]
+        },
+        {
+          "n": 17,
+          "name": "3.3V",
+          "role": "3.3v",
+          "at": [
+            7.62,
+            11.43,
+            0
+          ]
+        },
+        {
+          "n": 18,
+          "name": "23",
+          "role": "gpio",
+          "at": [
+            7.62,
+            8.89,
+            0
+          ]
+        },
+        {
+          "n": 19,
+          "name": "22",
+          "role": "gpio",
+          "at": [
+            7.62,
+            6.35,
+            0
+          ]
+        },
+        {
+          "n": 20,
+          "name": "21",
+          "role": "gpio",
+          "at": [
+            7.62,
+            3.81,
+            0
+          ]
+        },
+        {
+          "n": 21,
+          "name": "20",
+          "role": "gpio",
+          "at": [
+            7.62,
+            1.27,
+            0
+          ]
+        },
+        {
+          "n": 22,
+          "name": "19",
+          "role": "gpio",
+          "at": [
+            7.62,
+            -1.27,
+            0
+          ]
+        },
+        {
+          "n": 23,
+          "name": "18",
+          "role": "gpio",
+          "at": [
+            7.62,
+            -3.81,
+            0
+          ]
+        },
+        {
+          "n": 24,
+          "name": "17",
+          "role": "gpio",
+          "at": [
+            7.62,
+            -6.35,
+            0
+          ]
+        },
+        {
+          "n": 25,
+          "name": "16",
+          "role": "gpio",
+          "at": [
+            7.62,
+            -8.89,
+            0
+          ]
+        },
+        {
+          "n": 26,
+          "name": "15",
+          "role": "gpio",
+          "at": [
+            7.62,
+            -11.43,
+            0
+          ]
+        },
+        {
+          "n": 27,
+          "name": "14",
+          "role": "gpio",
+          "at": [
+            7.62,
+            -13.97,
+            0
+          ]
+        },
+        {
+          "n": 28,
+          "name": "13",
+          "role": "gpio",
+          "at": [
+            7.62,
+            -16.51,
+            0
+          ]
+        }
+      ],
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "BLOCKS seat row, originals/blocks/files/src-extracted/parts.js line 39 and boardPins lines 45 to 52 (sha256 8822104bf031a6c803218f98791346e7015448f00af774f21a0cc13a42686b1f); no drawing cited (knowledge/designs/blocks.md, plan-deltas R70)"
+      }
+    }
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "id": "waveshare-4in-round-dsi-c",
+  "name": "Waveshare 4 inch round DSI LCD (C) 720x720",
+  "kind": "display",
+  "note": "Part frame: origin on the panel axis at the 124 step shoulder, +z rearward (cask4_bench.html line 799). GROMMET draws 106 / 101.6 / 108 stand-in discs from published dimensions, not vendor CAD (grommet-viewer.html lines 662 to 664).",
+  "fields": {
+    "dims.bodyD": {
+      "value": 126,
+      "unit": "mm",
+      "provenance": {
+        "tier": "vendor",
+        "method": "datasheet",
+        "date": "2026-10-09",
+        "source": "Waveshare 4 inch DSI round (C) factory STEP as measured in CASK4 (cask4_bench.html line 798; the STEP is not among the originals); originals/cask/files/cask4/cask4.scad line 75; originals/coaming/files/coaming.html line 1817 (round4 w 126.0, \"Waveshare drawing\") agrees"
+      }
+    },
+    "dims.step": {
+      "value": [
+        124,
+        1
+      ],
+      "unit": "mm",
+      "provenance": {
+        "tier": "vendor",
+        "method": "datasheet",
+        "date": "2026-10-09",
+        "source": "Waveshare 4 inch DSI round (C) factory STEP as measured in CASK4 (cask4_bench.html line 798; the STEP is not among the originals); originals/cask/files/cask4/cask4.scad line 85 (\"steps from 126 to 124 for its last 1.0mm\"), originals/cask/files/cask4/cask4_bench.html line 804"
+      }
+    },
+    "dims.glassD": {
+      "value": 102,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "glass diameter"
+      },
+      "conflicts": [
+        {
+          "value": 102,
+          "source": "originals/cask/files/cask4/cask4_bench.html line 802 (from the factory STEP)"
+        },
+        {
+          "value": 106,
+          "source": "originals/grommet/files/grommet-viewer.html line 748 (r 53.0, stand-in; diameter computed)"
+        }
+      ]
+    },
+    "dims.active": {
+      "value": [
+        101.52,
+        101.52
+      ],
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/coaming/files/coaming.html line 1817 (\"Waveshare drawing\", drawing not named)"
+      }
+    },
+    "mountHoles": {
+      "value": {
+        "pitch": 75,
+        "rotDeg": 45,
+        "offset": [
+          0,
+          0
+        ],
+        "thread": "M3",
+        "surfaceH": 4
+      },
+      "unit": "mm",
+      "provenance": {
+        "tier": "vendor",
+        "method": "datasheet",
+        "date": "2026-10-09",
+        "source": "Waveshare 4 inch DSI round (C) factory STEP as measured in CASK4 (cask4_bench.html line 798; the STEP is not among the originals); originals/cask/files/cask4/cask4.scad lines 54, 59, 65, 68, 71; bosses dia 7.1 at (+-37.5, +-37.5), originals/cask/files/cask4/cask4_bench.html lines 809 to 810"
+      }
+    }
+  }
+}

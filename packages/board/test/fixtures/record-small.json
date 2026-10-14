@@ -1,0 +1,273 @@
+{
+  "schema": 1,
+  "backend": "direct",
+  "board": {
+    "outline": [
+      [
+        0,
+        0
+      ],
+      [
+        20,
+        0
+      ],
+      [
+        20,
+        10
+      ],
+      [
+        0,
+        10
+      ]
+    ],
+    "thickness": 1.6,
+    "copperLayers": 2,
+    "finish": "HASL"
+  },
+  "parts": [
+    {
+      "ref": "U1",
+      "value": "ESP32-C3 SuperMini",
+      "catalogId": "esp32c3-supermini",
+      "tier": "vendor",
+      "side": "top",
+      "x": 6,
+      "y": 5,
+      "rot": 0,
+      "body": {
+        "w": 8,
+        "h": 6,
+        "z": 3.2
+      },
+      "model": {
+        "standIn": true,
+        "reason": "no vendor model in the fixture"
+      }
+    },
+    {
+      "ref": "R1",
+      "value": "10k",
+      "catalogId": "r-0603",
+      "tier": "community",
+      "side": "top",
+      "x": 15,
+      "y": 5,
+      "rot": 90,
+      "body": {
+        "w": 1.6,
+        "h": 0.8,
+        "z": 0.45
+      }
+    }
+  ],
+  "pads": [
+    {
+      "ref": "U1",
+      "pin": "GPIO20",
+      "net": "SIG",
+      "side": "top",
+      "through": true,
+      "shape": "oval",
+      "x": 3,
+      "y": 5,
+      "w": 2.6,
+      "h": 1.6,
+      "rot": 0,
+      "drill": 1.0,
+      "holeDx": 0.65
+    },
+    {
+      "ref": "U1",
+      "pin": "GND",
+      "net": "GND",
+      "side": "top",
+      "through": true,
+      "shape": "oval",
+      "x": 9,
+      "y": 5,
+      "w": 2.6,
+      "h": 1.6,
+      "rot": 0,
+      "drill": 1.0
+    },
+    {
+      "ref": "U1",
+      "pin": "NC",
+      "net": "",
+      "side": "top",
+      "through": false,
+      "shape": "rect",
+      "x": 6,
+      "y": 8,
+      "w": 1,
+      "h": 1,
+      "rot": 0
+    },
+    {
+      "ref": "R1",
+      "pin": "1",
+      "net": "SIG",
+      "side": "top",
+      "through": false,
+      "shape": "rect",
+      "x": 15,
+      "y": 5.75,
+      "w": 0.9,
+      "h": 0.8,
+      "rot": 90
+    },
+    {
+      "ref": "R1",
+      "pin": "2",
+      "net": "GND",
+      "side": "top",
+      "through": false,
+      "shape": "rect",
+      "x": 15,
+      "y": 4.25,
+      "w": 0.9,
+      "h": 0.8,
+      "rot": 90
+    },
+    {
+      "ref": "JP1",
+      "pin": "1",
+      "net": "GND",
+      "side": "bottom",
+      "through": false,
+      "shape": "rect",
+      "x": 17,
+      "y": 2,
+      "w": 1,
+      "h": 1.5,
+      "rot": 0
+    },
+    {
+      "ref": "JP1",
+      "pin": "2",
+      "net": "VBUS",
+      "side": "bottom",
+      "through": false,
+      "shape": "rect",
+      "x": 18.5,
+      "y": 2,
+      "w": 1,
+      "h": 1.5,
+      "rot": 0
+    }
+  ],
+  "nets": [
+    {
+      "name": "GND",
+      "members": [
+        "JP1.1",
+        "R1.2",
+        "U1.GND"
+      ]
+    },
+    {
+      "name": "SIG",
+      "members": [
+        "R1.1",
+        "U1.GPIO20"
+      ],
+      "required": 1
+    },
+    {
+      "name": "VBUS",
+      "members": [
+        "JP1.2"
+      ]
+    }
+  ],
+  "vias": [
+    {
+      "net": "GND",
+      "x": 12,
+      "y": 2,
+      "drill": 0.4,
+      "pad": 0.8,
+      "layers": [
+        "F.Cu",
+        "B.Cu"
+      ]
+    }
+  ],
+  "holes": [
+    {
+      "x": 1.5,
+      "y": 1.5,
+      "drill": 2.2,
+      "plated": false,
+      "role": "mount"
+    }
+  ],
+  "tracks": [
+    {
+      "net": "SIG",
+      "layer": "F.Cu",
+      "width": 0.3,
+      "pts": [
+        [
+          3,
+          5
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          15,
+          7
+        ],
+        [
+          15,
+          5.75
+        ]
+      ]
+    },
+    {
+      "net": "GND",
+      "layer": "B.Cu",
+      "width": 0.5,
+      "pts": [
+        [
+          9,
+          5
+        ],
+        [
+          12,
+          2
+        ]
+      ]
+    }
+  ],
+  "jumpers": [
+    {
+      "ref": "JP1",
+      "pads": [
+        "JP1.1",
+        "JP1.2"
+      ],
+      "default": "open",
+      "joins": [
+        "GND",
+        "VBUS"
+      ]
+    }
+  ],
+  "bridges": [],
+  "reads": [
+    {
+      "catalogId": "esp32c3-supermini",
+      "field": "pads",
+      "provenance": {
+        "tier": "vendor",
+        "method": "datasheet",
+        "date": "2026-10-04",
+        "source": "fixture: no datasheet read, the field names one for the shape test"
+      }
+    }
+  ],
+  "recordHash": "1e37d162d6fad6942a0bf8888ef29ec6e00a538d203d0257b6f0a9826f6de9a5"
+}

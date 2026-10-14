@@ -1,0 +1,8 @@
+{
+  "id": "rp2040",
+  "name": "Raspberry Pi RP2040",
+  "kind": "mcu",
+  "mcu": "rp2040",
+  "note": "Thresholds and pullup live in mcu-pins.json (D-076). No strapping or boot-activity figure is recorded for the RP2040; none is cited in the corpus.",
+  "fields": {}
+}

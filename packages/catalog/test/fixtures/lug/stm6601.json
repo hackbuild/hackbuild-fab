@@ -1,0 +1,84 @@
+{
+  "id": "stm6601",
+  "name": "STM6601 pushbutton on/off controller",
+  "kind": "other",
+  "note": "LUG U3; fixture only, never enters data/ (M08-T03 step 8)",
+  "fields": {
+    "pins": {
+      "value": [
+        {
+          "n": 1,
+          "name": "PB_IN",
+          "role": "unknown"
+        },
+        {
+          "n": 2,
+          "name": "GND1",
+          "role": "unknown"
+        },
+        {
+          "n": 3,
+          "name": "VCC",
+          "role": "unknown"
+        },
+        {
+          "n": 4,
+          "name": "nINT",
+          "role": "unknown"
+        },
+        {
+          "n": 5,
+          "name": "PSHOLD",
+          "role": "unknown"
+        },
+        {
+          "n": 6,
+          "name": "EN",
+          "role": "unknown"
+        },
+        {
+          "n": 7,
+          "name": "nSR",
+          "role": "unknown"
+        },
+        {
+          "n": 8,
+          "name": "DBI",
+          "role": "unknown"
+        },
+        {
+          "n": 9,
+          "name": "SEL",
+          "role": "unknown"
+        },
+        {
+          "n": 10,
+          "name": "GND2",
+          "role": "unknown"
+        },
+        {
+          "n": 11,
+          "name": "NC1",
+          "role": "unknown"
+        },
+        {
+          "n": 12,
+          "name": "NC2",
+          "role": "unknown"
+        },
+        {
+          "n": 13,
+          "name": "PAD",
+          "role": "unknown"
+        }
+      ],
+      "unit": "none",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "lug.tsx pin maps written from knowledge: benches/round-pi-board/outputs/lug.tsx lines 22 to 25 (U3_PINS, STM6601 pushbutton on/off controller, TDFN-12 3x3) and lines 10 to 11; sha256 ff88947cb61584f220eb8d2495e882ea1c2ca785972c3de872f165fe4d7a644d"
+      }
+    }
+  }
+}

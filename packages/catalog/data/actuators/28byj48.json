@@ -1,0 +1,134 @@
+{
+  "id": "28byj48",
+  "name": "28BYJ-48 5 V geared stepper",
+  "kind": "actuator",
+  "drive": "geared-stepper",
+  "note": "Part frame: origin on the can axis at the mounting face, +y toward the shaft, +z out of the shaft. DETENT and SLUG disagree on where the screw line runs: through the can axis (detent_parts.py lines 60 to 61) or through the shaft axis with the body 8 off (slug.scad lines 93 to 94); no field states it until a drawing or a caliper settles it.",
+  "fields": {
+    "dims.can": {
+      "value": [
+        28,
+        19
+      ],
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/detent/files/revD/detent_parts.py line 93 (NopSCADlib per lines 54 to 55); originals/slug/files/BUILD.md lines 320 to 321 agree"
+      }
+    },
+    "dims.holePitch": {
+      "value": 35,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/detent/files/revD/detent_parts.py line 94; originals/slug/files/slug.scad line 94 (\"ears 35 mm apart\") agree"
+      }
+    },
+    "dims.holeD": {
+      "value": 4.2,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "benches disagree on ear hole diameter (D-104, R70); every bench value is listed under conflicts; the SG90 caliper session is on the D-082 list"
+      },
+      "conflicts": [
+        {
+          "value": 4.2,
+          "source": "originals/detent/files/revD/detent_parts.py line 94"
+        },
+        {
+          "value": 4.4,
+          "source": "originals/slug/files/slug.scad line 554 (cut for M3)"
+        }
+      ]
+    },
+    "dims.shaftOffset": {
+      "value": 8,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/detent/files/revD/detent_parts.py line 96; originals/slug/files/slug.scad line 93 agree"
+      }
+    },
+    "dims.lug": {
+      "value": [
+        7,
+        0.85
+      ],
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/detent/files/revD/detent_parts.py line 95; docstring lines 54 to 55 \"28BYJ-48, NopSCADlib measured vitamin data\" (NopSCADlib not read here)"
+      }
+    },
+    "dims.boss": {
+      "value": [
+        9,
+        1.5
+      ],
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/detent/files/revD/detent_parts.py line 97; docstring lines 54 to 55 \"28BYJ-48, NopSCADlib measured vitamin data\" (NopSCADlib not read here)"
+      }
+    },
+    "dims.shaft": {
+      "value": [
+        5,
+        3,
+        10,
+        6
+      ],
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/detent/files/revD/detent_parts.py lines 98 to 99: diameter 5.0, across flats 3.0, length 10.0, flat length 6.0"
+      }
+    },
+    "mout": {
+      "value": {
+        "at": [
+          0,
+          8,
+          0
+        ],
+        "dir": [
+          0,
+          0,
+          1
+        ]
+      },
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/detent/files/revD/detent_parts.py line 96 SHAFT_OFFSET 8.0 from the can axis"
+      }
+    },
+    "dyn.stepsPerRev": {
+      "value": 4075.7728,
+      "unit": "half steps",
+      "provenance": {
+        "tier": "vendor",
+        "method": "derived",
+        "date": "2026-10-04",
+        "source": "moved from profile constant 28byj48.halfStepsPerRev (PROFILE.md 2.4: vendor, derived; equals the gear train 63.68395 x 64; no coupon); originals/detent/files/beam/detent_firmware.ino lines 30 to 32"
+      }
+    }
+  }
+}

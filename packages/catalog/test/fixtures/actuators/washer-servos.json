@@ -1,0 +1,361 @@
+{
+  "note": "WASHER laser-rig SERVOS presets (M08-T05 step 3), fixture rows that never enter data/. originals/washer/files/rig/laser-rig.html lines 3832 to 3837, the same text as benches/washer/outputs/laser-rig.html lines 3453 to 3458; units from fab-knowledge/sources/benches/benches-machines.md line 582. The table carries dynamics only, so mout is the generic servo frame with no position.",
+  "rows": [
+    {
+      "id": "washer-micro9g",
+      "name": "WASHER servo preset 9g micro (SG90 / MG90S)",
+      "kind": "actuator",
+      "drive": "servo",
+      "fields": {
+        "mout": {
+          "value": {
+            "at": [
+              0,
+              0,
+              0
+            ],
+            "dir": [
+              0,
+              0,
+              1
+            ]
+          },
+          "unit": "mm",
+          "provenance": {
+            "tier": "inferred",
+            "method": "derived",
+            "date": "2026-10-09",
+            "source": "originals/washer/files/rig/laser-rig.html line 3833: a preset holds no geometry; origin and +z are the generic servo frame"
+          }
+        },
+        "dyn.slew": {
+          "value": 240,
+          "unit": "deg/s",
+          "provenance": {
+            "tier": "inferred",
+            "method": "derived",
+            "date": "2026-10-09",
+            "source": "originals/washer/files/rig/laser-rig.html line 3833 SERVOS.micro9g ('9g micro (SG90 / MG90S)')"
+          }
+        },
+        "dyn.accel": {
+          "value": 1800,
+          "unit": "deg/s2",
+          "provenance": {
+            "tier": "inferred",
+            "method": "derived",
+            "date": "2026-10-09",
+            "source": "originals/washer/files/rig/laser-rig.html line 3833 SERVOS.micro9g ('9g micro (SG90 / MG90S)')"
+          }
+        },
+        "dyn.deadband": {
+          "value": 8,
+          "unit": "us",
+          "provenance": {
+            "tier": "inferred",
+            "method": "derived",
+            "date": "2026-10-09",
+            "source": "originals/washer/files/rig/laser-rig.html line 3833 SERVOS.micro9g ('9g micro (SG90 / MG90S)')"
+          }
+        },
+        "dyn.frameHz": {
+          "value": 50,
+          "unit": "Hz",
+          "provenance": {
+            "tier": "inferred",
+            "method": "derived",
+            "date": "2026-10-09",
+            "source": "originals/washer/files/rig/laser-rig.html line 3833 SERVOS.micro9g ('9g micro (SG90 / MG90S)')"
+          }
+        },
+        "dyn.lash": {
+          "value": 0.55,
+          "unit": "deg",
+          "provenance": {
+            "tier": "inferred",
+            "method": "derived",
+            "date": "2026-10-09",
+            "source": "originals/washer/files/rig/laser-rig.html line 3833 SERVOS.micro9g ('9g micro (SG90 / MG90S)')"
+          }
+        },
+        "dyn.band": {
+          "value": 6,
+          "unit": "deg",
+          "provenance": {
+            "tier": "inferred",
+            "method": "derived",
+            "date": "2026-10-09",
+            "source": "originals/washer/files/rig/laser-rig.html line 3833 SERVOS.micro9g ('9g micro (SG90 / MG90S)')"
+          }
+        }
+      }
+    },
+    {
+      "id": "washer-micro9gm",
+      "name": "WASHER servo preset 9g metal gear (MG90S)",
+      "kind": "actuator",
+      "drive": "servo",
+      "fields": {
+        "mout": {
+          "value": {
+            "at": [
+              0,
+              0,
+              0
+            ],
+            "dir": [
+              0,
+              0,
+              1
+            ]
+          },
+          "unit": "mm",
+          "provenance": {
+            "tier": "inferred",
+            "method": "derived",
+            "date": "2026-10-09",
+            "source": "originals/washer/files/rig/laser-rig.html line 3834: a preset holds no geometry; origin and +z are the generic servo frame"
+          }
+        },
+        "dyn.slew": {
+          "value": 300,
+          "unit": "deg/s",
+          "provenance": {
+            "tier": "inferred",
+            "method": "derived",
+            "date": "2026-10-09",
+            "source": "originals/washer/files/rig/laser-rig.html line 3834 SERVOS.micro9gm ('9g metal gear (MG90S)')"
+          }
+        },
+        "dyn.accel": {
+          "value": 2600,
+          "unit": "deg/s2",
+          "provenance": {
+            "tier": "inferred",
+            "method": "derived",
+            "date": "2026-10-09",
+            "source": "originals/washer/files/rig/laser-rig.html line 3834 SERVOS.micro9gm ('9g metal gear (MG90S)')"
+          }
+        },
+        "dyn.deadband": {
+          "value": 6,
+          "unit": "us",
+          "provenance": {
+            "tier": "inferred",
+            "method": "derived",
+            "date": "2026-10-09",
+            "source": "originals/washer/files/rig/laser-rig.html line 3834 SERVOS.micro9gm ('9g metal gear (MG90S)')"
+          }
+        },
+        "dyn.frameHz": {
+          "value": 50,
+          "unit": "Hz",
+          "provenance": {
+            "tier": "inferred",
+            "method": "derived",
+            "date": "2026-10-09",
+            "source": "originals/washer/files/rig/laser-rig.html line 3834 SERVOS.micro9gm ('9g metal gear (MG90S)')"
+          }
+        },
+        "dyn.lash": {
+          "value": 0.3,
+          "unit": "deg",
+          "provenance": {
+            "tier": "inferred",
+            "method": "derived",
+            "date": "2026-10-09",
+            "source": "originals/washer/files/rig/laser-rig.html line 3834 SERVOS.micro9gm ('9g metal gear (MG90S)')"
+          }
+        },
+        "dyn.band": {
+          "value": 5,
+          "unit": "deg",
+          "provenance": {
+            "tier": "inferred",
+            "method": "derived",
+            "date": "2026-10-09",
+            "source": "originals/washer/files/rig/laser-rig.html line 3834 SERVOS.micro9gm ('9g metal gear (MG90S)')"
+          }
+        }
+      }
+    },
+    {
+      "id": "washer-standard",
+      "name": "WASHER servo preset Standard metal gear",
+      "kind": "actuator",
+      "drive": "servo",
+      "fields": {
+        "mout": {
+          "value": {
+            "at": [
+              0,
+              0,
+              0
+            ],
+            "dir": [
+              0,
+              0,
+              1
+            ]
+          },
+          "unit": "mm",
+          "provenance": {
+            "tier": "inferred",
+            "method": "derived",
+            "date": "2026-10-09",
+            "source": "originals/washer/files/rig/laser-rig.html line 3835: a preset holds no geometry; origin and +z are the generic servo frame"
+          }
+        },
+        "dyn.slew": {
+          "value": 420,
+          "unit": "deg/s",
+          "provenance": {
+            "tier": "inferred",
+            "method": "derived",
+            "date": "2026-10-09",
+            "source": "originals/washer/files/rig/laser-rig.html line 3835 SERVOS.standard ('Standard metal gear')"
+          }
+        },
+        "dyn.accel": {
+          "value": 5000,
+          "unit": "deg/s2",
+          "provenance": {
+            "tier": "inferred",
+            "method": "derived",
+            "date": "2026-10-09",
+            "source": "originals/washer/files/rig/laser-rig.html line 3835 SERVOS.standard ('Standard metal gear')"
+          }
+        },
+        "dyn.deadband": {
+          "value": 4,
+          "unit": "us",
+          "provenance": {
+            "tier": "inferred",
+            "method": "derived",
+            "date": "2026-10-09",
+            "source": "originals/washer/files/rig/laser-rig.html line 3835 SERVOS.standard ('Standard metal gear')"
+          }
+        },
+        "dyn.frameHz": {
+          "value": 50,
+          "unit": "Hz",
+          "provenance": {
+            "tier": "inferred",
+            "method": "derived",
+            "date": "2026-10-09",
+            "source": "originals/washer/files/rig/laser-rig.html line 3835 SERVOS.standard ('Standard metal gear')"
+          }
+        },
+        "dyn.lash": {
+          "value": 0.18,
+          "unit": "deg",
+          "provenance": {
+            "tier": "inferred",
+            "method": "derived",
+            "date": "2026-10-09",
+            "source": "originals/washer/files/rig/laser-rig.html line 3835 SERVOS.standard ('Standard metal gear')"
+          }
+        },
+        "dyn.band": {
+          "value": 3.5,
+          "unit": "deg",
+          "provenance": {
+            "tier": "inferred",
+            "method": "derived",
+            "date": "2026-10-09",
+            "source": "originals/washer/files/rig/laser-rig.html line 3835 SERVOS.standard ('Standard metal gear')"
+          }
+        }
+      }
+    },
+    {
+      "id": "washer-digital",
+      "name": "WASHER servo preset Digital high speed",
+      "kind": "actuator",
+      "drive": "servo",
+      "fields": {
+        "mout": {
+          "value": {
+            "at": [
+              0,
+              0,
+              0
+            ],
+            "dir": [
+              0,
+              0,
+              1
+            ]
+          },
+          "unit": "mm",
+          "provenance": {
+            "tier": "inferred",
+            "method": "derived",
+            "date": "2026-10-09",
+            "source": "originals/washer/files/rig/laser-rig.html line 3836: a preset holds no geometry; origin and +z are the generic servo frame"
+          }
+        },
+        "dyn.slew": {
+          "value": 700,
+          "unit": "deg/s",
+          "provenance": {
+            "tier": "inferred",
+            "method": "derived",
+            "date": "2026-10-09",
+            "source": "originals/washer/files/rig/laser-rig.html line 3836 SERVOS.digital ('Digital high speed')"
+          }
+        },
+        "dyn.accel": {
+          "value": 9000,
+          "unit": "deg/s2",
+          "provenance": {
+            "tier": "inferred",
+            "method": "derived",
+            "date": "2026-10-09",
+            "source": "originals/washer/files/rig/laser-rig.html line 3836 SERVOS.digital ('Digital high speed')"
+          }
+        },
+        "dyn.deadband": {
+          "value": 2,
+          "unit": "us",
+          "provenance": {
+            "tier": "inferred",
+            "method": "derived",
+            "date": "2026-10-09",
+            "source": "originals/washer/files/rig/laser-rig.html line 3836 SERVOS.digital ('Digital high speed')"
+          }
+        },
+        "dyn.frameHz": {
+          "value": 200,
+          "unit": "Hz",
+          "provenance": {
+            "tier": "inferred",
+            "method": "derived",
+            "date": "2026-10-09",
+            "source": "originals/washer/files/rig/laser-rig.html line 3836 SERVOS.digital ('Digital high speed')"
+          }
+        },
+        "dyn.lash": {
+          "value": 0.08,
+          "unit": "deg",
+          "provenance": {
+            "tier": "inferred",
+            "method": "derived",
+            "date": "2026-10-09",
+            "source": "originals/washer/files/rig/laser-rig.html line 3836 SERVOS.digital ('Digital high speed')"
+          }
+        },
+        "dyn.band": {
+          "value": 1.6,
+          "unit": "deg",
+          "provenance": {
+            "tier": "inferred",
+            "method": "derived",
+            "date": "2026-10-09",
+            "source": "originals/washer/files/rig/laser-rig.html line 3836 SERVOS.digital ('Digital high speed')"
+          }
+        }
+      }
+    }
+  ]
+}

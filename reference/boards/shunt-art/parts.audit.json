@@ -1,0 +1,204 @@
+{
+  "reference": "shunt-art",
+  "date": "2026-10-09",
+  "source": "benches/shunt/outputs/shunt-r1/board.json sha256 db835634c13a8661fb0ac20132e55e11190e6f3262fa20f07f5a69fe3b08d375 and README.md",
+  "rows": [
+    {
+      "ref": "U1",
+      "footprint": "DIP-8_W7.62mm_Socket",
+      "tier": "community",
+      "method": "listing",
+      "source": "shunt-r1/parts/DIP-8_W7.62mm_Socket.kicad_mod sha256 6725714f0d333bb79b06e02a257cf5b17f1d9ce3bf46650854c0eeeae6d76c4b, 8 pads, KiCad v5 library, mirror frozen 2020-10"
+    },
+    {
+      "ref": "U2",
+      "footprint": "SOIC-16_3.9x9.9mm_P1.27mm",
+      "tier": "community",
+      "method": "listing",
+      "source": "shunt-r1/parts/SOIC-16_3.9x9.9mm_P1.27mm.kicad_mod sha256 809a7dab0a6690e65eff75fbb4256bdb718000a629b0ade4ea98513828d190a3, 16 pads, KiCad v5 library, mirror frozen 2020-10"
+    },
+    {
+      "ref": "SW2",
+      "footprint": "SW_PUSH_6mm",
+      "tier": "community",
+      "method": "listing",
+      "source": "shunt-r1/parts/SW_PUSH_6mm.kicad_mod sha256 2c2c808eae2a62e3a682fd669272e4c73e9dcc262ae5543b9ad5ba5c84257119, 4 pads, KiCad v5 library, mirror frozen 2020-10"
+    },
+    {
+      "ref": "Y1",
+      "footprint": "Crystal_HC49-U_Vertical",
+      "tier": "community",
+      "method": "listing",
+      "source": "shunt-r1/parts/Crystal_HC49-U_Vertical.kicad_mod sha256 e5d25be9e2933569e662963236dcef3fd606510d7ecc1b04dbef7fc3005e880c, 2 pads, KiCad v5 library, mirror frozen 2020-10"
+    },
+    {
+      "ref": "Q1",
+      "footprint": "TO-92_Inline_Wide",
+      "tier": "community",
+      "method": "listing",
+      "source": "shunt-r1/parts/TO-92_Inline_Wide.kicad_mod sha256 e7250cc59afde249142404c27714366270a44052fc5e94eab15da99a0b464f5d, 3 pads, KiCad v5 library, mirror frozen 2020-10"
+    },
+    {
+      "ref": "R1",
+      "footprint": "R_0603_1608Metric",
+      "tier": "community",
+      "method": "listing",
+      "source": "shunt-r1/parts/R_0603_1608Metric.kicad_mod sha256 effcae403a15810b3a1947b8664576270d6781e7cd525e97c47d48be0fdae8ce, 2 pads, KiCad v5 library, mirror frozen 2020-10"
+    },
+    {
+      "ref": "R2",
+      "footprint": "R_0603_1608Metric",
+      "tier": "community",
+      "method": "listing",
+      "source": "shunt-r1/parts/R_0603_1608Metric.kicad_mod sha256 effcae403a15810b3a1947b8664576270d6781e7cd525e97c47d48be0fdae8ce, 2 pads, KiCad v5 library, mirror frozen 2020-10"
+    },
+    {
+      "ref": "R3",
+      "footprint": "R_0603_1608Metric",
+      "tier": "community",
+      "method": "listing",
+      "source": "shunt-r1/parts/R_0603_1608Metric.kicad_mod sha256 effcae403a15810b3a1947b8664576270d6781e7cd525e97c47d48be0fdae8ce, 2 pads, KiCad v5 library, mirror frozen 2020-10"
+    },
+    {
+      "ref": "R4",
+      "footprint": "R_0603_1608Metric",
+      "tier": "community",
+      "method": "listing",
+      "source": "shunt-r1/parts/R_0603_1608Metric.kicad_mod sha256 effcae403a15810b3a1947b8664576270d6781e7cd525e97c47d48be0fdae8ce, 2 pads, KiCad v5 library, mirror frozen 2020-10"
+    },
+    {
+      "ref": "C1",
+      "footprint": "C_0805_2012Metric",
+      "tier": "community",
+      "method": "listing",
+      "source": "shunt-r1/parts/C_0805_2012Metric.kicad_mod sha256 99fff2e6692af4126feb9f9ebdfd454834bf414b13d04be0d075dffc23cfbd02, 2 pads, KiCad v5 library, mirror frozen 2020-10"
+    },
+    {
+      "ref": "C2",
+      "footprint": "C_0805_2012Metric",
+      "tier": "community",
+      "method": "listing",
+      "source": "shunt-r1/parts/C_0805_2012Metric.kicad_mod sha256 99fff2e6692af4126feb9f9ebdfd454834bf414b13d04be0d075dffc23cfbd02, 2 pads, KiCad v5 library, mirror frozen 2020-10"
+    },
+    {
+      "ref": "C3",
+      "footprint": "C_0805_2012Metric",
+      "tier": "community",
+      "method": "listing",
+      "source": "shunt-r1/parts/C_0805_2012Metric.kicad_mod sha256 99fff2e6692af4126feb9f9ebdfd454834bf414b13d04be0d075dffc23cfbd02, 2 pads, KiCad v5 library, mirror frozen 2020-10"
+    },
+    {
+      "ref": "R5",
+      "footprint": "R_0603_1608Metric",
+      "tier": "community",
+      "method": "listing",
+      "source": "shunt-r1/parts/R_0603_1608Metric.kicad_mod sha256 effcae403a15810b3a1947b8664576270d6781e7cd525e97c47d48be0fdae8ce, 2 pads, KiCad v5 library, mirror frozen 2020-10"
+    },
+    {
+      "ref": "R6",
+      "footprint": "R_0603_1608Metric",
+      "tier": "community",
+      "method": "listing",
+      "source": "shunt-r1/parts/R_0603_1608Metric.kicad_mod sha256 effcae403a15810b3a1947b8664576270d6781e7cd525e97c47d48be0fdae8ce, 2 pads, KiCad v5 library, mirror frozen 2020-10"
+    },
+    {
+      "ref": "R7",
+      "footprint": "R_0603_1608Metric",
+      "tier": "community",
+      "method": "listing",
+      "source": "shunt-r1/parts/R_0603_1608Metric.kicad_mod sha256 effcae403a15810b3a1947b8664576270d6781e7cd525e97c47d48be0fdae8ce, 2 pads, KiCad v5 library, mirror frozen 2020-10"
+    },
+    {
+      "ref": "R8",
+      "footprint": "R_0603_1608Metric",
+      "tier": "community",
+      "method": "listing",
+      "source": "shunt-r1/parts/R_0603_1608Metric.kicad_mod sha256 effcae403a15810b3a1947b8664576270d6781e7cd525e97c47d48be0fdae8ce, 2 pads, KiCad v5 library, mirror frozen 2020-10"
+    },
+    {
+      "ref": "D1",
+      "footprint": "LED_D5.0mm",
+      "tier": "community",
+      "method": "listing",
+      "source": "shunt-r1/parts/LED_D5.0mm.kicad_mod sha256 8baeb134c8a81fab4f1f6a0bd2f94f843e10833aa81c8e354d6f885131f74666, 2 pads, KiCad v5 library, mirror frozen 2020-10"
+    },
+    {
+      "ref": "D2",
+      "footprint": "LED_D5.0mm",
+      "tier": "community",
+      "method": "listing",
+      "source": "shunt-r1/parts/LED_D5.0mm.kicad_mod sha256 8baeb134c8a81fab4f1f6a0bd2f94f843e10833aa81c8e354d6f885131f74666, 2 pads, KiCad v5 library, mirror frozen 2020-10"
+    },
+    {
+      "ref": "D3",
+      "footprint": "LED_D5.0mm",
+      "tier": "community",
+      "method": "listing",
+      "source": "shunt-r1/parts/LED_D5.0mm.kicad_mod sha256 8baeb134c8a81fab4f1f6a0bd2f94f843e10833aa81c8e354d6f885131f74666, 2 pads, KiCad v5 library, mirror frozen 2020-10"
+    },
+    {
+      "ref": "D4",
+      "footprint": "LED_D5.0mm",
+      "tier": "community",
+      "method": "listing",
+      "source": "shunt-r1/parts/LED_D5.0mm.kicad_mod sha256 8baeb134c8a81fab4f1f6a0bd2f94f843e10833aa81c8e354d6f885131f74666, 2 pads, KiCad v5 library, mirror frozen 2020-10"
+    },
+    {
+      "ref": "D5",
+      "footprint": "LED_D5.0mm",
+      "tier": "community",
+      "method": "listing",
+      "source": "shunt-r1/parts/LED_D5.0mm.kicad_mod sha256 8baeb134c8a81fab4f1f6a0bd2f94f843e10833aa81c8e354d6f885131f74666, 2 pads, KiCad v5 library, mirror frozen 2020-10"
+    },
+    {
+      "ref": "D6",
+      "footprint": "LED_D5.0mm",
+      "tier": "community",
+      "method": "listing",
+      "source": "shunt-r1/parts/LED_D5.0mm.kicad_mod sha256 8baeb134c8a81fab4f1f6a0bd2f94f843e10833aa81c8e354d6f885131f74666, 2 pads, KiCad v5 library, mirror frozen 2020-10"
+    },
+    {
+      "ref": "J3",
+      "footprint": "PinHeader_1x15_P2.54mm_Vertical",
+      "tier": "community",
+      "method": "listing",
+      "source": "shunt-r1/parts/PinHeader_1x15_P2.54mm_Vertical.kicad_mod sha256 71e4ea71864aa535ea0b1fab24d993fdae0952f6856bbd7746ca7a5ebf23b36c, 15 pads, KiCad v5 library, mirror frozen 2020-10"
+    },
+    {
+      "ref": "J4",
+      "footprint": "PinHeader_1x15_P2.54mm_Vertical",
+      "tier": "community",
+      "method": "listing",
+      "source": "shunt-r1/parts/PinHeader_1x15_P2.54mm_Vertical.kicad_mod sha256 71e4ea71864aa535ea0b1fab24d993fdae0952f6856bbd7746ca7a5ebf23b36c, 15 pads, KiCad v5 library, mirror frozen 2020-10"
+    },
+    {
+      "ref": "J1",
+      "footprint": "USB_C_STANDIN",
+      "tier": "inferred",
+      "method": "derived",
+      "source": "parametric stand-in USB-C, HRO TYPE-C-31-M-12 (README.md line 205); \"from remembered datasheet dimensions, not measured parts\" (README.md open list item 2)"
+    },
+    {
+      "ref": "J2",
+      "footprint": "JACK35_STANDIN",
+      "tier": "inferred",
+      "method": "derived",
+      "source": "parametric stand-in 3.5 mm TRS, CUI SJ1-3533NG (README.md line 206); \"from remembered datasheet dimensions, not measured parts\" (README.md open list item 2)"
+    },
+    {
+      "ref": "SW1",
+      "footprint": "ENCODER_STANDIN",
+      "tier": "inferred",
+      "method": "derived",
+      "source": "parametric stand-in Alps EC11E (README.md line 207); \"from remembered datasheet dimensions, not measured parts\" (README.md open list item 2)"
+    },
+    {
+      "ref": "BT1",
+      "footprint": "BatteryHolder_Keystone_1058_1x2032",
+      "tier": "community",
+      "method": "listing",
+      "source": "shunt-r1/parts/BatteryHolder_Keystone_1058_1x2032.kicad_mod sha256 08aa55825ca79bf173336687bbec0a01921d3a8c0aab8924efda9af4eccd0ea1, 2 pads, KiCad v5 library, mirror frozen 2020-10"
+    }
+  ],
+  "verdict": "CHK-BRD-06 fails on the parametric stand-ins until a person measures them"
+}

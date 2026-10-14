@@ -1,0 +1,79 @@
+{
+  "id": "esp32-c3",
+  "name": "Espressif ESP32-C3",
+  "kind": "mcu",
+  "mcu": "esp32-c3",
+  "note": "Thresholds and pullup live in mcu-pins.json (D-076). Strapping and boot activity below are check fields (CHK-BRD-04).",
+  "fields": {
+    "strapping": {
+      "unit": "none",
+      "value": [
+        {
+          "pin": "GPIO2",
+          "default": "floating",
+          "spiBoot": "high",
+          "note": "does not select SPI boot but the datasheet recommends pulling it up against glitches (Table 3-3 note 2)"
+        },
+        {
+          "pin": "GPIO8",
+          "default": "floating",
+          "spiBoot": "any",
+          "note": "also gates UART0 ROM printing with EFUSE_UART_PRINT_CONTROL (Table 3-4)"
+        },
+        {
+          "pin": "GPIO9",
+          "default": "weak pull-up",
+          "spiBoot": "high",
+          "note": "held low at reset selects joint download boot"
+        }
+      ],
+      "provenance": {
+        "tier": "vendor",
+        "method": "datasheet",
+        "date": "2026-10-09",
+        "source": "Espressif ESP32-C3 Series Datasheet v2.4 (espressif.com esp32-c3_datasheet_en.pdf, sha256 833fc000b4b3c3d39c496fcbd597fed5806956503ce7390b19cc8ae82f19f968, read 2026-10-09) section 3, Table 3-1 p. 30 (default configuration of strapping pins) and Table 3-3 p. 31 (chip boot mode control)"
+      }
+    },
+    "bootActivity": {
+      "unit": "none",
+      "value": [
+        {
+          "pin": "GPIO21",
+          "activity": "U0TXD: ROM messages print to UART0 at every reset by default",
+          "drives": true
+        },
+        {
+          "pin": "GPIO20",
+          "activity": "U0RXD: an input at reset, not driven",
+          "drives": false
+        },
+        {
+          "pin": "GPIO4",
+          "activity": "MTMS, JTAG interface",
+          "drives": false
+        },
+        {
+          "pin": "GPIO5",
+          "activity": "MTDI, JTAG interface",
+          "drives": false
+        },
+        {
+          "pin": "GPIO6",
+          "activity": "MTCK, JTAG interface",
+          "drives": false
+        },
+        {
+          "pin": "GPIO7",
+          "activity": "MTDO, JTAG interface",
+          "drives": false
+        }
+      ],
+      "provenance": {
+        "tier": "vendor",
+        "method": "datasheet",
+        "date": "2026-10-09",
+        "source": "Espressif ESP32-C3 Series Datasheet v2.4 (espressif.com esp32-c3_datasheet_en.pdf, sha256 833fc000b4b3c3d39c496fcbd597fed5806956503ce7390b19cc8ae82f19f968, read 2026-10-09) Table 2-4 p. 20 (GPIO21 F0 U0TXD type O, GPIO20 F0 U0RXD type I), section 2.3.3 p. 23 (GPIO4 to GPIO7 JTAG, GPIO20 and GPIO21 UART0), Table 3-4 p. 32 (UART0 ROM printing enabled at the default eFuse)"
+      }
+    }
+  }
+}

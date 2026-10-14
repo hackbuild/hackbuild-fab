@@ -1,0 +1,91 @@
+{
+  "id": "gc9a01-1in28-round",
+  "name": "GC9A01 1.28 inch round display, 7 pin blue board",
+  "kind": "display",
+  "note": "GUDGEON is the one bench. The header pin order and pitch are not in the corpus; gudgeon.html line 1293 is a wiring list, not a physical order, so no pins field is written.",
+  "fields": {
+    "dims.disc": {
+      "value": 37.5,
+      "unit": "mm",
+      "provenance": {
+        "tier": "vendor",
+        "method": "listing",
+        "date": "2026-10-09",
+        "source": "originals/gudgeon/files/gudgeon.html line 1180 disc; line 235 \"the retailer figure for the 7 pin blue board\""
+      }
+    },
+    "dims.length": {
+      "value": 45,
+      "unit": "mm",
+      "provenance": {
+        "tier": "vendor",
+        "method": "listing",
+        "date": "2026-10-09",
+        "source": "originals/gudgeon/files/gudgeon.html line 1180 len; line 235 retailer figure"
+      }
+    },
+    "dims.thickness": {
+      "value": 3.2,
+      "unit": "mm",
+      "provenance": {
+        "tier": "vendor",
+        "method": "listing",
+        "date": "2026-10-09",
+        "source": "originals/gudgeon/files/gudgeon.html line 1180 thk; line 235 retailer figure"
+      }
+    },
+    "dims.earHoles": {
+      "value": [
+        30,
+        1.8
+      ],
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/gudgeon/files/gudgeon.html line 1180 holeSp, holeD; line 235 \"read from the product photo. put calipers on yours\""
+      }
+    },
+    "dims.tabW": {
+      "value": 20,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/gudgeon/files/gudgeon.html line 1180 tabW; no source stated"
+      }
+    },
+    "dims.pcbT": {
+      "value": 1.2,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/gudgeon/files/gudgeon.html line 1180 pcb; no source stated"
+      }
+    },
+    "dims.glassD": {
+      "value": 35.3,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/gudgeon/files/gudgeon.html line 1180 glass; no source stated"
+      }
+    },
+    "dims.activeD": {
+      "value": 32.4,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/gudgeon/files/gudgeon.html line 1180 active; no source stated"
+      }
+    }
+  }
+}

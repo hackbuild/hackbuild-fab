@@ -1,0 +1,137 @@
+{
+  "id": "15by-gm12-r150",
+  "name": "15BY-GM12 worm geared stepper, 1:150",
+  "kind": "actuator",
+  "drive": "geared-stepper",
+  "note": "PAWL fixture; never enters data/ (M08-T05 step 2). Part frame as pack.py lines 15 to 16: +x output shaft, +y can direction, gearbox centred on the origin.",
+  "fields": {
+    "dims.gearbox": {
+      "value": [
+        12,
+        14,
+        13
+      ],
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/pawl/files/src/pack.py line 22 (gb_x, gb_y, gb_z); lines 17 to 19 \"no vendor publishes a dimensioned drawing for the worm variant. These are the published outline numbers padded for tolerance\""
+      }
+    },
+    "dims.worm": {
+      "value": [
+        9.5,
+        10
+      ],
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/pawl/files/src/pack.py line 23 (worm_dia, worm_len); lines 17 to 19 \"no vendor publishes a dimensioned drawing for the worm variant. These are the published outline numbers padded for tolerance\""
+      }
+    },
+    "dims.can": {
+      "value": [
+        15,
+        11
+      ],
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/pawl/files/src/pack.py line 24 (can_dia, can_len); lines 17 to 19 \"no vendor publishes a dimensioned drawing for the worm variant. These are the published outline numbers padded for tolerance\""
+      }
+    },
+    "dims.boss": {
+      "value": [
+        6,
+        2
+      ],
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/pawl/files/src/pack.py line 25 (boss_dia, boss_len); lines 17 to 19 \"no vendor publishes a dimensioned drawing for the worm variant. These are the published outline numbers padded for tolerance\""
+      }
+    },
+    "dims.shaft": {
+      "value": [
+        3,
+        2.5,
+        10
+      ],
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/pawl/files/src/pack.py line 26 (shaft_dia, shaft_len) and originals/pawl/files/src/parts.py lines 24 to 26 (shaft_flat 2.5)"
+      }
+    },
+    "mout": {
+      "value": {
+        "at": [
+          8,
+          0,
+          0
+        ],
+        "dir": [
+          1,
+          0,
+          0
+        ]
+      },
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/pawl/files/src/pack.py lines 37 to 43: boss on the +x face of a centred gearbox, gb_x / 2 plus boss_len, 12 / 2 plus 2, computed"
+      }
+    },
+    "dyn.ratio": {
+      "value": 150,
+      "unit": "ratio",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/pawl/files/src/core.mjs line 10 and benches/pawl/outputs/pawl.html line 225 (ACT.r150)"
+      }
+    },
+    "dyn.stallTorque": {
+      "value": 0.186,
+      "unit": "N m",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/pawl/files/src/core.mjs line 10 and benches/pawl/outputs/pawl.html line 225 (ACT.r150); tau, output stall torque, unit N.m stated at benches/pawl/outputs/pawl.html line 221"
+      }
+    },
+    "dyn.slew": {
+      "value": 120,
+      "unit": "deg/s",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/pawl/files/src/core.mjs line 10 and benches/pawl/outputs/pawl.html line 225 (ACT.r150); wmax 120*Math.PI/180 rad/s is 120 deg/s"
+      }
+    },
+    "dyn.reflectedInertia": {
+      "value": 0.00036,
+      "unit": "kg m2",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/pawl/files/src/core.mjs line 10 and benches/pawl/outputs/pawl.html line 225 (ACT.r150); Jr 1.6e-8 x 150^2, computed; unit kg.m^2 stated at benches/pawl/outputs/pawl.html line 223 (\"J_rotor * N^2 (kg.m^2)\")"
+      }
+    }
+  }
+}

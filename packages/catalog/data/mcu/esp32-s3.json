@@ -1,0 +1,65 @@
+{
+  "id": "esp32-s3",
+  "name": "Espressif ESP32-S3",
+  "kind": "mcu",
+  "mcu": "esp32-s3",
+  "note": "Thresholds and pullup live in mcu-pins.json (D-076). Enters with the datasheet version, section and page cited (M08-T04 step 6). No S3 module row is written: the corpus holds outlines only (BUCK engine.js lines 16 to 19, inferred) and no pad table.",
+  "fields": {
+    "strapping": {
+      "unit": "none",
+      "value": [
+        {
+          "pin": "GPIO0",
+          "default": "weak pull-up",
+          "spiBoot": "high",
+          "note": "held low with GPIO46 low selects joint download boot (Table 3-3)"
+        },
+        {
+          "pin": "GPIO3",
+          "default": "floating",
+          "spiBoot": "any",
+          "note": "selects the JTAG signal source; no internal pull, so the circuit must not leave it floating (section 3.4 p. 34)"
+        },
+        {
+          "pin": "GPIO45",
+          "default": "weak pull-down",
+          "spiBoot": "low",
+          "note": "sets VDD_SPI: low gives 3.3 V flash at the default eFuse (Table 3-4 p. 34)"
+        },
+        {
+          "pin": "GPIO46",
+          "default": "weak pull-down",
+          "spiBoot": "any",
+          "note": "also gates ROM message printing"
+        }
+      ],
+      "provenance": {
+        "tier": "vendor",
+        "method": "datasheet",
+        "date": "2026-10-09",
+        "source": "Espressif ESP32-S3 Series Datasheet v2.2 (espressif.com esp32-s3_datasheet_en.pdf, sha256 2d5a7cb7fd559d8d972bd88db32669c0196d23f22d7afaafb0f63d099b589a3f, read 2026-10-09) section 3, Table 3-1 p. 32 (default configuration of strapping pins), Table 3-3 p. 33 (chip boot mode control), Table 3-4 and section 3.4 p. 34"
+      }
+    },
+    "bootActivity": {
+      "unit": "none",
+      "value": [
+        {
+          "pin": "GPIO43",
+          "activity": "U0TXD: ROM messages print to UART0 at reset by default",
+          "drives": true
+        },
+        {
+          "pin": "GPIO44",
+          "activity": "U0RXD: an input at reset, not driven",
+          "drives": false
+        }
+      ],
+      "provenance": {
+        "tier": "vendor",
+        "method": "datasheet",
+        "date": "2026-10-09",
+        "source": "Espressif ESP32-S3 Series Datasheet v2.2 (espressif.com esp32-s3_datasheet_en.pdf, sha256 2d5a7cb7fd559d8d972bd88db32669c0196d23f22d7afaafb0f63d099b589a3f, read 2026-10-09) Table 2-4 p. 22 (GPIO43 F0 U0TXD type O, GPIO44 F0 U0RXD type I), section 2.3.3 p. 26 (GPIO43 and GPIO44 UART0), section 3.3 p. 34 (ROM printing to UART0 by default)"
+      }
+    }
+  }
+}

@@ -1,0 +1,339 @@
+{
+ "id": "teensy40-pjrc",
+ "name": "Teensy 4.0",
+ "kind": "module",
+ "note": "PJRC Teensy 4.0 at vendor tier for the TANG R5 wiring (M08-T13). Frame: USB end at +y, top view, origin at the centre of the 2 x 14 pin array. n counts the left column from the USB end, then the right column; PJRC numbers the pins by name only. The five end pads (On/Off, Program, GND, 3.3V, VBat) and the bottom pads are left out: the drawing gives no pitch for the end pads. The board outline is drawn centred on the pin array, which the drawing does not dimension (inferred, drawing only).",
+ "fields": {
+  "dims.w": {
+   "value": 17.78,
+   "unit": "mm",
+   "provenance": {
+    "tier": "vendor",
+    "method": "datasheet",
+    "date": "2026-10-09",
+    "source": "PJRC Teensy 4.0 dimension drawing (dimensions_teensy40.png, https://www.pjrc.com/teensy/dimensions_teensy40.png, linked from https://www.pjrc.com/teensy/dimensions.html; fetched 2026-10-09 19:35 PDT, sha256 29e54a9d0deacb19958195aaa8208a2d85ad4e914651b1ccf7b98500cf78036a; copy at fab-knowledge/evidence/m08-close/pjrc/): 17.78 +/-0.6 board width"
+   }
+  },
+  "dims.l": {
+   "value": 35.56,
+   "unit": "mm",
+   "provenance": {
+    "tier": "vendor",
+    "method": "datasheet",
+    "date": "2026-10-09",
+    "source": "PJRC Teensy 4.0 dimension drawing (dimensions_teensy40.png, https://www.pjrc.com/teensy/dimensions_teensy40.png, linked from https://www.pjrc.com/teensy/dimensions.html; fetched 2026-10-09 19:35 PDT, sha256 29e54a9d0deacb19958195aaa8208a2d85ad4e914651b1ccf7b98500cf78036a; copy at fab-knowledge/evidence/m08-close/pjrc/): 35.56 board length"
+   }
+  },
+  "dims.pitch": {
+   "value": 2.54,
+   "unit": "mm",
+   "provenance": {
+    "tier": "vendor",
+    "method": "datasheet",
+    "date": "2026-10-09",
+    "source": "PJRC Teensy 4.0 dimension drawing (dimensions_teensy40.png, https://www.pjrc.com/teensy/dimensions_teensy40.png, linked from https://www.pjrc.com/teensy/dimensions.html; fetched 2026-10-09 19:35 PDT, sha256 29e54a9d0deacb19958195aaa8208a2d85ad4e914651b1ccf7b98500cf78036a; copy at fab-knowledge/evidence/m08-close/pjrc/): 2.54 pin pitch"
+   }
+  },
+  "dims.rowX": {
+   "value": 7.62,
+   "unit": "mm",
+   "provenance": {
+    "tier": "vendor",
+    "method": "datasheet",
+    "date": "2026-10-09",
+    "source": "PJRC Teensy 4.0 dimension drawing (dimensions_teensy40.png, https://www.pjrc.com/teensy/dimensions_teensy40.png, linked from https://www.pjrc.com/teensy/dimensions.html; fetched 2026-10-09 19:35 PDT, sha256 29e54a9d0deacb19958195aaa8208a2d85ad4e914651b1ccf7b98500cf78036a; copy at fab-knowledge/evidence/m08-close/pjrc/): rows 1.27 inside each long edge of the 17.78 board, so each row sits 17.78 / 2 - 1.27 = 7.62 off the centreline (computed from vendor dimensions)"
+   }
+  },
+  "pins": {
+   "value": [
+    {
+     "n": 1,
+     "name": "GND",
+     "role": "gnd",
+     "at": [
+      -7.62,
+      16.51,
+      0
+     ]
+    },
+    {
+     "n": 2,
+     "name": "0",
+     "role": "gpio",
+     "at": [
+      -7.62,
+      13.97,
+      0
+     ]
+    },
+    {
+     "n": 3,
+     "name": "1",
+     "role": "gpio",
+     "at": [
+      -7.62,
+      11.43,
+      0
+     ]
+    },
+    {
+     "n": 4,
+     "name": "2",
+     "role": "gpio",
+     "at": [
+      -7.62,
+      8.89,
+      0
+     ]
+    },
+    {
+     "n": 5,
+     "name": "3",
+     "role": "gpio",
+     "at": [
+      -7.62,
+      6.35,
+      0
+     ]
+    },
+    {
+     "n": 6,
+     "name": "4",
+     "role": "gpio",
+     "at": [
+      -7.62,
+      3.81,
+      0
+     ]
+    },
+    {
+     "n": 7,
+     "name": "5",
+     "role": "gpio",
+     "at": [
+      -7.62,
+      1.27,
+      0
+     ]
+    },
+    {
+     "n": 8,
+     "name": "6",
+     "role": "gpio",
+     "at": [
+      -7.62,
+      -1.27,
+      0
+     ]
+    },
+    {
+     "n": 9,
+     "name": "7",
+     "role": "gpio",
+     "at": [
+      -7.62,
+      -3.81,
+      0
+     ]
+    },
+    {
+     "n": 10,
+     "name": "8",
+     "role": "gpio",
+     "at": [
+      -7.62,
+      -6.35,
+      0
+     ]
+    },
+    {
+     "n": 11,
+     "name": "9",
+     "role": "gpio",
+     "at": [
+      -7.62,
+      -8.89,
+      0
+     ]
+    },
+    {
+     "n": 12,
+     "name": "10",
+     "role": "gpio",
+     "at": [
+      -7.62,
+      -11.43,
+      0
+     ]
+    },
+    {
+     "n": 13,
+     "name": "11",
+     "role": "gpio",
+     "at": [
+      -7.62,
+      -13.97,
+      0
+     ]
+    },
+    {
+     "n": 14,
+     "name": "12",
+     "role": "gpio",
+     "at": [
+      -7.62,
+      -16.51,
+      0
+     ]
+    },
+    {
+     "n": 15,
+     "name": "Vin",
+     "role": "vin",
+     "at": [
+      7.62,
+      16.51,
+      0
+     ]
+    },
+    {
+     "n": 16,
+     "name": "GND",
+     "role": "gnd",
+     "at": [
+      7.62,
+      13.97,
+      0
+     ]
+    },
+    {
+     "n": 17,
+     "name": "3.3V",
+     "role": "3v3",
+     "at": [
+      7.62,
+      11.43,
+      0
+     ]
+    },
+    {
+     "n": 18,
+     "name": "23",
+     "role": "gpio, analog A9",
+     "at": [
+      7.62,
+      8.89,
+      0
+     ]
+    },
+    {
+     "n": 19,
+     "name": "22",
+     "role": "gpio, analog A8",
+     "at": [
+      7.62,
+      6.35,
+      0
+     ]
+    },
+    {
+     "n": 20,
+     "name": "21",
+     "role": "gpio, analog A7",
+     "at": [
+      7.62,
+      3.81,
+      0
+     ]
+    },
+    {
+     "n": 21,
+     "name": "20",
+     "role": "gpio, analog A6",
+     "at": [
+      7.62,
+      1.27,
+      0
+     ]
+    },
+    {
+     "n": 22,
+     "name": "19",
+     "role": "gpio, analog A5",
+     "at": [
+      7.62,
+      -1.27,
+      0
+     ]
+    },
+    {
+     "n": 23,
+     "name": "18",
+     "role": "gpio, analog A4",
+     "at": [
+      7.62,
+      -3.81,
+      0
+     ]
+    },
+    {
+     "n": 24,
+     "name": "17",
+     "role": "gpio, analog A3",
+     "at": [
+      7.62,
+      -6.35,
+      0
+     ]
+    },
+    {
+     "n": 25,
+     "name": "16",
+     "role": "gpio, analog A2",
+     "at": [
+      7.62,
+      -8.89,
+      0
+     ]
+    },
+    {
+     "n": 26,
+     "name": "15",
+     "role": "gpio, analog A1",
+     "at": [
+      7.62,
+      -11.43,
+      0
+     ]
+    },
+    {
+     "n": 27,
+     "name": "14",
+     "role": "gpio, analog A0",
+     "at": [
+      7.62,
+      -13.97,
+      0
+     ]
+    },
+    {
+     "n": 28,
+     "name": "13",
+     "role": "gpio, led",
+     "at": [
+      7.62,
+      -16.51,
+      0
+     ]
+    }
+   ],
+   "unit": "mm",
+   "provenance": {
+    "tier": "vendor",
+    "method": "datasheet",
+    "date": "2026-10-09",
+    "source": "PJRC Teensy 4.0 pinout card, front (teensy40_card10a_rev2.png, https://www.pjrc.com/store/teensy40_card10a_rev2.png, linked from https://www.pjrc.com/store/teensy40.html; fetched 2026-10-09 19:35 PDT, sha256 6a9408e95d10f92155c1bc85b86b071f9106df770516a15d525b75e9ef75104e; copy at fab-knowledge/evidence/m08-close/pjrc/) for names and order; positions on the 2.54 pitch and the 7.62 row offset of PJRC Teensy 4.0 dimension drawing (dimensions_teensy40.png, https://www.pjrc.com/teensy/dimensions_teensy40.png, linked from https://www.pjrc.com/teensy/dimensions.html; fetched 2026-10-09 19:35 PDT, sha256 29e54a9d0deacb19958195aaa8208a2d85ad4e914651b1ccf7b98500cf78036a; copy at fab-knowledge/evidence/m08-close/pjrc/)"
+   }
+  }
+ }
+}

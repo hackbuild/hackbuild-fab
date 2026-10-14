@@ -1,0 +1,183 @@
+{
+  "id": "mg996r",
+  "name": "TowerPro MG996R class standard servo",
+  "kind": "actuator",
+  "drive": "servo",
+  "note": "DAVIT says \"Verified against published outline drawings\" (lib.py lines 104 to 105) without naming the drawing; the benches disagree, so the geometry stays inferred. Frame as sg90.",
+  "fields": {
+    "dims.length": {
+      "value": 40.6,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "benches disagree on case length (D-104, R70); every bench value is listed under conflicts; the SG90 caliper session is on the D-082 list"
+      },
+      "conflicts": [
+        {
+          "value": 40.6,
+          "source": "originals/davit/files/src/lib.py line 107"
+        },
+        {
+          "value": 40.7,
+          "source": "originals/stanchion/files/src/cad.py line 44"
+        }
+      ]
+    },
+    "dims.width": {
+      "value": 20,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "benches disagree on case width (D-104, R70); every bench value is listed under conflicts; the SG90 caliper session is on the D-082 list"
+      },
+      "conflicts": [
+        {
+          "value": 20,
+          "source": "originals/davit/files/src/lib.py line 107"
+        },
+        {
+          "value": 19.7,
+          "source": "originals/stanchion/files/src/cad.py line 44"
+        }
+      ]
+    },
+    "dims.tabSpan": {
+      "value": 55.4,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "benches disagree on tab span (D-104, R70); every bench value is listed under conflicts; the SG90 caliper session is on the D-082 list"
+      },
+      "conflicts": [
+        {
+          "value": 55.4,
+          "source": "originals/davit/files/src/lib.py line 109"
+        },
+        {
+          "value": 54.5,
+          "source": "originals/stanchion/files/src/cad.py line 44"
+        }
+      ]
+    },
+    "dims.holeGrid": {
+      "value": [
+        49.66,
+        10
+      ],
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "benches disagree on mount hole grid (D-104, R70); every bench value is listed under conflicts; the SG90 caliper session is on the D-082 list"
+      },
+      "conflicts": [
+        {
+          "value": [
+            49.66,
+            10
+          ],
+          "source": "originals/davit/files/src/lib.py line 110"
+        },
+        {
+          "value": [
+            49.5,
+            10
+          ],
+          "source": "originals/stanchion/files/src/cad.py line 46"
+        }
+      ]
+    },
+    "dims.shaftOffset": {
+      "value": 10.4,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "benches disagree on shaft offset from the case centre (D-104, R70); every bench value is listed under conflicts; the SG90 caliper session is on the D-082 list"
+      },
+      "conflicts": [
+        {
+          "value": 10.4,
+          "source": "originals/davit/files/src/lib.py line 111"
+        },
+        {
+          "value": 10,
+          "source": "originals/stanchion/files/src/cad.py line 45"
+        },
+        {
+          "value": 10.1,
+          "source": "originals/jib/files/jib.html line 91 (stdshaft)"
+        }
+      ]
+    },
+    "dims.splineD": {
+      "value": 5.9,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/davit/files/src/lib.py line 112, originals/stanchion/files/src/cad.py line 45 agree; no drawing cited"
+      }
+    },
+    "mout": {
+      "value": {
+        "at": [
+          10.4,
+          0,
+          0
+        ],
+        "dir": [
+          0,
+          0,
+          1
+        ]
+      },
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/davit/files/src/lib.py line 111 shaft_off 10.4 from the case centre"
+      }
+    },
+    "dyn.stall48": {
+      "value": 9.4,
+      "unit": "kg cm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/davit/files/src/lib.py line 117, originals/jib/files/jib.html line 100 agree; JIB line 85 \"typical and editable\""
+      }
+    },
+    "dyn.stall60": {
+      "value": 11,
+      "unit": "kg cm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/davit/files/src/lib.py line 117, originals/jib/files/jib.html line 100 agree"
+      }
+    },
+    "dyn.mass": {
+      "value": 55,
+      "unit": "g",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/davit/files/src/lib.py line 117"
+      }
+    }
+  }
+}

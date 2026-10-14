@@ -1,0 +1,99 @@
+{
+  "id": "max98357a",
+  "name": "MAX98357A I2S amplifier",
+  "kind": "other",
+  "note": "LUG U4 and U5; fixture only, never enters data/ (M08-T03 step 8)",
+  "fields": {
+    "pins": {
+      "value": [
+        {
+          "n": 1,
+          "name": "SD_MODE",
+          "role": "unknown"
+        },
+        {
+          "n": 2,
+          "name": "GAIN",
+          "role": "unknown"
+        },
+        {
+          "n": 3,
+          "name": "DIN",
+          "role": "unknown"
+        },
+        {
+          "n": 4,
+          "name": "BCLK",
+          "role": "unknown"
+        },
+        {
+          "n": 5,
+          "name": "LRCLK",
+          "role": "unknown"
+        },
+        {
+          "n": 6,
+          "name": "GND1",
+          "role": "unknown"
+        },
+        {
+          "n": 7,
+          "name": "VDD1",
+          "role": "unknown"
+        },
+        {
+          "n": 8,
+          "name": "NC1",
+          "role": "unknown"
+        },
+        {
+          "n": 9,
+          "name": "OUTN",
+          "role": "unknown"
+        },
+        {
+          "n": 10,
+          "name": "OUTN2",
+          "role": "unknown"
+        },
+        {
+          "n": 11,
+          "name": "PGND1",
+          "role": "unknown"
+        },
+        {
+          "n": 12,
+          "name": "PVDD",
+          "role": "unknown"
+        },
+        {
+          "n": 13,
+          "name": "OUTP",
+          "role": "unknown"
+        },
+        {
+          "n": 14,
+          "name": "OUTP2",
+          "role": "unknown"
+        },
+        {
+          "n": 15,
+          "name": "PGND2",
+          "role": "unknown"
+        },
+        {
+          "n": 16,
+          "name": "VDD2",
+          "role": "unknown"
+        }
+      ],
+      "unit": "none",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "lug.tsx pin maps written from knowledge: benches/round-pi-board/outputs/lug.tsx lines 26 to 29 (AMP_PINS, MAX98357A TSSOP-16) and lines 10 to 11; sha256 ff88947cb61584f220eb8d2495e882ea1c2ca785972c3de872f165fe4d7a644d"
+      }
+    }
+  }
+}

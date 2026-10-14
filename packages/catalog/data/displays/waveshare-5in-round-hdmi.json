@@ -1,0 +1,60 @@
+{
+  "id": "waveshare-5in-round-hdmi",
+  "name": "Waveshare 5 inch round HDMI LCD 1080x1080 (SKU 24369)",
+  "kind": "display",
+  "note": "Part frame: origin on the panel axis at the flat back face, +z rearward as cask.scad draws it. Hole square offset 1.5 mm perpendicular to the HDMI edge.",
+  "fields": {
+    "dims.bodyD": {
+      "value": 150,
+      "unit": "mm",
+      "provenance": {
+        "tier": "vendor",
+        "method": "datasheet",
+        "date": "2026-10-09",
+        "source": "Waveshare factory STEP 5inch-1080x1080-lcd-sku24369.stp as measured in CASK (cask.scad lines 17 to 19; the STEP is not among the originals); originals/cask/files/cask.scad lines 27 and 75 (\"case body diameter, measured\")"
+      }
+    },
+    "dims.tail": {
+      "value": [
+        146,
+        4.5
+      ],
+      "unit": "mm",
+      "provenance": {
+        "tier": "vendor",
+        "method": "datasheet",
+        "date": "2026-10-09",
+        "source": "Waveshare factory STEP 5inch-1080x1080-lcd-sku24369.stp as measured in CASK (cask.scad lines 17 to 19; the STEP is not among the originals); originals/cask/files/cask.scad line 28 (\"steps to 146.0 dia for the last 4.5mm\")"
+      }
+    },
+    "dims.glassD": {
+      "value": 149,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-09",
+        "source": "originals/cask/files/cask_bench.html line 801, a mock disc; cask.scad line 26 says the glass sits \"about 1.6mm proud of the case lip\""
+      }
+    },
+    "mountHoles": {
+      "value": {
+        "pitch": 75,
+        "rotDeg": 45,
+        "offset": [
+          0,
+          -1.5
+        ],
+        "thread": "M4",
+        "surfaceH": 0
+      },
+      "unit": "mm",
+      "provenance": {
+        "tier": "vendor",
+        "method": "datasheet",
+        "date": "2026-10-09",
+        "source": "Waveshare factory STEP 5inch-1080x1080-lcd-sku24369.stp as measured in CASK (cask.scad lines 17 to 19; the STEP is not among the originals); originals/cask/files/cask.scad lines 54, 59, 65, 68, 71 (\"M4\" measured); originals/cask/files/cask_bench.html lines 192 to 194"
+      }
+    }
+  }
+}
