@@ -22,7 +22,7 @@
 import { MESH_GRID_PER_MM, type Finding } from "@hackbuild/spec";
 import { defineCheck } from "../../registry.js";
 import { inPrintPose, triNormal } from "../../solid/mesh.js";
-import { bodyMeshes, intervalFinding, isReason, partTarget, skip } from "../common.js";
+import { bodyMeshes, intervalFinding, isReason, partTarget, sheetSkip, skip } from "../common.js";
 import { AT_LIMIT_DEG, BED_BAND_CONSTANT, OVERHANG_CONSTANT, bedBand, fromVerticalDeg, onBed, overhangLimit } from "./overhang.js";
 
 const GRID_MM = 1 / MESH_GRID_PER_MM;
@@ -40,6 +40,8 @@ export const check = defineCheck({
   level: "part",
   run: (t, ctx): readonly Finding[] => {
     const at = partTarget(t.part);
+    const sheet = sheetSkip(t.part, ctx);
+    if (sheet !== undefined) return [sheet];
     const got = bodyMeshes(t.part, ctx);
     if (isReason(got)) return [skip(at, "not run", got.reason)];
     const row = overhangLimit(ctx.profile);

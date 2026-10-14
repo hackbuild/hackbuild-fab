@@ -14,7 +14,7 @@
 import type { Finding, Metric } from "@hackbuild/spec";
 import { defineCheck } from "../../registry.js";
 import { inPrintPose, triNormal } from "../../solid/mesh.js";
-import { bodyMeshes, boolFinding, fmt, isReason, partTarget, skip } from "../common.js";
+import { bodyMeshes, boolFinding, fmt, isReason, partTarget, sheetSkip, skip } from "../common.js";
 import { BED_BAND_CONSTANT, OVERHANG_CONSTANT, bedBand, onBed, overhangLimit, pastLimit } from "./overhang.js";
 
 const isOverhangMetric = (m: Metric): boolean => /overhang/i.test(m.id) && typeof m.value === "number" && m.unit === "percent";
@@ -24,6 +24,8 @@ export const check = defineCheck({
   level: "part",
   run: (t, ctx): readonly Finding[] => {
     const at = partTarget(t.part);
+    const sheet = sheetSkip(t.part, ctx);
+    if (sheet !== undefined) return [sheet];
     const got = bodyMeshes(t.part, ctx);
     if (isReason(got)) return [skip(at, "not run", got.reason)];
     const limit = overhangLimit(ctx.profile);

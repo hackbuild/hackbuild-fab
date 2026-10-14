@@ -93,8 +93,12 @@ export const isReason = (v: unknown): v is { readonly reason: string } =>
  * sheet parts). Undefined for a printed part, which the check then runs on.
  */
 export function sheetSkip(part: Part, ctx: CheckCtx): Finding | undefined {
-  if (ctx.profile.machine(part.machine).presets.length > 0) return undefined;
-  return skip(partTarget(part), "not applicable", `machine ${part.machine} cuts ${part.process} sheet and has no layer grid; this check reads a printer preset`);
+  if (ctx.profile.machine(part.machine).presets.length === 0) {
+    return skip(partTarget(part), "not applicable", `machine ${part.machine} cuts ${part.process} sheet and has no layer grid; this check reads a printer preset`);
+  }
+  // A laser, vinyl or paper part on a machine row that carries a preset still has no layers.
+  if (part.process !== "fdm") return skip(partTarget(part), "not applicable", `part ${part.id} is a ${part.process} part and has no print layers; this check applies to fdm parts`);
+  return undefined;
 }
 
 /** The machine's first preset: the active preset of a build (PROFILE.md 8). E_PARAM_MISSING when the machine has none. */

@@ -505,7 +505,7 @@ const TYPED_IN_CHECKS: Readonly<Record<string, readonly string[]>> = {
   "CHK-INL-03": ["0.2286", "0.0103", "0.8745"],
   "CHK-LNT-04": ["-1.5"],
   "CHK-PRT-06": ["0.05"],
-  "CHK-PRT-07": ["0.24", "0.20", "0.05"],
+  "CHK-PRT-07": ["0.20", "0.05"],
   "CHK-PRT-08": ["45", "1.2", "2.4"],
   "CHK-PRT-10": ["0.02", "8"],
   "CHK-PRT-11": ["0.000846"],

@@ -8,7 +8,7 @@
 import type { Finding } from "@hackbuild/spec";
 import { defineCheck } from "../../registry.js";
 import { floating, uniformMids } from "../../solid/layers.js";
-import { isReason, partTarget, skip } from "../common.js";
+import { isReason, partTarget, sheetSkip, skip } from "../common.js";
 import { poseSlices, walkLayers } from "./layers.js";
 
 /** The two layer heights the check title names, mm. */
@@ -19,6 +19,8 @@ export const check = defineCheck({
   level: "part",
   run: (t, ctx): readonly Finding[] => {
     const at = partTarget(t.part);
+    const sheet = sheetSkip(t.part, ctx);
+    if (sheet !== undefined) return [sheet];
     const s = poseSlices(t.part, ctx);
     if (isReason(s)) return [skip(at, "not run", s.reason)];
     const per = ISLAND_LAYERS.map((layer) => {
