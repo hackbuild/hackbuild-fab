@@ -1,0 +1,701 @@
+{
+  "preset": "two",
+  "epoch": 315532800,
+  "sketch": {
+    "chargeUs": 30,
+    "waitUs": 3500,
+    "limitUs": 20000,
+    "guardUs": 2000,
+    "agree": 2,
+    "scanGapMs": 2,
+    "keys": [
+      {
+        "net": "K1",
+        "pin": 2,
+        "port": "port.key1"
+      },
+      {
+        "net": "K2",
+        "pin": 3,
+        "port": "port.key2"
+      }
+    ]
+  },
+  "keys": [
+    {
+      "net": "K1",
+      "port": "port.key1",
+      "pin": "GP2",
+      "legs": [
+        {
+          "conductor": "conductor.key1",
+          "direction": "along",
+          "lengthMm": 15,
+          "ohm": 74404.76190476191,
+          "row": "cpla.pip.along",
+          "tier": "inferred"
+        },
+        {
+          "conductor": "conductor.key1col",
+          "direction": "through",
+          "lengthMm": 3.9200000000000004,
+          "ohm": 28607.02049390219,
+          "row": "cpla.pip.through",
+          "tier": "inferred"
+        },
+        {
+          "conductor": "conductor.gnd1col",
+          "direction": "through",
+          "lengthMm": 3.9200000000000004,
+          "ohm": 28607.020493902226,
+          "row": "cpla.pip.through",
+          "tier": "inferred"
+        },
+        {
+          "conductor": "conductor.gnd1stub",
+          "direction": "along",
+          "lengthMm": 3,
+          "ohm": 14880.952380952382,
+          "row": "cpla.pip.along",
+          "tier": "inferred"
+        },
+        {
+          "conductor": "conductor.gnd",
+          "direction": "along",
+          "lengthMm": 44,
+          "ohm": 218253.96825396825,
+          "row": "cpla.pip.along",
+          "tier": "inferred"
+        }
+      ],
+      "unpricedContacts": [
+        "port.key1",
+        "conductor.key1col|cap1",
+        "cap1|conductor.gnd1col",
+        "port.gnd"
+      ],
+      "contactAt": [
+        "port.key1",
+        "conductor.key1col|cap1",
+        "cap1|conductor.gnd1col",
+        "port.gnd"
+      ],
+      "pathOhm": {
+        "value": 364753.723527487,
+        "unit": "ohm",
+        "qualifier": "computed",
+        "source": "solveKeys over profile rows cpla.pip.along and cpla.pip.through (inferred rows)"
+      },
+      "cap": {
+        "colR": {
+          "value": 1.6006577331937668,
+          "unit": "mm",
+          "qualifier": "computed",
+          "source": "built conductor.key1col"
+        },
+        "colGap": {
+          "value": 0.8000000000000007,
+          "unit": "mm",
+          "qualifier": "computed",
+          "source": "built conductor.key1col"
+        },
+        "capT": {
+          "value": 0.7199999999999998,
+          "unit": "mm",
+          "qualifier": "computed",
+          "source": "built cap1"
+        },
+        "rhoT": {
+          "value": 400,
+          "unit": "ohm cm",
+          "qualifier": "inferred",
+          "source": "ctpu.pip.bulk"
+        },
+        "rswOhm": {
+          "value": 5597.3134991811785,
+          "unit": "ohm",
+          "qualifier": "computed",
+          "source": "pip-controller src/model.js:404 over the built geometry (inferred row)"
+        }
+      },
+      "solvedOhm": {
+        "value": 370351.0370266682,
+        "unit": "ohm",
+        "qualifier": "computed",
+        "source": "pathOhm plus cap bridge, no contact interfaces"
+      },
+      "pressedOhm": {
+        "lo": 3703510.370266682,
+        "hi": 11110531.110800046,
+        "unit": "ohm",
+        "qualifier": "computed",
+        "source": "solvedOhm x contactFactor (inferred)"
+      },
+      "declaredMaxOhm": {
+        "value": 2000000,
+        "unit": "ohm",
+        "qualifier": "computed",
+        "source": "contact.key1.maxOhm in the built part"
+      },
+      "capacitance": {
+        "pinPf": {
+          "value": 7,
+          "unit": "pF",
+          "qualifier": "inferred",
+          "source": "pip-controller src/layout.js:46 cpin; docs/electrical.md:121 assumed 7 pF"
+        },
+        "keyTraceMm": {
+          "value": 15,
+          "unit": "mm",
+          "qualifier": "computed",
+          "source": "key net along legs"
+        },
+        "tracePf": {
+          "value": 1.3,
+          "unit": "pF",
+          "qualifier": "inferred",
+          "source": "profile electrical.tracePfPerMm: pip-controller src/model.js:418, Cpf = cpin + 0.02 pF per mm + 1; read by tools/skeleton/flexpair_probe/sim/run.mjs (virtual exit B, D-234); no ContactRow exists yet (packages/profile/src/lookup.ts contact()), so this row stands in until the coupon and M05 rows land; not measured on this part"
+        },
+        "keyLeadPf": {
+          "value": 20,
+          "unit": "pF",
+          "qualifier": "inferred",
+          "source": "profile electrical.keyLeadPf: the probe jumper from GP2 or GP3 to the key's pad clip, the same kind of lead as electrical.gndLeadPf, 10 to 30 pF (inferred, no measurement); read by tools/skeleton/flexpair_probe/sim/run.mjs (virtual exit B, D-234); no ContactRow exists yet (packages/profile/src/lookup.ts contact()), so this row stands in until the coupon and M05 rows land; not measured on this part"
+        },
+        "totalPf": {
+          "value": 28.3,
+          "unit": "pF",
+          "qualifier": "inferred",
+          "source": "pin plus trace plus the probe lead to the pad clip"
+        },
+        "gndNetMm": {
+          "value": 50,
+          "unit": "mm",
+          "qualifier": "computed",
+          "source": "GND net centrelines"
+        }
+      },
+      "thresholds": {
+        "vddV": {
+          "value": 3.3,
+          "unit": "V",
+          "qualifier": "vendor",
+          "source": "RP2040 datasheet pp. 616 to 617"
+        },
+        "vilMaxV": {
+          "value": 0.8,
+          "unit": "V",
+          "qualifier": "vendor",
+          "source": "RP2040 datasheet pp. 616 to 617"
+        },
+        "vihMinV": {
+          "value": 2,
+          "unit": "V",
+          "qualifier": "vendor",
+          "source": "RP2040 datasheet pp. 616 to 617"
+        },
+        "waitUs": {
+          "value": 3500,
+          "unit": "us",
+          "qualifier": "inferred",
+          "source": "flexpair_probe.ino WAIT_US"
+        },
+        "limitUs": {
+          "value": 20000,
+          "unit": "us",
+          "qualifier": "inferred",
+          "source": "flexpair_probe.ino LIMIT_US"
+        },
+        "rejectByCrossingOhm": {
+          "value": 87275335.04712652,
+          "unit": "ohm",
+          "qualifier": "computed",
+          "source": "largest path that crosses VIL inside WAIT_US at totalPf"
+        },
+        "rejectBy5TauOhm": {
+          "value": 24734982.332155474,
+          "unit": "ohm",
+          "qualifier": "computed",
+          "source": "WAIT_US / (5 C), the sketch header's figure, at totalPf"
+        }
+      },
+      "crossingUs": {
+        "solved": {
+          "value": 14.852175919959599,
+          "unit": "us",
+          "qualifier": "computed",
+          "source": "solvedOhm at totalPf to VIL"
+        },
+        "solvedAtVih": {
+          "value": 5.248592915638839,
+          "unit": "us",
+          "qualifier": "computed",
+          "source": "solvedOhm at totalPf to VIH, the earliest a Schmitt input could fall"
+        },
+        "pressedFactor": {
+          "min": 148.52319365072086,
+          "p5": 156.89639662280737,
+          "median": 259.0375913978522,
+          "p95": 421.3000262130993,
+          "max": 445.516150764468,
+          "unit": "us",
+          "qualifier": "computed",
+          "source": "pressedOhm log uniform, 10000 draws, at totalPf to VIL"
+        },
+        "pressedStick": {
+          "min": 113.00332864481253,
+          "p5": 132.04022168628924,
+          "median": 519.8675296144686,
+          "p95": 2104.3269854710757,
+          "max": 2430.648561555267,
+          "unit": "us",
+          "qualifier": "inferred",
+          "source": "pip.md 5.10, pip-controller docs/electrical.md:147: pressed crossings on the PIP stick (measured there, transferred here)"
+        },
+        "releasedDry": {
+          "value": 70750,
+          "unit": "us",
+          "qualifier": "computed",
+          "source": "pin leakage 1 nA (inferred) at totalPf, VDD to VIL"
+        },
+        "releasedStick": {
+          "lo": 6500,
+          "hi": 17800,
+          "never": "2 of 10 pins",
+          "unit": "us",
+          "qualifier": "inferred",
+          "source": "pip.md 5.10: idle crossings on the PIP stick (measured there, transferred here)"
+        },
+        "releasedSkin": {
+          "min": 40.164719747187576,
+          "p5": 47.65845405676523,
+          "median": 179.07129981541806,
+          "p95": 690.9572847907502,
+          "max": 802.0492297412371,
+          "unit": "us",
+          "qualifier": "computed",
+          "source": "skin 1 to 20 Mohm log uniform key to GND, 10000 draws, at totalPf to VIL"
+        }
+      }
+    },
+    {
+      "net": "K2",
+      "port": "port.key2",
+      "pin": "GP3",
+      "legs": [
+        {
+          "conductor": "conductor.key2",
+          "direction": "along",
+          "lengthMm": 15,
+          "ohm": 74404.76190476191,
+          "row": "cpla.pip.along",
+          "tier": "inferred"
+        },
+        {
+          "conductor": "conductor.key2col",
+          "direction": "through",
+          "lengthMm": 3.9200000000000004,
+          "ohm": 28607.020493902226,
+          "row": "cpla.pip.through",
+          "tier": "inferred"
+        },
+        {
+          "conductor": "conductor.gnd2col",
+          "direction": "through",
+          "lengthMm": 3.9200000000000004,
+          "ohm": 28607.02049390219,
+          "row": "cpla.pip.through",
+          "tier": "inferred"
+        },
+        {
+          "conductor": "conductor.gnd2stub",
+          "direction": "along",
+          "lengthMm": 3,
+          "ohm": 14880.952380952382,
+          "row": "cpla.pip.along",
+          "tier": "inferred"
+        },
+        {
+          "conductor": "conductor.gnd",
+          "direction": "along",
+          "lengthMm": 44,
+          "ohm": 218253.96825396825,
+          "row": "cpla.pip.along",
+          "tier": "inferred"
+        }
+      ],
+      "unpricedContacts": [
+        "port.key2",
+        "conductor.key2col|cap1",
+        "cap1|conductor.gnd2col",
+        "port.gnd"
+      ],
+      "contactAt": [
+        "port.key2",
+        "conductor.key2col|cap1",
+        "cap1|conductor.gnd2col",
+        "port.gnd"
+      ],
+      "pathOhm": {
+        "value": 364753.7235274869,
+        "unit": "ohm",
+        "qualifier": "computed",
+        "source": "solveKeys over profile rows cpla.pip.along and cpla.pip.through (inferred rows)"
+      },
+      "cap": {
+        "colR": {
+          "value": 1.6006577331937668,
+          "unit": "mm",
+          "qualifier": "computed",
+          "source": "built conductor.key2col"
+        },
+        "colGap": {
+          "value": 0.8000000000000007,
+          "unit": "mm",
+          "qualifier": "computed",
+          "source": "built conductor.key2col"
+        },
+        "capT": {
+          "value": 0.7199999999999998,
+          "unit": "mm",
+          "qualifier": "computed",
+          "source": "built cap2"
+        },
+        "rhoT": {
+          "value": 400,
+          "unit": "ohm cm",
+          "qualifier": "inferred",
+          "source": "ctpu.pip.bulk"
+        },
+        "rswOhm": {
+          "value": 5597.3134991811785,
+          "unit": "ohm",
+          "qualifier": "computed",
+          "source": "pip-controller src/model.js:404 over the built geometry (inferred row)"
+        }
+      },
+      "solvedOhm": {
+        "value": 370351.0370266681,
+        "unit": "ohm",
+        "qualifier": "computed",
+        "source": "pathOhm plus cap bridge, no contact interfaces"
+      },
+      "pressedOhm": {
+        "lo": 3703510.3702666806,
+        "hi": 11110531.110800043,
+        "unit": "ohm",
+        "qualifier": "computed",
+        "source": "solvedOhm x contactFactor (inferred)"
+      },
+      "declaredMaxOhm": {
+        "value": 2000000,
+        "unit": "ohm",
+        "qualifier": "computed",
+        "source": "contact.key2.maxOhm in the built part"
+      },
+      "capacitance": {
+        "pinPf": {
+          "value": 7,
+          "unit": "pF",
+          "qualifier": "inferred",
+          "source": "pip-controller src/layout.js:46 cpin; docs/electrical.md:121 assumed 7 pF"
+        },
+        "keyTraceMm": {
+          "value": 15,
+          "unit": "mm",
+          "qualifier": "computed",
+          "source": "key net along legs"
+        },
+        "tracePf": {
+          "value": 1.3,
+          "unit": "pF",
+          "qualifier": "inferred",
+          "source": "profile electrical.tracePfPerMm: pip-controller src/model.js:418, Cpf = cpin + 0.02 pF per mm + 1; read by tools/skeleton/flexpair_probe/sim/run.mjs (virtual exit B, D-234); no ContactRow exists yet (packages/profile/src/lookup.ts contact()), so this row stands in until the coupon and M05 rows land; not measured on this part"
+        },
+        "keyLeadPf": {
+          "value": 20,
+          "unit": "pF",
+          "qualifier": "inferred",
+          "source": "profile electrical.keyLeadPf: the probe jumper from GP2 or GP3 to the key's pad clip, the same kind of lead as electrical.gndLeadPf, 10 to 30 pF (inferred, no measurement); read by tools/skeleton/flexpair_probe/sim/run.mjs (virtual exit B, D-234); no ContactRow exists yet (packages/profile/src/lookup.ts contact()), so this row stands in until the coupon and M05 rows land; not measured on this part"
+        },
+        "totalPf": {
+          "value": 28.3,
+          "unit": "pF",
+          "qualifier": "inferred",
+          "source": "pin plus trace plus the probe lead to the pad clip"
+        },
+        "gndNetMm": {
+          "value": 50,
+          "unit": "mm",
+          "qualifier": "computed",
+          "source": "GND net centrelines"
+        }
+      },
+      "thresholds": {
+        "vddV": {
+          "value": 3.3,
+          "unit": "V",
+          "qualifier": "vendor",
+          "source": "RP2040 datasheet pp. 616 to 617"
+        },
+        "vilMaxV": {
+          "value": 0.8,
+          "unit": "V",
+          "qualifier": "vendor",
+          "source": "RP2040 datasheet pp. 616 to 617"
+        },
+        "vihMinV": {
+          "value": 2,
+          "unit": "V",
+          "qualifier": "vendor",
+          "source": "RP2040 datasheet pp. 616 to 617"
+        },
+        "waitUs": {
+          "value": 3500,
+          "unit": "us",
+          "qualifier": "inferred",
+          "source": "flexpair_probe.ino WAIT_US"
+        },
+        "limitUs": {
+          "value": 20000,
+          "unit": "us",
+          "qualifier": "inferred",
+          "source": "flexpair_probe.ino LIMIT_US"
+        },
+        "rejectByCrossingOhm": {
+          "value": 87275335.04712652,
+          "unit": "ohm",
+          "qualifier": "computed",
+          "source": "largest path that crosses VIL inside WAIT_US at totalPf"
+        },
+        "rejectBy5TauOhm": {
+          "value": 24734982.332155474,
+          "unit": "ohm",
+          "qualifier": "computed",
+          "source": "WAIT_US / (5 C), the sketch header's figure, at totalPf"
+        }
+      },
+      "crossingUs": {
+        "solved": {
+          "value": 14.852175919959594,
+          "unit": "us",
+          "qualifier": "computed",
+          "source": "solvedOhm at totalPf to VIL"
+        },
+        "solvedAtVih": {
+          "value": 5.248592915638837,
+          "unit": "us",
+          "qualifier": "computed",
+          "source": "solvedOhm at totalPf to VIH, the earliest a Schmitt input could fall"
+        },
+        "pressedFactor": {
+          "min": 148.52250427057882,
+          "p5": 157.14222993209816,
+          "median": 256.88150940203684,
+          "p95": 421.97976839086454,
+          "max": 445.53447811705064,
+          "unit": "us",
+          "qualifier": "computed",
+          "source": "pressedOhm log uniform, 10000 draws, at totalPf to VIL"
+        },
+        "pressedStick": {
+          "min": 113.02939449657096,
+          "p5": 131.8313078356708,
+          "median": 523.1443849773777,
+          "p95": 2090.600291274321,
+          "max": 2430.104849201488,
+          "unit": "us",
+          "qualifier": "inferred",
+          "source": "pip.md 5.10, pip-controller docs/electrical.md:147: pressed crossings on the PIP stick (measured there, transferred here)"
+        },
+        "releasedDry": {
+          "value": 70750,
+          "unit": "us",
+          "qualifier": "computed",
+          "source": "pin leakage 1 nA (inferred) at totalPf, VDD to VIL"
+        },
+        "releasedStick": {
+          "lo": 6500,
+          "hi": 17800,
+          "never": "2 of 10 pins",
+          "unit": "us",
+          "qualifier": "inferred",
+          "source": "pip.md 5.10: idle crossings on the PIP stick (measured there, transferred here)"
+        },
+        "releasedSkin": {
+          "min": 40.10843396501475,
+          "p5": 45.992648958230035,
+          "median": 176.88120610881427,
+          "p95": 687.3307844554748,
+          "max": 801.7570915007931,
+          "unit": "us",
+          "qualifier": "computed",
+          "source": "skin 1 to 20 Mohm log uniform key to GND, 10000 draws, at totalPf to VIL"
+        }
+      }
+    }
+  ],
+  "mech": {
+    "coneH": {
+      "value": 4.08,
+      "unit": "mm",
+      "qualifier": "computed",
+      "source": "contact.key1.coneH in the built part"
+    },
+    "gap": {
+      "value": 1.84,
+      "unit": "mm",
+      "qualifier": "computed",
+      "source": "contact.key1.gap in the built part (declared)"
+    },
+    "printedGap": null,
+    "travel": {
+      "value": 2.04,
+      "unit": "mm",
+      "qualifier": "computed",
+      "source": "0.5 x coneH, pip.md 5.1 limits: a pressed cone travels about half its height (REPO/docs/switches.md), a rule of thumb"
+    },
+    "margin": {
+      "value": 0.19999999999999996,
+      "unit": "mm",
+      "qualifier": "computed",
+      "source": "travel minus the declared gap; no slicer analysis given, so the printed gap is not known here"
+    },
+    "gapPct": {
+      "value": 45.09803921568627,
+      "unit": "percent",
+      "qualifier": "computed",
+      "source": "gap / coneH; PIP holds 35 to 50 (pip.md 5.1)"
+    },
+    "sameForKey2": true,
+    "closure": "every press of scenarios 01 to 03 closes by construction: their counts hold given every press closes; scenario 10 gates each press on a drawn travel against the gap"
+  },
+  "timing": {
+    "scanWorst": {
+      "value": 25.5,
+      "unit": "ms",
+      "qualifier": "computed",
+      "source": "(keys - 1) x LIMIT_US + WAIT_US + SCAN_GAP_MS, flexpair_probe.ino"
+    },
+    "holdAlwaysRead": {
+      "value": 51,
+      "unit": "ms",
+      "qualifier": "computed",
+      "source": "AGREE x scanWorst: a hold this long always registers"
+    }
+  },
+  "findings": [
+    {
+      "key": "K1",
+      "kind": "pressed range over the declared contact.maxOhm",
+      "pressedOhm": {
+        "lo": 3703510.370266682,
+        "hi": 11110531.110800046
+      },
+      "declaredMaxOhm": 2000000,
+      "rejectByCrossingOhm": 87275335.04712652,
+      "note": "the pressed path assumed here (solvedOhm x contactFactor, inferred) is above the ceiling the design declares; presses still read because WAIT_US accepts paths up to rejectByCrossingOhm",
+      "qualifier": "computed"
+    },
+    {
+      "key": "K2",
+      "kind": "pressed range over the declared contact.maxOhm",
+      "pressedOhm": {
+        "lo": 3703510.3702666806,
+        "hi": 11110531.110800043
+      },
+      "declaredMaxOhm": 2000000,
+      "rejectByCrossingOhm": 87275335.04712652,
+      "note": "the pressed path assumed here (solvedOhm x contactFactor, inferred) is above the ceiling the design declares; presses still read because WAIT_US accepts paths up to rejectByCrossingOhm",
+      "qualifier": "computed"
+    }
+  ],
+  "assumed": {
+    "contactFactor": {
+      "lo": 10,
+      "hi": 30,
+      "qualifier": "inferred",
+      "source": "profile electrical.contactFactor.lo: pip-controller docs/electrical.md:152 to 153, pip.md 5.10: printed contact resistance ten to thirty times the solved path (measured on the PIP stick, transferred to the flex cap); lo end; read by tools/skeleton/flexpair_probe/sim/run.mjs (virtual exit B, D-234); no ContactRow exists yet (packages/profile/src/lookup.ts contact()), so this row stands in until the coupon and M05 rows land; not measured on this part"
+    },
+    "stickPressedUs": {
+      "lo": 113,
+      "hi": 2431,
+      "qualifier": "inferred",
+      "source": "pip.md 5.10, pip-controller docs/electrical.md:147: pressed crossings on the PIP stick (measured there, transferred here)"
+    },
+    "stickIdleUs": {
+      "lo": 6500,
+      "hi": 17800,
+      "never": "2 of 10 pins",
+      "qualifier": "inferred",
+      "source": "pip.md 5.10: idle crossings on the PIP stick (measured there, transferred here)"
+    },
+    "skinOhm": {
+      "lo": 1000000,
+      "hi": 20000000,
+      "qualifier": "inferred",
+      "source": "profile electrical.skinOhm.lo: pip.md 5.3 limits and 5.10 touch read: skin 1 to 20 Mohm (model.js:486); lo end; read by tools/skeleton/flexpair_probe/sim/run.mjs (virtual exit B, D-234); no ContactRow exists yet (packages/profile/src/lookup.ts contact()), so this row stands in until the coupon and M05 rows land; not measured on this part"
+    },
+    "tracePfPerMm": {
+      "value": 0.02,
+      "qualifier": "inferred",
+      "source": "profile electrical.tracePfPerMm: pip-controller src/model.js:418, Cpf = cpin + 0.02 pF per mm + 1; read by tools/skeleton/flexpair_probe/sim/run.mjs (virtual exit B, D-234); no ContactRow exists yet (packages/profile/src/lookup.ts contact()), so this row stands in until the coupon and M05 rows land; not measured on this part"
+    },
+    "tracePfFixed": {
+      "value": 1,
+      "qualifier": "inferred",
+      "source": "profile electrical.tracePfFixed: pip-controller src/model.js:418, the + 1 pF of Cpf = cpin + 0.02 pF per mm + 1; read by tools/skeleton/flexpair_probe/sim/run.mjs (virtual exit B, D-234); no ContactRow exists yet (packages/profile/src/lookup.ts contact()), so this row stands in until the coupon and M05 rows land; not measured on this part"
+    },
+    "smearOhm": {
+      "value": 300000,
+      "qualifier": "inferred",
+      "source": "profile electrical.smearOhm: pip.md 5.13 cell 4: a wire across a split reads a few hundred kohm; read by tools/skeleton/flexpair_probe/sim/run.mjs (virtual exit B, D-234); no ContactRow exists yet (packages/profile/src/lookup.ts contact()), so this row stands in until the coupon and M05 rows land; not measured on this part"
+    },
+    "gndLeadPf": {
+      "value": 20,
+      "qualifier": "inferred",
+      "source": "profile electrical.gndLeadPf: a jumper of about 20 cm left on the GND pad, 10 to 30 pF (inferred, no measurement); read by tools/skeleton/flexpair_probe/sim/run.mjs (virtual exit B, D-234); no ContactRow exists yet (packages/profile/src/lookup.ts contact()), so this row stands in until the coupon and M05 rows land; not measured on this part"
+    },
+    "keyLeadPf": {
+      "value": 20,
+      "qualifier": "inferred",
+      "source": "profile electrical.keyLeadPf: the probe jumper from GP2 or GP3 to the key's pad clip, the same kind of lead as electrical.gndLeadPf, 10 to 30 pF (inferred, no measurement); read by tools/skeleton/flexpair_probe/sim/run.mjs (virtual exit B, D-234); no ContactRow exists yet (packages/profile/src/lookup.ts contact()), so this row stands in until the coupon and M05 rows land; not measured on this part",
+      "lo": 10,
+      "hi": 30
+    },
+    "coneTravelDraw": {
+      "lo": 0.4,
+      "hi": 0.6,
+      "qualifier": "inferred",
+      "source": "scenario 10: a press travels 0.4 to 0.6 of the cone height, around the pip.md 5.1 rule of thumb (inferred)"
+    },
+    "noiseV": {
+      "value": 0.005,
+      "qualifier": "inferred",
+      "source": "profile electrical.noiseV: 5 mV rms on the floated node, no measurement; read by tools/skeleton/flexpair_probe/sim/run.mjs (virtual exit B, D-234); no ContactRow exists yet (packages/profile/src/lookup.ts contact()), so this row stands in until the coupon and M05 rows land; not measured on this part"
+    },
+    "holdMs": {
+      "lo": 90,
+      "hi": 400,
+      "qualifier": "inferred",
+      "source": "deliberate test presses, no measurement"
+    },
+    "gapMs": {
+      "lo": 250,
+      "hi": 700,
+      "qualifier": "inferred",
+      "source": "deliberate test presses, no measurement"
+    },
+    "tapHoldMs": {
+      "lo": 30,
+      "hi": 120,
+      "qualifier": "inferred",
+      "source": "fast taps, no measurement"
+    },
+    "coneTravelFraction": {
+      "value": 0.5,
+      "qualifier": "inferred",
+      "source": "pip.md 5.1 limits: a pressed cone travels about half its height (REPO/docs/switches.md), a rule of thumb"
+    }
+  }
+}
