@@ -167,17 +167,23 @@ export function pressedPathOf(
   if (retPort === undefined || retPort.type === "signal") {
     return { reason: `return net ${ret.id} ends at ${retPort === undefined ? "no port" : `signal port ${retPort.id}`}; a press returns to a gnd or power port` };
   }
-  const warning: BuildWarning | undefined = ret.resistance[0]!.terminals[1] === contact.id ? undefined : {
+  // A branched return net is priced on one pair (M05-T04). When that pair
+  // ends at another contact its ohms belong to another key, so the return
+  // leg of this press is left out and named unpriced: the path is then a
+  // lower bound for this key instead of a copy of another key's figure.
+  const pairTo = ret.resistance[0]!.terminals[1];
+  const ownPair = pairTo === contact.id;
+  const warning: BuildWarning | undefined = ownPair ? undefined : {
     code: "RETURN_PATH_PAIR",
-    text: `return net ${ret.id} is priced on its read path ${ret.resistance[0]!.terminals.join(" to ")}, not to ${contact.id}; a branched net has one priced pair (M05-T04)`,
+    text: `return net ${ret.id} is priced on its read path ${ret.resistance[0]!.terminals.join(" to ")}, not to ${contact.id}; the return leg of ${net.id} is unpriced and its path a lower bound (a branched net has one priced pair, M05-T04)`,
   };
   const traceMm = net.resistance[0]!.preview.segments.filter((s) => s.direction === "along").reduce((s, x) => s + x.lengthMm, 0);
   const path: PressedPathOhm = {
     net: net.id, returnNet: ret.id, contact: contact.id,
-    pathOhm: net.totalOhm[1] + ret.totalOhm[1],
+    pathOhm: net.totalOhm[1] + (ownPair ? ret.totalOhm[1] : 0),
     returnType: retPort.type,
     tier: lowestTier([net.tier, ret.tier]) as Tier,
-    unpriced: [...net.unpricedContacts, ...ret.unpricedContacts, contact.id],
+    unpriced: [...net.unpricedContacts, ...(ownPair ? ret.unpricedContacts : [`${ret.id} return to ${contact.id}`]), contact.id],
     traceMm,
   };
   return warning === undefined ? { path } : { path, warning };
