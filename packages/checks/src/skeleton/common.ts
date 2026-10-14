@@ -15,11 +15,18 @@ export function missing(path: string, hint: string): ThrownCommandError {
   return checkError({ code: "E_PARAM_MISSING", path, hint, record: "verification" });
 }
 
-/** A number as printed in a constraint or message: at most `digits` decimals, no trailing zeros. */
+/**
+ * A number as printed in a constraint or message: at most `digits` decimals,
+ * no trailing zeros. A value that is not whole keeps one decimal when it
+ * rounds to a whole (10.9996 prints 11.0), because a whole print reads as
+ * the exact value and has no source field to trace to (D-010).
+ */
 export function fmt(v: number, digits = 3): string {
   if (!Number.isFinite(v)) return String(v);
   const s = v.toFixed(digits);
-  return s.includes(".") ? s.replace(/0+$/, "").replace(/\.$/, "") : s;
+  if (!s.includes(".")) return s;
+  const t = s.replace(/0+$/, "").replace(/\.$/, "");
+  return t.includes(".") || Number(t) === v ? t : `${t}.0`;
 }
 
 /**
