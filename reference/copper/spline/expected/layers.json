@@ -1,0 +1,50 @@
+{
+ "05_backer.svg": {
+  "role": "backer",
+  "sha256": "c0306f6953af7f366f09e179b602bf20cceb4930d3a446f9c96561b3f34cd5ca",
+  "size": [
+   242,
+   146
+  ]
+ },
+ "00_guide_under.svg": {
+  "role": "guide",
+  "sha256": "6587b59b849b7ddcf0825ca79ce4b6958dc9e750bbcfd902a31d9d4709cd7834",
+  "size": [
+   242,
+   146
+  ]
+ },
+ "01_copper.svg": {
+  "role": "copper",
+  "sha256": "201cc09cea3b8c0ca7291bea7d3ce12df5d9fe64769da005e35e0c8576e7e666",
+  "size": [
+   242,
+   146
+  ]
+ },
+ "02_vinyl_face.svg": {
+  "role": "dielectric",
+  "sha256": "0afb4729a167cca6aec4e0514872a6b25f846a27b028a1932f672ebb848c0010",
+  "size": [
+   242,
+   146
+  ]
+ },
+ "03_faceplate_print.svg": {
+  "role": "faceplate",
+  "sha256": "3ec028cad89bd4523fdbb166547068fa3cd8ae0f0c461fec913c01b2437c8f70",
+  "size": [
+   242,
+   146
+  ]
+ },
+ "04_vinyl_accents.svg": {
+  "role": "accent",
+  "sha256": "0e48bda0bc7e88ea127f32d49a0a981714ea509ee3c75eb669b43d57f5fb94eb",
+  "size": [
+   242,
+   146
+  ]
+ }
+}

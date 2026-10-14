@@ -1,0 +1,88 @@
+PASS net T1    single island (1)
+PASS net T2    single island (1)
+PASS net T3    single island (1)
+PASS net T4    single island (1)
+PASS net T5    single island (1)
+PASS net T6    single island (1)
+PASS net T7    single island (1)
+PASS net T8    single island (1)
+PASS net T9    single island (1)
+PASS net T10   single island (1)
+PASS net T11   single island (1)
+PASS net T12   single island (1)
+PASS net AR_A  single island (1)
+PASS net AR_B  single island (1)
+PASS net L1_A  single island (1)
+PASS net L1_B  single island (1)
+PASS net L2_A  single island (1)
+PASS net L2_B  single island (1)
+PASS min clearance 1.100 mm at T1/T2 (gate 0.90)
+PASS all copper >= 1.0 mm from the shared outline
+PASS net T1    survives the 1.10 mm erode test
+PASS net T2    survives the 1.10 mm erode test
+PASS net T3    survives the 1.10 mm erode test
+PASS net T4    survives the 1.10 mm erode test
+PASS net T5    survives the 1.10 mm erode test
+PASS net T6    survives the 1.10 mm erode test
+PASS net T7    survives the 1.10 mm erode test
+PASS net T8    survives the 1.10 mm erode test
+PASS net T9    survives the 1.10 mm erode test
+PASS net T10   survives the 1.10 mm erode test
+PASS net T11   survives the 1.10 mm erode test
+PASS net T12   survives the 1.10 mm erode test
+PASS net AR_A  survives the 1.10 mm erode test
+PASS net AR_B  survives the 1.10 mm erode test
+PASS net L1_A  survives the 1.10 mm erode test
+PASS net L1_B  survives the 1.10 mm erode test
+PASS net L2_A  survives the 1.10 mm erode test
+PASS net L2_B  survives the 1.10 mm erode test
+PASS smallest tile 765 mm2, largest 1734 (a fingertip is about 100)
+PASS every tile is one connected piece
+PASS 12 tiles from 4 columns x 3 rows
+PASS channel 0 at x=15.0 is clear of every tile
+PASS channel 1 at x=68.0 is clear of every tile
+PASS channel 2 at x=121.0 is clear of every tile
+PASS channel 3 at x=174.0 is clear of every tile
+PASS channel 4 at x=227.0 is clear of every tile
+PASS channel 0 sub-lanes on 3.0 mm centres
+PASS channel 1 sub-lanes on 3.0 mm centres
+PASS channel 2 sub-lanes on 3.0 mm centres
+PASS channel 3 sub-lanes on 3.0 mm centres
+PASS slider L1 ratio monotone left to right
+PASS slider L1 span 0.831 to 0.169, off both rails
+PASS slider L2 ratio monotone left to right
+PASS slider L2 span 0.831 to 0.169, off both rails
+PASS arc ratio monotone along the sweep
+PASS arc span 0.202 to 0.733, off both rails
+PASS arc sweep 37 mm, small by design
+PASS the arc stays inside the slider band
+PASS straight sliders 39 mm each, small by design
+PASS the slider band is clear of every tile
+PASS exactly 18 channels: two MPR121 on one bus, 18 of 24 used
+PASS rail is ONE row on 13.0 mm pitch
+PASS rail finger gap 4.0 mm
+PASS finger depth alternates 16 / 11 mm
+PASS rail order follows arrival order (monotone fan)
+PASS fan needs 4 lanes, 9 available
+PASS vinyl covers all live copper outside the rail zone (0.00 mm2 bare)
+PASS vinyl clears every rail finger
+PASS vinyl overhangs tile T3
+PASS vinyl overhangs tile T2
+PASS vinyl overhangs tile T1
+PASS vinyl overhangs tile T6
+PASS vinyl overhangs tile T5
+PASS vinyl overhangs tile T4
+PASS vinyl overhangs tile T9
+PASS vinyl overhangs tile T8
+PASS vinyl overhangs tile T7
+PASS vinyl overhangs tile T12
+PASS vinyl overhangs tile T11
+PASS vinyl overhangs tile T10
+PASS vinyl overhangs the arc
+PASS vinyl overhangs both straight sliders
+PASS vinyl faceplate is one connected piece
+PASS accent tiles clear the faceplate edge by 1 mm
+PASS vinyl inside the shared outline keepout
+
+GATES 85 passed 0 failed
+TESSERA rev A   242 x 176 mm   18 channels in ONE row   tiles 765-1734 mm2   min clr 1.10 mm

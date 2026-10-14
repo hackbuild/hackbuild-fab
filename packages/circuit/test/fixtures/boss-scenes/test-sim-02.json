@@ -1,0 +1,523 @@
+{
+ "note": "written by tools/legacy/boss/dump-elements.cjs from designs/blocks/legacy/boss-src (M05-T03); never edited by hand. Volts in V, currents in A, LED current in mA as BOSS reports it; every value computed by the BOSS sim.",
+ "sources": {
+  "src/kernel.js": "344d80b3df3b6b15e5861de343a03c79663669fd700578bf162f97afba499de1",
+  "src/boss.js": "fad77485920bb29d996610adf577d4d10c60f813ce4abc036a10f5a4aa8bfcf7",
+  "src/parts.js": "e9e44eaca651fac61e248e5d066cb523ec7d71252c8a792d1ef09057f801d9e6",
+  "src/sim.js": "27e4b12212b75c63d3e812db7f2dbb6137e7875049b63419676965706a38e6f5",
+  "test_sim.js": "ed86f4dc1d164abcc930fbf6909350c17b54e84a14b29c8e4f2d21ff7b77f0de",
+  "test_sim2.js": "72508dc766f68afdc36d6bcd51c0951faf6d4e1eb184925724421e7ca5e957b4"
+ },
+ "name": "test-sim-02",
+ "source": "test_sim.js",
+ "pullupOhm": 50000,
+ "ok": true,
+ "network": {
+  "nodeCount": 42,
+  "ground": 24,
+  "nodes": [
+   "n1:C1.1",
+   "n1:C8.1",
+   "n1:C1.8",
+   "n1:C8.8",
+   "p2:IO3",
+   "n2:IO3",
+   "p2:IO9",
+   "n2:IO9",
+   "p2:IO2",
+   "n2:IO2",
+   "p2:IO10",
+   "n2:IO10",
+   "p2:IO4",
+   "n2:IO4",
+   "p2:IO8",
+   "n2:IO8",
+   "p2:IO0",
+   "n2:IO0",
+   "p2:IO21",
+   "n2:IO21",
+   "p2:IO1",
+   "n2:IO1",
+   "p2:IO20",
+   "n2:IO20",
+   "p2:GND",
+   "n2:GND",
+   "p2:IO6",
+   "n2:IO6",
+   "p2:3V3",
+   "n2:3V3",
+   "p2:IO7",
+   "n2:IO7",
+   "p2:5V",
+   "n2:5V",
+   "p2:IO5",
+   "n2:IO5",
+   "gnd2",
+   "vio2",
+   "w5a",
+   "w6a",
+   "w5b",
+   "w6b"
+  ],
+  "resistors": [
+   {
+    "a": 0,
+    "b": 1,
+    "ohm": 23534.66607634751,
+    "tag": "1:C1.1-C8.1"
+   },
+   {
+    "a": 2,
+    "b": 3,
+    "ohm": 23534.666076347516,
+    "tag": "1:C1.8-C8.8"
+   },
+   {
+    "a": 4,
+    "b": 5,
+    "ohm": 6125.138319767747,
+    "tag": "2:pin:IO3-IO3"
+   },
+   {
+    "a": 6,
+    "b": 7,
+    "ohm": 6291.793856459882,
+    "tag": "2:pin:IO9-IO9"
+   },
+   {
+    "a": 8,
+    "b": 9,
+    "ohm": 7124.82158871032,
+    "tag": "2:pin:IO2-IO2"
+   },
+   {
+    "a": 10,
+    "b": 11,
+    "ohm": 7291.48818951259,
+    "tag": "2:pin:IO10-IO10"
+   },
+   {
+    "a": 12,
+    "b": 13,
+    "ohm": 8291.875392298156,
+    "tag": "2:pin:IO4-IO4"
+   },
+   {
+    "a": 14,
+    "b": 15,
+    "ohm": 8458.542058964822,
+    "tag": "2:pin:IO8-IO8"
+   },
+   {
+    "a": 16,
+    "b": 17,
+    "ohm": 9083.347692108058,
+    "tag": "2:pin:IO0-IO0"
+   },
+   {
+    "a": 18,
+    "b": 19,
+    "ohm": 11233.635757619575,
+    "tag": "2:pin:IO21-IO21"
+   },
+   {
+    "a": 20,
+    "b": 21,
+    "ohm": 9458.694903455604,
+    "tag": "2:pin:IO1-IO1"
+   },
+   {
+    "a": 22,
+    "b": 23,
+    "ohm": 9625.361570122273,
+    "tag": "2:pin:IO20-IO20"
+   },
+   {
+    "a": 24,
+    "b": 25,
+    "ohm": 10416.848326979625,
+    "tag": "2:pin:GND-GND"
+   },
+   {
+    "a": 26,
+    "b": 27,
+    "ohm": 12251.997289268353,
+    "tag": "2:pin:IO6-IO6"
+   },
+   {
+    "a": 28,
+    "b": 29,
+    "ohm": 10624.822111818214,
+    "tag": "2:pin:3V3-3V3"
+   },
+   {
+    "a": 30,
+    "b": 31,
+    "ohm": 10791.488778484882,
+    "tag": "2:pin:IO7-IO7"
+   },
+   {
+    "a": 32,
+    "b": 33,
+    "ohm": 12583.317258236133,
+    "tag": "2:pin:5V-5V"
+   },
+   {
+    "a": 34,
+    "b": 35,
+    "ohm": 19400.858773053136,
+    "tag": "2:pin:IO5-IO5"
+   },
+   {
+    "a": 12,
+    "b": 36,
+    "ohm": 1000000000,
+    "tag": "hiZ IO4"
+   },
+   {
+    "a": 4,
+    "b": 36,
+    "ohm": 1000000000,
+    "tag": "hiZ IO3"
+   },
+   {
+    "a": 8,
+    "b": 36,
+    "ohm": 1000000000,
+    "tag": "hiZ IO2"
+   },
+   {
+    "a": 20,
+    "b": 36,
+    "ohm": 1000000000,
+    "tag": "hiZ IO1"
+   },
+   {
+    "a": 16,
+    "b": 36,
+    "ohm": 1000000000,
+    "tag": "hiZ IO0"
+   },
+   {
+    "a": 34,
+    "b": 36,
+    "ohm": 1000000000,
+    "tag": "hiZ IO5"
+   },
+   {
+    "a": 26,
+    "b": 36,
+    "ohm": 1000000000,
+    "tag": "hiZ IO6"
+   },
+   {
+    "a": 30,
+    "b": 36,
+    "ohm": 1000000000,
+    "tag": "hiZ IO7"
+   },
+   {
+    "a": 14,
+    "b": 36,
+    "ohm": 1000000000,
+    "tag": "hiZ IO8"
+   },
+   {
+    "a": 6,
+    "b": 36,
+    "ohm": 1000000000,
+    "tag": "hiZ IO9"
+   },
+   {
+    "a": 10,
+    "b": 36,
+    "ohm": 1000000000,
+    "tag": "hiZ IO10"
+   },
+   {
+    "a": 22,
+    "b": 36,
+    "ohm": 1000000000,
+    "tag": "hiZ IO20"
+   },
+   {
+    "a": 18,
+    "b": 36,
+    "ohm": 1000000000,
+    "tag": "hiZ IO21"
+   },
+   {
+    "a": 38,
+    "b": 40,
+    "ohm": 15625.000000000002,
+    "tag": "wire 5"
+   },
+   {
+    "a": 39,
+    "b": 41,
+    "ohm": 15625.000000000002,
+    "tag": "wire 6"
+   }
+  ],
+  "leds": [
+   {
+    "anode": 40,
+    "cathode": 41,
+    "vfV": 2,
+    "seriesOhm": 7176.181357420243
+   }
+  ],
+  "sources": [
+   {
+    "pos": 32,
+    "neg": 36,
+    "volts": 5,
+    "tag": "rail 5V"
+   },
+   {
+    "pos": 24,
+    "neg": 36,
+    "volts": 0,
+    "tag": "rail GND"
+   },
+   {
+    "pos": 28,
+    "neg": 36,
+    "volts": 3.3,
+    "tag": "rail 3V3"
+   },
+   {
+    "pos": 37,
+    "neg": 36,
+    "volts": 3.3,
+    "tag": "vio"
+   },
+   {
+    "pos": 38,
+    "neg": 39,
+    "volts": 3.3,
+    "tag": "3:supply"
+   }
+  ]
+ },
+ "boss": {
+  "nodeVolts": [
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   3.3,
+   3.2999999649380873,
+   0,
+   0,
+   5,
+   4.999999937083415,
+   0,
+   0,
+   0,
+   3.3,
+   1.6500000138945752,
+   -1.6499999861054246,
+   1.1216640541465237,
+   -1.1216640263573727
+  ],
+  "resistorAmps": [
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   3.299999954397322e-12,
+   0,
+   4.999999883953432e-12,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0.00003381350142387529,
+   -0.00003381350142387532
+  ],
+  "leds": [
+   {
+    "mA": 0.03381350030221126,
+    "v": 2.2433280805038964
+   }
+  ],
+  "pins": [
+   {
+    "pin": "5V",
+    "mode": "RAIL",
+    "node": 32,
+    "v": 5,
+    "adc": 4095,
+    "digital": "HIGH"
+   },
+   {
+    "pin": "GND",
+    "mode": "RAIL",
+    "node": 24,
+    "v": 0,
+    "adc": 0,
+    "digital": "LOW"
+   },
+   {
+    "pin": "3V3",
+    "mode": "RAIL",
+    "node": 28,
+    "v": 3.3,
+    "adc": 4095,
+    "digital": "HIGH"
+   },
+   {
+    "pin": "IO4",
+    "mode": "IN",
+    "node": 12,
+    "v": 0,
+    "adc": 0,
+    "digital": "LOW"
+   },
+   {
+    "pin": "IO3",
+    "mode": "IN",
+    "node": 4,
+    "v": 0,
+    "adc": 0,
+    "digital": "LOW"
+   },
+   {
+    "pin": "IO2",
+    "mode": "IN",
+    "node": 8,
+    "v": 0,
+    "adc": 0,
+    "digital": "LOW"
+   },
+   {
+    "pin": "IO1",
+    "mode": "IN",
+    "node": 20,
+    "v": 0,
+    "adc": 0,
+    "digital": "LOW"
+   },
+   {
+    "pin": "IO0",
+    "mode": "IN",
+    "node": 16,
+    "v": 0,
+    "adc": 0,
+    "digital": "LOW"
+   },
+   {
+    "pin": "IO5",
+    "mode": "IN",
+    "node": 34,
+    "v": 0,
+    "adc": 0,
+    "digital": "LOW"
+   },
+   {
+    "pin": "IO6",
+    "mode": "IN",
+    "node": 26,
+    "v": 0,
+    "adc": 0,
+    "digital": "LOW"
+   },
+   {
+    "pin": "IO7",
+    "mode": "IN",
+    "node": 30,
+    "v": 0,
+    "adc": 0,
+    "digital": "LOW"
+   },
+   {
+    "pin": "IO8",
+    "mode": "IN",
+    "node": 14,
+    "v": 0,
+    "adc": 0,
+    "digital": "LOW"
+   },
+   {
+    "pin": "IO9",
+    "mode": "IN",
+    "node": 6,
+    "v": 0,
+    "adc": 0,
+    "digital": "LOW"
+   },
+   {
+    "pin": "IO10",
+    "mode": "IN",
+    "node": 10,
+    "v": 0,
+    "adc": 0,
+    "digital": "LOW"
+   },
+   {
+    "pin": "IO20",
+    "mode": "IN",
+    "node": 22,
+    "v": 0,
+    "adc": 0,
+    "digital": "LOW"
+   },
+   {
+    "pin": "IO21",
+    "mode": "IN",
+    "node": 18,
+    "v": 0,
+    "adc": 0,
+    "digital": "LOW"
+   }
+  ]
+ },
+ "printed": [
+  "with wires: leds [ '0.034 mA at 2.24 V' ] volts V+ 1.65 lampA 1.12"
+ ]
+}

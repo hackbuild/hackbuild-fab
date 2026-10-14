@@ -1,0 +1,157 @@
+{
+ "face": {
+  "origin": [
+   0,
+   0,
+   0
+  ],
+  "normal": [
+   0,
+   0,
+   1
+  ],
+  "u": [
+   1,
+   0,
+   0
+  ]
+ },
+ "layers": [
+  {
+   "role": "backer",
+   "material": "chipboard-2",
+   "t": 2,
+   "registration": "outline"
+  },
+  {
+   "role": "conductor",
+   "material": "copper-tape",
+   "t": 0.07,
+   "registration": "outline"
+  },
+  {
+   "role": "spacer",
+   "material": "cardstock-030",
+   "t": 0.3,
+   "registration": "outline",
+   "windows": [
+    [
+     [
+      44.5,
+      131
+     ],
+     [
+      16.5,
+      131
+     ],
+     [
+      16.5,
+      103
+     ],
+     [
+      44.5,
+      103
+     ]
+    ],
+    [
+     [
+      93.5,
+      131
+     ],
+     [
+      65.5,
+      131
+     ],
+     [
+      65.5,
+      103
+     ],
+     [
+      93.5,
+      103
+     ]
+    ],
+    [
+     [
+      44.5,
+      91
+     ],
+     [
+      16.5,
+      91
+     ],
+     [
+      16.5,
+      63
+     ],
+     [
+      44.5,
+      63
+     ]
+    ],
+    [
+     [
+      93.5,
+      91
+     ],
+     [
+      65.5,
+      91
+     ],
+     [
+      65.5,
+      63
+     ],
+     [
+      93.5,
+      63
+     ]
+    ]
+   ]
+  },
+  {
+   "role": "resistive",
+   "material": "velostat",
+   "t": 0.1,
+   "registration": "outline"
+  },
+  {
+   "role": "spacer",
+   "material": "cardstock-030",
+   "t": 0.3,
+   "registration": "outline",
+   "windows": [
+    [
+     [
+      85.5,
+      50.5
+     ],
+     [
+      16,
+      50.5
+     ],
+     [
+      16,
+      44.5
+     ],
+     [
+      85.5,
+      44.5
+     ]
+    ]
+   ]
+  },
+  {
+   "role": "conductor",
+   "material": "copper-tape",
+   "t": 0.07,
+   "registration": "outline"
+  },
+  {
+   "role": "face",
+   "material": "eva-2",
+   "t": 2,
+   "registration": "outline"
+  }
+ ]
+}

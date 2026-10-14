@@ -1,0 +1,98 @@
+PASS net K1    single island (1)
+PASS net K2    single island (1)
+PASS net K3    single island (1)
+PASS net K4    single island (1)
+PASS net K5    single island (1)
+PASS net K6    single island (1)
+PASS net K7    single island (1)
+PASS net K8    single island (1)
+PASS net K9    single island (1)
+PASS net K10   single island (1)
+PASS net K11   single island (1)
+PASS net K12   single island (1)
+PASS net K13   single island (1)
+PASS net K14   single island (1)
+PASS net K15   single island (1)
+PASS net AR_A  single island (1)
+PASS net AR_B  single island (1)
+PASS net L1_A  single island (1)
+PASS net L1_B  single island (1)
+PASS net L2_A  single island (1)
+PASS net L2_B  single island (1)
+PASS min clearance 1.000 mm at K10/K15 (gate 0.90)
+PASS all copper >= 1.0 mm from the shared outline
+PASS net K1    survives the 1.10 mm erode test
+PASS net K2    survives the 1.10 mm erode test
+PASS net K3    survives the 1.10 mm erode test
+PASS net K4    survives the 1.10 mm erode test
+PASS net K5    survives the 1.10 mm erode test
+PASS net K6    survives the 1.10 mm erode test
+PASS net K7    survives the 1.10 mm erode test
+PASS net K8    survives the 1.10 mm erode test
+PASS net K9    survives the 1.10 mm erode test
+PASS net K10   survives the 1.10 mm erode test
+PASS net K11   survives the 1.10 mm erode test
+PASS net K12   survives the 1.10 mm erode test
+PASS net K13   survives the 1.10 mm erode test
+PASS net K14   survives the 1.10 mm erode test
+PASS net K15   survives the 1.10 mm erode test
+PASS net AR_A  survives the 1.10 mm erode test
+PASS net AR_B  survives the 1.10 mm erode test
+PASS net L1_A  survives the 1.10 mm erode test
+PASS net L1_B  survives the 1.10 mm erode test
+PASS net L2_A  survives the 1.10 mm erode test
+PASS net L2_B  survives the 1.10 mm erode test
+PASS hex key plate 585 mm2, 28 x 26 mm across
+PASS 15 hex keys in 5 interlocking columns of 3
+PASS up a column is a whole tone everywhere ([2])
+PASS up-right is a perfect fifth everywhere ([7])
+PASS down-right is a perfect fourth everywhere ([5])
+PASS no duplicated notes (15 distinct)
+PASS range 28 semitones, C to E
+PASS covers 6 of the 7 diatonic degrees of the home key
+PASS channel 0 carries 4 traces, 2.77 mm apart across the grout
+PASS channel 1 carries 3 traces, 2.77 mm apart across the grout
+PASS channel 2 carries 3 traces, 2.77 mm apart across the grout
+PASS channel 3 carries 3 traces, 2.77 mm apart across the grout
+PASS channel 4 carries 3 traces, 2.77 mm apart across the grout
+PASS no grout ribbon carries more than 4 traces
+PASS slider L1 ratio monotone bottom to top
+PASS slider L1 span 0.827 to 0.173, off both rails
+PASS slider L2 ratio monotone bottom to top
+PASS slider L2 span 0.827 to 0.173, off both rails
+PASS arc ratio monotone along the sweep
+PASS arc span 0.204 to 0.758, off both rails
+PASS arc sweep 108 mm
+PASS straight sliders 122 and 122 mm
+PASS sliders clear the honeycomb by 11.00 mm
+PASS sliders inside the outline keepout
+PASS exactly 21 channels: two MPR121 on one bus, 21 of 24 used
+PASS rail is ONE row on 11.0 mm pitch
+PASS rail finger gap 2.0 mm
+PASS finger depth alternates 16 / 11 mm
+PASS rail order follows arrival order (monotone fan)
+PASS fan needs 3 lanes, 12 available
+PASS vinyl covers all live copper outside the rail zone (0.00 mm2 bare)
+PASS vinyl clears every rail finger
+PASS vinyl overhangs key K1
+PASS vinyl overhangs key K2
+PASS vinyl overhangs key K3
+PASS vinyl overhangs key K4
+PASS vinyl overhangs key K5
+PASS vinyl overhangs key K6
+PASS vinyl overhangs key K7
+PASS vinyl overhangs key K8
+PASS vinyl overhangs key K9
+PASS vinyl overhangs key K10
+PASS vinyl overhangs key K11
+PASS vinyl overhangs key K12
+PASS vinyl overhangs key K13
+PASS vinyl overhangs key K14
+PASS vinyl overhangs key K15
+PASS vinyl overhangs the arc
+PASS vinyl faceplate is one connected piece
+PASS accent inlays clear the faceplate edge
+PASS vinyl inside the shared outline keepout
+
+GATES 95 passed 0 failed
+FRET rev A   248 x 244 mm   21 channels in ONE row   keys 42 x 36 mm   range 28 semis   min clr 1.00

@@ -1,0 +1,416 @@
+[
+ {
+  "id": "CHK-NET-45",
+  "ok": true,
+  "line": "PASS board 96 mm wide fits 101.6 mm tape with 2.8 mm each side"
+ },
+ {
+  "id": "CHK-NET-01",
+  "ok": true,
+  "line": "PASS net D1    single island (1)",
+  "extra": {
+   "islands": 1
+  }
+ },
+ {
+  "id": "CHK-NET-01",
+  "ok": true,
+  "line": "PASS net D2    single island (1)",
+  "extra": {
+   "islands": 1
+  }
+ },
+ {
+  "id": "CHK-NET-01",
+  "ok": true,
+  "line": "PASS net D3    single island (1)",
+  "extra": {
+   "islands": 1
+  }
+ },
+ {
+  "id": "CHK-NET-01",
+  "ok": true,
+  "line": "PASS net D4    single island (1)",
+  "extra": {
+   "islands": 1
+  }
+ },
+ {
+  "id": "CHK-NET-01",
+  "ok": true,
+  "line": "PASS net D5    single island (1)",
+  "extra": {
+   "islands": 1
+  }
+ },
+ {
+  "id": "CHK-NET-01",
+  "ok": true,
+  "line": "PASS net D6    single island (1)",
+  "extra": {
+   "islands": 1
+  }
+ },
+ {
+  "id": "CHK-NET-01",
+  "ok": true,
+  "line": "PASS net D7    single island (1)",
+  "extra": {
+   "islands": 1
+  }
+ },
+ {
+  "id": "CHK-NET-01",
+  "ok": true,
+  "line": "PASS net D8    single island (1)",
+  "extra": {
+   "islands": 1
+  }
+ },
+ {
+  "id": "CHK-NET-01",
+  "ok": true,
+  "line": "PASS net L1_A  single island (1)",
+  "extra": {
+   "islands": 1
+  }
+ },
+ {
+  "id": "CHK-NET-01",
+  "ok": true,
+  "line": "PASS net L1_B  single island (1)",
+  "extra": {
+   "islands": 1
+  }
+ },
+ {
+  "id": "CHK-NET-01",
+  "ok": true,
+  "line": "PASS net L2_A  single island (1)",
+  "extra": {
+   "islands": 1
+  }
+ },
+ {
+  "id": "CHK-NET-01",
+  "ok": true,
+  "line": "PASS net L2_B  single island (1)",
+  "extra": {
+   "islands": 1
+  }
+ },
+ {
+  "id": "CHK-NET-02",
+  "ok": true,
+  "line": "PASS min clearance 1.200 mm at D1/D2 (gate 0.90)",
+  "extra": {
+   "pair": "D1/D2",
+   "ties": "D1/D2 D1/L1_A D7/D8 D8/L2_A L1_A/L1_B L2_A/L2_B"
+  }
+ },
+ {
+  "id": "CHK-NET-08",
+  "ok": true,
+  "line": "PASS all copper >= 1.0 mm from the shared outline"
+ },
+ {
+  "id": "CHK-NET-14",
+  "ok": true,
+  "line": "PASS net D1    survives the 1.10 mm erode test",
+  "extra": {
+   "islandsBefore": 1,
+   "islandsAfter": 1
+  }
+ },
+ {
+  "id": "CHK-NET-14",
+  "ok": true,
+  "line": "PASS net D2    survives the 1.10 mm erode test",
+  "extra": {
+   "islandsBefore": 1,
+   "islandsAfter": 1
+  }
+ },
+ {
+  "id": "CHK-NET-14",
+  "ok": true,
+  "line": "PASS net D3    survives the 1.10 mm erode test",
+  "extra": {
+   "islandsBefore": 1,
+   "islandsAfter": 1
+  }
+ },
+ {
+  "id": "CHK-NET-14",
+  "ok": true,
+  "line": "PASS net D4    survives the 1.10 mm erode test",
+  "extra": {
+   "islandsBefore": 1,
+   "islandsAfter": 1
+  }
+ },
+ {
+  "id": "CHK-NET-14",
+  "ok": true,
+  "line": "PASS net D5    survives the 1.10 mm erode test",
+  "extra": {
+   "islandsBefore": 1,
+   "islandsAfter": 1
+  }
+ },
+ {
+  "id": "CHK-NET-14",
+  "ok": true,
+  "line": "PASS net D6    survives the 1.10 mm erode test",
+  "extra": {
+   "islandsBefore": 1,
+   "islandsAfter": 1
+  }
+ },
+ {
+  "id": "CHK-NET-14",
+  "ok": true,
+  "line": "PASS net D7    survives the 1.10 mm erode test",
+  "extra": {
+   "islandsBefore": 1,
+   "islandsAfter": 1
+  }
+ },
+ {
+  "id": "CHK-NET-14",
+  "ok": true,
+  "line": "PASS net D8    survives the 1.10 mm erode test",
+  "extra": {
+   "islandsBefore": 1,
+   "islandsAfter": 1
+  }
+ },
+ {
+  "id": "CHK-NET-14",
+  "ok": true,
+  "line": "PASS net L1_A  survives the 1.10 mm erode test",
+  "extra": {
+   "islandsBefore": 1,
+   "islandsAfter": 1
+  }
+ },
+ {
+  "id": "CHK-NET-14",
+  "ok": true,
+  "line": "PASS net L1_B  survives the 1.10 mm erode test",
+  "extra": {
+   "islandsBefore": 1,
+   "islandsAfter": 1
+  }
+ },
+ {
+  "id": "CHK-NET-14",
+  "ok": true,
+  "line": "PASS net L2_A  survives the 1.10 mm erode test",
+  "extra": {
+   "islandsBefore": 1,
+   "islandsAfter": 1
+  }
+ },
+ {
+  "id": "CHK-NET-14",
+  "ok": true,
+  "line": "PASS net L2_B  survives the 1.10 mm erode test",
+  "extra": {
+   "islandsBefore": 1,
+   "islandsAfter": 1
+  }
+ },
+ {
+  "id": "CHK-NET-40",
+  "ok": true,
+  "line": "PASS key plate 859 mm2, 52 x 17 mm",
+  "extra": {
+   "minMm2": 858.842,
+   "maxMm2": 858.842
+  }
+ },
+ {
+  "id": "CHK-NET-40",
+  "ok": true,
+  "line": "PASS all 8 keys the same size within 0.0 mm2",
+  "extra": {
+   "minMm2": 858.842,
+   "maxMm2": 858.842
+  }
+ },
+ {
+  "id": "CHK-NET-40",
+  "ok": true,
+  "line": "PASS 8 keys, one octave of any scale",
+  "extra": {
+   "plates": 8
+  }
+ },
+ {
+  "id": "CHK-NET-02",
+  "ok": true,
+  "line": "PASS chevron seams hold 1.60 mm between keys"
+ },
+ {
+  "id": "CHK-NET-15",
+  "ok": true,
+  "line": "PASS slider L1 ratio monotone left to right",
+  "extra": {
+   "b": "L1_B",
+   "spanMin": 0.145778,
+   "spanMax": 0.854222
+  }
+ },
+ {
+  "id": "CHK-NET-15",
+  "ok": true,
+  "line": "PASS slider L1 span 0.854 to 0.146, off both rails",
+  "extra": {
+   "b": "L1_B",
+   "spanMin": 0.145778,
+   "spanMax": 0.854222
+  }
+ },
+ {
+  "id": "CHK-NET-15",
+  "ok": true,
+  "line": "PASS slider L2 ratio monotone left to right",
+  "extra": {
+   "b": "L2_B",
+   "spanMin": 0.145778,
+   "spanMax": 0.854222
+  }
+ },
+ {
+  "id": "CHK-NET-15",
+  "ok": true,
+  "line": "PASS slider L2 span 0.854 to 0.146, off both rails",
+  "extra": {
+   "b": "L2_B",
+   "spanMin": 0.145778,
+   "spanMax": 0.854222
+  }
+ },
+ {
+  "id": "CHK-NET-41",
+  "ok": true,
+  "line": "PASS sliders 50 mm of travel each",
+  "extra": {
+   "values": "50.000 50.000"
+  }
+ },
+ {
+  "id": "CHK-NET-43",
+  "ok": true,
+  "line": "PASS exactly 12 channels, one MPR121 or 12 ESP32-S3 touch pins",
+  "extra": {
+   "terminals": 12,
+   "nets": 12
+  }
+ },
+ {
+  "id": "CHK-NET-21",
+  "ok": true,
+  "line": "PASS rail is ONE row on 12.0 mm pitch down the left edge"
+ },
+ {
+  "id": "CHK-NET-21",
+  "ok": true,
+  "line": "PASS rail finger gap 3.0 mm"
+ },
+ {
+  "id": "CHK-NET-21",
+  "ok": true,
+  "line": "PASS finger depth alternates 14 / 9 mm"
+ },
+ {
+  "id": "CHK-NET-22",
+  "ok": true,
+  "line": "PASS rail order follows arrival order (monotone fan)"
+ },
+ {
+  "id": "CHK-NET-22",
+  "ok": true,
+  "line": "PASS fan needs 5 lanes, 6 available"
+ },
+ {
+  "id": "CHK-NET-42",
+  "ok": true,
+  "line": "PASS the wiring zone ends 22.5 mm before the keys start"
+ },
+ {
+  "id": "CHK-NET-20",
+  "ok": true,
+  "line": "PASS vinyl covers all live copper outside the rail zone (0.00 mm2 bare)"
+ },
+ {
+  "id": "CHK-NET-24",
+  "ok": true,
+  "line": "PASS vinyl clears every rail finger"
+ },
+ {
+  "id": "CHK-NET-24",
+  "ok": true,
+  "line": "PASS vinyl overhangs key D1"
+ },
+ {
+  "id": "CHK-NET-24",
+  "ok": true,
+  "line": "PASS vinyl overhangs key D2"
+ },
+ {
+  "id": "CHK-NET-24",
+  "ok": true,
+  "line": "PASS vinyl overhangs key D3"
+ },
+ {
+  "id": "CHK-NET-24",
+  "ok": true,
+  "line": "PASS vinyl overhangs key D4"
+ },
+ {
+  "id": "CHK-NET-24",
+  "ok": true,
+  "line": "PASS vinyl overhangs key D5"
+ },
+ {
+  "id": "CHK-NET-24",
+  "ok": true,
+  "line": "PASS vinyl overhangs key D6"
+ },
+ {
+  "id": "CHK-NET-24",
+  "ok": true,
+  "line": "PASS vinyl overhangs key D7"
+ },
+ {
+  "id": "CHK-NET-24",
+  "ok": true,
+  "line": "PASS vinyl overhangs key D8"
+ },
+ {
+  "id": "CHK-NET-24",
+  "ok": true,
+  "line": "PASS vinyl overhangs both sliders"
+ },
+ {
+  "id": "CHK-NET-09",
+  "ok": true,
+  "line": "PASS vinyl faceplate is one connected piece",
+  "extra": {
+   "pieces": 1
+  }
+ },
+ {
+  "id": "CHK-NET-24",
+  "ok": true,
+  "line": "PASS accent inlays clear the faceplate edge"
+ },
+ {
+  "id": "CHK-NET-09",
+  "ok": true,
+  "line": "PASS vinyl inside the shared outline keepout"
+ }
+]

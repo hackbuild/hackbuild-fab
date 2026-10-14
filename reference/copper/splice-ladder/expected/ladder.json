@@ -1,0 +1,135 @@
+{
+ "note": "computed by packages/copper on the sanitised shipped SVG; audit tolerances are M05-T14's choice",
+ "audit": {
+  "minRun": 0.5,
+  "angleTol": 0.5,
+  "tol": 0.01
+ },
+ "pitch": 2.54,
+ "width": 1.6,
+ "gap": 0.94,
+ "pair": "SIGA/5V",
+ "ties": [
+  "SIGA/5V",
+  "SIGA/SIGB",
+  "5V/GND",
+  "5V/SIGB",
+  "GND/BASE1",
+  "GND/BASE2",
+  "BASE2/COL"
+ ],
+ "rows": [
+  {
+   "net": "SIGB",
+   "y": 2.3,
+   "offGrid": 0
+  },
+  {
+   "net": "SIGA",
+   "y": 4.84,
+   "offGrid": 0
+  },
+  {
+   "net": "5V",
+   "y": 7.38,
+   "offGrid": 0
+  },
+  {
+   "net": "GND",
+   "y": 9.92,
+   "offGrid": 0
+  },
+  {
+   "net": "COL",
+   "y": 18.3,
+   "offGrid": 0.76
+  },
+  {
+   "net": "GND",
+   "y": 18.3,
+   "offGrid": 0.76
+  },
+  {
+   "net": "5V",
+   "y": 22.8,
+   "offGrid": 0.18
+  }
+ ],
+ "weed": [
+  {
+   "net": "SIGA",
+   "pieces": 1,
+   "ok": true
+  },
+  {
+   "net": "5V",
+   "pieces": 1,
+   "ok": true
+  },
+  {
+   "net": "GND",
+   "pieces": 1,
+   "ok": true
+  },
+  {
+   "net": "SIGB",
+   "pieces": 1,
+   "ok": true
+  },
+  {
+   "net": "BASE1",
+   "pieces": 1,
+   "ok": true
+  },
+  {
+   "net": "BASE2",
+   "pieces": 1,
+   "ok": true
+  },
+  {
+   "net": "COL",
+   "pieces": 1,
+   "ok": true
+  }
+ ],
+ "probe": {
+  "erode": 0.8,
+  "nets": [
+   {
+    "net": "SIGA",
+    "pieces": 0,
+    "ok": false
+   },
+   {
+    "net": "5V",
+    "pieces": 3,
+    "ok": false
+   },
+   {
+    "net": "GND",
+    "pieces": 3,
+    "ok": false
+   },
+   {
+    "net": "SIGB",
+    "pieces": 2,
+    "ok": false
+   },
+   {
+    "net": "BASE1",
+    "pieces": 2,
+    "ok": false
+   },
+   {
+    "net": "BASE2",
+    "pieces": 1,
+    "ok": true
+   },
+   {
+    "net": "COL",
+    "pieces": 2,
+    "ok": false
+   }
+  ]
+ }
+}

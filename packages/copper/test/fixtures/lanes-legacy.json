@@ -1,0 +1,587 @@
+{
+ "note": "Lane inputs and assignments of the KEYWAY family fans, dumped by tools/py/copper/dump_lanes.py from the pinned generators in reference/copper/<name>/legacy/ (computed, shapely 2.1.2). Do not edit.",
+ "boards": [
+  {
+   "name": "quadrant",
+   "version": "v1",
+   "rail": "x",
+   "margin": 2.5,
+   "lanes": [
+    37.0,
+    34.0,
+    31.0,
+    28.0,
+    25.0,
+    22.0
+   ],
+   "nets": [
+    {
+     "net": "S3A",
+     "arrive": 13.572452843831556,
+     "terminal": 18.0,
+     "lane": 37.0
+    },
+    {
+     "net": "S2A",
+     "arrive": 29.02726606445664,
+     "terminal": 32.0,
+     "lane": 37.0
+    },
+    {
+     "net": "S1A",
+     "arrive": 44.48207928508174,
+     "terminal": 46.0,
+     "lane": 37.0
+    },
+    {
+     "net": "B1",
+     "arrive": 76.99195054677212,
+     "terminal": 60.0,
+     "lane": 37.0
+    },
+    {
+     "net": "B2",
+     "arrive": 82.92277565038474,
+     "terminal": 74.0,
+     "lane": 34.0
+    },
+    {
+     "net": "B3",
+     "arrive": 90.97629089960854,
+     "terminal": 88.0,
+     "lane": 37.0
+    },
+    {
+     "net": "B4",
+     "arrive": 99.73701232543027,
+     "terminal": 102.0,
+     "lane": 37.0
+    },
+    {
+     "net": "B5",
+     "arrive": 107.66515756555336,
+     "terminal": 116.0,
+     "lane": 34.0
+    },
+    {
+     "net": "B6",
+     "arrive": 113.36727765463507,
+     "terminal": 130.0,
+     "lane": 37.0
+    },
+    {
+     "net": "S1B",
+     "arrive": 148.8020685243011,
+     "terminal": 144.0,
+     "lane": 37.0
+    },
+    {
+     "net": "S2B",
+     "arrive": 164.2568817449262,
+     "terminal": 158.0,
+     "lane": 37.0
+    },
+    {
+     "net": "S3B",
+     "arrive": 179.7116949655513,
+     "terminal": 172.0,
+     "lane": 37.0
+    }
+   ],
+   "lanes_used": 2
+  },
+  {
+   "name": "spline",
+   "version": "v1",
+   "rail": "x",
+   "margin": 2.5,
+   "lanes": [
+    43.0,
+    40.0,
+    37.0,
+    34.0,
+    31.0,
+    28.0,
+    25.0,
+    22.0
+   ],
+   "nets": [
+    {
+     "net": "L1_B",
+     "arrive": 6.0,
+     "terminal": 10.5,
+     "lane": 43.0
+    },
+    {
+     "net": "L1_A",
+     "arrive": 15.1,
+     "terminal": 23.5,
+     "lane": 43.0
+    },
+    {
+     "net": "AR_A",
+     "arrive": 43.30061182841442,
+     "terminal": 36.5,
+     "lane": 43.0
+    },
+    {
+     "net": "K1",
+     "arrive": 101.34035093706419,
+     "terminal": 49.5,
+     "lane": 43.0
+    },
+    {
+     "net": "K2",
+     "arrive": 104.02943725152286,
+     "terminal": 62.5,
+     "lane": 40.0
+    },
+    {
+     "net": "K3",
+     "arrive": 107.23416552757489,
+     "terminal": 75.5,
+     "lane": 37.0
+    },
+    {
+     "net": "K4",
+     "arrive": 110.85716171822321,
+     "terminal": 88.5,
+     "lane": 34.0
+    },
+    {
+     "net": "K5",
+     "arrive": 114.7883429175395,
+     "terminal": 101.5,
+     "lane": 31.0
+    },
+    {
+     "net": "K6",
+     "arrive": 118.9082621740562,
+     "terminal": 114.5,
+     "lane": 28.0
+    },
+    {
+     "net": "K7",
+     "arrive": 123.0917378259438,
+     "terminal": 127.5,
+     "lane": 28.0
+    },
+    {
+     "net": "K8",
+     "arrive": 127.2116570824605,
+     "terminal": 140.5,
+     "lane": 31.0
+    },
+    {
+     "net": "K9",
+     "arrive": 131.1428382817768,
+     "terminal": 153.5,
+     "lane": 34.0
+    },
+    {
+     "net": "K10",
+     "arrive": 134.7658344724251,
+     "terminal": 166.5,
+     "lane": 37.0
+    },
+    {
+     "net": "K11",
+     "arrive": 137.97056274847714,
+     "terminal": 179.5,
+     "lane": 40.0
+    },
+    {
+     "net": "K12",
+     "arrive": 140.6596490629358,
+     "terminal": 192.5,
+     "lane": 43.0
+    },
+    {
+     "net": "AR_B",
+     "arrive": 198.69938817158558,
+     "terminal": 205.5,
+     "lane": 43.0
+    },
+    {
+     "net": "L2_A",
+     "arrive": 223.1,
+     "terminal": 218.5,
+     "lane": 43.0
+    },
+    {
+     "net": "L2_B",
+     "arrive": 236.0,
+     "terminal": 231.5,
+     "lane": 43.0
+    }
+   ],
+   "lanes_used": 6
+  },
+  {
+   "name": "tessera",
+   "version": "v2",
+   "rail": "x",
+   "margin": 2.5,
+   "lanes": [
+    46.0,
+    43.0,
+    40.0,
+    37.0,
+    34.0,
+    31.0,
+    28.0,
+    25.0,
+    22.0
+   ],
+   "nets": [
+    {
+     "net": "T1",
+     "arrive": 12.0,
+     "terminal": 10.5,
+     "lane": 37.0
+    },
+    {
+     "net": "T2",
+     "arrive": 15.0,
+     "terminal": 23.5,
+     "lane": 37.0
+    },
+    {
+     "net": "T3",
+     "arrive": 18.0,
+     "terminal": 36.5,
+     "lane": 40.0
+    },
+    {
+     "net": "L1_A",
+     "arrive": 23.4,
+     "terminal": 49.5,
+     "lane": 43.0
+    },
+    {
+     "net": "L1_B",
+     "arrive": 59.6,
+     "terminal": 62.5,
+     "lane": 37.0
+    },
+    {
+     "net": "T4",
+     "arrive": 65.0,
+     "terminal": 75.5,
+     "lane": 40.0
+    },
+    {
+     "net": "T5",
+     "arrive": 68.0,
+     "terminal": 88.5,
+     "lane": 43.0
+    },
+    {
+     "net": "T6",
+     "arrive": 71.0,
+     "terminal": 101.5,
+     "lane": 46.0
+    },
+    {
+     "net": "T7",
+     "arrive": 118.0,
+     "terminal": 114.5,
+     "lane": 37.0
+    },
+    {
+     "net": "T8",
+     "arrive": 121.0,
+     "terminal": 127.5,
+     "lane": 37.0
+    },
+    {
+     "net": "T9",
+     "arrive": 124.0,
+     "terminal": 140.5,
+     "lane": 40.0
+    },
+    {
+     "net": "L2_A",
+     "arrive": 129.4,
+     "terminal": 153.5,
+     "lane": 43.0
+    },
+    {
+     "net": "L2_B",
+     "arrive": 165.6,
+     "terminal": 166.5,
+     "lane": 37.0
+    },
+    {
+     "net": "T10",
+     "arrive": 171.0,
+     "terminal": 179.5,
+     "lane": 37.0
+    },
+    {
+     "net": "T11",
+     "arrive": 174.0,
+     "terminal": 192.5,
+     "lane": 40.0
+    },
+    {
+     "net": "T12",
+     "arrive": 177.0,
+     "terminal": 205.5,
+     "lane": 43.0
+    },
+    {
+     "net": "AR_A",
+     "arrive": 186.85562168825604,
+     "terminal": 218.5,
+     "lane": 46.0
+    },
+    {
+     "net": "AR_B",
+     "arrive": 225.99851538142016,
+     "terminal": 231.5,
+     "lane": 37.0
+    }
+   ],
+   "lanes_used": 4
+  },
+  {
+   "name": "fret",
+   "version": "v2",
+   "rail": "x",
+   "margin": 2.5,
+   "lanes": [
+    54.0,
+    51.0,
+    48.0,
+    45.0,
+    42.0,
+    39.0,
+    36.0,
+    33.0,
+    30.0,
+    27.0,
+    24.0,
+    21.0
+   ],
+   "nets": [
+    {
+     "net": "L1_B",
+     "arrive": 5.5,
+     "terminal": 14.0,
+     "lane": 48.0
+    },
+    {
+     "net": "L1_A",
+     "arrive": 19.8,
+     "terminal": 25.0,
+     "lane": 48.0
+    },
+    {
+     "net": "AR_A",
+     "arrive": 35.6,
+     "terminal": 36.0,
+     "lane": 48.0
+    },
+    {
+     "net": "K3",
+     "arrive": 38.8,
+     "terminal": 47.0,
+     "lane": 48.0
+    },
+    {
+     "net": "K2",
+     "arrive": 42.0,
+     "terminal": 58.0,
+     "lane": 51.0
+    },
+    {
+     "net": "K1",
+     "arrive": 45.2,
+     "terminal": 69.0,
+     "lane": 54.0
+    },
+    {
+     "net": "K6",
+     "arrive": 86.6,
+     "terminal": 80.0,
+     "lane": 48.0
+    },
+    {
+     "net": "K5",
+     "arrive": 89.8,
+     "terminal": 91.0,
+     "lane": 48.0
+    },
+    {
+     "net": "K4",
+     "arrive": 93.0,
+     "terminal": 102.0,
+     "lane": 51.0
+    },
+    {
+     "net": "K9",
+     "arrive": 107.6,
+     "terminal": 113.0,
+     "lane": 48.0
+    },
+    {
+     "net": "K8",
+     "arrive": 110.8,
+     "terminal": 124.0,
+     "lane": 51.0
+    },
+    {
+     "net": "K7",
+     "arrive": 114.0,
+     "terminal": 135.0,
+     "lane": 54.0
+    },
+    {
+     "net": "K12",
+     "arrive": 149.6,
+     "terminal": 146.0,
+     "lane": 48.0
+    },
+    {
+     "net": "K11",
+     "arrive": 152.8,
+     "terminal": 157.0,
+     "lane": 48.0
+    },
+    {
+     "net": "K10",
+     "arrive": 156.0,
+     "terminal": 168.0,
+     "lane": 51.0
+    },
+    {
+     "net": "K15",
+     "arrive": 170.6,
+     "terminal": 179.0,
+     "lane": 48.0
+    },
+    {
+     "net": "K14",
+     "arrive": 173.8,
+     "terminal": 190.0,
+     "lane": 51.0
+    },
+    {
+     "net": "K13",
+     "arrive": 177.0,
+     "terminal": 201.0,
+     "lane": 54.0
+    },
+    {
+     "net": "AR_B",
+     "arrive": 208.0,
+     "terminal": 212.0,
+     "lane": 48.0
+    },
+    {
+     "net": "L2_A",
+     "arrive": 223.8,
+     "terminal": 223.0,
+     "lane": 48.0
+    },
+    {
+     "net": "L2_B",
+     "arrive": 242.5,
+     "terminal": 234.0,
+     "lane": 48.0
+    }
+   ],
+   "lanes_used": 3
+  },
+  {
+   "name": "stave",
+   "version": "v2",
+   "rail": "y",
+   "margin": 2.5,
+   "lanes": [
+    35.0,
+    32.2,
+    29.4,
+    26.6,
+    23.8,
+    21.0
+   ],
+   "nets": [
+    {
+     "net": "L1_B",
+     "arrive": 4.0,
+     "terminal": 59.0,
+     "lane": 23.8
+    },
+    {
+     "net": "L1_A",
+     "arrive": 19.8,
+     "terminal": 71.0,
+     "lane": 26.6
+    },
+    {
+     "net": "D1",
+     "arrive": 59.375,
+     "terminal": 83.0,
+     "lane": 29.4
+    },
+    {
+     "net": "D2",
+     "arrive": 78.125,
+     "terminal": 95.0,
+     "lane": 32.2
+    },
+    {
+     "net": "D3",
+     "arrive": 96.875,
+     "terminal": 107.0,
+     "lane": 35.0
+    },
+    {
+     "net": "D4",
+     "arrive": 115.625,
+     "terminal": 119.0,
+     "lane": 23.8
+    },
+    {
+     "net": "D5",
+     "arrive": 134.375,
+     "terminal": 131.0,
+     "lane": 23.8
+    },
+    {
+     "net": "D6",
+     "arrive": 153.125,
+     "terminal": 143.0,
+     "lane": 35.0
+    },
+    {
+     "net": "D7",
+     "arrive": 171.875,
+     "terminal": 155.0,
+     "lane": 32.2
+    },
+    {
+     "net": "D8",
+     "arrive": 190.625,
+     "terminal": 167.0,
+     "lane": 29.4
+    },
+    {
+     "net": "L2_A",
+     "arrive": 225.8,
+     "terminal": 179.0,
+     "lane": 26.6
+    },
+    {
+     "net": "L2_B",
+     "arrive": 246.0,
+     "terminal": 191.0,
+     "lane": 23.8
+    }
+   ],
+   "lanes_used": 5
+  }
+ ]
+}

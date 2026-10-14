@@ -1,0 +1,11 @@
+{
+ "note": "KEYWAY with KEYWAY_BRAND=1, computed by tools/py/copper/dump_keyway_brand.py from the pinned legacy generator (Python 3.14, shapely 2.1.2). Do not edit.",
+ "copper_area": 7532.7965,
+ "brand_area": 557.2525,
+ "brand_islands": 13,
+ "brand_nearest_net": "SA",
+ "brand_nearest_mm": 9.7232,
+ "art_islands": 18,
+ "min_clearance": 0.9999999999999714,
+ "tightest_pair": "P3/SA"
+}

@@ -1,0 +1,63 @@
+PASS net B1   single island (1)
+PASS net B2   single island (1)
+PASS net B3   single island (1)
+PASS net B4   single island (1)
+PASS net B5   single island (1)
+PASS net B6   single island (1)
+PASS net S1A  single island (1)
+PASS net S1B  single island (1)
+PASS net S2A  single island (1)
+PASS net S2B  single island (1)
+PASS net S3A  single island (1)
+PASS net S3B  single island (1)
+PASS min clearance 1.200 mm at B5/B6 (gate 0.90)
+PASS all copper >= 1.0 mm from the shared outline
+PASS net B1   survives the 1.10 mm erode test (1 islands)
+PASS net B2   survives the 1.10 mm erode test (1 islands)
+PASS net B3   survives the 1.10 mm erode test (1 islands)
+PASS net B4   survives the 1.10 mm erode test (1 islands)
+PASS net B5   survives the 1.10 mm erode test (1 islands)
+PASS net B6   survives the 1.10 mm erode test (1 islands)
+PASS net S1A  survives the 1.10 mm erode test (1 islands)
+PASS net S1B  survives the 1.10 mm erode test (1 islands)
+PASS net S2A  survives the 1.10 mm erode test (1 islands)
+PASS net S2B  survives the 1.10 mm erode test (1 islands)
+PASS net S3A  survives the 1.10 mm erode test (1 islands)
+PASS net S3B  survives the 1.10 mm erode test (1 islands)
+PASS button B1 plate is solid copper
+PASS button B2 plate is solid copper
+PASS button B3 plate is solid copper
+PASS button B4 plate is solid copper
+PASS button B5 plate is solid copper
+PASS button B6 plate is solid copper
+PASS slider 1 ratio monotone across the travel
+PASS slider 1 span 0.797 to 0.203, off both rails
+PASS slider 1 both wedges carry real plate area
+PASS slider 2 ratio monotone across the travel
+PASS slider 2 span 0.797 to 0.203, off both rails
+PASS slider 2 both wedges carry real plate area
+PASS slider 3 ratio monotone across the travel
+PASS slider 3 span 0.797 to 0.203, off both rails
+PASS slider 3 both wedges carry real plate area
+PASS slider travel 64.0 mm
+PASS top field: all 6 terminals sit on their arrival x (no fan)
+PASS top field pitch >= 15.0 mm, rows staggered
+PASS top field: 21.5 mm between same-row clip jaws
+PASS bottom field pitch >= 12.0 mm, rows staggered
+PASS bottom field: 14.0 mm between same-row clip jaws
+PASS exactly 12 channels, one MPR121 or 12 S3 touch pins
+PASS vinyl covers all live copper outside the clip fields (0.00 mm2 bare)
+PASS vinyl clears every clip pad
+PASS vinyl overhangs button B1 by 1.6 mm
+PASS vinyl overhangs button B2 by 1.6 mm
+PASS vinyl overhangs button B3 by 1.6 mm
+PASS vinyl overhangs button B4 by 1.6 mm
+PASS vinyl overhangs button B5 by 1.6 mm
+PASS vinyl overhangs button B6 by 1.6 mm
+PASS vinyl faceplate is one connected piece
+PASS accent tiles land inside the faceplate
+PASS vinyl inside the shared outline keepout
+PASS accent tiles clear the faceplate edge by 1 mm
+
+GATES 60 passed 0 failed
+VERNIER rev A   110 x 214 mm   12 channels   9647 mm2 copper   min clearance 1.20 mm

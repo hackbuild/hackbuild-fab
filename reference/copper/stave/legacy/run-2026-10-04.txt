@@ -1,0 +1,60 @@
+PASS board 96 mm wide fits 101.6 mm tape with 2.8 mm each side
+PASS net D1    single island (1)
+PASS net D2    single island (1)
+PASS net D3    single island (1)
+PASS net D4    single island (1)
+PASS net D5    single island (1)
+PASS net D6    single island (1)
+PASS net D7    single island (1)
+PASS net D8    single island (1)
+PASS net L1_A  single island (1)
+PASS net L1_B  single island (1)
+PASS net L2_A  single island (1)
+PASS net L2_B  single island (1)
+PASS min clearance 1.200 mm at D1/L1_A (gate 0.90)
+PASS all copper >= 1.0 mm from the shared outline
+PASS net D1    survives the 1.10 mm erode test
+PASS net D2    survives the 1.10 mm erode test
+PASS net D3    survives the 1.10 mm erode test
+PASS net D4    survives the 1.10 mm erode test
+PASS net D5    survives the 1.10 mm erode test
+PASS net D6    survives the 1.10 mm erode test
+PASS net D7    survives the 1.10 mm erode test
+PASS net D8    survives the 1.10 mm erode test
+PASS net L1_A  survives the 1.10 mm erode test
+PASS net L1_B  survives the 1.10 mm erode test
+PASS net L2_A  survives the 1.10 mm erode test
+PASS net L2_B  survives the 1.10 mm erode test
+PASS key plate 859 mm2, 52 x 17 mm
+PASS all 8 keys the same size within 0.0 mm2
+PASS 8 keys, one octave of any scale
+PASS chevron seams hold 1.60 mm between keys
+PASS slider L1 ratio monotone left to right
+PASS slider L1 span 0.854 to 0.146, off both rails
+PASS slider L2 ratio monotone left to right
+PASS slider L2 span 0.854 to 0.146, off both rails
+PASS sliders 50 mm of travel each
+PASS exactly 12 channels, one MPR121 or 12 ESP32-S3 touch pins
+PASS rail is ONE row on 12.0 mm pitch down the left edge
+PASS rail finger gap 3.0 mm
+PASS finger depth alternates 14 / 9 mm
+PASS rail order follows arrival order (monotone fan)
+PASS fan needs 5 lanes, 6 available
+PASS the wiring zone ends 22.5 mm before the keys start
+PASS vinyl covers all live copper outside the rail zone (0.00 mm2 bare)
+PASS vinyl clears every rail finger
+PASS vinyl overhangs key D1
+PASS vinyl overhangs key D2
+PASS vinyl overhangs key D3
+PASS vinyl overhangs key D4
+PASS vinyl overhangs key D5
+PASS vinyl overhangs key D6
+PASS vinyl overhangs key D7
+PASS vinyl overhangs key D8
+PASS vinyl overhangs both sliders
+PASS vinyl faceplate is one connected piece
+PASS accent inlays clear the faceplate edge
+PASS vinyl inside the shared outline keepout
+
+GATES 57 passed 0 failed
+STAVE rev A   96 x 250 mm   fits 101.6 mm tape (2.8 mm spare each side)   12 channels   min clr 1.20

@@ -1,0 +1,588 @@
+{
+ "meta": {
+  "generator": "node tools/legacy/pip/dump-elec.mjs <pip-controller checkout at b137deb>",
+  "source": "hackbuild/pip-controller",
+  "commit": "b137deb518229ea8910bfe85e6416d34cee353f3",
+  "manifold": "3.5.3",
+  "node": "v22.18.0",
+  "qualifier": "computed by PIP b137deb",
+  "layout": "H.LAYOUT.layout(H.LAYOUT.defaults()), H.ROUTER.route(L), H.MODEL.build(P, L, R); src/model.js lines 393, 396, 399 and 430 wrapped in memory to record their locals"
+ },
+ "phys": {
+  "rhoC": 500,
+  "rhoCz": 2000,
+  "rhoT": 400,
+  "cpin": 7,
+  "leak": 1,
+  "waitMech": 0.2,
+  "waitTouch": 1.5
+ },
+ "route": {
+  "w": 1.4,
+  "post": 0.6,
+  "via": 0.8
+ },
+ "stack": {
+  "trace": 0.72,
+  "l1": [
+   0.72,
+   1.44
+  ],
+  "l2": [
+   2.4,
+   3.12
+  ],
+  "floor": 4.8,
+  "hPost": 4.08,
+  "viaH": 2.4000000000000004
+ },
+ "nets": [
+  {
+   "name": "GND",
+   "lenMm": 215.5548698896889,
+   "stubMm": 1.670177326772766,
+   "vias": 0
+  },
+  {
+   "name": "3V3",
+   "lenMm": 60.31370849898476,
+   "stubMm": 0.21633307652783917,
+   "vias": 0
+  },
+  {
+   "name": "UP",
+   "lenMm": 36.39949493661167,
+   "stubMm": 0.5005992817228355,
+   "vias": 0
+  },
+  {
+   "name": "DOWN",
+   "lenMm": 44.68376618407357,
+   "stubMm": 0.44999999999999873,
+   "vias": 0
+  },
+  {
+   "name": "LEFT",
+   "lenMm": 54.95584412271572,
+   "stubMm": 0.5183281572999734,
+   "vias": 0
+  },
+  {
+   "name": "RIGHT",
+   "lenMm": 25.920310216782976,
+   "stubMm": 0.4832380757938115,
+   "vias": 0
+  },
+  {
+   "name": "X",
+   "lenMm": 34.65685424949238,
+   "stubMm": 0.35059928172283694,
+   "vias": 0
+  },
+  {
+   "name": "B",
+   "lenMm": 49.01219330881976,
+   "stubMm": 0.30000000000000016,
+   "vias": 0
+  },
+  {
+   "name": "Y",
+   "lenMm": 22.713203435596427,
+   "stubMm": 0.3332380757938129,
+   "vias": 0
+  },
+  {
+   "name": "A",
+   "lenMm": 59.54163056034262,
+   "stubMm": 0.4541145949268768,
+   "vias": 0
+  },
+  {
+   "name": "SELECT",
+   "lenMm": 28.349242404917497,
+   "stubMm": 0.08944271909999008,
+   "vias": 0
+  },
+  {
+   "name": "START",
+   "lenMm": 24.621320343559642,
+   "stubMm": 0.08944271909999008,
+   "vias": 0
+  }
+ ],
+ "commons": {
+  "GND": {
+   "net": "GND",
+   "lenMm": 217.22504721646166,
+   "posts": [
+    {
+     "what": "terminal",
+     "hMm": 4.08,
+     "rMm": 0.6,
+     "count": 2
+    }
+   ],
+   "ohm": 1221805.6762627515
+  },
+  "3V3": {
+   "net": "3V3",
+   "lenMm": 60.5300415755126,
+   "posts": [
+    {
+     "what": "terminal",
+     "hMm": 4.08,
+     "rMm": 0.6,
+     "count": 2
+    }
+   ],
+   "ohm": 444548.7038374088
+  }
+ },
+ "keys": [
+  {
+   "id": "UP",
+   "pin": "GP29",
+   "type": "flex",
+   "net": "UP",
+   "lenMm": 36.9000942183345,
+   "routeLenMm": 36.39949493661167,
+   "vias": 0,
+   "posts": [
+    {
+     "what": "terminal",
+     "hMm": 4.08,
+     "rMm": 0.6,
+     "count": 2
+    },
+    {
+     "what": "via",
+     "hMm": 2.4000000000000004,
+     "rMm": 0.8,
+     "count": 0
+    },
+    {
+     "what": "switch",
+     "hMm": 7.4799999999999995,
+     "rMm": 1.1199999999999999,
+     "count": 2
+    }
+   ],
+   "RswOhm": 5599.061154493724,
+   "common": "GND",
+   "parts": {
+    "RnOhm": 327336.66337521584,
+    "extraOhm": 75923.4039749603,
+    "commonOhm": 1221805.6762627515
+   },
+   "bench": {
+    "R": 1630664.8047674214,
+    "C": 8.738001884366689,
+    "tauUs": 14.248752136828168,
+    "waitUs": 200,
+    "ok": true,
+    "rejectOhm": 4577705.581817818
+   }
+  },
+  {
+   "id": "DOWN",
+   "pin": "GP26",
+   "type": "flex",
+   "net": "DOWN",
+   "lenMm": 45.133766184073565,
+   "routeLenMm": 44.68376618407357,
+   "vias": 0,
+   "posts": [
+    {
+     "what": "terminal",
+     "hMm": 4.08,
+     "rMm": 0.6,
+     "count": 2
+    },
+    {
+     "what": "via",
+     "hMm": 2.4000000000000004,
+     "rMm": 0.8,
+     "count": 0
+    },
+    {
+     "what": "switch",
+     "hMm": 7.4799999999999995,
+     "rMm": 1.1199999999999999,
+     "count": 2
+    }
+   ],
+   "RswOhm": 5599.061154493724,
+   "common": "GND",
+   "parts": {
+    "RnOhm": 368178.29018939764,
+    "extraOhm": 75923.4039749603,
+    "commonOhm": 1221805.6762627515
+   },
+   "bench": {
+    "R": 1671506.4315816031,
+    "C": 8.902675323681471,
+    "tauUs": 14.88087906181641,
+    "waitUs": 200,
+    "ok": true,
+    "rejectOhm": 4493031.4254635805
+   }
+  },
+  {
+   "id": "LEFT",
+   "pin": "GP28",
+   "type": "flex",
+   "net": "LEFT",
+   "lenMm": 55.474172280015694,
+   "routeLenMm": 54.95584412271572,
+   "vias": 0,
+   "posts": [
+    {
+     "what": "terminal",
+     "hMm": 4.08,
+     "rMm": 0.6,
+     "count": 2
+    },
+    {
+     "what": "via",
+     "hMm": 2.4000000000000004,
+     "rMm": 0.8,
+     "count": 0
+    },
+    {
+     "what": "switch",
+     "hMm": 7.4799999999999995,
+     "rMm": 1.1199999999999999,
+     "count": 2
+    }
+   ],
+   "RswOhm": 5599.061154493724,
+   "common": "GND",
+   "parts": {
+    "RnOhm": 419469.98709387257,
+    "extraOhm": 75923.4039749603,
+    "commonOhm": 1221805.6762627515
+   },
+   "bench": {
+    "R": 1722798.128486078,
+    "C": 9.109483445600315,
+    "tauUs": 15.69380103155513,
+    "waitUs": 200,
+    "ok": true,
+    "rejectOhm": 4391028.343030706
+   }
+  },
+  {
+   "id": "RIGHT",
+   "pin": "GP27",
+   "type": "flex",
+   "net": "RIGHT",
+   "lenMm": 26.403548292576787,
+   "routeLenMm": 25.920310216782976,
+   "vias": 0,
+   "posts": [
+    {
+     "what": "terminal",
+     "hMm": 4.08,
+     "rMm": 0.6,
+     "count": 2
+    },
+    {
+     "what": "via",
+     "hMm": 2.4000000000000004,
+     "rMm": 0.8,
+     "count": 0
+    },
+    {
+     "what": "switch",
+     "hMm": 7.4799999999999995,
+     "rMm": 1.1199999999999999,
+     "count": 2
+    }
+   ],
+   "RswOhm": 5599.061154493724,
+   "common": "GND",
+   "parts": {
+    "RnOhm": 275270.4633466557,
+    "extraOhm": 75923.4039749603,
+    "commonOhm": 1221805.6762627515
+   },
+   "bench": {
+    "R": 1578598.6047388613,
+    "C": 8.528070965851537,
+    "tauUs": 13.462400927807229,
+    "waitUs": 200,
+    "ok": true,
+    "rejectOhm": 4690392.488543973
+   }
+  },
+  {
+   "id": "X",
+   "pin": "GP3",
+   "type": "clicky",
+   "net": "X",
+   "lenMm": 35.00745353121522,
+   "routeLenMm": 34.65685424949238,
+   "vias": 0,
+   "posts": [
+    {
+     "what": "terminal",
+     "hMm": 4.08,
+     "rMm": 0.6,
+     "count": 2
+    },
+    {
+     "what": "via",
+     "hMm": 2.4000000000000004,
+     "rMm": 0.8,
+     "count": 0
+    },
+    {
+     "what": "switch",
+     "hMm": 0.7199999999999998,
+     "rMm": 0.8,
+     "count": 2
+    }
+   ],
+   "RswOhm": 9951.923076923078,
+   "common": "GND",
+   "parts": {
+    "RnOhm": 317948.5647287908,
+    "extraOhm": 14323.944878270577,
+    "commonOhm": 1221805.6762627515
+   },
+   "bench": {
+    "R": 1564030.108946736,
+    "C": 8.700149070624304,
+    "tauUs": 13.607295098781373,
+    "waitUs": 200,
+    "ok": true,
+    "rejectOhm": 4597622.371214116
+   }
+  },
+  {
+   "id": "B",
+   "pin": "GP6",
+   "type": "clicky",
+   "net": "B",
+   "lenMm": 49.31219330881976,
+   "routeLenMm": 49.01219330881976,
+   "vias": 0,
+   "posts": [
+    {
+     "what": "terminal",
+     "hMm": 4.08,
+     "rMm": 0.6,
+     "count": 2
+    },
+    {
+     "what": "via",
+     "hMm": 2.4000000000000004,
+     "rMm": 0.8,
+     "count": 0
+    },
+    {
+     "what": "switch",
+     "hMm": 0.7199999999999998,
+     "rMm": 0.8,
+     "count": 2
+    }
+   ],
+   "RswOhm": 9951.923076923078,
+   "common": "GND",
+   "parts": {
+    "RnOhm": 388904.61521294026,
+    "extraOhm": 14323.944878270577,
+    "commonOhm": 1221805.6762627515
+   },
+   "bench": {
+    "R": 1634986.1594308852,
+    "C": 8.986243866176395,
+    "tauUs": 14.692384346469092,
+    "waitUs": 200,
+    "ok": true,
+    "rejectOhm": 4451247.99590152
+   }
+  },
+  {
+   "id": "Y",
+   "pin": "GP5",
+   "type": "clicky",
+   "net": "Y",
+   "lenMm": 23.04644151139024,
+   "routeLenMm": 22.713203435596427,
+   "vias": 0,
+   "posts": [
+    {
+     "what": "terminal",
+     "hMm": 4.08,
+     "rMm": 0.6,
+     "count": 2
+    },
+    {
+     "what": "via",
+     "hMm": 2.4000000000000004,
+     "rMm": 0.8,
+     "count": 0
+    },
+    {
+     "what": "switch",
+     "hMm": 0.7199999999999998,
+     "rMm": 0.8,
+     "count": 2
+    }
+   ],
+   "RswOhm": 9951.923076923078,
+   "common": "GND",
+   "parts": {
+    "RnOhm": 258618.14796378592,
+    "extraOhm": 14323.944878270577,
+    "commonOhm": 1221805.6762627515
+   },
+   "bench": {
+    "R": 1504699.692181731,
+    "C": 8.460928830227804,
+    "tauUs": 12.73115700641531,
+    "waitUs": 200,
+    "ok": true,
+    "rejectOhm": 4727613.3392228335
+   }
+  },
+  {
+   "id": "A",
+   "pin": "GP4",
+   "type": "clicky",
+   "net": "A",
+   "lenMm": 59.995745155269496,
+   "routeLenMm": 59.54163056034262,
+   "vias": 0,
+   "posts": [
+    {
+     "what": "terminal",
+     "hMm": 4.08,
+     "rMm": 0.6,
+     "count": 2
+    },
+    {
+     "what": "via",
+     "hMm": 2.4000000000000004,
+     "rMm": 0.8,
+     "count": 0
+    },
+    {
+     "what": "switch",
+     "hMm": 0.7199999999999998,
+     "rMm": 0.8,
+     "count": 2
+    }
+   ],
+   "RswOhm": 9951.923076923078,
+   "common": "GND",
+   "parts": {
+    "RnOhm": 441898.4239750918,
+    "extraOhm": 14323.944878270577,
+    "commonOhm": 1221805.6762627515
+   },
+   "bench": {
+    "R": 1687979.968193037,
+    "C": 9.19991490310539,
+    "tauUs": 15.529272065522482,
+    "waitUs": 200,
+    "ok": true,
+    "rejectOhm": 4347866.303252239
+   }
+  },
+  {
+   "id": "SELECT",
+   "pin": "GP12",
+   "type": "touch",
+   "net": "SELECT",
+   "lenMm": 28.438685124017486,
+   "routeLenMm": 28.349242404917497,
+   "vias": 0,
+   "posts": [
+    {
+     "what": "terminal",
+     "hMm": 4.08,
+     "rMm": 0.6,
+     "count": 2
+    },
+    {
+     "what": "via",
+     "hMm": 2.4000000000000004,
+     "rMm": 0.8,
+     "count": 0
+    },
+    {
+     "what": "switch",
+     "hMm": 11.279999999999998,
+     "rMm": 0.6,
+     "count": 1
+    }
+   ],
+   "RswOhm": 0,
+   "common": "3V3",
+   "parts": {
+    "RnOhm": 285365.3881057862,
+    "extraOhm": 199474.19534184216,
+    "commonOhm": 444548.7038374088
+   },
+   "bench": {
+    "R": 929388.2872850371,
+    "C": 8.56877370248035,
+    "tauUs": 179.3391919650883,
+    "waitUs": 1500,
+    "ok": true,
+    "rejectOhm": 58351406.78942987,
+    "settle": 0.9997668990702462
+   }
+  },
+  {
+   "id": "START",
+   "pin": "GP10",
+   "type": "touch",
+   "net": "START",
+   "lenMm": 24.71076306265963,
+   "routeLenMm": 24.621320343559642,
+   "vias": 0,
+   "posts": [
+    {
+     "what": "terminal",
+     "hMm": 4.08,
+     "rMm": 0.6,
+     "count": 2
+    },
+    {
+     "what": "via",
+     "hMm": 2.4000000000000004,
+     "rMm": 0.8,
+     "count": 0
+    },
+    {
+     "what": "switch",
+     "hMm": 11.279999999999998,
+     "rMm": 0.6,
+     "count": 1
+    }
+   ],
+   "RswOhm": 0,
+   "common": "3V3",
+   "parts": {
+    "RnOhm": 266873.71121413016,
+    "extraOhm": 199474.19534184216,
+    "commonOhm": 444548.7038374088
+   },
+   "bench": {
+    "R": 910896.6103933811,
+    "C": 8.494215261253192,
+    "tauUs": 177.6216571144911,
+    "waitUs": 1500,
+    "ok": true,
+    "rejectOhm": 58863589.469032675,
+    "settle": 0.9997850093772156
+   }
+  }
+ ],
+ "droopV": 0.21428571428571433,
+ "rejectMinOhm": 4347866.303252239,
+ "warn": []
+}

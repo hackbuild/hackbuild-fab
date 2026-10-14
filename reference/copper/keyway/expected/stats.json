@@ -1,0 +1,28 @@
+{
+ "note": "computed by packages/copper and packages/checks at the chase defaults; tolerances are M05-T14's choice for a Clipper2 port of shapely geometry",
+ "tolerances": {
+  "areaFrac": 0.002,
+  "clearanceMm": 0.005,
+  "span": 0.002,
+  "travelMm": 0.1,
+  "netXorFrac": 0.005,
+  "brandMm": 0.005
+ },
+ "copperMm2": 6975.5439,
+ "brandCopperMm2": 7532.7964,
+ "nets": {
+  "COM": 2754.9207,
+  "P1": 497.7688,
+  "P2": 528.6488,
+  "P3": 614.0888,
+  "P4": 603.3688,
+  "SA": 788.0914,
+  "SB": 803.7571,
+  "SC": 361.4998
+ },
+ "sliderSpan": [
+  0.811322,
+  0.177476
+ ],
+ "travelMm": 67.9
+}

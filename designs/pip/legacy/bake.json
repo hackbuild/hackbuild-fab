@@ -1,0 +1,107 @@
+{
+  "id": "pip-legacy",
+  "shell": "bench/part1.html",
+  "drop": [
+    "<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">",
+    "<link href=\"https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Permanent+Marker&family=Special+Elite&family=VT323&display=swap\" rel=\"stylesheet\">"
+  ],
+  "vendor": [
+    {
+      "match": "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js\"></script>",
+      "from": "npm:three/build/three.min.js",
+      "label": "inlined three.min.js"
+    },
+    {
+      "match": "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js\"></script>",
+      "from": "npm:jszip/dist/jszip.min.js",
+      "label": "inlined jszip.min.js"
+    }
+  ],
+  "fonts": [
+    {
+      "family": "Permanent Marker",
+      "weight": 400,
+      "style": "normal",
+      "from": "npm:@fontsource/permanent-marker/files/permanent-marker-latin-400-normal.woff2"
+    },
+    {
+      "family": "Special Elite",
+      "weight": 400,
+      "style": "normal",
+      "from": "npm:@fontsource/special-elite/files/special-elite-latin-400-normal.woff2"
+    },
+    {
+      "family": "VT323",
+      "weight": 400,
+      "style": "normal",
+      "from": "npm:@fontsource/vt323/files/vt323-latin-400-normal.woff2"
+    },
+    {
+      "family": "IBM Plex Mono",
+      "weight": 400,
+      "style": "normal",
+      "from": "npm:@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-400-normal.woff2"
+    },
+    {
+      "family": "IBM Plex Mono",
+      "weight": 600,
+      "style": "normal",
+      "from": "npm:@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-600-normal.woff2"
+    }
+  ],
+  "blocks": [
+    {
+      "from": "tools/rastermesh.js",
+      "label": "rastermesh.js"
+    },
+    {
+      "from": "tools/orca3mf.js",
+      "label": "orca3mf.js"
+    },
+    {
+      "from": "vendor/manifold-classic.js",
+      "label": "part10-manifold.js",
+      "vendored": true
+    },
+    {
+      "from": "src/snapfe.js",
+      "label": "part11-snapfe.js"
+    },
+    {
+      "from": "src/geom.js",
+      "label": "part12-geom.js"
+    },
+    {
+      "from": "src/font.js",
+      "label": "part13-font.js"
+    },
+    {
+      "from": "src/layout.js",
+      "label": "part14-layout.js"
+    },
+    {
+      "from": "src/router.js",
+      "label": "part15-router.js"
+    },
+    {
+      "from": "src/model.js",
+      "label": "part16-model.js"
+    },
+    {
+      "from": "src/pkg.js",
+      "label": "part17-pkg.js"
+    },
+    {
+      "from": "src/coupon.js",
+      "label": "part18-coupon.js"
+    },
+    {
+      "from": "bench/part2.js",
+      "label": "part2.js"
+    },
+    {
+      "from": "bench/part3.js",
+      "label": "part3.js"
+    }
+  ]
+}

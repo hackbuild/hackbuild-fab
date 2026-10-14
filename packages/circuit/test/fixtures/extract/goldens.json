@@ -1,0 +1,11 @@
+{
+  "note": "M05-T04 acceptance goldens, typed from the card table (docs/plan/milestones/M05-circuit-copper.md, M05-T04 Acceptance), every R computed from R = rho L / (w t) with rho in ohm cm x 10. decimals is how many places the card prints; the extracted R must round to r at that many places. legacy rows read rho from the BOSS source (boss.js SLOTS), the others from the profile row named. bossReadout is the string BOSS parts.js fmtR prints for the wire core (parts.js line 426).",
+  "cases": [
+    { "id": "boss-cpla", "case": "BOSS wire core, cPLA (legacy constant)", "rhoOhmCm": 30, "lengthMm": 80, "widthMm": 1.2, "tMm": 0.96, "r": 20833, "decimals": 0, "row": { "legacySlot": 2 }, "role": "conductor", "bossReadout": "20.8 kohm", "source": "boss.js SLOTS slot 2 (legacy); parts.js wire core coreW 1.2, zc1 - zc0 = 1.44 - 0.48" },
+    { "id": "boss-ctpu", "case": "BOSS wire core, cTPU (legacy constant)", "rhoOhmCm": 1500, "lengthMm": 80, "widthMm": 1.2, "tMm": 0.96, "r": 1041667, "decimals": 0, "row": { "legacySlot": 4 }, "role": "flex-conductor", "bossReadout": "1.04 Mohm", "source": "boss.js SLOTS slot 4 (legacy)" },
+    { "id": "capricate-along", "case": "Capricate sample, along", "rhoOhmCm": 0.4382, "lengthMm": 100, "widthMm": 12, "tMm": 1, "r": 36.52, "decimals": 2, "row": { "profile": "cabs.capricate.along", "material": "cabs", "direction": "along" }, "role": "conductor", "source": "cabs-capricate" },
+    { "id": "capricate-across", "case": "Capricate sample, across", "rhoOhmCm": 0.8171, "lengthMm": 100, "widthMm": 12, "tMm": 1, "r": 68.09, "decimals": 2, "row": { "profile": "cabs.capricate.across", "material": "cabs", "direction": "across" }, "role": null, "source": "cabs-capricate" },
+    { "id": "capricate-trace", "case": "Capricate minimal trace, along", "rhoOhmCm": 0.4382, "lengthMm": 100, "widthMm": 0.8, "tMm": 0.2, "r": 2738.8, "decimals": 1, "row": { "profile": "cabs.capricate.along", "material": "cabs", "direction": "along" }, "role": "conductor", "source": "cabs-capricate" },
+    { "id": "pip-per-mm", "case": "PIP trace per mm, working cpla", "rhoOhmCm": 500, "lengthMm": 1, "widthMm": 1.4, "tMm": 0.72, "r": 4960.3, "decimals": 1, "row": { "profile": "cpla.pip.along", "material": "cpla", "direction": "along" }, "role": "conductor", "source": "cpla (inferred)" }
+  ]
+}

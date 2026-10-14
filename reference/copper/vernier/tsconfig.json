@@ -1,0 +1,30 @@
+{
+  "extends": "../../../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "composite": false,
+    "declaration": false,
+    "types": [
+      "node"
+    ]
+  },
+  "include": [
+    "*.ts",
+    "test/*.ts",
+    "../_harness/*.ts"
+  ],
+  "references": [
+    {
+      "path": "../../../packages/copper"
+    },
+    {
+      "path": "../../../packages/checks"
+    },
+    {
+      "path": "../../../packages/chase"
+    },
+    {
+      "path": "../../../core"
+    }
+  ]
+}

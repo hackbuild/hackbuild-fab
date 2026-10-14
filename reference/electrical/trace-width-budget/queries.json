@@ -1,0 +1,8 @@
+{
+  "queries": [
+    { "golden": "expected/query-1.json", "input": { "dim": "conductor.width", "material": "cpla-protopasta", "facts": { "pathMm": 62, "tMm": 0.72, "netBudgetOhm": 8000, "flexes": true, "pitchMm": 8, "pitchClrMm": 1 } } },
+    { "golden": "expected/query-2.json", "input": { "dim": "conductor.width", "material": "cpla", "facts": { "pathMm": 62, "tMm": 0.72, "netBudgetOhm": 8000, "flexes": true, "pitchMm": 8, "pitchClrMm": 1 } } },
+    { "golden": "expected/query-3.json", "input": { "dim": "conductor.width", "material": "cpla-protopasta", "facts": { "pathMm": 62, "tMm": 0.72, "netBudgetOhm": 2000, "flexes": true, "pitchMm": 8, "pitchClrMm": 1 } } },
+    { "golden": "expected/query-4.json", "input": { "dim": "conductor.width", "material": "cpla-protopasta", "facts": { "pathMm": 62, "tMm": 0.72, "flexes": true, "pitchMm": 8, "pitchClrMm": 1 } } }
+  ]
+}

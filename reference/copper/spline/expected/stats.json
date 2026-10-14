@@ -1,0 +1,59 @@
+{
+ "note": "computed by packages/copper and packages/checks at the chase defaults; tolerances are M05-T14's choice for a Clipper2 port of shapely geometry",
+ "tolerances": {
+  "areaFrac": 0.002,
+  "clearanceMm": 0.005,
+  "span": 0.002,
+  "travelMm": 0.1,
+  "netXorFrac": 0.005
+ },
+ "copperMm2": 9123.8239,
+ "nets": {
+  "K1": 476.4723,
+  "K2": 502.1116,
+  "K3": 453.7474,
+  "K4": 479.0941,
+  "K5": 429.8747,
+  "K6": 453.8293,
+  "K7": 416.8293,
+  "K8": 466.8747,
+  "K9": 442.0941,
+  "K10": 490.7474,
+  "K11": 465.1116,
+  "K12": 513.4723,
+  "AR_A": 785.6568,
+  "AR_B": 779.5404,
+  "L1_A": 440.8271,
+  "L1_B": 549.6303,
+  "L2_A": 471.7471,
+  "L2_B": 506.1634
+ },
+ "lanesUsed": 6,
+ "lanesNeed": 6,
+ "lanes": {
+  "K1": 43,
+  "K12": 43,
+  "K2": 40,
+  "K11": 40,
+  "K3": 37,
+  "K10": 37,
+  "K4": 34,
+  "K9": 34,
+  "K5": 31,
+  "K8": 31,
+  "L1_A": 43,
+  "AR_A": 43,
+  "AR_B": 43,
+  "L2_A": 43,
+  "L1_B": 43,
+  "L2_B": 43,
+  "K6": 28,
+  "K7": 28
+ },
+ "board": {
+  "arcSweepMm": 68.4169,
+  "linTravelMm": 42,
+  "vinylMm2": 29039.0131,
+  "bladeMm2": 193.9213
+ }
+}

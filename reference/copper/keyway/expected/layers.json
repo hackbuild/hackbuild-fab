@@ -1,0 +1,66 @@
+{
+ "07_backer.svg": {
+  "role": "backer",
+  "sha256": "fd1595dd8d48e30831d5716153cd7273243d8261958433325e7bd720df23532b",
+  "size": [
+   110,
+   174
+  ]
+ },
+ "08_overlay_guide.svg": {
+  "role": "guide",
+  "sha256": "9f3eb918644fba86b6b4d78a68c149410c04270b7b9d2abefbd5397a86c624fd",
+  "size": [
+   110,
+   174
+  ]
+ },
+ "01_copper_base.svg": {
+  "role": "copper",
+  "sha256": "2d1d2af660ba5e675d1b71f2a1d8817f88c41a857b22bd570ba578df60920bc6",
+  "size": [
+   110,
+   174
+  ]
+ },
+ "03_spacer_lower.svg": {
+  "role": "spacer",
+  "sha256": "34580371de26de591806d3b53906bd3cf3bfed2c46a094152dde6dbe58aeb0fe",
+  "size": [
+   110,
+   174
+  ]
+ },
+ "02_velostat.svg": {
+  "role": "film",
+  "sha256": "d525698cba8f423f0a3f89cd594104d719a5e9302daab359f0a39b6abad8dced",
+  "size": [
+   110,
+   174
+  ]
+ },
+ "04_spacer_upper.svg": {
+  "role": "spacer",
+  "sha256": "833bab2bec3b458c9ca95aa29ab07f475fd297e015295caa26d8183820500d64",
+  "size": [
+   110,
+   174
+  ]
+ },
+ "05_copper_wiper.svg": {
+  "role": "wiper",
+  "sha256": "971ea42d71d6223accdd950c05ab029a579a3128deb6b280f8ada3fee57cd93e",
+  "size": [
+   110,
+   174
+  ]
+ },
+ "06_foam_caps.svg": {
+  "role": "caps",
+  "sha256": "b4e52736cf13fe987d09d3974f1d92cfd257cba69bd80f3348e54a551f074d63",
+  "size": [
+   110,
+   174
+  ]
+ }
+}

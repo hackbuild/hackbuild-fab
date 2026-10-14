@@ -1,0 +1,343 @@
+[
+ {
+  "id": "CHK-NET-01",
+  "ok": true,
+  "line": "PASS net COM  single island (1)",
+  "extra": {
+   "islands": 1
+  }
+ },
+ {
+  "id": "CHK-NET-01",
+  "ok": true,
+  "line": "PASS net P1   single island (1)",
+  "extra": {
+   "islands": 1
+  }
+ },
+ {
+  "id": "CHK-NET-01",
+  "ok": true,
+  "line": "PASS net P2   single island (1)",
+  "extra": {
+   "islands": 1
+  }
+ },
+ {
+  "id": "CHK-NET-01",
+  "ok": true,
+  "line": "PASS net P3   single island (1)",
+  "extra": {
+   "islands": 1
+  }
+ },
+ {
+  "id": "CHK-NET-01",
+  "ok": true,
+  "line": "PASS net P4   single island (1)",
+  "extra": {
+   "islands": 1
+  }
+ },
+ {
+  "id": "CHK-NET-01",
+  "ok": true,
+  "line": "PASS net SA   single island (1)",
+  "extra": {
+   "islands": 1
+  }
+ },
+ {
+  "id": "CHK-NET-01",
+  "ok": true,
+  "line": "PASS net SB   single island (1)",
+  "extra": {
+   "islands": 1
+  }
+ },
+ {
+  "id": "CHK-NET-01",
+  "ok": true,
+  "line": "PASS net SC   single island (1)",
+  "extra": {
+   "islands": 1
+  }
+ },
+ {
+  "id": "CHK-NET-31",
+  "ok": true,
+  "line": "PASS netlist audit by name (20/20 connections)"
+ },
+ {
+  "id": "CHK-NET-02",
+  "ok": true,
+  "line": "PASS min clearance 1.000 mm at COM/ART (gate 0.70)",
+  "extra": {
+   "pair": "COM/ART",
+   "ties": "COM/ART P1/P3 P2/P4 P3/SA P4/SC SB/SC"
+  }
+ },
+ {
+  "id": "CHK-NET-08",
+  "ok": true,
+  "line": "PASS all copper >= 1.0 mm from the shared outline"
+ },
+ {
+  "id": "CHK-NET-14",
+  "ok": true,
+  "line": "PASS COM  survives the 1.10 mm erode test (1/1 islands)",
+  "extra": {
+   "islandsBefore": 1,
+   "islandsAfter": 1
+  }
+ },
+ {
+  "id": "CHK-NET-14",
+  "ok": true,
+  "line": "PASS P1   survives the 1.10 mm erode test (1/1 islands)",
+  "extra": {
+   "islandsBefore": 1,
+   "islandsAfter": 1
+  }
+ },
+ {
+  "id": "CHK-NET-14",
+  "ok": true,
+  "line": "PASS P2   survives the 1.10 mm erode test (1/1 islands)",
+  "extra": {
+   "islandsBefore": 1,
+   "islandsAfter": 1
+  }
+ },
+ {
+  "id": "CHK-NET-14",
+  "ok": true,
+  "line": "PASS P3   survives the 1.10 mm erode test (1/1 islands)",
+  "extra": {
+   "islandsBefore": 1,
+   "islandsAfter": 1
+  }
+ },
+ {
+  "id": "CHK-NET-14",
+  "ok": true,
+  "line": "PASS P4   survives the 1.10 mm erode test (1/1 islands)",
+  "extra": {
+   "islandsBefore": 1,
+   "islandsAfter": 1
+  }
+ },
+ {
+  "id": "CHK-NET-14",
+  "ok": true,
+  "line": "PASS SA   survives the 1.10 mm erode test (1/1 islands)",
+  "extra": {
+   "islandsBefore": 1,
+   "islandsAfter": 1
+  }
+ },
+ {
+  "id": "CHK-NET-14",
+  "ok": true,
+  "line": "PASS SB   survives the 1.10 mm erode test (1/1 islands)",
+  "extra": {
+   "islandsBefore": 1,
+   "islandsAfter": 1
+  }
+ },
+ {
+  "id": "CHK-NET-14",
+  "ok": true,
+  "line": "PASS SC   survives the 1.10 mm erode test (1/1 islands)",
+  "extra": {
+   "islandsBefore": 1,
+   "islandsAfter": 1
+  }
+ },
+ {
+  "id": "CHK-NET-14",
+  "ok": true,
+  "line": "PASS ART  survives the 1.10 mm erode test (23/18 islands)",
+  "extra": {
+   "islandsBefore": 18,
+   "islandsAfter": 23
+  }
+ },
+ {
+  "id": "CHK-NET-32",
+  "ok": true,
+  "line": "PASS art island gaps 0.85 mm (18 islands incl. 5 slider ticks)"
+ },
+ {
+  "id": "CHK-NET-32",
+  "ok": true,
+  "line": "PASS art counters weedable (3 holes, smallest survives 0.6 mm erode)",
+  "extra": {
+   "holes": 3
+  }
+ },
+ {
+  "id": "CHK-NET-33",
+  "ok": true,
+  "line": "PASS slider wedges keep >= 1.8 mm of copper across full travel",
+  "extra": {
+   "b": "SB"
+  }
+ },
+ {
+  "id": "CHK-NET-15",
+  "ok": true,
+  "line": "PASS slider ratio monotone 0.81 -> 0.18 over 67.9 mm of travel",
+  "extra": {
+   "spanFirst": 0.811322,
+   "spanLast": 0.177476,
+   "travelMm": 67.9
+  }
+ },
+ {
+  "id": "CHK-NET-21",
+  "ok": true,
+  "line": "PASS terminal field staggered: 14.0 mm between physically adjacent clips",
+  "extra": {
+   "jawsMm": 14
+  }
+ },
+ {
+  "id": "CHK-NET-18",
+  "ok": true,
+  "line": "PASS Velostat P1 bridges COM+P1 only (foreign none)"
+ },
+ {
+  "id": "CHK-NET-18",
+  "ok": true,
+  "line": "PASS Velostat P1 covers both combs (260 / 260 mm2)",
+  "extra": {
+   "commonMm2": 260.145,
+   "ownMm2": 260.145
+  }
+ },
+ {
+  "id": "CHK-NET-34",
+  "ok": true,
+  "line": "PASS spacer window P1 exposes both combs (197 / 247 mm2)",
+  "extra": {
+   "commonMm2": 197.28,
+   "ownMm2": 246.6
+  }
+ },
+ {
+  "id": "CHK-NET-18",
+  "ok": true,
+  "line": "PASS Velostat P2 bridges COM+P2 only (foreign none)"
+ },
+ {
+  "id": "CHK-NET-18",
+  "ok": true,
+  "line": "PASS Velostat P2 covers both combs (260 / 260 mm2)",
+  "extra": {
+   "commonMm2": 260.145,
+   "ownMm2": 260.145
+  }
+ },
+ {
+  "id": "CHK-NET-34",
+  "ok": true,
+  "line": "PASS spacer window P2 exposes both combs (197 / 247 mm2)",
+  "extra": {
+   "commonMm2": 197.28,
+   "ownMm2": 246.6
+  }
+ },
+ {
+  "id": "CHK-NET-18",
+  "ok": true,
+  "line": "PASS Velostat P3 bridges COM+P3 only (foreign none)"
+ },
+ {
+  "id": "CHK-NET-18",
+  "ok": true,
+  "line": "PASS Velostat P3 covers both combs (260 / 260 mm2)",
+  "extra": {
+   "commonMm2": 260.145,
+   "ownMm2": 260.145
+  }
+ },
+ {
+  "id": "CHK-NET-34",
+  "ok": true,
+  "line": "PASS spacer window P3 exposes both combs (197 / 247 mm2)",
+  "extra": {
+   "commonMm2": 197.28,
+   "ownMm2": 246.6
+  }
+ },
+ {
+  "id": "CHK-NET-18",
+  "ok": true,
+  "line": "PASS Velostat P4 bridges COM+P4 only (foreign none)"
+ },
+ {
+  "id": "CHK-NET-18",
+  "ok": true,
+  "line": "PASS Velostat P4 covers both combs (260 / 260 mm2)",
+  "extra": {
+   "commonMm2": 260.145,
+   "ownMm2": 260.145
+  }
+ },
+ {
+  "id": "CHK-NET-34",
+  "ok": true,
+  "line": "PASS spacer window P4 exposes both combs (197 / 247 mm2)",
+  "extra": {
+   "commonMm2": 197.28,
+   "ownMm2": 246.6
+  }
+ },
+ {
+  "id": "CHK-NET-18",
+  "ok": true,
+  "line": "PASS slider Velostat touches SA+SB only (foreign none)"
+ },
+ {
+  "id": "CHK-NET-35",
+  "ok": true,
+  "line": "PASS slider Velostat clears the SC collector by 2.70 mm"
+ },
+ {
+  "id": "CHK-NET-19",
+  "ok": true,
+  "line": "PASS wiper reaches base copper at the SC pad only (stray 0.000 mm2)"
+ },
+ {
+  "id": "CHK-NET-35",
+  "ok": true,
+  "line": "PASS wiper tail lands 34.8 mm2 on SC"
+ },
+ {
+  "id": "CHK-NET-35",
+  "ok": true,
+  "line": "PASS spacer slot sits fully over the slider Velostat"
+ },
+ {
+  "id": "CHK-NET-36",
+  "ok": true,
+  "line": "PASS Velostat inside the shared outline keepout"
+ },
+ {
+  "id": "CHK-NET-37",
+  "ok": true,
+  "line": "PASS both spacers are single connected pieces",
+  "extra": {
+   "pieces": "1 1"
+  }
+ },
+ {
+  "id": "CHK-NET-38",
+  "ok": true,
+  "line": "PASS all 8 layer SVGs report one doc size (110.0, 174.0)",
+  "extra": {
+   "sizes": "(110.0, 174.0)"
+  }
+ }
+]

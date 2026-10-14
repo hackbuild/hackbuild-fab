@@ -1,0 +1,48 @@
+PASS net COM  single island (1)
+PASS net P1   single island (1)
+PASS net P2   single island (1)
+PASS net P3   single island (1)
+PASS net P4   single island (1)
+PASS net SA   single island (1)
+PASS net SB   single island (1)
+PASS net SC   single island (1)
+PASS netlist audit by name (20/20 connections)
+PASS min clearance 1.000 mm at P3/SA (gate 0.70)
+PASS all copper >= 1.0 mm from the shared outline
+PASS COM  survives the 1.10 mm erode test (1/1 islands)
+PASS P1   survives the 1.10 mm erode test (1/1 islands)
+PASS P2   survives the 1.10 mm erode test (1/1 islands)
+PASS P3   survives the 1.10 mm erode test (1/1 islands)
+PASS P4   survives the 1.10 mm erode test (1/1 islands)
+PASS SA   survives the 1.10 mm erode test (1/1 islands)
+PASS SB   survives the 1.10 mm erode test (1/1 islands)
+PASS SC   survives the 1.10 mm erode test (1/1 islands)
+PASS ART  survives the 1.10 mm erode test (5/5 islands)
+PASS art island gaps 15.17 mm (5 islands incl. 5 slider ticks, brand art off)
+PASS art counters weedable (0 holes, smallest survives 0.6 mm erode)
+PASS slider wedges keep >= 1.8 mm of copper across full travel
+PASS slider ratio monotone 0.81 -> 0.18 over 67.9 mm of travel
+PASS terminal field staggered: 14.0 mm between physically adjacent clips
+PASS Velostat P1 bridges COM+P1 only (foreign none)
+PASS Velostat P1 covers both combs (260 / 260 mm2)
+PASS spacer window P1 exposes both combs (197 / 247 mm2)
+PASS Velostat P2 bridges COM+P2 only (foreign none)
+PASS Velostat P2 covers both combs (260 / 260 mm2)
+PASS spacer window P2 exposes both combs (197 / 247 mm2)
+PASS Velostat P3 bridges COM+P3 only (foreign none)
+PASS Velostat P3 covers both combs (260 / 260 mm2)
+PASS spacer window P3 exposes both combs (197 / 247 mm2)
+PASS Velostat P4 bridges COM+P4 only (foreign none)
+PASS Velostat P4 covers both combs (260 / 260 mm2)
+PASS spacer window P4 exposes both combs (197 / 247 mm2)
+PASS slider Velostat touches SA+SB only (foreign none)
+PASS slider Velostat clears the SC collector by 2.70 mm
+PASS wiper reaches base copper at the SC pad only (stray 0.000 mm2)
+PASS wiper tail lands 34.8 mm2 on SC
+PASS spacer slot sits fully over the slider Velostat
+PASS Velostat inside the shared outline keepout
+PASS both spacers are single connected pieces
+PASS all 8 layer SVGs report one doc size (110.0, 174.0)
+
+GATES 45 passed 0 failed
+KEYWAY rev A   110 x 174 mm   6976 mm2 copper   11 fingers/pad   min clearance 1.00 mm

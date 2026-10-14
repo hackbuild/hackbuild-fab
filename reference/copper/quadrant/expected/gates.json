@@ -1,0 +1,437 @@
+[
+ {
+  "id": "CHK-NET-01",
+  "ok": true,
+  "line": "PASS net B1   single island (1)",
+  "extra": {
+   "islands": 1
+  }
+ },
+ {
+  "id": "CHK-NET-01",
+  "ok": true,
+  "line": "PASS net B2   single island (1)",
+  "extra": {
+   "islands": 1
+  }
+ },
+ {
+  "id": "CHK-NET-01",
+  "ok": true,
+  "line": "PASS net B3   single island (1)",
+  "extra": {
+   "islands": 1
+  }
+ },
+ {
+  "id": "CHK-NET-01",
+  "ok": true,
+  "line": "PASS net B4   single island (1)",
+  "extra": {
+   "islands": 1
+  }
+ },
+ {
+  "id": "CHK-NET-01",
+  "ok": true,
+  "line": "PASS net B5   single island (1)",
+  "extra": {
+   "islands": 1
+  }
+ },
+ {
+  "id": "CHK-NET-01",
+  "ok": true,
+  "line": "PASS net B6   single island (1)",
+  "extra": {
+   "islands": 1
+  }
+ },
+ {
+  "id": "CHK-NET-01",
+  "ok": true,
+  "line": "PASS net S1A  single island (1)",
+  "extra": {
+   "islands": 1
+  }
+ },
+ {
+  "id": "CHK-NET-01",
+  "ok": true,
+  "line": "PASS net S1B  single island (1)",
+  "extra": {
+   "islands": 1
+  }
+ },
+ {
+  "id": "CHK-NET-01",
+  "ok": true,
+  "line": "PASS net S2A  single island (1)",
+  "extra": {
+   "islands": 1
+  }
+ },
+ {
+  "id": "CHK-NET-01",
+  "ok": true,
+  "line": "PASS net S2B  single island (1)",
+  "extra": {
+   "islands": 1
+  }
+ },
+ {
+  "id": "CHK-NET-01",
+  "ok": true,
+  "line": "PASS net S3A  single island (1)",
+  "extra": {
+   "islands": 1
+  }
+ },
+ {
+  "id": "CHK-NET-01",
+  "ok": true,
+  "line": "PASS net S3B  single island (1)",
+  "extra": {
+   "islands": 1
+  }
+ },
+ {
+  "id": "CHK-NET-02",
+  "ok": true,
+  "line": "PASS min clearance 1.203 mm at B1/B2 (gate 0.90)",
+  "extra": {
+   "pair": "B1/B2",
+   "ties": "B1/B2 B2/B3 B3/B4 B4/B5 B5/B6"
+  }
+ },
+ {
+  "id": "CHK-NET-08",
+  "ok": true,
+  "line": "PASS all copper >= 1.0 mm from the shared outline"
+ },
+ {
+  "id": "CHK-NET-14",
+  "ok": true,
+  "line": "PASS net B1   survives the 1.10 mm erode test (1 islands)",
+  "extra": {
+   "islandsBefore": 1,
+   "islandsAfter": 1
+  }
+ },
+ {
+  "id": "CHK-NET-14",
+  "ok": true,
+  "line": "PASS net B2   survives the 1.10 mm erode test (1 islands)",
+  "extra": {
+   "islandsBefore": 1,
+   "islandsAfter": 1
+  }
+ },
+ {
+  "id": "CHK-NET-14",
+  "ok": true,
+  "line": "PASS net B3   survives the 1.10 mm erode test (1 islands)",
+  "extra": {
+   "islandsBefore": 1,
+   "islandsAfter": 1
+  }
+ },
+ {
+  "id": "CHK-NET-14",
+  "ok": true,
+  "line": "PASS net B4   survives the 1.10 mm erode test (1 islands)",
+  "extra": {
+   "islandsBefore": 1,
+   "islandsAfter": 1
+  }
+ },
+ {
+  "id": "CHK-NET-14",
+  "ok": true,
+  "line": "PASS net B5   survives the 1.10 mm erode test (1 islands)",
+  "extra": {
+   "islandsBefore": 1,
+   "islandsAfter": 1
+  }
+ },
+ {
+  "id": "CHK-NET-14",
+  "ok": true,
+  "line": "PASS net B6   survives the 1.10 mm erode test (1 islands)",
+  "extra": {
+   "islandsBefore": 1,
+   "islandsAfter": 1
+  }
+ },
+ {
+  "id": "CHK-NET-14",
+  "ok": true,
+  "line": "PASS net S1A  survives the 1.10 mm erode test (1 islands)",
+  "extra": {
+   "islandsBefore": 1,
+   "islandsAfter": 1
+  }
+ },
+ {
+  "id": "CHK-NET-14",
+  "ok": true,
+  "line": "PASS net S1B  survives the 1.10 mm erode test (1 islands)",
+  "extra": {
+   "islandsBefore": 1,
+   "islandsAfter": 1
+  }
+ },
+ {
+  "id": "CHK-NET-14",
+  "ok": true,
+  "line": "PASS net S2A  survives the 1.10 mm erode test (1 islands)",
+  "extra": {
+   "islandsBefore": 1,
+   "islandsAfter": 1
+  }
+ },
+ {
+  "id": "CHK-NET-14",
+  "ok": true,
+  "line": "PASS net S2B  survives the 1.10 mm erode test (1 islands)",
+  "extra": {
+   "islandsBefore": 1,
+   "islandsAfter": 1
+  }
+ },
+ {
+  "id": "CHK-NET-14",
+  "ok": true,
+  "line": "PASS net S3A  survives the 1.10 mm erode test (1 islands)",
+  "extra": {
+   "islandsBefore": 1,
+   "islandsAfter": 1
+  }
+ },
+ {
+  "id": "CHK-NET-14",
+  "ok": true,
+  "line": "PASS net S3B  survives the 1.10 mm erode test (1 islands)",
+  "extra": {
+   "islandsBefore": 1,
+   "islandsAfter": 1
+  }
+ },
+ {
+  "id": "CHK-NET-40",
+  "ok": true,
+  "line": "PASS sector B6 is solid copper"
+ },
+ {
+  "id": "CHK-NET-40",
+  "ok": true,
+  "line": "PASS sector B5 is solid copper"
+ },
+ {
+  "id": "CHK-NET-40",
+  "ok": true,
+  "line": "PASS sector B4 is solid copper"
+ },
+ {
+  "id": "CHK-NET-40",
+  "ok": true,
+  "line": "PASS sector B3 is solid copper"
+ },
+ {
+  "id": "CHK-NET-40",
+  "ok": true,
+  "line": "PASS sector B2 is solid copper"
+ },
+ {
+  "id": "CHK-NET-40",
+  "ok": true,
+  "line": "PASS sector B1 is solid copper"
+ },
+ {
+  "id": "CHK-NET-15",
+  "ok": true,
+  "line": "PASS arc 1 ratio monotone along the sweep",
+  "extra": {
+   "b": "S1B",
+   "spanMin": 0.180484,
+   "spanMax": 0.779209
+  }
+ },
+ {
+  "id": "CHK-NET-15",
+  "ok": true,
+  "line": "PASS arc 1 span 0.180 to 0.779, off both rails",
+  "extra": {
+   "b": "S1B",
+   "spanMin": 0.180484,
+   "spanMax": 0.779209
+  }
+ },
+ {
+  "id": "CHK-NET-40",
+  "ok": true,
+  "line": "PASS arc 1 both wedges carry real plate area",
+  "extra": {
+   "minMm2": 888.101,
+   "maxMm2": 940.009
+  }
+ },
+ {
+  "id": "CHK-NET-15",
+  "ok": true,
+  "line": "PASS arc 2 ratio monotone along the sweep",
+  "extra": {
+   "b": "S2B",
+   "spanMin": 0.185019,
+   "spanMax": 0.783888
+  }
+ },
+ {
+  "id": "CHK-NET-15",
+  "ok": true,
+  "line": "PASS arc 2 span 0.185 to 0.784, off both rails",
+  "extra": {
+   "b": "S2B",
+   "spanMin": 0.185019,
+   "spanMax": 0.783888
+  }
+ },
+ {
+  "id": "CHK-NET-40",
+  "ok": true,
+  "line": "PASS arc 2 both wedges carry real plate area",
+  "extra": {
+   "minMm2": 1078.614,
+   "maxMm2": 1204.522
+  }
+ },
+ {
+  "id": "CHK-NET-15",
+  "ok": true,
+  "line": "PASS arc 3 ratio monotone along the sweep",
+  "extra": {
+   "b": "S3B",
+   "spanMin": 0.187876,
+   "spanMax": 0.786816
+  }
+ },
+ {
+  "id": "CHK-NET-15",
+  "ok": true,
+  "line": "PASS arc 3 span 0.188 to 0.787, off both rails",
+  "extra": {
+   "b": "S3B",
+   "spanMin": 0.187876,
+   "spanMax": 0.786816
+  }
+ },
+ {
+  "id": "CHK-NET-40",
+  "ok": true,
+  "line": "PASS arc 3 both wedges carry real plate area",
+  "extra": {
+   "minMm2": 1343.128,
+   "maxMm2": 1395.036
+  }
+ },
+ {
+  "id": "CHK-NET-41",
+  "ok": true,
+  "line": "PASS inner arc sweep 132 mm of travel",
+  "extra": {
+   "values": "131.947"
+  }
+ },
+ {
+  "id": "CHK-NET-43",
+  "ok": true,
+  "line": "PASS exactly 12 channels, one MPR121 or 12 S3 touch pins",
+  "extra": {
+   "terminals": 12,
+   "nets": 12
+  }
+ },
+ {
+  "id": "CHK-NET-21",
+  "ok": true,
+  "line": "PASS rail is ONE row on 14.0 mm pitch"
+ },
+ {
+  "id": "CHK-NET-21",
+  "ok": true,
+  "line": "PASS rail finger gap 5.0 mm"
+ },
+ {
+  "id": "CHK-NET-21",
+  "ok": true,
+  "line": "PASS alternating finger depth 5.0 mm so adjacent clip bodies nest"
+ },
+ {
+  "id": "CHK-NET-21",
+  "ok": true,
+  "line": "PASS depth alternates every finger"
+ },
+ {
+  "id": "CHK-NET-22",
+  "ok": true,
+  "line": "PASS rail order follows arrival order (monotone fan, no crossings)"
+ },
+ {
+  "id": "CHK-NET-20",
+  "ok": true,
+  "line": "PASS vinyl covers all live copper outside the rail zone (0.00 mm2 bare)"
+ },
+ {
+  "id": "CHK-NET-24",
+  "ok": true,
+  "line": "PASS vinyl clears every rail finger"
+ },
+ {
+  "id": "CHK-NET-24",
+  "ok": true,
+  "line": "PASS vinyl overhangs sector B6 by 1.6 mm"
+ },
+ {
+  "id": "CHK-NET-24",
+  "ok": true,
+  "line": "PASS vinyl overhangs sector B5 by 1.6 mm"
+ },
+ {
+  "id": "CHK-NET-24",
+  "ok": true,
+  "line": "PASS vinyl overhangs sector B4 by 1.6 mm"
+ },
+ {
+  "id": "CHK-NET-24",
+  "ok": true,
+  "line": "PASS vinyl overhangs sector B3 by 1.6 mm"
+ },
+ {
+  "id": "CHK-NET-24",
+  "ok": true,
+  "line": "PASS vinyl overhangs sector B2 by 1.6 mm"
+ },
+ {
+  "id": "CHK-NET-24",
+  "ok": true,
+  "line": "PASS vinyl overhangs sector B1 by 1.6 mm"
+ },
+ {
+  "id": "CHK-NET-09",
+  "ok": true,
+  "line": "PASS vinyl faceplate is one connected piece",
+  "extra": {
+   "pieces": 1
+  }
+ },
+ {
+  "id": "CHK-NET-24",
+  "ok": true,
+  "line": "PASS accent tiles clear the faceplate edge by 1 mm"
+ },
+ {
+  "id": "CHK-NET-09",
+  "ok": true,
+  "line": "PASS vinyl inside the shared outline keepout"
+ }
+]

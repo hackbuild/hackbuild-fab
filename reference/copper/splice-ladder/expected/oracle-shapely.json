@@ -1,0 +1,43 @@
+{
+ "note": "SPLICE rev C copper figures computed by tools/py/copper/dump_splice.py with shapely 2.1.2 on the shipped SVG. Do not edit.",
+ "nets": {
+  "SIGA": 26.4992,
+  "5V": 76.8429,
+  "GND": 61.3125,
+  "SIGB": 39.8614,
+  "BASE1": 27.766,
+  "BASE2": 14.8413,
+  "COL": 18.6842
+ },
+ "islands": {
+  "SIGA": 1,
+  "5V": 1,
+  "GND": 1,
+  "SIGB": 1,
+  "BASE1": 1,
+  "BASE2": 1,
+  "COL": 1
+ },
+ "min_gap": 0.9399999999999995,
+ "pair": "5V/GND",
+ "erode": {
+  "0.75": {
+   "SIGA": 1,
+   "5V": 1,
+   "GND": 1,
+   "SIGB": 1,
+   "BASE1": 1,
+   "BASE2": 1,
+   "COL": 1
+  },
+  "0.80": {
+   "SIGA": 0,
+   "5V": 3,
+   "GND": 3,
+   "SIGB": 2,
+   "BASE1": 2,
+   "BASE2": 1,
+   "COL": 2
+  }
+ }
+}

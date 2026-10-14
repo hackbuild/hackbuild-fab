@@ -1,0 +1,146 @@
+{
+ "note": "flex-pair traces on one face: bus, K1 lead and GND stub on the trace face at z 0.73 (computed 0.00 deg)",
+ "meshes": {
+  "pad": {
+   "solids": [
+    {
+     "box": [
+      -20,
+      -15,
+      0,
+      20,
+      15,
+      2
+     ]
+    }
+   ]
+  }
+ },
+ "parts": [
+  {
+   "id": "pad",
+   "bodies": [
+    {
+     "id": "pad",
+     "mesh": "@pad"
+    }
+   ],
+   "features": [
+    {
+     "kind": "conductor",
+     "id": "conductor.gnd",
+     "body": "pad",
+     "material": "cpla",
+     "net": "GND",
+     "region": {
+      "centreline": [
+       [
+        0,
+        3
+       ],
+       [
+        30,
+        3
+       ]
+      ],
+      "face": {
+       "origin": [
+        0,
+        0,
+        0.73
+       ],
+       "normal": [
+        0,
+        0,
+        1
+       ],
+       "u": [
+        1,
+        0,
+        0
+       ]
+      }
+     },
+     "width": 1.4,
+     "t": 0.72
+    },
+    {
+     "kind": "conductor",
+     "id": "conductor.key1",
+     "body": "pad",
+     "material": "cpla",
+     "net": "K1",
+     "region": {
+      "centreline": [
+       [
+        1.1,
+        0
+       ],
+       [
+        1.1,
+        -15
+       ]
+      ],
+      "face": {
+       "origin": [
+        0,
+        0,
+        0.73
+       ],
+       "normal": [
+        0,
+        0,
+        1
+       ],
+       "u": [
+        1,
+        0,
+        0
+       ]
+      }
+     },
+     "width": 1.4,
+     "t": 0.72
+    },
+    {
+     "kind": "conductor",
+     "id": "conductor.gnd1stub",
+     "body": "pad",
+     "material": "cpla",
+     "net": "GND",
+     "region": {
+      "centreline": [
+       [
+        -1.1,
+        0
+       ],
+       [
+        -1.1,
+        3
+       ]
+      ],
+      "face": {
+       "origin": [
+        0,
+        0,
+        0.73
+       ],
+       "normal": [
+        0,
+        0,
+        1
+       ],
+       "u": [
+        1,
+        0,
+        0
+       ]
+      }
+     },
+     "width": 1.4,
+     "t": 0.72
+    }
+   ]
+  }
+ ]
+}

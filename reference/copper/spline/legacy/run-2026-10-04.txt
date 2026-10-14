@@ -1,0 +1,88 @@
+PASS net K1    single island (1)
+PASS net K2    single island (1)
+PASS net K3    single island (1)
+PASS net K4    single island (1)
+PASS net K5    single island (1)
+PASS net K6    single island (1)
+PASS net K7    single island (1)
+PASS net K8    single island (1)
+PASS net K9    single island (1)
+PASS net K10   single island (1)
+PASS net K11   single island (1)
+PASS net K12   single island (1)
+PASS net AR_A  single island (1)
+PASS net AR_B  single island (1)
+PASS net L1_A  single island (1)
+PASS net L1_B  single island (1)
+PASS net L2_A  single island (1)
+PASS net L2_B  single island (1)
+PASS min clearance 1.000 mm at L1_A/L1_B (gate 0.90)
+PASS all copper >= 1.0 mm from the shared outline
+PASS net K1    survives the 1.10 mm erode test
+PASS net K2    survives the 1.10 mm erode test
+PASS net K3    survives the 1.10 mm erode test
+PASS net K4    survives the 1.10 mm erode test
+PASS net K5    survives the 1.10 mm erode test
+PASS net K6    survives the 1.10 mm erode test
+PASS net K7    survives the 1.10 mm erode test
+PASS net K8    survives the 1.10 mm erode test
+PASS net K9    survives the 1.10 mm erode test
+PASS net K10   survives the 1.10 mm erode test
+PASS net K11   survives the 1.10 mm erode test
+PASS net K12   survives the 1.10 mm erode test
+PASS net AR_A  survives the 1.10 mm erode test
+PASS net AR_B  survives the 1.10 mm erode test
+PASS net L1_A  survives the 1.10 mm erode test
+PASS net L1_B  survives the 1.10 mm erode test
+PASS net L2_A  survives the 1.10 mm erode test
+PASS net L2_B  survives the 1.10 mm erode test
+PASS blade K12 is solid copper
+PASS blade K11 is solid copper
+PASS blade K10 is solid copper
+PASS blade K9 is solid copper
+PASS blade K8 is solid copper
+PASS blade K7 is solid copper
+PASS blade K6 is solid copper
+PASS blade K5 is solid copper
+PASS blade K4 is solid copper
+PASS blade K3 is solid copper
+PASS blade K2 is solid copper
+PASS blade K1 is solid copper
+PASS smallest blade plate 194 mm2 (a fingertip is about 100)
+PASS arc ratio monotone along the sweep
+PASS arc span 0.235 to 0.727, off both rails
+PASS arc sweep 68 mm, small by design
+PASS slider L1 ratio monotone bottom to top
+PASS slider L1 span 0.887 to 0.113, off both rails
+PASS slider L2 ratio monotone bottom to top
+PASS slider L2 span 0.887 to 0.113, off both rails
+PASS straight slider travel 42 mm, small by design
+PASS exactly 18 channels: two MPR121 on one bus, 18 of 24 used
+PASS rail is ONE row on 13.0 mm pitch
+PASS rail finger gap 4.0 mm
+PASS alternating finger depth 5.0 mm so adjacent clip bodies nest
+PASS depth alternates every finger
+PASS rail order follows arrival order (monotone fan)
+PASS fan fits 6 lanes for 18 nets
+PASS vinyl covers all live copper outside the rail zone (0.00 mm2 bare)
+PASS vinyl clears every rail finger
+PASS vinyl overhangs blade K12
+PASS vinyl overhangs blade K11
+PASS vinyl overhangs blade K10
+PASS vinyl overhangs blade K9
+PASS vinyl overhangs blade K8
+PASS vinyl overhangs blade K7
+PASS vinyl overhangs blade K6
+PASS vinyl overhangs blade K5
+PASS vinyl overhangs blade K4
+PASS vinyl overhangs blade K3
+PASS vinyl overhangs blade K2
+PASS vinyl overhangs blade K1
+PASS vinyl overhangs the arc slider
+PASS vinyl overhangs both straight sliders
+PASS vinyl faceplate is one connected piece
+PASS accent tiles clear the faceplate edge by 1 mm
+PASS vinyl inside the shared outline keepout
+
+GATES 85 passed 0 failed
+SPLINE rev A   242 x 146 mm   18 channels in ONE row of 18   9124 mm2 copper   min clr 1.00 mm

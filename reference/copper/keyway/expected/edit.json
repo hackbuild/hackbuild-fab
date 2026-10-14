@@ -1,0 +1,14 @@
+{
+ "pointer": "/clr",
+ "from": 0.7,
+ "to": 1.1,
+ "expect": {
+  "flipped": [
+   "FAIL min clearance 1.000 mm at COM/ART (gate 1.10)"
+  ],
+  "written": false,
+  "failures": [
+   "FAIL min clearance 1.000 mm at COM/ART (gate 1.10)"
+  ]
+ }
+}

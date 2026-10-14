@@ -1,0 +1,33 @@
+{
+ "face": {
+  "origin": [
+   0,
+   0,
+   0
+  ],
+  "normal": [
+   0,
+   0,
+   1
+  ],
+  "u": [
+   1,
+   0,
+   0
+  ]
+ },
+ "layers": [
+  {
+   "role": "backer",
+   "material": "chipboard-2",
+   "t": 2,
+   "registration": "outline"
+  },
+  {
+   "role": "conductor",
+   "material": "copper-tape",
+   "t": 0.07,
+   "registration": "outline"
+  }
+ ]
+}

@@ -1,0 +1,1 @@
+{"name":"boss-bench","private":true,"dependencies":{"three":"0.128.0","jszip":"3.10.1","earcut":"2.2.4","polygon-clipping":"0.15.7","@fontsource/permanent-marker":"*","@fontsource/special-elite":"*","@fontsource/vt323":"*","@fontsource/ibm-plex-mono":"*"},"scripts":{"build":"python3 build.py","test":"node test_parts.js && node sweep.js","smoke":"python3 smoke.py"}}

@@ -1,0 +1,1 @@
+{"expect":{"changed":["trace.3V3","trace.A","trace.B","trace.DOWN","trace.GND","trace.LEFT","trace.RIGHT","trace.SELECT","trace.START","trace.UP","trace.X","trace.Y"],"metricDelta":{},"unchanged":[]},"from":6,"pointer":"/pitchMm","to":7}

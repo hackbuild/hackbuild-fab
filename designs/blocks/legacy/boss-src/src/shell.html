@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BOSS.bench</title>
+<style>
+/* hack.build app shell. Tokens from the v1.0 design system: paper chrome, ink bars, one pink. */
+:root{
+  --pink:#FE0386; --cream:#f5f0e6; --paper:#fffdf7; --sunk:#efe9db; --edge:#e8e0d0; --ink:#1a1a1a; --void:#0a0a0a;
+  --ink2:#444; --ink3:#6b6459; --ink4:#9a9184; --ok:#1f9d55; --warn:#c77700; --err:#c3251f; --slime:#a6e22e; --amber:#ffb020;
+  --mono:'IBM Plex Mono',ui-monospace,Menlo,monospace; --disp:'Permanent Marker',cursive; --type:'Special Elite',serif; --inst:'VT323',monospace;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--cream) radial-gradient(rgba(26,26,26,.045) 1px,transparent 1px);background-size:4px 4px;color:var(--ink);font:13px/1.35 var(--mono);display:flex;flex-direction:column;overflow:hidden}
+button,input,select,textarea{font:inherit;color:inherit}
+button{background:var(--ink);color:var(--cream);border:0;padding:6px 10px;cursor:pointer;text-transform:uppercase;letter-spacing:.08em;font-size:11px;box-shadow:3px 3px 0 var(--pink)}
+button:hover{background:var(--pink);color:var(--cream)}
+button.ghost{background:transparent;color:var(--ink);border:2px solid var(--ink);box-shadow:none}
+button.ghost:hover{background:var(--ink);color:var(--cream)}
+button.pink{background:var(--pink)}
+button.pink:hover{background:var(--ink)}
+button:disabled{opacity:.4;cursor:default}
+input[type=text],input[type=number],select,textarea{background:var(--paper);border:2px solid var(--ink);padding:4px 6px;outline:none;border-radius:0}
+input:focus,select:focus,textarea:focus{border-color:var(--pink)}
+input[type=range]{accent-color:var(--pink);width:100%}
+input[type=checkbox],input[type=color]{accent-color:var(--pink)}
+input[type=color]{width:34px;height:26px;border:2px solid var(--ink);padding:0;background:var(--paper)}
+/* header */
+#hdr{background:var(--ink);color:var(--cream);border-bottom:3px solid var(--pink);display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;padding:6px 14px;flex:0 0 auto}
+#hdr .mark{width:28px;height:28px;flex:0 0 auto}
+#hdr h1{font:26px var(--disp);margin:0;letter-spacing:.02em}
+#hdr h1 span{color:var(--pink)}
+#hdr .tag{font:14px var(--type);opacity:.75;margin-left:4px}
+#hdr .sp{flex:1}
+#hdr button{padding:5px 9px;box-shadow:none;border:1px solid var(--cream)}
+#hdr button:hover{border-color:var(--pink)}
+/* steps + guide */
+#steps{display:flex;background:var(--ink);flex:0 0 auto}
+#steps button{flex:1;background:transparent;box-shadow:none;border:0;border-bottom:3px solid transparent;padding:8px 6px;color:var(--cream);font-weight:600;letter-spacing:.14em;font-size:12px}
+#steps button .n{display:inline-block;width:18px;height:18px;line-height:18px;border:1px solid var(--cream);text-align:center;margin-right:6px;font-size:11px}
+#steps button.done .n{background:var(--ok);border-color:var(--ok)}
+#steps button.on{border-bottom-color:var(--pink);color:#fff}
+#steps button.on .n{background:var(--pink);border-color:var(--pink)}
+#guide{background:var(--sunk);border-bottom:2px solid var(--ink);padding:5px 14px;font:13px var(--type);flex:0 0 auto}
+#guide b{font-family:var(--inst);font-size:17px;font-weight:400;color:var(--pink);margin-right:8px}
+/* main */
+#main{flex:1;display:flex;min-height:0}
+#stage{flex:1;position:relative;background:var(--void);background-image:linear-gradient(rgba(254,3,134,.14) 1px,transparent 1px),linear-gradient(90deg,rgba(254,3,134,.14) 1px,transparent 1px);background-size:26px 26px;min-width:0;display:flex}
+#stage canvas.three{width:100%;height:100%;display:block;flex:1}
+#stage.art canvas.three{flex:0 0 42%;min-width:0}
+#face{display:none;flex:1;position:relative;background:var(--void);border-left:2px solid var(--pink)}
+#stage.art #face{display:block}
+#face canvas{width:100%;height:100%;display:block;cursor:grab}
+#face .hint{position:absolute;left:10px;bottom:8px;color:var(--ink4);font:15px var(--inst);pointer-events:none}
+#cams{position:absolute;left:10px;top:10px;display:flex;gap:4px}
+#cams button{padding:3px 7px;font-size:10px;box-shadow:none;border:1px solid var(--ink4);background:rgba(10,10,10,.8)}
+#cams button.on{border-color:var(--pink);color:var(--pink)}
+#legend{position:absolute;right:10px;top:10px;display:flex;flex-direction:column;gap:4px;font:15px var(--inst);color:var(--cream)}
+#legend div{display:flex;align-items:center;gap:6px}
+#legend i{display:inline-block;width:14px;height:14px;border:1px solid var(--cream)}
+/* rail */
+#rail{flex:0 0 340px;background:var(--paper);border-left:3px solid var(--ink);overflow-y:auto;padding:0 0 30px}
+.pane{display:none;padding:10px}
+.pane.on{display:block}
+.panel{border:2px solid var(--ink);background:var(--paper);box-shadow:5px 5px 0 var(--ink);margin:0 4px 16px 0}
+.panel h3{margin:0;background:var(--ink);color:var(--cream);font:20px var(--inst);padding:3px 10px;letter-spacing:.04em;font-weight:400}
+.panel .bd{padding:8px 10px}
+.row{display:flex;align-items:center;gap:8px;margin:5px 0}
+.row label{flex:0 0 96px;font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--ink3)}
+.row input[type=range]{flex:1}
+.row input[type=number]{width:64px;flex:0 0 auto}
+.row select{flex:1;min-width:0}
+.row input[type=text]{flex:1;min-width:0}
+.row .u{font-size:10px;color:var(--ink4);flex:0 0 22px}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{border:2px solid var(--ink);padding:4px 9px;cursor:pointer;font-size:11px;text-transform:uppercase;letter-spacing:.1em;background:var(--paper);box-shadow:none;color:var(--ink)}
+.chip:hover{background:var(--sunk);color:var(--ink)}
+.chip.on{background:var(--ink);color:var(--cream)}
+.chip.pink.on{background:var(--pink)}
+.fold>summary{cursor:pointer;font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:var(--ink3);padding:6px 0;list-style:none}
+.fold>summary::before{content:'+ ';color:var(--pink)}
+.fold[open]>summary::before{content:'- '}
+.layers{display:flex;flex-direction:column;gap:4px;margin:6px 0}
+.layer{border:2px solid var(--ink);padding:5px 8px;cursor:pointer;display:flex;align-items:center;gap:8px;background:var(--paper)}
+.layer.on{border-color:var(--pink);box-shadow:3px 3px 0 var(--pink)}
+.layer .k{font:15px var(--inst);color:var(--pink);flex:0 0 46px}
+.layer .t{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.layer .x{background:transparent;color:var(--ink3);box-shadow:none;padding:0 4px;font-size:14px}
+.layer .x:hover{color:var(--err);background:transparent}
+.slot{display:flex;align-items:center;gap:8px;margin:6px 0}
+.slot .n{font:18px var(--inst);color:var(--pink);flex:0 0 20px}
+.slot input[type=text]{flex:1;min-width:0}
+.slot select{flex:0 0 80px}
+.slot .role{font-size:10px;color:var(--ink4);text-transform:uppercase;letter-spacing:.1em;flex:0 0 auto}
+.btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.next{display:flex;justify-content:flex-end;margin:4px 6px 12px 0}
+.note{font:13px var(--type);color:var(--ink3);margin:6px 0}
+/* status strip */
+#status{background:var(--ink);color:var(--cream);font:16px var(--inst);padding:4px 14px;display:flex;gap:18px;align-items:center;flex:0 0 auto}
+#status .chips{gap:6px}
+#status .c{border:1px solid var(--ink4);padding:0 8px;line-height:20px;font-size:15px}
+#status .c.ok{border-color:var(--slime);color:var(--slime)}
+#status .c.warn{border-color:var(--amber);color:var(--amber)}
+#status .c.err{border-color:#ff5c4d;color:#ff5c4d}
+#status .sp{flex:1}
+/* overlay */
+#welcome{position:absolute;inset:0;background:rgba(10,10,10,.82);display:flex;align-items:center;justify-content:center;z-index:20}
+#welcome.hide{display:none}
+#welcome .card{background:var(--paper);border:3px solid var(--ink);box-shadow:8px 8px 0 var(--pink);padding:18px 22px;max-width:640px}
+#welcome h2{font:30px var(--disp);margin:0 0 8px}
+#welcome h2 span{color:var(--pink)}
+#welcome .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:12px 0 16px}
+#welcome .grid div{border:2px solid var(--ink);padding:8px}
+#welcome .grid b{font:22px var(--inst);color:var(--pink);font-weight:400;display:block}
+#welcome .grid p{margin:2px 0 0;font:12px var(--type)}
+.drop{border:2px dashed var(--ink3);padding:10px;text-align:center;color:var(--ink3);font:13px var(--type);cursor:pointer}
+.drop.over{border-color:var(--pink);color:var(--pink)}
+.readout{font:16px var(--inst);color:var(--ink2);display:grid;grid-template-columns:1fr 1fr;gap:2px 10px}
+.readout span{color:var(--pink)}
+@media (max-width:820px){#rail{flex-basis:290px}#hdr .tag{display:none}}
+@media (max-width:640px){#main{flex-direction:column}#rail{flex:0 0 46%;border-left:0;border-top:3px solid var(--ink)}#stage{min-height:0}#steps button{letter-spacing:.04em;font-size:11px;padding:8px 2px}#steps button .n{margin-right:3px}#hdr{gap:6px 8px;padding:6px 8px}#hdr h1{font-size:22px}#hdr button{padding:4px 6px;font-size:10px}#status{flex-wrap:wrap;gap:6px 12px}#cams button{padding:2px 5px}#face .hint{display:none}}
+</style><style>
+/* BOSS additions */
+#stage canvas.three{width:100%;height:100%;display:block;flex:1;outline:none}
+#welcome .card{max-width:min(640px,calc(100vw - 24px));margin:0 12px;overflow:auto;max-height:90vh}
+@media (max-width:640px){#welcome .grid{grid-template-columns:1fr 1fr}}
+#hud{position:absolute;left:10px;bottom:8px;color:var(--ink4);font:15px var(--inst);pointer-events:none;max-width:70%}
+#hud b{color:var(--pink);font-weight:400}
+#tools{position:absolute;left:10px;top:40px;display:flex;gap:4px;flex-wrap:wrap}
+#tools button{padding:3px 7px;font-size:10px;box-shadow:none;border:1px solid var(--ink4);background:rgba(10,10,10,.8)}
+#tools button.on{border-color:var(--pink);color:var(--pink)}
+.gallery{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.gal{border:2px solid var(--ink);padding:6px 8px;cursor:pointer;background:var(--paper)}
+.gal:hover{background:var(--sunk)}
+.gal.on{border-color:var(--pink);box-shadow:3px 3px 0 var(--pink)}
+.gal .k{font:17px var(--inst);color:var(--pink)}
+.gal .t{font:12px var(--type);color:var(--ink3)}
+.pins{display:grid;grid-template-columns:1fr 1fr;gap:2px 10px;font-size:11px}
+.pins label{display:flex;align-items:center;gap:6px;cursor:pointer}
+.pins label.rail{color:var(--ink3)}
+.gridpad{display:grid;gap:2px;margin:6px 0}
+.gridpad div{aspect-ratio:1;border:1px solid var(--ink3);cursor:pointer;background:var(--paper);font:10px var(--inst);display:flex;align-items:center;justify-content:center}
+.gridpad div.n0{background:#FE0386;color:#fff}.gridpad div.n1{background:#1f9d55;color:#fff}.gridpad div.n2{background:#ffb020}.gridpad div.n3{background:#3b82f6;color:#fff}.gridpad div.n4{background:#8b5cf6;color:#fff}.gridpad div.n5{background:#c3251f;color:#fff}.gridpad div.n6{background:#0891b2;color:#fff}.gridpad div.n7{background:#6b6459;color:#fff}
+.insts{display:flex;flex-direction:column;gap:4px}
+.inst{border:2px solid var(--ink);padding:4px 8px;cursor:pointer;display:flex;align-items:center;gap:8px;background:var(--paper);font-size:12px}
+.inst.on{border-color:var(--pink);box-shadow:3px 3px 0 var(--pink)}
+.inst .k{font:15px var(--inst);color:var(--pink);flex:0 0 26px}
+.inst .t{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.inst .x{background:transparent;color:var(--ink3);box-shadow:none;padding:0 4px;font-size:14px}
+.inst .x:hover{color:var(--err);background:transparent}
+.pinrow{display:grid;grid-template-columns:52px 1fr 70px;gap:4px;align-items:center;font-size:11px;margin:2px 0}
+.pinrow .v{font:15px var(--inst);color:var(--ink2);text-align:right}
+.pinrow .v.hi{color:var(--ok)}.pinrow .v.lo{color:var(--ink4)}
+.pinrow select{padding:2px 4px;font-size:11px}
+.warns{font:13px var(--type);color:var(--warn)}
+.warns div::before{content:'! ';color:var(--err)}
+.oks{font:13px var(--type);color:var(--ok)}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:2px 10px;font:15px var(--inst);color:var(--ink2)}
+.kv b{color:var(--pink);font-weight:400}
+.mat{display:flex;align-items:center;gap:8px;margin:6px 0}
+.mat .n{font:18px var(--inst);color:var(--pink);flex:0 0 20px}
+.mat input[type=text]{flex:1;min-width:0}
+.mat .role{font-size:10px;color:var(--ink4);text-transform:uppercase;letter-spacing:.1em;flex:0 0 80px}
+</style>
+</head>
+<body>
+<div id="hdr">
+  <svg class="mark" viewBox="117 103 800 800" aria-hidden="true">
+    <path transform="translate(490,121)" fill="#f5f0e6" d="m0 0h38l34 3 29 5 25 6 26 8 21 8 20 9 20 10 23 14 19 13 12 10 11 9 16 15 9 9 7 8 9 10 15 20 18 27 13 23 13 28 10 26 8 26 6 27 4 27 2 25v29l-2 28-5 32-6 27-8 27-10 25-12 25-10 17-13 19-10 13-11 13-7 8-9 10-20 20-8 7-15 13-16 12-19 13-13 8-18 10-27 13-29 11-24 7-24 5-27 4-24 2h-25l-27-3-20-4-16-5-12-6-8-7-7-10-4-8-2-10v-13l4-13 7-12 11-11 14-8 12-3h16l24 3 23 1 25-1 22-3 30-7 18-6 25-11 22-12 21-14 10-8 13-11 13-13 9-11 10-13 10-15 12-22 9-20 10-30 6-27 3-19 2-26v-20l-3-29-6-26-8-24-8-18-11-21-14-21-11-14-9-10-7-8-16-16-11-9-15-12-17-11-14-8-16-8-14-6-24-8-22-5-21-3-12-1h-37l-25 3-20 4-20 6-21 8-24 12-19 12-12 9-11 9-10 9-17 17-9 11-14 19-11 18-11 21-10 26-6 21-4 19-2 15-1 14v25l2 22 3 20v10l-4 16-7 11-6 7-13 9-13 5-5 1h-14l-12-3-12-6-10-9-6-7-7-14-4-18-3-26-1-16v-36l3-30 5-28 8-29 11-29 13-28 14-24 14-21 10-14 13-16 12-14 30-30 11-9 15-12 24-16 21-12 23-11 27-10 23-7 27-6 27-4z"/>
+    <path transform="translate(498,314)" fill="#FE0386" d="m0 0h25l14 3 6 4 3 4 1 8-4 8-11 10-20 16-14 12-14 14-10 14-8 16-4 15-1 6v20l4 18 5 13 6 11 9 12 6 7 11 9 14 9 16 7 16 4 8 1h15l16-3 16-6 14-8 13-10 13-12 9-9 2-3h2l2-4 11-12 7-9 5-4 9-2 9 3 6 7 2 5 1 9-3 25-5 23-7 21-13 27-10 15-8 10-9 10-12 12-14 11-18 11-23 11-19 6-23 5-21 2h-17l-23-2-14-2h-19l-16 4-12 7-10 8-63 63-9 8-13 8-13 6-11 3h-20l-15-4-17-9-11-9-9-11-7-15-2-10v-16l3-13 6-11 11-14 16-16 7-8 69-69 6-9 4-13-1-9-7-24-3-21v-31l3-22 6-21 7-17 11-19 10-13 11-12 13-13 16-12 16-10 19-10 19-7 19-5z"/>
+  </svg>
+  <h1>BOSS<span>.</span>bench</h1>
+  <span class="tag">stud and socket electronics you print. make things. break things. repeat.</span>
+  <span class="sp"></span>
+  <button id="bUndo" title="ctrl z">undo</button>
+  <button id="bRedo" title="ctrl shift z">redo</button>
+  <button id="bOpen">open</button>
+  <button id="bSave">save</button>
+  <button id="bGuide">guide</button>
+</div>
+<div id="steps">
+  <button data-step="0" class="on"><span class="n">1</span>PART</button>
+  <button data-step="1"><span class="n">2</span>MATERIALS</button>
+  <button data-step="2"><span class="n">3</span>BUILD</button>
+  <button data-step="3"><span class="n">4</span>PRINT</button>
+</div>
+<div id="guide"><b>STEP 1 PART</b><span id="guideText">pick a part from the catalog and set its parameters. every number is checked against the printer and the electrics before it reaches the stage.</span></div>
+<div id="main">
+  <div id="stage">
+    <canvas class="three" tabindex="0"></canvas>
+    <div id="cams"><button data-cam="iso" class="on">iso</button><button data-cam="top">top</button><button data-cam="front">front</button><button data-cam="under">under</button><button data-cam="xray">x ray</button></div>
+    <div id="tools" style="display:none"><button data-tool="move" class="on">move</button><button data-tool="wire">wire</button><button data-tool="rotate">rotate</button><button data-tool="delete">delete</button><button data-tool="run">run</button></div>
+    <div id="legend"></div>
+    <div id="hud"></div>
+    <div id="welcome">
+      <div class="card">
+        <h2>BOSS<span>.</span>bench</h2>
+        <p class="note">a LEGO style electronics system you print in four filaments: PETG body, conductive PLA studs and traces, TPU wires and buttons, conductive TPU sockets and cores. Board seats bring ESP32-C3, Pico and Teensy pins out to studs, bricks add buttons, touch, force, sliders, lamps and resistors, printed wires join it all, and the build step is a circuit simulator you snap together in 3D.</p>
+        <div class="grid">
+          <div><b>1 PART</b><p>seats, plates, wires, bricks. set numbers, read the checks.</p></div>
+          <div><b>2 MATERIALS</b><p>the four filaments, their resistivity, what that costs you.</p></div>
+          <div><b>3 BUILD</b><p>drop parts on a grid, stack, wire, run the circuit.</p></div>
+          <div><b>4 PRINT</b><p>3MF with filaments assigned, STL zip, print card.</p></div>
+        </div>
+        <div class="btns"><button id="wBlank" class="ghost">start with a seat</button><button id="wExample" class="pink">worked example scene</button></div>
+      </div>
+    </div>
+  </div>
+  <div id="rail">
+    <div class="pane on" id="pane0">
+      <div class="panel"><h3>CATALOG</h3><div class="bd"><div class="gallery" id="gallery"></div></div></div>
+      <div class="panel"><h3>PARAMETERS</h3><div class="bd" id="params"></div></div>
+      <div class="panel"><h3>READOUT</h3><div class="bd"><div class="kv" id="readout"></div><div id="checks" style="margin-top:6px"></div></div></div>
+      <div class="panel"><h3>HOOKUP</h3><div class="bd"><div class="note" id="hookup"></div><div class="note" id="bom"></div></div></div>
+      <div class="next"><button id="next0">next: materials</button></div>
+    </div>
+    <div class="pane" id="pane1">
+      <div class="panel"><h3>FILAMENTS</h3><div class="bd" id="mats"></div></div>
+      <div class="panel"><h3>PRINT REALITY</h3><div class="bd"><div class="note">Studs 4.8 mm on an 8 mm pitch, LEGO compatible. Sockets are conductive TPU rings at 4.6 mm, so they stretch 0.2 mm over a stud and stay in contact. Everything prints flat with no supports. Conductive PLA (Protopasta class) is about 30 ohm cm in plane; conductive TPU (Eel class) about 1500 ohm cm. That is why every readout shows kilohms: printed conductors carry signals, touch, and dividers. They do not carry motor current or LED strips. Wires with a conductive PLA core are 50x lower than conductive TPU and still bend a little.</div>
+        <div class="note">Purge into conductive TPU generously (70 mm3 or more) or the black smears the cream. Print the conductive slots at the low end of their temperature range. If the filament list imports as one entry, use the per colour STL zip.</div></div></div>
+      <div class="next"><button id="next1">next: build</button></div>
+    </div>
+    <div class="pane" id="pane2">
+      <div class="panel"><h3>PALETTE</h3><div class="bd"><div class="chips" id="palette"></div><div class="note">click a chip, then click the grid to drop it. R rotates while placing. drag to move, things stack. wire tool: click stud, click stud.</div></div></div>
+      <div class="panel"><h3>SCENE</h3><div class="bd"><div class="insts" id="insts"></div><div class="btns"><button id="bClear" class="ghost">clear</button><button id="bRun" class="pink">run circuit</button></div></div></div>
+      <div class="panel"><h3>SELECTED</h3><div class="bd" id="selPanel"><div class="note">select a part in the scene</div></div></div>
+      <div class="panel"><h3>BOARD PINS</h3><div class="bd" id="pinPanel"><div class="note">add a SEAT to drive pins</div></div></div>
+      <div class="panel"><h3>RESULT</h3><div class="bd" id="result"><div class="note">run to see voltages</div></div></div>
+      <div class="next"><button id="next2">next: print</button></div>
+    </div>
+    <div class="pane" id="pane3">
+      <div class="panel"><h3>WHAT TO PRINT</h3><div class="bd"><div class="chips" id="printWhat"><button class="chip on" data-what="part">this part</button><button class="chip" data-what="scene">the whole scene</button></div><div class="kv" id="printList" style="margin-top:8px"></div></div></div>
+      <div class="panel"><h3>EXPORT</h3><div class="bd">
+        <div class="btns"><button id="b3mf" class="pink">3MF project</button><button id="bStl" class="ghost">STL zip</button><button id="bCard" class="ghost">print card</button><button id="bJson" class="ghost">design json</button></div>
+        <div class="note" id="exportNote"></div>
+      </div></div>
+      <div class="panel"><h3>PRINT NOTES</h3><div class="bd"><div class="note">Creator 5 Pro, 0.4 nozzle, 0.24 layers, prime tower on. Slot 1 PETG cream, slot 2 conductive PLA black, slot 3 TPU 95A pink, slot 4 conductive TPU dark grey. The snap seat lid prints flat beside the body; the FORCE membrane prints face down beside its brick. Filament pin hinge: push two 8 mm bits of 1.75 filament in from the gap.</div></div></div>
+    </div>
+  </div>
+</div>
+<div id="status"><span id="sDims">-</span><span id="sTris">-</span><span id="sMs">-</span><span class="sp"></span><div class="chips" id="sChips"></div></div>

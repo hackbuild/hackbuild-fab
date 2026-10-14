@@ -1,0 +1,70 @@
+{
+ "note": "a conductor ramp rising 10 mm over a 5 mm run, laid on a unit face frame whose u axis climbs (computed 63.43 deg; D-255 refuses a non-unit frame)",
+ "meshes": {
+  "pad": {
+   "solids": [
+    {
+     "box": [
+      0,
+      -5,
+      0,
+      5,
+      5,
+      10
+     ]
+    }
+   ]
+  }
+ },
+ "parts": [
+  {
+   "id": "ramp",
+   "bodies": [
+    {
+     "id": "pad",
+     "mesh": "@pad"
+    }
+   ],
+   "features": [
+    {
+     "kind": "conductor",
+     "id": "conductor.ramp",
+     "body": "pad",
+     "material": "cpla",
+     "net": "K1",
+     "region": {
+      "centreline": [
+       [
+        0,
+        0
+       ],
+       [
+        11.180339887498949,
+        0
+       ]
+      ],
+      "face": {
+       "origin": [
+        0,
+        0,
+        0
+       ],
+       "normal": [
+        -0.8944271909999159,
+        0,
+        0.4472135954999579
+       ],
+       "u": [
+        0.4472135954999579,
+        0,
+        0.8944271909999159
+       ]
+      }
+     },
+     "width": 1.4,
+     "t": 0.72
+    }
+   ]
+  }
+ ]
+}

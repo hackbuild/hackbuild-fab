@@ -1,0 +1,610 @@
+[
+ {
+  "id": "CHK-NET-01",
+  "ok": true,
+  "line": "PASS net T1    single island (1)",
+  "extra": {
+   "islands": 1
+  }
+ },
+ {
+  "id": "CHK-NET-01",
+  "ok": true,
+  "line": "PASS net T2    single island (1)",
+  "extra": {
+   "islands": 1
+  }
+ },
+ {
+  "id": "CHK-NET-01",
+  "ok": true,
+  "line": "PASS net T3    single island (1)",
+  "extra": {
+   "islands": 1
+  }
+ },
+ {
+  "id": "CHK-NET-01",
+  "ok": true,
+  "line": "PASS net T4    single island (1)",
+  "extra": {
+   "islands": 1
+  }
+ },
+ {
+  "id": "CHK-NET-01",
+  "ok": true,
+  "line": "PASS net T5    single island (1)",
+  "extra": {
+   "islands": 1
+  }
+ },
+ {
+  "id": "CHK-NET-01",
+  "ok": true,
+  "line": "PASS net T6    single island (1)",
+  "extra": {
+   "islands": 1
+  }
+ },
+ {
+  "id": "CHK-NET-01",
+  "ok": true,
+  "line": "PASS net T7    single island (1)",
+  "extra": {
+   "islands": 1
+  }
+ },
+ {
+  "id": "CHK-NET-01",
+  "ok": true,
+  "line": "PASS net T8    single island (1)",
+  "extra": {
+   "islands": 1
+  }
+ },
+ {
+  "id": "CHK-NET-01",
+  "ok": true,
+  "line": "PASS net T9    single island (1)",
+  "extra": {
+   "islands": 1
+  }
+ },
+ {
+  "id": "CHK-NET-01",
+  "ok": true,
+  "line": "PASS net T10   single island (1)",
+  "extra": {
+   "islands": 1
+  }
+ },
+ {
+  "id": "CHK-NET-01",
+  "ok": true,
+  "line": "PASS net T11   single island (1)",
+  "extra": {
+   "islands": 1
+  }
+ },
+ {
+  "id": "CHK-NET-01",
+  "ok": true,
+  "line": "PASS net T12   single island (1)",
+  "extra": {
+   "islands": 1
+  }
+ },
+ {
+  "id": "CHK-NET-01",
+  "ok": true,
+  "line": "PASS net AR_A  single island (1)",
+  "extra": {
+   "islands": 1
+  }
+ },
+ {
+  "id": "CHK-NET-01",
+  "ok": true,
+  "line": "PASS net AR_B  single island (1)",
+  "extra": {
+   "islands": 1
+  }
+ },
+ {
+  "id": "CHK-NET-01",
+  "ok": true,
+  "line": "PASS net L1_A  single island (1)",
+  "extra": {
+   "islands": 1
+  }
+ },
+ {
+  "id": "CHK-NET-01",
+  "ok": true,
+  "line": "PASS net L1_B  single island (1)",
+  "extra": {
+   "islands": 1
+  }
+ },
+ {
+  "id": "CHK-NET-01",
+  "ok": true,
+  "line": "PASS net L2_A  single island (1)",
+  "extra": {
+   "islands": 1
+  }
+ },
+ {
+  "id": "CHK-NET-01",
+  "ok": true,
+  "line": "PASS net L2_B  single island (1)",
+  "extra": {
+   "islands": 1
+  }
+ },
+ {
+  "id": "CHK-NET-02",
+  "ok": true,
+  "line": "PASS min clearance 1.100 mm at T1/T2 (gate 0.90)",
+  "extra": {
+   "pair": "T1/T2",
+   "ties": "T1/T2 T2/T3 T4/T5 T5/T6 T7/T8 T8/T9 T10/T11 T11/T12"
+  }
+ },
+ {
+  "id": "CHK-NET-08",
+  "ok": true,
+  "line": "PASS all copper >= 1.0 mm from the shared outline"
+ },
+ {
+  "id": "CHK-NET-14",
+  "ok": true,
+  "line": "PASS net T1    survives the 1.10 mm erode test",
+  "extra": {
+   "islandsBefore": 1,
+   "islandsAfter": 1
+  }
+ },
+ {
+  "id": "CHK-NET-14",
+  "ok": true,
+  "line": "PASS net T2    survives the 1.10 mm erode test",
+  "extra": {
+   "islandsBefore": 1,
+   "islandsAfter": 1
+  }
+ },
+ {
+  "id": "CHK-NET-14",
+  "ok": true,
+  "line": "PASS net T3    survives the 1.10 mm erode test",
+  "extra": {
+   "islandsBefore": 1,
+   "islandsAfter": 1
+  }
+ },
+ {
+  "id": "CHK-NET-14",
+  "ok": true,
+  "line": "PASS net T4    survives the 1.10 mm erode test",
+  "extra": {
+   "islandsBefore": 1,
+   "islandsAfter": 1
+  }
+ },
+ {
+  "id": "CHK-NET-14",
+  "ok": true,
+  "line": "PASS net T5    survives the 1.10 mm erode test",
+  "extra": {
+   "islandsBefore": 1,
+   "islandsAfter": 1
+  }
+ },
+ {
+  "id": "CHK-NET-14",
+  "ok": true,
+  "line": "PASS net T6    survives the 1.10 mm erode test",
+  "extra": {
+   "islandsBefore": 1,
+   "islandsAfter": 1
+  }
+ },
+ {
+  "id": "CHK-NET-14",
+  "ok": true,
+  "line": "PASS net T7    survives the 1.10 mm erode test",
+  "extra": {
+   "islandsBefore": 1,
+   "islandsAfter": 1
+  }
+ },
+ {
+  "id": "CHK-NET-14",
+  "ok": true,
+  "line": "PASS net T8    survives the 1.10 mm erode test",
+  "extra": {
+   "islandsBefore": 1,
+   "islandsAfter": 1
+  }
+ },
+ {
+  "id": "CHK-NET-14",
+  "ok": true,
+  "line": "PASS net T9    survives the 1.10 mm erode test",
+  "extra": {
+   "islandsBefore": 1,
+   "islandsAfter": 1
+  }
+ },
+ {
+  "id": "CHK-NET-14",
+  "ok": true,
+  "line": "PASS net T10   survives the 1.10 mm erode test",
+  "extra": {
+   "islandsBefore": 1,
+   "islandsAfter": 1
+  }
+ },
+ {
+  "id": "CHK-NET-14",
+  "ok": true,
+  "line": "PASS net T11   survives the 1.10 mm erode test",
+  "extra": {
+   "islandsBefore": 1,
+   "islandsAfter": 1
+  }
+ },
+ {
+  "id": "CHK-NET-14",
+  "ok": true,
+  "line": "PASS net T12   survives the 1.10 mm erode test",
+  "extra": {
+   "islandsBefore": 1,
+   "islandsAfter": 1
+  }
+ },
+ {
+  "id": "CHK-NET-14",
+  "ok": true,
+  "line": "PASS net AR_A  survives the 1.10 mm erode test",
+  "extra": {
+   "islandsBefore": 1,
+   "islandsAfter": 1
+  }
+ },
+ {
+  "id": "CHK-NET-14",
+  "ok": true,
+  "line": "PASS net AR_B  survives the 1.10 mm erode test",
+  "extra": {
+   "islandsBefore": 1,
+   "islandsAfter": 1
+  }
+ },
+ {
+  "id": "CHK-NET-14",
+  "ok": true,
+  "line": "PASS net L1_A  survives the 1.10 mm erode test",
+  "extra": {
+   "islandsBefore": 1,
+   "islandsAfter": 1
+  }
+ },
+ {
+  "id": "CHK-NET-14",
+  "ok": true,
+  "line": "PASS net L1_B  survives the 1.10 mm erode test",
+  "extra": {
+   "islandsBefore": 1,
+   "islandsAfter": 1
+  }
+ },
+ {
+  "id": "CHK-NET-14",
+  "ok": true,
+  "line": "PASS net L2_A  survives the 1.10 mm erode test",
+  "extra": {
+   "islandsBefore": 1,
+   "islandsAfter": 1
+  }
+ },
+ {
+  "id": "CHK-NET-14",
+  "ok": true,
+  "line": "PASS net L2_B  survives the 1.10 mm erode test",
+  "extra": {
+   "islandsBefore": 1,
+   "islandsAfter": 1
+  }
+ },
+ {
+  "id": "CHK-NET-40",
+  "ok": true,
+  "line": "PASS smallest tile 765 mm2, largest 1734 (a fingertip is about 100)",
+  "extra": {
+   "minMm2": 765.45,
+   "maxMm2": 1734.293
+  }
+ },
+ {
+  "id": "CHK-NET-01",
+  "ok": true,
+  "line": "PASS every tile is one connected piece",
+  "extra": {
+   "pieces": "1 1 1 1 1 1 1 1 1 1 1 1"
+  }
+ },
+ {
+  "id": "CHK-NET-40",
+  "ok": true,
+  "line": "PASS 12 tiles from 4 columns x 3 rows",
+  "extra": {
+   "plates": 12
+  }
+ },
+ {
+  "id": "CHK-NET-42",
+  "ok": true,
+  "line": "PASS channel 0 at x=15.0 is clear of every tile"
+ },
+ {
+  "id": "CHK-NET-42",
+  "ok": true,
+  "line": "PASS channel 1 at x=68.0 is clear of every tile"
+ },
+ {
+  "id": "CHK-NET-42",
+  "ok": true,
+  "line": "PASS channel 2 at x=121.0 is clear of every tile"
+ },
+ {
+  "id": "CHK-NET-42",
+  "ok": true,
+  "line": "PASS channel 3 at x=174.0 is clear of every tile"
+ },
+ {
+  "id": "CHK-NET-42",
+  "ok": true,
+  "line": "PASS channel 4 at x=227.0 is clear of every tile"
+ },
+ {
+  "id": "CHK-NET-22",
+  "ok": true,
+  "line": "PASS channel 0 sub-lanes on 3.0 mm centres"
+ },
+ {
+  "id": "CHK-NET-22",
+  "ok": true,
+  "line": "PASS channel 1 sub-lanes on 3.0 mm centres"
+ },
+ {
+  "id": "CHK-NET-22",
+  "ok": true,
+  "line": "PASS channel 2 sub-lanes on 3.0 mm centres"
+ },
+ {
+  "id": "CHK-NET-22",
+  "ok": true,
+  "line": "PASS channel 3 sub-lanes on 3.0 mm centres"
+ },
+ {
+  "id": "CHK-NET-15",
+  "ok": true,
+  "line": "PASS slider L1 ratio monotone left to right",
+  "extra": {
+   "b": "L1_B",
+   "spanMin": 0.169329,
+   "spanMax": 0.830671
+  }
+ },
+ {
+  "id": "CHK-NET-15",
+  "ok": true,
+  "line": "PASS slider L1 span 0.831 to 0.169, off both rails",
+  "extra": {
+   "b": "L1_B",
+   "spanMin": 0.169329,
+   "spanMax": 0.830671
+  }
+ },
+ {
+  "id": "CHK-NET-15",
+  "ok": true,
+  "line": "PASS slider L2 ratio monotone left to right",
+  "extra": {
+   "b": "L2_B",
+   "spanMin": 0.169329,
+   "spanMax": 0.830671
+  }
+ },
+ {
+  "id": "CHK-NET-15",
+  "ok": true,
+  "line": "PASS slider L2 span 0.831 to 0.169, off both rails",
+  "extra": {
+   "b": "L2_B",
+   "spanMin": 0.169329,
+   "spanMax": 0.830671
+  }
+ },
+ {
+  "id": "CHK-NET-15",
+  "ok": true,
+  "line": "PASS arc ratio monotone along the sweep",
+  "extra": {
+   "b": "AR_B",
+   "spanMin": 0.202231,
+   "spanMax": 0.732638
+  }
+ },
+ {
+  "id": "CHK-NET-15",
+  "ok": true,
+  "line": "PASS arc span 0.202 to 0.733, off both rails",
+  "extra": {
+   "b": "AR_B",
+   "spanMin": 0.202231,
+   "spanMax": 0.732638
+  }
+ },
+ {
+  "id": "CHK-NET-41",
+  "ok": true,
+  "line": "PASS arc sweep 37 mm, small by design",
+  "extra": {
+   "values": "37.141"
+  }
+ },
+ {
+  "id": "CHK-NET-42",
+  "ok": true,
+  "line": "PASS the arc stays inside the slider band"
+ },
+ {
+  "id": "CHK-NET-41",
+  "ok": true,
+  "line": "PASS straight sliders 39 mm each, small by design",
+  "extra": {
+   "values": "39.000 39.000"
+  }
+ },
+ {
+  "id": "CHK-NET-42",
+  "ok": true,
+  "line": "PASS the slider band is clear of every tile"
+ },
+ {
+  "id": "CHK-NET-43",
+  "ok": true,
+  "line": "PASS exactly 18 channels: two MPR121 on one bus, 18 of 24 used",
+  "extra": {
+   "terminals": 18,
+   "nets": 18
+  }
+ },
+ {
+  "id": "CHK-NET-21",
+  "ok": true,
+  "line": "PASS rail is ONE row on 13.0 mm pitch"
+ },
+ {
+  "id": "CHK-NET-21",
+  "ok": true,
+  "line": "PASS rail finger gap 4.0 mm"
+ },
+ {
+  "id": "CHK-NET-21",
+  "ok": true,
+  "line": "PASS finger depth alternates 16 / 11 mm"
+ },
+ {
+  "id": "CHK-NET-22",
+  "ok": true,
+  "line": "PASS rail order follows arrival order (monotone fan)"
+ },
+ {
+  "id": "CHK-NET-22",
+  "ok": true,
+  "line": "PASS fan needs 4 lanes, 9 available"
+ },
+ {
+  "id": "CHK-NET-20",
+  "ok": true,
+  "line": "PASS vinyl covers all live copper outside the rail zone (0.00 mm2 bare)"
+ },
+ {
+  "id": "CHK-NET-24",
+  "ok": true,
+  "line": "PASS vinyl clears every rail finger"
+ },
+ {
+  "id": "CHK-NET-24",
+  "ok": true,
+  "line": "PASS vinyl overhangs tile T3"
+ },
+ {
+  "id": "CHK-NET-24",
+  "ok": true,
+  "line": "PASS vinyl overhangs tile T2"
+ },
+ {
+  "id": "CHK-NET-24",
+  "ok": true,
+  "line": "PASS vinyl overhangs tile T1"
+ },
+ {
+  "id": "CHK-NET-24",
+  "ok": true,
+  "line": "PASS vinyl overhangs tile T6"
+ },
+ {
+  "id": "CHK-NET-24",
+  "ok": true,
+  "line": "PASS vinyl overhangs tile T5"
+ },
+ {
+  "id": "CHK-NET-24",
+  "ok": true,
+  "line": "PASS vinyl overhangs tile T4"
+ },
+ {
+  "id": "CHK-NET-24",
+  "ok": true,
+  "line": "PASS vinyl overhangs tile T9"
+ },
+ {
+  "id": "CHK-NET-24",
+  "ok": true,
+  "line": "PASS vinyl overhangs tile T8"
+ },
+ {
+  "id": "CHK-NET-24",
+  "ok": true,
+  "line": "PASS vinyl overhangs tile T7"
+ },
+ {
+  "id": "CHK-NET-24",
+  "ok": true,
+  "line": "PASS vinyl overhangs tile T12"
+ },
+ {
+  "id": "CHK-NET-24",
+  "ok": true,
+  "line": "PASS vinyl overhangs tile T11"
+ },
+ {
+  "id": "CHK-NET-24",
+  "ok": true,
+  "line": "PASS vinyl overhangs tile T10"
+ },
+ {
+  "id": "CHK-NET-24",
+  "ok": true,
+  "line": "PASS vinyl overhangs the arc"
+ },
+ {
+  "id": "CHK-NET-24",
+  "ok": true,
+  "line": "PASS vinyl overhangs both straight sliders"
+ },
+ {
+  "id": "CHK-NET-09",
+  "ok": true,
+  "line": "PASS vinyl faceplate is one connected piece",
+  "extra": {
+   "pieces": 1
+  }
+ },
+ {
+  "id": "CHK-NET-24",
+  "ok": true,
+  "line": "PASS accent tiles clear the faceplate edge by 1 mm"
+ },
+ {
+  "id": "CHK-NET-09",
+  "ok": true,
+  "line": "PASS vinyl inside the shared outline keepout"
+ }
+]

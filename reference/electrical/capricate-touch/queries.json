@@ -1,0 +1,8 @@
+{
+  "queries": [
+    { "golden": "expected/query-solve.json", "command": "circuit.solve", "input": { "build": "reference/electrical/capricate-touch" } },
+    { "golden": "expected/query-ceiling.json", "input": { "dim": "net.ohm", "material": "cabs", "facts": { "capacitive": true } } },
+    { "golden": "expected/query-along.json", "input": { "dim": "conductor.pathLen", "material": "cabs", "facts": { "wMm": 0.8, "tMm": 0.2, "capacitive": true } } },
+    { "golden": "expected/query-across.json", "input": { "dim": "conductor.pathLen", "material": "cabs", "facts": { "wMm": 0.8, "tMm": 0.2, "capacitive": true, "direction": "across" } } }
+  ]
+}

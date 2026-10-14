@@ -1,0 +1,43 @@
+{
+  "name": "pip",
+  "version": "1.0.0",
+  "description": "PIP, print in place: a game controller printed in one pass, with printed conductive traces and no electronic components. This package builds the browser bench that designs it.",
+  "author": "Moheeb Zara <hackbuildvideo@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hackbuild/pip-controller.git"
+  },
+  "homepage": "https://github.com/hackbuild/pip-controller#readme",
+  "bugs": {
+    "url": "https://github.com/hackbuild/pip-controller/issues"
+  },
+  "keywords": [
+    "3d-printing",
+    "print-in-place",
+    "conductive-filament",
+    "3mf",
+    "rp2040",
+    "game-controller"
+  ],
+  "private": true,
+  "scripts": {
+    "setup": "PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 npm install",
+    "build": "./build.sh",
+    "test": "npm run test:node",
+    "test:node": "node test/cases.mjs && node test/t_layout.mjs && node test/t_build.mjs && node test/t_fe.mjs && node test/coupon.mjs && node test/export.mjs",
+    "test:sweep": "node test/sweep.mjs"
+  },
+  "dependencies": {
+    "@fontsource/ibm-plex-mono": "5.3.0",
+    "@fontsource/permanent-marker": "5.3.0",
+    "@fontsource/special-elite": "5.3.0",
+    "@fontsource/vt323": "5.3.0",
+    "jszip": "3.10.1",
+    "three": "0.128.0"
+  },
+  "devDependencies": {
+    "manifold-3d": "3.5.3",
+    "playwright": "1.63.0"
+  }
+}

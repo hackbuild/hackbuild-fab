@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PIP bench</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Permanent+Marker&family=Special+Elite&family=VT323&display=swap" rel="stylesheet">
+<style>
+/* hack.build app shell. Tokens from the v1.0 design system: paper chrome, ink bars, one pink. */
+:root{
+  --pink:#FE0386; --cream:#f5f0e6; --paper:#fffdf7; --sunk:#efe9db; --edge:#e8e0d0; --ink:#1a1a1a; --void:#0a0a0a;
+  --ink2:#444; --ink3:#6b6459; --ink4:#9a9184; --ok:#1f9d55; --warn:#c77700; --err:#c3251f; --slime:#a6e22e; --amber:#ffb020;
+  --mono:'IBM Plex Mono',ui-monospace,Menlo,monospace; --disp:'Permanent Marker',cursive; --type:'Special Elite',serif; --inst:'VT323',monospace;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--cream) radial-gradient(rgba(26,26,26,.045) 1px,transparent 1px);background-size:4px 4px;color:var(--ink);font:13px/1.35 var(--mono);display:flex;flex-direction:column;overflow:hidden}
+button,input,select,textarea{font:inherit;color:inherit}
+button{background:var(--ink);color:var(--cream);border:0;padding:6px 10px;cursor:pointer;text-transform:uppercase;letter-spacing:.08em;font-size:11px;box-shadow:3px 3px 0 var(--pink)}
+button:hover{background:var(--pink);color:var(--cream)}
+button.ghost{background:transparent;color:var(--ink);border:2px solid var(--ink);box-shadow:none}
+button.ghost:hover{background:var(--ink);color:var(--cream)}
+button.pink{background:var(--pink)}
+button.pink:hover{background:var(--ink)}
+button:disabled{opacity:.4;cursor:default}
+input[type=text],input[type=number],select,textarea{background:var(--paper);border:2px solid var(--ink);padding:4px 6px;outline:none;border-radius:0}
+input:focus,select:focus,textarea:focus{border-color:var(--pink)}
+input[type=range]{accent-color:var(--pink);width:100%}
+input[type=checkbox],input[type=color]{accent-color:var(--pink)}
+input[type=color]{width:34px;height:26px;border:2px solid var(--ink);padding:0;background:var(--paper)}
+/* header */
+#hdr{background:var(--ink);color:var(--cream);border-bottom:3px solid var(--pink);display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;padding:6px 14px;flex:0 0 auto}
+#hdr .mark{width:28px;height:28px;flex:0 0 auto}
+#hdr h1{font:26px var(--disp);margin:0;letter-spacing:.02em}
+#hdr h1 span{color:var(--pink)}
+#hdr .tag{font:14px var(--type);opacity:.75;margin-left:4px}
+#hdr .sp{flex:1}
+#hdr button{padding:5px 9px;box-shadow:none;border:1px solid var(--cream)}
+#hdr button:hover{border-color:var(--pink)}
+/* steps + guide */
+#steps{display:flex;background:var(--ink);flex:0 0 auto}
+#steps button{flex:1;background:transparent;box-shadow:none;border:0;border-bottom:3px solid transparent;padding:8px 6px;color:var(--cream);font-weight:600;letter-spacing:.14em;font-size:12px}
+#steps button .n{display:inline-block;width:18px;height:18px;line-height:18px;border:1px solid var(--cream);text-align:center;margin-right:6px;font-size:11px}
+#steps button.done .n{background:var(--ok);border-color:var(--ok)}
+#steps button.on{border-bottom-color:var(--pink);color:#fff}
+#steps button.on .n{background:var(--pink);border-color:var(--pink)}
+#guide{background:var(--sunk);border-bottom:2px solid var(--ink);padding:5px 14px;font:13px var(--type);flex:0 0 auto}
+#guide b{font-family:var(--inst);font-size:17px;font-weight:400;color:var(--pink);margin-right:8px}
+/* main */
+#main{flex:1;display:flex;min-height:0}
+#stage{flex:1;position:relative;background:var(--void);background-image:linear-gradient(rgba(254,3,134,.14) 1px,transparent 1px),linear-gradient(90deg,rgba(254,3,134,.14) 1px,transparent 1px);background-size:26px 26px;min-width:0;display:flex}
+#stage canvas.three{width:100%;height:100%;display:block;flex:1}
+#stage.art canvas.three{flex:0 0 42%;min-width:0}
+#face{display:none;flex:1;position:relative;background:var(--void);border-left:2px solid var(--pink)}
+#stage.art #face{display:block}
+#face canvas{width:100%;height:100%;display:block;cursor:grab}
+#face .hint{position:absolute;left:10px;bottom:8px;color:var(--ink4);font:15px var(--inst);pointer-events:none}
+#cams{position:absolute;left:10px;top:10px;display:flex;gap:4px}
+#cams button{padding:3px 7px;font-size:10px;box-shadow:none;border:1px solid var(--ink4);background:rgba(10,10,10,.8)}
+#cams button.on{border-color:var(--pink);color:var(--pink)}
+#legend{position:absolute;right:10px;top:10px;display:flex;flex-direction:column;gap:4px;font:15px var(--inst);color:var(--cream)}
+#legend div{display:flex;align-items:center;gap:6px}
+#legend i{display:inline-block;width:14px;height:14px;border:1px solid var(--cream)}
+/* rail */
+#rail{flex:0 0 340px;background:var(--paper);border-left:3px solid var(--ink);overflow-y:auto;padding:0 0 30px}
+.pane{display:none;padding:10px}
+.pane.on{display:block}
+.panel{border:2px solid var(--ink);background:var(--paper);box-shadow:5px 5px 0 var(--ink);margin:0 4px 16px 0}
+.panel h3{margin:0;background:var(--ink);color:var(--cream);font:20px var(--inst);padding:3px 10px;letter-spacing:.04em;font-weight:400}
+.panel .bd{padding:8px 10px}
+.row{display:flex;align-items:center;gap:8px;margin:5px 0}
+.row label{flex:0 0 96px;font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--ink3)}
+.row input[type=range]{flex:1}
+.row input[type=number]{width:64px;flex:0 0 auto}
+.row select{flex:1;min-width:0}
+.row input[type=text]{flex:1;min-width:0}
+.row .u{font-size:10px;color:var(--ink4);flex:0 0 22px}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{border:2px solid var(--ink);padding:4px 9px;cursor:pointer;font-size:11px;text-transform:uppercase;letter-spacing:.1em;background:var(--paper);box-shadow:none;color:var(--ink)}
+.chip:hover{background:var(--sunk);color:var(--ink)}
+.chip.on{background:var(--ink);color:var(--cream)}
+.chip.pink.on{background:var(--pink)}
+.fold>summary{cursor:pointer;font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:var(--ink3);padding:6px 0;list-style:none}
+.fold>summary::before{content:'+ ';color:var(--pink)}
+.fold[open]>summary::before{content:'- '}
+.layers{display:flex;flex-direction:column;gap:4px;margin:6px 0}
+.layer{border:2px solid var(--ink);padding:5px 8px;cursor:pointer;display:flex;align-items:center;gap:8px;background:var(--paper)}
+.layer.on{border-color:var(--pink);box-shadow:3px 3px 0 var(--pink)}
+.layer .k{font:15px var(--inst);color:var(--pink);flex:0 0 46px}
+.layer .t{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.layer .x{background:transparent;color:var(--ink3);box-shadow:none;padding:0 4px;font-size:14px}
+.layer .x:hover{color:var(--err);background:transparent}
+.slot{display:flex;align-items:center;gap:8px;margin:6px 0}
+.slot .n{font:18px var(--inst);color:var(--pink);flex:0 0 20px}
+.slot input[type=text]{flex:1;min-width:0}
+.slot select{flex:0 0 80px}
+.slot .role{font-size:10px;color:var(--ink4);text-transform:uppercase;letter-spacing:.1em;flex:0 0 auto}
+.btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.next{display:flex;justify-content:flex-end;margin:4px 6px 12px 0}
+.note{font:13px var(--type);color:var(--ink3);margin:6px 0}
+/* status strip */
+#status{background:var(--ink);color:var(--cream);font:16px var(--inst);padding:4px 14px;display:flex;gap:18px;align-items:center;flex:0 0 auto}
+#status .chips{gap:6px}
+#status .c{border:1px solid var(--ink4);padding:0 8px;line-height:20px;font-size:15px}
+#status .c.ok{border-color:var(--slime);color:var(--slime)}
+#status .c.warn{border-color:var(--amber);color:var(--amber)}
+#status .c.err{border-color:#ff5c4d;color:#ff5c4d}
+#status .sp{flex:1}
+/* overlay */
+#welcome{position:absolute;inset:0;background:rgba(10,10,10,.82);display:flex;align-items:center;justify-content:center;z-index:20}
+#welcome.hide{display:none}
+#welcome .card{background:var(--paper);border:3px solid var(--ink);box-shadow:8px 8px 0 var(--pink);padding:18px 22px;max-width:640px}
+#welcome h2{font:30px var(--disp);margin:0 0 8px}
+#welcome h2 span{color:var(--pink)}
+#welcome .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:12px 0 16px}
+#welcome .grid div{border:2px solid var(--ink);padding:8px}
+#welcome .grid b{font:22px var(--inst);color:var(--pink);font-weight:400;display:block}
+#welcome .grid p{margin:2px 0 0;font:12px var(--type)}
+.drop{border:2px dashed var(--ink3);padding:10px;text-align:center;color:var(--ink3);font:13px var(--type);cursor:pointer}
+.drop.over{border-color:var(--pink);color:var(--pink)}
+.readout{font:16px var(--inst);color:var(--ink2);display:grid;grid-template-columns:1fr 1fr;gap:2px 10px}
+.readout span{color:var(--pink)}
+@media (max-width:820px){#rail{flex-basis:290px}#hdr .tag{display:none}}
+@media (max-width:640px){#main{flex-direction:column}#rail{flex:0 0 46%;border-left:0;border-top:3px solid var(--ink)}#stage{min-height:0}#steps button{letter-spacing:.04em;font-size:11px;padding:8px 2px}#steps button .n{margin-right:3px}#hdr{gap:6px 8px;padding:6px 8px}#hdr h1{font-size:22px}#hdr button{padding:4px 6px;font-size:10px}#status{flex-wrap:wrap;gap:6px 12px}#cams button{padding:2px 5px}#face .hint{display:none}}
+
+/* PIP additions */
+#cams{flex-wrap:wrap;max-width:calc(100% - 20px)}
+#welcome .card{max-width:min(640px,calc(100% - 20px));max-height:calc(100% - 20px);overflow:auto}
+.row{flex-wrap:wrap}
+.row input[type=number]{min-width:0}
+@media (max-width:640px){#welcome .grid{grid-template-columns:1fr 1fr}#legend{display:none}#pad .keys{max-width:220px}}
+#stage .ov{position:absolute;left:10px;bottom:10px;display:flex;flex-direction:column;gap:6px;z-index:5}
+#pad{background:rgba(10,10,10,.86);border:2px solid var(--pink);padding:6px 8px;color:var(--cream);font:15px var(--inst);user-select:none;touch-action:none}
+#pad .t{display:flex;justify-content:space-between;gap:10px;margin-bottom:4px}
+#pad .keys{display:flex;flex-wrap:wrap;gap:4px;max-width:300px}
+#pad .keys button{box-shadow:none;border:1px solid var(--ink4);background:transparent;color:var(--cream);font:15px var(--inst);padding:1px 7px;letter-spacing:0;text-transform:none}
+#pad .keys button.on{background:var(--pink);border-color:var(--pink)}
+#pad .keys button.lit{border-color:var(--slime);color:var(--slime)}
+#pad .read{color:var(--slime);min-height:18px;max-width:300px}
+#busy{position:absolute;right:10px;bottom:10px;background:var(--pink);color:#fff;font:16px var(--inst);padding:2px 10px;display:none;z-index:6}
+#busy.on{display:block}
+.tbl{width:100%;border-collapse:collapse;font:15px var(--inst)}
+.tbl td,.tbl th{border-bottom:1px solid var(--edge);padding:1px 4px;text-align:left;font-weight:400}
+.tbl th{color:var(--ink3);font-size:13px;text-transform:uppercase}
+.tbl td.bad{color:var(--err)}
+.warns{font:15px var(--inst);color:var(--warn);margin:4px 0}
+.warns div::before{content:'! ';color:var(--err)}
+.warns div.ok{color:var(--ok)}
+.warns div.ok::before{content:''}
+.chip.pk.on{background:var(--pink);border-color:var(--pink);color:#fff}
+canvas.curve{width:100%;height:150px;display:block;background:var(--void);border:2px solid var(--ink)}
+#wiring svg{width:100%;height:auto;display:block;background:var(--paper);border:2px solid var(--ink)}
+.grp{border-top:1px dashed var(--edge);padding-top:6px;margin-top:6px}
+.grp:first-child{border-top:0;margin-top:0;padding-top:0}
+.grp .gh{display:flex;align-items:center;gap:8px;font:18px var(--inst);color:var(--pink)}
+.grp .gh input{margin-left:auto}
+.pins{display:grid;grid-template-columns:1fr 1fr;gap:4px 10px}
+.pins .row label{flex-basis:56px}
+</style>
+</head>
+<body>
+<div id="hdr">
+  <svg class="mark" viewBox="117 103 800 800" aria-hidden="true">
+    <path transform="translate(490,121)" fill="#f5f0e6" d="m0 0h38l34 3 29 5 25 6 26 8 21 8 20 9 20 10 23 14 19 13 12 10 11 9 16 15 9 9 7 8 9 10 15 20 18 27 13 23 13 28 10 26 8 26 6 27 4 27 2 25v29l-2 28-5 32-6 27-8 27-10 25-12 25-10 17-13 19-10 13-11 13-7 8-9 10-20 20-8 7-15 13-16 12-19 13-13 8-18 10-27 13-29 11-24 7-24 5-27 4-24 2h-25l-27-3-20-4-16-5-12-6-8-7-7-10-4-8-2-10v-13l4-13 7-12 11-11 14-8 12-3h16l24 3 23 1 25-1 22-3 30-7 18-6 25-11 22-12 21-14 10-8 13-11 13-13 9-11 10-13 10-15 12-22 9-20 10-30 6-27 3-19 2-26v-20l-3-29-6-26-8-24-8-18-11-21-14-21-11-14-9-10-7-8-16-16-11-9-15-12-17-11-14-8-16-8-14-6-24-8-22-5-21-3-12-1h-37l-25 3-20 4-20 6-21 8-24 12-19 12-12 9-11 9-10 9-17 17-9 11-14 19-11 18-11 21-10 26-6 21-4 19-2 15-1 14v25l2 22 3 20v10l-4 16-7 11-6 7-13 9-13 5-5 1h-14l-12-3-12-6-10-9-6-7-7-14-4-18-3-26-1-16v-36l3-30 5-28 8-29 11-29 13-28 14-24 14-21 10-14 13-16 12-14 30-30 11-9 15-12 24-16 21-12 23-11 27-10 23-7 27-6 27-4z"/>
+    <path transform="translate(498,314)" fill="#FE0386" d="m0 0h25l14 3 6 4 3 4 1 8-4 8-11 10-20 16-14 12-14 14-10 14-8 16-4 15-1 6v20l4 18 5 13 6 11 9 12 6 7 11 9 14 9 16 7 16 4 8 1h15l16-3 16-6 14-8 13-10 13-12 9-9 2-3h2l2-4 11-12 7-9 5-4 9-2 9 3 6 7 2 5 1 9-3 25-5 23-7 21-13 27-10 15-8 10-9 10-12 12-14 11-18 11-23 11-19 6-23 5-21 2h-17l-23-2-14-2h-19l-16 4-12 7-10 8-63 63-9 8-13 8-13 6-11 3h-20l-15-4-17-9-11-9-9-11-7-15-2-10v-16l3-13 6-11 11-14 16-16 7-8 69-69 6-9 4-13-1-9-7-24-3-21v-31l3-22 6-21 7-17 11-19 10-13 11-12 13-13 16-12 16-10 19-10 19-7 19-5z"/>
+  </svg>
+  <h1>PIP<span>.</span>bench</h1>
+  <span class="tag">a game controller printed whole. make things. break things. repeat.</span>
+  <span class="sp"></span>
+  <button id="bUndo" title="ctrl z">undo</button>
+  <button id="bRedo" title="ctrl shift z">redo</button>
+  <button id="bOpen">open</button>
+  <button id="bSave">save</button>
+  <button id="bGuide">guide</button>
+</div>
+<div id="steps">
+  <button data-step="0" class="on"><span class="n">1</span>LAYOUT</button>
+  <button data-step="1"><span class="n">2</span>BUTTONS</button>
+  <button data-step="2"><span class="n">3</span>BOARD</button>
+  <button data-step="3"><span class="n">4</span>PRINT</button>
+</div>
+<div id="guide"><b>STEP 1 LAYOUT</b><span id="guideText"></span></div>
+<div id="main">
+  <div id="stage">
+    <canvas class="three"></canvas>
+    <div id="cams"><button data-cam="iso" class="on">iso</button><button data-cam="top">top</button><button data-cam="front">front</button><button data-cam="under">under</button><button data-cam="explode">explode</button><button data-cam="xray">xray</button><button data-cam="section">section</button><button data-cam="plate">plate</button></div>
+    <div id="legend"></div>
+    <div class="ov">
+      <div id="pad"><div class="t"><span>DRIVE</span><span id="padMode">hold a key, or click one in the view</span></div><div class="keys" id="padKeys"></div><div class="read" id="padRead"></div></div>
+    </div>
+    <div id="busy">building</div>
+    <div id="welcome">
+      <div class="card">
+        <h2>PIP<span>.</span>bench</h2>
+        <div class="note">a game controller printed in one go on a four head machine: PETG body, conductive PLA traces buried in it, TPU keys, conductive TPU contacts. a Waveshare RP2040-Zero drops into the pocket.</div>
+        <div class="grid">
+          <div><b>1 layout</b><p>body shape, button groups, flex / clicky / touch per group</p></div>
+          <div><b>2 buttons</b><p>cone, snap spring, touch comb and stick geometry with feel readouts</p></div>
+          <div><b>3 board</b><p>press fit contacts or wire cups, pin map, wiring and firmware</p></div>
+          <div><b>4 print</b><p>stack, routing, filaments, export 3MF, STLs and the print card</p></div>
+        </div>
+        <div class="btns"><button id="wBlank" class="ghost">start blank</button><button id="wStick" class="ghost">stick example</button><button id="wExample" class="pink">worked example</button></div>
+      </div>
+    </div>
+  </div>
+  <div id="rail">
+    <!-- 1 LAYOUT -->
+    <div class="pane on" data-pane="0">
+      <div class="panel"><h3>BODY</h3><div class="bd">
+        <div class="chips" id="shapes"><button class="chip" data-shape="stadium">stadium</button><button class="chip" data-shape="slab">slab</button><button class="chip" data-shape="grips">grips</button></div>
+        <div class="row"><label>width</label><input type="range" data-p="shape.W" min="100" max="220" step="1"><input type="number" data-p="shape.W" step="1"><span class="u">mm</span></div>
+        <div class="row"><label>depth</label><input type="range" data-p="shape.H" min="50" max="100" step="1"><input type="number" data-p="shape.H" step="1"><span class="u">mm</span></div>
+        <div class="row" data-show="shape.style=slab"><label>corner</label><input type="range" data-p="shape.corner" min="2" max="30" step="0.5"><input type="number" data-p="shape.corner" step="0.5"><span class="u">mm</span></div>
+        <div class="row" data-show="shape.style=grips"><label>grip drop</label><input type="range" data-p="shape.drop" min="4" max="30" step="0.5"><input type="number" data-p="shape.drop" step="0.5"><span class="u">mm</span></div>
+        <div class="row"><label>bezel</label><input type="range" data-p="stack.bezel" min="1.44" max="4.8" step="0.24"><input type="number" data-p="stack.bezel" step="0.24"><span class="u">mm</span></div>
+        <div class="row"><label>bezel edge</label><input type="range" data-p="shape.bezelChamfer" min="0" max="1.92" step="0.24"><input type="number" data-p="shape.bezelChamfer" step="0.24"><span class="u">mm</span></div>
+        <div class="note">thickness is not a setting: the body grows to whatever the tallest key and the board pocket need, snapped to layers.</div>
+      </div></div>
+      <div class="panel"><h3>BUTTON GROUPS</h3><div class="bd" id="groups"></div></div>
+      <div class="panel"><h3>CHECKS</h3><div class="bd"><div class="warns" id="warns1"></div><div class="readout" id="dims1"></div></div></div>
+      <div class="next"><button data-go="1">next: buttons</button></div>
+    </div>
+    <!-- 2 BUTTONS -->
+    <div class="pane" data-pane="1">
+      <div class="panel" data-type="flex"><h3>FLEX CONE</h3><div class="bd">
+        <div class="row"><label>face</label><input type="range" data-p="flex.face" min="6" max="16" step="0.2"><input type="number" data-p="flex.face" step="0.2"><span class="u">mm</span></div>
+        <div class="row"><label>cone height</label><input type="range" data-p="flex.Hs" min="2.4" max="7" step="0.24"><input type="number" data-p="flex.Hs" step="0.24"><span class="u">mm</span></div>
+        <div class="row"><label>cone angle</label><input type="range" data-p="flex.alpha" min="25" max="50" step="1"><input type="number" data-p="flex.alpha" step="1"><span class="u">deg</span></div>
+        <div class="row"><label>wall</label><input type="range" data-p="flex.wall" min="0.4" max="1.2" step="0.05"><input type="number" data-p="flex.wall" step="0.05"><span class="u">mm</span></div>
+        <div class="row"><label>hole</label><input type="range" data-p="flex.hole" min="2" max="6" step="0.1"><input type="number" data-p="flex.hole" step="0.1"><span class="u">mm</span></div>
+        <div class="row"><label>cap</label><input type="range" data-p="flex.cap" min="0.48" max="1.44" step="0.24"><input type="number" data-p="flex.cap" step="0.24"><span class="u">mm</span></div>
+        <div class="row"><label>contact gap</label><input type="range" data-p="flex.gapPct" min="35" max="50" step="1"><input type="number" data-p="flex.gapPct" step="1"><span class="u">%</span></div>
+        <div class="row"><label>split</label><input type="range" data-p="flex.colGap" min="0.6" max="1.6" step="0.05"><input type="number" data-p="flex.colGap" step="0.05"><span class="u">mm</span></div>
+        <div class="row"><label>face disc</label><input type="range" data-p="flex.faceT" min="0.72" max="2.4" step="0.24"><input type="number" data-p="flex.faceT" step="0.24"><span class="u">mm</span></div>
+        <div class="row"><label>protrude</label><input type="range" data-p="flex.protrude" min="0.8" max="5" step="0.1"><input type="number" data-p="flex.protrude" step="0.1"><span class="u">mm</span></div>
+        <div class="readout" id="roFlex"></div>
+        <div class="note">printed in place: a TPU cone on a buried foot ring, a conductive TPU cap over the hole, two split conductive PLA columns under it. the gap is held at 35 to 50 percent of the cone, never under 1.2 mm, because a pressed cone only travels about half its height.</div>
+      </div></div>
+      <div class="panel" data-type="clicky"><h3>CLICK SPRING</h3><div class="bd">
+        <canvas class="curve" id="curve"></canvas>
+        <div class="readout" id="roClick"></div>
+        <div class="row"><label>span</label><input type="range" data-p="clicky.l" min="16" max="30" step="0.5"><input type="number" data-p="clicky.l" step="0.5"><span class="u">mm</span></div>
+        <div class="row"><label>beam</label><input type="range" data-p="clicky.t" min="0.4" max="0.8" step="0.02"><input type="number" data-p="clicky.t" step="0.02"><span class="u">mm</span></div>
+        <div class="row"><label>rise Q</label><input type="range" data-p="clicky.Q" min="1.5" max="2.8" step="0.05"><input type="number" data-p="clicky.Q" step="0.05"><span class="u">h/t</span></div>
+        <div class="row"><label>width</label><input type="range" data-p="clicky.w" min="1.2" max="3.6" step="0.24"><input type="number" data-p="clicky.w" step="0.24"><span class="u">mm</span></div>
+        <div class="row"><label>beam gap</label><input type="range" data-p="clicky.g" min="0.6" max="2" step="0.1"><input type="number" data-p="clicky.g" step="0.1"><span class="u">mm</span></div>
+        <div class="row"><label>cap</label><input type="range" data-p="clicky.cap" min="7" max="14" step="0.5"><input type="number" data-p="clicky.cap" step="0.5"><span class="u">mm</span></div>
+        <div class="row"><label>protrude</label><input type="range" data-p="clicky.protrude" min="1" max="5" step="0.1"><input type="number" data-p="clicky.protrude" step="0.1"><span class="u">mm</span></div>
+        <div class="row"><label>cap material</label><select data-p="clicky.capMat"><option value="tpu">TPU (slot 3)</option><option value="petg">PETG (slot 1)</option></select></div>
+        <details class="fold"><summary>spring internals</summary>
+        <div class="row"><label>end block</label><input type="range" data-p="clicky.eb" min="1.8" max="5" step="0.1"><input type="number" data-p="clicky.eb" step="0.1"><span class="u">mm</span></div>
+        <div class="row"><label>shuttle</label><input type="range" data-p="clicky.sw" min="2.4" max="5" step="0.1"><input type="number" data-p="clicky.sw" step="0.1"><span class="u">mm</span></div>
+        <div class="row"><label>tip</label><input type="range" data-p="clicky.tip" min="2" max="4.4" step="0.1"><input type="number" data-p="clicky.tip" step="0.1"><span class="u">mm</span></div>
+        <div class="row"><label>flange</label><input type="range" data-p="clicky.flange" min="0.8" max="2.4" step="0.1"><input type="number" data-p="clicky.flange" step="0.1"><span class="u">mm</span></div>
+        <div class="row"><label>flange thk</label><input type="range" data-p="clicky.flangeT" min="0.72" max="1.92" step="0.24"><input type="number" data-p="clicky.flangeT" step="0.24"><span class="u">mm</span></div>
+        <div class="row"><label>end fit</label><input type="range" data-p="clicky.slotClr" min="0.15" max="0.6" step="0.05"><input type="number" data-p="clicky.slotClr" step="0.05"><span class="u">mm</span></div>
+        <div class="row"><label>travel relief</label><input type="range" data-p="clicky.relief" min="0" max="2.4" step="0.1"><input type="number" data-p="clicky.relief" step="0.1"><span class="u">mm</span></div>
+        <div class="row"><label>rib</label><input type="range" data-p="clicky.rib" min="0.6" max="1.6" step="0.1"><input type="number" data-p="clicky.rib" step="0.1"><span class="u">mm</span></div>
+        <div class="row"><label>modulus</label><input type="range" data-p="clicky.E" min="1200" max="3600" step="50"><input type="number" data-p="clicky.E" step="50"><span class="u">MPa</span></div>
+        </details>
+        <div class="note">a double cosine beam, printed flat in PETG with a conductive TPU tip locked in by a dovetail. the slot is snug only under the end blocks, where a rib keys each one down; over the arch it opens out so the beams never touch a wall. the curve comes from a corotational beam solve of these numbers; the contact lands just past the snap.</div>
+      </div></div>
+      <div class="panel" data-type="touch"><h3>TOUCH COMB</h3><div class="bd">
+        <div class="row"><label>diameter</label><input type="range" data-p="touch.d" min="8" max="20" step="0.5"><input type="number" data-p="touch.d" step="0.5"><span class="u">mm</span></div>
+        <div class="row"><label>finger</label><input type="range" data-p="touch.finger" min="0.6" max="2" step="0.05"><input type="number" data-p="touch.finger" step="0.05"><span class="u">mm</span></div>
+        <div class="row"><label>gap</label><input type="range" data-p="touch.gap" min="0.6" max="2" step="0.05"><input type="number" data-p="touch.gap" step="0.05"><span class="u">mm</span></div>
+        <div class="row"><label>spine</label><input type="range" data-p="touch.spine" min="1.2" max="3" step="0.1"><input type="number" data-p="touch.spine" step="0.1"><span class="u">mm</span></div>
+        <div class="row"><label>rim</label><input type="range" data-p="touch.rim" min="0.6" max="2" step="0.1"><input type="number" data-p="touch.rim" step="0.1"><span class="u">mm</span></div>
+        <div class="readout" id="roTouch"></div>
+        <div class="note">interdigitated conductive PLA flush with the bezel top on a PETG boss. a fingertip bridges the sense comb to the 3V3 comb; no moving part.</div>
+      </div></div>
+      <div class="panel" data-type="stick"><h3>STICK</h3><div class="bd">
+        <div class="chips" id="sticktops"><button class="chip" data-top="inplace">thumb pad printed on</button><button class="chip" data-top="press">separate cap</button></div>
+        <div class="row"><label>tilt</label><input type="range" data-p="stick.tilt" min="8" max="22" step="0.5"><input type="number" data-p="stick.tilt" step="0.5"><span class="u">deg</span></div>
+        <div class="row"><label>overtravel</label><input type="range" data-p="stick.over" min="0" max="8" step="0.5"><input type="number" data-p="stick.over" step="0.5"><span class="u">deg</span></div>
+        <div class="row"><label>band radius</label><input type="range" data-p="stick.bandR" min="3.5" max="8" step="0.1"><input type="number" data-p="stick.bandR" step="0.1"><span class="u">mm</span></div>
+        <div class="row"><label>band height</label><input type="range" data-p="stick.bandH" min="1.44" max="4.8" step="0.24"><input type="number" data-p="stick.bandH" step="0.24"><span class="u">mm</span></div>
+        <div class="row"><label>neck</label><input type="range" data-p="stick.neckD" min="2" max="5" step="0.1"><input type="number" data-p="stick.neckD" step="0.1"><span class="u">mm</span></div>
+        <div class="row"><label>neck height</label><input type="range" data-p="stick.neckH" min="1.2" max="5" step="0.24"><input type="number" data-p="stick.neckH" step="0.24"><span class="u">mm</span></div>
+        <div class="row"><label>stem</label><input type="range" data-p="stick.stemD" min="3" max="6" step="0.1"><input type="number" data-p="stick.stemD" step="0.1"><span class="u">mm</span></div>
+        <div class="row"><label>thumb cap</label><input type="range" data-p="stick.capD" min="12" max="26" step="0.5"><input type="number" data-p="stick.capD" step="0.5"><span class="u">mm</span></div>
+        <div class="row"><label>cap thk</label><input type="range" data-p="stick.capH" min="1.92" max="5" step="0.24"><input type="number" data-p="stick.capH" step="0.24"><span class="u">mm</span></div>
+        <div class="row"><label>dish</label><input type="range" data-p="stick.capDish" min="0" max="3" step="0.1"><input type="number" data-p="stick.capDish" step="0.1"><span class="u">mm</span></div>
+        <div class="row"><label>pad split</label><input type="range" data-p="stick.padGap" min="0.6" max="2" step="0.1"><input type="number" data-p="stick.padGap" step="0.1"><span class="u">mm</span></div>
+        <div class="readout" id="roStick"></div>
+        <div class="note">printed on: the thumb pad comes out of the printer attached, with a 45 degree dish you can feel, and the bezel hole is sized to drop over it. separate cap: a small stem through a tight hole, with the pad pressed on afterwards.</div>
+        <div class="note">the TOGGLE mechanism: a TPU stem on an anchored neck, a conductive TPU band that lies flat against the well wall at full tilt, bridging a low wall pad to the common ring above it.</div>
+      </div></div>
+      <div class="note" id="noTypes">no button group uses a moving key yet. turn groups on in step 1.</div>
+      <div class="next"><button data-go="2">next: board</button></div>
+    </div>
+    <!-- 3 BOARD -->
+    <div class="pane" data-pane="2">
+      <div class="panel"><h3>MOUNT</h3><div class="bd">
+        <div class="chips" id="modes"><button class="chip" data-mode="press">press fit</button><button class="chip" data-mode="wire">wire cups</button><button class="chip" data-mode="both">both</button></div>
+        <div class="row"><label>press</label><input type="range" data-p="board.press" min="0" max="0.6" step="0.05"><input type="number" data-p="board.press" step="0.05"><span class="u">mm</span></div>
+        <div class="row"><label>bump height</label><input type="range" data-p="board.bumpH" min="0.24" max="1.2" step="0.24"><input type="number" data-p="board.bumpH" step="0.24"><span class="u">mm</span></div>
+        <div class="row"><label>bump size</label><input type="range" data-p="board.bumpW" min="1" max="2" step="0.05"><input type="number" data-p="board.bumpW" step="0.05"><span class="u">mm</span></div>
+        <div class="row"><label>pocket play</label><input type="range" data-p="board.clr" min="0.1" max="0.6" step="0.05"><input type="number" data-p="board.clr" step="0.05"><span class="u">mm</span></div>
+        <div class="row"><label>back window</label><input type="checkbox" data-p="board.window"><span class="u"></span></div>
+        <details class="fold"><summary>board and cups</summary>
+        <div class="row"><label>length</label><input type="number" data-p="board.L" step="0.1"><span class="u">mm</span><label>width</label><input type="number" data-p="board.W" step="0.1"></div>
+        <div class="row"><label>thickness</label><input type="number" data-p="board.T" step="0.1"><span class="u">mm</span><label>usb height</label><input type="number" data-p="board.usbH" step="0.05"></div>
+        <div class="row"><label>pad inset</label><input type="number" data-p="board.inset" step="0.01"><span class="u">mm</span><label>pitch</label><input type="number" data-p="board.pitch" step="0.01"></div>
+        <div class="row"><label>cup od</label><input type="range" data-p="cups.od" min="2.4" max="4.4" step="0.1"><input type="number" data-p="cups.od" step="0.1"><span class="u">mm</span></div>
+        <div class="row"><label>cup bore</label><input type="range" data-p="cups.bore" min="0.6" max="2" step="0.1"><input type="number" data-p="cups.bore" step="0.1"><span class="u">mm</span></div>
+        <div class="row"><label>cup height</label><input type="range" data-p="cups.h" min="1.44" max="5" step="0.24"><input type="number" data-p="cups.h" step="0.24"><span class="u">mm</span></div>
+        <div class="row"><label>cup pitch</label><input type="range" data-p="cups.pitch" min="3.6" max="7" step="0.1"><input type="number" data-p="cups.pitch" step="0.1"><span class="u">mm</span></div>
+        <div class="row"><label>per row</label><input type="range" data-p="cups.perRow" min="3" max="10" step="1"><input type="number" data-p="cups.perRow" step="1"><span class="u"></span></div>
+        </details>
+        <div class="note">press fit: conductive bumps under the castellations, the bezel ribs push the board onto them. wire cups: numbered conductive cups beside the pocket; push a hot wire into the bore or drive an M1.2 screw. both keeps the cups as a backup.</div>
+      </div></div>
+      <div class="panel"><h3>PIN MAP</h3><div class="bd"><div class="pins" id="pins"></div><div class="warns" id="warns3"></div></div></div>
+      <div class="panel"><h3>HOOKUP</h3><div class="bd">
+        <div id="wiring"></div>
+        <table class="tbl" id="elec"></table>
+        <div class="btns"><button class="ghost" id="bFw">firmware .ino</button><button class="ghost" id="bSvg">wiring svg</button></div>
+        <div class="note" id="hookNote"></div>
+      </div></div>
+      <div class="panel"><h3>BEZEL</h3><div class="bd">
+        <div class="row"><label>labels</label><input type="checkbox" data-p="bezel.labels"><span class="u"></span><label>mark</label><input type="checkbox" data-p="bezel.mark"></div>
+        <div class="row"><label>pegs</label><input type="checkbox" data-p="bezel.pins"><span class="u"></span></div>
+        <div class="row"><label>label height</label><input type="range" data-p="bezel.labelH" min="2.4" max="5" step="0.1"><input type="number" data-p="bezel.labelH" step="0.1"><span class="u">mm</span></div>
+      </div></div>
+      <details class="fold"><summary>materials and read timing</summary><div class="panel"><div class="bd">
+        <div class="row"><label>cPLA in plane</label><input type="number" data-p="phys.rhoC" step="1"><span class="u">ohm cm</span></div>
+        <div class="row"><label>cPLA across</label><input type="number" data-p="phys.rhoCz" step="1"><span class="u">ohm cm</span></div>
+        <div class="row"><label>cTPU</label><input type="number" data-p="phys.rhoT" step="10"><span class="u">ohm cm</span></div>
+        <div class="row"><label>pin C</label><input type="number" data-p="phys.cpin" step="0.5"><span class="u">pF</span></div>
+        <div class="row"><label>leakage</label><input type="number" data-p="phys.leak" step="0.1"><span class="u">nA</span></div>
+        <div class="row"><label>key wait</label><input type="number" data-p="phys.waitMech" step="0.05"><span class="u">ms</span></div>
+        <div class="row"><label>touch wait</label><input type="number" data-p="phys.waitTouch" step="0.1"><span class="u">ms</span></div>
+        <div class="chips" id="mats"><button class="chip" data-mat="yousu">Yousu</button><button class="chip" data-mat="proto">Protopasta</button></div>
+        <div class="note">defaults are Yousu: their conductive PLA and TPU both measure 100 to 200 kohm across 10 cm of 1.75 mm filament, which is 240 to 480 ohm cm as extruded, and printed parts run worse. measure a coupon and type in what you get.</div>
+      </div></div></details>
+      <div class="next"><button data-go="3">next: print</button></div>
+    </div>
+    <!-- 4 PRINT -->
+    <div class="pane" data-pane="3">
+      <div class="panel"><h3>STACK</h3><div class="bd">
+        <div class="row"><label>bottom skin</label><input type="range" data-p="stack.skin" min="0.48" max="1.44" step="0.24"><input type="number" data-p="stack.skin" step="0.24"><span class="u">mm</span></div>
+        <div class="row"><label>trace thk</label><input type="range" data-p="stack.trace" min="0.48" max="1.2" step="0.24"><input type="number" data-p="stack.trace" step="0.24"><span class="u">mm</span></div>
+        <div class="row"><label>insulation</label><input type="range" data-p="stack.iso" min="0.48" max="1.68" step="0.24"><input type="number" data-p="stack.iso" step="0.24"><span class="u">mm</span></div>
+        <div class="row"><label>pad layer</label><input type="range" data-p="stack.pad" min="0.48" max="1.2" step="0.24"><input type="number" data-p="stack.pad" step="0.24"><span class="u">mm</span></div>
+        <div class="note">two buried conductive PLA layers with PETG between: layer 1, insulation, layer 2, insulation, then the pad layer the keys stand on. the insulation is what stops a trace shorting to the one crossing it, so it is four layers by default; every 0.24 here costs 0.48 of body height.</div>
+      </div></div>
+      <div class="panel"><h3>ROUTING</h3><div class="bd">
+        <div class="row"><label>trace width</label><input type="range" data-p="route.w" min="0.8" max="2.4" step="0.05"><input type="number" data-p="route.w" step="0.05"><span class="u">mm</span></div>
+        <div class="row"><label>clearance</label><input type="range" data-p="route.clr" min="0.5" max="1.6" step="0.05"><input type="number" data-p="route.clr" step="0.05"><span class="u">mm</span></div>
+        <div class="row"><label>grid</label><select data-p="route.grid"><option value="0.4">0.40</option><option value="0.5">0.50</option><option value="0.6">0.60</option><option value="0.8">0.80</option></select><span class="u">mm</span></div>
+        <div class="row"><label>via radius</label><input type="range" data-p="route.via" min="0.6" max="1.2" step="0.05"><input type="number" data-p="route.via" step="0.05"><span class="u">mm</span></div>
+        <div class="row"><label>edge margin</label><input type="range" data-p="route.margin" min="1.5" max="6" step="0.1"><input type="number" data-p="route.margin" step="0.1"><span class="u">mm</span></div>
+        <div class="readout" id="roRoute"></div>
+      </div></div>
+      <div class="panel"><h3>FILAMENTS</h3><div class="bd">
+        <div id="slots"></div>
+        <div class="note">four heads, fixed roles: 1 structure and bezel, 2 conductive traces and label ink, 3 TPU keys and the pink of the mark, 4 conductive TPU contacts.</div>
+      </div></div>
+      <details class="fold"><summary>slicer profile</summary><div class="panel"><div class="bd">
+        <div class="row"><label>write filaments</label><input type="checkbox" data-p="print.writeFilaments"><span class="u"></span></div>
+        <div class="row"><label>preset</label><input type="text" data-p="print.pattern"></div>
+        <div class="row"><label>printer</label><input type="text" data-p="print.printer"></div>
+        <div class="row"><label>process</label><input type="text" data-p="print.process"></div>
+        <div class="note">names only, never settings. blank leaves the slicer's selection alone.</div>
+      </div></div></details>
+      <div class="panel"><h3>PLATE</h3><div class="bd">
+        <div class="row"><label>bed</label><input type="number" data-p="print.bedW" step="1"><span class="u">x</span><input type="number" data-p="print.bedD" step="1"><span class="u">mm</span></div>
+        <div class="row"><label>smoothness</label><input type="range" data-p="seg" min="24" max="72" step="4"><input type="number" data-p="seg" step="4"><span class="u"></span></div>
+        <div class="row"><label>auto rebuild</label><input type="checkbox" id="autoB" checked><span class="u"></span></div>
+        <div class="btns"><button id="bBuild" class="ghost">rebuild now</button><button id="bPlate" class="ghost">show plate</button></div>
+      </div></div>
+      <div class="panel"><h3>FITS AND CLEARANCES</h3><div class="bd"><table class="tbl" id="fits"></table>
+        <div class="note">every place two parts meet, with what the printer usually does to it. holes come out about 0.15 mm small and pegs about 0.05 mm big, so a 0.10 mm clearance on paper is a press fit in the hand.</div>
+      </div></div>
+      <div class="panel"><h3>EXPORT</h3><div class="bd">
+        <div class="btns"><button id="b3mf" class="pink">3MF project</button><button id="bStl" class="ghost">STL zip</button><button id="bCard" class="ghost">print card</button><button id="bJson" class="ghost">design json</button></div>
+        <div class="btns"><button id="bCoupon" class="ghost">test coupon</button></div>
+        <div class="note">print the coupon first. it carries the same stack, a trace run of known length, a layer crossing, three split gaps, a bump pair, one flex key and one click spring. measure it, then type the numbers into step 3.</div>
+        <div class="readout" id="readout"></div>
+      </div></div>
+    </div>
+  </div>
+</div>
+<div id="status"><span id="stDims">-</span><span id="stTris">-</span><span id="stMs">-</span><span class="sp"></span><span class="chips" id="stChips"></span></div>
+<input type="file" id="fileIn" accept=".json,application/json" style="display:none">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>

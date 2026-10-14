@@ -1,0 +1,62 @@
+PASS net B1   single island (1)
+PASS net B2   single island (1)
+PASS net B3   single island (1)
+PASS net B4   single island (1)
+PASS net B5   single island (1)
+PASS net B6   single island (1)
+PASS net S1A  single island (1)
+PASS net S1B  single island (1)
+PASS net S2A  single island (1)
+PASS net S2B  single island (1)
+PASS net S3A  single island (1)
+PASS net S3B  single island (1)
+PASS min clearance 1.203 mm at B3/B4 (gate 0.90)
+PASS all copper >= 1.0 mm from the shared outline
+PASS net B1   survives the 1.10 mm erode test (1 islands)
+PASS net B2   survives the 1.10 mm erode test (1 islands)
+PASS net B3   survives the 1.10 mm erode test (1 islands)
+PASS net B4   survives the 1.10 mm erode test (1 islands)
+PASS net B5   survives the 1.10 mm erode test (1 islands)
+PASS net B6   survives the 1.10 mm erode test (1 islands)
+PASS net S1A  survives the 1.10 mm erode test (1 islands)
+PASS net S1B  survives the 1.10 mm erode test (1 islands)
+PASS net S2A  survives the 1.10 mm erode test (1 islands)
+PASS net S2B  survives the 1.10 mm erode test (1 islands)
+PASS net S3A  survives the 1.10 mm erode test (1 islands)
+PASS net S3B  survives the 1.10 mm erode test (1 islands)
+PASS sector B6 is solid copper
+PASS sector B5 is solid copper
+PASS sector B4 is solid copper
+PASS sector B3 is solid copper
+PASS sector B2 is solid copper
+PASS sector B1 is solid copper
+PASS arc 1 ratio monotone along the sweep
+PASS arc 1 span 0.180 to 0.779, off both rails
+PASS arc 1 both wedges carry real plate area
+PASS arc 2 ratio monotone along the sweep
+PASS arc 2 span 0.185 to 0.784, off both rails
+PASS arc 2 both wedges carry real plate area
+PASS arc 3 ratio monotone along the sweep
+PASS arc 3 span 0.188 to 0.787, off both rails
+PASS arc 3 both wedges carry real plate area
+PASS inner arc sweep 132 mm of travel
+PASS exactly 12 channels, one MPR121 or 12 S3 touch pins
+PASS rail is ONE row on 14.0 mm pitch
+PASS rail finger gap 5.0 mm
+PASS alternating finger depth 5.0 mm so adjacent clip bodies nest
+PASS depth alternates every finger
+PASS rail order follows arrival order (monotone fan, no crossings)
+PASS vinyl covers all live copper outside the rail zone (0.00 mm2 bare)
+PASS vinyl clears every rail finger
+PASS vinyl overhangs sector B6 by 1.6 mm
+PASS vinyl overhangs sector B5 by 1.6 mm
+PASS vinyl overhangs sector B4 by 1.6 mm
+PASS vinyl overhangs sector B3 by 1.6 mm
+PASS vinyl overhangs sector B2 by 1.6 mm
+PASS vinyl overhangs sector B1 by 1.6 mm
+PASS vinyl faceplate is one connected piece
+PASS accent tiles clear the faceplate edge by 1 mm
+PASS vinyl inside the shared outline keepout
+
+GATES 59 passed 0 failed
+QUADRANT rev A   190 x 134 mm   12 channels in ONE row   9459 mm2 copper   min clearance 1.20 mm
