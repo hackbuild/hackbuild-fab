@@ -285,9 +285,13 @@ jobs:
           uv run --project tools/py --extra bench tools/py/harness/artboard_smoke.py packages/ui-core/test/artboard/fixture.html "$RUNNER_TEMP/artboard"
   exit-m06-m08:
     # M06 and M08 Exit rows run as commands: the AILERON differential
-    # derivation, the mockups quarantine grep, the SPINDLE board builds, the
-    # SHUNT board checks, the SPINDLE gerbers refused at E_PROVENANCE without
-    # a terminal (exit 4) and the SuperMini pin map. A board build spawns uv.
+    # derivation (refused at E_REF while candidate; the step goes red the
+    # day it is typed and is flipped back to the exit row then), the mockups
+    # quarantine grep, the SPINDLE board builds, the SHUNT board checks, the
+    # SPINDLE gerbers refused at E_PROVENANCE without a person (exit 4), the
+    # TTY gate refusal E_GATE_UNAVAILABLE (exit 3) on an export that clears
+    # provenance and checks, and the SuperMini pin map. No step opens a
+    # gate. A board build spawns uv.
     # SPINDLE R1 is kept as shipped with its 5V to GND short (D-249): each
     # R1 step passes only while the checks still catch it, and spindle-r2,
     # R1 less the four GND vias on the 5V trace, passes CHK-BRD-01 and -21.
@@ -303,8 +307,12 @@ jobs:
       - uses: astral-sh/setup-uv@v10.2.0
       - run: npm ci
       - run: npx tsc -b
-      - name: AILERON differential derivation (known red, recorded M06 row; candidate, E_REF until M11-T09)
-        run: npx --no-install hbf mech.derive aileron-differential --params '{"tilt":10,"roll":10}' --json
+      - name: AILERON differential derivation refused while candidate, E_REF exit 2 with the solveHorns horns 46.1 and 0.6 deg in the hint (M06 row unmet, typed at M11-T09)
+        run: |
+          set +e
+          npx --no-install hbf mech.derive aileron-differential --params '{"tilt":10,"roll":10}' --json > "$RUNNER_TEMP/aileron.json"
+          test $? -eq 2 || exit 1
+          jq -e '.ok == false and .stage == "input" and ([.errors[].code] == ["E_REF"]) and (.errors[0].hint | contains("aileron-differential is candidate")) and (.errors[0].hint | contains("46.1 and 0.6 deg"))' "$RUNNER_TEMP/aileron.json"
       - name: no canon package or reference cites the quarantined mockups (M06-T06, M06-T14)
         if: ${{ !cancelled() }}
         run: '! grep -rn "fab-knowledge/mockups" packages/mechanisms packages/archetypes reference'
@@ -340,12 +348,23 @@ jobs:
       - name: SHUNT expect sets, 5 shorts and 5 nets under two pads, exact (D-074, D-254)
         if: ${{ !cancelled() }}
         run: npx --no-install hbf check.run reference/boards/shunt-art --only CHK-BRD-09,CHK-BRD-21 --json
-      - name: SPINDLE R1 gerbers without a terminal stop at the provenance gate, exit 4 (D-102)
+      - name: SPINDLE R1 gerbers without a person stop at the provenance gate, exit 4, only E_PROVENANCE, nothing written (D-102)
         if: ${{ !cancelled() }}
         run: |
           set +e
-          npx --no-install hbf export.run reference/boards/spindle-r1 --kind gerbers < /dev/null
-          test $? -eq 4
+          npx --no-install hbf export.run reference/boards/spindle-r1 --kind gerbers --json < /dev/null > "$RUNNER_TEMP/spindle-r1-gerbers.json"
+          test $? -eq 4 || exit 1
+          jq -e '.ok == false and .stage == "gate" and (.errors | length) > 0 and ([.errors[].code] | unique) == ["E_PROVENANCE"] and .artifacts == []' "$RUNNER_TEMP/spindle-r1-gerbers.json" || exit 1
+          test ! -e reference/boards/spindle-r1/out
+      - name: a fabrication export past provenance and checks, without a terminal, refuses at E_GATE_UNAVAILABLE, exit 3, naming the line a person runs, nothing written (D-102)
+        if: ${{ !cancelled() }}
+        run: |
+          set +e
+          out="$RUNNER_TEMP/slug-no-tty"
+          npx --no-install hbf export.run --scene slug-sheets --kind dxf --out "$out" --json < /dev/null > "$RUNNER_TEMP/slug-no-tty.json"
+          test $? -eq 3 || exit 1
+          jq -e '.ok == false and .stage == "gate" and ([.errors[].code] == ["E_GATE_UNAVAILABLE"]) and (.errors[0].personRuns | startswith("npx --no-install hbf export.run --scene slug-sheets --kind dxf")) and .artifacts == []' "$RUNNER_TEMP/slug-no-tty.json" || exit 1
+          test ! -e "$out"
       - if: ${{ !cancelled() }}
         run: npx --no-install hbf catalog.pins esp32c3-supermini --json
   dxf-audit:

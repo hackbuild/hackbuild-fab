@@ -14,7 +14,7 @@
   "scripts": {
     "build": "tsc -b",
     "pretest": "tsc -b",
-    "test": "vitest run"
+    "test": "vitest run --passWithNoTests"
   },
   "dependencies": {
     "@hackbuild/3mf": "0.0.0",

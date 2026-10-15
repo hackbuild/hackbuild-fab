@@ -1,6 +1,6 @@
 {
-  "about": "Rows of the M03-T12 handle table, driven through the art board fixture. Read by artboard_smoke.py (Playwright) and artboard_drive.mjs (puppeteer-core). A point expression returns canvas css px; a check returns null or what failed, polled for up to 3 s.",
-  "prelude": "window.H = { cv: () => document.querySelector('#board'), st: () => ARTBOARD.state(), L: (id) => ARTBOARD.state().layers.find((l) => l.id === id), ids: () => ARTBOARD.state().layers.map((l) => l.id), h: () => UI.FE.handles, mm: (x, y) => { const v = ARTBOARD.state().view; return [v.ox + x * v.scale, v.oy - y * v.scale]; }, tomm: (p) => { const v = ARTBOARD.state().view; return [(p[0] - v.ox) / v.scale, -(p[1] - v.oy) / v.scale]; }, pick: (id) => document.querySelector('[data-pick=\"' + id + '\"]').click(), at: (deg, r) => { const c = UI.FE.handles.centre, a = deg * Math.PI / 180; return [c[0] + r * Math.cos(a), c[1] - r * Math.sin(a)]; }, mid: () => { const k = UI.FE.handles.corners; return [(k[0][0] + k[2][0]) / 2, (k[0][1] + k[2][1]) / 2]; }, s: {}, types: new Set() }; document.querySelector('#board').addEventListener('pointerdown', (e) => H.types.add(e.pointerType), true); null",
+  "about": "Rows of the M03-T12 handle table, driven through the art board fixture. Read by artboard_smoke.py (Playwright) and artboard_drive.mjs (puppeteer-core). A point expression returns canvas css px; a check returns null or what failed, polled for up to 3 s. H.turn(deg, r) is the point r px from the placement centre where a drag from the rotate dot turns the selected layer to deg; it starts from the dot's measured angle, because the dot sits on the top edge midpoint of a raster bbox, which can sit a 0.25 mm cell off the placement axis when glyphs raster differently (linux chromium put a shift drag aimed at 52 degrees past 52.5, committed 60).",
+  "prelude": "window.H = { cv: () => document.querySelector('#board'), st: () => ARTBOARD.state(), L: (id) => ARTBOARD.state().layers.find((l) => l.id === id), ids: () => ARTBOARD.state().layers.map((l) => l.id), h: () => UI.FE.handles, mm: (x, y) => { const v = ARTBOARD.state().view; return [v.ox + x * v.scale, v.oy - y * v.scale]; }, tomm: (p) => { const v = ARTBOARD.state().view; return [(p[0] - v.ox) / v.scale, -(p[1] - v.oy) / v.scale]; }, pick: (id) => document.querySelector('[data-pick=\"' + id + '\"]').click(), at: (deg, r) => { const c = UI.FE.handles.centre, a = deg * Math.PI / 180; return [c[0] + r * Math.cos(a), c[1] - r * Math.sin(a)]; }, turn: (deg, r) => { const h = UI.FE.handles, c = h.centre, d = h.dot, L = H.L(H.st().sel), a = Math.atan2(c[1] - d[1], d[0] - c[0]) + (deg - (L.rot || 0)) * Math.PI / 180; return [c[0] + r * Math.cos(a), c[1] - r * Math.sin(a)]; }, mid: () => { const k = UI.FE.handles.corners; return [(k[0][0] + k[2][0]) / 2, (k[0][1] + k[2][1]) / 2]; }, s: {}, types: new Set() }; document.querySelector('#board').addEventListener('pointerdown', (e) => H.types.add(e.pointerType), true); null",
   "mouse": [
     {
       "row": "handles",
@@ -45,11 +45,11 @@
     {
       "row": "rotate snap at 3 degrees off 90",
       "steps": [
-        {"drag": {"from": "H.h().dot", "to": "H.at(90 + 93, 60)"}},
+        {"drag": {"from": "H.h().dot", "to": "H.turn(93, 60)"}},
         {"check": "H.L('text').rot === 90 ? null : 'drag ending at 93 degrees committed ' + H.L('text').rot + ', want 90'"},
-        {"drag": {"from": "H.h().dot", "to": "H.at(90 + 52, 60)", "hold": ["Shift"]}},
+        {"drag": {"from": "H.h().dot", "to": "H.turn(52, 60)", "hold": ["Shift"]}},
         {"check": "H.L('text').rot === 45 ? null : 'shift drag ending at 52 degrees committed ' + H.L('text').rot + ', want 45'"},
-        {"drag": {"from": "H.h().dot", "to": "H.at(90 + 93, 60)", "hold": ["Alt"]}},
+        {"drag": {"from": "H.h().dot", "to": "H.turn(93, 60)", "hold": ["Alt"]}},
         {"check": "H.L('text').rot === 93 ? null : 'alt drag ending at 93 degrees committed ' + H.L('text').rot + ', want 93'"}
       ]
     },
@@ -203,7 +203,7 @@
     {
       "row": "touch rotate",
       "steps": [
-        {"swipe": {"from": "H.h().dot", "to": "H.at(90 + 93, 60)"}},
+        {"swipe": {"from": "H.h().dot", "to": "H.turn(93, 60)"}},
         {"check": "H.L('text').rot === 90 ? null : 'touch rotate to 93 degrees committed ' + H.L('text').rot"}
       ]
     },
