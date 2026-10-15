@@ -9,7 +9,7 @@ import {
   HbAppShell, HbGuide, HbHeader, HbPill, HbSelect, HbSpinner, HbStageOverlay, HbStatusBar, HbSteps, HbWelcome,
   type HbStepOption, type HbWelcomeStart,
 } from "@virgilvox/hackbuild-ui";
-import type { Bench, Chase, CheckResult, ContactFn } from "@hackbuild/spec";
+import type { Bench, Chase, CheckResult, ContactFn, ViewMode } from "@hackbuild/spec";
 import {
   applyFix, CAM_NAMES, mountBakeStage, targetOfBody, welcomeStarts,
   type BakeStage, type BenchCore, type CamChangeDetail, type CamName, type Located, type Pad, type PickDetail, type ViewPart, type Welcome,
@@ -248,6 +248,7 @@ onMounted(() => {
   document.documentElement.dataset["three"] = stage?.revision ?? "";
   if (stage !== null && cams.value[0] !== undefined) stage.viewer.cam = cams.value[0];
   paintStage();
+  enterStep(shell.step);
   host.value?.addEventListener("pick", onPick);
   host.value?.addEventListener("camchange", onCamChange);
   window.addEventListener("keydown", onKey);
@@ -280,7 +281,26 @@ watch(marks, () => nextTick(tagHooks));
 // Entering the export step runs the build and every check (step 9).
 watch(() => shell.step, (i) => {
   if (i === exportStep.value) props.core.ensureMesh().catch(() => undefined);
+  enterStep(i);
 });
+
+// Step entry applies the step's declared view and camera (P-08, G-44), as
+// TANG R6's goStep opens under on the underside step and plate on the print
+// step (tang-r6 src/06_app.js line 219). A view a step turned on goes off on
+// a step that declares none, as TANG returns plate to iso on the early steps.
+let stepMode: string | null = null;
+function enterStep(i: number): void {
+  const s = steps.value[i];
+  if (s === undefined) return;
+  const def = props.bench.views.default;
+  const want = s.view !== undefined && s.view !== def && props.bench.views.modes.includes(s.view) ? s.view : null;
+  if (s.view === def) for (const m of shell.modes.filter((x) => props.bench.views.modes.includes(x as ViewMode))) toggleMode(m);
+  else if (stepMode !== null && stepMode !== want && shell.modes.includes(stepMode)) toggleMode(stepMode);
+  stepMode = want;
+  if (want !== null && !shell.modes.includes(want)) toggleMode(want);
+  const cam = cams.value.find((c) => c === s.cam);
+  if (cam !== undefined) setCam(cam);
+}
 
 // ---- rail and status
 const ctx = computed<PanelCtx>(() => ({

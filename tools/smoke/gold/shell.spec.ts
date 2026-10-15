@@ -89,8 +89,46 @@ rule("G-43", "one focal pink per view at 390, 768 and 1280, welcome included", a
   expect(fails, fails.join("\n")).toEqual([]);
 });
 
-rule("G-44", "a step with a declared cam or view leaves the viewer on it", async ({ bench }) => {
-  notRun(`${bench.id}: no step of this page declares a cam or view the hook can read`);
+rule("G-44", "a step with a declared cam or view leaves the viewer on it", async ({ page, bench }) => {
+  if (bench.origin === "legacy") notRun(`${bench.id}: the legacy page declares no step cam or view`);
+  await openGold(page, bench);
+  const steps = page.locator(bench.dom.steps);
+  const off: string[] = [];
+  for (const [i, want] of bench.enter.entries()) {
+    if (want.cam === null && want.view === null) continue;
+    // Enter from another step, after an orbit, so a view or cam left over from boot cannot pass the row.
+    await steps.nth(i === 0 ? 1 : 0).click();
+    await hookSettled(page);
+    const box = await page.locator("hb-viewer").boundingBox();
+    if (box !== null) {
+      await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+      await page.mouse.down();
+      await page.mouse.move(box.x + box.width / 2 + 60, box.y + box.height / 2 + 10, { steps: 4 });
+      await page.mouse.up();
+    }
+    await steps.nth(i).click();
+    await hookSettled(page);
+    const r = await page.evaluate(() => {
+      const v = document.querySelector("hb-viewer") as unknown as { explode: boolean; layers: boolean; section: number | null; plate: boolean; viewState(): { cam: { name: string | null } } } | null;
+      if (v === null) return null;
+      const on: string[] = [];
+      if (v.plate) on.push("plate");
+      if (v.explode) on.push("exploded");
+      if (v.section !== null) on.push("section");
+      if (v.layers) on.push("layers");
+      return { on, cam: v.viewState().cam.name };
+    });
+    if (r === null) {
+      off.push(`step ${i + 1}: no viewer on the page`);
+      continue;
+    }
+    if (want.cam !== null && r.cam !== want.cam) off.push(`step ${i + 1}: declares cam ${want.cam}, viewer on ${r.cam ?? "orbit"}`);
+    if (want.view !== null) {
+      const ok = want.view === bench.defaultView ? r.on.length === 0 : r.on.includes(want.view);
+      if (!ok) off.push(`step ${i + 1}: declares view ${want.view}, viewer on ${r.on.join("+") || "the default view"}`);
+    }
+  }
+  expect(off, off.join("\n")).toEqual([]);
 });
 
 rule("G-45", "on each step the status strip's scope equals the view on screen", async ({ page, bench }) => {

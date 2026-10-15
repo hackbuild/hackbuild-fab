@@ -40,6 +40,10 @@ export interface GoldBench {
   dom: Dom;
   /** RailStep.focus per step from the bench declaration; null where a step declares none. */
   focus: (string | null)[];
+  /** RailStep.cam and RailStep.view per step from the bench declaration, null where a step declares none (G-44). */
+  enter: { cam: string | null; view: string | null }[];
+  /** BenchDecl.views.default; null on a legacy page. */
+  defaultView: string | null;
 }
 
 export interface Dom {
@@ -87,7 +91,7 @@ const LEGACY_NA: Record<string, Record<string, string>> = {
 
 interface Decl {
   chase: { meta: { kind: string }; exports: readonly { kind: string }[]; presets?: readonly unknown[]; params: readonly { fields?: readonly { commit?: string }[] }[] };
-  bench: { views: { modes?: readonly string[]; render?: readonly string[]; drive?: { contact?: string } }; rail?: readonly { panels?: readonly string[]; cam?: string; view?: string; focus?: string }[] } | null;
+  bench: { views: { default?: string; modes?: readonly string[]; render?: readonly string[]; drive?: { contact?: string } }; rail?: readonly { panels?: readonly string[]; cam?: string; view?: string; focus?: string }[] } | null;
 }
 
 async function declOf(b: BenchUnderTest): Promise<Decl> {
@@ -138,9 +142,10 @@ export async function goldBenches(): Promise<GoldBench[]> {
       const build = builds.get(id);
       if (build === undefined) continue;
       const d = await declOf(b);
-      out.push({ id, under: b, origin: "fab", build, na: naOf(d), dom: FAB_DOM, focus: (d.bench?.rail ?? []).map((r) => r.focus ?? null) });
+      out.push({ id, under: b, origin: "fab", build, na: naOf(d), dom: FAB_DOM, focus: (d.bench?.rail ?? []).map((r) => r.focus ?? null),
+        enter: (d.bench?.rail ?? []).map((r) => ({ cam: r.cam ?? null, view: r.view ?? null })), defaultView: d.bench?.views.default ?? null });
     } else if (b.origin === "legacy" && b.rel.startsWith(`dist${path.sep}legacy`) && b.adapter !== null && LEGACY_DOM[b.adapter] !== undefined) {
-      out.push({ id: b.adapter, under: b, origin: "legacy", build: null, na: { ...(LEGACY_NA[b.adapter] ?? {}) }, dom: LEGACY_DOM[b.adapter] as Dom, focus: [] });
+      out.push({ id: b.adapter, under: b, origin: "legacy", build: null, na: { ...(LEGACY_NA[b.adapter] ?? {}) }, dom: LEGACY_DOM[b.adapter] as Dom, focus: [], enter: [], defaultView: null });
     }
   }
   cache = out;
