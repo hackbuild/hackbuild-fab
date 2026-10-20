@@ -562,6 +562,9 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-506 | Test-local ContactFn and placement prefix on the click-spring-window fixture | decided | Testing, docs, milestones, registry |
 | D-507 | widgetsModel takes a WidgetView carrying claimFns and travelMm | decided | UI |
 | D-508 | BindOptions gains claimFns and a travel getter | decided | UI |
+| D-509 | loft and sweep refuse a stage 6 inset | decided | Kernel, geometry |
+| D-510 | hull takes the stage 6 inset on every operand | decided | Kernel, geometry |
+| D-511 | part.build proof for loft, sweep and hull is a manual CLI run plus a mesh test | decided | Testing, docs, milestones, registry |
 
 ## House rules and process
 
@@ -6205,6 +6208,39 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. `bindChase` takes optional `claimFns` (claim registry entries by id) and `travel: () => number \| undefined`. `widgets()` reads both on every call. |
 | Rationale | `BENCH.widgets()` takes no arguments, so the current press travel has to come from the host through a getter. Main's `entry.ts` supplied neither, so today's pages behave the same as before. |
 | Evidence | `packages/ui-core/src/chase/bind.ts` BindOptions and widgets(); the bind.test travel 0.25 to 1.2 case (hand computed, not measured). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-509 loft and sweep refuse a stage 6 inset
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. A loft or sweep body with an inset role (flex-conductor, flex, conductor, art) is refused with E_KERNEL, expected `no stage 6 inset on a <route> body`. The same applies when such a body is a csg operand. |
+| Rationale | An offset of a section ring changes its point count, so loft rings can no longer be joined point for point. The imported route already refuses the inset. |
+| Evidence | `packages/mesh/src/stages.ts` noInset; test `refuses a stage 6 inset on a loft insert` in `packages/mesh/test/routes-loft-sweep-hull.test.ts` (computed, 2026-10-20). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-510 hull takes the stage 6 inset on every operand
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. csg hull insets every operand, as union and intersection do, and then hulls the result. |
+| Rationale | Hulling the shrunk operands keeps the result inside the original hull, so an insert cannot grow. |
+| Evidence | `packages/mesh/src/stages.ts` csg build comment and operand inset choice. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-511 part.build proof for loft, sweep and hull is a manual CLI run plus a mesh test
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The mesh test runs the loft-sweep-hull fixture build.ts with a stub author (body, part, ring.circle from geom) through runStages. The part.build run is recorded as a manual CLI verification and is not a vitest case. |
+| Rationale | @hackbuild/kernel depends on mesh, and core is a higher tier, so a mesh test cannot import either one without breaking `tools/tiers.json`. |
+| Evidence | `kernel/package.json` dependencies; `tools/tiers.mjs` edge rules; `hbf part.build packages/mesh/test/fixtures/loft-sweep-hull --json` verdict pass, 12 pass, 0 fail, 44 skip (computed, builder run 2026-10-20). |
 | Supersedes | new |
 | Milestone | none |
 
