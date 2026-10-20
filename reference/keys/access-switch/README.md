@@ -29,6 +29,40 @@ reference test holds the default inside 1.3 to 1.8 N and fails at span 24.
 A 0.05 mm beam error moves the peak from 108 g to 224 g (computed, scout
 sweep), so the force claim waits on the thickness ladder coupon.
 
+## The press claim
+
+`claim.ts` holds the drawn peak to a target band, the stopgap for the
+engine function claims; build.ts emits the band as metrics
+`claim.press.targetN`, `claim.press.lo` and `claim.press.hi`, and
+`test/claim.test.ts` runs the five corners through packages/sim and
+writes the block below (R1-flagship-access-switch-04).
+
+<!-- generated: press claim; rewrite with HBF_ACCEPT=1 npx vitest run reference/keys/access-switch -->
+
+Claim `press.peak`, tier inferred, unproven until coupon. Band 1.176 to 1.764 N
+(120 to 180 g), target 1.470 N (150 g) plus or minus
+20 percent, from `access.pressTargetN` and `access.pressBandPct` (profile, inferred;
+the band edges computed). Drawn peak 1.552 N (158 g, computed), in band.
+
+Each corner moves one input alone: beam thickness by `click.beamPrintErrorMm`
+0.05 mm, modulus by `click.modulusSpreadPct` 20 percent (profile,
+inferred), through packages/sim clickRigid and clickReadout at span 28, rise 2,
+width 1.6, shuttle 3 (all peaks computed, grams at standard gravity):
+
+| corner | t mm | E MPa | peak N | peak g | band |
+|---|---|---|---|---|---|
+| drawn | 0.55 | 1900 | 1.552 | 158 | in |
+| t minus | 0.50 | 1900 | 1.062 | 108 | out |
+| t plus | 0.60 | 1900 | 2.195 | 224 | out |
+| E minus | 0.55 | 1520 | 1.242 | 127 | in |
+| E plus | 0.55 | 2280 | 1.863 | 190 | out |
+
+Spread 1.062 to 2.195 N (108 to 224 g, computed)
+leaves the band, so the claim stays inferred until a person
+enters a reading from the thickness ladder coupon.
+
+<!-- end generated: press claim -->
+
 ## Body and paddle
 
 - Body: a 62 mm disc (paddle diameter plus two walls) to host.top 13.68 mm,
