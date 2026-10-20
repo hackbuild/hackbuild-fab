@@ -434,7 +434,7 @@ it is a section 9 row, and M-S-T06 seeded it.
 
 | prefix | family | covers | seeded | entered | package home | runs from |
 |---|---|---|---|---|---|---|
-| PRT | print | manifoldness, layer and line quantisation, islands, bridges, teardrops, print pose, bed fit | 12 | 4 | checks (mesh, profile) | M00 to M04 |
+| PRT | print | manifoldness, layer and line quantisation, islands, bridges, teardrops, print pose, bed fit | 12 | 6 | checks (mesh, profile) | M00 to M04 |
 | FIT | fit | fit class bands on real gaps, snaps, mixed-process classes, bearings, snap strain, flexure stress | 5 | 3 | checks (profile, mesh) | M01 to M06 |
 | ASM | assembly | driver reach, assembly order, insertion, bought bodies, swept volumes, closest approach, poses, printed wire reach | 9 | 3 | checks (sim, mesh) | M02 to M04 |
 | SHT | sheet | connected profiles, rings, DXF reload, kerf, sag, living hinges, collision budget, corner fill | 7 | 4 | checks (geom, nest) | M07 |
@@ -449,7 +449,7 @@ it is a section 9 row, and M-S-T06 seeded it.
 | UI | page | sideways overflow at 390, 768, 1280; plate and section cameras | 2 | 0 | checks (page) | M09 |
 | ART | artifact | export completeness, source-to-artifact rebuild, derived artifacts, parameter echo, QR legibility, placeholder text, firmware read coverage, unresolved values, card against build | 0 | 10 | checks (artifact) | M00 to M09 |
 | DEV | device | CLASP payload, one-shot signals, heartbeat cadence, laser safety block | 0 | 4 | link | M13 |
-| total | | | 86 | 84 | | |
+| total | | | 86 | 86 | | |
 
 Seeded counts are computed from `packages/checks/seed/checks.seed.json`
 (86 rows: 77 block, 9 warn; counts.json wins; 85 and 76 before M-S-T06
@@ -457,7 +457,8 @@ seeded CHK-NET-29). Entered counts are the rows of section
 9, not counting the two reserved rows of section 9.10 (counted 2026-10-05
 over the section 9 tables; the 2026-10-04 column missed CHK-FIT-07,
 CHK-NET-30, CHK-3MF-08, -09 and CHK-DEV-04; CHK-3MF-10, entered by
-M04-T12 from section 15, is counted since 9.15 gave it a row). Seed rows
+M04-T12 from section 15, is counted since 9.15 gave it a row; CHK-PRT-18
+and -19, entered 2026-10-20, are counted in the PRT row). Seed rows
 entered at M04-T12 carry `enteredBy` and are counted as registered, not
 seeded (counts.json `checks.registered`). The CHK-LNT-01
 and -02 run bodies are tools/lint-voice.mjs (D-004), called on the source
