@@ -4,7 +4,7 @@
     "S": ["spec"],
     "0": ["profile", "catalog", "geom", "mesh"],
     "1": ["3mf", "sim", "circuit", "copper", "board", "nest", "inlay", "motion", "wiring", "constraints", "mechanisms", "archetypes"],
-    "2": ["checks", "project", "reference", "knowledge", "chase", "pipeline"],
+    "2": ["checks", "project", "reference", "knowledge", "chase", "pipeline", "commands"],
     "3": ["ui-core", "ui", "link"],
     "app": ["core", "apps/fab", "apps/sketch", "apps/blocks"]
   },
@@ -33,11 +33,12 @@
     "knowledge": ["spec", "profile", "catalog", "geom", "mesh", "3mf", "sim", "circuit", "copper", "board", "nest", "inlay", "motion", "wiring", "constraints", "mechanisms", "archetypes"],
     "chase": ["spec", "profile", "catalog", "geom", "mesh", "3mf", "sim", "circuit", "copper", "board", "nest", "inlay", "motion", "wiring", "constraints", "mechanisms", "archetypes", "checks", "project", "reference"],
     "pipeline": ["spec", "profile", "catalog", "geom", "mesh", "3mf", "sim", "circuit", "inlay", "mechanisms", "archetypes", "checks"],
+    "commands": ["spec"],
     "ui-core": ["spec", "profile", "catalog", "geom", "mesh", "3mf", "sim", "circuit", "copper", "board", "nest", "inlay", "motion", "wiring", "constraints", "mechanisms", "archetypes", "checks", "project", "reference", "knowledge", "chase"],
     "ui": ["spec", "checks", "ui-core"],
     "link": ["spec", "profile", "catalog", "motion", "checks"],
     "kernel": ["spec", "profile", "catalog", "geom", "mesh", "3mf", "sim", "circuit", "copper", "board", "nest", "inlay", "motion", "wiring", "constraints", "mechanisms", "archetypes", "checks", "project", "reference", "knowledge", "chase"],
-    "core": ["spec", "profile", "catalog", "geom", "mesh", "3mf", "sim", "circuit", "copper", "board", "nest", "inlay", "motion", "wiring", "constraints", "mechanisms", "archetypes", "checks", "project", "reference", "knowledge", "chase", "pipeline", "kernel"],
+    "core": ["spec", "profile", "catalog", "geom", "mesh", "3mf", "sim", "circuit", "copper", "board", "nest", "inlay", "motion", "wiring", "constraints", "mechanisms", "archetypes", "checks", "project", "reference", "knowledge", "chase", "pipeline", "commands", "kernel"],
     "apps/fab": ["*"],
     "apps/sketch": ["*"],
     "apps/blocks": ["ui", "designs/blocks"]

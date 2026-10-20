@@ -10,7 +10,7 @@ import { createProfileLookup } from "@hackbuild/profile";
 import { archetypes } from "../canon.js";
 import { fullProfile } from "../load-build.js";
 import type { CommandOut } from "../result.js";
-import type { CoreCtx } from "../registry.js";
+import type { CoreCtx } from "../ctx.js";
 import { ZERO, capped, rank, type Scored } from "./canon-hits.js";
 
 /**

@@ -21,7 +21,7 @@ import { archetypes } from "../canon.js";
 import { cmdError, didYouMean } from "../errors.js";
 import { resolveFace } from "../face-frame.js";
 import type { CommandOut } from "../result.js";
-import type { CoreCtx } from "../registry.js";
+import type { CoreCtx } from "../ctx.js";
 import { buildTarget } from "./part-build.js";
 import { ZERO } from "./canon-hits.js";
 import { PACKAGE_KINDS } from "../kinds.js";

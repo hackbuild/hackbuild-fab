@@ -6,7 +6,7 @@
 // core/test/surface.test.ts and docs/explanation/command-surface.md.
 // Version 4, 2026-10-04. Carries D-106, D-107, D-161, D-177, D-193.
 
-import { readFileSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 import { describe, expect, test } from "vitest";
 import {
   CLI_ONLY, CLI_ONLY_FIELDS, COMMAND_GROUP, COMMAND_NAMES, GROUPS, MCP_TOOLS, MCP_TOOL_NAMES, TOOL_NAME_PATTERN, TOOLSET_PROFILES,
@@ -58,14 +58,17 @@ describe("command surface", () => {
   });
 
   test("no MCP tool reaches the network, so every network input field is CLI only (standard rule 10)", () => {
-    // Independent source: core's CLI schemas, where a field that needs the
-    // network says so in its describe() text. Each such field must be listed
-    // in CLI_ONLY_FIELDS, which McpToolIO omits (fixtures/surface.ts proves
-    // the omission at compile time; tsc -b runs before every test).
-    const registry = readFileSync(new URL("../../core/src/registry.ts", import.meta.url), "utf8");
+    // Independent source: the command specs' CLI schemas, where a field
+    // that needs the network says so in its describe() text. Each such field
+    // must be listed in CLI_ONLY_FIELDS, which McpToolIO omits
+    // (fixtures/surface.ts proves the omission at compile time; tsc -b runs
+    // before every test).
+    const defs = new URL("../../packages/commands/src/defs/", import.meta.url);
     const network: Record<string, string[]> = {};
-    for (const block of registry.split(/\nexport const /).slice(1)) {
-      const name = /^\w+: CommandDef<"([a-z.]+)">/.exec(block)?.[1];
+    for (const file of readdirSync(defs).filter((f) => f.endsWith(".ts") && f !== "index.ts")) {
+      const block = readFileSync(new URL(file, defs), "utf8");
+      const name = /\bspec: CommandSpec<"([a-z.]+)">/.exec(block)?.[1];
+      expect(name, `${file} declares spec: CommandSpec<name>`).toBeDefined();
       if (name === undefined) continue;
       for (const m of block.matchAll(/^\s+(\w+): z\..*\.describe\("[^"]*\bnetwork\b[^"]*"\)/gm)) (network[name] ??= []).push(m[1] as string);
     }

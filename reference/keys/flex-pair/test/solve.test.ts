@@ -17,7 +17,7 @@ import { beforeAll, describe, expect, test } from "vitest";
 import type { CheckResult, Hash, Net } from "@hackbuild/spec";
 import { buildPart, loadDesign, resolveParams, type Built } from "../../../../core/src/commands/build.js";
 import { solveBuilt, type CircuitSolveOutput } from "../../../../core/src/commands/circuit-solve.js";
-import type { CoreCtx } from "../../../../core/src/registry.js";
+import type { CoreCtx } from "../../../../core/src/ctx.js";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const DIR = path.resolve(HERE, "..");

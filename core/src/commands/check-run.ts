@@ -20,7 +20,7 @@ import { sourceDateEpoch } from "../epoch.js";
 import { cmdError, didYouMean } from "../errors.js";
 import { hashOf } from "../jcs.js";
 import { countsOf, findingsOf, worst, type CommandOut } from "../result.js";
-import type { CoreCtx } from "../registry.js";
+import type { CoreCtx } from "../ctx.js";
 import {
   buildPart, checkVersions, declares3mf, export3mf, fixCalls, loadDesign, loadWorkspace, rebuildOf, workspaceRoot, type Built, type Values,
 } from "./build.js";

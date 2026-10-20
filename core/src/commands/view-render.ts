@@ -5,18 +5,18 @@
 
 import { mkdirSync, writeFileSync } from "node:fs";
 import path from "node:path";
-import type { ArtifactHash, CommandInput, CommandOutput, ViewMode } from "@hackbuild/spec";
+import type { ArtifactHash, CommandInput, CommandOutput } from "@hackbuild/spec";
+import { VIEW_MODES, type ViewModeName } from "@hackbuild/commands";
 import { cmdError, didYouMean } from "../errors.js";
 import { sha256Hex } from "@hackbuild/spec";
-import type { CoreCtx } from "../registry.js";
+import type { CoreCtx } from "../ctx.js";
 import type { CommandOut } from "../result.js";
 import { encodePng } from "../render/png.js";
 import { parseColour, renderSheet, renderView, type RenderMesh, type View } from "../render/raster.js";
 import { recordOf } from "./part-inspect.js";
 
-/** Modes view.render draws, and the single view each one is. */
-const MODE_VIEW = { assembled: undefined, iso: "iso", section: "section", plate: "top" } as const satisfies Partial<Record<ViewMode, View | undefined>>;
-export const VIEW_MODES = Object.keys(MODE_VIEW) as readonly (keyof typeof MODE_VIEW)[];
+/** The single view each mode the view.render spec names is; tsc fails when the spec's VIEW_MODES and this map disagree. */
+const MODE_VIEW: { readonly [M in ViewModeName]: View | undefined } = { assembled: undefined, iso: "iso", section: "section", plate: "top" };
 
 /** Default image size, px: the sheet holds four 512 px views. */
 const DEFAULT_SIZE = { sheet: [1024, 1024], single: [512, 512] } as const;

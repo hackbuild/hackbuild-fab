@@ -6,7 +6,7 @@
 import type { AnyCommandDef, CommandError, CommandResult, SchemaIssue } from "@hackbuild/spec";
 import { cmdError, schemaError } from "./errors.js";
 import { finish, type CommandOut } from "./result.js";
-import type { CoreCtx } from "./registry.js";
+import type { CoreCtx } from "./ctx.js";
 
 /** E_SCHEMA from schema issues; an unrecognized key names its own pointer. */
 export function issuesError(input: unknown, issues: readonly SchemaIssue[], command: string): CommandError {

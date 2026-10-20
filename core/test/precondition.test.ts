@@ -15,7 +15,7 @@ import type { CheckResult, CommandResult, Hash, Severity } from "@hackbuild/spec
 import { seedRows, stamp } from "../src/checks.js";
 import { importAudit } from "../src/commands/part-build.js";
 import { exitOf } from "../src/errors.js";
-import type { CoreCtx } from "../src/registry.js";
+import type { CoreCtx } from "../src/ctx.js";
 import { countsOf, findingsOf, finish, worst } from "../src/result.js";
 import { Store } from "../src/store.js";
 import { renderResult } from "../src/text.js";

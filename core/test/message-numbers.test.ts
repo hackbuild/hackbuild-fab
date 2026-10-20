@@ -47,7 +47,7 @@ import { DEFAULT_MACHINE, constraintRegistry, runConstraintsQuery } from "../src
 import { finish } from "../src/result.js";
 import { hashOf } from "../src/jcs.js";
 import { fullProfile } from "../src/load-build.js";
-import type { CoreCtx } from "../src/registry.js";
+import type { CoreCtx } from "../src/ctx.js";
 import { renderFinding, renderResult } from "../src/text.js";
 import { DERIVATIONS, decimalsOf } from "../src/text/fmt.js";
 import { buildPart, declares3mf, export3mf, loadDesign, resolveParams, runChecks } from "../src/commands/build.js";

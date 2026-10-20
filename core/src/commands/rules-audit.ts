@@ -22,7 +22,7 @@ import { CHECK_MODULES, PAGE_MILESTONE, kernelsAt, registerChecks, runRegistry, 
 import type { StaleEntry } from "@hackbuild/project";
 import { artifactRebuild, designsByChaseId } from "../artifact-rebuild.js";
 import { cmdError } from "../errors.js";
-import type { CoreCtx } from "../registry.js";
+import type { CoreCtx } from "../ctx.js";
 import { countsOf, findingsOf, worst, type CommandOut } from "../result.js";
 import { loadWorkspace, workspaceRoot } from "./build.js";
 import { projectGraph, viewOf } from "./project-graph.js";

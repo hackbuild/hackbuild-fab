@@ -18,7 +18,7 @@ import { solveBuilt, type CircuitSolveInput, type CircuitSolveOutput } from "../
 import { finish } from "../src/result.js";
 import { fullProfile } from "../src/load-build.js";
 import { exitOf } from "../src/errors.js";
-import type { CoreCtx } from "../src/registry.js";
+import type { CoreCtx } from "../src/ctx.js";
 import { renderResult } from "../src/text.js";
 import { REF, ROOT, hbf, json } from "./hbf.js";
 

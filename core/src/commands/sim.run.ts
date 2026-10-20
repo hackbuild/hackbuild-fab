@@ -23,7 +23,7 @@ import { runTrials, type Expectation, type SceneDeps, type TrialsRun } from "@ha
 import { cmdError } from "../errors.js";
 import { sceneKinematics } from "../kinematics.js";
 import { fullProfile } from "../load-build.js";
-import type { CoreCtx } from "../registry.js";
+import type { CoreCtx } from "../ctx.js";
 import type { CommandOut } from "../result.js";
 import { DEFAULT_MACHINE } from "./constraints-query.js";
 

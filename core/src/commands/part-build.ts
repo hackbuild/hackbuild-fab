@@ -17,7 +17,7 @@ import { cmdError } from "../errors.js";
 import { hashOf } from "../jcs.js";
 import { resolveTarget, storeBuild } from "../load-build.js";
 import { countsOf, findingsOf, worst, type CommandOut } from "../result.js";
-import type { CoreCtx } from "../registry.js";
+import type { CoreCtx } from "../ctx.js";
 import { buildPart, fixCalls, loadDesign, loadWorkspace, mergeWarnings, resolveParams, workspaceRoot, type Built, type Values, type Workspace } from "./build.js";
 import { reportChecks, reportOrigin, runAllChecks, type AllChecked } from "./check-run.js";
 import { isBoardDesign } from "../board.js";

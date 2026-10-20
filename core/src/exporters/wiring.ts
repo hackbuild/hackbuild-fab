@@ -14,7 +14,7 @@ import { WiringError, wiringReport, wiringSvg, type WiringBoard, type WiringDraf
 import { workspaceCatalog } from "../catalog-files.js";
 import { cmdError, didYouMean } from "../errors.js";
 import type { CommandOut } from "../result.js";
-import type { CoreCtx } from "../registry.js";
+import type { CoreCtx } from "../ctx.js";
 import { runSandboxed, type SandboxOptions } from "../sandbox.js";
 import type { Design, Values } from "../commands/build.js";
 

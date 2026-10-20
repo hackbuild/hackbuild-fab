@@ -1,0 +1,23 @@
+{
+  "name": "@hackbuild/commands",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "author": "Moheeb Zara <hackbuildvideo@gmail.com>",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "pretest": "tsc -b",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@hackbuild/spec": "0.1.0",
+    "zod": "4.6.5"
+  }
+}

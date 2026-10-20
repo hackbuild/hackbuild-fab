@@ -13,7 +13,7 @@ import type { CheckResult, Finding, KernelId, ProfileLookup, Sheet } from "@hack
 import { CHECK_MODULES, kernelsAt, registerChecks, runRegistry, type KernelViews } from "@hackbuild/checks";
 import { sheetNames, type CutScene, type PackOutcome, type PlateScene, type SheetScene } from "@hackbuild/nest";
 import { cmdError, didYouMean } from "../errors.js";
-import type { CoreCtx } from "../registry.js";
+import type { CoreCtx } from "../ctx.js";
 import { loadWorkspace } from "../commands/build.js";
 
 /** One manifest row of packages/nest/scenes/index.ts, by shape (core's rootDir holds no scene file). */

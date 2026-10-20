@@ -36,7 +36,7 @@ import { readRouteMetrics } from "@hackbuild/copper";
 import { CHECK_MODULES, kernelsAt, registerChecks, runRegistry } from "@hackbuild/checks";
 import { cmdError, didYouMean } from "../errors.js";
 import { countsOf, findingsOf, worst, type CommandOut } from "../result.js";
-import type { CoreCtx } from "../registry.js";
+import type { CoreCtx } from "../ctx.js";
 import type { Built } from "./build.js";
 import { buildTarget } from "./part-build.js";
 import { fmt } from "../text/fmt.js";

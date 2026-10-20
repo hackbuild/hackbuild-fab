@@ -7,7 +7,7 @@
 import type { CommandInput, Pose, Quat, Vec3 } from "@hackbuild/spec";
 import { solveAssembly, type AsmRun, type Placement } from "@hackbuild/sim";
 import { cmdError } from "../errors.js";
-import type { CoreCtx } from "../registry.js";
+import type { CoreCtx } from "../ctx.js";
 import type { CommandOut } from "../result.js";
 import { sceneDeps, sceneOf, simResult, type SceneArg } from "./sim.run.js";
 

@@ -11,7 +11,7 @@ import type { BuildWarning, CommandInput, CommandOutput, NextCall } from "@hackb
 import { TPU_FALLBACK_PRESET } from "@hackbuild/3mf";
 import { cmdError, didYouMean } from "../errors.js";
 import { countsOf, findingsOf, worst, type CommandOut } from "../result.js";
-import type { CoreCtx } from "../registry.js";
+import type { CoreCtx } from "../ctx.js";
 import { exportedLine } from "@hackbuild/project";
 import { storeBuild } from "../load-build.js";
 import { askHost } from "../tty-gate.js";

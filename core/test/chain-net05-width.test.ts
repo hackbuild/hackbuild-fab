@@ -15,7 +15,7 @@ import { constraintRegistry, runConstraintsQuery } from "../src/commands/constra
 import { finish } from "../src/result.js";
 import { exitOf } from "../src/errors.js";
 import { hashOf } from "../src/jcs.js";
-import type { CoreCtx } from "../src/registry.js";
+import type { CoreCtx } from "../src/ctx.js";
 import { ROOT, hbf, json } from "./hbf.js";
 
 type Input = CommandInput<"constraints.query">;

@@ -28,7 +28,7 @@ import {
 import { cmdError, didYouMean } from "../errors.js";
 import { fullProfile } from "../load-build.js";
 import { countsOf, findingsOf, worst, type CommandOut } from "../result.js";
-import type { CoreCtx } from "../registry.js";
+import type { CoreCtx } from "../ctx.js";
 import { loadWorkspace } from "./build.js";
 
 /** The pinned sources each machine is read from, workspace relative. */

@@ -16,7 +16,7 @@ import { describe, expect, test } from "vitest";
 import { VERDICT_TRANSPORT, type CheckResult, type Metric } from "@hackbuild/spec";
 import { buildPart, loadDesign, resolveParams } from "../../../../core/src/commands/build.js";
 import { solveBuilt } from "../../../../core/src/commands/circuit-solve.js";
-import type { CoreCtx } from "../../../../core/src/registry.js";
+import type { CoreCtx } from "../../../../core/src/ctx.js";
 import { routeData, moduleText } from "../../../../packages/copper/scripts/pip-buried-route.mjs";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));

@@ -20,7 +20,7 @@ import { cmdError } from "../errors.js";
 import { fullProfile } from "../load-build.js";
 import { countsOf, findingsOf, worst, type CommandOut } from "../result.js";
 import { decimalsOf, fixed } from "../text/fmt.js";
-import type { CoreCtx } from "../registry.js";
+import type { CoreCtx } from "../ctx.js";
 import { constraintRegistry } from "./constraints-query.js";
 import { buildTarget } from "./part-build.js";
 

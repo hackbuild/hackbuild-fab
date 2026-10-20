@@ -19,7 +19,7 @@ import { cutScene, kerfNext, packPlates, type CutScene, type PlateScene, type Sh
 import { cmdError, didYouMean } from "../errors.js";
 import { fullProfile } from "../load-build.js";
 import { countsOf, errorResult, findingsOf, worst, type CommandOut } from "../result.js";
-import type { CoreCtx } from "../registry.js";
+import type { CoreCtx } from "../ctx.js";
 import { askHost } from "../tty-gate.js";
 import { loadWorkspace } from "../commands/build.js";
 import { SHEET_EXPORTERS, type SheetExporter } from "./index.js";

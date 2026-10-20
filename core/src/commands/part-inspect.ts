@@ -7,7 +7,7 @@ import { partOf } from "@hackbuild/project";
 import { cmdError } from "../errors.js";
 import { storeBuild } from "../load-build.js";
 import { parseUri, type BuildRecord, type SlotView } from "../store.js";
-import type { CoreCtx } from "../registry.js";
+import type { CoreCtx } from "../ctx.js";
 import type { CommandOut } from "../result.js";
 import { buildTarget } from "./part-build.js";
 
