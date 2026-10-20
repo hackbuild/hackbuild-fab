@@ -371,6 +371,9 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-315 | Access-switch parity edit golden moves paddle D | decided | Testing, docs, milestones, registry |
 | D-316 | Access-switch paddle preload reported, not subtracted | decided | Canons, reference, profile, catalog |
 | D-317 | Rerecorded the access-switch 3mf artifact hash | decided | Testing, docs, milestones, registry |
+| D-318 | The solver hint names registerSolvers in archetypes | decided | Architecture |
+| D-319 | Page click test reads goldens instead of an in-process core build | decided | Testing, docs, milestones, registry |
+| D-320 | registerSolvers is once-only | decided | Architecture |
 
 ## House rules and process
 
@@ -3913,6 +3916,39 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. At the merge of R1-flagship-access-switch-02, accepted the new `reference/keys/access-switch/expected/artifacts.json` 3mf hash (c822edc8... to 504f54c8...), and rerecorded `packages/project/test/fixtures/graph.jsonl` with 21 access-switch lines added and none removed. |
 | Rationale | The branch recorded its goldens before main gained the detect_thin_wall object row (D-307). Its spring t 0.55 mm is under the 0.63 mm bound (computed), so only the package bytes move, by one `model_settings.config` line. The mesh, build, report and edit goldens are equal, so this is not a geometry move. |
 | Evidence | Package members of the branch tip and the merged tree, read in memory: only `Metadata/model_settings.config` differs, by `<metadata key="detect_thin_wall" value="1"/>`; `3D/3dmodel.model` is byte-equal (computed). hbf parity: build.json, report.json, edit.json equal. `npx vitest run reference/keys/access-switch` 6 passed; core/test/project-graph.test.ts 11 passed. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-318 The solver hint names registerSolvers in archetypes
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. R1-designs-reach-03 edits `packages/archetypes/src/solvers.ts`, outside the brief's Writes line: the header comment, the `provideClickSolver` doc and the `E_KERNEL` hint now name `registerSolvers` from `@hackbuild/pipeline`, so a missing registration names the registrar. |
+| Rationale | The done condition asks the mutant to fail with `E_KERNEL` naming the registrar. The old hint sent callers through core, which is wrong for a baked page. |
+| Evidence | With the `registerSolvers()` call removed from `packages/pipeline/src/page.ts`, `packages/pipeline/test/page-click.test.ts` failed with `E_KERNEL /solvers/click no click-spring solver is registered; call registerSolvers from @hackbuild/pipeline (core and createPageBuild call it) before the archetype` (measured, builder run); restored, it passed. Merge commit of `r1/R1-designs-reach-03`. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-319 Page click test reads goldens instead of an in-process core build
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `packages/pipeline/test/page-click.test.ts` builds `reference/buttons/click-spring` through `createPageBuild` in a child process and compares it to the committed `expected/build.json` (buildHash and every mesh hash) and to the legacy record `packages/archetypes/test/legacy/pip-fits.json` (peak, drop, contact travel, cg and stop strain to 6 places, bistable, the CHK-KEY-04 gates, all 11 click fits rows). It does not run core's `buildPart` in the same process. |
+| Rationale | Importing core registers the solver at load and would hide the mutant, and `tools/tiers.json` forbids pipeline tests from importing core. A child-process core build returns no metrics (`part.build --json` has none). |
+| Evidence | `node core/bin/hbf.mjs part.build reference/buttons/click-spring --json` gave buildHash `9be09937ffda67074dc73115cecbdf103ad8402f9e1f757ce614b4d14e70b977`, equal to `expected/build.json` (measured, builder run). `npx vitest run packages/pipeline` on the merged tree: 3 passed (measured). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-320 registerSolvers is once-only
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `registerSolvers` in `packages/pipeline/src/solvers.ts` sets a module flag, so repeat calls do nothing. A test that later calls `provideClickSolver` directly still replaces the solver. |
+| Rationale | The brief asks for an idempotent registration, and the archetype parity tests inject a legacy curve through `provideClickSolver`. |
+| Evidence | `npx vitest run packages/archetypes` on the merged tree: 19 files, 198 tests passed (measured). |
 | Supersedes | new |
 | Milestone | none |
 
