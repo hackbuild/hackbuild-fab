@@ -20,3 +20,7 @@ export {
 export { nonFiniteError, type BuiltValues } from "./nan.js";
 export { isChaseDocument, shareOptions, type ShareInputs, type ShareOptions } from "./share.js";
 export { literal, patchChaseSource, sourceErrors, type PatchOptions, type PatchOutcome, type PatchPlan, type SourceEdit } from "./patch.js";
+export {
+  SCAFFOLDS, benchSource, composerScaffold, copyEdits, displayName, fieldUnit, hasScaffold, legalDefault, minimalScaffold, retarget, singleScaffold,
+  type BenchGroup, type MinimalKind, type ScaffoldFiles,
+} from "./scaffold/index.js";

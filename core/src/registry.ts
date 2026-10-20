@@ -32,6 +32,7 @@ import { runArchFind } from "./commands/arch.find.js";
 import { runArchApply } from "./commands/arch.apply.js";
 import { runChaseValidate } from "./commands/chase-validate.js";
 import { runChasePatch } from "./commands/chase-patch.js";
+import { runChaseScaffold } from "./commands/chase-scaffold.js";
 
 export type { CliForm, FlagKind } from "@hackbuild/commands";
 export { CLI_FORM, VERBS };
@@ -72,6 +73,7 @@ export const RUNS: Runs = {
   "arch.apply": (i, ctx) => runArchApply(i, ctx as CoreCtx),
   "chase.validate": (i, ctx) => runChaseValidate(i, ctx as CoreCtx),
   "chase.patch": (i, ctx) => runChasePatch(i, ctx as CoreCtx),
+  "chase.scaffold": (i, ctx) => runChaseScaffold(i, ctx as CoreCtx),
 };
 
 /** Every CommandDef hbf registers, in COMMAND_NAMES order. */

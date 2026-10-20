@@ -56,11 +56,11 @@ export interface PatchRefusal {
 
 const posix = (p: string): string => p.split(path.sep).join("/");
 
-function git(top: string, args: readonly string[]): string {
+export function git(top: string, args: readonly string[]): string {
   return execFileSync("git", args, { cwd: top, encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] }).trim();
 }
 
-function tryGit(top: string, args: readonly string[]): string | undefined {
+export function tryGit(top: string, args: readonly string[]): string | undefined {
   try {
     return git(top, args);
   } catch {
@@ -90,6 +90,17 @@ export function writeTarget(dir: string): { readonly top: string; readonly rel: 
 
 const refuse = (e: Omit<CommandError, "record"> & { readonly record?: string }): PatchRefusal => ({ errors: [{ record: "chase-patch/write", ...e }] });
 
+/** git checkout -q args in top; a failure is the refusal naming the branch and git's first line (D-478). */
+export function checkoutBranch(top: string, branch: string, args: readonly string[], record = "chase-patch/write"): PatchRefusal | undefined {
+  try {
+    git(top, ["checkout", "-q", ...args]);
+    return undefined;
+  } catch (e) {
+    const msg = (e as { stderr?: string }).stderr?.split("\n").find((l) => l.trim() !== "") ?? String(e);
+    return refuse({ code: "E_REF", path: "/file", got: branch, expected: `a work tree git can switch to ${branch}`, hint: `git could not check out ${branch}: ${msg.trim()}; resolve the work tree and run again`, record });
+  }
+}
+
 /**
  * Apply edits to the chase.ts or build.ts in dir on branch hbf/<chase>.
  * An edit that cannot apply throws its CommandError; a refusal to write
@@ -107,15 +118,7 @@ export async function writeChasePatch(ctx: CoreCtx, dir: string, file: "chase.ts
   const branch = `hbf/${id}`;
   const current = tryGit(top, ["symbolic-ref", "--short", "-q", "HEAD"]);
   const exists = tryGit(top, ["rev-parse", "--verify", "-q", `refs/heads/${branch}`]) !== undefined;
-  const checkout = (args: readonly string[]): PatchRefusal | undefined => {
-    try {
-      git(top, ["checkout", "-q", ...args]);
-      return undefined;
-    } catch (e) {
-      const msg = (e as { stderr?: string }).stderr?.split("\n").find((l) => l.trim() !== "") ?? String(e);
-      return refuse({ code: "E_REF", path: "/file", got: branch, expected: `a work tree git can switch to ${branch}`, hint: `git could not check out ${branch}: ${msg.trim()}; resolve the work tree and run again` });
-    }
-  };
+  const checkout = (args: readonly string[]): PatchRefusal | undefined => checkoutBranch(top, branch, args);
   // An existing branch holds the text the edits apply to, so switch first.
   if (exists && current !== branch) {
     const r = checkout([branch]);

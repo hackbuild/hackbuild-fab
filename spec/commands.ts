@@ -498,8 +498,9 @@ export interface CommandIO {
       name: string;
       /**
        * reference:<area>/<id> (for example reference:keys/flex-pair),
-       * reference:<meta.id> (keys-flex-pair), or design:<id>; any other
-       * form is E_REF with didYouMean.
+       * reference:<meta.id> (keys-flex-pair), design:<id>, or draft:<dir>
+       * (a draft directory, for adopt); any other form is E_REF with
+       * didYouMean.
        */
       from?: string;
     };
