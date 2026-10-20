@@ -29,8 +29,8 @@ const ROOT = `${path.resolve(HERE, "../../..")}${path.sep}`;
 const NAME = "@hackbuild/ui";
 
 const EXPECTED = [
-  "BenchShell", "ChecksPanel", "CurvePanel", "DrivePad", "DrivePress", "ExportsPanel", "FitsPanel", "LogPanel", "NotesPanel",
-  "ParamRail", "PlotCurve", "mountBench", "pageBench", "pageOf", "useBench", "useShell",
+  "BenchShell", "ChaseBench", "ChecksPanel", "CurvePanel", "DrivePad", "DrivePress", "ExportsPanel", "FitsPanel", "LogPanel",
+  "NotesPanel", "ParamRail", "PlotCurve", "mountBench", "pageBench", "pageOf", "useBench", "useShell",
 ];
 
 let ui: typeof Ui;
@@ -66,7 +66,7 @@ describe("@hackbuild/ui exports", () => {
     expect(readFileSync(sheet)).toEqual(readFileSync(`${PKG}src/bench/bench.css`));
   });
 
-  it("mountBench mounts the exported BenchShell in happy-dom", async () => {
+  it("mountBench mounts the exported ChaseBench, which draws BenchShell, in happy-dom", async () => {
     Object.defineProperty(window, "innerWidth", { configurable: true, value: 1280 });
     const errors: string[] = [];
     vi.spyOn(console, "error").mockImplementation((...a: unknown[]) => void errors.push(a.map(String).join(" ")));
@@ -76,9 +76,9 @@ describe("@hackbuild/ui exports", () => {
     expect(mounted).not.toBeNull();
     await new Promise((r) => setTimeout(r, 0));
     await nextTick();
-    // createApp copies the root component, so the setup function is the identity.
+    // createApp copies the root component, so the setup function is the identity. The root is the chase binding's mount (M10-T06).
     const app = (el as unknown as { __vue_app__?: { _component: { setup?: unknown } } }).__vue_app__;
-    expect(app?._component.setup).toBe((ui.BenchShell as { setup?: unknown }).setup);
+    expect(app?._component.setup).toBe((ui.ChaseBench as { setup?: unknown }).setup);
     expect(el.querySelector(".hb-header h1")?.textContent?.trim()).toBe("FLEX PAIR.bench");
     expect(errors).toEqual([]);
     mounted?.unmount();

@@ -4,7 +4,7 @@
 // BENCH.drive both read it here, so they cannot disagree (G-20).
 
 import type { Bench, Chase, ContactFn } from "@hackbuild/spec";
-import { padModel, type PadModel, type ViewPart } from "@hackbuild/ui-core";
+import { driveModel, type PadModel, type ViewPart } from "@hackbuild/ui-core";
 import type { BenchReport } from "../stores/shell.js";
 
 export interface PadSource {
@@ -12,16 +12,7 @@ export interface PadSource {
   readonly report: BenchReport;
 }
 
-/** The pad model, or null when the bench declares no drive pad. */
+/** The pad model, or null when the bench declares no drive pad (ui-core driveModel, the chase binding's drive model). */
 export function padOf(chase: Chase, bench: Bench, contact: ContactFn | null, src: PadSource): PadModel | null {
-  const decl = bench.views.drive;
-  if (decl === undefined || !bench.views.overlays.includes("drive")) return null;
-  return padModel({
-    decl,
-    hookup: chase.hookup ?? [],
-    features: src.part?.part.features ?? [],
-    metrics: src.report.metrics ?? [],
-    results: src.report.results ?? [],
-    contact,
-  });
+  return driveModel(chase, bench, contact, src);
 }

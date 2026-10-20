@@ -11,7 +11,7 @@ import {
 } from "@virgilvox/hackbuild-ui";
 import type { Bench, Chase, CheckResult, ContactFn, ViewMode } from "@hackbuild/spec";
 import {
-  applyFix, CAM_NAMES, mountBakeStage, targetOfBody, welcomeStarts,
+  applyFix, CAM_NAMES, chaseStarts, mountBakeStage, targetOfBody,
   type BakeStage, type BenchCore, type CamChangeDetail, type CamName, type Located, type Pad, type PickDetail, type ViewPart, type Welcome,
 } from "@hackbuild/ui-core";
 import Rail from "./Rail.vue";
@@ -95,13 +95,8 @@ const readoutPanels = computed(() => (stepNow.value?.panels ?? []).filter((p) =>
 const rightRail = computed(() => layout.value === "composer" || (layout.value === "single3" && readoutPanels.value.length > 0));
 const logOpen = ref(false);
 
-const starts = computed<HbWelcomeStart[]>(() => {
-  const presets = (props.bench.welcome?.presets ?? []).flatMap((id) => {
-    const p = props.chase.presets?.find((x) => x.id === id);
-    return p === undefined ? [] : [{ id: p.id, label: p.label }];
-  });
-  return welcomeStarts(presets).map((s) => ({ id: s.id, name: s.label, primary: s.primary }));
-});
+const starts = computed<HbWelcomeStart[]>(() =>
+  chaseStarts(props.chase, props.bench).map((s) => ({ id: s.id, name: s.label, primary: s.primary })));
 
 // ---- stage
 const host = ref<HTMLElement | null>(null);
