@@ -395,6 +395,9 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-339 | Coupon frame takes per-cell host heights | decided | Canons, reference, profile, catalog |
 | D-340 | Coupon cup shape and the coins metric | decided | Canons, reference, profile, catalog |
 | D-341 | Coupon nested under the switch directory | decided | Testing, docs, milestones, registry |
+| D-342 | touched hook calls the tsc bin directly instead of npx --no-install | decided | Agent surface |
+| D-343 | projectFor ignores files that are not TypeScript | decided | Agent surface |
+| D-344 | touched hook accepts MultiEdit and resolves symlinks | decided | Agent surface |
 
 ## House rules and process
 
@@ -4201,6 +4204,39 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. The coupon lives at `reference/keys/access-switch/coupon` as the brief names, with its own entry in root `tsconfig.json`. |
 | Rationale | The brief's Files line. The cost is that the depth-2 reference walkers (metric-gates builds.json, project graph) do not list it, so those suites do not cover the coupon. |
 | Evidence | `packages/checks/test/metric-gates.test.ts` chases() reads reference/<area>/<id> only; `npx tsc -b` exit 0 on main after the merge type-checks the coupon. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-342 touched hook calls the tsc bin directly instead of npx --no-install
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The touched-package type check hook (`tools/agent-hooks/touched-typecheck.mjs`, item R1-rails-ci-hooks-06) runs `node <root>/node_modules/.bin/tsc` and falls back to the tsc bin next to the hook script. The item brief said `npx --no-install tsc`. |
+| Rationale | It avoids npx start-up time on every edit, and it lets the hook check a project in a directory with no node_modules, which the scratch-project test needs. |
+| Evidence | `commandFor` in `tools/agent-hooks/touched-typecheck.mjs`. A clean run on an edit of `packages/geom/src/index.ts` took 0.34 s (measured by the builder). `node --test tools/test/agent-hooks-touched.test.mjs`: 11 pass on merged main (measured). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-343 projectFor ignores files that are not TypeScript
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. In `tools/agent-hooks/touched.mjs`, only .ts, .tsx, .mts, .cts and tsconfig*.json files map to a build, tests or tools check, and .vue maps to vue. Every other file, such as a README or a .mjs test, gives null and starts no check. |
+| Rationale | A README or fixture edit inside a package should not start a tsc run. The item brief's README.md case expects null. |
+| Evidence | The `CHECKED` regex in `tools/agent-hooks/touched.mjs`. A manual run on `tools/test/settings.test.mjs` printed nothing in 0.07 s (measured by the builder). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-344 touched hook accepts MultiEdit and resolves symlinks
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The touched-package type check hook acts on Edit, Write and MultiEdit. The edited path is resolved through symlinks before it is made relative to the git root. |
+| Rationale | `git rev-parse --show-toplevel` prints the resolved path (/private/var on macOS). Without resolving symlinks, temp-dir and symlinked worktrees would map to null. |
+| Evidence | The worktree-copy test and the hook spawn test in `tools/test/agent-hooks-touched.test.mjs` use `realpathSync(mkdtemp)` under /var/folders; 11 pass on merged main (measured). |
 | Supersedes | new |
 | Milestone | none |
 
