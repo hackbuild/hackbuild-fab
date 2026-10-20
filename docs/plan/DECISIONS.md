@@ -410,6 +410,10 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-354 | stop hook round count resets on a non-continuation stop | decided | Testing, docs, milestones, registry |
 | D-355 | allowed stop notes carry systemMessage and additionalContext | decided | Testing, docs, milestones, registry |
 | D-356 | stop hook resolves tool binaries directly, not through npx | decided | Testing, docs, milestones, registry |
+| D-357 | lineage row for shells.ts from DAVIT finalize | decided | Kernel, geometry |
+| D-358 | zero-volume shell components count as voids | decided | Kernel, geometry |
+| D-359 | ShellGroup.shells counts the outer shell | decided | Kernel, geometry |
+| D-360 | shell parity ray uses fixed slopes sqrt2/7 and pi/11 | decided | Kernel, geometry |
 
 ## House rules and process
 
@@ -4381,6 +4385,50 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. The stop hook runs `node_modules/vitest/vitest.mjs` and `tools/lint-voice.mjs` from the checked root, falling back to the copies beside the hook, in place of `npx --no-install`. |
 | Rationale | This matches item 06's tscBin pattern and avoids npx startup cost. |
 | Evidence | `tools/agent-hooks/touched-typecheck.mjs` tscBin. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-357 lineage row for shells.ts from DAVIT finalize
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `lineage/mesh.shells.json` is a canonical row whose source is `fab-knowledge:originals/davit/files/src/parts_r4.py` (sha256 ddae2111..., matching the originals SHA256SUMS), lines 328 to 333, with dest `packages/mesh/src/shells.ts`. The brief's Writes line did not list this file. |
+| Rationale | D-222 asks for the canonical lineage row in the same change as a port. DAVIT finalize splits a mesh into trimesh bodies by face adjacency and counts the real ones, the closest original to this split; the void grouping is new. |
+| Evidence | `parts_r4.py` line 329: `bodies=[b for b in m.split(only_watertight=False) if b.volume>1.0]`. `npm run registries -- --check` and `node --test tools/test/lineage.test.mjs` pass on the merged tree (computed, 2026-10-20). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-358 zero-volume shell components count as voids
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. In `shellGroups`, a component is an outer shell only when its signed volume is above 0. A component at 0 or below goes through void assignment, and the group's voids count includes it. |
+| Rationale | An open sheet with a volume near zero should not host real voids. A caller can refuse a group whose volume is not positive. |
+| Evidence | `packages/mesh/src/shells.ts`, the outers filter `s.volume > 0`. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-359 ShellGroup.shells counts the outer shell
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `ShellGroup.shells` is the number of closed components in the group, outer included: a hollow cube gives shells 2, voids 1, and an orphan void group gives shells 1, voids 1. |
+| Rationale | The brief named the fields but not this convention. Counting every component lets a caller read both numbers without arithmetic. |
+| Evidence | `packages/mesh/test/shells.test.ts`, the summary expectations. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-360 shell parity ray uses fixed slopes sqrt2/7 and pi/11
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The void containment parity ray in `shellGroups` is `[1, SQRT2/7, PI/11]` from the void's first-use vertex. A test pins the case where a pure +x ray fails: manifold-3d 3.5.4 splits a cube's x = 10 face along y + z = 10 (computed, read from getMesh). |
+| Rationale | A ray grazing a shared face diagonal counts twice and calls a held void outside. The fixed slopes make the result deterministic. |
+| Evidence | `shells.test.ts` case "keeps a void whose ray from its first vertex meets the outer face diagonal"; the builder's mutant with a pure +x ray failed that case (computed, 2026-10-20). |
 | Supersedes | new |
 | Milestone | none |
 
