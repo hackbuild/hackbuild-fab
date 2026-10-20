@@ -12,8 +12,9 @@
 // Version 4, 2026-10-04. Carries D-024, D-047, D-048, D-049, D-053, D-054,
 // D-058, D-063, D-132, D-165, D-177, D-178.
 // 2026-10-05: ContactFn for the drive pad (gold standard P-05, G-20).
+// 2026-10-20: loft and sweep routes and the csg hull op (PLAN.md 3.3).
 
-import type { Axis, FaceFrame, FaceRef, FitClassId, Mm, MeshRoute, Process, Ring, Tier, Vec2 } from "./ids";
+import type { Axis, FaceFrame, FaceRef, FitClassId, Mm, MeshRoute, Process, Ring, Tier, Vec2, Vec3 } from "./ids";
 import type { Feature, FeatureAt, KindMilestone } from "./features";
 import type { AppliedArchetype } from "./chase";
 import type { ApplyOut, MechanismApplyOut } from "./canon";
@@ -71,8 +72,26 @@ export type ShapeDecl =
   | { readonly route: "raster"; readonly layers: readonly { readonly mask: string; /** mm */ readonly z: readonly [Mm, Mm] }[]; /** mm per pixel */ readonly res: number }
   /** Trace raster, DP simplify, ear clip, then prism (SPRUE). tolerance in mm. */
   | { readonly route: "trace"; readonly source: string; /** mm */ readonly tolerance: Mm; /** mm */ readonly z: readonly [Mm, Mm] }
-  /** Boolean via manifold. Union tries batch, verifies is_volume, then folds (D-055). */
-  | { readonly route: "csg"; readonly op: "union" | "difference" | "intersection"; readonly of: readonly ShapeDecl[] }
+  /**
+   * Loft of closed xy rings at rising heights z in mm (packages/mesh
+   * routes/loft.ts). Every ring has the same point count; point i of one
+   * ring joins point i of the next, and the first and last rings are capped
+   * by earcut. Guarantees manifold, not exactZ (PLAN.md 3.3).
+   */
+  | { readonly route: "loft"; readonly sections: readonly { readonly ring: Ring; /** mm */ readonly z: Mm }[] }
+  /**
+   * Sweep of one closed section along an open polyline path in part
+   * coordinates, mm (packages/mesh routes/sweep.ts). The section's u axis
+   * follows the rotation minimizing frame normal and v the binormal; both
+   * ends are capped. Guarantees manifold, not exactZ (PLAN.md 3.3).
+   */
+  | { readonly route: "sweep"; readonly section: Ring; readonly path: readonly Vec3[] }
+  /**
+   * Boolean via manifold. Union tries batch, verifies is_volume, then folds
+   * (D-055). hull is the convex hull of every operand (Manifold.hull): two
+   * cylinders give a slot (PLAN.md 3.3).
+   */
+  | { readonly route: "csg"; readonly op: "union" | "difference" | "intersection" | "hull"; readonly of: readonly ShapeDecl[] }
   /** Imported mesh; placeable and checkable, never parametrised; winding checked (D-102). */
   | { readonly route: "imported"; readonly uri: string; readonly format: "stl" | "glb" | "step" | "wrl" | "scad"; readonly tier: Tier }
   /** Opt-in replicad route, lazy, M14, never in the default bake (D-024). */

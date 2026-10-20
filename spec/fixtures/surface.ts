@@ -66,7 +66,7 @@ export type SurfaceAssertions = [
   Expect<Equal<(typeof ERROR_CODES)["length"], 11>>,
   Expect<Equal<(typeof REGISTRY_KINDS)["length"], 11>>,
   Expect<Equal<(typeof KERNEL_IDS)["length"], 11>>,
-  Expect<Equal<(typeof MESH_ROUTES)["length"], 9>>,
+  Expect<Equal<(typeof MESH_ROUTES)["length"], 11>>,
   Expect<Equal<(typeof TIERS)["length"], 5>>,
   Expect<Equal<(typeof QUALIFIERS)["length"], 5>>,
 ];
