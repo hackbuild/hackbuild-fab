@@ -542,6 +542,11 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-486 | Absent widgetKinds reads as empty, and core does not feed it yet | decided | Architecture |
 | D-487 | Widget registry stays out of the @hackbuild/ui public exports | decided | UI |
 | D-488 | Two files outside the brief's Files list were edited | decided | UI |
+| D-489 | chase.diff output carries migrations and both defHashes in spec | decided | Agent surface |
+| D-490 | chase.diff against defaults to HEAD; an existing path wins over a git ref | decided | Agent surface |
+| D-491 | Which build module each side of chase.diff uses | decided | Architecture |
+| D-492 | chase.diff fixture is generated in the test, and the card's 1.44 is kept | decided | Testing, docs, milestones, registry |
+| D-493 | Parity verdict comparison shared with chase.diff | decided | Architecture |
 
 ## House rules and process
 
@@ -5965,6 +5970,61 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. packages/chase/src/validate.ts (one call to resolveBenchRefs) and packages/ui/src/bench/entry.ts (wires widgets() into mountBench). |
 | Rationale | Step 4 needs the rule to run inside chase.validate. Step 3 needs a real bench hook to return widgets for the smoke suite. |
 | Evidence | git show 740c90d --stat. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-489 chase.diff output carries migrations and both defHashes in spec
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The chase.diff output in `spec/commands.ts` gains `migrations` {against, chase} (each from, to, lines), `defHashBefore` and `defHashAfter`. `ChaseChange` gains `op` (added, removed or changed), with from or to set to null on the missing side. `ChaseVerdictChange` gains `target`. |
+| Rationale | M10-T04 step 4 asks for the migrations applied, the defHash before and after, and added, removed or changed entries; the old shape had no field for any of them. A check can fire on several targets, so target tells repeats apart. |
+| Evidence | `docs/plan/milestones/M10-chase.md` lines 588 to 594; `spec/commands.ts` ChaseChange, ChaseMigrations, chase.diff (merge of r1/R1-engine-17). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-490 chase.diff against defaults to HEAD; an existing path wins over a git ref
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. When against is absent, chase.diff compares with HEAD. When against names an existing path on disk it is read as a file, and a directory means its chase.ts; otherwise it is a git ref. A ref starting with '-' is refused as E_REF. |
+| Rationale | `docs/plan/AGENT-SURFACE.md` row 7 makes against nullable for diff, and the work tree against the last commit is the useful default. The '-' refusal keeps option text from reaching git. |
+| Evidence | `docs/plan/AGENT-SURFACE.md` line 457; `core/src/commands/chase-diff.ts` runChaseDiff and refSide. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-491 Which build module each side of chase.diff uses
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The chase side builds as its own design. A file side builds in its own directory when its build module is there, and otherwise with the chase directory's build module. A git ref builds the ref's chase with the work tree's build module, and its defHash uses each source as the ref holds it. When the ref's build sources differ from the work tree, --build is E_STALE naming the moved files. |
+| Rationale | The ref's old build.ts is not on disk, and building the ref's chase with the new build.ts would report verdicts that no commit ever produced. |
+| Evidence | `core/src/commands/chase-diff.ts` header comment; HEAD~0 gives equal defHash before and after (computed). The E_STALE path has no test yet. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-492 chase.diff fixture is generated in the test, and the card's 1.44 is kept
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The diff fixture is not a committed copy of the flex-pair chase. The test writes two variants under .hbf/ with chase.patch's pointer edit at the travel default, one at 1.44 and one at 2.15, matching the card's literal pair. The reference default stays 1.84 (D-241). |
+| Rationale | A committed copy of the reference chase would drift when the reference changes; generating it from the reference keeps one source. Keeping the card's 1.44 makes the acceptance numbers match as written. |
+| Evidence | `core/test/chase-diff.test.ts`; `reference/keys/flex-pair/chase.ts` line 57 default 1.84; CHK-KEY-01 interval 1.428 to 2.04 mm (computed). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-493 Parity verdict comparison shared with chase.diff
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `parity.ts` verdictFlips now maps from a new exported verdictPairs(before, after), and chase.diff reads the same pairs. The edit.json shape is unchanged. |
+| Rationale | Keeps one implementation of the verdict comparison, and the diff needs the before measured value, which the parity golden form drops. |
+| Evidence | `core/src/commands/parity.ts` verdictPairs; core vitest including the parity tests passes on the merged tree (computed). |
 | Supersedes | new |
 | Milestone | none |
 
