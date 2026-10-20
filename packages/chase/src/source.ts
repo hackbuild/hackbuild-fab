@@ -73,7 +73,7 @@ class SourceError extends Error {
 }
 
 /** UTF-8 byte offset of every char offset, so spans are byte offsets as ChaseSourceSpan states. */
-function byteOffsets(source: string): Uint32Array {
+export function byteOffsets(source: string): Uint32Array {
   const out = new Uint32Array(source.length + 1);
   let b = 0;
   for (let i = 0; i < source.length; i += 1) {

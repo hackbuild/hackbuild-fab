@@ -9,11 +9,13 @@
 // ids, the port ids, the applied record, the slots added and the kernels
 // the emitted kinds need that the chase does not list.
 //
-// Nothing is written. The patch belongs on hbf/<chase> through the
-// chase.patch writer (D-115), which lands at M10, and this repository has
-// no commit to branch from; the result says so in notWritten.
+// The entry, the slots added and the kernels added go to chase.ts as one
+// patch on hbf/<chase> through the chase.patch writer (D-115, M10-T05 step
+// 4). The writer takes designs/<name> in a git work tree only; for a
+// reference or a fixture, or when the patch would add a validation error,
+// the result carries written false and notWritten names the reason.
 
-import type { AppliedArchetype, ArchetypeDef, CommandInput, CommandOutput, FaceDecl, FaceFrame, FaceRef, MaterialSlot, Vec3 } from "@hackbuild/spec";
+import { isThrownCommandError, type AppliedArchetype, type ArchetypeDef, type Chase, type CommandInput, type CommandOutput, type FaceDecl, type FaceFrame, type FaceRef, type MaterialSlot, type PatchEdit, type Vec3 } from "@hackbuild/spec";
 import { placeArchetype } from "@hackbuild/archetypes";
 import { cross } from "@hackbuild/geom";
 import { createProfileLookup } from "@hackbuild/profile";
@@ -23,13 +25,38 @@ import { resolveFace } from "../face-frame.js";
 import type { CommandOut } from "../result.js";
 import type { CoreCtx } from "../ctx.js";
 import { buildTarget } from "./part-build.js";
+import { writeChasePatch } from "./chase-patch.js";
 import { ZERO } from "./canon-hits.js";
 import { PACKAGE_KINDS } from "../kinds.js";
 
 type Input = CommandInput<"arch.apply">;
 
-/** Why nothing is written yet; the result carries it as notWritten. */
-export const NOT_WRITTEN = "not written: the patch belongs on the branch through chase.patch, which lands at M10 (D-115); declare the applied entry and the slots added in chase.ts until then";
+/**
+ * The chase.patch edits that record a placement: the applied entry (the
+ * applied list added when the chase has none), then each slot and kernel
+ * appended.
+ */
+export function appliedEdits(chase: Chase, applied: AppliedArchetype, slotsAdded: readonly MaterialSlot[], kernelsAdded: readonly string[]): PatchEdit[] {
+  return [
+    chase.applied === undefined ? { pointer: "/applied", set: [applied] } : { pointer: "/applied/-", set: applied },
+    ...slotsAdded.map((s) => ({ pointer: "/materials/-", set: s })),
+    ...kernelsAdded.map((k) => ({ pointer: "/meta/kernels/-", set: k })),
+  ];
+}
+
+/** Write the placement through chase.patch; written false with the reason when the writer refuses. */
+async function write(ctx: CoreCtx, dir: string, edits: readonly PatchEdit[]): Promise<{ readonly written: boolean; readonly notWritten?: string }> {
+  let w: Awaited<ReturnType<typeof writeChasePatch>>;
+  try {
+    w = await writeChasePatch(ctx, dir, "chase.ts", edits, { addMembers: true });
+  } catch (e) {
+    if (!isThrownCommandError(e)) throw e;
+    w = { errors: [e.hbf] };
+  }
+  if (!("errors" in w)) return { written: true };
+  const why = w.errors.map((e) => `${e.code}${e.path === undefined ? "" : ` ${e.path}`} ${e.hint}`).join("; ");
+  return { written: false, notWritten: `not written, chase.patch refused the patch for hbf/<chase> (D-115): ${why}` };
+}
 
 const TOL = 1e-9;
 const dot = (a: Vec3, b: Vec3): number => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
@@ -125,11 +152,12 @@ export async function runArchApply(input: Input, ctx: CoreCtx): Promise<CommandO
     .map(([id]) => id)
     .filter((id) => !(chase.meta.kernels as readonly string[]).includes(id));
   const applied: AppliedArchetype = { archetype: entry.id, part: draft.id, face: ref, ...(input.params === undefined ? {} : { params: input.params }) };
+  const written = await write(ctx, built.design.dir, appliedEdits(chase, applied, slotsAdded, kernelsAdded));
   return {
     verdict: "pass", stage: "done", inputsHash: ctx.inputsHash, buildHash: built.part.buildHash,
     result: {
       emitted: placed.features.map((f) => f.id), ports: [...placed.ports], applied, slotsAdded, kernelsAdded,
-      branch: `hbf/${chase.meta.id}`, written: false, notWritten: NOT_WRITTEN,
+      branch: `hbf/${chase.meta.id}`, ...written,
     },
     findings: [], counts: { ...ZERO }, errors: [], artifacts: [], next: [],
   };

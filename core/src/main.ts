@@ -112,6 +112,15 @@ function readFlag(kind: CliForm["flags"][string]["kind"], name: string, raw: str
   return raw;
 }
 
+/** chase.patch --set: a json value when the text parses as one (1.44, true, {"a":1}), else the text as a string. */
+function readSet(raw: string): unknown {
+  try {
+    return JSON.parse(raw);
+  } catch {
+    return raw;
+  }
+}
+
 /** File extension to ImportSpec.format; an extension outside it stays as written and the schema refuses it. */
 const IMPORT_FORMAT: Readonly<Record<string, string>> = { stl: "stl", glb: "glb", step: "step", stp: "step", wrl: "wrl", scad: "scad" };
 
@@ -187,11 +196,19 @@ function inputOf(command: string, form: CliForm, rest: readonly string[]): { inp
   const input: Record<string, unknown> = {};
   if (target !== undefined) input[form.target] = target;
   else if (form.targetOptional === true && cli.artifact !== undefined) input[form.target] = cli.artifact;
+  const edit: Record<string, unknown> = {};
+  let editField: string | undefined;
   for (const [flag, d] of Object.entries(form.flags)) {
     if (d.kind === "switch") {
       if (p.switches.has(flag)) input[d.field] = true;
+    } else if (d.kind === "edit") {
+      if (p.values[flag] !== undefined) {
+        edit[flag] = flag === "set" ? readSet(p.values[flag]!) : p.values[flag]!;
+        editField = d.field;
+      }
     } else if (p.values[flag] !== undefined) input[d.field] = readFlag(d.kind, flag, p.values[flag]!);
   }
+  if (editField !== undefined) input[editField] = [...((input[editField] as unknown[] | undefined) ?? []), edit];
   if (form.rest !== undefined && Object.keys(p.extra).length > 0) {
     const into: Record<string, unknown> = { ...(input[form.rest] as Record<string, unknown> | undefined) };
     for (const [k, v] of Object.entries(p.extra)) into[k] = NUMBER.test(v) ? Number(v) : v;

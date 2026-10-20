@@ -19,3 +19,4 @@ export {
 } from "./normalise.js";
 export { nonFiniteError, type BuiltValues } from "./nan.js";
 export { isChaseDocument, shareOptions, type ShareInputs, type ShareOptions } from "./share.js";
+export { literal, patchChaseSource, sourceErrors, type PatchOptions, type PatchOutcome, type PatchPlan, type SourceEdit } from "./patch.js";

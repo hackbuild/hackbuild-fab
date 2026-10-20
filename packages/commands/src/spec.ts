@@ -8,7 +8,12 @@ import { COMMAND_NAMES, commandError } from "@hackbuild/spec";
 import type { AnyCommandDef, CommandDef, CommandName } from "@hackbuild/spec";
 
 /** How one flag reads its value. */
-export type FlagKind = "string" | "json" | "list" | "switch" | "size" | "facts" | "import" | "gap" | "pairs";
+/**
+ * "edit" flags build one chase.patch edit together: --anchor with
+ * --replace, or --pointer with --set (json when it parses, else a string),
+ * appended to the field after any --edits list.
+ */
+export type FlagKind = "string" | "json" | "list" | "switch" | "size" | "facts" | "import" | "gap" | "pairs" | "edit";
 
 export interface CliForm {
   /** Input field the positional target fills. */

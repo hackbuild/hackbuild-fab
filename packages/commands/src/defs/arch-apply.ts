@@ -10,7 +10,7 @@ export const spec: CommandSpec<"arch.apply"> = {
   description: [
     "Place a proven archetype on a declared face of a part: returns the feature and port ids the next part.build merge produces, the chase.applied record and the material slots the chase lacks.",
     "face is a face ref the part declares, or a frame lying on one; a param the archetype needs with no default, such as the blocks stud standard, comes back as E_PARAM_MISSING listing the options, and a stub, candidate or unproven id is E_REF with its reason.",
-    "Until chase.patch lands the result is returned with written false and nothing is written.",
+    "It writes them to a designs/ chase.ts as one chase.patch on hbf/<chase>; otherwise written is false and notWritten says why.",
     "Do not use it to build; part.build merges every chase.applied entry and runs the checks.",
   ].join(" "),
   input: inputOf<"arch.apply">(z.object({

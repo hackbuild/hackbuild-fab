@@ -528,6 +528,9 @@ export interface CommandIO {
       /** Edits applied, count. */
       edits: number;
       branch: string;
+      /** defHash of the design before the patch (M10-T05 step 3). */
+      defHashBefore: Hash;
+      /** defHash of the design after the patch. */
       defHash: Hash;
     };
   };
@@ -566,8 +569,10 @@ export interface CommandIO {
       /** hbf/<chase>, the branch the patch belongs on (D-115). Added at M06-T12. */
       branch: string;
       /**
-       * False until the chase.patch writer lands (M10, D-115): the entry and
-       * slots are returned and nothing is written, and notWritten says why.
+       * True when chase.patch wrote the entry, slots and kernels to chase.ts
+       * on hbf/<chase> (M10-T05 step 4, D-115). False for a chase outside
+       * designs/<name> in a git work tree, or a patch the writer refused;
+       * notWritten says why.
        */
       written: boolean;
       notWritten?: string;
