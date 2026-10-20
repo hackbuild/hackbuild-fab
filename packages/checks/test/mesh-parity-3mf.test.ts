@@ -1,17 +1,24 @@
-// src/mesh.ts holds the mesh shape, signed volume and the CHK-PRT-01 audit
-// so the package carries no wasm and the D-027 split stands alone.
+// hackbuild-3mf js/src/mesh.ts holds the mesh shape, signed volume and the
+// CHK-PRT-01 audit so the package carries no wasm and stands alone (D-027).
 // packages/mesh is tier 0 and keeps the same code (PACKAGES.md 3.1); this
-// file fails when the two copies drift, in source text and on fixtures, and
-// when a runtime dependency on a workspace package other than spec returns.
+// file fails when the two copies drift, on fixtures through the vendored
+// build packages/3mf re-exports and, with a sibling hackbuild-3mf checkout,
+// in source text, and when the vendored package gains a workspace or wasm
+// dependency. Moved from packages/3mf/test/mesh-parity.test.ts
+// (R1-engine-03): packages/3mf imports no workspace package.
 
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { join as joinPath } from "node:path";
+import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 import * as kernel from "@hackbuild/mesh";
-import { MIN_TRIANGLE_AREA_MM2, audit, signedVolume, type MeshData } from "../src/index.js";
+import { MIN_TRIANGLE_AREA_MM2, audit, signedVolume, type MeshData } from "@hackbuild/3mf";
 
-const PKG = new URL("../", import.meta.url);
-const text = (rel: string): string => readFileSync(new URL(rel, PKG), "utf8");
+const ROOT = new URL("../../../", import.meta.url);
+/** The vendored package as npm installed it from tools/vendor. */
+const VENDORED = new URL("node_modules/hackbuild-3mf/", ROOT);
+/** The hackbuild-3mf checkout beside this one, or HBF_3MF. */
+const SIBLING = process.env["HBF_3MF"] ?? fileURLToPath(new URL("../hackbuild-3mf/", ROOT));
 
 /** The block from the line starting with `start` to the first closing brace at column 0, or to the end. */
 function block(src: string, start: string, toEnd = false): string {
@@ -93,14 +100,18 @@ async function kernelMeshes(): Promise<Record<string, MeshData>> {
   });
 }
 
-describe("src/mesh.ts against packages/mesh", () => {
-  it("holds the same source as mesh/src/hash.ts and mesh/src/audit.ts", () => {
-    const local = text("src/mesh.ts");
-    const hash = readFileSync(new URL("../mesh/src/hash.ts", PKG), "utf8");
-    const aud = readFileSync(new URL("../mesh/src/audit.ts", PKG), "utf8");
-    expect(block(local, "/** Indexed triangle mesh")).toBe(block(hash, "/** Indexed triangle mesh"));
-    expect(block(local, "/** Signed enclosed volume")).toBe(block(hash, "/** Signed enclosed volume"));
-    expect(block(local, "/** Triangles under this area", true)).toBe(block(aud, "/** Triangles under this area", true));
+describe("the vendored mesh against packages/mesh", () => {
+  const local = joinPath(SIBLING, "js", "src", "mesh.ts");
+  it.skipIf(!existsSync(local))("holds the same source as mesh/src/hash.ts and mesh/src/audit.ts", () => {
+    const mine = readFileSync(local, "utf8");
+    const hash = readFileSync(new URL("packages/mesh/src/hash.ts", ROOT), "utf8");
+    const aud = readFileSync(new URL("packages/mesh/src/audit.ts", ROOT), "utf8");
+    expect(block(mine, "/** Indexed triangle mesh")).toBe(block(hash, "/** Indexed triangle mesh"));
+    expect(block(mine, "/** Signed enclosed volume")).toBe(block(hash, "/** Signed enclosed volume"));
+    expect(block(mine, "/** Triangles under this area", true)).toBe(block(aud, "/** Triangles under this area", true));
+  });
+
+  it("carries the same area floor", () => {
     expect(MIN_TRIANGLE_AREA_MM2).toBe(kernel.MIN_TRIANGLE_AREA_MM2);
   });
 
@@ -126,40 +137,28 @@ describe("src/mesh.ts against packages/mesh", () => {
   });
 });
 
-describe("the hackbuild-3mf split carries src/mesh.ts unchanged (D-027)", () => {
-  // tools/import-from-fab.sh rewrites only the spec import to ./contracts.js.
-  // The split is a sibling working tree (M00-T15); without it there is no copy.
-  const SPLIT = new URL("../../../hackbuild-3mf/js/src/mesh.ts", PKG);
-  const present = existsSync(SPLIT);
-
-  it.skipIf(!present)("equals src/mesh.ts with the spec import rewritten", () => {
-    const want = text("src/mesh.ts").replace('from "@hackbuild/spec"', 'from "./contracts.js"');
-    expect(readFileSync(SPLIT, "utf8")).toBe(want);
-  });
-});
-
-describe("standalone package (D-027, PACKAGES.md 5.1)", () => {
-  it("lists no workspace package other than spec as a runtime dependency", () => {
-    const pkg = JSON.parse(text("package.json")) as { dependencies?: Record<string, string> };
-    expect(Object.keys(pkg.dependencies ?? {}).filter((d) => d.startsWith("@hackbuild/") && d !== "@hackbuild/spec")).toEqual([]);
-    expect(Object.keys(pkg.dependencies ?? {})).not.toContain("manifold-3d");
+describe("standalone vendored package (D-027, PACKAGES.md 5.1)", () => {
+  it("lists jszip as its one runtime dependency", () => {
+    const pkg = JSON.parse(readFileSync(new URL("package.json", VENDORED), "utf8")) as { name: string; dependencies?: Record<string, string> };
+    expect(pkg.name).toBe("hackbuild-3mf");
+    expect(Object.keys(pkg.dependencies ?? {})).toEqual(["jszip"]);
   });
 
-  it("imports no workspace package other than spec, and no wasm, under src/", () => {
+  it("imports no workspace package and no wasm under dist/", () => {
     const files: string[] = [];
     const walk = (dir: string): void => {
       for (const e of readdirSync(dir)) {
         const p = joinPath(dir, e);
         if (statSync(p).isDirectory()) walk(p);
-        else if (p.endsWith(".ts")) files.push(p);
+        else if (p.endsWith(".js")) files.push(p);
       }
     };
-    walk(new URL("src", PKG).pathname);
+    walk(fileURLToPath(new URL("dist", VENDORED)));
     const bad: string[] = [];
     for (const f of files) {
       for (const m of readFileSync(f, "utf8").matchAll(/(?:from|import)\s*\(?\s*"([^"]+)"/g)) {
         const spec = m[1]!;
-        if ((spec.startsWith("@hackbuild/") && spec !== "@hackbuild/spec") || spec.startsWith("manifold-3d")) bad.push(`${f}: ${spec}`);
+        if (spec.startsWith("@hackbuild/") || spec.startsWith("manifold-3d")) bad.push(`${f}: ${spec}`);
       }
     }
     expect(files.length).toBeGreaterThan(10);

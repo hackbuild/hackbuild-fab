@@ -1,11 +1,8 @@
-export * from "./writer/index.js";
-export * from "./validate/index.js";
-export { CHK_3MF_04, CHK_3MF_04_VERSION, INSET_CONSTANTS, chk3mf04, type BodyOutline, type Chk04Input } from "./checks/chk-3mf-04.js";
-export { AI_NAMES, NO_ATTRIBUTION, attribution, authorMeta, authorName, type Attribution } from "./metadata.js";
-export { MIN_TRIANGLE_AREA_MM2, audit, signedVolume, type AuditOptions, type MeshAudit, type MeshData } from "./mesh.js";
-export {
-  CONDUCTOR_RECORD, CONDUCTOR_ROLES, INTERLOCKING_BEAM, INTERLOCKING_BEAM_WIDTH, INTERLOCKING_DEPTH, OVERRIDE_ROWS, SPARSE_INFILL_DENSITY,
-  DETECT_THIN_WALL, THIN_WALL_LINES, beamFreeBodies, conductorObjects, isConductorRole, isOneLineBeam, overridesOf,
-  type ConductorObject, type ConductorPart, type ConductorTouch, type ObjectOverrides, type OverrideRow,
-} from "./overrides.js";
-export { CHASE_ENTRY, CHK_3MF_08, CHK_3MF_08_VERSION, chk3mf08, objectMetadata, type Chk08Outcome, type InterlockingDefaults } from "./validate/chk-3mf-08.js";
+// The 3MF writer, validator mirror and artifact hash live once, in
+// hackbuild-3mf (D-027, R1-engine-03). This workspace re-exports the build
+// vendored at tools/vendor/hackbuild-3mf-0.1.0-<sha7>.tgz, so the importers
+// of @hackbuild/3mf keep their name. A change to the writer lands in
+// hackbuild-3mf, is packed into tools/vendor with its sha256 in SHA256SUMS,
+// and this package.json points at the new file.
+
+export * from "hackbuild-3mf";

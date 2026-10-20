@@ -6,9 +6,9 @@ entry's sha256, the artifactHash and the warning codes must be equal
 written by tools/corpus/3mf/dump-input.mjs from export3mf, so the TPU preset
 fallback and its PRESET_INFERRED warnings are compared too. Byte identity of
 the two zips is outside the requirement. The TypeScript side runs from
-packages/3mf/src, bundled here with esbuild (the spec package ships .ts
-sources, which plain node cannot import), so the test never reads a stale
-build.
+packages/3mf/src, the re-export of the vendored hackbuild-3mf build
+(R1-engine-03), bundled here with esbuild, so the test reads the writer
+npm installed from tools/vendor and never a stale fab build.
 """
 import datetime
 import hashlib
@@ -304,7 +304,7 @@ EDGE_VALUES = [4.958810806274414e-7, 4.95881e-7, 9.99999e-7, 9.999995e-7, 1e-7, 
                -4.95881e-7, 3.2e-12, 0.1, 0.30000000000000004, 123456.7, 1e20, 1e21, 1.5e21, -2.5e22]
 
 FMT_JS = r"""
-import { fmt, num } from "./packages/3mf/src/writer/fmt.ts";
+import { fmt, num } from "./packages/3mf/src/index.ts";
 const vals = JSON.parse(process.argv[2]);
 const refusal = (v) => { try { fmt(v); return null; } catch (e) { return e.hbf ?? String(e); } };
 process.stdout.write(JSON.stringify({ str: vals.map((v) => String(v)), num: vals.map(num),

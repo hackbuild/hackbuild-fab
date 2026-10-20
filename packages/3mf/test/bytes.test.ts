@@ -5,7 +5,7 @@
 import { createHash } from "node:crypto";
 import { afterAll, describe, expect, it } from "vitest";
 import JSZip from "jszip";
-import { utf8Bytes } from "@hackbuild/spec";
+import { utf8Bytes } from "../src/index.js";
 import { build, DOS_EPOCH, zipEntries, type BuildConfig, type Built } from "../src/index.js";
 import { box, EPOCH } from "./cube.js";
 
@@ -98,6 +98,18 @@ describe("reproducible bytes (M00-T07 step 4)", () => {
 
   it("reproduces the STL fallback zip too", async () => {
     expect(sha(await ok(cfg(SDE)).stlZip())).toBe(sha(await ok(cfg(SDE)).stlZip()));
+  });
+
+  // Golden sha256 of the zip bytes at the acceptance epoch, computed on
+  // 2026-10-20 by the in-fab writer of hackbuild-fab d7d8dc2 before the move
+  // to the vendored hackbuild-3mf (R1-engine-03); the vendored build gave the
+  // same three. A change to the container (level, order, dates, encoder)
+  // moves the first two.
+  it("writes the bytes the in-fab writer wrote before the move", async () => {
+    const b = ok(cfg(EPOCH));
+    expect(sha(await b.zip())).toBe("ed947bd066eabcf634a697dd26c489e046b37b6372a523700f0da511582302ec");
+    expect(sha(await b.stlZip())).toBe("e3cd20bc940488627b0bd439540e10b9ad72c2231322f45808adf45b2a0a0e20");
+    expect(b.artifactHash).toBe("c9b1848734be6c28b38521cac17cf4176f0ae098da30f707ffb3332e6a874ff2");
   });
 });
 

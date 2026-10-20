@@ -21,7 +21,8 @@ function keyList(src, re, what) {
   return [...m[1].matchAll(/"([^"]+)"/g)].map((x) => x[1]).sort();
 }
 
-const tsKeys = keyList(read("packages/3mf/src/writer/settings.ts"), /export const SCALAR_KEYS = \[([^\]]*)\]/, "settings.ts");
+// The writer is the vendored hackbuild-3mf build (R1-engine-03); npm installs it from tools/vendor.
+const tsKeys = keyList(read("node_modules/hackbuild-3mf/dist/writer/settings.js"), /export const SCALAR_KEYS = \[([^\]]*)\]/, "settings.js");
 const pyKeys = keyList(read("tools/py/orca3mf.py"), /^SCALAR_KEYS = \(([^)]*)\)/m, "orca3mf.py");
 const templateKeys = Object.keys(json("packages/3mf/data/filament_template.json").keys).length;
 

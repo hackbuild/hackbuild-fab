@@ -54,14 +54,7 @@
   "tools": {
     "tools/glue": { "mayImport": ["typescript"], "why": "the glue and bespoke-UI counter reads source as text: node built-ins and typescript 7.0.2, no workspace package (M10 package placement)" }
   },
-  "edgeExceptions": [
-    {
-      "source": "3mf",
-      "targets": ["spec", "profile", "mesh"],
-      "since": "2026-10-05",
-      "note": "M00-T01 step 3 and M00-T09 wrote these edges; PACKAGES.md 5.1 and D-027 say 3mf imports no workspace package. Reported, not failed, until the owner records which side wins. Remove this entry when packages/3mf carries its own types.ts and audit; the gate fails on an exception no edge still uses."
-    }
-  ],
+  "edgeExceptions": [],
   "sameTier": [["geom", "profile"], ["mesh", "profile"], ["mesh", "geom"], ["catalog", "profile"], ["catalog", "mesh"], ["pipeline", "checks"], ["ui", "ui-core"]],
   "headless": ["S", "0", "1", "2", "kernel"],
   "forbid": [
