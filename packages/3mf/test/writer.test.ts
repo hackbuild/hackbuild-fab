@@ -2,8 +2,8 @@
 // the coordinate format, artifactHash, the chase record and the refusals.
 
 import { describe, expect, it } from "vitest";
-import { isThrownCommandError } from "@hackbuild/spec";
-import { sha256Hex } from "@hackbuild/spec";
+import { isThrownCommandError } from "../src/index.js";
+import { sha256Hex } from "../src/index.js";
 import {
   assertSettings, artifactHash, build, didYouMean, fmt, printCard, stl, DEFAULT_MATERIALS, DEFAULT_PRESET, printerOf,
   type BuildConfig, type Built,

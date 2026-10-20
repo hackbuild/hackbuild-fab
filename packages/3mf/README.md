@@ -4,7 +4,15 @@ The slicer dialect: writer, validator, conformance corpus, artifact hash.
 Tier 1; milestone M00, extracted at M00 exit as hackbuild-3mf (PACKAGES.md,
 D-027).
 
-Built: M00 and M-S, staged, not released; the split lives in hackbuild-3mf.
+Built: M00 and M-S, staged, not released. Since R1-engine-03 the code lives
+once, in hackbuild-3mf: `src/index.ts` re-exports the build vendored at
+`tools/vendor/hackbuild-3mf-<version>-<sha7>.tgz` (sha256 in
+`tools/vendor/SHA256SUMS`), and the `src/` paths below are paths in
+hackbuild-3mf `js/src`. A writer change lands there, is packed into
+`tools/vendor`, and `package.json` here names the new file. `data/` and
+`seed/` stay here for the harvest and `tools/py`; `test/vendored.test.ts`
+holds them equal to the vendored copies. CHK-3MF-04 on Part IR outlines
+moved to `packages/checks/src/3mf/chk-3mf-04.ts`.
 
 ## Writer
 

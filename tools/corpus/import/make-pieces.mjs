@@ -31,14 +31,14 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../../..");
 const at = (p) => pathToFileURL(path.join(ROOT, p)).href;
-for (const p of ["core/dist/resolve-hook.js", "packages/3mf/dist/writer/stl.js", "packages/mesh/dist/hash.js"]) {
+for (const p of ["core/dist/resolve-hook.js", "packages/3mf/dist/index.js", "packages/mesh/dist/hash.js"]) {
   if (!existsSync(path.join(ROOT, p))) {
     console.error(`${p} is missing; run npx tsc -b first`);
     process.exit(2);
   }
 }
 register(at("core/dist/resolve-hook.js"));
-const { stl } = await import(at("packages/3mf/dist/writer/stl.js"));
+const { stl } = await import(at("packages/3mf/dist/index.js"));
 const { signedVolume } = await import(at("packages/mesh/dist/hash.js"));
 const { default: Module } = await import("manifold-3d");
 

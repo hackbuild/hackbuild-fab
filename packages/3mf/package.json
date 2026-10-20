@@ -19,11 +19,9 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@hackbuild/spec": "0.1.0",
-    "jszip": "3.10.1"
+    "hackbuild-3mf": "file:../../tools/vendor/hackbuild-3mf-0.1.0-aa3a173.tgz"
   },
   "devDependencies": {
-    "@hackbuild/mesh": "0.0.0",
-    "@hackbuild/profile": "0.0.0"
+    "jszip": "3.10.1"
   }
 }

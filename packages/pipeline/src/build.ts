@@ -562,7 +562,10 @@ export function threeMfInput(built: Built, name: string): ThreeMfInput {
  */
 export async function export3mf(built: Built, name: string): Promise<{ readonly bytes: Uint8Array; readonly artifactHash: ArtifactHash; readonly name: string; readonly warnings: readonly BuildWarning[] }> {
   const out = await write3mf(threeMfInput(built, name));
-  return { bytes: out.bytes, artifactHash: out.artifactHash, name: `${name}.3mf`, warnings: out.warnings };
+  // The vendored writer brands its hash with its own symbol and types
+  // warning bounds as unknown; it writes lowercase sha256 hex and sets no
+  // bound (packages/checks/src/3mf/contracts.ts), so both narrow to spec.
+  return { bytes: out.bytes, artifactHash: out.artifactHash as string as ArtifactHash, name: `${name}.3mf`, warnings: out.warnings as readonly BuildWarning[] };
 }
 
 /** The writer config of the same package, for the STL fallback zip and the print card (packages/3mf build). */

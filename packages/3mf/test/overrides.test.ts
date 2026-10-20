@@ -7,7 +7,7 @@
 
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import type { BodyAdjacency, BodyRole } from "@hackbuild/spec";
+import type { BodyAdjacency, BodyRole } from "../src/index.js";
 import {
   DEFAULT_MATERIALS, DEFAULT_TEMPLATE, OVERRIDE_ROWS, build, configOf, readEntries, validateEntries, type Built, type ThreeMfInput,
 } from "../src/index.js";

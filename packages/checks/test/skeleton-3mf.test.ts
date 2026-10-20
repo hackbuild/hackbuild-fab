@@ -22,11 +22,11 @@ import { liveCount, meshRef, runStages, type MeshData } from "@hackbuild/mesh";
 import { createProfileLookup, layerIndex, layerTop, loadProfile, snapLayer, tablesFromSeed } from "@hackbuild/profile";
 import {
   artifactHash, filamentTemplate, slicerMaterials, threeMfEntries, write3mf, zipEntries, type FilamentSlot, type ThreeMfInput,
-} from "../src/index.js";
+} from "@hackbuild/3mf";
 
 const read = (rel: string): unknown => JSON.parse(readFileSync(new URL(rel, import.meta.url), "utf8"));
-const template = filamentTemplate(read("../data/filament_template.json"));
-const materials = slicerMaterials(read("../seed/materials.json"));
+const template = filamentTemplate(read("../../3mf/data/filament_template.json"));
+const materials = slicerMaterials(read("../../3mf/seed/materials.json"));
 const tables = tablesFromSeed(read("../../profile/seed/profile.seed.json"));
 const machine = tables.machines.find((m) => m.id === "ffc5p")!;
 /** Bed x and y, mm: the envelope, or its sheet for a cutter. */

@@ -5,7 +5,7 @@
 // and a 7-member STL zip for 11 parts. The export must fail before any byte.
 
 import { describe, expect, it } from "vitest";
-import { isThrownCommandError } from "@hackbuild/spec";
+import { isThrownCommandError } from "../src/index.js";
 import { build, write3mf, filamentTemplate, slicerMaterials, DEFAULT_MATERIALS, DEFAULT_TEMPLATE, type WriterObject } from "../src/index.js";
 import { box, EPOCH } from "./cube.js";
 

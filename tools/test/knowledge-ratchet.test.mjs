@@ -125,9 +125,10 @@ test("the mesh kernel record names the zero-area repairs and the manifold-3d cav
 
 test("the 3MF dialect lists every scalar key the writer emits", () => {
   const dialect = readFileSync(join(root, "knowledge", "kernels", "3mf-dialect.md"), "utf8");
-  const src = readFileSync(join(root, "packages", "3mf", "src", "writer", "settings.ts"), "utf8");
+  // The writer is the vendored hackbuild-3mf build (R1-engine-03); npm installs it from tools/vendor.
+  const src = readFileSync(join(root, "node_modules", "hackbuild-3mf", "dist", "writer", "settings.js"), "utf8");
   const list = /export const SCALAR_KEYS = \[([^\]]*)\]/.exec(src);
-  assert.ok(list, "SCALAR_KEYS in packages/3mf/src/writer/settings.ts");
+  assert.ok(list, "SCALAR_KEYS in node_modules/hackbuild-3mf/dist/writer/settings.js");
   const keys = [...list[1].matchAll(/"([a-z_]+)"/g)].map((m) => m[1]);
   assert.ok(keys.includes("curr_bed_type"), "the writer emits curr_bed_type");
   for (const k of keys) assert.ok(dialect.includes(`\`${k}\``), `3mf-dialect.md names the scalar key ${k}`);

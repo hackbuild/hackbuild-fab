@@ -193,7 +193,7 @@ describe("checks seed", () => {
 
   test("CHK-3MF-04 is seeded at the version its run reports, 2.0.0 (D-070, CHECKS.md 7.1)", () => {
     const four = rows.find((r) => r.id === "CHK-3MF-04");
-    const code = read("packages/3mf/src/checks/chk-3mf-04.ts").match(/CHK_3MF_04_VERSION\s*=\s*"([^"]+)"/)?.[1];
+    const code = read("packages/checks/src/3mf/chk-3mf-04.ts").match(/CHK_3MF_04_VERSION\s*=\s*"([^"]+)"/)?.[1];
     expect(code).toBe("2.0.0");
     expect(four?.version).toBe(code);
   });

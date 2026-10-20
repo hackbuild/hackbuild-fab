@@ -44,4 +44,5 @@ export { runNet11 } from "./net/net11.js";
 export { routeFinding, runNet12 } from "./net/net12.js";
 // CHK-3MF-08 on the package, with the Part IR when the build is at hand (M05-T20).
 export { BEAM_CONSTANTS, interlockingDefaults, run3mf08 } from "./3mf/chk-3mf-08.js";
+export { CHK_3MF_04, CHK_3MF_04_VERSION, INSET_CONSTANTS, chk3mf04, type BodyOutline, type Chk04Input } from "./3mf/chk-3mf-04.js";
 export { conductorPackageChecks } from "./3mf/package-checks.js";

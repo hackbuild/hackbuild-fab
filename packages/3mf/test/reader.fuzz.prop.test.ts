@@ -17,7 +17,7 @@ import { crc32, deflateRawSync } from "node:zlib";
 import { describe, expect, it, vi } from "vitest";
 import fc from "fast-check";
 import JSZip from "jszip";
-import { isThrownCommandError } from "@hackbuild/spec";
+import { isThrownCommandError } from "../src/index.js";
 import { parseModel, READER_LIMITS, readEntries, scanTags, unsafeEntryName, validateZip, zipMemberNames } from "../src/index.js";
 
 const FC_RUNS = Number(process.env["FC_RUNS"] ?? 100);

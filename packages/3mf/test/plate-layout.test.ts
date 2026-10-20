@@ -10,7 +10,7 @@
 
 import { existsSync, readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import { isThrownCommandError, type QuarterTurn, type Vec3 } from "@hackbuild/spec";
+import { isThrownCommandError, type QuarterTurn, type Vec3 } from "../src/index.js";
 import {
   DEFAULT_MATERIALS, DEFAULT_PRESET, DEFAULT_TEMPLATE, build, configOf, instanceTransform, printerOf, threeMfEntries,
   type BuildConfig, type Built, type ThreeMfInput,

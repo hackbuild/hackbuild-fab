@@ -5,7 +5,7 @@
 
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import { isThrownCommandError } from "@hackbuild/spec";
+import { isThrownCommandError } from "../src/index.js";
 import { authorMeta, authorName, build, configOf, type BuildConfig } from "../src/index.js";
 import { box, EPOCH } from "./cube.js";
 

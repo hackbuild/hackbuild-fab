@@ -17,7 +17,9 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 const REPO = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
-const DIST = join(REPO, "packages/3mf/dist");
+// The validator lives in the vendored hackbuild-3mf build that packages/3mf
+// re-exports (R1-engine-03); its internal modules are read from there.
+const DIST = join(REPO, "node_modules/hackbuild-3mf/dist");
 register(pathToFileURL(join(REPO, "core/dist/resolve-hook.js")).href);
 const load = (p) => import(pathToFileURL(join(DIST, p)).href);
 
