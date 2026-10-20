@@ -7,6 +7,7 @@ export { mountBench, pageBench, pageOf, type BenchBuild, type BenchWriter, type 
 export { useBench, type UseBench } from "./bench/use-bench.js";
 export { useShell, type BenchReport, type BenchResult, type Values } from "./stores/shell.js";
 export { default as BenchShell } from "./bench/BenchShell.vue";
+export { default as ChaseBench } from "./bench/ChaseBench.vue";
 export { default as ChecksPanel } from "./panels/ChecksPanel.vue";
 export { default as CurvePanel } from "./panels/CurvePanel.vue";
 export { default as ExportsPanel } from "./panels/ExportsPanel.vue";

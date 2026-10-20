@@ -52,3 +52,5 @@ export { claimAt, claimBinding, claimTarget, drivePress, PRESS_GESTURE, pressLin
 export type { ClaimBinding, PressModel, WidgetClaimArgs, WidgetClaimFn } from "./widgets/press.js";
 export { CONTACT_TOL_MM, contactTravel, CURVE_TOLERANCE, curvePeak, plotCurve, plotLines } from "./widgets/curve.js";
 export type { CurveCursor, CurvePoint, CurveView, PlotModel } from "./widgets/curve.js";
+export { bindChase, chaseStarts, driveModel, EXPORT_STEPS, NO_BUILD, NOT_A_DESIGN, NOT_IN_BAKE, panelRow, railEndError, railRows, widgetsModel } from "./chase/bind.js";
+export type { BindOptions, BuildView, ChaseBinding, ChaseReport, ChaseWriter, PanelRow, RailRow, WidgetView } from "./chase/bind.js";

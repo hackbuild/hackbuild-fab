@@ -6,7 +6,7 @@
 
 import type { Component } from "vue";
 import type { Bench, Chase, ContactFn, WidgetRecord } from "@hackbuild/spec";
-import { widgetRecords, type ViewPart, type WidgetClaimFn } from "@hackbuild/ui-core";
+import { widgetsModel, type WidgetView } from "@hackbuild/ui-core";
 import type { BenchReport } from "../stores/shell.js";
 import DrivePad from "../stage/DrivePad.vue";
 import DrivePress from "./DrivePress.vue";
@@ -32,31 +32,14 @@ export function widgetComponentKinds(): string[] {
   return [...components.keys()].sort();
 }
 
-export interface WidgetSource {
-  readonly part: ViewPart | null;
+/** The shell's build as the widgets read it (ui-core WidgetView). */
+export interface WidgetSource extends WidgetView {
   readonly report: BenchReport;
-  /** Claim functions by id, from the page build's claim registry; without them the claim widgets name what is missing. */
-  readonly claimFns?: Readonly<Record<string, WidgetClaimFn>>;
-  /** The drive.press travel, mm, the person dragged to. */
-  readonly travelMm?: number;
 }
 
-/** The records BENCH.widgets() returns for the bench's declared widgets on the current build. */
+/** The records BENCH.widgets() returns for the bench's declared widgets on the current build (ui-core widgetsModel). */
 export function widgetsOf(chase: Chase, bench: Bench, contact: ContactFn | null, src: WidgetSource): WidgetRecord[] {
-  const decls = bench.views.widgets ?? [];
-  if (decls.length === 0) return [];
-  const drive = bench.views.drive;
-  return widgetRecords(decls, {
-    features: src.part?.part.features ?? [],
-    metrics: src.report.metrics ?? [],
-    results: src.report.results ?? [],
-    hookup: chase.hookup ?? [],
-    contacts: drive !== undefined && contact !== null ? { [drive.contact]: contact } : {},
-    ...(drive === undefined ? {} : { drive }),
-    ...(chase.claims === undefined ? {} : { claims: chase.claims }),
-    ...(src.claimFns === undefined ? {} : { claimFns: src.claimFns }),
-    ...(src.travelMm === undefined ? {} : { travelMm: src.travelMm }),
-  });
+  return widgetsModel(chase, bench, contact, src);
 }
 
 // The mapped kinds, one line each.
