@@ -14,5 +14,16 @@
     "sha256": "c621103d81e35959d9262ce6cd9e7d6af9c156a9c78308c3e738ecaf3bfe82ad",
     "fixes": [],
     "dest": "designs/pip/legacy/src/coupon.js"
+  },
+  {
+    "id": "pip.coupon/haft-9-access-switch-coupon",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft-src/src/coupon.js",
+    "sha256": "a33e2741ba772f96ab557c8b9e087fb04796e28f118cbf7f65e9dfaec7eebb35",
+    "fixes": [
+      "the click spring cell (coupon.js lines 131 to 150: slot, relief, cap well and ribs on the coupon floor) and the spring and cap printed apart (lines 166 to 170), placed three times through click-spring-key by reference/keys/access-switch/coupon/build.ts at span 28 and beams 0.50, 0.55, 0.60 (R1-flagship-access-switch-10); the electrical cells, pads and leads are dropped, force only",
+      "the label stroke 0.6 mm and deboss depth 0.48 mm (lines 163 and 165) and the pad label height 2.6 mm (line 37) set the rung bars debossed beside each slot, the depth snapped to a layer"
+    ],
+    "dest": "reference/keys/access-switch/coupon/build.ts"
   }
 ]
