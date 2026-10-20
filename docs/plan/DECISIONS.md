@@ -374,6 +374,9 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-318 | The solver hint names registerSolvers in archetypes | decided | Architecture |
 | D-319 | Page click test reads goldens instead of an in-process core build | decided | Testing, docs, milestones, registry |
 | D-320 | registerSolvers is once-only | decided | Architecture |
+| D-321 | Fix main's stale lineage fragment in this branch | decided | Testing, docs, milestones, registry |
+| D-322 | Pack the CHECK_MODULES array to 80 columns | decided | Architecture |
+| D-323 | Generated check index refuses a module outside its family directory | decided | Architecture |
 
 ## House rules and process
 
@@ -3949,6 +3952,39 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. `registerSolvers` in `packages/pipeline/src/solvers.ts` sets a module flag, so repeat calls do nothing. A test that later calls `provideClickSolver` directly still replaces the solver. |
 | Rationale | The brief asks for an idempotent registration, and the archetype parity tests inject a legacy curve through `provideClickSolver`. |
 | Evidence | `npx vitest run packages/archetypes` on the merged tree: 19 files, 198 tests passed (measured). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-321 Fix main's stale lineage fragment in this branch
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The R1-rails-registries-04 branch appended the row `pip.model/haft-9-thin-wall`, unchanged, to `lineage/pip.model.json` so `node tools/gen/registries.mjs --check` passes; root `lineage.json` is unchanged. Main had landed the same row in 0627158 before the merge, so the merge held it twice; the integrator restored main's fragment in ee48dd0 and one copy stands. |
+| Rationale | The brief's done condition needs `--check` to exit 0. The R1-flagship-access-switch-07 merge wrote the row straight into root `lineage.json` after the switch to fragments, so regenerating would have deleted the row. |
+| Evidence | On bc3a9d1, `node tools/gen/registries.mjs` removed 10 lines (that row) from `lineage.json` (measured by the builder). After the merge `--check` refused the duplicate id; the two rows were byte-identical (computed); after ee48dd0 it reports 2 generators, 3 outputs, all fresh (measured). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-322 Pack the CHECK_MODULES array to 80 columns
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The generated `packages/checks/src/defs/index.ts` packs the `CHECK_MODULES` names to 80 columns with a two-space indent, replacing the old uneven hand wrapping. |
+| Rationale | Same output on every run with no hand edits; the brief allowed a change only in line wrapping. |
+| Evidence | `git diff` of `packages/checks/src/defs/index.ts` changes no import line, only the array lines and two header lines saying it is generated (measured). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-323 Generated check index refuses a module outside its family directory
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `tools/gen/registries/checks.mjs` refuses a check module filed outside its family directory, such as `defs/net/CHK-BRD-01.ts`, by name, with no guess about where it belongs. |
+| Rationale | All 158 modules follow the rule today (measured), and the variable name comes from the file name. |
+| Evidence | `tools/test/checks-fragments.test.mjs` test "a module outside its family directory is refused" passes on main after the merge (measured). |
 | Supersedes | new |
 | Milestone | none |
 
