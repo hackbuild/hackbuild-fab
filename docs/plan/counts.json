@@ -45,16 +45,16 @@
     "warn": 9
   },
   "decisions": {
-    "decided": 399,
+    "decided": 403,
     "first": 1,
-    "last": 457,
+    "last": 461,
     "neverIssued": [
       176
     ],
     "owner": 49,
     "ownerQueue": 49,
     "superseded": 8,
-    "total": 456
+    "total": 460
   },
   "external": {
     "bench.catalogue": "157 tools, 16 groups, 153 placeable",

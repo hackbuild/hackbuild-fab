@@ -511,6 +511,10 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-455 | The registry loader imports constraintDefs by name | decided | Repos, packaging, toolchain, licensing |
 | D-456 | Loaded constraint versions win over the baked fact on drift | decided | Repos, packaging, toolchain, licensing |
 | D-457 | PageResult carries registryHash | decided | Repos, packaging, toolchain, licensing |
+| D-458 | Loft and sweep tests sit at packages/mesh/test/ top level | decided | Testing, docs, milestones, registry |
+| D-459 | Pappus is applied to the section polygon area, not the true circle | decided | Kernel, geometry |
+| D-460 | Lineage canonical rows: loft from TENON part2.js, sweep from the geometry prototype | decided | House rules and process |
+| D-461 | Sweep end tangents follow the segment direction | decided | Kernel, geometry |
 
 ## House rules and process
 
@@ -5593,6 +5597,50 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. `packages/pipeline/src/page.ts` sets `PageResult.registryHash` to `built.inputs.registryHash`. |
 | Rationale | The smoke spec and `hash.test.ts` compare registryHash directly instead of through buildHash, so a registry drift names itself. |
 | Evidence | `tools/smoke/page-build.spec.ts` checks the page registryHash equals the one `tools/smoke/cli-3mf.mjs` prints; `packages/registry-loader/test/hash.test.ts`. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-458 Loft and sweep tests sit at packages/mesh/test/ top level
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The R1-engine-08 tests are `packages/mesh/test/loft.test.ts` and `packages/mesh/test/sweep.test.ts`, as the brief's Files line names them, instead of `packages/mesh/test/routes/` next to the other route tests. |
+| Rationale | The brief was followed literally. Moving them later is a rename with no behaviour change. |
+| Evidence | Brief R1-engine-08 Files line; `packages/mesh/test/routes/` holds the prism, raster, revolve and stack tests. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-459 Pappus is applied to the section polygon area, not the true circle
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The sweep volume check holds the mesh volume to the 32-gon section area times the quarter arc travelled by its centroid, as the geometry prototype did. |
+| Rationale | The mesher is given a polygon. Its own area isolates the sweep error from the circle's facet error, which is -0.64 percent (computed). The sweep error is -0.0118 percent against a 0.05 percent bound (computed). |
+| Evidence | `fab-knowledge` evidence proto.mjs line 119, `sweepAnalytic = polyArea(SR, NP) * PR * PI / 2`; `packages/mesh/test/sweep.test.ts`. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-460 Lineage canonical rows: loft from TENON part2.js, sweep from the geometry prototype
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `mesh.loft/tenon-src` is the canonical row of `lineage/mesh.loft.json`, with source TENON part2.js; the prototype is cited in its fixes text, not as a copy row. `mesh.sweep/geom-proto` is the canonical row of `lineage/mesh.sweep.json`, with source the `fab-knowledge` evidence proto.mjs. |
+| Rationale | `tools/test/lineage.test.mjs` needs a canonical `mesh.<route>` row for every route file and refuses a file that is a copy under one subject and canonical under another. No original holds a sweep, so the prototype is the nearest source; the rotation minimizing frame method comes from Wang et al. 2008. |
+| Evidence | `tools/test/lineage.test.mjs` lines 103 to 150; the brief's line that the loft ports the TENON revolve skinning pattern. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-461 Sweep end tangents follow the segment direction
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. In `sweepMesh` each end section is normal to its first or last path segment, and each interior section lies on the bisector of its two segments. There is no end tangent option. |
+| Rationale | The input stays a plain polyline. On the 90 deg arc in 48 steps the end sections tilt by half a step, and the volume stays -0.0118 percent from Pappus (computed). |
+| Evidence | `packages/mesh/src/routes/sweep.ts` `tangents()`; `packages/mesh/test/sweep.test.ts`. |
 | Supersedes | new |
 | Milestone | none |
 
