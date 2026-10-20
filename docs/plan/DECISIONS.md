@@ -436,6 +436,10 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-380 | pairwise excludes groups that fail the audit, voids included | decided | Kernel, geometry |
 | D-381 | body attribution of union pieces by bounds containment | decided | Kernel, geometry |
 | D-382 | pieces and bodyPieces are null when the union is refused | decided | Kernel, geometry |
+| D-383 | Import piece count and floating piece checks | decided | Constraints and checks |
+| D-384 | Import path checks stay out of chase builds | decided | Constraints and checks |
+| D-385 | No CHECKS.md section 6 rows for the new checks | decided | Testing, docs, milestones, registry |
+| D-386 | fab-knowledge: evidence prefix accepted in seed origins | decided | Testing, docs, milestones, registry |
 
 ## House rules and process
 
@@ -4693,6 +4697,50 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. Neither pieces nor bodyPieces is filled when no union exists, and pairwise is null when the union verifies. |
 | Rationale | This follows the brief's step 5 types. A verified union lets CHK-PRT-03 use the union against the summed volumes. |
 | Evidence | packages/mesh/test/imported-pieces.test.ts: the corner-touch case asserts pieces null, bodyPieces null and pairwise set. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-383 Import piece count and floating piece checks
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. Enter CHK-PRT-18 and CHK-PRT-19 at 1.0.0, block, part level, needs mesh, legal interval. CHK-PRT-18 compares the measured count with the declared count (default 1). CHK-PRT-19 measures the largest lift of a piece above the part's lowest point, legal 0 to 1/1024 mm. A floating piece fails even when the pieces are declared. CHK-PRT-03 keeps 2.0.0 because its rule and legal are unchanged; only the input the import path gives it changes (item 04). |
+| Rationale | The image eval mushroom imported with no warning (fab-knowledge:plan-v5/image-eval.md line 25). Part IR carries no pieces, so the rule can only run where the import is read. |
+| Evidence | packages/checks/src/defs/prt/CHK-PRT-18.ts and CHK-PRT-19.ts, packages/checks/test/prt18-19.test.ts, fixtures measured by the builder from mush-first.stl and mush-prim.stl with manifold-3d 3.5.4 (measured). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-384 Import path checks stay out of chase builds
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. IMPORT_PATH_CHECKS (packages/checks/src/defs/prt/import-path.ts) lists CHK-PRT-18 and CHK-PRT-19. Pipeline registryDefs, the conformance run and the message-numbers fixture run all leave them out. Both stay registered, because the generator requires a module for every seed row. |
+| Rationale | registryDefs takes every registered check of the part, body and feature levels (D-243). Including the two checks would have moved the registryHash and reportHash of every pinned reference build, and they could only ever skip there. The brief's own fallback (leave the modules out of defs/index.ts) no longer works, because defs/index.ts is generated. |
+| Evidence | packages/pipeline/src/build.ts registryDefs; core/test/export-gate-registry.test.ts asserts the exclusion, and the mutant without it fails; core/test/project-graph.test.ts passes with graph.jsonl unchanged. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-385 No CHECKS.md section 6 rows for the new checks
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The rows for CHK-PRT-18 and CHK-PRT-19 go in section 9.2 only, as CHK-PRT-16 did. |
+| Rationale | Section 6 lists the 86 seeded rows. packages/checks/test/seeded-ids.ts derives SEEDED_IDS from it, and entered.test expects 86 rows with no enteredBy. |
+| Evidence | packages/checks/test/seeded-ids.ts line 11; packages/checks/test/entered.test.ts, the 86 seeded rows case. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-386 fab-knowledge: evidence prefix accepted in seed origins
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. origin.test resolves fab-knowledge:<path> to the archive and checks it exists when the archive is on this host, the same rule as for absolute paths. |
+| Rationale | The brief asked for no absolute path, and the test tried to read any non-absolute path as a repo path. |
+| Evidence | packages/checks/test/origin.test.ts; tools/publish-paths.mjs defines the prefix. |
 | Supersedes | new |
 | Milestone | none |
 
