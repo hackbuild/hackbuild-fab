@@ -1,9 +1,9 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
-import { cpSync, mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { cpSync, mkdtempSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { dirname, join } from "node:path";
+import { basename, dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const repo = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
@@ -227,6 +227,45 @@ test("hackbuild-ui class count follows the stylesheet inside the tarball", () =>
     writeFileSync(pkgPath, JSON.stringify(pkg, null, 2) + "\n");
     run(dir);
     assert.equal(counts(dir).ui.hbClasses, 3);
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+// D-010 moved here from the package tests (R1-rails-registries-02): the
+// packages hold their loaded registries to the seed and def files, and this
+// test holds the generated counts to the same files, read on their own
+// terms: the seed rows as parsed, one def file per entry under every
+// subfolder of src/defs, the status line each def states, the alias rows.
+test("the generated registry counts equal the seed, def and alias files", async () => {
+  const { parse } = await import("yaml");
+  const dir = tempCopy();
+  try {
+    run(dir);
+    const got = counts(dir);
+    const text = (p) => readFileSync(join(dir, p), "utf8");
+    const checks = JSON.parse(text("packages/checks/seed/checks.seed.json")).checks;
+    const sev = (s) => checks.filter((c) => c.severity === s).length;
+    assert.deepEqual(got.checks.registered, { block: sev("block"), total: checks.length, warn: sev("warn") });
+    assert.equal(got.mechanisms, parse(text("packages/mechanisms/seed/mechanisms.seed.yaml")).length);
+    assert.equal(got.archetypes, parse(text("packages/archetypes/seed/archetypes.seed.yaml")).length);
+    const canon = (pkg) => {
+      const files = readdirSync(join(dir, "packages", pkg, "src/defs"), { recursive: true })
+        .map(String).filter((f) => f.endsWith(".ts") && basename(f) !== "index.ts");
+      const byStatus = {};
+      for (const f of files) {
+        const s = /^\s*status: "([a-z]+)",$/m.exec(text(join("packages", pkg, "src/defs", f)))?.[1] ?? "unstated";
+        byStatus[s] = (byStatus[s] ?? 0) + 1;
+      }
+      return { registered: files.length, byStatus };
+    };
+    const m = canon("mechanisms");
+    const a = canon("archetypes");
+    assert.equal(got.canon.mechanisms.registered, m.registered);
+    assert.deepEqual(got.canon.mechanisms.byStatus, m.byStatus);
+    assert.equal(got.canon.archetypes.registered, a.registered);
+    assert.deepEqual(got.canon.archetypes.byStatus, a.byStatus);
+    assert.equal(got.canon.archetypes.aliases, text("packages/archetypes/src/aliases.ts").split("\n").filter((l) => l.trimStart().startsWith('{ alias: "')).length);
   } finally {
     rmSync(dir, { recursive: true, force: true });
   }

@@ -1,6 +1,6 @@
 // M04-T03: severity and precondition checks (D-067, CHECKS.md section 3).
-// Independent sources: the raw seed rows (packages/checks/seed), the
-// generated counts (docs/plan/counts.json, written by tools/counts.mjs), the
+// Independent sources: the raw seed rows (packages/checks/seed), whose
+// severity split tools/test/counts.test.mjs holds the generated count to, the
 // precondition table of CHECKS.md section 3, and the corpus file lug.glb,
 // whose node parts trimesh finds open (tools/corpus/import/MANIFEST.json,
 // 25 of 26 open, computed). A seed row that loses its severity, a lost
@@ -20,8 +20,10 @@ import {
 const root = new URL("../../../", import.meta.url);
 const readText = (rel: string): string => readFileSync(new URL(rel, root), "utf8");
 const seed = JSON.parse(readText("packages/checks/seed/checks.seed.json")) as { checks: { id: string; severity: Severity; precondition?: boolean }[] };
-// Every registered row: the seeded rows and those entered later (counts.json checks.registered).
-const counts = (JSON.parse(readText("docs/plan/counts.json")) as { checks: { registered: { total: number; block: number; warn: number } } }).checks.registered;
+// Every registered row: the seeded rows and those entered later, split by the raw seed severity
+// (the same rows tools/counts.mjs counts as checks.registered; no row is dropped there).
+const seedSplit = (s: Severity): number => seed.checks.filter((r) => r.severity === s).length;
+const counts = { total: seed.checks.length, block: seedSplit("block"), warn: seedSplit("warn") };
 const defs = registerChecks({ seed }, CHECK_MODULES);
 
 /** The check ids of the precondition table in CHECKS.md section 3, in table order. */
@@ -40,7 +42,7 @@ function result(id: string, severity: Severity, verdict: Verdict): CheckResult {
 }
 
 describe("seed severity registers unchanged", () => {
-  test("every registered check carries its seed row's severity, and the split equals the generated counts", () => {
+  test("every registered check carries its seed row's severity, and the split equals the seed's split", () => {
     const rows = new Map(seed.checks.map((r) => [r.id, r]));
     expect(defs.length).toBe(counts.total);
     for (const d of defs) expect(d.severity, d.id).toBe(rows.get(d.id)!.severity);
