@@ -517,6 +517,9 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-461 | Sweep end tangents follow the segment direction | decided | Kernel, geometry |
 | D-462 | Profile corner lineage gets its own subject | decided | House rules and process |
 | D-463 | ogee16.printed port rows stay copy | decided | House rules and process |
+| D-464 | M10 pending list in the surface test | decided | Testing, docs, milestones, registry |
+| D-465 | flex-pair Q-TIER pointers are /materials/1 and /materials/3 | decided | Reference, goldens |
+| D-466 | flex-pair validate exits 2 on the contact.gap E_REF | decided | Reference, goldens |
 
 ## House rules and process
 
@@ -5665,6 +5668,39 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. `ogee16.printed/geom-profile-chamfer` and `ogee16.printed/mesh-junction` keep kind copy under their own subject. |
 | Rationale | `printed.scad` is canonical only under `ogee16.printed` (the r16p row), and a copy under the same subject does not break D-156. `m02-proud-head` already does this. |
 | Evidence | A grep of `lineage/*.json` for `printed.scad` finds one canonical row, `ogee16.printed/r16p`; lineage tests pass, 21 of 21 (computed, 2026-10-20). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-464 M10 pending list in the surface test
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `core/test/surface.test.ts` reads the M10 row of MILESTONES.md 1.3 and lists chase.scaffold, chase.diff, chase.patch, chase.render and chase.bake as pending. Each later card deletes its own entry. |
+| Rationale | This follows the existing M01, M04 and M06 pending lists and keeps the expected surface coming from MILESTONES.md instead of a count typed into the test. |
+| Evidence | `core/test/surface.test.ts`; adding chase.validate to M10_PENDING fails 2 surface cases (measured, mutant killed by the builder); integrator packet `.hbf-notes/r1/packets/R1-engine-16.txt`. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-465 flex-pair Q-TIER pointers are /materials/1 and /materials/3
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The flex-pair Q-TIER questions point at /materials/1 (cpla) and /materials/3 (ctpu), not the /materials/2 the brief names. |
+| Rationale | materials is a 0-based array: cpla is at index 1 and ctpu at index 3 in `reference/keys/flex-pair/chase.ts`. The brief's /materials/2 reads as a stale index. |
+| Evidence | `reference/keys/flex-pair/chase.ts` lines 38 to 43; `core/test/chase-validate.test.ts` lines 24 and 25. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-466 flex-pair validate exits 2 on the contact.gap E_REF
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. flex-pair validates with one error, E_REF /params/1/fields/0/item/3/constraintDim contact.gap, where the brief says 0 errors. The test pins that single error and says the list empties once something registers contact.gap. |
+| Rationale | No ConstraintDef registers contact.gap, so validate reports a real missing reference. Fixing the constraint registry is outside the brief's Writes line. |
+| Evidence | `core/test/chase-validate.test.ts` line 22 and header comment line 5. |
 | Supersedes | new |
 | Milestone | none |
 
