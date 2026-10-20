@@ -171,11 +171,44 @@ device before the card claims the switch closes for it.
 
 ### Not verified by anything
 
-- Not sliced; no force has been on a gauge (unknown).
+- No force has been on a gauge (unknown). The slice below is virtual.
 - The press band and the corner spread above are computed; the claim
   stays inferred until a reading from the thickness ladder coupon.
 
 <!-- R1-flagship-access-switch-08: virtual slice -->
+
+## Virtual slice
+
+2026-10-20, preset default, a simulated print through `tools/slice/slice.mjs`
+and `tools/py/gcode/analyze.py`; evidence and `SLICE.md` in
+`fab-knowledge/evidence/virtual-print/2026-10-20-access-switch/`. Every figure
+is computed from the G-code and the meshes unless it says measured. Nothing
+was printed.
+
+- Run: `sliced: exit 0, 5592 ms wall (measured)`, Orca-Flashforge 2.3.2, fresh
+  datadir, checks worst warn with 0 failed. TPU slots sliced with the
+  "Generic TPU-95A @FF C5P" stand-in (D-238, inferred). analyze.py exit 0
+  wrote `slice.json`.
+- Beam road check: pass. The four spring beams get one road each on every
+  layer 0 to 6, road cover 1.000 of the beam section and no gap along the
+  beam (computed). `detect_thin_wall 1` is on the object; the process keeps
+  the classic wall generator.
+- The G-code plans the beam road 0.587 to 0.601 mm wide against the drawn
+  0.55 mm (computed). At 0.60 mm the press claim reads 2.195 N, 224 g, out of
+  band (computed), so the claim stays inferred until the thickness ladder
+  coupon.
+- Plate: body, paddle, cap and tip each deposited; 0 regions of a body
+  printed by another tool; the two cPLA nets stay apart and both leads reach
+  their columns (computed).
+- Finding: the bundled process fills `brim_type auto_brim`, and the slicer
+  lays a 2143 mm2 brim on layer 0 around body and paddle in the cap's TPU 95A
+  (computed). A TPU brim on PETG is hard to peel (inferred). Queued as a
+  writer fix; until then, turn the brim off in the slicer.
+- The centre shuttle's two small feet get no road on layer 0 (0.74 mm2
+  each, computed).
+- Slicer estimate: 1h 34m 29s, 36.75 g in all (PETG 32.13, cPLA 1.98, TPU
+  95A 2.20, cTPU 0.44 g), 71 tool changes (computed).
+
 <!-- end R1-flagship-access-switch-08 -->
 
 <!-- R1-flagship-access-switch-09: print card -->
