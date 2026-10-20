@@ -473,6 +473,11 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-417 | The gold check host builds the bench's own design | decided | Rails, gold |
 | D-418 | Curve scale fmax also covers the claim band top | decided | UI, lineage |
 | D-419 | The integrator rerecords graph.jsonl when only the build hash moves | decided | Rails, goldens |
+| D-420 | CHK-PRT-19 on floating-cap measures 22 mm, not about 2 mm | decided | Rails, checks |
+| D-421 | pieces enters the part.build input schema without a range check | decided | Rails, commands |
+| D-422 | Declared pieces enter defHash as the resolved count | decided | Rails, goldens |
+| D-423 | With no union, CHK-PRT-18 and CHK-PRT-19 skip with the no-union reason | decided | Rails, checks |
+| D-424 | A kernel-refused pairwise fails CHK-PRT-03 with measured kernel refused | decided | Rails, checks |
 
 ## House rules and process
 
@@ -5137,6 +5142,61 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. The R1-flagship-access-switch-12 builder left `packages/project/test/fixtures/graph.jsonl` for the integrator, who rerecorded it with `HBF_ACCEPT_GRAPH=1` after checking that every mesh item hash and volume was unchanged and that no line outside access-switch moved. |
 | Rationale | The build hash moved by design from the chase json export, not from geometry. Item 02 took the same path after a mesh-equal re-accept. |
 | Evidence | `core/test/project-graph.test.ts` 11 pass after the rerecord (computed); graph diff 26 lines, all access-switch, mesh hashes equal; LOG.md line for R1-flagship-access-switch-02. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-420 CHK-PRT-19 on floating-cap measures 22 mm, not about 2 mm
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The CHK-PRT-19 rule merged in R1-rails-import-05 is kept as it is. The golden and `tools/corpus/import/MANIFEST.json` record 22 mm (computed), the floating cap's lift above the part's bed plane. |
+| Rationale | `prt19Finding` measures a piece's lowest point minus the bed plane. The cap's base is 22 mm above the bed and 2 mm above its stem. Changing the check is outside R1-rails-import-07's Writes, and the fail verdict is the same either way. |
+| Evidence | `packages/checks/src/defs/prt/CHK-PRT-19.ts` `prt19Finding`; the in-process run gives firstFloating -8,-8,22 to 8,8,30 mm and measured 22 (computed). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-421 pieces enters the part.build input schema without a range check
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `packages/commands/src/defs/part-build.ts` takes `pieces` as `z.number().exactOptional()`. Only `part.build` checks for an integer of at least 1 and refuses others with E_SCHEMA at `/import/<i>/pieces`. |
+| Rationale | Without the field the cli refused `path#N` as an unknown input, so the R1-rails-import-06 syntax never reached the command. One range rule in one place matches the comment in `core/test/import-flag.test.ts`, which says the range check is part.build's. |
+| Evidence | Before the change the cli run of `two-on-bed.stl#2` gave exit 2 with "remove pieces; part.build takes no such input"; after it, exit 0 (computed). 0 and 1.5 are refused with E_SCHEMA in `core/test/part-build-import.test.ts`. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-422 Declared pieces enter defHash as the resolved count
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The defHash import rows hash `pieces: spec.pieces ?? 1`, so an undeclared file and `#1` hash the same and `#2` hashes differently. Every import build hash moved once because of this; no mesh hash or volume moved. |
+| Rationale | The declaration enters the build hash, as `ImportSpec.pieces` documents, and absent and 1 declare the same thing. |
+| Evidence | `core/test/part-build-import.test.ts` asserts that two-on-bed and two-on-bed#2 have different build hashes; the golden volumes and triangles of locket-r2.glb and lug.glb are unchanged (computed). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-423 With no union, CHK-PRT-18 and CHK-PRT-19 skip with the no-union reason
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. When CHK-PRT-01 finds no union (for example lug.glb), CHK-PRT-18 and CHK-PRT-19 skip with "no union of the imported parts to count pieces in: <reason>", not with the CHK-PRT-01 precondition gate, so neither passes without a union. |
+| Rationale | The R1-rails-import-07 brief asks for the no-union reason, and `core/test/precondition.test.ts` asserts that CHK-PRT-03 is the only gated skip. |
+| Evidence | `core/test/precondition.test.ts` 9 pass on the merged tree (computed). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-424 A kernel-refused pairwise fails CHK-PRT-03 with measured kernel refused
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. When the kernel refuses a shell group, CHK-PRT-03 fails with measured "kernel refused", legal kind none, and a constraint that quotes the UNION warning's pairwise reason. |
+| Rationale | Under D-064 the measured value must be a real value, and the interval legal kind needs a number, which does not exist here. |
+| Evidence | `core/src/commands/part-build.ts` importChecks. |
 | Supersedes | new |
 | Milestone | none |
 
