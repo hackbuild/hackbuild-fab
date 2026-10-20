@@ -20,7 +20,8 @@
     "typecheck": "tsc -b && tsc -p tools/tsconfig.json && tsc -p tsconfig.tests.json",
     "pretest": "tsc -b",
     "test": "vitest run && node --test tools/test/*.test.mjs packages/*/seed/test/*.test.mjs knowledge/test/*.test.mjs",
-    "derived": "node tools/counts.mjs && git diff --exit-code -- docs/plan/counts.json docs/plan/PLAN.md",
+    "registries": "node tools/gen/registries.mjs",
+    "derived": "node tools/gen/registries.mjs --check && node tools/counts.mjs && git diff --exit-code -- docs/plan/counts.json docs/plan/PLAN.md",
     "tiers": "node tools/tiers.mjs",
     "check": "npm run lint && node tools/lint-authors.mjs && npm run typecheck && npm test && npm run tiers && npm run derived",
     "bake:all": "tsc -b packages/ui && node tools/bake/bake.mjs --all"
