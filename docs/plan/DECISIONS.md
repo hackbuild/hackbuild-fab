@@ -340,6 +340,10 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-284 | spindle-r2 goldens pinned at epoch 315532800 | decided | Testing, docs, milestones, registry |
 | D-285 | The four owner calls of 2026-10-14 verified independently | decided | Testing, docs, milestones, registry |
 | D-286 | M10-T01 legacy copies stay out of git; the folders commit their README and SHA256SUMS | decided | Testing, docs, milestones, registry |
+| D-287 | access.pressTargetN tier is inferred, not computed | decided | Canons, reference, profile, catalog |
+| D-288 | coin mass at vendor tier from a search excerpt | decided | Canons, reference, profile, catalog |
+| D-289 | pressBandPct ties to modulusSpreadPct | decided | Canons, reference, profile, catalog |
+| D-290 | no lineage row for profile constants | decided | Canons, reference, profile, catalog |
 
 ## House rules and process
 
@@ -3541,6 +3545,50 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. The M10-T01 commit holds the ten `designs/<id>/legacy/` folders as their lineage README.md and SHA256SUMS only. The 115 copied files (66 MB, measured, owner slicer saves among them) stay on the owner's disk, named one per line in a `.gitignore` block that `tools/legacy/held.mjs` reads; the canonical copies are in `fab-knowledge:originals/`. Legacy files tracked before stay tracked until their readers move (PLAN.md section 5, rails item R1-rails-public-11). A test that reads a held copy reports not run when the copy is absent. `reference/test/legacy-embedded.test.ts` scans tracked legacy files only, since the notices cover what the repo publishes. |
 | Rationale | PLAN.md section 5 moves the legacy copies to the private archive and leaves the history rewrite to the owner; a committed copy stays in public history until that rewrite. Holding the files out is reversible (commit them later); committing them is not. |
 | Evidence | `git diff --cached --numstat` lists 0 binary rows after the change (measured). Suites one workspace at a time with the copies present, and the same suites in a worktree built from the commit tree without them, logged in `.hbf-notes/r1/health/` and `.hbf-notes/r1/m10ci/` (computed, 2026-10-20). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-287 access.pressTargetN tier is inferred, not computed
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The `access.pressTargetN` profile row, 1.47 N, is tier inferred with method derived (R1-flagship-access-switch-01). |
+| Rationale | TIERS has no computed tier. The g to N conversion is exact (150 g times 9.80665 m/s2 is 1.471 N, computed), but its input, the owner's 150 g target, is a design target and not a measurement, so the row takes the lowest tier of its inputs. |
+| Evidence | `spec/ids.ts` line 217: verified, measured, vendor, community, inferred. `fab-knowledge:plan-v5/old-skills-scenarios.md` line 17 names the 150 g press. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-288 coin mass at vendor tier from a search excerpt
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `coupon.coinMassG` is 5.0 g at tier vendor, method datasheet, citing the US Mint coin specifications URL. The row source says the value was read through a search excerpt after a direct fetch returned HTTP 403; tolerance unknown. |
+| Rationale | The 5.000 g figure appears on several US Mint pages in the excerpt. No page was fetched directly, so the owner can lower the tier or re-read the page. |
+| Evidence | Builder WebFetch of the usmint.gov coin specifications and nickel pages: HTTP 403, 2026-10-20 (reported by the builder, not rerun by the integrator). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-289 pressBandPct ties to modulusSpreadPct
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `access.pressBandPct` is 20 percent, matching `click.modulusSpreadPct`; the row source says so. The band is 1.18 to 1.76 N, or 120 to 180 g (computed). |
+| Rationale | The brief gives 20 percent. While the PETG modulus is only a working value (1900 MPa, inferred), a band narrower than the modulus spread could not be held by the drawn point alone. |
+| Evidence | `.hbf-notes/r1/briefs/flagship-access-switch.md` scout finding 2: 1500 and 2200 MPa at l 28, t 0.55 give 125 and 183 g (computed). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-290 no lineage row for profile constants
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The six R1-flagship-access-switch-01 rows in `packages/profile/data/constants.json` add no `lineage.json` row; each row names its source inline. |
+| Rationale | No code or file was ported. Existing `click.*` rows cite originals inline without lineage rows. |
+| Evidence | `constants.json` `click.rigidSpanMin` source text; `lineage.json` has no profile rows. |
 | Supersedes | new |
 | Milestone | none |
 
