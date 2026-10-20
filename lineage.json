@@ -1987,6 +1987,16 @@
     "dest": "reference/copper/fret/legacy/run-2026-10-04.txt"
   },
   {
+    "id": "geom.profile-corner/tenon-src",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/tenon/files/src/src/part2.js",
+    "sha256": "ac5f68c3ac6454a3f500a2c941786090ac5fbb5436fc92b2e8155767432d8003",
+    "fixes": [
+      "buildTip circular fillet (part2.js lines 414 to 418), the flat face then n points on a quarter circle of radius rf to the rim, ported to packages/geom/src/profile-corner.ts roundCorner for a corner of any angle, cos and sin from the D-175 table; packages/geom/test/profile-corner.test.ts holds the arc to its tangent circle and the profile area to the closed form (R1-engine-07)"
+    ],
+    "dest": "packages/geom/src/profile-corner.ts"
+  },
+  {
     "id": "gib.parts/gib-4",
     "kind": "canonical",
     "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/gib/files/src/src/part2.js",
@@ -3361,6 +3371,16 @@
     "dest": "reference/fit/ogee16-r16p/build.ts"
   },
   {
+    "id": "ogee16.printed/geom-profile-chamfer",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/ogee16/files/src/source/printed.scad",
+    "sha256": "b0631eb717ffc0381dc605ca79cab3f5036ca03a4ba935093c982f784e43d42f",
+    "fixes": [
+      "knob_hub root fillet (printed.scad lines 318 to 321), a cone d1 HUB_D + 3 to d2 HUB_D over 1.5 at the plate to hub joint, ported to packages/geom/src/profile-corner.ts chamferCorner as a flat set back c along both legs of a revolve profile corner (R1-engine-07)"
+    ],
+    "dest": "packages/geom/src/profile-corner.ts"
+  },
+  {
     "id": "ogee16.printed/m02-proud-head",
     "kind": "copy",
     "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/ogee16/files/src/source/printed.scad",
@@ -3369,6 +3389,16 @@
       "proud-head fixture: in a_crank_row, a_crank_col and a_crank_latch drive_pin_flush() is replaced by the legacy drive_pin() and the pin_seat() counterbore is not subtracted; include and use paths point at ../../source; rendered by OpenSCAD 2021.01 (M02-T07 step 4)"
     ],
     "dest": "designs/ogee16/legacy/fixtures/proud-head/printed_proud.scad"
+  },
+  {
+    "id": "ogee16.printed/mesh-junction",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/ogee16/files/src/source/printed.scad",
+    "sha256": "b0631eb717ffc0381dc605ca79cab3f5036ca03a4ba935093c982f784e43d42f",
+    "fixes": [
+      "knob_hub root fillet (printed.scad lines 318 to 321) is the plate to hub joint packages/mesh/src/junction.ts junctionFillet fills for any upper outline, as stacked offset rings per layer clipped to the lower top (geometry-strategy.md prototype 3a); the bands come from prismWithEdges, the collar.bench/mesh-edge-stack port (R1-engine-07)"
+    ],
+    "dest": "packages/mesh/src/junction.ts"
   },
   {
     "id": "ogee16.printed/r16p",
