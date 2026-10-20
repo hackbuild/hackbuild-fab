@@ -360,6 +360,10 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-304 | CLAUDE.md lineage bullet rewrapped over three lines | decided | Testing, docs, milestones, registry |
 | D-305 | The cross-file duplicate lineage test accepts either refusal | decided | Testing, docs, milestones, registry |
 | D-306 | Counts drift committed in the R1-rails-registries-03 branch | decided | Testing, docs, milestones, registry |
+| D-307 | Thin-wall bound is 1.5 preset line widths, not PIP's fixed 0.6 mm | decided | Constraints and checks |
+| D-308 | No line width means no thin-wall row | decided | Constraints and checks |
+| D-309 | Rerecorded the click-spring 3mf artifact hash | decided | Testing, docs, milestones, registry |
+| D-310 | Spring thickness and line width carried through the writer input | decided | Architecture |
 
 ## House rules and process
 
@@ -3781,6 +3785,50 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. `node tools/counts.mjs` moved `docs/plan/counts.json` and the PLAN.md Appendix B row because D-295 to D-298 were on main without a counts run. The builder committed both in a separate commit, 0c1010e. PLAN.md is outside the brief's Writes line, but `tools/counts.mjs` writes it; it was not edited by hand. At merge both files conflicted with main's later counts; main's side was taken and `tools/counts.mjs` rerun, with no diff. |
 | Rationale | The task says to commit counts.json when it moves, and counts.mjs writes the PLAN.md table in the same run. |
 | Evidence | `git show 0c1010e`; merge d379850 |
+| Supersedes | new |
+| Milestone | none |
+
+### D-307 Thin-wall bound is 1.5 preset line widths, not PIP's fixed 0.6 mm
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `detect_thin_wall` 1 is written in `Metadata/model_settings.config` when the thinnest spring t on a body is under 1.5 times the preset line width (0.63 mm at ffc5p line width 0.42, computed), as the R1-flagship-access-switch-07 brief specifies. The key never goes in project_settings. |
+| Rationale | PIP's fit note fires at a fixed C.t < 0.6. A bound tied to line width also holds on the 0.25 nozzle preset, where a 0.55 mm beam is two lines. The two bounds differ only for t between 0.60 and 0.63 mm on the 0.4 nozzle. The Flash Studio 1.7.14 process "0.24mm Standard @FF C5" sets detect_thin_wall 0 and wall_generator classic (vendor), so the preset does not handle sub-line walls itself. Whether Flash Studio honours the key per object is unverified until item 08 slices it. |
+| Evidence | `fab-knowledge:originals/pip/files/haft-src/src/model.js` line 540; pip RECORD.md line 350; `packages/profile/data/machines.json` ffc5p_20260819 lineWidth 0.42 (vendor); lineage row `pip.model/haft-9-thin-wall` in `lineage/pip.model.json`; `packages/3mf/test/thin-wall.test.ts`, two mutants killed (builder, computed) |
+| Supersedes | new |
+| Milestone | none |
+
+### D-308 No line width means no thin-wall row
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. When the writer input carries no `lineWidthMm`, `overridesOf` does not write `detect_thin_wall`, even for a spring part. |
+| Rationale | Every physical number comes from profile, so there is no fallback width. The pipeline always passes `preset.lineWidth`, so only hand-built writer inputs skip the row. |
+| Evidence | `packages/3mf/src/overrides.ts` `isOneLineBeam`; test 'writes no thin-wall key without a line width to compare against' in `packages/3mf/test/thin-wall.test.ts` |
+| Supersedes | new |
+| Milestone | none |
+
+### D-309 Rerecorded the click-spring 3mf artifact hash
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. Accepted the new `reference/buttons/click-spring/expected/artifacts.json` 3mf hash (373cfa7c... to d4960e42...). |
+| Rationale | Only the package bytes moved, by the one intended `model_settings.config` line. The mesh hashes, volumes, report and edit goldens are equal, so this is not a geometry move. |
+| Evidence | hbf parity output: build.json, report.json, edit.json equal; artifacts.json moved on 3mf only; with the write removed the old golden matched; the 3mf entries differ only by `<metadata key="detect_thin_wall" value="1"/>` (builder, computed). Integrator rerun on the merged tree: `npx vitest run reference/buttons/click-spring` 4 passed |
+| Supersedes | new |
+| Milestone | none |
+
+### D-310 Spring thickness and line width carried through the writer input
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. Added optional `WriterPart.springTMm`, `BodyEntry.springTMm`, and `lineWidthMm` on `ThreeMfInput`, `BuildConfig` and `CardInput`. The pipeline fills them from spring features (a feature without a body falls back to the part's first body) and from `preset.lineWidth`; the print card lists the key. |
+| Rationale | The writer had no feature data apart from conductor width, so a row in overrides.ts alone could never fire on a real build. This follows the existing widthMm pattern. |
+| Evidence | `packages/pipeline/src/build.ts` threeMfInput; `packages/3mf/src/writer/index.ts` configOf; `npx tsc -b` exit 0 on the merged tree |
 | Supersedes | new |
 | Milestone | none |
 
