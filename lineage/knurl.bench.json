@@ -14,5 +14,15 @@
     "sha256": "90a7f98e708e3fa850e11ce3e58f3ab5fa612b8446f15b5f8a7efbde575e9af1",
     "fixes": [],
     "dest": "designs/knurl/legacy/knurl.html"
+  },
+  {
+    "id": "knurl.bench/knurl-8-edge",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/knurl/files/knurl.html",
+    "sha256": "90a7f98e708e3fa850e11ce3e58f3ab5fa612b8446f15b5f8a7efbde575e9af1",
+    "fixes": [
+      "elephant foot relief (knurl.html lines 1014 to 1015, the first footZ opened by foot) ported to packages/geom/src/edge.ts as the foot profile, size footZ and inset foot, both from the caller's profile (R1-engine-05)"
+    ],
+    "dest": "packages/geom/src/edge.ts"
   }
 ]

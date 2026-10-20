@@ -170,5 +170,15 @@
       "the printed socket (model.js lines 204 to 205, a cup per pin on its net; lines 593 to 595, wall at least 0.45 and pin length at least 2.0) as the S and T leg sockets of reference/keys/access-switch/jack.ts, a slot between two cPLA walls on a column to trace layer 1, and the closed path readout (lines 453 to 460 and 481: lead length over rho along times the trace section plus a post at each end at rho through) as R.leads and R.closed (R1-flagship-access-switch-06)"
     ],
     "dest": "reference/keys/access-switch/jack.ts"
+  },
+  {
+    "id": "pip.model/haft-9-edge",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft-src/src/model.js",
+    "sha256": "95a996433e54d586cdaa970a844ee8f8f02196f80b23ba36983c95ed456d1f34",
+    "fixes": [
+      "chamferTop (model.js lines 624 to 635), a stepped top chamfer one layer per step, ported to packages/geom/src/edge.ts as the chamfer profile d(z); the per layer bands it cut are the R1-engine-06 stack generator's (R1-engine-05)"
+    ],
+    "dest": "packages/geom/src/edge.ts"
   }
 ]

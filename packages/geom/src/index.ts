@@ -27,3 +27,5 @@ export { parseWoff2 } from "./text/woff2.js";
 export type { BrotliDecompress, Font, FontPoint, Glyph } from "./text/woff2.js";
 export { GLYPH_QUAD_POINTS, TEXT_FACES, contourRing, measureText, textFace, textRings } from "./text/outline.js";
 export type { FaceTable, TextPlacement } from "./text/outline.js";
+export { EDGE_PROFILES, edgeExtent, edgeInset, edgeMaxInset, profileInset } from "./edge.js";
+export type { EdgeKind, EdgeProfile, EdgeSpec } from "./edge.js";
