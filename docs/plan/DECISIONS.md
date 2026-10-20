@@ -389,6 +389,12 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-333 | Modulus corners use plus or minus 20 percent of the profile E, not the scout's 1500 and 2200 MPa | decided | Sim, motion, nest, inlay, tools |
 | D-334 | Press claim tier typed as a spec Qualifier | decided | Scope, claim and position |
 | D-335 | No lineage row for the access-switch press claim | decided | Canons, reference, profile, catalog |
+| D-336 | Coupon declares the switch's four material slots | decided | Canons, reference, profile, catalog |
+| D-337 | Coupon tips print in TPU 95A, conductors dropped | decided | Canons, reference, profile, catalog |
+| D-338 | Coupon rung marked by debossed bars, not digits | decided | Canons, reference, profile, catalog |
+| D-339 | Coupon frame takes per-cell host heights | decided | Canons, reference, profile, catalog |
+| D-340 | Coupon cup shape and the coins metric | decided | Canons, reference, profile, catalog |
+| D-341 | Coupon nested under the switch directory | decided | Testing, docs, milestones, registry |
 
 ## House rules and process
 
@@ -4129,6 +4135,72 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. `reference/keys/access-switch/claim.ts` gets no lineage row. |
 | Rationale | claim.ts ports nothing from an original. The band logic is new, and the sim functions it calls already carry lineage (pip.layout/haft-9). |
 | Evidence | The header of `packages/sim/src/fe/click.ts` cites lineage row pip.layout/haft-9. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-336 Coupon declares the switch's four material slots
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `reference/keys/access-switch/coupon/chase.ts` declares petg 1, cpla 2, tpu95 3 and ctpu 4, but only slots 1 and 3 carry bodies (R1-flagship-access-switch-10). |
+| Rationale | `placeArchetype` refuses a placement unless every slot the archetype uses is declared, so a two-slot chase cannot place click-spring-key. The brief's same four slots fits this. |
+| Evidence | check.run with only slots 1 and 3 failed with E_SCHEMA 'add a conductor slot of cpla to the chase materials; click-spring-key needs it' (`packages/archetypes/src/pip/place.ts` line 67, builder run). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-337 Coupon tips print in TPU 95A, conductors dropped
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The coupon `build.ts` remaps each ctpu tip body to tpu95 (slot 3, role flex) and filters out conductor, port and pad features and the R readouts. |
+| Rationale | The brief says force only, printed in PETG and TPU. Keeping the tip as a soft stop holds the spring's travel geometry the same as the switch's. |
+| Evidence | `reference/keys/access-switch/coupon/test/reference.test.ts` asserts the body materials are only petg and tpu95 and that no conductor, port or pad features remain; passes on main after the merge. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-338 Coupon rung marked by debossed bars, not digits
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. Cell N carries N bars (0.6 x 2.6 mm, 0.48 mm deep snapped to a layer, ported from PIP coupon.js lines 37, 163 and 165); the chase help text maps bars to beams. |
+| Rationale | No feature route debosses text on an FDM face (inlay is multi-colour art), and the PIP stroke font (font.js) has no 0, 5 or 6 glyphs. Drawing new glyphs would be reinventing. |
+| Evidence | font.js glyph table lines 7 to 26; the spec feature kinds list no FDM engrave kind; lineage rows in `lineage/pip.coupon.json` and `lineage/pip.font.json`. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-339 Coupon frame takes per-cell host heights
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. Each coupon cell asks the archetype for its own host top, and the frame is one block per cell to that height on a tie plate, rather than one shared top. |
+| Rationale | Each rung then sits in the frame exactly as the switch would at that beam, and the build needs no second archetype call to probe the tallest need. |
+| Evidence | host.top 13.20, 13.68 and 13.92 mm; frame 49.08 x 79.58 mm (computed, committed `expected/build.json`). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-340 Coupon cup shape and the coins metric
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The cup is a loose PETG revolve with a cone socket at profile overhang.maxDeg plus half of access.paddleGuideClr as clearance. Its inside diameter is a chase param (24 mm default) because no coin diameter row exists in profile. rung.N.coins is peak g over coupon.coinMassG as the brief defines it; cup.massG is reported separately and not subtracted. |
+| Rationale | Self-centring with no support and no physical number typed in. Preload is reported, never subtracted silently (brief 02 rule). |
+| Evidence | cup.massG 6.287 g, 1.26 coins (computed); mesh volume 4942.65 mm3 at 1.27 g/cm3 gives 6.277 g (computed, 64-segment faceting); cup.lift 4.736 mm, more than every rung's contact travel (test). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-341 Coupon nested under the switch directory
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The coupon lives at `reference/keys/access-switch/coupon` as the brief names, with its own entry in root `tsconfig.json`. |
+| Rationale | The brief's Files line. The cost is that the depth-2 reference walkers (metric-gates builds.json, project graph) do not list it, so those suites do not cover the coupon. |
+| Evidence | `packages/checks/test/metric-gates.test.ts` chases() reads reference/<area>/<id> only; `npx tsc -b` exit 0 on main after the merge type-checks the coupon. |
 | Supersedes | new |
 | Milestone | none |
 
