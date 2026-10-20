@@ -32,10 +32,12 @@ export const SELECTOR_ROUTES = {
 
 /**
  * Command field renames on the MCP side: layout_solve carries nest.pack
- * `mode` as `nestMode`, so no nest field reads as a selector (McpToolIO).
+ * `mode` as `nestMode` and chase_bake carries chase.bake `mode` as
+ * `bakeMode`, so no command field reads as a selector (McpToolIO).
  */
 export const FIELD_RENAMES: { readonly [N in CommandName]?: Readonly<Record<string, string>> } = {
   "nest.pack": { nestMode: "mode" },
+  "chase.bake": { bakeMode: "mode" },
 };
 
 /** One served tool: its spec row, the covered commands with a CommandDef, and the routes the selector takes. */

@@ -297,6 +297,28 @@ export async function bundleBuild(spec, base, m) {
   return { code, own, inlined };
 }
 
+/**
+ * Network URLs the markup and stylesheets load at open (D-129): src,
+ * srcset and poster attributes and CSS url(), outside script blocks.
+ * Script text is left to the smoke run's network count, since libraries
+ * carry URL strings (namespaces, docs) they never fetch. Anchors navigate
+ * on a click and are not requests.
+ */
+export function offFileRequests(text) {
+  const markup = text.replace(/(<script\b[^>]*>)[\s\S]*?(<\/script>)/gi, '$1$2');
+  const net = /^\s*["']?\s*((?:https?:)?\/\/[^"'\s)>,]+)/i;
+  const found = [];
+  for (const m of markup.matchAll(/\s(?:src|srcset|poster)\s*=\s*(["']?[^\s>]+)/gi)) {
+    const hit = net.exec(m[1]);
+    if (hit) found.push(hit[1]);
+  }
+  for (const m of markup.matchAll(/url\(([^)]*)\)/gi)) {
+    const hit = net.exec(m[1]);
+    if (hit) found.push(hit[1]);
+  }
+  return found;
+}
+
 const UI_SHELL = (title) =>
   '<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n' +
   '<meta name="viewport" content="width=device-width, initial-scale=1">\n' +
@@ -383,6 +405,8 @@ export async function bake(manifestPath, opts = {}) {
   for (let x = link.exec(text); x; x = link.exec(text)) {
     if (/^(?:[a-z]+:)?\/\//i.test(x[1]) && !x[1].startsWith('data:')) fail(`output links off the file: ${x[1]}`);
   }
+  const off = offFileRequests(text);
+  if (off.length > 0) fail(`output requests off the file: ${off.slice(0, 3).join(', ')}. inline the resource or drop it.`);
   if (text.includes(REPO)) fail('output holds an absolute repo path');
 
   const licences = licenceManifest(inlined, opts.licences ?? readTable(REPO));

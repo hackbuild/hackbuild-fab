@@ -67,6 +67,10 @@ three 0.186.1
   licence: MIT
   copyright: Copyright © 2010-2026 three.js authors
 
+zod 4.6.5
+  licence: MIT
+  copyright: Copyright (c) 2025 Colin McDonnell
+
 Licence texts, each once
 
 Apache-2.0
