@@ -32,7 +32,7 @@
     "reference": ["spec", "profile", "catalog", "geom", "mesh", "3mf", "sim", "circuit", "copper", "board", "nest", "inlay", "motion", "wiring", "constraints", "mechanisms", "archetypes"],
     "knowledge": ["spec", "profile", "catalog", "geom", "mesh", "3mf", "sim", "circuit", "copper", "board", "nest", "inlay", "motion", "wiring", "constraints", "mechanisms", "archetypes"],
     "chase": ["spec", "profile", "catalog", "geom", "mesh", "3mf", "sim", "circuit", "copper", "board", "nest", "inlay", "motion", "wiring", "constraints", "mechanisms", "archetypes", "checks", "project", "reference"],
-    "pipeline": ["spec", "profile", "catalog", "geom", "mesh", "3mf", "circuit", "inlay", "mechanisms", "archetypes", "checks"],
+    "pipeline": ["spec", "profile", "catalog", "geom", "mesh", "3mf", "sim", "circuit", "inlay", "mechanisms", "archetypes", "checks"],
     "ui-core": ["spec", "profile", "catalog", "geom", "mesh", "3mf", "sim", "circuit", "copper", "board", "nest", "inlay", "motion", "wiring", "constraints", "mechanisms", "archetypes", "checks", "project", "reference", "knowledge", "chase"],
     "ui": ["spec", "checks", "ui-core"],
     "link": ["spec", "profile", "catalog", "motion", "checks"],

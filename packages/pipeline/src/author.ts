@@ -3,9 +3,9 @@
 // snapshot the parent sends, or in a baked bench page (D-264); kernel
 // stage contexts read machineView. Every value it returns is plain data,
 // so the draft crosses IPC unchanged. Author.arch places from the
-// archetype registry as loaded; core registers sim's click solver on it
-// (core/src/canon.ts) and a page registers none, so a click archetype
-// refuses there.
+// archetype registry as loaded; registerSolvers (./solvers.ts) puts
+// sim's click solver on it, called by core at load (core/src/canon.ts)
+// and by createPageBuild in a page.
 
 import { qualify, type Author, type BuildWarning, type Chase, type FitClassId, type MachineView, type Metric, type ParamField, type Ring, type Vec2 } from "@hackbuild/spec";
 import { layerIndex, layerTop, snapLayer, type SkeletonLookup } from "@hackbuild/profile";
