@@ -1,0 +1,12 @@
+[
+  {
+    "id": "ogee16.scad/r16p",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/ogee16/files/src/source/ogee16.scad",
+    "sha256": "4afd9001c421371385eef257060914a6f578b30c21e62fb51064e90dc4f3b078",
+    "fixes": [
+      "ported to packages/mechanisms/src/bodies/ogee-latch.ts, as its header cites ogee16.scad (packages/mechanisms/src/bodies/ogee-latch.ts line 2: \"originals/ogee16/files/src/source/ogee16.scad: the rod p_rod() (lines 68\"); recorded by the M06 and M08 integration"
+    ],
+    "dest": null
+  }
+]

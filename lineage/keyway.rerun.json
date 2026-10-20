@@ -1,0 +1,13 @@
+[
+  {
+    "id": "keyway.rerun/2026-10-04",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/keyway/files/rerun/run-2026-10-04.txt",
+    "sha256": "a66cca838de61686d066b8de21b4da169073c4db1364cfc79fbd4c4938843044",
+    "fixes": [
+      "tools/py/copper/test_oracle.py: the gate list, verdicts and order the oracle run must equal, numbers masked (M05-T13)",
+      "reference/copper/keyway/test/parity.test.ts holds the packages/copper port's 45 gate lines equal to these, the clearance line's pair checked as a member of the port's tie (M05-T14)"
+    ],
+    "dest": "reference/copper/keyway/legacy/run-2026-10-04.txt"
+  }
+]

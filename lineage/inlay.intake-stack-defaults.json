@@ -1,0 +1,10 @@
+[
+  {
+    "id": "inlay.intake-stack-defaults/badge-replicator",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/badge-replicator/src/stores/capture.ts",
+    "sha256": "acc5b8858e307d2842c6d2b79a4fc90cc6dede5f8ae767ceb02110e8f858f61e",
+    "fixes": [],
+    "dest": "packages/inlay/src/intake/stack.ts"
+  }
+]

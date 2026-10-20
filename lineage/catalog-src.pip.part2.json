@@ -1,0 +1,58 @@
+[
+  {
+    "id": "catalog-src.pip.part2/m08",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/pip-controller/bench/part2.js",
+    "sha256": "e1cf608f117d655ca6e4e95e7075c2669b2e8a77767b1fd345a548c1e612496c",
+    "fixes": [],
+    "dest": "packages/wiring/src/svg.ts"
+  },
+  {
+    "id": "catalog-src.pip.part2/pip-controller-legacy",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/bench/part2.js",
+    "sha256": "e1cf608f117d655ca6e4e95e7075c2669b2e8a77767b1fd345a548c1e612496c",
+    "fixes": [],
+    "dest": "designs/pip/legacy/bench/part2.js"
+  },
+  {
+    "id": "catalog-src.pip.part2/ui-core-bench-core",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/bench/part2.js",
+    "sha256": "e1cf608f117d655ca6e4e95e7075c2669b2e8a77767b1fd345a548c1e612496c",
+    "fixes": [
+      "rev, built, the 320 ms schedule, runBuild with BUILDING and QUEUED, ensureMesh and blankState (part2.js lines 8 to 15, 46 to 92) ported to packages/ui-core/src/bench/core.ts; a thrown build keeps the previous model where line 82 set MODEL to null (M09-T03 step 3)"
+    ],
+    "dest": "packages/ui-core/src/bench/core.ts"
+  },
+  {
+    "id": "catalog-src.pip.part2/ui-core-bench-hook",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/bench/part2.js",
+    "sha256": "e1cf608f117d655ca6e4e95e7075c2669b2e8a77767b1fd345a548c1e612496c",
+    "fixes": [
+      "BENCH getters over rev, built, busy, state set replaces and rebuilds, exportBytes base64 over 0x8000-byte slices (part2.js lines 405 to 428) ported to packages/ui-core/src/bench/hook.ts; ready turns true after the first build settles, settled() added, an unknown kind rejects with unknown export kind: <k> where PIP read an undefined blob, state writes clamp and log (M09-T11, D-214)"
+    ],
+    "dest": "packages/ui-core/src/bench/hook.ts"
+  },
+  {
+    "id": "catalog-src.pip.part2/ui-core-bench-merge",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/bench/part2.js",
+    "sha256": "e1cf608f117d655ca6e4e95e7075c2669b2e8a77767b1fd345a548c1e612496c",
+    "fixes": [
+      "loadDesign merge onto fresh defaults with retired keys dropped (part2.js lines 188 to 197) ported to packages/ui-core/src/bench/merge.ts, each dropped key now logged by pointer (M09-T03 step 7)"
+    ],
+    "dest": "packages/ui-core/src/bench/merge.ts"
+  },
+  {
+    "id": "catalog-src.pip.part2/ui-core-bench-undo",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/bench/part2.js",
+    "sha256": "e1cf608f117d655ca6e4e95e7075c2669b2e8a77767b1fd345a548c1e612496c",
+    "fixes": [
+      "HIST snapshot 450 ms, identical skipped, 80 deep, undo takes a pending snapshot first (part2.js lines 31 to 43) ported to packages/ui-core/src/bench/undo.ts"
+    ],
+    "dest": "packages/ui-core/src/bench/undo.ts"
+  }
+]

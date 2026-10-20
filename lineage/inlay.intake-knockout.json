@@ -1,0 +1,10 @@
+[
+  {
+    "id": "inlay.intake-knockout/badge-replicator",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/badge-replicator/src/lib/knockout.ts",
+    "sha256": "44afaeaf8a03ffbbafa92a5916ac263a1af7e81f91bd65bf0de879b60e1c43df",
+    "fixes": [],
+    "dest": "packages/inlay/src/intake/knockout.ts"
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "id": "sprue.print-card/design-legacy",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/sprue/files/print-card.txt",
+    "sha256": "0d0e12011d9f2776a301b912d1b5d194e894f22bc694fc6c503258b74becb4da",
+    "fixes": [],
+    "dest": "designs/sprue/legacy/print-card.txt"
+  },
+  {
+    "id": "sprue.print-card/print-card-txt",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/sprue/files/print-card.txt",
+    "sha256": "0d0e12011d9f2776a301b912d1b5d194e894f22bc694fc6c503258b74becb4da",
+    "fixes": [],
+    "dest": null
+  }
+]

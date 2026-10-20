@@ -1,0 +1,28 @@
+[
+  {
+    "id": "pintle.parts/derrick-bundle",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/derrick/files/src/pintle_parts.py",
+    "sha256": "5280a22350a488e721d411504a562dec2007f421129e5f7462e055cb2b45a6b1",
+    "fixes": [],
+    "dest": null
+  },
+  {
+    "id": "pintle.parts/r4",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pintle/files/r4/pintle_parts.py",
+    "sha256": "ee0fa821585c4398d5586835399a431e55182f5bda202e3e2f611d00cbb7f943",
+    "fixes": [],
+    "dest": null
+  },
+  {
+    "id": "pintle.parts/r6",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pintle/files/src/pintle_parts.py",
+    "sha256": "5280a22350a488e721d411504a562dec2007f421129e5f7462e055cb2b45a6b1",
+    "fixes": [
+      "bodies snap_check.py intersects exported as STL by tools/py/derrick/export_bodies.py to designs/derrick/legacy/capture/ (M04-T06)"
+    ],
+    "dest": null
+  }
+]

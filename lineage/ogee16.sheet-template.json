@@ -1,0 +1,12 @@
+[
+  {
+    "id": "ogee16.sheet-template/r16p",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/ogee16/files/src/source/sheet_template.html",
+    "sha256": "6c841010b1a8f9f0ae665a1e522c59c07b7b89b23961ae6172d87bafa615c08b",
+    "fixes": [
+      "dxf() of lines 236 to 262 ported into packages/nest/src/dxf.ts for its group order (handle before AcDbEntity, layer after it) and the closed flag with the first vertex repeated; the header it wrote held $INSUNITS and $EXTMIN, $EXTMAX only, and the port takes the AC1024 skeleton of COTTER instead (cotter.kit/r5)"
+    ],
+    "dest": "packages/nest/src/dxf.ts"
+  }
+]

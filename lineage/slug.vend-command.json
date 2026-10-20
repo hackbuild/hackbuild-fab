@@ -1,0 +1,12 @@
+[
+  {
+    "id": "slug.vend-command/slug-12",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/slug/files/slug.html",
+    "sha256": "2d09238c27d5ca4bf023eeee44939b1500470ad2058822b8d0add48ec9bf3241",
+    "fixes": [
+      "btnVend (lines 965 to 969) commits targetSteps when pressed; the frame loop (lines 1206 to 1225) advanced the motor by the frame's dt, so the frames drawn decided a vend; packages/sim/src/commit.ts commitAtCommand steps the fixed DT to completion and frames only draw (M02-T11 step 8, 03-diagnostics 'nothing ever latches under headless')"
+    ],
+    "dest": "packages/sim/src/commit.ts"
+  }
+]

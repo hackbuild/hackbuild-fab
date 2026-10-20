@@ -1,0 +1,10 @@
+[
+  {
+    "id": "sparger-w.thread/sparger-r",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/sparger-w/files/source/sparger_r.py",
+    "sha256": "8ac1cc90de33499fb454dfff12ee68b7180c69ca3385688d0d8d28fe8f4b24af",
+    "fixes": [],
+    "dest": null
+  }
+]

@@ -1,0 +1,15 @@
+[
+  {
+    "id": "checks.seed/hbf-handoff",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/plan-to-refine/handoff/hbf/seed/checks.seed.json",
+    "sha256": "23cd8c372a2586c824f545c3f067528c14fb570b3a03a86e9868917c4cf1133d",
+    "fixes": [
+      "CHK-NET-05 to 2.0.0 (M01-T08 step 7, CHECKS.md 7.5): the per-MCU pullup interval title, target kind port (was conductor), needs circuit and profile, legal interval, constraint circuit/pullup-low-read, status entered pending M05, origin failure rewritten from the BOSS 50 kohm and 0.5 VIO rerun (verified-claims C5)",
+      "CHK-FIT-04, CHK-SHT-04, CHK-LNT-03 and CHK-LNT-04 1.0.1 to 2.0.0 (M04-T13, CHECKS.md 7.8): prose records skip, CHK-FIT-04 reads a params source only as a params file, load_params, an imported P or a PARAMS table, CHK-LNT-04 reads a code shaped hidden assignment",
+      "CHK-SHT-04 2.0.0 to 2.0.1 (integration after M06 and M08, 2026-10-10): a number followed by a multiplication derives the kerf from a named quantity (CHK-SHT-11 kerf = 2 * burn) and is no typed kerf; a bare number stays a fail",
+      "CHK-KEY-04 2.0.0 to 2.0.1 and CHK-SHT-11 1.0.0 to 1.0.1 (integration after M06 and M08, 2026-10-10): the beam the window was queried on (l, t, w, sw) and the finger pitch and kerf ride in extra, so every number the constraint prints traces to a field (M04-T05)"
+    ],
+    "dest": "packages/checks/seed/checks.seed.json"
+  }
+]

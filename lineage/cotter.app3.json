@@ -1,0 +1,12 @@
+[
+  {
+    "id": "cotter.app3/r5",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/cotter/files/cotter-src/src/app3.js",
+    "sha256": "a1262092adbfe0ccfeebc1761c5104d8759b1d592116824caace9b4f294e0cec",
+    "fixes": [
+      "buildKit's file names ported into core/src/exporters/names.ts (M07-T14): uniq of line 73 (a second use of a name takes -2, -3; here per export and on the stem, so the extension stays last), the part form xNN_<slug> cut at 56 characters of line 75, the plate form plate-NN-of-NN_<group> of line 81 and the laser form xNN_<slug>_<T>mm-<material> of line 83, one stock per sheet so one material per name; the 3d repo's _xN suffix is read by quantityOf as a legacy alias and never written"
+    ],
+    "dest": "core/src/exporters/names.ts"
+  }
+]

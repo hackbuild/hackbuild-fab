@@ -1,0 +1,18 @@
+[
+  {
+    "id": "collar.export/example-preset",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/collar/files/example-hackbuild-coin.3mf",
+    "sha256": "922e43109c4ceeada265cda661a5280ffc7e03c1b3767a9fae71e5e64e2c31b4",
+    "fixes": [],
+    "dest": null
+  },
+  {
+    "id": "collar.export/harvest",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/collar-coin/outputs/collar/example-hackbuild-coin.3mf",
+    "sha256": "922e43109c4ceeada265cda661a5280ffc7e03c1b3767a9fae71e5e64e2c31b4",
+    "fixes": [],
+    "dest": null
+  }
+]

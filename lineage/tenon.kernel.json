@@ -1,0 +1,10 @@
+[
+  {
+    "id": "tenon.kernel/part2",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/tenon/files/src/src/part2.js",
+    "sha256": "ac5f68c3ac6454a3f500a2c941786090ac5fbb5436fc92b2e8155767432d8003",
+    "fixes": [],
+    "dest": null
+  }
+]

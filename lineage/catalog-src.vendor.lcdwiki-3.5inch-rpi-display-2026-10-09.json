@@ -1,0 +1,10 @@
+[
+  {
+    "id": "catalog-src.vendor.lcdwiki-3.5inch-rpi-display-2026-10-09/m08",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/m08-catalog/datasheets/lcdwiki-3.5inch_RPi_Display-2026-10-09.html",
+    "sha256": "f7dfa66bbe17df4925b47a8760f3341c2e6be056c94888427b541f73c879ffa0",
+    "fixes": [],
+    "dest": null
+  }
+]

@@ -1,0 +1,30 @@
+[
+  {
+    "id": "baffle.model/r2-21",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/baffle-r2/files/src/model.js",
+    "sha256": "97239a2f2459c32d17630532cb4a3d1c28fa73a65e2677eea238ce921331f95b",
+    "fixes": [],
+    "dest": null
+  },
+  {
+    "id": "baffle.model/r3-36",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/baffle-r3/files/src/model.js",
+    "sha256": "bda7af8d66f52e9dec1ba3956e2dc8e54d2dc6e62bf679b12fb5de580633636f",
+    "fixes": [
+      "rp2040zero_r1 board row and four-finger collet (model.js BOARDS from line 27, tile from line 770)"
+    ],
+    "dest": null
+  },
+  {
+    "id": "baffle.model/r3-36-collet",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/baffle-r3/files/src/model.js",
+    "sha256": "bda7af8d66f52e9dec1ba3956e2dc8e54d2dc6e62bf679b12fb5de580633636f",
+    "fixes": [
+      "tile socket checks (model.js lines 993 to 997: interference 0.08 to 0.2, at least 3 fingers, axial squeeze 0.06 to 0.2) ported to packages/checks/src/fit/fit07.ts as CHK-FIT-07 over profile constants fit.collet.*; slider swing check (lines 1005 to 1012, at least 30 percent) ported to packages/checks/src/net/net30.ts as CHK-NET-30 over profile constant read.swing.minPercent (M05-T19)"
+    ],
+    "dest": "packages/checks/src/fit/fit07.ts"
+  }
+]

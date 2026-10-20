@@ -1,0 +1,75 @@
+[
+  {
+    "id": "washer.app/harvest",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/washer/files/history/laser-rig-2026-07-30-harvest.html",
+    "sha256": "1b4f11d80a37b4882dccd9f1ae6a70705c270a962bd066f8cabca06ff7fd8ace",
+    "fixes": [],
+    "dest": null
+  },
+  {
+    "id": "washer.app/laserriggg",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/washer/files/rig/laser-rig.html",
+    "sha256": "38a2c04770ba85a9afea7aa8ff4b988174d2246bb7ce8657851c5aefce411f9c",
+    "fixes": [
+      "hermite segments, tangent clamp, EMA loss stretch, starvation gate, TX ring, credit flow over the harvest copy (washer record section 1)",
+      "densify, degPerMm, resolutionSlew, resolutionMM and planChainPen (lines 4096 to 4308) ported to packages/motion/src/planners/washer-mm.ts with CFG, PLAN and SERVO from profile rows washer.* and servo.<preset>.*; the canonical resolutionSlew floors PLAN.steps at 0.25 where the harvested copy (row washer.app/m07-legacy) floors it at 1, and every other planner function is the same text; on the harvested numbers the 60 mm square equals packages/motion/records/washer-plan.json within 1e-9 relative, on the canonical defaults it gives the drive record's 1.1703 s and peak 260 (packages/motion/test/planners.test.ts, M07-T12); each speed names its ceiling, the per point form of smoothReadout (line 4532)",
+      "usToDeg, degToUs, degToUsF, vOff, ik, fkCalib, fk, calibMap and wallToAngles (lines 2190 to 2279, 3623 to 3644, 5241) ported to packages/motion/src/kinematics/washer.ts; the bilinear calibration readout in packages/motion/src/calibrate.ts equals the harvested page's own functions run by designs/washer/legacy/tools/extract-cal.mjs (packages/motion/records/washer-cal.json)",
+      "emitSegments on linear playback with withGates, nextGate, sampleAt, uOfWall and playbackError (lines 4415 to 4470, 5243 to 5409) ported to packages/motion/src/serialise.ts washerSegments, run to the end of one planned chain with no transport, credit window or packet framing (M13); the duration rounding residual is carried"
+    ],
+    "dest": null
+  },
+  {
+    "id": "washer.app/m07-canonical-copy",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/washer/files/rig/laser-rig.html",
+    "sha256": "38a2c04770ba85a9afea7aa8ff4b988174d2246bb7ce8657851c5aefce411f9c",
+    "fixes": [
+      "byte identical to the canonical row washer.app/laserriggg, stored as the one member laser-rig.html of designs/washer/legacy/laser-rig-canonical.zip (dated 1980-01-01, zip sha256 35726c4d01c2a94bf36a8a229a1e72045dc46f3eb5efd506cc61bff7f62e0648) since its line 1852 writes an em dash as an HTML entity",
+      "lets packages/motion/test/planners.test.ts check the cited profile lines in CI, where the originals tree is absent (M07 audit)"
+    ],
+    "dest": "designs/washer/legacy/laser-rig-canonical.zip"
+  },
+  {
+    "id": "washer.app/m07-drive-record",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/washer/drive/plan-square-2026-10-05.json",
+    "sha256": "08404263f86d3d5f52e73327febc9e2a78d3c6400f0c7d5e9e2ea2bb9765a3b1",
+    "fixes": [
+      "the canonical and harvest pages' own planChainPen on the 60 mm square, written by originals/washer/drive/plan-square.cjs in Chrome on 2026-10-05; copied byte identical so the canonical defaults check in packages/motion/test/planners.test.ts runs in CI (M07 audit)"
+    ],
+    "dest": "designs/washer/legacy/plan-square-2026-10-05.json"
+  },
+  {
+    "id": "washer.app/m07-kin",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/washer/files/rig/laser-rig.html",
+    "sha256": "38a2c04770ba85a9afea7aa8ff4b988174d2246bb7ce8657851c5aefce411f9c",
+    "fixes": [
+      "the M07-T10 port of usToDeg to wallToAngles (lines 2190 to 2279, 3623 to 3644, 5241); listed on row washer.app/laserriggg"
+    ],
+    "dest": "packages/motion/src/kinematics/washer.ts"
+  },
+  {
+    "id": "washer.app/m07-legacy",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/washer/outputs/laser-rig.html",
+    "sha256": "1b4f11d80a37b4882dccd9f1ae6a70705c270a962bd066f8cabca06ff7fd8ace",
+    "fixes": [
+      "kept over the canonical laserriggg page because the M07 WASHER golden was taken from it; the canonical page plans the same square with new defaults (designs/washer/legacy/README.md)",
+      "stored byte identical as the one member laser-rig.html of designs/washer/legacy/laser-rig.zip, since its line 1610 writes an em dash as an HTML entity, a dash the voice lint blocks in a plain file"
+    ],
+    "dest": "designs/washer/legacy/laser-rig.zip"
+  },
+  {
+    "id": "washer.app/m07-planner",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/washer/files/rig/laser-rig.html",
+    "sha256": "38a2c04770ba85a9afea7aa8ff4b988174d2246bb7ce8657851c5aefce411f9c",
+    "fixes": [
+      "the M07-T12 port of densify, degPerMm, resolutionSlew, resolutionMM and planChainPen (lines 4096 to 4308); listed on row washer.app/laserriggg"
+    ],
+    "dest": "packages/motion/src/planners/washer-mm.ts"
+  }
+]

@@ -1,0 +1,30 @@
+[
+  {
+    "id": "gusset.bench/m07-legacy",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/gusset (10).html",
+    "sha256": "a29d4f27b07376941230d21638b989f8ce5698ce0ec3ac2c04f2177e24b8ed97",
+    "fixes": [],
+    "dest": "designs/gusset/legacy/gusset-10.html"
+  },
+  {
+    "id": "gusset.bench/nest-orders",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/gusset/files/gusset-v16.html",
+    "sha256": "a29d4f27b07376941230d21638b989f8ce5698ce0ec3ac2c04f2177e24b8ed97",
+    "fixes": [
+      "nest() and nestOnce() of lines 1264 to 1313 ported into packages/nest/src/maxrects.ts: the five comparators of lines 1265 to 1271 as SORT_ORDERS, and nestOnce's sheet choice (the open bin whose best fit has the smallest short leftover, first on a tie, else a new bin) as the multi-sheet loop of maxrectsPack",
+      "the free-rectangle search, split and prune take OGEE16 packOne's form (row ogee16.packone/r16p): no 1e-6 mm fit slack (line 1285) and packOne's sums, since float rounding breaks ties between free rectangles; on the OGEE16 R16 lasercut set the height order then gives 3 sheets where GUSSET gives 2, and the bin count and winning order agree (packages/nest/test/gusset-orders.test.ts, computed)",
+      "nest()'s choice of the fewest bins with ties to the first order moves to packages/nest/src/sheet-loop.ts, which adds the shelf packer as a sixth candidate and lets a candidate that leaves more copies oversize lose first; the unused last-bin fill u of line 1273 is dropped"
+    ],
+    "dest": "packages/nest/src/maxrects.ts"
+  },
+  {
+    "id": "gusset.bench/v16",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/gusset/files/gusset-v16.html",
+    "sha256": "a29d4f27b07376941230d21638b989f8ce5698ce0ec3ac2c04f2177e24b8ed97",
+    "fixes": [],
+    "dest": null
+  }
+]

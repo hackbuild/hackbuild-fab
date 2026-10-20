@@ -1,0 +1,10 @@
+[
+  {
+    "id": "davit.sweep/r4",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/davit/files/src/sweep.py",
+    "sha256": "d6d1162526d5619b4924521a05845bc47303f5fd394917f903bd2063511d21eb",
+    "fixes": [],
+    "dest": "designs/davit/legacy/r4/sweep.py"
+  }
+]

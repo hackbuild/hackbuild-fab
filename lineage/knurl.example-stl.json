@@ -1,0 +1,10 @@
+[
+  {
+    "id": "knurl.example-stl/bench-outputs",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/knurl/outputs/knurl/examples/knurl_default_stl.zip",
+    "sha256": "0132c744e569083cfdf552e683def15a026907263abdae19aacaed953fef71b0",
+    "fixes": [],
+    "dest": "designs/knurl/legacy/examples/knurl_default_stl.zip"
+  }
+]

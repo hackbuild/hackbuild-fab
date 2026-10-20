@@ -1,0 +1,14 @@
+[
+  {
+    "id": "toggle.build/part2d",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/toggle/files/src/src/part2d.js",
+    "sha256": "1da486e757df5334a0a920dd40cb54ef1d9780a39ffec7c4c919b3635f951523",
+    "fixes": [
+      "assignments (part2d.js lines 118 to 143) ported to packages/copper/src/route/assign.ts, with a guard returning no map when nets outnumber terminals (TOGGLE indexed past the ring); tryRoute and routeSearch (lines 169 to 205, 218 to 260) ported to packages/copper/src/route/search.ts with the plan view as data; the 0.2, 0.6, 0.65, 0.71 and 0.5 mm lengths of lines 171, 176, 197, 229 and 237 are profile constants route.stick.*; parity with packages/copper/test/fixtures/toggle-presets/*.json written by tools/legacy/toggle/dump-route.cjs (M05-T09)",
+      "routeAll cache (lines 207 to 217) ported to packages/copper/src/route/cache.ts: 6 results, newest first, keyed by the RFC 8785 canonical JSON of the whole plan view and the route.stick.* constants (TOGGLE keyed a hand-picked field list) (M05-T09)",
+      "ported to packages/archetypes/src/toggle/solver.ts, as its header cites part2d.js (packages/archetypes/src/toggle/solver.ts line 2: \"presets), ported from originals/toggle/files/src/src: part2d.js\"); recorded by the M06 and M08 integration"
+    ],
+    "dest": "packages/copper/src/route/search.ts"
+  }
+]

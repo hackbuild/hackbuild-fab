@@ -1,0 +1,10 @@
+[
+  {
+    "id": "cotter.app1/r5",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/cotter/files/cotter-src/src/app1.js",
+    "sha256": "eac210b56c906518b758204c1d78922287983d09225b5d1ef95f40654a8159fa",
+    "fixes": [],
+    "dest": null
+  }
+]

@@ -1,0 +1,10 @@
+[
+  {
+    "id": "cotter.laser-fit/r5",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/cotter/files/cotter-src/test/laser_fit.mjs",
+    "sha256": "ea39bc46f5fc31d229c451ae213cdc2524ad0ea0d0f593b893daaed8e7880bec",
+    "fixes": [],
+    "dest": null
+  }
+]

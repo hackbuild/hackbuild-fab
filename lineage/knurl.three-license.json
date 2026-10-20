@@ -1,0 +1,10 @@
+[
+  {
+    "id": "knurl.three-license/npm-0-185-1",
+    "kind": "canonical",
+    "source": "designs/knurl/legacy/three-0.185.1.zip!three@0.185.1/LICENSE",
+    "sha256": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+    "fixes": [],
+    "dest": "designs/knurl/legacy/three-0.185.1.zip!three@0.185.1/LICENSE"
+  }
+]

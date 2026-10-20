@@ -1,0 +1,29 @@
+[
+  {
+    "id": "tang-r6.design4/r6-0",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/tang-r6/files/src/r6_0_04_design.js",
+    "sha256": "28211d4041e8eb81bd7c460abbc6aed32581a054c1a1f7a9574542f3378f7b27",
+    "fixes": [],
+    "dest": null
+  },
+  {
+    "id": "tang-r6.design4/r6-4",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/tang-r6/files/src/04_design.js",
+    "sha256": "43893788df778791f8f309ee1253addfb0248dc9f5fd42495f8809cf8d0ceef0",
+    "fixes": [
+      "peg-to-socket neck and wall-notch USB from r6_2 (04_design.js:406)",
+      "ported to packages/archetypes/src/tang/pot.ts, as its header cites 04_design.js (packages/archetypes/src/tang/pot.ts line 2: \"from originals/tang-r6/files/src/04_design.js lines 194 to 231 (one pot's\"); recorded by the M06 and M08 integration"
+    ],
+    "dest": null
+  },
+  {
+    "id": "tang-r6.design4/r6-4-port-pot",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/tang-r6/files/src/04_design.js",
+    "sha256": "43893788df778791f8f309ee1253addfb0248dc9f5fd42495f8809cf8d0ceef0",
+    "fixes": [],
+    "dest": "packages/archetypes/src/tang/pot.ts"
+  }
+]

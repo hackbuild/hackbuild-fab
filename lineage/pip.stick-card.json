@@ -1,0 +1,10 @@
+[
+  {
+    "id": "pip.stick-card/haft-9",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft-stick-card.txt",
+    "sha256": "7ce4086d0dd0236cb460cfae44e8a776e2f6c23c9a099458eda184f3f26acad1",
+    "fixes": [],
+    "dest": "designs/pip/legacy/original/haft-stick-card.txt"
+  }
+]

@@ -1,0 +1,20 @@
+[
+  {
+    "id": "derrick.build/m07-legacy",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/pintle-derrick/outputs/derrick/src/arm_build.py",
+    "sha256": "204cc173ccaba951a7b690cb029b2ba3a9dcf3600516098bd0e0dee0e623e467",
+    "fixes": [],
+    "dest": "designs/derrick/legacy/arm_build.py"
+  },
+  {
+    "id": "derrick.build/r3",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/derrick/files/src/arm_build.py",
+    "sha256": "204cc173ccaba951a7b690cb029b2ba3a9dcf3600516098bd0e0dee0e623e467",
+    "fixes": [
+      "frames (lines 17 to 55), hardware() and instances() (lines 68 to 107) and torque_table() (lines 139 to 163) ported to packages/motion/src/kinematics/derrick.ts (M07-T10); every number enters through DerrickModel, read from arm_parts, pintle_parts and the part meshes by packages/motion/scripts/derrick_fk_golden.py, which runs lines 1 to 9 and 12 to 164 unedited; the port equals arm_build.py within 1e-9 at the seven POSES (packages/motion/test/derrick-fk.test.ts)"
+    ],
+    "dest": "packages/motion/src/kinematics/derrick.ts"
+  }
+]

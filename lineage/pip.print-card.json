@@ -1,0 +1,18 @@
+[
+  {
+    "id": "pip.print-card/haft-9",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/print-card.txt",
+    "sha256": "4e7f7d22f6a9de7a804a226fba26ce50146e0db309fb2bcedc27d7d9f4b67ca6",
+    "fixes": [],
+    "dest": "designs/pip/legacy/original/print-card.txt"
+  },
+  {
+    "id": "pip.print-card/pip-controller-b137deb",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/print/print-card.txt",
+    "sha256": "62d6ac06d579de12b6c5e952b15815fd0d9881215bc00a9a3dce3d4626c578ac",
+    "fixes": [],
+    "dest": "designs/pip/legacy/print/print-card.txt"
+  }
+]

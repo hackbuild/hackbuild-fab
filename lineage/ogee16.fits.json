@@ -1,0 +1,25 @@
+[
+  {
+    "id": "ogee16.fits/bench-zip",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/ogee16/outputs/ogee16-source.zip",
+    "sha256": "47d6077e0596eb4e9722a0a9f687cb82ec472c7bc031d8d2f61a98266aa94dd5",
+    "fixes": [],
+    "dest": "reference/fit/ogee16-r16p/legacy/fits.stdout.txt"
+  },
+  {
+    "id": "ogee16.fits/r16p",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/ogee16/files/src/source/fits.py",
+    "sha256": "b127b99ecef2d5b6b9256507c206e79975b418d91e2dce5921cefbd9595f082c",
+    "fixes": [
+      "BAND, LOSS and the 1e-9 edge tolerance (lines 25 and 38 to 40, 85) ported as the legacy fit model ogee16-fits-v1 with provenance per band: SLIDE method felt (lines 36 to 37), the rest derived (D-099)",
+      "PSLIDE keyed as the profile class PSLIP with legacyClass PSLIDE (D-100)",
+      "the PR mirror of printed.scad (lines 46 to 50) and the barb literals 0.15, 3.8 and 0.10 (line 62) are chase params of reference/fit/ogee16-r16p, read from one source (knowledge/designs/ogee16.md 4.8)",
+      "the FITS rows (lines 51 to 77) are Part IR metrics emitted by reference/fit/ogee16-r16p/build.ts and bounded through profile/fit-band by fits.table (D-049)",
+      "packages/checks/src/defs/fit/CHK-FIT-01.ts: the in-band rule of fits.py as M01-T09 ported it to fits.table; fitRowsOf is the one loop fits.table calls",
+      "reference/fit/ogee16-r16p/test/reference.test.ts: holds the port to fits.py stdout (legacy/fits.stdout.txt, legacy/fits-slide055.stdout.txt) and to expected/fits.json written by legacy/fits_golden.py, never by the port"
+    ],
+    "dest": "packages/profile/src/fits/ogee16-fits-v1.ts"
+  }
+]

@@ -1,0 +1,10 @@
+[
+  {
+    "id": "toggle.shell/part3",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/toggle/files/src/src/part3.js",
+    "sha256": "e3b6b1d33377f25366c83c4673d4dbf676b808919e63a1b25e2af1c0fdef0784",
+    "fixes": [],
+    "dest": null
+  }
+]

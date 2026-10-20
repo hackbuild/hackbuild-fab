@@ -1,0 +1,13 @@
+[
+  {
+    "id": "shunt.generator/r1",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/shunt/files/gen_board.py",
+    "sha256": "dfab6bdf0cb365e4e88f5e583e7e76fb734d3f8a55fb143d7730fca7375691bf",
+    "fixes": [
+      "G7 inverted gate (lines 699 to 718) is the origin of the D-074 expect set; packages/checks/src/expect.ts compares the declared set with board.json defects (M04-T06)",
+      "ported to packages/board/src/writers/assembly.ts, as its header cites gen_board.py (packages/board/src/writers/assembly.ts line 20: \"side and note (gen_board.py lines 851 to 861); the record holds no\"); recorded by the M06 and M08 integration"
+    ],
+    "dest": "designs/shunt/legacy/gen_board.py"
+  }
+]

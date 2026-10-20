@@ -1,0 +1,58 @@
+[
+  {
+    "id": "knowledge.print-reality/hbf-seed",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/plan-to-refine/handoff/hbf/seed/references/print-forge/print-reality.md",
+    "sha256": "4b042b60c3f0f3ad1553a2a3d381923e2d93a59ff23e0611c329ec5420e24b49",
+    "fixes": [],
+    "dest": "knowledge/references/print-forge/print-reality.md"
+  },
+  {
+    "id": "knowledge.print-reality/inlay-min-feature",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/inlay/files/skill/print-forge/references/print-reality.md",
+    "sha256": "4b042b60c3f0f3ad1553a2a3d381923e2d93a59ff23e0611c329ec5420e24b49",
+    "fixes": [],
+    "dest": "packages/profile/data/opacity.json"
+  },
+  {
+    "id": "knowledge.print-reality/inlay-opacity-rows",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/inlay/files/skill/print-forge/references/print-reality.md",
+    "sha256": "4b042b60c3f0f3ad1553a2a3d381923e2d93a59ff23e0611c329ec5420e24b49",
+    "fixes": [],
+    "dest": "packages/profile/data/opacity.json"
+  },
+  {
+    "id": "knowledge.print-reality/inlay-opacity-rule",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/inlay/files/skill/print-forge/references/print-reality.md",
+    "sha256": "4b042b60c3f0f3ad1553a2a3d381923e2d93a59ff23e0611c329ec5420e24b49",
+    "fixes": [],
+    "dest": "packages/inlay/src/opacity.ts"
+  },
+  {
+    "id": "knowledge.print-reality/inlay-skill",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/inlay/files/skill/print-forge/references/print-reality.md",
+    "sha256": "4b042b60c3f0f3ad1553a2a3d381923e2d93a59ff23e0611c329ec5420e24b49",
+    "fixes": [],
+    "dest": "knowledge/references/print-forge/print-reality.md"
+  },
+  {
+    "id": "knowledge.print-reality/pf-skill",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/benches-coins-inlay/pf-skill/print-forge/references/print-reality.md",
+    "sha256": "4b042b60c3f0f3ad1553a2a3d381923e2d93a59ff23e0611c329ec5420e24b49",
+    "fixes": [],
+    "dest": null
+  },
+  {
+    "id": "knowledge.print-reality/skills-20261006",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/skills-2026-10-06/print-forge/references/print-reality.md",
+    "sha256": "4b042b60c3f0f3ad1553a2a3d381923e2d93a59ff23e0611c329ec5420e24b49",
+    "fixes": [],
+    "dest": null
+  }
+]

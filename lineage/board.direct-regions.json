@@ -1,0 +1,12 @@
+[
+  {
+    "id": "board.direct-regions/spindle-r1",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/spindle/files/pcb.py",
+    "sha256": "650351218717462917332d02c7cfb70883ad3a66ffad24b0e2756b90ce8a3176",
+    "fixes": [
+      "emit_poly and emit_stroke (pcb.py lines 290 to 331): rings by index, largest area first; the header carries TF.GenerationSoftware hack.build,hbf,<version> and a TF.CreationDate from the epoch in place of datetime.now() (spindle record failure 14)"
+    ],
+    "dest": "tools/py/board/direct/gerber.py"
+  }
+]

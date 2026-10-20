@@ -1,0 +1,12 @@
+[
+  {
+    "id": "board.lead-landing/shunt-r1",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/shunt/files/check3d_shunt.mjs",
+    "sha256": "2753dcdcb26212400f04d7e714fd5cbb77aca54d54bb0bd22913738ad1bc1aad",
+    "fixes": [
+      "the placement transform and the lead landing loop of lines 48 to 84 over a BoardRecord: placements from the generator's gates.json, leads from models.json, the SW2 allowance from allow.json; bounds over body plus 1.6 mm and the stand-in rule kept (M08-T09, CHK-BRD-19)"
+    ],
+    "dest": "packages/checks/src/brd/chk-brd-19.ts"
+  }
+]

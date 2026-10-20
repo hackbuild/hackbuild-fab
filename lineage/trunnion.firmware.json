@@ -1,0 +1,10 @@
+[
+  {
+    "id": "trunnion.firmware/rev-a",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/trunnion/files/trunnion.ino",
+    "sha256": "5cd8c4ccf0c0125c96dc5a2295844c7ac8a1bb4cd23dac55917c3eb839da458b",
+    "fixes": [],
+    "dest": null
+  }
+]

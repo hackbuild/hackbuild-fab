@@ -1,0 +1,22 @@
+[
+  {
+    "id": "cotter.geo/evidence-x",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/cotter-src/src/geo.js",
+    "sha256": "55046403d5e27c2dafabdb526d36c0526237e4a667b997b30e61a7d977a7a7c4",
+    "fixes": [],
+    "dest": "packages/mechanisms/src/constraints/hook-rule.ts"
+  },
+  {
+    "id": "cotter.geo/r5",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/cotter/files/cotter-src/src/geo.js",
+    "sha256": "55046403d5e27c2dafabdb526d36c0526237e4a667b997b30e61a7d977a7a7c4",
+    "fixes": [
+      "dyadic snap GEO.q (geo.js line 28) ported to packages/geom/src/snap.ts (D-054)",
+      "also ported to packages/geom/src/cs.ts (kernel setup, geo.js lines 10 to 27), packages/geom/src/rrect.ts (circular segment limits, geo.js line 13) and packages/mesh/src/wasm.ts (GEO.scope and its POOL, geo.js lines 7 to 24, D-055)",
+      "GEO.hookRule (geo.js line 102) ported to packages/constraints/src/fixtures/hook-rule.ts as mech/hook-rule (moved unchanged to packages/mechanisms/src/constraints/hook-rule.ts at M06-T03), with Rb = start + k step in place of repeated addition and sweep 88 tested (M01-T10)"
+    ],
+    "dest": "packages/geom/src/snap.ts"
+  }
+]

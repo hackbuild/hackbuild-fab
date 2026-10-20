@@ -1,0 +1,30 @@
+[
+  {
+    "id": "ogee16.printed/bench-zip",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/ogee16/outputs/ogee16-source.zip",
+    "sha256": "47d6077e0596eb4e9722a0a9f687cb82ec472c7bc031d8d2f61a98266aa94dd5",
+    "fixes": [],
+    "dest": "reference/fit/ogee16-r16p/build.ts"
+  },
+  {
+    "id": "ogee16.printed/m02-proud-head",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/ogee16/files/src/source/printed.scad",
+    "sha256": "b0631eb717ffc0381dc605ca79cab3f5036ca03a4ba935093c982f784e43d42f",
+    "fixes": [
+      "proud-head fixture: in a_crank_row, a_crank_col and a_crank_latch drive_pin_flush() is replaced by the legacy drive_pin() and the pin_seat() counterbore is not subtracted; include and use paths point at ../../source; rendered by OpenSCAD 2021.01 (M02-T07 step 4)"
+    ],
+    "dest": "designs/ogee16/legacy/fixtures/proud-head/printed_proud.scad"
+  },
+  {
+    "id": "ogee16.printed/r16p",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/ogee16/files/src/source/printed.scad",
+    "sha256": "b0631eb717ffc0381dc605ca79cab3f5036ca03a4ba935093c982f784e43d42f",
+    "fixes": [
+      "reference/fit/ogee16-r16p/build.ts: fr() PRINT_SHRINK per edge and RAIL_GAP = FIT_SLIDE - 4 x SH, the edge counts 2 and 4 as printed.scad writes them"
+    ],
+    "dest": null
+  }
+]

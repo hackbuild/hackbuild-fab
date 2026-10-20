@@ -1,0 +1,10 @@
+[
+  {
+    "id": "spool.parts/spool-cad",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/spool/files/src/spool_parts.py",
+    "sha256": "56176ce99411e75b2ca9e87132c208ec8e86b06b65c05cc3c75bd8fab54fd95f",
+    "fixes": [],
+    "dest": null
+  }
+]

@@ -1,0 +1,12 @@
+[
+  {
+    "id": "hackbuild-bench.spectrum-math/2c66696",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/hackbuild-bench/src/core/dsp/spectrumMath.ts",
+    "sha256": "de594664105e648ed0182dd895c38ede6109a3afaf1dbb694947d775e1fb9c61",
+    "fixes": [
+      "parseFrequency (spectrumMath.ts lines 65 to 76), commas stripped and a case-insensitive suffix after optional space, is the model of packages/ui-core/src/bench/parse-length.ts parseLength (plan-deltas R35)"
+    ],
+    "dest": "packages/ui-core/src/bench/parse-length.ts"
+  }
+]

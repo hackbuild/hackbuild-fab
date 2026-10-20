@@ -1,0 +1,18 @@
+[
+  {
+    "id": "tang-r5.wiring/dl",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-gudgeon-tang-keyway/tang/tang_r5_wiring.html",
+    "sha256": "1b4f1347b15b6d5f0d09214d7081a4a1f31310964d5ff2a7e4a31395d5cf3331",
+    "fixes": [],
+    "dest": "designs/tang/legacy/tang_r5_wiring.html"
+  },
+  {
+    "id": "tang-r5.wiring/r5",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/tang-r5/files/tang_r5_wiring.html",
+    "sha256": "1b4f1347b15b6d5f0d09214d7081a4a1f31310964d5ff2a7e4a31395d5cf3331",
+    "fixes": [],
+    "dest": "designs/tang/legacy/tang_r5_wiring.html"
+  }
+]

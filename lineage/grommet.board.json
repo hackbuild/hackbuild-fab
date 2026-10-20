@@ -1,0 +1,12 @@
+[
+  {
+    "id": "grommet.board/rev-a",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/grommet/files/grommet.tsx",
+    "sha256": "102ca22261bb8a749f799f8e270977891318c17eac58ca9355ebb1599f3a6ec4",
+    "fixes": [
+      "inner1 GND pour over the pre-pour fab package (grommet record section 1)"
+    ],
+    "dest": null
+  }
+]

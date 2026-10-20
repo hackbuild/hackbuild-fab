@@ -1,0 +1,18 @@
+[
+  {
+    "id": "pip.coupon-zip/haft-9",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft-coupon.zip",
+    "sha256": "4d38c8f392adfb25717916091738177c5c839cc2cde6865725efa0404cda06a8",
+    "fixes": [],
+    "dest": "designs/pip/legacy/original/haft-coupon.zip"
+  },
+  {
+    "id": "pip.coupon-zip/pip-controller-b137deb",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/print/pip-coupon.zip",
+    "sha256": "3ce6d4c2ef8aef756c8f11408dc53049fc9bf6595cd35ba0165d58ea83be0177",
+    "fixes": [],
+    "dest": "designs/pip/legacy/print/pip-coupon.zip"
+  }
+]

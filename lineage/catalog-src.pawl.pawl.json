@@ -1,0 +1,10 @@
+[
+  {
+    "id": "catalog-src.pawl.pawl/m08",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/pawl/outputs/pawl.html",
+    "sha256": "ef01802506f4b6ffaa3dd6e774dad2b0988e4d07bdb9d56063d299eb40d29fe9",
+    "fixes": [],
+    "dest": null
+  }
+]

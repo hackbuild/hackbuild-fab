@@ -1,0 +1,18 @@
+[
+  {
+    "id": "gudgeon.bench/dl",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-gudgeon-tang-keyway/gudgeon/gudgeon.html",
+    "sha256": "6ab837e3e233ffbed8c635ab9230649109c3a05cd525ce6db9d6aa89aded3735",
+    "fixes": [],
+    "dest": "designs/gudgeon/legacy/gudgeon.html"
+  },
+  {
+    "id": "gudgeon.bench/gudgeon-html",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/gudgeon/files/gudgeon.html",
+    "sha256": "6ab837e3e233ffbed8c635ab9230649109c3a05cd525ce6db9d6aa89aded3735",
+    "fixes": [],
+    "dest": "designs/gudgeon/legacy/gudgeon.html"
+  }
+]

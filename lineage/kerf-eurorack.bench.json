@@ -1,0 +1,10 @@
+[
+  {
+    "id": "kerf-eurorack.bench/kerf-2",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/kerf-eurorack/files/kerf-eurorack.html",
+    "sha256": "ede53b3a115717dada829a85570591b3cfe69f2598cace4d8f879f6a36d01f15",
+    "fixes": [],
+    "dest": null
+  }
+]

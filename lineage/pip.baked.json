@@ -1,0 +1,20 @@
+[
+  {
+    "id": "pip.baked/haft-9",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft.html",
+    "sha256": "6c9717338b2e09a2364a464876da47116727f5c3fd8911beb6e87af0bd0b82ea",
+    "fixes": [],
+    "dest": "designs/pip/legacy/original/haft.html"
+  },
+  {
+    "id": "pip.baked/pip-controller-b137deb",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/pip.html",
+    "sha256": "a1fa88bd6ffa603c76059567c8b27c804536e39e7c07ec56c58daad55b001263",
+    "fixes": [
+      "firmware generator GUARD_US 2000 (pip-controller firmware/pip/pip.ino); haft (9) ships KEY_WAIT_US 200 without the guard (knowledge/designs/pip.md 1.1 and 3.13)"
+    ],
+    "dest": "designs/pip/legacy/pip.html"
+  }
+]

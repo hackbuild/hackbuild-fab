@@ -1,0 +1,10 @@
+[
+  {
+    "id": "auger.case/rev-b",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/auger/files/case/auger-geom.scad",
+    "sha256": "e3e728f6f0cc05980b8bb2333854fe693c1b599f6bb637a9c8c911477a579f44",
+    "fixes": [],
+    "dest": null
+  }
+]

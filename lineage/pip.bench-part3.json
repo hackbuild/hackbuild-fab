@@ -1,0 +1,78 @@
+[
+  {
+    "id": "pip.bench-part3/haft-9",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft-src/bench/part3.js",
+    "sha256": "ffb244c597bdb05fdab77c3fe533ba750ff56ddef753c98e677f2804e799b054",
+    "fixes": [],
+    "dest": null
+  },
+  {
+    "id": "pip.bench-part3/pip-controller-b137deb",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/pip-controller/bench/part3.js",
+    "sha256": "594ee29b0c4ff173c0c656a818c4ea626b76c25b31e977d2e25bb20525253e24",
+    "fixes": [
+      "flex feel readout thresholds, soft under 0.16 and medium under 0.24 of wall across over cone height (part3.js line 429), ported to reference/keys/flex-pair/build.ts FEEL (D-223); haft (9) part3.js line 429 holds the same thresholds"
+    ],
+    "dest": "reference/keys/flex-pair/build.ts"
+  },
+  {
+    "id": "pip.bench-part3/pip-controller-legacy",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/bench/part3.js",
+    "sha256": "594ee29b0c4ff173c0c656a818c4ea626b76c25b31e977d2e25bb20525253e24",
+    "fixes": [],
+    "dest": "designs/pip/legacy/bench/part3.js"
+  },
+  {
+    "id": "pip.bench-part3/ui-core-bench-touch",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/bench/part3.js",
+    "sha256": "594ee29b0c4ff173c0c656a818c4ea626b76c25b31e977d2e25bb20525253e24",
+    "fixes": [
+      "range input calls touch, change calls commit (part3.js lines 277 to 295) carried as the touch and commit kinds of packages/ui-core/src/bench/core.ts"
+    ],
+    "dest": "packages/ui-core/src/bench/core.ts"
+  },
+  {
+    "id": "pip.bench-part3/ui-core-drive",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/bench/part3.js",
+    "sha256": "594ee29b0c4ff173c0c656a818c4ea626b76c25b31e977d2e25bb20525253e24",
+    "fixes": [
+      "drive pad: padKeys, renderPad and padRefresh (part3.js lines 360 to 392; padKeys opens at line 361, measured 2026-10-13), ported to packages/ui-core/src/drive/drive.ts with every number read from the current build (M09-T10)"
+    ],
+    "dest": "packages/ui-core/src/drive/drive.ts"
+  },
+  {
+    "id": "pip.bench-part3/ui-core-viewer-controls",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/bench/part3.js",
+    "sha256": "594ee29b0c4ff173c0c656a818c4ea626b76c25b31e977d2e25bb20525253e24",
+    "fixes": [
+      "z-up orbit, drag 0.008 rad per px, phi held to 1.5 rad, wheel 1.1 and 0.9 inside 20 to 1500 mm (part3.js lines 22 to 98), ported to packages/ui-core/src/viewer/controls.ts; the drag and wheel lines the port cites as 85 and 94 sit at 88 and 96 in this copy (measured 2026-10-13)"
+    ],
+    "dest": "packages/ui-core/src/viewer/controls.ts"
+  },
+  {
+    "id": "pip.bench-part3/ui-core-viewer-scene",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/bench/part3.js",
+    "sha256": "594ee29b0c4ff173c0c656a818c4ea626b76c25b31e977d2e25bb20525253e24",
+    "fixes": [
+      "lights, bed and clip plane (part3.js lines 9 to 21) and VIEW.update xray, section and plate modes (lines 194 to 233), ported to packages/ui-core/src/viewer/scene.ts (M09-T06)"
+    ],
+    "dest": "packages/ui-core/src/viewer/scene.ts"
+  },
+  {
+    "id": "pip.bench-part3/ui-rail-showwhen",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/bench/part3.js",
+    "sha256": "594ee29b0c4ff173c0c656a818c4ea626b76c25b31e977d2e25bb20525253e24",
+    "fixes": [
+      "UI.visibility data-show rows (part3.js lines 296 to 308) and GROUP_NAMES with renderGroups (lines 315 to 324; the port cites GROUP_NAMES at 314, measured at 315 on 2026-10-13), ported to packages/ui/src/rail/showWhen.ts as ShowWhen (M09-T08)"
+    ],
+    "dest": "packages/ui/src/rail/showWhen.ts"
+  }
+]

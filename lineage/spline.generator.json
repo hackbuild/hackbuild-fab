@@ -1,0 +1,22 @@
+[
+  {
+    "id": "spline.generator/bench",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/cricut-midi-seven/outputs/spline/gen_spline.py",
+    "sha256": "62491f4eec5699880bcc1b1d1529b936ec5e31e1c24788880898d9b7cc4bc3d6",
+    "fixes": [],
+    "dest": "reference/copper/spline/legacy/gen_spline.py"
+  },
+  {
+    "id": "spline.generator/rev-a",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/spline/files/gen_spline.py",
+    "sha256": "62491f4eec5699880bcc1b1d1529b936ec5e31e1c24788880898d9b7cc4bc3d6",
+    "fixes": [
+      "tools/py/copper/run_legacy_gen.py runs it byte identical from a temp dir with the shipped inputs and the logo literal replaced in memory; tools/py/copper/test_oracle.py holds the run to the M05-T13 table (M05-T13)",
+      "fan lane assignment (version 1) ported to packages/copper/src/vinyl/lanes.ts and the shared helpers to packages/copper/src/vinyl/helpers.ts; the lanes each net took are held by packages/copper/test/lanes.test.ts through tools/py/copper/dump_lanes.py (M05-T14)",
+      "ported to packages/copper as declarations: reference/copper/spline/build.ts with its P dict in chase.surface.ts, evaluated by packages/copper/src/vinyl/draft.ts; the gates as a program run by packages/checks/src/copper/program.ts, one run body per family (M05-T15)"
+    ],
+    "dest": "reference/copper/spline/legacy/gen_spline.py"
+  }
+]

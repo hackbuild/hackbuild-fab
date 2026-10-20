@@ -1,0 +1,12 @@
+[
+  {
+    "id": "sash.parts/part2",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/sash/files/src/src/part2.js",
+    "sha256": "536cfa371fabda52fe6fb31ff3a3c1f60969c8a9ce59f4d9f89c64e4c77f3567",
+    "fixes": [
+      "keeper rib against slide escape (part2.js:597 to 598)"
+    ],
+    "dest": null
+  }
+]

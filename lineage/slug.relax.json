@@ -1,0 +1,10 @@
+[
+  {
+    "id": "slug.relax/slug-12",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/slug/files/slug.html",
+    "sha256": "2d09238c27d5ca4bf023eeee44939b1500470ad2058822b8d0add48ec9bf3241",
+    "fixes": [],
+    "dest": "designs/slug/legacy/slug.html"
+  }
+]

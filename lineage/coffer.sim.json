@@ -1,0 +1,10 @@
+[
+  {
+    "id": "coffer.sim/harvest",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/coffer/files/coffer_sim.html",
+    "sha256": "b08c5a461bb715fd17b97463573d256178ad359b2a31ba92d74a195453213bb4",
+    "fixes": [],
+    "dest": null
+  }
+]

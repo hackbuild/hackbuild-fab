@@ -1,0 +1,18 @@
+[
+  {
+    "id": "pip.print-3mf/haft-9",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft.3mf",
+    "sha256": "04a2e6c2a1589bd3892e87ac3812b053e9bda70b035462adecc51f748ac1e554",
+    "fixes": [],
+    "dest": "designs/pip/legacy/original/haft.3mf"
+  },
+  {
+    "id": "pip.print-3mf/pip-controller-b137deb",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/print/pip.3mf",
+    "sha256": "bc0135dd5d37a7b195105851366024f2be4dc1f1417f3c291d1a2580200af76f",
+    "fixes": [],
+    "dest": "designs/pip/legacy/print/pip.3mf"
+  }
+]

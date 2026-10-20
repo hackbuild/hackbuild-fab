@@ -1,0 +1,10 @@
+[
+  {
+    "id": "cotter.kit-layout/2026-09-21",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-pip-latest/cotter/unzipped/cotter-kit_today_2026-09-21/layout.json",
+    "sha256": "586052524bc09a8a4641e7aea0e5dc5b451c34e6a14f641a924d62051c9f65c0",
+    "fixes": [],
+    "dest": "designs/cotter/legacy/kit-2026-09-21/layout.json"
+  }
+]

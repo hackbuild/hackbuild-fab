@@ -1,0 +1,12 @@
+[
+  {
+    "id": "pintle.snap-check/r6",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pintle/files/src/snap_check.py",
+    "sha256": "9b7c9c9f0de47b0da552cb924fe59e8c8175b8ed3104e9e251f3acf974f30aa3",
+    "fixes": [
+      "the 37 tests exported by tools/py/derrick/export_bodies.py to designs/derrick/legacy/capture/tests.json; the strict 1.0 mm3 rule of line 25 ported to packages/checks/src/capture.ts (M04-T06)"
+    ],
+    "dest": null
+  }
+]

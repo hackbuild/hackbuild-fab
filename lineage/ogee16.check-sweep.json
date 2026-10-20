@@ -1,0 +1,34 @@
+[
+  {
+    "id": "ogee16.check-sweep/bench-source-zip",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/ogee16/outputs/ogee16-source.zip",
+    "sha256": "47d6077e0596eb4e9722a0a9f687cb82ec472c7bc031d8d2f61a98266aa94dd5",
+    "fixes": [],
+    "dest": "designs/ogee16/legacy/ogee16-source.zip"
+  },
+  {
+    "id": "ogee16.check-sweep/m02-port",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/ogee16/files/src/source/check_sweep.py",
+    "sha256": "507cd5f5e04ae039f6356488d9d3c67af2b8a45af6f09b137de58a4aa4d87b3b",
+    "fixes": [
+      "swept() (lines 29 to 37) concatenates the 25 copies and the boolean counts their overlap once per copy; the port counts a point once (obstacle less every reaching copy) and reports the per-step sum beside it (packages/sim/src/sweep/rotate.ts)",
+      "closest approach (line 84) measures from the eight box corners only; the port keeps it as cornerMm for parity and adds gapMm, the true box to surface gap (packages/sim/src/closest.ts)",
+      "lines 82 to 83 and 92 to 93 turn a kernel failure into a volume of 0.0 mm3; the port lets E_KERNEL through",
+      "the 1.0 mm3 clash volume (lines 85 and 94) and the 25 steps (line 24) are profile constants ogee16.sweepClashMm3 and ogee16.sweepSteps"
+    ],
+    "dest": "packages/sim/src/sweep/rotate.ts"
+  },
+  {
+    "id": "ogee16.check-sweep/r16p",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/ogee16/files/src/source/check_sweep.py",
+    "sha256": "507cd5f5e04ae039f6356488d9d3c67af2b8a45af6f09b137de58a4aa4d87b3b",
+    "fixes": [
+      "packages/motion/src/kinematics/ogee.ts crank(): the crank placements of main() (lines 45 to 59), the latch angle from lCrankPhi; packages/sim/scenes/ogee16-cranks.ts sweeps them through core's binding with the step count and clash volume read from profile ogee16.sweepSteps and ogee16.sweepClashMm3",
+      "packages/sim/src/sweep/rotate.ts: swept() and the loop of main() through row ogee16.check-sweep/m02-port; the region is counted once, the per step sum reported beside it"
+    ],
+    "dest": "designs/ogee16/legacy/source/check_sweep.py"
+  }
+]

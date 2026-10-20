@@ -1,0 +1,10 @@
+[
+  {
+    "id": "sash.shell/part3",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/sash/files/src/src/part3.js",
+    "sha256": "99105de1eef5f6cc0477c263842f66fbf0f94dcabcada00391f24c2cca06cb4b",
+    "fixes": [],
+    "dest": null
+  }
+]

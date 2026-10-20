@@ -1,0 +1,10 @@
+[
+  {
+    "id": "pawl.parts/mk3",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pawl/files/src/parts.py",
+    "sha256": "be215f3ddffda8569b5db293917d5657ae1037de62becb8fae3868119cbc2a18",
+    "fixes": [],
+    "dest": null
+  }
+]

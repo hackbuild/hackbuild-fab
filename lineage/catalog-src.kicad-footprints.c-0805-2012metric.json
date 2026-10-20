@@ -1,0 +1,10 @@
+[
+  {
+    "id": "catalog-src.kicad-footprints.c-0805-2012metric/m08",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/m08-catalog/kicad/C_0805_2012Metric.kicad_mod",
+    "sha256": "99fff2e6692af4126feb9f9ebdfd454834bf414b13d04be0d075dffc23cfbd02",
+    "fixes": [],
+    "dest": null
+  }
+]

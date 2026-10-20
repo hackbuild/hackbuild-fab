@@ -1,0 +1,12 @@
+[
+  {
+    "id": "slug.capsule-geometry/slug-12",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/slug/files/slug.html",
+    "sha256": "2d09238c27d5ca4bf023eeee44939b1500470ad2058822b8d0add48ec9bf3241",
+    "fixes": [
+      "funnel faces, plateTop, plateTopRect, inHood, pocketCentre and nearestPocket of slug.html lines 236 to 244 and 713 to 811 ported as plain arithmetic in the page order, three.js r160 applyAxisAngle and normalize written out; numbers come from the scene rows"
+    ],
+    "dest": "packages/sim/src/capsule/geometry.ts"
+  }
+]

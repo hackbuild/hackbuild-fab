@@ -1,0 +1,10 @@
+[
+  {
+    "id": "detent.firmware/1-3",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/detent/files/beam/detent_firmware.ino",
+    "sha256": "4de1e3105c4f45f258cfd5d05fe01126d5e901d33633f54a5beeb820315cd4c2",
+    "fixes": [],
+    "dest": null
+  }
+]

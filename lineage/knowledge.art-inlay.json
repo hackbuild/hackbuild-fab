@@ -1,0 +1,20 @@
+[
+  {
+    "id": "knowledge.art-inlay/hbf",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/plan-to-refine/handoff/hbf/knowledge/kernels/art-inlay.md",
+    "sha256": "84334a01df5344cf3b5c669cf72a0542cd8c7c5c956ea4c3237c3b9a2fbcc800",
+    "fixes": [],
+    "dest": null
+  },
+  {
+    "id": "knowledge.art-inlay/repo",
+    "kind": "canonical",
+    "source": "knowledge/kernels/art-inlay.md",
+    "sha256": "b0a985e7738a769a658f35049e4ba5c29c1a239bc298a1cb34cf3e720e2946d1",
+    "fixes": [
+      "line 104 restated in house voice, same requirement: the harness draws the handles and drives them (RULES.md Language)"
+    ],
+    "dest": "knowledge/kernels/art-inlay.md"
+  }
+]

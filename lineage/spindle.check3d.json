@@ -1,0 +1,10 @@
+[
+  {
+    "id": "spindle.check3d/r1",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/spindle/files/check3d.mjs",
+    "sha256": "2605af49627df4d597ad4b6f39a1a58e56993fcbc32d2801d0d2119b720a2eb1",
+    "fixes": [],
+    "dest": null
+  }
+]

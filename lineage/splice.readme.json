@@ -1,0 +1,22 @@
+[
+  {
+    "id": "splice.readme/rev-c",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/splice/files/README-trunnion.md",
+    "sha256": "85cba6f77a751ee864297fe02723992521aecdab223c17b4c0f4404020d478d6",
+    "fixes": [
+      "SPLICE rev C section, lines 123 to 137 (one 2.54 mm ladder, every segment orthogonal or 45, one 1.6 mm trace width, least gap 0.94 mm set by pitch less width): stated without code, ported as the ladder audit of packages/copper/src/vinyl/ladder.ts, which reads the cut geometry back (least gap between nets, run directions, horizontal centre lines on one grid) and is held to shapely by reference/copper/splice-ladder/test/parity.test.ts (M05-T14, D-092)"
+    ],
+    "dest": "packages/copper/src/vinyl/ladder.ts"
+  },
+  {
+    "id": "splice.readme/rev-c-weed",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/splice/files/README-trunnion.md",
+    "sha256": "85cba6f77a751ee864297fe02723992521aecdab223c17b4c0f4404020d478d6",
+    "fixes": [
+      "SPLICE rev C section, lines 139 to 141 (eroding every shape by 0.75 mm leaves one connected skeleton per net): stated without code, ported as weedProof in packages/copper/src/vinyl/weed.ts with the erosion read from the profile constant vinyl.weedErode; every SPLICE net stays one piece after the erosion in reference/copper/splice-ladder/test/parity.test.ts, held to shapely (M05-T14, D-092)"
+    ],
+    "dest": "packages/copper/src/vinyl/weed.ts"
+  }
+]

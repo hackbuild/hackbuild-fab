@@ -1,0 +1,10 @@
+[
+  {
+    "id": "pip.package/pip-controller-b137deb",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/package.json",
+    "sha256": "655215b043a3a67d3ffe527f22bb93353497a4dadac6d1fa34fb97a28c6f478b",
+    "fixes": [],
+    "dest": "designs/pip/legacy/package.json"
+  }
+]

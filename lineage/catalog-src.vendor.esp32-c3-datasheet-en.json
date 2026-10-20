@@ -1,0 +1,10 @@
+[
+  {
+    "id": "catalog-src.vendor.esp32-c3-datasheet-en/m08",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/m08-catalog/datasheets/esp32-c3_datasheet_en.pdf",
+    "sha256": "833fc000b4b3c3d39c496fcbd597fed5806956503ce7390b19cc8ae82f19f968",
+    "fixes": [],
+    "dest": null
+  }
+]

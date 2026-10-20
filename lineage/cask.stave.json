@@ -1,0 +1,10 @@
+[
+  {
+    "id": "cask.stave/v0-2",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/cask/files/stave/stave.html",
+    "sha256": "35a7086cf1cf445726b5f0b786870e9f067469084b27da2abaada2fa9fb74866",
+    "fixes": [],
+    "dest": null
+  }
+]

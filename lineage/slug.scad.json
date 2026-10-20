@@ -1,0 +1,22 @@
+[
+  {
+    "id": "slug.scad/slug-12",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/slug/files/slug.scad",
+    "sha256": "a5990b866b0829282ec7dc9b6f090c64c447c8f1a3432164b279ebc8dcf3fef6",
+    "fixes": [
+      "tangential rim spacers in two staggered tiers replace the radial posts that cracked the pocket web (slug record section 1)",
+      "ported to packages/mechanisms/src/bodies/slug-cage.ts, as its header cites slug.scad (packages/mechanisms/src/bodies/slug-cage.ts line 2: \"canonical original originals/slug/files/slug.scad (lineage\"); recorded by the M06 and M08 integration",
+      "ported to packages/mechanisms/src/defs/capsule-pocket-rotor.ts, as its header cites slug.scad (packages/mechanisms/src/defs/capsule-pocket-rotor.ts line 2: \"Registered at M06-T01; derive() ported at M06-T05 from slug.scad's\"); recorded by the M06 and M08 integration"
+    ],
+    "dest": null
+  },
+  {
+    "id": "slug.scad/slug-12-port-slug-cage",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/slug/files/slug.scad",
+    "sha256": "a5990b866b0829282ec7dc9b6f090c64c447c8f1a3432164b279ebc8dcf3fef6",
+    "fixes": [],
+    "dest": "packages/mechanisms/src/bodies/slug-cage.ts"
+  }
+]

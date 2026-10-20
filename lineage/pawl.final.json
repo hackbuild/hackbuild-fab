@@ -1,0 +1,10 @@
+[
+  {
+    "id": "pawl.final/sim-trials",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pawl/files/src/final.mjs",
+    "sha256": "e4e61a3dc9cc5aa887243f803b0f65aaf7d139adcb94f5885c4d468cddc3b671",
+    "fixes": [],
+    "dest": "packages/sim/src/programs/pawl/suite.ts"
+  }
+]

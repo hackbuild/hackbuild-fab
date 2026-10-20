@@ -1,0 +1,12 @@
+[
+  {
+    "id": "cotter.dxf-template/r5",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/cotter/files/cotter-src/assets/dxf_template.json",
+    "sha256": "ce721c5263fe923629363e975d83c61556be2c06683d36084b722cc06335a7c4",
+    "fixes": [
+      "the script that wrote it did not ship; tools/py/make_dxf_template.py writes the nest skeleton packages/nest/data/dxf-template.json the same way (ezdxf.new R2010, units 4) with the five cut layers, $MEASUREMENT 1, fixed GUIDs and the four date variables at SOURCE_DATE_EPOCH 315532800, so one ezdxf version gives one template"
+    ],
+    "dest": "designs/cotter/legacy/dxf_template.json"
+  }
+]

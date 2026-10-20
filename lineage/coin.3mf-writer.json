@@ -1,0 +1,10 @@
+[
+  {
+    "id": "coin.3mf-writer/coin-v2",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/coin/files/src/write3mf.py",
+    "sha256": "a889159d5da414af2fc8b9e7f05671e77848342a7dafd046266f8dbe9aaa837b",
+    "fixes": [],
+    "dest": null
+  }
+]

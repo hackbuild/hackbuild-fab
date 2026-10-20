@@ -1,0 +1,10 @@
+[
+  {
+    "id": "jib.bench/jib-html",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/jib/files/jib.html",
+    "sha256": "fd968e5721bac20b7c72a4552275f26b48fdbb10ef122b01c92f4249c57cc331",
+    "fixes": [],
+    "dest": null
+  }
+]

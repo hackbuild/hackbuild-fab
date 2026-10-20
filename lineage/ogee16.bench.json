@@ -1,0 +1,18 @@
+[
+  {
+    "id": "ogee16.bench/bench-outputs",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/ogee16/outputs/ogee16p.html",
+    "sha256": "eec1e191cea91a6d04d5b47b68ef334a85b9eedc1446f30b1838fa937f035dc4",
+    "fixes": [],
+    "dest": "designs/ogee16/legacy/ogee16p.html"
+  },
+  {
+    "id": "ogee16.bench/r16p",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/ogee16/files/ogee16p.html",
+    "sha256": "eec1e191cea91a6d04d5b47b68ef334a85b9eedc1446f30b1838fa937f035dc4",
+    "fixes": [],
+    "dest": "designs/ogee16/legacy/ogee16p.html"
+  }
+]

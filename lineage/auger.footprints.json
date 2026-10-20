@@ -1,0 +1,10 @@
+[
+  {
+    "id": "auger.footprints/rev-b",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/auger/files/src/footprints.tsx",
+    "sha256": "4cb5399a0ba5ed4a45032ee2b9afbdcaf8269cc82a78fa637e31c5cbb6b5cc9e",
+    "fixes": [],
+    "dest": null
+  }
+]

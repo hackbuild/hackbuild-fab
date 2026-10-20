@@ -1,0 +1,10 @@
+[
+  {
+    "id": "feeler.ladder-3mf/dl",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-gudgeon-tang-keyway/feeler/feeler-ladder (1).3mf",
+    "sha256": "8f61c82cdfb2b9b308738cae21b27d268952e05fe5a85c267c92fc6768e426cf",
+    "fixes": [],
+    "dest": "designs/stylus/legacy/feeler-ladder (1).3mf"
+  }
+]

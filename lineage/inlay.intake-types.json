@@ -1,0 +1,10 @@
+[
+  {
+    "id": "inlay.intake-types/badge-replicator",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/badge-replicator/src/lib/types.ts",
+    "sha256": "086c23b370ade3d5a21a25518141499eaaded8563a50d5c6fca189cd14c3a20f",
+    "fixes": [],
+    "dest": "packages/inlay/src/intake/image.ts"
+  }
+]

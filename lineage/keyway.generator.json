@@ -1,0 +1,21 @@
+[
+  {
+    "id": "keyway.generator/bench",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/cricut-midi-seven/outputs/keyway/gen_keyway.py",
+    "sha256": "d712ce489ad04cc33f670715e204ad8ac21ee3429a1123e48cfa3dfdcf715e3c",
+    "fixes": [],
+    "dest": "reference/copper/keyway/legacy/gen_keyway.py"
+  },
+  {
+    "id": "keyway.generator/rev-a",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/keyway/files/gen_keyway.py",
+    "sha256": "d712ce489ad04cc33f670715e204ad8ac21ee3429a1123e48cfa3dfdcf715e3c",
+    "fixes": [
+      "tools/py/copper/run_legacy_gen.py runs it byte identical from a temp dir with the shipped inputs and the logo literal replaced in memory; tools/py/copper/test_oracle.py holds the run to the M05-T13 table (M05-T13)",
+      "ported to packages/copper: the helpers to packages/copper/src/vinyl/helpers.ts, the board as declarations evaluated by packages/copper/src/vinyl/draft.ts, the layer emit to packages/copper/src/vinyl/emit-svg.ts and the stack to packages/copper/src/vinyl/stack.ts; the 45 gates to packages/checks/src/copper/gate.ts, packages/checks/src/copper/nets.ts, packages/checks/src/copper/art.ts, packages/checks/src/copper/slider.ts, packages/checks/src/copper/clips.ts, packages/checks/src/copper/film.ts, packages/checks/src/copper/wiper.ts, packages/checks/src/copper/sheets.ts and packages/checks/src/copper/run.ts; the board to reference/copper/keyway/build.ts and reference/copper/keyway/chase.surface.ts. The document size gate now runs before anything is written (lines 382 to 383 ran it after). Held line for line to the 2026-10-04 rerun by reference/copper/keyway/test/parity.test.ts, the least clearance a six way tie at 1.000 mm (M05-T14)"
+    ],
+    "dest": "reference/copper/keyway/legacy/gen_keyway.py"
+  }
+]

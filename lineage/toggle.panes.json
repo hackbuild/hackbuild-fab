@@ -1,0 +1,20 @@
+[
+  {
+    "id": "toggle.panes/part4",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/toggle/files/src/src/part4.js",
+    "sha256": "37d194fff6702f85510e846d3ebda6b82fa136b420b8e4e55c88e6cb692ce71a",
+    "fixes": [],
+    "dest": null
+  },
+  {
+    "id": "toggle.panes/ui-core-bench-merge",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/toggle/src/src/part4.js",
+    "sha256": "37d194fff6702f85510e846d3ebda6b82fa136b420b8e4e55c88e6cb692ce71a",
+    "fixes": [
+      "loadDesign merges onto blankState and drops unknown keys one level deep (part4.js lines 62 to 68); packages/ui-core/src/bench/merge.ts keeps the PIP recursion instead"
+    ],
+    "dest": "packages/ui-core/src/bench/merge.ts"
+  }
+]

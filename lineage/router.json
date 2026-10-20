@@ -1,0 +1,74 @@
+[
+  {
+    "id": "router/baffle-bench-src",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/benches-conductive-a/baffle-bench-src/part2.js",
+    "sha256": "26e37e89ef581767cbba6f1e401f1168817fec9342d2e928c7af0ee2eb230d38",
+    "fixes": [
+      "Float64 best[] so the pop guard keeps live nodes and the frontier is not starved (part2.js:197 to 199)",
+      "carried into packages/copper/src/route/negotiated.ts: Float64 g, history and costs by default; PIP's Float32 history only behind the test-only parity switch (M05-T08 step 5, D-092)",
+      "carried into packages/copper/src/route/manhattan.ts as well: Float64 g and history by default; TOGGLE's Float32 arrays only behind the test-only legacyFloat32 switch (M05-T09)"
+    ],
+    "dest": null
+  },
+  {
+    "id": "router/boss-route",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/boss/files/boss-src/src/boss.js",
+    "sha256": "fad77485920bb29d996610adf577d4d10c60f813ce4abc036a10f5a4aa8bfcf7",
+    "fixes": [
+      "route() (boss.js lines 132 to 256) is not ported: designs/blocks/src/route-seat.ts hands the seat nets to packages/copper in octile mode (D-092) with BOSS's traceW, clr and cell and its border dilation clr + w/2 (lines 136, 155 to 156) as the keep-in margin; BOSS's rectangle dilation (lines 147 to 149) is markStaticRect in packages/copper/src/route/stencil.ts, a rect pad on RouteTerminal (M05-T09)"
+    ],
+    "dest": "designs/blocks/src/route-seat.ts"
+  },
+  {
+    "id": "router/pip-controller-b137deb",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/pip-controller/src/router.js",
+    "sha256": "c9217561d7341410c99793d72d3356f7637ff99b2be424639e1460111d4c16a0",
+    "fixes": [
+      "negotiated congestion core (router.js lines 34 to 259) ported to packages/copper/src/route/negotiated.ts, legacy Float32 history behind the test-only legacyFloat32History switch, parity with the b137deb routes in packages/copper/test/fixtures/pip-b137deb-route.json and pip-b137deb-sweep-route.json, the default layout and the 40 seed 1 sweep designs (M05-T08)",
+      "typed array binary heap (router.js lines 9 to 30) ported to packages/copper/src/route/heap.ts, sift order kept for tie parity",
+      "grid bounds, disc stencil and static owner marks (router.js lines 37 to 67) ported to packages/copper/src/route/stencil.ts",
+      "terminal keepout and via zone pad 0.15 (line 68) and trace zone pad 0.02 (line 74) are profile constants route.keepoutPad and route.zonePad, read by packages/copper/src/route/negotiated.ts",
+      "BAFFLE Float64 carried: packages/copper/src/route/negotiated.ts keeps g, history and every cost Float64 by default (lineage router/baffle-bench-src, D-092, D-156)"
+    ],
+    "dest": "packages/copper/src/route/negotiated.ts"
+  },
+  {
+    "id": "router/pip-controller-legacy",
+    "kind": "copy",
+    "source": "designs/pip/legacy/src/router.js",
+    "sha256": "c9217561d7341410c99793d72d3356f7637ff99b2be424639e1460111d4c16a0",
+    "fixes": [],
+    "dest": "designs/pip/legacy/src/router.js"
+  },
+  {
+    "id": "router/pip-haft-9",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft-src/src/router.js",
+    "sha256": "f182a45a493c64c997d137b3eff0f57da782db9d57758e62de18e05522649bd4",
+    "fixes": [
+      "the unpublished sibling of the canonical file: byte identical to pip-controller src/router.js at b137deb except the global namespace on line 7 (HAFT for PIP); the canonical row moved to router/pip-controller-b137deb (M05-T08 step 1, D-013)"
+    ],
+    "dest": null
+  },
+  {
+    "id": "router/toggle-part2c",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/toggle/files/src/src/part2c.js",
+    "sha256": "af62a4f9ddbb90b9bcf1a85e941194aed0d929ea05471abef85fb0888b2aa0ef",
+    "fixes": [
+      "T.route (part2c.js lines 31 to 205) ported to packages/copper/src/route/manhattan.ts as the router's Manhattan mode (D-092): 4-connected moves, turn 2.5, via 30, history 1.5, 22 iterations, pop cap 400000, square mask R = max(1, ceil((w + clr)/g) - 1); TOGGLE's Float32 g and history only behind the test-only legacyFloat32 switch, Float64 by default; occupancy Uint16 where TOGGLE had Uint8; the binary heap (lines 6 to 27) is packages/copper/src/route/heap.ts, the same sift; parity with every recorded try of packages/copper/test/fixtures/toggle-presets/*.json (M05-T09)"
+    ],
+    "dest": "packages/copper/src/route/manhattan.ts"
+  },
+  {
+    "id": "router/x-pip-controller",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/src/router.js",
+    "sha256": "c9217561d7341410c99793d72d3356f7637ff99b2be424639e1460111d4c16a0",
+    "fixes": [],
+    "dest": null
+  }
+]

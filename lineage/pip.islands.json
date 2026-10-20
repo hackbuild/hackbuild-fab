@@ -1,0 +1,16 @@
+[
+  {
+    "id": "pip.islands/pip-controller",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/pip-controller/test/islands.py",
+    "sha256": "94bec281685f1a18c552a6c80e8a0b5f15b16f0a62f0d0ba2f5ffba7e52034d4",
+    "fixes": [
+      "port: packages/checks/src/solid/slice.ts slices the union of an object's parts, as islands.py batch_boolean does before it slices",
+      "port: packages/checks/src/solid/plan.ts measures a region's width as islands.py width() does, twice the largest inset that leaves it",
+      "port: packages/checks/src/defs/prt/CHK-PRT-06.ts runs the floating-component rule at the preset's layer mids",
+      "port: packages/checks/src/defs/prt/CHK-PRT-07.ts runs the floating-component rule at LAYER 0.24 and 0.20",
+      "port: packages/checks/src/defs/key/CHK-KEY-05.ts measures the tip over pad overlap with that width"
+    ],
+    "dest": "packages/checks/src/solid/layers.ts"
+  }
+]
