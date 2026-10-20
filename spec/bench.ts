@@ -17,6 +17,7 @@
 // P-28, P-29 (synthesis/gold-standard.md section 12).
 
 import type { Chase } from "./chase";
+import type { WidgetDecl } from "./widgets";
 
 /** Current bench schema version. */
 export const BENCH_SCHEMA_VERSION = 1;
@@ -179,6 +180,11 @@ export interface ViewsDecl {
   readonly scene?: SceneContext;
   /** Stage tools (P-13); requires overlays "tools". */
   readonly tools?: readonly StageTool[];
+  /**
+   * Registered widgets (spec/widgets.ts, plan v9 section 3.2). A kind no
+   * widget registry holds is E_REF at chase.validate.
+   */
+  readonly widgets?: readonly WidgetDecl[];
 }
 
 /**
