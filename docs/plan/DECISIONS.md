@@ -486,6 +486,10 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-430 | Edge profiles refuse an empty inset range with E_UNSAT | decided | Kernel, geometry |
 | D-431 | The foot edge profile carries a required inset field | decided | Kernel, geometry |
 | D-432 | Edge angleDeg is limited to turn fractions the D-175 table holds | decided | Kernel, geometry |
+| D-433 | The coupon card is generated and drift-tested, not hand-typed | decided | Reference, docs |
+| D-434 | The coupon result is pasted under Coupon result in the switch README | decided | Reference, docs |
+| D-435 | The word per coupon rung decides; scale and coins only record | decided | Reference, docs |
+| D-436 | plateRows is exported from the switch card and reused by the coupon card | decided | Reference, docs |
 
 ## House rules and process
 
@@ -5293,6 +5297,50 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. Chamfer and teardrop read cos and sin from `unitCircle`. angleDeg must make angleDeg * n / 360 whole for some n from 3 to 256, so every even degree and 22.5 pass and 7 is E_SCHEMA. On a chamfer, `size` is the inset at the face and the vertical extent is size * tan(angle). |
 | Rationale | geom forbids Math.cos, sin and tan, enforced by a test, so that hashes match across node and WebKit (D-175). |
 | Evidence | `packages/geom/test/unit-circle.test.ts` lines 84 to 89 |
+| Supersedes | new |
+| Milestone | none |
+
+### D-433 The coupon card is generated and drift-tested, not hand-typed
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `reference/keys/access-switch/COUPON.md` carries a generated card block written by `coupon/test/card.ts` and guarded by a drift test in `coupon/test/reference.test.ts`; `HBF_ACCEPT=1` rewrites the block. This adds two coupon test files beyond the brief's Writes line of item R1-flagship-access-switch-11. |
+| Rationale | The checklist states the export bytes and sha256 the owner checks against. The house rules forbid hand-typed numbers that another file determines, and flex-pair EXIT-B has a test-backed card for the same reason. |
+| Evidence | A cup depth mutant (chase.ts default 8 to 8.5 mm) makes the drift test fail, 91918 against 91914 bytes (computed); the access-switch suites pass 36 of 36 on the merged tree (computed, 2026-10-20). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-434 The coupon result is pasted under Coupon result in the switch README
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The owner pastes the coupon result under "Coupon result" in `reference/keys/access-switch/README.md`, not in the coupon README. Until then the subsection reads "none yet" and every force stays computed. |
+| Rationale | The result sets the switch's `spring.t` and its press claim, and the item brief puts the link block in the design README. |
+| Evidence | `reference/keys/access-switch/README.md`, the R1-flagship-access-switch-11 block. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-435 The word per coupon rung decides; scale and coins only record
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The one-word verdict per rung (too soft, right, too stiff) picks the rung. Caliper, scale and coin readings are recorded as evidence and do not override it. The rung marked right sets the switch default `spring.t` to that rung's drawn beam, not to its caliper reading. Only the owner enters a result; an agent may only propose the change. |
+| Rationale | The item brief's rule is that the rung marked right sets the switch default t. The same drawn beam on the same printer is expected to print the same way (inferred). |
+| Evidence | `reference/keys/access-switch/COUPON.md`, section "Pass, and what to record". |
+| Supersedes | new |
+| Milestone | none |
+
+### D-436 plateRows is exported from the switch card and reused by the coupon card
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `plateRows` in `reference/keys/access-switch/test/card.ts` (item 09's file) is exported and the coupon card imports it rather than copying it. |
+| Rationale | House rule: one implementation of each thing. |
+| Evidence | A one-word diff in `test/card.ts`; the switch suites pass 29 of 29 on the branch and the access-switch workspace 36 of 36 on the merged tree (computed, 2026-10-20). |
 | Supersedes | new |
 | Milestone | none |
 
