@@ -1,0 +1,24 @@
+[
+  {
+    "id": "chase.scaffold-template/v3-chase",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/plan-to-refine/handoff/hbf/scaffold/designs/_template/chase.ts",
+    "sha256": "f7c599c7173a29c7be3df66d26616ad5be8b7a9baf0075d8f6a1202e9b8973c9",
+    "fixes": [
+      "schema 2: chase 2, machines list for machine, license CC-BY-SA-4.0, build module ./build.ts, exports pose print with no gated flag (gating is the exporter registry's), assertions kept empty",
+      "views, rail and status move to bench.ts (D-174) through benchSource; the checks list is dropped (D-173)",
+      "param d takes label diameter and step 0.5 so the default 44 lands on a step (G-09), the COLLAR blank.dia range, step and default"
+    ],
+    "dest": "packages/chase/src/scaffold/single.ts"
+  },
+  {
+    "id": "chase.scaffold-template/v3-build",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/plan-to-refine/handoff/hbf/scaffold/designs/_template/build.ts",
+    "sha256": "3df8006062926f158c35db808a4bef4afc6f6819241bc0b5193fbfb599510193",
+    "fixes": [
+      "the template build threw implement; the scaffold build returns one PETG disc of diameter d, eight layers thick on the active machine, through defineBuild"
+    ],
+    "dest": "packages/chase/src/scaffold/single.ts"
+  }
+]

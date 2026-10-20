@@ -214,7 +214,7 @@ export async function loadDesign(target: string, cwd: string, opts: { readonly c
   const rel = posix(path.relative(root, dir));
   const chaseFile = path.join(dir, "chase.ts");
   if (opts.chase === undefined && !existsSync(chaseFile)) {
-    throw cmdError({ code: "E_REF", path: "/chase", got: target, expected: "chase.ts in the directory", hint: "add chase.ts to the directory; hbf does not scaffold one yet" });
+    throw cmdError({ code: "E_REF", path: "/chase", got: target, expected: "chase.ts in the directory", hint: "add chase.ts to the directory, or start one with chase.scaffold" });
   }
   // Read as data: nothing in chase.ts runs (D-178).
   const chase = opts.chase ?? readChaseSource(readFileSync(chaseFile, "utf8"), posix(path.relative(root, chaseFile))).chase;

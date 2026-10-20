@@ -23,7 +23,7 @@ export type ArtifactRebuild = (stated: StatedSource) => Promise<Rebuilt>;
 const posix = (p: string): string => p.split(path.sep).join("/");
 
 /** Directories at most two levels under reference/ and one under designs/ that hold chase.ts, relative to root. */
-function designDirs(root: string): string[] {
+export function designDirs(root: string): string[] {
   const out: string[] = [];
   const walk = (rel: string, depth: number): void => {
     const abs = path.join(root, rel);
