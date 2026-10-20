@@ -440,6 +440,12 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-384 | Import path checks stay out of chase builds | decided | Constraints and checks |
 | D-385 | No CHECKS.md section 6 rows for the new checks | decided | Testing, docs, milestones, registry |
 | D-386 | fab-knowledge: evidence prefix accepted in seed origins | decided | Testing, docs, milestones, registry |
+| D-387 | COMMANDS is ordered by COMMAND_NAMES | decided | Agent surface |
+| D-388 | motion.run program ids reach the spec through host lists | decided | Architecture |
+| D-389 | VIEW_MODES moves into the view.render spec | decided | Architecture |
+| D-390 | Widened CLI examples lose their compile-time check | decided | Agent surface |
+| D-391 | The run-body mutation check is split between core and the package | decided | Testing, docs, milestones, registry |
+| D-392 | The spec surface test reads the def files | decided | Testing, docs, milestones, registry |
 
 ## House rules and process
 
@@ -4741,6 +4747,72 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. origin.test resolves fab-knowledge:<path> to the archive and checks it exists when the archive is on this host, the same rule as for absolute paths. |
 | Rationale | The brief asked for no absolute path, and the test tried to read any non-absolute path as a repo path. |
 | Evidence | packages/checks/test/origin.test.ts; tools/publish-paths.mjs defines the prefix. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-387 COMMANDS is ordered by COMMAND_NAMES
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. R1-engine-01: `bind()` in `packages/commands/src/spec.ts` sorts the bound defs into spec `COMMAND_NAMES` order. The hand-written `COMMANDS` array in `core/src/registry.ts` is gone. |
+| Rationale | The generated def index sorts by file name, so the order has to come from a derived list. The old array comment said it was in `COMMAND_NAMES` order, but the array did not follow it. |
+| Evidence | The order of `hbf --help` lines and of the MCP tool list follows `COMMANDS`, so it changed. `core/test/mcp-parity.test.ts` (wire order) and `core/test/surface.test.ts` pass on the merged tree (computed, 2026-10-20). No golden of help output was found. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-388 motion.run program ids reach the spec through host lists
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. R1-engine-01: `CommandSpec.input` may be a function of `HostLists` (`{ programIds }`). Only `motion.run` uses it, and core passes `PROGRAM_IDS` when it calls `bind`. |
+| Rationale | `PROGRAM_IDS` is derived from the motion families in core, which import motion and profile at runtime. A tier 2 package that depends only on spec cannot read it, and typing the ids into the package would hand-list something another file determines. |
+| Evidence | `packages/commands/src/spec.ts` `HostLists`; `packages/commands/src/defs/motion-run.ts`; the `bind` call in `core/src/registry.ts`. `packages/commands/test/bind.test.ts` validates a `motion.run` example after bind (computed, 2026-10-20). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-389 VIEW_MODES moves into the view.render spec
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. R1-engine-01: `VIEW_MODES` is a literal in `packages/commands/src/defs/view-render.ts` that satisfies spec `ViewMode[]`. Core's `MODE_VIEW` is typed as a map over exactly those modes. |
+| Rationale | The spec's description and schema text need the list, and the package cannot import core. tsc fails if the list and core's map disagree, so there is still one source. |
+| Evidence | `core/src/commands/view-render.ts` lines 9 to 19; `npx tsc -b` exits 0 on the merged tree (computed, 2026-10-20). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-390 Widened CLI examples lose their compile-time check
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. R1-engine-01: in `packages/commands`, `example<N>()` takes a plain record. The widened input types (`SimRunInput`, `NestPackInput`, `ExportInput` and the rest) stay in core with their run bodies. |
+| Rationale | Those types live in core command files the package cannot import. The examples are still validated against each input schema at runtime by `core/test/contract.test.ts`. The widened CLI layer comes out at M10 (D-107). |
+| Evidence | `packages/commands/src/shared.ts` comment; `core/test/contract.test.ts` passes on the merged tree (computed, 2026-10-20). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-391 The run-body mutation check is split between core and the package
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. R1-engine-01: `packages/commands/test/bind.test.ts` proves `bind()` rejects a deleted run body with a synthetic runs map and does not import core's real `RUNS`. A run body deleted from core's `RUNS` stops the core load with E_KERNEL. |
+| Rationale | In `tools/tiers.mjs` a relative import from a package test into core counts as an edge from commands up to core, and that edge fails the tier gate. |
+| Evidence | `tools/tiers.mjs` header comment. Builder mutants (computed, 2026-10-20): deleting the `fits.table` run body failed `core/test/contract.test.ts` at load with E_KERNEL; removing the no-run-body check from `bind()` failed the bind test case. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-392 The spec surface test reads the def files
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. R1-engine-01: `spec/test/surface.test.ts` finds network-only fields in `packages/commands/src/defs/*.ts`, not in `core/src/registry.ts`, and fails on any def file that does not declare `spec: CommandSpec<name>`. The file is outside the item's Writes line. |
+| Rationale | The schemas moved, and the old text parse would have passed with nothing to read. |
+| Evidence | `spec/test/surface.test.ts` lines 60 to 78; `npx vitest run spec` 38 passed on the merged tree (computed, 2026-10-20). |
 | Supersedes | new |
 | Milestone | none |
 
