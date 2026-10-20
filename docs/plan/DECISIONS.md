@@ -501,6 +501,10 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-445 | split-fresh compares by repacking the named commit, plus a HEAD js/ tree check | decided | Testing, docs, milestones, registry |
 | D-446 | The lineage dest of the thin-wall row names the vendored tgz | decided | Testing, docs, milestones, registry |
 | D-447 | The hackbuild-3mf branch for R1-engine-03 is committed outside fab and not merged there | decided | Repos, packaging, toolchain, licensing |
+| D-448 | prismWithEdges is async and loads geom itself | decided | Kernel, geometry |
+| D-449 | The narrower edge band carries the stack band overlap | decided | Kernel, geometry |
+| D-450 | Edge stack body z must sit on the layer grid | decided | Kernel, geometry |
+| D-451 | The kernel package depends on mesh and geom | decided | Repos, packaging, toolchain, licensing |
 
 ## House rules and process
 
@@ -5473,6 +5477,50 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. hackbuild-3mf commit aa3a173 sits on branch r1/R1-engine-03-r1 in worktree `wt/R1-engine-03-r1-3mf`, on top of main 73e1120, not pushed and not merged into hackbuild-3mf main. |
 | Rationale | The brief's step 2 needs js/src brought up to date (fab had gained the thin-wall override) and a commit for the tgz sha7; the brief names a separate worktree for ../hackbuild-3mf. The fab integrator writes only fab main. |
 | Evidence | aa3a17395c6c1fcc5a9ff24f7cf70bf31eac3dfe; `git -C hackbuild-3mf branch --contains aa3a173` lists only r1/R1-engine-03-r1 (measured, integrator). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-448 prismWithEdges is async and loads geom itself
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `prismWithEdges` in `packages/mesh/src/edge-stack.ts` returns `Promise<StackShape>` and calls the cached `loadGeom()`; the geom handle is not a parameter. A build.ts awaits it, which `BuildFn` allows. |
+| Rationale | `Author.ring.offset` throws E_KERNEL in this kernel build (`outsideSlice`), so a build.ts has no synchronous offset. The R1-engine-06 brief's signature has no geom field. |
+| Evidence | `packages/pipeline/src/author.ts` line 96; `spec/build.ts` `BuildFn` returns `BuildResultAt` or a Promise of it. Not run: no build.ts calls it inside the core build sandbox yet. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-449 The narrower edge band carries the stack band overlap
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. Of two neighbouring bands from `prismWithEdges`, the one with the larger inset reaches into the other by q((lo+hi)/2) of profile `stack.bandOverlap` (0.0146484375 mm, computed). In the bottom zone the lower band reaches up; in the top zone the upper band reaches down. The wider band keeps both bounds on q(layerTop(i)). |
+| Rationale | The union then adds no volume: -0.0160 percent against the analytic volume, the COLLAR prototype row 2a was -0.0151 percent (both computed). The overlap value is the D-313 middle-of-range choice the access switch already uses. |
+| Evidence | `packages/mesh/test/edge-stack.test.ts` band bounds and volume cases; `reference/keys/access-switch/build.ts` line 66. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-450 Edge stack body z must sit on the layer grid
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. For `prismWithEdges` the bottom must be 0 or a layer top and the top must be a layer top, otherwise E_SCHEMA with a hint to snap with `machine.layer`. Adjacent bands with equal snapped inset merge into one band. An inset that splits or empties the outline is E_UNSAT; the generator does not compute an inradius. |
+| Rationale | This keeps every band bound on q(layerTop(i)) as the brief requires. A stack band outline holds one outer ring plus holes, so a split section cannot be expressed. |
+| Evidence | `packages/mesh/src/edge-stack.ts` layerBounds and insetOutline; `packages/mesh/src/routes/prism.ts` outlineComponents takes outline[0] as the single outer ring. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-451 The kernel package depends on mesh and geom
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `kernel/package.json` and `kernel/tsconfig.json` gain `@hackbuild/geom` and `@hackbuild/mesh`, and `package-lock.json` was updated through `npm install --package-lock-only`. These files sit outside the R1-engine-06 brief's Writes line. |
+| Rationale | The brief requires exporting `prismWithEdges` through `kernel/src/author/index.ts`. `tools/tiers.json` lets the kernel import tier 0. |
+| Evidence | `tools/tiers.json` kernel mayImport S, 0, 1, 2; `node tools/tiers.mjs` reports 0 failures on the merged tree (computed, 2026-10-20). |
 | Supersedes | new |
 | Milestone | none |
 
