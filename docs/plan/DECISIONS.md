@@ -377,6 +377,10 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-321 | Fix main's stale lineage fragment in this branch | decided | Testing, docs, milestones, registry |
 | D-322 | Pack the CHECK_MODULES array to 80 columns | decided | Architecture |
 | D-323 | Generated check index refuses a module outside its family directory | decided | Architecture |
+| D-324 | CI small jobs merged into build and bake | decided | Repos, packaging, toolchain, licensing |
+| D-325 | Build steps guarded on install success | decided | Repos, packaging, toolchain, licensing |
+| D-326 | CI job count is 15, not 14 | decided | Repos, packaging, toolchain, licensing |
+| D-327 | A ui-css or size failure now blocks browser | decided | Repos, packaging, toolchain, licensing |
 
 ## House rules and process
 
@@ -3985,6 +3989,50 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. `tools/gen/registries/checks.mjs` refuses a check module filed outside its family directory, such as `defs/net/CHK-BRD-01.ts`, by name, with no guess about where it belongs. |
 | Rationale | All 158 modules follow the rule today (measured), and the variable name comes from the file name. |
 | Evidence | `tools/test/checks-fragments.test.mjs` test "a module outside its family directory is refused" passes on main after the merge (measured). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-324 CI small jobs merged into build and bake
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. typecheck, derived, tiers, contract, seed, property and vtracer-eval are now named steps of one `build` job in `.github/workflows/ci.yml`. ui-css and size are now steps at the end of `bake`. house-rules, cold, determinism and bake-determinism stay separate. 23 job keys become 15. |
+| Rationale | PLAN.md 6 release 1 rails asks for CI as one build job with merged small jobs. These nine jobs each repeated checkout, setup-node, npm ci and mostly tsc -b to run a short check. |
+| Evidence | Run 38667622976 on 13856c3: 5772 runner seconds (measured). Job seconds: typecheck 57, derived 50, tiers 12, contract 51, seed 43, property 44, vtracer-eval 46, ui-css 28, size 5 (measured). Branch protection on main returns 404, so no required check breaks (measured). The merged workflow has not run on GitHub; its runner seconds are unknown. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-325 Build steps guarded on install success
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. Each `build` step after the first check uses `if: ${{ !cancelled() && steps.install.outcome == 'success' }}` in place of a plain `!cancelled()`. |
+| Rationale | A plain `!cancelled()` runs every step after a failed `npm ci` and shows a dozen red steps from one cause. The guard keeps one red check from hiding the rest, and skips everything when the install fails. |
+| Evidence | `.github/scripts/ci-workflow.test.mjs` test "every build check after the first reports even when one before it failed" passes on main after the merge (measured). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-326 CI job count is 15, not 14
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `.github/scripts/ci-workflow.test.mjs` pins the 15 job names the item lists, in order. The item text's count of 14 was a miscount. |
+| Rationale | 23 jobs minus 9 merged plus 1 new build job is 15, and the item's own list has 15 names. |
+| Evidence | A yaml parse of `.github/workflows/ci.yml` prints 15 job keys (measured). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-327 A ui-css or size failure now blocks browser
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. ui-css and size run inside `bake`, so either one failing fails bake, and `browser` (needs bake) is skipped. The bake upload still runs under `!cancelled()`. |
+| Rationale | This follows from the merge in D-324. It is accepted because both are hard gates on the bake. |
+| Evidence | `.github/scripts/ci-workflow.test.mjs` test that bake runs bake:all before ui-css and size, and both before the upload, passes on main after the merge (measured). |
 | Supersedes | new |
 | Milestone | none |
 
