@@ -153,6 +153,10 @@
           "gate": "informational"
         },
         {
+          "id": "click-spring-key.0.key.R.pads",
+          "gate": "informational"
+        },
+        {
           "id": "click-spring-key.0.key.fits.slot-at-the-end-blocks",
           "gate": "informational"
         },
@@ -961,6 +965,10 @@
           "gate": "informational"
         },
         {
+          "id": "click-spring-key.0.key.R.pads",
+          "gate": "informational"
+        },
+        {
           "id": "click-spring-key.0.key.fits.slot-at-the-end-blocks",
           "gate": "informational"
         },
@@ -1030,6 +1038,38 @@
         },
         {
           "id": "layout.rimTop",
+          "gate": "informational"
+        },
+        {
+          "id": "claim.press.targetN",
+          "gate": "informational"
+        },
+        {
+          "id": "claim.press.lo",
+          "gate": "informational"
+        },
+        {
+          "id": "claim.press.hi",
+          "gate": "informational"
+        },
+        {
+          "id": "jack.legDepth",
+          "gate": "informational"
+        },
+        {
+          "id": "jack.axisZ",
+          "gate": "informational"
+        },
+        {
+          "id": "jack.wall",
+          "gate": "informational"
+        },
+        {
+          "id": "R.leads",
+          "gate": "informational"
+        },
+        {
+          "id": "R.closed",
           "gate": "informational"
         }
       ]

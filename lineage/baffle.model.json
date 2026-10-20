@@ -26,5 +26,15 @@
       "tile socket checks (model.js lines 993 to 997: interference 0.08 to 0.2, at least 3 fingers, axial squeeze 0.06 to 0.2) ported to packages/checks/src/fit/fit07.ts as CHK-FIT-07 over profile constants fit.collet.*; slider swing check (lines 1005 to 1012, at least 30 percent) ported to packages/checks/src/net/net30.ts as CHK-NET-30 over profile constant read.swing.minPercent (M05-T19)"
     ],
     "dest": "packages/checks/src/fit/fit07.ts"
+  },
+  {
+    "id": "baffle.model/r3-36-access-jack",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/baffle-r3/files/src/model.js",
+    "sha256": "bda7af8d66f52e9dec1ba3956e2dc8e54d2dc6e62bf679b12fb5de580633636f",
+    "fixes": [
+      "the panel jack bore (model.js lines 110 and 124: wall 2.4, jack d 6.2, nut land deep 1.2; lines 593 to 596 and 635 to 639: stacked three-layer prisms whose half chord follows the circle) ported to reference/keys/access-switch/jack.ts over profile constants jack.boreD and jack.panelT; above the axis the bore runs straight up through the rim so the jack drops in (R1-flagship-access-switch-06)"
+    ],
+    "dest": "reference/keys/access-switch/jack.ts"
   }
 ]

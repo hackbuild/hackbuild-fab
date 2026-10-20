@@ -7,13 +7,14 @@
 // rests on the cap; the skirt edge stops on the body top at the spring's
 // contact travel plus click.stopOvertravel, the travel eStop is read to.
 // The spring element, the cap and the paddle print beside the body; the
-// paddle prints plate down. Two leads run on trace layer 1 from the key's
-// routed terminals to placeholder clip pads at the body's edge (item 06
-// replaces them with the jack seat). Conditionals live here (D-178).
+// paddle prints plate down. The jack seat (jack.ts) sets a PJ398SM in the
+// -y wall and runs one lead per net on trace layer 1 from the key's routed
+// terminals to its T and S sockets. Conditionals live here (D-178).
 
-import { defineBuild, qualify, type FaceFrame, type Feature, type Metric, type ShapeDecl, type Vec2 } from "@hackbuild/spec";
+import { defineBuild, qualify, type FaceFrame, type Metric, type ShapeDecl, type Vec2 } from "@hackbuild/spec";
 import { chase } from "./chase";
 import { PRESS_IDS, pressBand } from "./claim";
+import { jackSeat } from "./jack";
 
 const ID = "click-spring-key";
 const SEGMENTS = 64;
@@ -95,25 +96,16 @@ export const build = defineBuild(chase, (p, k) => {
   if (density === undefined) throw new Error("profile material petg has no densityGcm3; the paddle mass needs it");
   const massG = (volMm3 * density) / 1000;
 
-  const post = (tag: string): Vec2 => {
+  // The key's routed terminal posts: centre, net and radius, for the jack leads.
+  const end = (tag: string) => {
     const f = out.features.find((x) => x.id === `${ID}.0.conductor.post${tag}`);
-    const ring = f !== undefined && f.kind === "conductor" && "path" in f.region ? f.region.path : [];
-    const xs = ring.map((q) => q[0]), ys = ring.map((q) => q[1]);
-    return [(Math.min(...xs) + Math.max(...xs)) / 2, (Math.min(...ys) + Math.max(...ys)) / 2];
+    if (f === undefined || f.kind !== "conductor" || !("path" in f.region)) throw new Error(`click-spring-key reported no conductor.post${tag}`);
+    const xs = f.region.path.map((q) => q[0]), ys = f.region.path.map((q) => q[1]);
+    const at: Vec2 = [(Math.min(...xs) + Math.max(...xs)) / 2, (Math.min(...ys) + Math.max(...ys)) / 2];
+    return { at, net: f.net, postR: f.width / 2 };
   };
-  const net = (tag: string): string => {
-    const f = out.features.find((x) => x.id === `${ID}.0.conductor.post${tag}`);
-    return f !== undefined && f.kind === "conductor" ? f.net : "";
-  };
-  // Each lead ends where its line meets the body's circle.
-  const edge = (q: Vec2, sg: number): Vec2 => [q[0], sg * Math.sqrt(R * R - q[0] * q[0])];
-  const t0 = post(""), t1 = post("Common");
-  const leads: Feature[] = [
-    { kind: "conductor", id: "conductor.lead0", body: "body", material: "cpla", net: net(""), region: { centreline: [t0, edge(t0, -1)], face: up(skin) }, width: tw, t: trace },
-    { kind: "pad", id: "pad.0", body: "body", net: net(""), size: [3, 3], for: "clip", note: "placeholder clip pad where lead 0 meets the -y edge, until the jack seat (computed)" },
-    { kind: "conductor", id: "conductor.lead1", body: "body", material: "cpla", net: net("Common"), region: { centreline: [t1, edge(t1, 1)], face: up(skin) }, width: tw, t: trace },
-    { kind: "pad", id: "pad.1", body: "body", net: net("Common"), size: [3, 3], for: "clip", note: "placeholder clip pad where lead 1 meets the +y edge, until the jack seat (computed)" },
-  ];
+  const jack = jackSeat(k, { R, top, rimTop, l1: skin, trace, l2Top: skin + trace + iso + trace, floor, tw, T: end(""), S: end("Common") });
+  const rClosed = metricOf("key.R.switch") + metricOf("key.R.pads") + jack.rLeads;
 
   // The press claim's band (claim.ts), so the panel and the card read it
   // from the build; the spread needs the sim and lives in the claim test.
@@ -140,13 +132,15 @@ export const build = defineBuild(chase, (p, k) => {
     metric("layout", "layout.top", top, "mm", "body top, the spring's need", []),
     metric("layout", "layout.rimTop", rimTop, "mm", "rim top, the cap top snapped up a layer", []),
     ...claimMetrics,
+    ...jack.metrics,
+    metric("jack", "R.closed", rClosed, "ohm", "pressed, T to S: key.R.switch + key.R.pads + R.leads (PIP model.js line 481); the legs in their printed sockets add a contact resistance with no profile row (unknown)", jack.rTiers),
   ];
 
   return k.part({
     id: "body", name: "ACCESS SWITCH", process: "fdm", machine: "ffc5p",
     frame: { originOnAxis: false, carriesOffset: false, pose: "print" },
     bodies: [body, ...out.bodies, paddle],
-    features: [...out.features, ...leads],
+    features: [...out.features, ...jack.features],
     metrics,
     assertions: [],
   });

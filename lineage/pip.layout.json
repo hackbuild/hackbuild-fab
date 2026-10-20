@@ -134,5 +134,15 @@
     "sha256": "6052af46de1330436bb160d7369902932e09b2a1ea3ed0e209363eba2ff38836",
     "fixes": [],
     "dest": "packages/sim/src/fe/click.ts"
+  },
+  {
+    "id": "pip.layout/haft-9-access-jack-socket",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft-src/src/layout.js",
+    "sha256": "2d1c6c10554b5c7d8dc333496529abee82e937d2d3fe85c41a8d7ee22bb2468c",
+    "fixes": [
+      "the board seat socket defaults (layout.js line 39: clr 0.3, sockOD 1.8, sockBore 0.75, pinLen 3.0) as profile constants jack.clr, jack.socketWall and jack.socketLen, read by the PJ398SM leg sockets and the jack pocket of reference/keys/access-switch/jack.ts (R1-flagship-access-switch-06)"
+    ],
+    "dest": "reference/keys/access-switch/jack.ts"
   }
 ]

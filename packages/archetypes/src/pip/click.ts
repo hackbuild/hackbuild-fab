@@ -258,6 +258,7 @@ export function clickApply(input: ApplyIn<ClickParams>, id: string): ApplyOut {
   if (!fe.snaps) e.warnings.push({ code: "SPRING", text: "click springs do not snap at this rise, raise Q above 2" });
   const sw = clickSwitch(C, s, fe, input.profile);
   e.metric("key.R.switch", sw.rsw, "ohm", "tip across the pad split (model.js line 472)", sw.tiers);
+  e.metric("key.R.pads", sw.pads, "ohm", "both half pads, through the layers (model.js line 471)", sw.tiers);
   const rows = clickFits(C, fe);
   for (const r of rows) e.metrics.push(fitMetric("key", r, []));
   e.warnings.push(...fitWarnings(rows));

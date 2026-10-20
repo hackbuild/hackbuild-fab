@@ -2,7 +2,7 @@
 
 The access switch flagship (plan v9 section 6, release 1 "designs"): one
 PIP click spring under a 56 mm round paddle, on a round PETG body with the
-PIP buried stack, two leads to placeholder clip pads. Every number below is
+PIP buried stack, two leads to a PJ398SM panel jack. Every number below is
 computed from the build and the profile rows, tier inferred where a profile
 row is inferred, unless it says otherwise. Nothing here has been printed.
 
@@ -16,6 +16,11 @@ flagship.
 | materials | PIP's four slots | `layout.js` lines 47 to 52 | buttons/click-spring |
 | stack | profile stack rows | `layout.js` line 27 | electrical/pip-buried-route |
 | body, rim, paddle | build.ts, new to this design (no original) | none | this reference |
+| jack pads and body outline | jack.ts, the catalog row connectors/pj398sm | KiCad v5 `Jack_3.5mm_QingPu_WQP-PJ398SM_Vertical_CircularHoles.kicad_mod` | packages/catalog |
+| jack bore | jack.ts, stacked three-layer prisms, half chord on the circle | `originals/baffle-r3/files/src/model.js` lines 110, 124, 593 to 596, 635 to 639 | none |
+| jack body depth | profile `jack.bodyDepth` | `originals/kerf-eurorack/files/kerf-eurorack.html` line 1634 | none |
+| leg sockets | jack.ts, PIP's printed socket | `layout.js` line 39, `model.js` lines 204 to 205 and 593 to 595 | seats/rp2040-zero-pressfit |
+| R.leads, R.closed | jack.ts and build.ts | `model.js` lines 453 to 460 and 481 | none |
 
 ## The spring point
 
@@ -81,9 +86,53 @@ enters a reading from the thickness ladder coupon.
   density 1.27 from profile, inferred; infill lowers it, unknown). Its
   weight, 0.156 N at standard gravity (computed), rests on the spring. The
   peak above does not subtract it.
-- Leads: as buttons/click-spring, on trace layer 1 from the key's two
-  posts to the body edge, each ending at a placeholder clip pad that the
-  jack seat replaces (R1-flagship-access-switch-06).
+- Leads: as buttons/click-spring, on trace layer 1, one straight lead per
+  net from the key's routed post to a jack socket: KEY to T, GND to S.
+
+## The jack seat
+
+`jack.ts` (R1-flagship-access-switch-06) sets a PJ398SM 3.5 mm mono panel
+jack (catalog row `connectors/pj398sm`) in the -y side wall, axis along
+-y, its pads along x at the axis height: the jack lies a quarter turn
+about its axis from the KiCad top view, a turn and never a mirror. The
+build sandbox cannot read the catalog, so jack.ts copies the pad table and
+the F.Fab outline, and the reference test holds them equal to the row
+loaded from the committed footprint.
+
+- Bore: `jack.boreD` 6.2 mm through `jack.panelT` 3.6 mm of PETG on the
+  axis (BAFFLE R3's jack, profile, inferred). Below the axis it is BAFFLE's
+  stack of three-layer prisms whose half chord follows the circle; above
+  the axis it runs straight up through the rim, so the jack and its legs
+  drop in from the top before the paddle goes on. The body is round, so
+  the wall the nut clamps thins off the axis to about 2.6 mm at the S lug
+  (computed).
+- Pocket: the F.Fab body outline and the S pad, `jack.clr` 0.3 mm each side
+  except the front face, `jack.bodyDepth` 11 mm along the axis (KERF's
+  drawn jack body, inferred; the PJ398SM depth is not in the row, unknown).
+  The jack axis sits at 8.83 mm, its top 0.35 mm under the body top where
+  the paddle skirt stops (computed).
+- Legs: S and T each drop into a cPLA socket: a slot the pad drill wide
+  (1.22 and 1.43 mm, community) between two `jack.socketWall` 0.525 mm
+  walls, `jack.socketLen` 3.0 mm along the leg, on a column down to trace
+  layer 1. `jack.legDepth` 3.0 mm meets `seat.socketPinMin` 2.0 mm (PIP,
+  inferred) only if the leg reaches that far past the body; the PJ398SM
+  leg length and section are not in the row (unknown), so the grip is
+  unknown until a jack sits in a print. TN has no socket, only a PETG
+  clearance slot.
+- Resistance, PIP's readout: per net the lead along trace layer 1, the
+  key's terminal post and the socket column through the layers, at the
+  Yousu cPLA rows 500 ohm cm along and 2000 through (profile, inferred).
+  Lead T 14.97 mm reads 74.3 kohm, lead S 15.39 mm 76.4 kohm, each key
+  post 38.6 kohm, the T and S columns 19.4 and 21.9 kohm (all computed).
+
+At defaults R.leads 269148 ohm, key.R.switch 9952 ohm and key.R.pads
+14324 ohm give R.closed 293423 ohm pressed, T to S (all computed, tier
+inferred; the reference test holds this line to the build). The legs in
+their printed sockets add a contact resistance no profile row covers
+(unknown).
+The input threshold of a switch interface (Xbox Adaptive Controller,
+AbleNet or iPad switch adapters) is unknown here; a person reads one
+device before the card claims the switch closes for it.
 
 ## Deviations, each named
 
