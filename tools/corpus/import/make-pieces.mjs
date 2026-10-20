@@ -8,10 +8,10 @@
 //                     shells
 //   pile.stl          five overlapping primitives, each meshed alone and
 //                     concatenated with no boolean
-//   pile-union.stl    the union of the same five: positive control, 1 piece
-//   hollow-box.stl    20 mm box less a 12 mm box: positive control, 1 piece
-//                     with 1 void
-//   two-on-bed.stl    two 10 mm cubes 5 mm apart, both on z 0: 2 pieces,
+//   pile-union.stl    the union of the same five: positive control, one piece
+//   hollow-box.stl    20 mm box less a 12 mm box: positive control, one piece
+//                     with one void
+//   two-on-bed.stl    two 10 mm cubes 5 mm apart, both on z 0: two pieces,
 //                     none floating
 //   corner-touch.stl  two 10 mm cubes sharing one corner, concatenated: the
 //                     union is refused

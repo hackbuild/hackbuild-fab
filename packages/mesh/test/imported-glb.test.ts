@@ -170,7 +170,7 @@ describe("imported route: glb in the stage runner and the audit stage", () => {
     expect(single.noUnion).toBeNull();
     expect(Math.abs(signedVolume(single.staged.solid) - single.staged.bodies[0]!.volumeMm3)).toBeLessThanOrEqual(1e-6 * single.staged.bodies[0]!.volumeMm3);
     const lug = await stageImported([{ draft: { ...body, id: "lug" }, read: importGlb(bytesOf(`${CORPUS}lug.glb`), "lug.glb") }]);
-    expect(lug.noUnion).toMatch(/^\d+ of 26 parts fail the audit/);
+    expect(lug.noUnion).toMatch(/^\d+ of 26 imported parts fails? the audit/);
     expect(lug.staged.warnings.every((w) => w.code === "AUDIT")).toBe(true);
     expect(liveCount()).toBe(0);
   });

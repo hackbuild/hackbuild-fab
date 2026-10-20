@@ -961,6 +961,202 @@
           "gate": "CHK-KEY-04"
         },
         {
+          "id": "click-spring-key.0.spring.curve.n",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.spring.curve.d0",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.spring.curve.F0",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.spring.curve.d1",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.spring.curve.F1",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.spring.curve.d2",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.spring.curve.F2",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.spring.curve.d3",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.spring.curve.F3",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.spring.curve.d4",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.spring.curve.F4",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.spring.curve.d5",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.spring.curve.F5",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.spring.curve.d6",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.spring.curve.F6",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.spring.curve.d7",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.spring.curve.F7",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.spring.curve.d8",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.spring.curve.F8",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.spring.curve.d9",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.spring.curve.F9",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.spring.curve.d10",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.spring.curve.F10",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.spring.curve.d11",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.spring.curve.F11",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.spring.curve.d12",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.spring.curve.F12",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.spring.curve.d13",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.spring.curve.F13",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.spring.curve.d14",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.spring.curve.F14",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.spring.curve.d15",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.spring.curve.F15",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.spring.curve.d16",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.spring.curve.F16",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.spring.curve.d17",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.spring.curve.F17",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.spring.curve.d18",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.spring.curve.F18",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.spring.curve.d19",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.spring.curve.F19",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.spring.curve.d20",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.spring.curve.F20",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.spring.curve.d21",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.spring.curve.F21",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.spring.curve.d22",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.spring.curve.F22",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.spring.curve.d23",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.spring.curve.F23",
+          "gate": "CHK-KEY-04"
+        },
+        {
           "id": "click-spring-key.0.key.R.switch",
           "gate": "informational"
         },
