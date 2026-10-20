@@ -101,6 +101,9 @@ const INFORMATIONAL: readonly { readonly pattern: RegExp; readonly why: string }
   { pattern: /^layout\.(width|depth|faderOverhang|top)$/, why: "keys/midi-pad body extents and top as build.ts lays the archetypes out; the top is the seat's host.top and no failure on record sets a bound on the others" },
   { pattern: /^layout\.(diameter|rimTop)$/, why: "keys/access-switch body diameter and rim top as build.ts lays them out from the paddle and the cap top; no failure on record sets a bound" },
   { pattern: /^paddle\.(massG|guideClr|travel|boss)$/, why: "keys/access-switch paddle readouts: solid mass (a spring preload, never subtracted), guide clearance from profile access.paddleGuideClr, stop travel and boss length; no CHK-FIT row covers the guide and no failure on record sets a bound (R1-flagship-access-switch-02)" },
+  { pattern: /^claim\.press\.(targetN|lo|hi)$/, why: "keys/access-switch press claim band from profile access.pressTargetN and access.pressBandPct; the claim stays unproven until a person enters a coupon reading, so no check gates it (R1-flagship-access-switch-04)" },
+  { pattern: /^jack\.(legDepth|axisZ|wall)$/, why: "keys/access-switch jack seat readouts: leg depth against seat.socketPinMin (build.ts warns FIT under it), axis height and the wall the nut clamps; no failure on record sets a bound (R1-flagship-access-switch-06)" },
+  { pattern: /^R\.(leads|closed)$/, why: "keys/access-switch closed path resistance on the cPLA tier, PIP's readout (model.js lines 453 to 460 and 481); the threshold of a switch interface is unknown, so no failure on record sets a bound (R1-flagship-access-switch-06)" },
 ];
 
 /** The builds a recording must hold: reference/<area>/<id> and designs/<id> with a chase.ts. */

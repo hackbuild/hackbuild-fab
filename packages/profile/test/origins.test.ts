@@ -57,3 +57,34 @@ describe("PETG in-plane strain cites the HAFT click spring fit (D-073, D-191)", 
     expect(line(original("pip.model/haft-9"), 541)).toMatch(/fit\('click spring', 'strain at the stop'.*cd\.eStop <= 0\.025, 'PETG fatigues above about 2\.5'\)/);
   });
 });
+
+describe("jack rows cite BAFFLE R3, KERF and PIP lines that say what the rows hold (R1-flagship-access-switch-06)", () => {
+  const row = (id: string) => constants.constants.find((c) => c.id === id);
+  test("the committed rows carry the values and name their original lines", () => {
+    const want: [string, number, RegExp][] = [
+      ["jack.boreD", 6.2, /baffle-r3\/files\/src\/model\.js line 124/],
+      ["jack.panelT", 3.6, /baffle-r3\/files\/src\/model\.js line 110 \(wall 2\.4\) plus line 124 \(deep 1\.2/],
+      ["jack.bodyDepth", 11, /kerf-eurorack\/files\/kerf-eurorack\.html line 1634/],
+      ["jack.clr", 0.3, /pip\/files\/haft-src\/src\/layout\.js line 39 \(board clr 0\.3/],
+      ["jack.socketWall", 0.525, /layout\.js line 39 \(sockOD 1\.8, sockBore 0\.75\)/],
+      ["jack.socketLen", 3.0, /layout\.js line 39 \(pinLen 3\.0/],
+    ];
+    for (const [id, value, source] of want) {
+      expect(row(id)?.value, id).toBe(value);
+      expect(row(id)?.provenance.source, id).toMatch(source);
+      expect(row(id)?.provenance.tier, id).toBe("inferred");
+    }
+  });
+  test.runIf(existsSync(original("baffle.model/r3-36")))("BAFFLE R3 model.js lines 110 and 124 hold the wall and the jack bore", () => {
+    const at = original("baffle.model/r3-36");
+    expect(line(at, 110)).toMatch(/wall: 2\.4/);
+    expect(line(at, 124)).toMatch(/jack: \{ on: 1, wall: 'west', pos: 33\.0, d: 6\.2, z: 7\.44, land: 11\.0, deep: 1\.2 \}/);
+  });
+  test.runIf(existsSync(original("kerf-eurorack.bench/kerf-2")))("KERF line 1634 is the jack body box", () => {
+    expect(line(original("kerf-eurorack.bench/kerf-2"), 1634)).toMatch(/const body = new THREE\.Mesh\(new THREE\.BoxGeometry\(8, 8, 11\), mats\.jackBody\)/);
+  });
+  test.runIf(existsSync(original("pip.layout/haft-9")))("PIP layout.js line 39 holds the seat clearance and socket defaults", () => {
+    const l39 = line(original("pip.layout/haft-9"), 39);
+    for (const s of ["clr: 0.3,", "sockOD: 1.8,", "sockBore: 0.75,", "pinLen: 3.0,"]) expect(l39).toContain(s);
+  });
+});

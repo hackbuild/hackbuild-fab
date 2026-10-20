@@ -21,6 +21,9 @@
     },
     {
       "path": "../../../packages/archetypes"
+    },
+    {
+      "path": "../../../packages/catalog"
     }
   ]
 }

@@ -6,5 +6,15 @@
     "sha256": "ede53b3a115717dada829a85570591b3cfe69f2598cace4d8f879f6a36d01f15",
     "fixes": [],
     "dest": null
+  },
+  {
+    "id": "kerf-eurorack.bench/kerf-2-access-jack",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/kerf-eurorack/files/kerf-eurorack.html",
+    "sha256": "ede53b3a115717dada829a85570591b3cfe69f2598cace4d8f879f6a36d01f15",
+    "fixes": [
+      "the PJ-398SM jack body depth (kerf-eurorack.html line 1634, buildJack BoxGeometry(8, 8, 11)) as profile constant jack.bodyDepth, the pocket depth of reference/keys/access-switch/jack.ts; a drawn model, not a vendor drawing (R1-flagship-access-switch-06)"
+    ],
+    "dest": "reference/keys/access-switch/jack.ts"
   }
 ]
