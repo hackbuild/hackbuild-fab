@@ -446,6 +446,10 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-390 | Widened CLI examples lose their compile-time check | decided | Agent surface |
 | D-391 | The run-body mutation check is split between core and the package | decided | Testing, docs, milestones, registry |
 | D-392 | The spec surface test reads the def files | decided | Testing, docs, milestones, registry |
+| D-393 | Absent claimFns reads as an empty registry | decided | Constraints and checks |
+| D-394 | EvidenceRef shape | decided | Constraints and checks |
+| D-395 | Claim range, unit and id rules run outside zod | decided | Constraints and checks |
+| D-396 | A zero-width claim band is legal | decided | Constraints and checks |
 
 ## House rules and process
 
@@ -4813,6 +4817,50 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. R1-engine-01: `spec/test/surface.test.ts` finds network-only fields in `packages/commands/src/defs/*.ts`, not in `core/src/registry.ts`, and fails on any def file that does not declare `spec: CommandSpec<name>`. The file is outside the item's Writes line. |
 | Rationale | The schemas moved, and the old text parse would have passed with nothing to read. |
 | Evidence | `spec/test/surface.test.ts` lines 60 to 78; `npx vitest run spec` 38 passed on the merged tree (computed, 2026-10-20). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-393 Absent claimFns reads as an empty registry
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. R1-engine-10: when `ChaseRegistries.claimFns` is absent, every claim fn is refused with E_REF (record `chase-ref/claim-fn`) instead of going unchecked. R1-engine-11 feeds claimFns through the loader before any chase declares claims. |
+| Rationale | The resolve.ts rule is that an id resolving to nothing is an error, never a check that does not run. No chase declares claims today, so nothing breaks. |
+| Evidence | `packages/chase/src/resolve.ts`; `packages/chase/test/claims.test.ts` test "refuses every claim fn when the registries carry no claim fns"; `npx vitest run packages/chase` 251 passed on the merged tree (computed, 2026-10-20). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-394 EvidenceRef shape
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. R1-engine-10: EvidenceRef is `{kind: "coupon" \| "record" \| "file"; ref: string}`, defined in `spec/claims.ts`. The brief named the type but no spec file defined it. |
+| Rationale | The smallest shape that holds a coupon result, a profile or knowledge record, or a file on record. It is the input CHK-CLAIM-01 (R1-engine-11) needs to tell "inferred, no evidence" from "backed". |
+| Evidence | `spec/claims.ts`; a grep of spec/, packages/ and core/ found no prior EvidenceRef; the brief `.hbf-notes/r1/briefs/engine.md` line 350 names it. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-395 Claim range, unit and id rules run outside zod
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. R1-engine-10: zod types the claim fields only. The range, unit and id-unique rules run in `claimRuleErrors` so they carry the record `chase-claim/<rule>`. The why field stays a zod refine, like the waiver reason. |
+| Rationale | A zod issue gets a `chase-schema/<zod code>` record, which would not match `chase-claim/<rule>`. |
+| Evidence | `packages/chase/src/schema.ts` `claimRuleErrors`; mutant disabling the unit rule fails 1 of 13 claims tests, mutant disabling the range rule fails 3 of 13 (computed, 2026-10-20). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-396 A zero-width claim band is legal
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. R1-engine-10: a claim band with lo == nominal == hi validates. |
+| Rationale | The brief's rule is lo <= nominal <= hi, which is not strict. |
+| Evidence | `packages/chase/test/claims.test.ts` test "accepts a zero-width band at the nominal". |
 | Supersedes | new |
 | Milestone | none |
 
