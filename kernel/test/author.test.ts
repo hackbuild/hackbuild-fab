@@ -5,6 +5,7 @@
 import { describe, expect, it } from "vitest";
 import * as author from "@hackbuild/kernel/author";
 import * as spec from "@hackbuild/spec";
+import * as mesh from "@hackbuild/mesh";
 
 const chase = author.defineChase({
   meta: { id: "author-entry", kind: "single", name: "AUTHOR", version: 1, chase: 2, kernels: [], machines: [], license: "CC-BY-SA-4.0" },
@@ -20,6 +21,9 @@ describe("@hackbuild/kernel/author", () => {
     expect(author.defineChase).toBe(spec.defineChase);
     expect(author.defineBuild).toBe(spec.defineBuild);
     expect(author.defineChase(chase)).toBe(chase);
+  });
+  it("re-exports the mesh edge stack generator (R1-engine-06)", () => {
+    expect(author.prismWithEdges).toBe(mesh.prismWithEdges);
   });
   it("types build params from the chase", () => {
     const p: author.ParamsOf<typeof chase> = { d: 4 };

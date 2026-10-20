@@ -17,6 +17,7 @@ export {
 export type { PrismMesh, RouteWarning } from "./routes/prism.js";
 export { BAND_OVERLAP_IDS, bandOverlap, checkBandOverlaps, stackMesh } from "./routes/stack.js";
 export type { StackMesh, StackRun } from "./routes/stack.js";
+export { prismWithEdges, type EdgePrism, type StackShape } from "./edge-stack.js";
 export { HEAL_FREEZE_FLIPS, HEAL_MAX_PASSES, HEAL_WARN_PERCENT, fixPinches, greedyRects, meshSlots, raster, slotsUsed } from "./routes/raster.js";
 export type { HealReport, RasterResult, RasterSlab, RasterVolume } from "./routes/raster.js";
 export {
