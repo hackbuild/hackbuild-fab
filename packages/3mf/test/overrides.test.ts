@@ -65,6 +65,7 @@ describe("override table (M05-T20 step 2)", () => {
       ["part", "sparse_infill_density", "100%", "CHK-NET-05", true],
       ["object", "interlocking_beam", "0", "CHK-3MF-08", true],
       ["object", "interlocking_beam", "1", null, false],
+      ["object", "detect_thin_wall", "1", "CHK-KEY-04", true],
     ]);
   });
 });
