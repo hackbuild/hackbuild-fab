@@ -24,6 +24,10 @@ export {
   DEFAULT_SEGMENTS, EDGE_COLUMN_HALF, RADIAL_FIELDS, checkProfile, profileReport, radialField, revolveRows, revolveShape, thetaList,
 } from "./routes/revolve.js";
 export type { FieldDef, FieldParams, ProfileReport, RadialField, RevolveRow } from "./routes/revolve.js";
+export { capTriangles, loftMesh, orientSections, skinRings } from "./routes/loft.js";
+export type { LoftSection } from "./routes/loft.js";
+export { rmfFrames, sweepMesh } from "./routes/sweep.js";
+export type { Frame, SweepOptions } from "./routes/sweep.js";
 export { IMPORTED_ROUTE, MM_PER_UNIT, importSoup, importStl, readStl, stlEncoding } from "./routes/imported.js";
 export type { FileUnit, ImportEncoding, ImportedBody, ImportedPart, SoupPart, StlEncoding } from "./routes/imported.js";
 export { importGlb, readGlb, readGlbChunks } from "./routes/imported-glb.js";

@@ -1,0 +1,12 @@
+[
+  {
+    "id": "mesh.sweep/geom-proto",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/geom-proto-2026-10-20/proto.mjs",
+    "sha256": "a76cc5840857944fa394a30de7d21a5fedad91b45f2765d2dbf2bb8ed7215db1",
+    "fixes": [
+      "sweep from frames (proto.mjs lines 117 to 136): one section per path vertex skinned ring to ring and capped, ported to packages/mesh/src/routes/sweep.ts sweepMesh with the arc's closed form frames replaced by rotation minimizing frames by double reflection (Wang, Juttler, Zheng and Liu, ACM TOG 27(1), 2008), the fan caps by earcut and the skin by loft.ts skinRings (R1-engine-08)"
+    ],
+    "dest": "packages/mesh/src/routes/sweep.ts"
+  }
+]
