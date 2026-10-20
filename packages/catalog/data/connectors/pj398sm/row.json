@@ -1,0 +1,32 @@
+{
+  "id": "pj398sm",
+  "name": "QingPu WQP-PJ398SM 3.5 mm mono jack (Thonkiconn)",
+  "kind": "connector",
+  "note": "Pads and pad names S, TN, T parse at load from pj398sm.kicad_mod, a byte copy of Connector_Audio.pretty/Jack_3.5mm_QingPu_WQP-PJ398SM_Vertical_CircularHoles.kicad_mod from github.com/KiCad/kicad-footprints at 7ebfa6b23cc292a56f751b7b5f4a0e12eeef69dd (2020-10-02, frozen v5 mirror at ~/.cache/board-forge/kicad-footprints). KiCad libraries are CC-BY-SA 4.0 with the KiCad design exception; KiCad's LICENSE.md sits beside the footprint (tools/licences.json). The v5 mirror holds no .kicad_sym, so the row has no pins field: the pad names are the pin names. The GitLab library may have revised this footprint since 2020 (unknown).",
+  "fields": {
+    "pads": {
+      "from": {
+        "kind": "kicad",
+        "mod": "pj398sm.kicad_mod",
+        "count": 3
+      },
+      "unit": "mm",
+      "provenance": {
+        "tier": "community",
+        "method": "listing",
+        "date": "2026-10-20",
+        "source": "pj398sm.kicad_mod sha256 8ae08dd1e353c7fdbea2827c890ecd150e6f5f528598770bec85a8f2422b98cc, KiCad v5 library footprint (community, the parts-audit tier for a library footprint), its descr citing qingpu-electronics.com/en/products/WQP-PJ398SM-362.html. Cross-check, tools/py/board/kicad_fetch.py pads on the same file (KiCad frame, y down): S thru_hole rect at (0.000, 0.000) size 1.93x1.83 drill 1.22; T thru_hole circle at (0.000, 11.400) size 2.13x2.13 drill 1.43; TN thru_hole circle at (0.000, 3.100) size 2.13x2.13 drill 1.42"
+      }
+    },
+    "dims.body": {
+      "value": [9, 10.45],
+      "unit": "mm",
+      "provenance": {
+        "tier": "community",
+        "method": "listing",
+        "date": "2026-10-20",
+        "source": "pj398sm.kicad_mod F.Fab outline: x -4.5 to 4.5, y 2.03 to 12.48 (KiCad frame), so 9 x 10.45 mm footprint of the body, x then y"
+      }
+    }
+  }
+}

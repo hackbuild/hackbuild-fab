@@ -150,10 +150,12 @@
     },
     {
       "glob": [
-        "packages/catalog/data/kicad/**"
+        "packages/catalog/data/kicad/**",
+        "packages/catalog/data/connectors/pj398sm/pj398sm.kicad_mod",
+        "packages/catalog/data/connectors/pj398sm/LICENSE.md"
       ],
       "licence": "CC-BY-SA-4.0",
-      "note": "KiCad libraries, collection redistribution; KiCad's LICENSE.md sits beside them",
+      "note": "KiCad libraries, collection redistribution; KiCad's LICENSE.md sits beside them. The pj398sm footprint is a byte copy from github.com/KiCad/kicad-footprints at 7ebfa6b2 (2020-10-02), with that repository's LICENSE.md beside it",
       "decision": [
         "D-090"
       ]

@@ -6,7 +6,7 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, test } from "vitest";
 import { isThrownCommandError, sha256Hex } from "@hackbuild/spec";
-import { createCatalogLookup, isRowPath, loadCatalog, loadRow } from "../src/index";
+import { KICAD_RESOLVERS, createCatalogLookup, isRowPath, loadCatalog, loadRow } from "../src/index";
 
 const enc = new TextEncoder();
 const prov = (tier: string, source = "test") => ({ tier, method: tier === "vendor" ? "datasheet" : "derived", date: "2026-10-09", source });
@@ -78,5 +78,29 @@ describe("imported mesh winding (D-102, step 7)", () => {
     expect(e.hint).toContain("-6506");
     expect(e.hint).toContain("winding inverted");
     expect(e.hint).toContain("reverse triangle order");
+  });
+});
+
+// R1-flagship-access-switch-05: the PJ398SM row parses its pads from the
+// committed KiCad v5 footprint. The expected pads are typed from the
+// tools/py/board/kicad_fetch.py pads table pasted in the row (KiCad y down),
+// negated here because the reader puts the part frame +y up.
+describe("connectors/pj398sm from KiCad pad data", () => {
+  const dir = "connectors/pj398sm";
+  const f = new Map(["row.json", "pj398sm.kicad_mod"].map((n) => [`${dir}/${n}`, new Uint8Array(readFileSync(new URL(`../data/${dir}/${n}`, import.meta.url)))] as const));
+
+  test("the row loads with 3 pads S, TN, T and T at 11.4 mm from S along -y", () => {
+    expect(isRowPath(`${dir}/row.json`)).toBe(true);
+    const row = loadCatalog(f, { resolvers: KICAD_RESOLVERS }).rows.get("pj398sm");
+    expect(row?.kind).toBe("connector");
+    expect(row?.tier).toBe("community");
+    const pads = row?.fields["pads"]?.value as readonly { pad: string; name: string; x: number; y: number; w: number; h: number; drill: number }[];
+    expect(pads.map((p) => [p.name, p.x, p.y, p.w, p.h, p.drill])).toEqual([
+      ["TN", 0, -3.1, 2.13, 2.13, 1.42],
+      ["S", 0, -0, 1.93, 1.83, 1.22],
+      ["T", 0, -11.4, 2.13, 2.13, 1.43],
+    ]);
+    const at = (n: string) => pads.find((p) => p.name === n)!;
+    expect(at("T").y - at("S").y).toBeCloseTo(-11.4, 9);
   });
 });
