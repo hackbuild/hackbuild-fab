@@ -6,10 +6,14 @@
 // (packages/mesh/test/fixtures/imported-glb-oracle.json). The exits, counts
 // and volumes in goldens/part-build-import.json were computed at the first
 // run and pinned, as the card asks. The OpenSCAD cases run only where the
-// openscad binary is on PATH and print not run otherwise (D-153).
+// openscad binary is on PATH and print not run otherwise (D-153). The
+// piece fixtures (R1-rails-import-02) have no bench source: the test runs
+// make-pieces.mjs into a scratch directory and compares each sha256.
 
+import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, mkdtempSync, readdirSync, readFileSync, rmSync } from "node:fs";
+import { tmpdir } from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 import type { CommandInput, CommandOutput, Hash } from "@hackbuild/spec";
@@ -62,9 +66,22 @@ describe("import corpus", () => {
     for (const f of manifest.files) {
       expect(sha(path.join(ROOT, CORPUS, f.file))).toBe(f.sha256);
       expect(sums.get(f.file)).toBe(f.sha256);
-      if (existsSync(f.source)) expect(sha(f.source)).toBe(f.sha256);
+      if (path.isAbsolute(f.source) && existsSync(f.source)) expect(sha(f.source)).toBe(f.sha256);
     }
   });
+
+  it("regenerates the make-pieces.mjs rows byte for byte", () => {
+    const script = `${CORPUS}/make-pieces.mjs`;
+    const rows = manifest.files.filter((f) => f.source === script);
+    const out = mkdtempSync(path.join(tmpdir(), "hbf-pieces-"));
+    try {
+      execFileSync(process.execPath, [path.join(ROOT, script), "--out", out], { stdio: "pipe" });
+      expect(rows.map((f) => f.file).sort()).toEqual(readdirSync(out).sort());
+      for (const f of rows) expect(sha(path.join(out, f.file))).toBe(f.sha256);
+    } finally {
+      rmSync(out, { recursive: true, force: true });
+    }
+  }, 60_000);
 });
 
 describe("part.build --import on the cli", () => {
