@@ -432,6 +432,10 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-376 | corpus test regenerates script-sourced rows | decided | Testing, docs, milestones, registry |
 | D-377 | pile primitives at 16 segments | decided | Testing, docs, milestones, registry |
 | D-378 | floating cap is a hemisphere dome | decided | Testing, docs, milestones, registry |
+| D-379 | noUnion text keeps the part-count prefix | decided | Kernel, geometry |
+| D-380 | pairwise excludes groups that fail the audit, voids included | decided | Kernel, geometry |
+| D-381 | body attribution of union pieces by bounds containment | decided | Kernel, geometry |
+| D-382 | pieces and bodyPieces are null when the union is refused | decided | Kernel, geometry |
 
 ## House rules and process
 
@@ -4645,6 +4649,50 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. The floating-cap fixture's cap is a sphere of r 8 centred at z 22 and cut to z 22 and above, so its flat base sits at z 22, 2 mm above the stem top at z 20. |
 | Rationale | The brief puts the cap's lowest point at z 22. A flat base makes the gap exactly 2 mm whatever the tessellation. |
 | Evidence | Builder's shellGroups probe: the cap group's z min is 22 and the stem group's z max is 20 (computed). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-379 noUnion text keeps the part-count prefix
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. noUnion reads 'N of M parts fail the audit (x of y shell groups), first body/part#k' and 'the union of N parts is refused (y shell groups): ...'. The prefixes still count parts, with the group counts in brackets. |
+| Rationale | core/test/part-build-import.test.ts line 140 and imported-glb.test.ts line 173 match the part-count prefix. Keeping it leaves part-build unchanged until item 07 rewires it. |
+| Evidence | The builder's first wording, 'the union of 2 shell groups is refused', failed core part-build-import; after the rewording all 15 core tests pass, and the integrator's run of part-build-import, import-flag and root-references gives 19 passed. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-380 pairwise excludes groups that fail the audit, voids included
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. worstOverlap runs only over groups whose audit.ok is true. A negative-volume void group fails the audit and is left out. If the kernel still refuses a group, pairwise is null and a UNION warning is raised; stageImported does not throw. |
+| Rationale | The brief says 'groups that pass the audit'. The import audit reports rather than refuses, as the existing stageImported doc comment says. |
+| Evidence | packages/mesh/test/imported-pieces.test.ts: the void case gives pairwise {0, null} with only the cube compared (computed). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-381 body attribution of union pieces by bounds containment
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. Each body-union piece is assigned to the smallest union piece whose bounds hold it, with a tolerance of one grid step. A union piece with exactly one owning body takes that body; otherwise its body is null. |
+| Rationale | Any connected piece of a body's union lies inside exactly one piece of the full union. Bounds avoid a point-in-solid test; a piece nested inside a hollow piece is resolved by taking the smallest box. |
+| Evidence | packages/mesh/test/imported-pieces.test.ts: the three-body case gives pieces [null, 1500] (a and b overlap) and [c, 1500] (computed, mm3). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-382 pieces and bodyPieces are null when the union is refused
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. Neither pieces nor bodyPieces is filled when no union exists, and pairwise is null when the union verifies. |
+| Rationale | This follows the brief's step 5 types. A verified union lets CHK-PRT-03 use the union against the summed volumes. |
+| Evidence | packages/mesh/test/imported-pieces.test.ts: the corner-touch case asserts pieces null, bodyPieces null and pairwise set. |
 | Supersedes | new |
 | Milestone | none |
 
