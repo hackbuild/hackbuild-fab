@@ -895,6 +895,16 @@
     "dest": "designs/collar/legacy/collar.html"
   },
   {
+    "id": "collar.bench/geom-edge",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/collar/files/collar.html",
+    "sha256": "ef0864ab66ca40e2930d12aba4cab3159aa470f743eee533d052fc99f844fd46",
+    "fixes": [
+      "insetAt (collar.html lines 1215 to 1218), max(0, cham - z, cham - (thk - z)), ported to packages/geom/src/edge.ts edgeInset as a 45 deg chamfer on both faces taken by max; packages/geom/test/edge.test.ts holds the port to the formula at 9 heights (R1-engine-05)"
+    ],
+    "dest": "packages/geom/src/edge.ts"
+  },
+  {
     "id": "collar.bench/geom-raster-shapes",
     "kind": "copy",
     "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/collar/files/collar.html",
@@ -2752,6 +2762,16 @@
     "dest": "designs/knurl/legacy/knurl.html"
   },
   {
+    "id": "knurl.bench/knurl-8-edge",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/knurl/files/knurl.html",
+    "sha256": "90a7f98e708e3fa850e11ce3e58f3ab5fa612b8446f15b5f8a7efbde575e9af1",
+    "fixes": [
+      "elephant foot relief (knurl.html lines 1014 to 1015, the first footZ opened by foot) ported to packages/geom/src/edge.ts as the foot profile, size footZ and inset foot, both from the caller's profile (R1-engine-05)"
+    ],
+    "dest": "packages/geom/src/edge.ts"
+  },
+  {
     "id": "knurl.example-default/bench-outputs",
     "kind": "copy",
     "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/knurl/outputs/knurl/examples/knurl_default.json",
@@ -3518,6 +3538,16 @@
     "dest": null
   },
   {
+    "id": "pawl.parts/mk3-edge",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pawl/files/src/parts.py",
+    "sha256": "be215f3ddffda8569b5db293917d5657ae1037de62becb8fae3868119cbc2a18",
+    "fixes": [
+      "bed_relief (parts.py lines 82 to 88), a chamfer of size EFOOT on the bed edge, is the bottom chamfer profile of packages/geom/src/edge.ts; the size comes from the caller's profile, edge.ts carries no default (R1-engine-05)"
+    ],
+    "dest": "packages/geom/src/edge.ts"
+  },
+  {
     "id": "pawl.snap/m02-record",
     "kind": "canonical",
     "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pawlrun/snap.mjs",
@@ -4165,6 +4195,16 @@
       "clickElement2D arch helper (model.js lines 683 to 694) ported to reference/keys/click-spring-window/build.ts (M01-T07): two arches on vb 0 and t + g, 64 segments, without the 0.4 mm run-out into the end blocks, which the reference does not build"
     ],
     "dest": "reference/keys/click-spring-window/build.ts"
+  },
+  {
+    "id": "pip.model/haft-9-edge",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft-src/src/model.js",
+    "sha256": "95a996433e54d586cdaa970a844ee8f8f02196f80b23ba36983c95ed456d1f34",
+    "fixes": [
+      "chamferTop (model.js lines 624 to 635), a stepped top chamfer one layer per step, ported to packages/geom/src/edge.ts as the chamfer profile d(z); the per layer bands it cut are the R1-engine-06 stack generator's (R1-engine-05)"
+    ],
+    "dest": "packages/geom/src/edge.ts"
   },
   {
     "id": "pip.model/haft-9-port-flex",

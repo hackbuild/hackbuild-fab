@@ -167,5 +167,15 @@
     "sha256": "ef0864ab66ca40e2930d12aba4cab3159aa470f743eee533d052fc99f844fd46",
     "fixes": [],
     "dest": "packages/ui-core/src/surface/canvas-surface.ts"
+  },
+  {
+    "id": "collar.bench/geom-edge",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/collar/files/collar.html",
+    "sha256": "ef0864ab66ca40e2930d12aba4cab3159aa470f743eee533d052fc99f844fd46",
+    "fixes": [
+      "insetAt (collar.html lines 1215 to 1218), max(0, cham - z, cham - (thk - z)), ported to packages/geom/src/edge.ts edgeInset as a 45 deg chamfer on both faces taken by max; packages/geom/test/edge.test.ts holds the port to the formula at 9 heights (R1-engine-05)"
+    ],
+    "dest": "packages/geom/src/edge.ts"
   }
 ]
