@@ -569,6 +569,11 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-513 | Owner profile guard extended to the new slicers | decided | Rails, virtual print |
 | D-514 | Version regexes for the unverified slicer rows are inferred from the Flash Studio log line | decided | Rails, virtual print |
 | D-515 | probe reports cliVersion unknown | decided | Rails, virtual print |
+| D-516 | The finger pot (GIB, canonical) stands in for the BLOCKS SLIDER fixture | decided | UI |
+| D-517 | What WidgetDecl.fn names for drive.touch, drive.fader and readout.signal | decided | UI |
+| D-518 | The fader divider and ADC formulas live in ui-core and are held to circuit by test | decided | UI |
+| D-519 | Charge-release return rail taken from the drive level | decided | UI |
+| D-520 | Widget stimuli keyed by port and by pot prefix | decided | UI |
 
 ## House rules and process
 
@@ -6289,6 +6294,61 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. `probe` in `tools/slice/orca-family.mjs` never launches the slicer, so its `cliVersion` is always `unknown`. Only a slice log names the CLI version, and the run record carries it. |
 | Rationale | The brief says probe works without slicing, and the CLI prints its version only in the `--debug 3` log of a run. |
 | Evidence | `tools/slice/orca-family.mjs` `probe`; `tools/test/orca-family.test.mjs` missing-app probe test (measured). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-516 The finger pot (GIB, canonical) stands in for the BLOCKS SLIDER fixture
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `drive.fader` is proven on the GIB finger-pot case in `packages/archetypes/test/legacy/gib.json`, with the original's `simFinger` recorded in place. No BLOCKS SLIDER build was used. |
+| Rationale | MECHANISMS.md names GIB `buildFinger` as the canonical finger pot, with BLOCKS SLIDER as its brick form. blocks.md row 453 lists the BLOCKS slider archetype variants as MISSING, and the BOSS/BLOCKS pot element was never ported into circuit. |
+| Evidence | `knowledge/designs/MECHANISMS.md` line 48; `knowledge/designs/blocks.md` lines 284 to 288 and 453; `fab-knowledge/originals/gib/files/src/src/part2.js` lines 431 to 436. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-517 What WidgetDecl.fn names for drive.touch, drive.fader and readout.signal
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. For `drive.touch`, fn is `CHK-NET-29`. For `drive.fader`, fn is the finger-pot metric prefix, for example `finger-pot.0`. For `readout.signal`, fn is a hookup port id. The `spec/widgets.ts` fn doc comment says so. |
+| Rationale | None of the three calls a claim function or a ContactFn, and `WidgetDecl.inputs` holds only numbers or param refs, so fn is the only string binding available. |
+| Evidence | `spec/widgets.ts` `WidgetDecl.fn`; `packages/ui-core/src/widgets/touch.ts`, `fader.ts` and `signal.ts`. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-518 The fader divider and ADC formulas live in ui-core and are held to circuit by test
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `wiperV` and `adcCounts` are written in ui-core, and `widgets-fader.test.ts` holds them to circuit `dividerV` and `fullScaleCounts`. Touch reuses `chargeReleaseLevels` from `drive.ts`. |
+| Rationale | The bake cannot import `@hackbuild/circuit`, whose index loads manifold. `drive.ts` already follows this pattern against `floatPoint`. `simFinger` had no TS port before this change. |
+| Evidence | `packages/ui-core/src/drive/drive.ts` header comment; `packages/ui-core/package.json` lists circuit as a devDependency only. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-519 Charge-release return rail taken from the drive level
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. A charge-release pin returns to VDD when it is driven low and to ground when it is driven high. |
+| Rationale | The CHK-NET-29 record does not name the return port. The read model drives the pin away from its active level, and the PIP touch pads (drive low, 3V3 common) agree with the golden points (computed). |
+| Evidence | `spec/circuit.ts` ReadModel charge-release drive doc; `reference/electrical/pip-drive` `chase.ts` scene.drive return 3V3 for touch. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-520 Widget stimuli keyed by port and by pot prefix
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `WidgetBuild.closed` lists the hookup ports that are closed now. `WidgetBuild.positions` is keyed by finger-pot prefix, so a fader and a signal readout of the same pot always agree. |
+| Rationale | Models do not see each other's declarations; keying the position by the pot itself gives one source for both widgets. |
+| Evidence | `packages/ui-core/src/widgets/registry.ts` `WidgetBuild`. |
 | Supersedes | new |
 | Milestone | none |
 
