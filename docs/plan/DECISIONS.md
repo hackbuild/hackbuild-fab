@@ -495,6 +495,12 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-439 | useBench reads the hook from the BENCH global | decided | UI |
 | D-440 | tsc -b leaves out the ui index; types go to dist/types | decided | Repos, packaging, toolchain, licensing |
 | D-441 | the ui exports test builds the package before importing it | decided | Testing, docs, milestones, registry |
+| D-442 | Cross-package 3mf tests and the contract type test live in packages/checks | decided | Repos, packaging, toolchain, licensing |
+| D-443 | Fab narrows the wider vendored contract types at the two glue sites | decided | Repos, packaging, toolchain, licensing |
+| D-444 | packages/3mf keeps data/, seed/ and scripts/ beside the shim | decided | Repos, packaging, toolchain, licensing |
+| D-445 | split-fresh compares by repacking the named commit, plus a HEAD js/ tree check | decided | Testing, docs, milestones, registry |
+| D-446 | The lineage dest of the thin-wall row names the vendored tgz | decided | Testing, docs, milestones, registry |
+| D-447 | The hackbuild-3mf branch for R1-engine-03 is committed outside fab and not merged there | decided | Repos, packaging, toolchain, licensing |
 
 ## House rules and process
 
@@ -5401,6 +5407,72 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. `packages/ui/test/exports.test.ts` runs the vite build and the vue-tsc emit in child processes (NODE_ENV production), then imports `@hackbuild/ui` through a variable specifier. |
 | Rationale | Building first means the test never reads a stale dist, so a mutant in `src/index.ts` is caught. The variable specifier keeps `tsc -p tsconfig.tests.json` passing in CI, where the typecheck runs before any build. |
 | Evidence | Deleting the DrivePad export failed 2 of 5 tests (measured, builder); `npx tsc -p tsconfig.tests.json --noEmit` exit 0 on the merged tree (measured, integrator). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-442 Cross-package 3mf tests and the contract type test live in packages/checks
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The canonical, mesh-parity and skeleton tests moved from `packages/3mf/test` to `packages/checks/test` (`canonical-3mf`, `mesh-parity-3mf`, `skeleton-3mf`). The SlicerPreset type test is `packages/checks/src/3mf/contracts.ts`, compiled by `tsc -b`, not a test file in `packages/3mf`. |
+| Rationale | With the 3mf edge exception gone, `packages/3mf` (edges []) may not import spec, mesh or profile, even from tests. checks is the lowest tier that sees spec, profile, mesh and 3mf. A type test inside a vitest file is never compiled by `tsc -b`, so it would catch nothing. |
+| Evidence | `tools/tiers.mjs` scans test/ and devDependencies for edges; 0 failures on the merged tree (measured, integrator). Removing readonly bedType from the vendored `contracts.d.ts` failed tsc at `contracts.ts` line 13 (measured, builder). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-443 Fab narrows the wider vendored contract types at the two glue sites
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `packages/pipeline/src/build.ts` export3mf casts artifactHash (string to spec ArtifactHash) and warnings to spec BuildWarning; `packages/checks/src/defs/3mf/validator.ts` annotates with the vendored CheckResult before the existing cast to Finding. hackbuild-3mf `contracts.ts` is unchanged. |
+| Rationale | The vendored copy types Fix.patch and BuildWarning.bound as unknown and brands Hash with its own unique symbol, so they are not assignable to spec. The vendored code never sets patch or bound (grep), so narrowing is sound; copying PatchEdit and Bound into hackbuild-3mf would add a large type tree to the public package. |
+| Evidence | Without the casts tsc failed at `build.ts:565` and `validator.ts:16` (measured, builder). `packages/checks/src/3mf/contracts.ts` asserts the spec types fit the vendored ones; `npx tsc -b` exit 0 on the merged tree (measured, integrator). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-444 packages/3mf keeps data/, seed/ and scripts/ beside the shim
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The harvest script and the data files stay in fab; `packages/3mf/test/vendored.test.ts` holds them equal to the vendored copies (`filament_presets.json` after mapping save paths to file names). |
+| Rationale | `tools/py/orca3mf.py`, the harvest tools and reference builds read `packages/3mf/data` and seed paths; moving them is outside R1-engine-03. |
+| Evidence | `git grep packages/3mf/data` hits in tools/py and `reference/sheet/ogee16-r16p-plates/build.ts`; `npx vitest run packages/3mf` 14 files, 258 pass on the merged tree (measured, integrator). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-445 split-fresh compares by repacking the named commit, plus a HEAD js/ tree check
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `tools/test/split-fresh.test.mjs` archives the hackbuild-3mf commit named by the sha7 in the tgz name, runs npm pack, and compares sha256 with the vendored file. A second test fails when the sibling HEAD js/ tree differs from that commit's. |
+| Rationale | npm pack of a fixed commit gave identical bytes twice (computed), so the hash is checkable. The HEAD check is the brief's literal requirement; it fails against hackbuild-3mf main until aa3a173 is merged there. |
+| Evidence | Two packs gave 5b5d06a3... (computed, builder). On the merged fab main with sibling hackbuild-3mf at main 73e1120, the HEAD test fails with the merge hint, 2 pass 1 fail (measured, integrator); the old split-fresh test was already red against that sibling on the pre-merge main (measured, integrator). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-446 The lineage dest of the thin-wall row names the vendored tgz
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. In `lineage/pip.model.json`, row pip.model/haft-9-thin-wall has dest `tools/vendor/hackbuild-3mf-0.1.0-aa3a173.tgz`, and a fix line records the move. Each vendor bump updates this dest. |
+| Rationale | `lineage.test.mjs` requires every dest to exist in the repo; the code now lives in hackbuild-3mf `js/src/overrides.ts`. |
+| Evidence | lineage.test 'every dest exists' failed before the edit and passed after (measured, builder); `node --test tools/test/lineage.test.mjs` green on the merged tree (measured, integrator). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-447 The hackbuild-3mf branch for R1-engine-03 is committed outside fab and not merged there
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. hackbuild-3mf commit aa3a173 sits on branch r1/R1-engine-03-r1 in worktree `wt/R1-engine-03-r1-3mf`, on top of main 73e1120, not pushed and not merged into hackbuild-3mf main. |
+| Rationale | The brief's step 2 needs js/src brought up to date (fab had gained the thin-wall override) and a commit for the tgz sha7; the brief names a separate worktree for ../hackbuild-3mf. The fab integrator writes only fab main. |
+| Evidence | aa3a17395c6c1fcc5a9ff24f7cf70bf31eac3dfe; `git -C hackbuild-3mf branch --contains aa3a173` lists only r1/R1-engine-03-r1 (measured, integrator). |
 | Supersedes | new |
 | Milestone | none |
 
