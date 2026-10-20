@@ -515,6 +515,8 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-459 | Pappus is applied to the section polygon area, not the true circle | decided | Kernel, geometry |
 | D-460 | Lineage canonical rows: loft from TENON part2.js, sweep from the geometry prototype | decided | House rules and process |
 | D-461 | Sweep end tangents follow the segment direction | decided | Kernel, geometry |
+| D-462 | Profile corner lineage gets its own subject | decided | House rules and process |
+| D-463 | ogee16.printed port rows stay copy | decided | House rules and process |
 
 ## House rules and process
 
@@ -5641,6 +5643,28 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. In `sweepMesh` each end section is normal to its first or last path segment, and each interior section lies on the bisector of its two segments. There is no end tangent option. |
 | Rationale | The input stays a plain polyline. On the 90 deg arc in 48 steps the end sections tilt by half a step, and the volume stays -0.0118 percent from Pappus (computed). |
 | Evidence | `packages/mesh/src/routes/sweep.ts` `tangents()`; `packages/mesh/test/sweep.test.ts`. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-462 Profile corner lineage gets its own subject
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The roundCorner port row is `geom.profile-corner/tenon-src`, kind canonical, in a new fragment `lineage/geom.profile-corner.json`. It is no longer a row under `tenon.kernel`. |
+| Rationale | Under `tenon.kernel`, kind copy breaks the D-156 rule (a file canonical in `mesh.revolve` and `mesh.loft` cannot be a copy elsewhere), and kind canonical breaks one canonical row per subject. A new subject per port follows the precedent `mesh.loft` set in R1-engine-08 (D-460). |
+| Evidence | `tools/test/lineage.test.mjs`: with `tenon.kernel` kind canonical, "one canonical row per subject" failed; with the new subject, 21 of 21 pass (computed, 2026-10-20). Precedent: `lineage/mesh.loft.json` (commit d78bbcd). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-463 ogee16.printed port rows stay copy
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `ogee16.printed/geom-profile-chamfer` and `ogee16.printed/mesh-junction` keep kind copy under their own subject. |
+| Rationale | `printed.scad` is canonical only under `ogee16.printed` (the r16p row), and a copy under the same subject does not break D-156. `m02-proud-head` already does this. |
+| Evidence | A grep of `lineage/*.json` for `printed.scad` finds one canonical row, `ogee16.printed/r16p`; lineage tests pass, 21 of 21 (computed, 2026-10-20). |
 | Supersedes | new |
 | Milestone | none |
 
