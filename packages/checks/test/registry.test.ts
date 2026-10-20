@@ -4,8 +4,9 @@
 // left the union; the seed carries the card's retargets, needs corrections
 // and joint and assertion selections. The expected tables below are the
 // card's words (milestones/M04-checks-project.md M04-T01 steps 2 to 4),
-// copied, never derived from the code under test. The total is read from
-// docs/plan/counts.json, which tools/counts.mjs generates (D-010).
+// copied, never derived from the code under test. The total is the seed's
+// row count; tools/test/counts.test.mjs holds the generated count to the
+// same seed (D-010).
 
 import { readFileSync } from "node:fs";
 import { describe, expect, test } from "vitest";
@@ -15,7 +16,6 @@ import { CHECK_MODULES, defineCheck, loadSeed, registerChecks, skipMilestone, ty
 
 const read = (rel: string): string => readFileSync(new URL(`../../../${rel}`, import.meta.url), "utf8");
 const seed = JSON.parse(read("packages/checks/seed/checks.seed.json")) as { note: string; checks: Record<string, unknown>[] };
-const counts = JSON.parse(read("docs/plan/counts.json")) as { checks: { total: number; registered: { total: number } } };
 const defs = registerChecks({ seed }, CHECK_MODULES);
 const byId = new Map(defs.map((d) => [d.id as string, d]));
 
@@ -33,7 +33,6 @@ describe("registry", () => {
   test("every seeded row registers once, with semver, a dated origin, a legal kind and KernelId needs", () => {
     console.info(`registered ${defs.length} of ${seed.checks.length} seed rows`);
     expect(defs.length).toBe(seed.checks.length);
-    expect(defs.length).toBe(counts.checks.registered.total);
     expect(new Set(defs.map((d) => d.id)).size).toBe(defs.length);
     for (const d of defs) {
       expect(d.version, d.id).toMatch(/^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$/);

@@ -2,6 +2,13 @@
 // table (D-010). Repo counts are recomputed on each run; rows whose source
 // lives outside the repo come from tools/counts.external.json.
 //
+// counts.json and Appendix B are integrator-only (R1-rails-registries-02):
+// a builder branch never commits either; the integrator runs this after
+// each merge and commits the result, and `npm run derived:counts` (CI on
+// main) fails while they lag. No package test reads counts.json; the
+// cross-check of these counts against the seed and def files (D-010) is
+// tools/test/counts.test.mjs.
+//
 //   node tools/counts.mjs                 write counts.json and Appendix B
 //   node tools/counts.mjs --external      recheck snapshot rows whose source exists here; exit 1 on a mismatch
 //   node tools/counts.mjs --check-prose   list hand-typed counted numbers in docs/ and READMEs (warnings, exit 0)
