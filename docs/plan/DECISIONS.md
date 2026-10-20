@@ -450,6 +450,14 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-394 | EvidenceRef shape | decided | Constraints and checks |
 | D-395 | Claim range, unit and id rules run outside zod | decided | Constraints and checks |
 | D-396 | A zero-width claim band is legal | decided | Constraints and checks |
+| D-397 | access-switch goldens accepted after the jack seat | decided | Reference, profile, archetypes |
+| D-398 | Jack bore opens up through the rim (U), unlike BAFFLE's closed bore | decided | Reference, profile, archetypes |
+| D-399 | Jack turned a quarter turn about its axis | decided | Reference, profile, archetypes |
+| D-400 | Jack physical numbers as six new inferred profile rows | decided | Reference, profile, archetypes |
+| D-401 | Leg slot drawn at the KiCad pad drill | decided | Reference, profile, archetypes |
+| D-402 | key.R.pads emitted by the click archetype | decided | Reference, profile, archetypes |
+| D-403 | R.leads written as rho L / A inside jack.ts | decided | Reference, profile, archetypes |
+| D-404 | Metric record rerecorded, including claim.press rows main had left out | decided | Reference, profile, archetypes |
 
 ## House rules and process
 
@@ -4861,6 +4869,94 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. R1-engine-10: a claim band with lo == nominal == hi validates. |
 | Rationale | The brief's rule is lo <= nominal <= hi, which is not strict. |
 | Evidence | `packages/chase/test/claims.test.ts` test "accepts a zero-width band at the nominal". |
+| Supersedes | new |
+| Milestone | none |
+
+### D-397 access-switch goldens accepted after the jack seat
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The access-switch goldens are accepted at buildHash 90e3873d after reading the diff: the body mesh moves by design (volume 42885.147 to 40990.216 mm3, computed) where the jack bore, pocket and sockets cut it; conductor.lead0 and lead1 become leadT and leadS with the socketT and socketS bodies and their walls; every other body keeps its mesh hash and volume. graph.jsonl rerecorded on access-switch lines only. The builder had left the set for a person under D-251; this entry makes that call under the delegation (D-152, D-274 form). |
+| Rationale | The move is the item itself (seating the jack), confined to the bodies the jack touches, and the checks hold on the new geometry. |
+| Evidence | Per-body meshHashes diff between main and the proposed set; hbf check.run on the branch 47 pass, 1 warn (CHK-PRT-05, also on main), 0 fail, 55 skip; reference/keys/access-switch 21 of 21; project-graph 11 of 11 (computed, 2026-10-20). The accepted set equals the builder proposed set. Not run: validate_3mf --overlap (export gate), the virtual slice, any print, any render look. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-398 Jack bore opens up through the rim (U), unlike BAFFLE's closed bore
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. Below the axis the bore is BAFFLE R3's stepped circle. Above the axis it is a straight 6.2 mm slot up to the rim top. |
+| Rationale | The legs drop into vertical slots in printed sockets. With a closed bore the jack would have to slide outward through the wall, and its legs could not reach sockets placed behind the body. The rim sits over the wall, so the bushing could not drop in either. |
+| Evidence | baffle-r3 model.js lines 593 to 596 and 635 to 639. jack.ts features pocket.jackBore0 to 4 and pocket.jackBoreU. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-399 Jack turned a quarter turn about its axis
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The pads lie along x at the axis height (world x = -(y_part + 6.48), z = axis + x_part). This is a proper rotation of the KiCad front view, not a mirror. |
+| Rationale | In the KiCad orientation the pads would stand 11.4 mm tall. With the jack top held under the 13.68 mm body top that does not fit, and it would not leave all three legs on one trace level. |
+| Evidence | jack.ts toWall. Test: T socket 11.4 mm from S along x. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-400 Jack physical numbers as six new inferred profile rows
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. Added jack.boreD 6.2 and jack.panelT 3.6 (BAFFLE R3), jack.bodyDepth 11 (KERF's drawn box), and jack.clr 0.3, jack.socketWall 0.525 and jack.socketLen 3.0 (PIP layout.js line 39). |
+| Rationale | Every physical number comes from profile. The PJ398SM catalog row has no bushing, depth or leg data. |
+| Evidence | packages/profile/data/constants.json. packages/profile/test/origins.test.ts reads each cited line through canonical lineage. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-401 Leg slot drawn at the KiCad pad drill
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The S and T slots are 1.22 and 1.43 mm wide (the footprint drills, community). |
+| Rationale | The leg section and length are not in any source in the repo. The drill is the only bound on record. Grip is unknown until a jack sits in a print. |
+| Evidence | PJ398SM_PADS in jack.ts. README jack seat section. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-402 key.R.pads emitted by the click archetype
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. One line in packages/archetypes/src/pip/click.ts emits the existing clickSwitch pads value as metric key.R.pads. |
+| Rationale | R.closed needs R.pads, and the formula already lives in the archetype. Re-deriving it in build.ts would make a second copy of the same calculation. |
+| Evidence | hbf parity on buttons/click-spring and access-switch/coupon: equal on all four goldens. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-403 R.leads written as rho L / A inside jack.ts
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. jack.ts computes ohmCm x 10 x L / A itself, and the reference test holds the result equal to @hackbuild/profile sectionResistance. |
+| Rationale | BUILD_IMPORTS forbids @hackbuild/profile inside the build sandbox. |
+| Evidence | The test 'R.closed is the key's switch and pads plus the leads, and R.leads equals sectionResistance over the features'. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-404 Metric record rerecorded, including claim.press rows main had left out
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. Rerecorded packages/checks/test/metric-gates/builds.json and added INFORMATIONAL reasons for claim.press.*, jack.* and R.leads/R.closed. |
+| Rationale | The rerecord is needed for the new metrics. It also showed that R1-flagship-access-switch-04 never recorded its claim metrics, so those rows had no reason entries. |
+| Evidence | The builds.json diff is 40 added lines, no deletions. packages/checks 558 passed. |
 | Supersedes | new |
 | Milestone | none |
 
