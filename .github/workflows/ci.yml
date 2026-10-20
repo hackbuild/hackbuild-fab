@@ -134,10 +134,11 @@ jobs:
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: node tools/eval/vtracer/run.mjs tools/corpus/inlay/vtracer
   unit:
-    # level 1 of TESTING.md (D-152), M00-T01 step 8. The epoch is pinned as
-    # in exit-a: the flex-pair goldens (expected/build.json buildHash) are
-    # taken under 315532800, and core uris and skeleton compare against them.
-    # The 3mf agreement, board generator and split tests spawn uv.
+    # level 1 of TESTING.md (D-152), M00-T01 step 8: the node tests. The
+    # package, core and kernel vitest files run once, in exit-a, from the
+    # root config (tools/ci/test-sets.mjs prints any file only a workspace
+    # run would collect). The epoch is pinned as in exit-a. The pytest
+    # runner test spawns uv.
     runs-on: ubuntu-24.04
     env:
       SOURCE_DATE_EPOCH: "315532800"
@@ -161,9 +162,6 @@ jobs:
           enable-cache: true
           cache-dependency-glob: tools/py/uv.lock
       - run: npm ci
-      - name: owner-file tests not run here
-        run: node .github/scripts/owner-files.mjs report
-      - run: npm test --workspaces --if-present -- $(node .github/scripts/owner-files.mjs excludes)
       - name: every tools node test (a test reading a gitignored or host-only file skips with its reason)
         if: ${{ !cancelled() }}
         run: npx tsc -b && node --test tools/test/*.test.mjs packages/*/seed/test/*.test.mjs knowledge/test/*.test.mjs
@@ -198,8 +196,8 @@ jobs:
       - run: npx tsc -b
       - name: owner-file tests not run here
         run: node .github/scripts/owner-files.mjs report
-      - name: package, reference and core tests
-        run: npx vitest run packages reference core $(node .github/scripts/owner-files.mjs excludes)
+      - name: package, reference, core and kernel tests
+        run: npx vitest run packages reference core kernel $(node .github/scripts/owner-files.mjs excludes)
       - if: ${{ !cancelled() }}
         run: npx --no-install hbf part.build reference/keys/flex-pair --json
       - if: ${{ !cancelled() }}
