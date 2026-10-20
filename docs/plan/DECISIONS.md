@@ -425,6 +425,9 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-369 | mesh.overlap lineage points at the original inlay validate_3mf.py | decided | Kernel, geometry |
 | D-370 | a zero or other out-of-range import count still parses | decided | Agent surface |
 | D-371 | readImports exported for its test | decided | Agent surface |
+| D-372 | vue-tsc runs on @typescript/typescript6 beside TS 7 | decided | Repos, packaging, toolchain, licensing |
+| D-373 | vue-tsc 3.3.13 rather than 3.3.12 | decided | Repos, packaging, toolchain, licensing |
+| D-374 | licence rows for the vue-tsc toolchain cite D-043 | decided | Repos, packaging, toolchain, licensing |
 
 ## House rules and process
 
@@ -4561,6 +4564,39 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. `readImports` in `core/src/main.ts` is a named export. |
 | Rationale | Every other path to the parser goes through main and the strict zod schema, which refuses `pieces` until rails item R1-rails-import-07, so the item 06 done test could not run through main. |
 | Evidence | `core/test/import-flag.test.ts` imports `readImports` from `../src/main.js`; 4 of 4 pass on the merged tree (measured, 2026-10-20). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-372 vue-tsc runs on @typescript/typescript6 beside TS 7
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. Single-file components are type-checked by vue-tsc 3.3.13 on `typescript6` (`npm:@typescript/typescript6@6.0.2`, which carries `@typescript/old` 6.0.3), started only through `tools/vue-check.mjs`. typescript 7.0.2 stays the compiler for `tsc -b`. Drop the alias once a TS 7.1 API lets vue-tsc run on TS 7. |
+| Rationale | TS 7.0.2 has no classic JS API, so vue-tsc cannot run on it. Plain `npx vue-tsc` would load the TS 7 native launcher. The alias avoids the nested-install fallback the brief describes. |
+| Evidence | Builder run before the fixes: exit 2 with 3 errors (Legend.vue 24, Rail.vue 46, ParamRail.vue 49); after: exit 0 in 5.0 to 5.3 s wall at load 68 (measured, builder worktree). A mutant on the tsc path fails the test (measured, builder). Dropping at TS 7.1 is inferred from research-build-speed.md. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-373 vue-tsc 3.3.13 rather than 3.3.12
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. vue-tsc is pinned at 3.3.13, published 2026-10-10 (vendor), 10 days old at the pin. |
+| Rationale | No pin-age rule was found in RULES.md, CLAUDE.md, .npmrc or PLAN.md (grep). The brief says both versions behave the same here, and 3.3.13 is the version the scout trial ran. |
+| Evidence | A grep for "two weeks" and minimum-release-age found nothing that applies; .npmrc holds only save-exact and engine-strict (measured, builder). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-374 licence rows for the vue-tsc toolchain cite D-043
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The 11 new `tools/licences.json` rows are status adopted, load dev-only, decision `["D-043"]`, the same as other transitive dev-toolchain rows. The vue-tsc, typescript6 and `@typescript/old` rows may add D-372 in a later licences change. |
+| Rationale | D-372 had no id when the rows were written, and D-043 is the decision every other dev-toolchain row cites. |
+| Evidence | The `tools/licences.json` diff adds lines only (154, counted); `node tools/licences.mjs --check` passes over 382 rows on the merged tree (measured, 2026-10-20). |
 | Supersedes | new |
 | Milestone | none |
 
