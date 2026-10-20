@@ -33,7 +33,7 @@ import { fileURLToPath } from "node:url";
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..");
 
 /** The vitest include roots of vitest.config.ts. */
-export const TEST_FILE = /^(spec\/test|tools\/test|tools\/test-support|tools\/parity|packages\/[^/]+\/test|reference\/.+\/test|designs\/.+\/test|core\/test)\/.+\.test\.ts$/;
+export const TEST_FILE = /^(spec\/test|tools\/test|tools\/test-support|tools\/parity|packages\/[^/]+\/test|reference\/.+\/test|designs\/.+\/test|core\/test|kernel\/test)\/.+\.test\.ts$/;
 
 const ORIGINALS_IMPORT = /import\s*\{([^}]*)\}\s*from\s*["'][./]*tools\/test-support\/originals-root(?:\.js|\.ts)?["']/g;
 const READERS = new Set(["originalPath", "originalsRoot", "localOriginal"]);

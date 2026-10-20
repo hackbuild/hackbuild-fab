@@ -15,6 +15,6 @@ export default defineConfig({
     // tsc -b before any test, so tests never run against a stale dist (core/test/global-setup.ts).
     globalSetup: ["core/test/global-setup.ts"],
     testTimeout,
-    include: ["spec/test/**/*.test.ts", "tools/test/**/*.test.ts", "tools/test-support/**/*.test.ts", "tools/parity/**/*.test.ts", "packages/*/test/**/*.test.ts", "reference/**/test/**/*.test.ts", "designs/**/test/**/*.test.ts", "core/test/**/*.test.ts"],
+    include: ["spec/test/**/*.test.ts", "tools/test/**/*.test.ts", "tools/test-support/**/*.test.ts", "tools/parity/**/*.test.ts", "packages/*/test/**/*.test.ts", "reference/**/test/**/*.test.ts", "designs/**/test/**/*.test.ts", "core/test/**/*.test.ts", "kernel/test/**/*.test.ts"],
   },
 });

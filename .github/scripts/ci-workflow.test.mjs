@@ -59,15 +59,15 @@ test("the parity reference loop runs every reference before it fails", () => {
 });
 
 test("hosted vitest runs exclude the owner files; the owner-files job runs them by hand only", () => {
-  for (const job of ["unit", "exit-a"]) {
-    const r = runs(job).join("\n");
-    assert.ok(r.includes("owner-files.mjs report"), `${job} prints the not-run list`);
-    assert.ok(r.includes("$(node .github/scripts/owner-files.mjs excludes)"), `${job} excludes the owner files`);
-  }
+  const r = runs("exit-a").join("\n");
+  assert.ok(r.includes("owner-files.mjs report"), "exit-a prints the not-run list");
+  assert.ok(r.includes("$(node .github/scripts/owner-files.mjs excludes)"), "exit-a excludes the owner files");
   for (const line of text.split("\n").filter((l) => /npx vitest run (packages|designs|tools\/parity|core)( |$)/.test(l))) {
     assert.ok(line.includes("owner-files.mjs excludes"), `excludes on: ${line.trim()}`);
   }
   const job = ci.jobs["owner-files"];
+  assert.ok(!runs("unit").some((r) => /vitest|npm test/.test(r)), "unit runs no vitest; exit-a runs the package, core and kernel files once");
+  assert.ok(!/npm test --workspaces/.test(text), "no step runs every workspace test script");
   assert.equal(job.if, "github.event_name == 'workflow_dispatch'");
   assert.deepEqual(job["runs-on"], ["self-hosted", "macOS"]);
   assert.ok(job.steps.some((s) => (s.run ?? "").includes("$(node .github/scripts/owner-files.mjs list)")));
@@ -75,10 +75,11 @@ test("hosted vitest runs exclude the owner files; the owner-files job runs them 
 
 // BR-03: a job whose steps reach uv sets it up first. Direct `uv run` steps
 // are found by text; the jobs below reach uv through the code they run: the
-// 3mf agreement, board generator and split tests (unit, exit-a), the board
-// references of the cold rebuild (cold), the sprue parity test and the
-// reference loop (parity), the board builds (exit-m06-m08).
-const SPAWNS_UV = { unit: "npm test", "exit-a": "npx vitest", cold: "node tools/cold-rebuild.mjs", parity: "npx vitest run tools/parity", "exit-m06-m08": "hbf part.build reference/boards" };
+// pytest runner test (unit), the 3mf agreement, board generator and split
+// tests (exit-a), the board references of the cold rebuild (cold), the
+// sprue parity test and the reference loop (parity), the board builds
+// (exit-m06-m08).
+const SPAWNS_UV = { unit: "node --test tools/test/", "exit-a": "npx vitest", cold: "node tools/cold-rebuild.mjs", parity: "npx vitest run tools/parity", "exit-m06-m08": "hbf part.build reference/boards" };
 
 test("every job that reaches uv sets up uv before the first step that does", () => {
   const isSetup = (s) => /^astral-sh\/setup-uv@/.test(s.uses ?? "");
