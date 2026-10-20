@@ -1,8 +1,10 @@
 // Solvers an archetype needs from a package it may not import (tier 1
 // has no same-tier edges, M06 "Package placement"). The click spring's FE
-// curve lives in packages/sim (SNAPFE, M01-T01); core registers it here at
-// load, registration by inversion (D-044). An archetype that needs a
-// solver nobody registered refuses with E_KERNEL naming the registrar.
+// curve lives in packages/sim (SNAPFE, M01-T01); registerSolvers in
+// packages/pipeline/src/solvers.ts registers it here, called by core at
+// load and by a page build, registration by inversion (D-044). An
+// archetype that needs a solver nobody registered refuses with E_KERNEL
+// naming the registrar.
 
 import { commandError, type ProfileLookup } from "@hackbuild/spec";
 
@@ -41,7 +43,7 @@ export type ClickSolver = (s: ClickSpringIn, profile: ProfileLookup) => ClickCur
 
 let clickSolver: ClickSolver | undefined;
 
-/** Core calls this once at load with the sim FE. A second call replaces the first. */
+/** registerSolvers calls this once with the sim FE. A second call replaces the first. */
 export function provideClickSolver(fn: ClickSolver): void {
   clickSolver = fn;
 }
@@ -50,7 +52,7 @@ export function clickCurve(s: ClickSpringIn, profile: ProfileLookup): ClickCurve
   if (clickSolver === undefined) {
     throw commandError({
       code: "E_KERNEL", path: "/solvers/click", got: "none", expected: "the sim click-spring FE",
-      hint: "no click-spring solver is registered; core registers packages/sim at load, so call the archetype through core", record: "viewer-sim",
+      hint: "no click-spring solver is registered; call registerSolvers from @hackbuild/pipeline (core and createPageBuild call it) before the archetype", record: "viewer-sim",
     });
   }
   return clickSolver(s, profile);

@@ -9,6 +9,7 @@ export { AUTHOR_CIRCLE_SEGMENTS, AUTHOR_CORNER_SEGMENTS, deriveTargets, machineV
 export { mergeApplied, type MergeCtx } from "./applied-merge.js";
 export { PACKAGE_KINDS, kernelKindsOf, type KernelKinds } from "./kinds.js";
 export { draftProblem, plainProblem } from "./draft.js";
+export { registerSolvers, simClickCurve } from "./solvers.js";
 export { defaultsOf, resolveParams, type Values } from "./params.js";
 export {
   M00_PART_CHECKS, gatedSkips, m00Versions, preconditionOrder, registryHashOf, runPartChecks, seedRows, stamp,

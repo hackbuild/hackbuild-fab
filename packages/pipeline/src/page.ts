@@ -29,6 +29,7 @@ import {
 } from "./build.js";
 import { kernelKindsOf } from "./kinds.js";
 import { resolveParams, type Values } from "./params.js";
+import { registerSolvers } from "./solvers.js";
 import { stageDesign } from "./stage.js";
 
 // A host global in browsers and node 17 on; this tier carries no DOM or node lib.
@@ -147,6 +148,7 @@ export async function runDraft(design: Design, module: Readonly<Record<string, u
 
 /** The page build of one design. The manifold kernel loads on the first build. */
 export function createPageBuild(input: PageInput): PageBuild {
+  registerSolvers();
   const { chase, module, facts } = input;
   const design = pageDesign(chase, facts, input.kinds);
   const stop = (reason: string, detail: string, at = "/build"): Error => cmdError({
