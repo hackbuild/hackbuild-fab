@@ -554,6 +554,12 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-498 | Minimal build makes a disc instead of throwing | decided | Kernel, geometry |
 | D-499 | Composer scaffold returns one part | decided | Agent surface |
 | D-500 | Writes go to designs/<name> under the git top of the cwd | decided | Agent surface |
+| D-501 | The host passes claim functions in; ui-core does not import packages/checks | decided | UI |
+| D-502 | How a widget picks its claim, target and cursor | decided | UI |
+| D-503 | One plot drawing for both the rail panel and the widget | decided | UI |
+| D-504 | Band line qualifier | decided | UI |
+| D-505 | access-switch typecheck gains the DOM lib | decided | Repos, packaging, toolchain, licensing |
+| D-506 | Test-local ContactFn and placement prefix on the click-spring-window fixture | decided | Testing, docs, milestones, registry |
 
 ## House rules and process
 
@@ -6109,6 +6115,72 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. The target is `<git top of cwd>/designs/<name>`. Sources resolve from the workspace root (design: also tries the git top first). Outside a git work tree the command gives E_REF. |
 | Rationale | This lets tests run in throwaway repos under `.hbf/` without moving the branch of the checkout, as chase.patch does (D-475). |
 | Evidence | `core/test/chase-scaffold.test.ts` asserts ROOT HEAD unchanged. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-501 The host passes claim functions in; ui-core does not import packages/checks
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `WidgetBuild` gains `claimFns`: a record of claim id to entry, typed structurally as `WidgetClaimFn` so the `packages/checks` registry entry fits as is. The test passes `claimFn('spring.forceAt')` from `@hackbuild/checks`, the same object CHK-CLAIM-01 calls. |
+| Rationale | Importing checks from ui-core src would pull checks, sim and mesh into every bench bundle. Bakes already get checks through the page build script (D-264). Both widgets and the check still call one function object, so the agreement rule (G-20) holds. |
+| Evidence | `packages/ui-core/src/widgets/press.ts` `WidgetClaimFn` and `claimBinding`; `reference/keys/access-switch/bench.entry.ts` comment on D-264. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-502 How a widget picks its claim, target and cursor
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. A claim widget reads the claim whose id equals the widget id, otherwise the only claim calling the widget's fn; anything else is a named problem. The drive target is the one whose metric prefix equals the claim's `at` arg. The press travel comes from `WidgetBuild.travelMm` (one press per bench in release 1), then `inputs.travelMm`, then the claim's own `travelMm`. plot.curve uses the same travel as its cursor. |
+| Rationale | `WidgetDecl.inputs` holds only numbers and param refs, so a claim id or a widget-to-widget link cannot be declared there. One stimulus per build matches the access switch. |
+| Evidence | `packages/ui-core/src/widgets/press.ts` `claimBinding`, `claimTarget`, `pressTravel`; `packages/ui-core/src/widgets/registry.ts` `WidgetBuild`. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-503 One plot drawing for both the rail panel and the widget
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The SVG template moved from `CurvePanel.vue` to `widgets/PlotCurve.vue`, which takes a `CurveView` plus lines. CurvePanel wraps it. The contact search and the `CurveView` types moved to ui-core `widgets/curve.ts`; `panels/curve.ts` re-exports them and keeps `curveSvg`, so the lineage dest is unchanged. |
+| Rationale | House rule: one implementation of each thing. Existing panel tests and the access-switch test pass unchanged. |
+| Evidence | `lineage/pip.bench-part3.json` row `pip.bench-part3/ui-curve-panel`; `packages/ui/test/curve.test.ts` passes. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-504 Band line qualifier
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The plot.curve band line reads 'claim <id> band lo to hi N, inferred until a coupon backs it'. |
+| Rationale | The band is the chase's declared target, not a measurement. Inferred is the honest qualifier until evidence rows exist. |
+| Evidence | `packages/ui-core/src/widgets/curve.ts` `plotLines`. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-505 access-switch typecheck gains the DOM lib
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. Added lib `[ES2023, DOM]` to `reference/keys/access-switch/tsconfig.json`. This file is outside the brief's Writes line. |
+| Rationale | Since TypeScript 5.5, ui-core's .d.ts files no longer carry `/// <reference lib="dom" />`. The access-switch bench test reaches them through `panels/curve.ts`. The alternative was adding `preserve="true"` to five ui-core DOM files. |
+| Evidence | `tsc -b` error TS2304 Element/HTMLElement in `packages/ui-core/dist/*.d.ts` before the change; exit 0 after. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-506 Test-local ContactFn and placement prefix on the click-spring-window fixture
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The click-spring-window reference exports no ContactFn and writes no spring curve metrics. The test therefore builds the metrics as item 11's claims test does, prefixes them with `click-spring-key.0` the way the kernel places an archetype, and uses a ContactFn that closes at `spring.cg` with its stop at the last curve sample. |
+| Rationale | The brief names this fixture. The only other design with a contact function (access-switch) needs a `paddle.travel` metric the fixture does not have. |
+| Evidence | `packages/ui-core/test/widgets-press.test.ts` header. |
 | Supersedes | new |
 | Milestone | none |
 
