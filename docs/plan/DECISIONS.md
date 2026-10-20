@@ -547,6 +547,13 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-491 | Which build module each side of chase.diff uses | decided | Architecture |
 | D-492 | chase.diff fixture is generated in the test, and the card's 1.44 is kept | decided | Testing, docs, milestones, registry |
 | D-493 | Parity verdict comparison shared with chase.diff | decided | Architecture |
+| D-494 | A taken name is E_SCHEMA, not a new E_EXISTS code | decided | Agent surface |
+| D-495 | derivedFrom only when the source has a golden | decided | Agent surface |
+| D-496 | A copy may keep its source's errors | decided | Agent surface |
+| D-497 | Generate from legal through the dim-form solver only | decided | Constraints and checks |
+| D-498 | Minimal build makes a disc instead of throwing | decided | Kernel, geometry |
+| D-499 | Composer scaffold returns one part | decided | Agent surface |
+| D-500 | Writes go to designs/<name> under the git top of the cwd | decided | Agent surface |
 
 ## House rules and process
 
@@ -6025,6 +6032,83 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. `parity.ts` verdictFlips now maps from a new exported verdictPairs(before, after), and chase.diff reads the same pairs. The edit.json shape is unchanged. |
 | Rationale | Keeps one implementation of the verdict comparison, and the diff needs the before measured value, which the parity golden form drops. |
 | Evidence | `core/src/commands/parity.ts` verdictPairs; core vitest including the parity tests passes on the merged tree (computed). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-494 A taken name is E_SCHEMA, not a new E_EXISTS code
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. chase.scaffold refuses a name whose `designs/<name>` exists on disk or on branch `hbf/<name>` with E_SCHEMA at /name. It adds no error code. |
+| Rationale | `spec/errors.ts` has no E_EXISTS. R1-engine-23 (init) plans to add it, and scaffold can move to it then. |
+| Evidence | `spec/errors.ts` ERROR_TRANSPORT list; `core/test/chase-scaffold.test.ts` 'a taken name' case (merge of r1/R1-engine-19). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-495 derivedFrom only when the source has a golden
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. reference: and design: sources set meta.derivedFrom from `<source>/expected/build.json` when it exists. draft: sources and designs without a golden get no derivedFrom. |
+| Rationale | The schema requires a buildHash, and a draft has none. R1-engine-25 adopt stores the draft export as its golden separately. |
+| Evidence | `packages/chase/src/schema.ts` metaSchema derivedFrom; `core/src/commands/chase-scaffold.ts` goldenHash. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-496 A copy may keep its source's errors
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. As D-476 does for chase.patch, a from-copy is refused only for validation errors it adds. The minimal scaffold must give 0 errors. |
+| Rationale | `reference/keys/flex-pair` already fails with E_REF contact.gap, so a strict rule would make the pair-copy acceptance impossible. |
+| Evidence | `hbf chase.validate reference/keys/flex-pair` gives E_REF /params/1/fields/0/item/3/constraintDim. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-497 Generate from legal through the dim-form solver only
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. A numeric default with a registered constraintDim is moved to the nearest on-step value inside range and interval. The interval comes from solve() with the chase's first material and machine and empty facts. A dim that throws, is unsat or is in another unit keeps the source default. |
+| Rationale | The param-form solver needs a build of the copy before it exists. Most dims need build facts, so the move is narrow today. No test yet copies a source whose default moves; legalDefault unit cases cover the move. |
+| Evidence | `hbf constraints.query conductor.width --material cpla` gives E_PARAM_MISSING pitchMm; `packages/chase/src/scaffold/index.ts` legalDefault. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-498 Minimal build makes a disc instead of throwing
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The v3 template build threw 'implement'. The scaffold build returns one PETG disc of diameter d, layerTop(7) thick (1.93 mm on ffc5p, computed; the eight-layer count is an inferred placeholder). |
+| Rationale | Without this, the first part.build of a new design fails. The thickness reads the machine's layer grid from profile and adds no physical constant of its own. |
+| Evidence | `fab-knowledge:evidence/x/plan-to-refine/handoff/hbf/scaffold/designs/_template/build.ts`; `lineage/chase.scaffold-template.json`. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-499 Composer scaffold returns one part
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. composer differs from single only in meta.kind, with the rail ending in print as the card says. Its build returns a PartDraft. |
+| Rationale | No build path in kernel or core reads an AssemblyDraft yet. |
+| Evidence | grep for AssemblyDraft in `kernel/src`, `core/src` and `packages/*/src` finds no consumer. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-500 Writes go to designs/<name> under the git top of the cwd
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The target is `<git top of cwd>/designs/<name>`. Sources resolve from the workspace root (design: also tries the git top first). Outside a git work tree the command gives E_REF. |
+| Rationale | This lets tests run in throwaway repos under `.hbf/` without moving the branch of the checkout, as chase.patch does (D-475). |
+| Evidence | `core/test/chase-scaffold.test.ts` asserts ROOT HEAD unchanged. |
 | Supersedes | new |
 | Milestone | none |
 
