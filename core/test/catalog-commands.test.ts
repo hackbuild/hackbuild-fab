@@ -5,7 +5,10 @@
 // blobless clone of the KiCad mirror (git show, offline): the workspace
 // clone hbf now keeps, or the home clone an older run left; it skips when
 // neither is present. The recorded network run is
-// fab-knowledge/evidence/m08-close/FETCH-KICAD.txt.
+// fab-knowledge/evidence/m08-close/FETCH-KICAD.txt. --fetch kicad now names
+// the gitlab library (R1-designs-reach-04); commit 7ebfa6b2 of the GitHub
+// mirror is a commit of the gitlab repository too (gitlab API commits read
+// 2026-10-20, measured), so the recorded source names the gitlab origin.
 
 import { spawnSync } from "node:child_process";
 import { cpSync, existsSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
@@ -24,12 +27,12 @@ const recorded: KicadSource = {
   list: () => LIST,
   get: (file) => new Uint8Array(spawnSync("git", ["-C", CLONE, "show", `HEAD:${file}`]).stdout),
   commit: () => "7ebfa6b23cc292a56f751b7b5f4a0e12eeef69dd",
-  origin: () => "https://github.com/KiCad/kicad-footprints.git",
+  origin: () => "https://gitlab.com/kicad/libraries/kicad-footprints.git",
 };
 /** A one-pad v5 footprint in the form kicad_fetch.py returns; `shape` trapezoid is one the catalog resolver refuses. */
 const mod = (stem: string, shape = "rect"): Uint8Array => new TextEncoder().encode(`(module ${stem} (layer F.Cu) (pad 1 smd ${shape} (at 0 0) (size 1 1) (layers F.Cu)))\n`);
 const synthetic = (files: Record<string, Uint8Array>, commit = "7ebfa6b23cc292a56f751b7b5f4a0e12eeef69dd"): KicadSource => ({
-  list: () => Object.keys(files), get: (f) => files[f]!, commit: () => commit, origin: () => "https://github.com/KiCad/kicad-footprints.git",
+  list: () => Object.keys(files), get: (f) => files[f]!, commit: () => commit, origin: () => "https://gitlab.com/kicad/libraries/kicad-footprints.git",
 });
 function thrownCode(f: () => unknown): string {
   try { f(); } catch (e) { if (isThrownCommandError(e)) return e.hbf.code; throw e; }
@@ -116,7 +119,7 @@ describe("catalog.find and catalog.pins", () => {
       const w = fresh();
       expect(fetchKicadRows(w, "R_0603", synthetic({ "Resistor_SMD.pretty/R_0603.kicad_mod": mod("R_0603") }), "2026-10-11")).toEqual(["kicad-r-0603"]);
       const row = JSON.parse(readFileSync(path.join(rows(w), "kicad-r-0603", "row.json"), "utf8")) as { fields: { pads: { provenance: { source: string } } } };
-      expect(row.fields.pads.provenance.source).toBe("https://github.com/KiCad/kicad-footprints.git Resistor_SMD.pretty/R_0603.kicad_mod at 7ebfa6b23cc292a56f751b7b5f4a0e12eeef69dd");
+      expect(row.fields.pads.provenance.source).toBe("https://gitlab.com/kicad/libraries/kicad-footprints.git Resistor_SMD.pretty/R_0603.kicad_mod at 7ebfa6b23cc292a56f751b7b5f4a0e12eeef69dd");
     });
   });
 });

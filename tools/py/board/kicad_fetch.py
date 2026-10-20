@@ -41,6 +41,8 @@ REPOS = {
         "official mirror, FROZEN 2020-10 (v5); classic packages only"),
     "kicad-packages3D": ("https://github.com/KiCad/kicad-packages3D.git",
         "official 3D mirror (.wrl + .step), FROZEN 2020-10; classic packages"),
+    "kicad-gitlab": ("https://gitlab.com/kicad/libraries/kicad-footprints.git",
+        "official footprints on gitlab, CURRENT (v6+ format); needs gitlab.com reachable"),
     "kicad-symbols": ("https://github.com/KiCad/kicad-symbols.git",
         "official symbol mirror, FROZEN 2020-10, legacy .lib/.dcm format"),
     "espressif": ("https://github.com/espressif/kicad-libraries.git",
