@@ -1,5 +1,5 @@
 {
-  "note": "computed 2026-10-07 at first run of M04-T14 and pinned; the qualifier of every number is computed. exit and verdict are the CLI result of hbf part.build --import <file> --json at default units (glb m, stl mm).",
+  "note": "computed 2026-10-07 at first run of M04-T14 and pinned; the qualifier of every number is computed. exit and verdict are the CLI result of hbf part.build --import <file> --json at default units (glb m, stl mm). R1-rails-import-07 (2026-10-20) wired CHK-PRT-03 pairwise, CHK-PRT-18 and CHK-PRT-19 into the import path: the locket and lug counts moved by those three results (locket-r2.glb now fails CHK-PRT-03 by pairwise overlap, computed), their volumes and triangles did not move, and the rows below them were computed at that run and pinned. checks holds verdict and measured of CHK-PRT-03 (mm3), CHK-PRT-18 (count) and CHK-PRT-19 (mm above the bed plane), all computed; a file ending #N declares N pieces.",
   "cases": [
     {
       "file": "tools/corpus/import/board-rp2040-pizero-standin.stl",
@@ -14,18 +14,34 @@
     },
     {
       "file": "tools/corpus/import/locket-r2.glb",
-      "exit": 0,
-      "verdict": "pass",
-      "stage": "done",
+      "exit": 1,
+      "verdict": "fail",
+      "stage": "check",
       "volumeMm3": 171378022396612.84,
       "triangles": 25312,
       "counts": {
         "pass": 1,
         "warn": 0,
-        "fail": 0,
-        "skip": 6
+        "fail": 1,
+        "skip": 7
       },
-      "fail": []
+      "fail": [
+        "CHK-PRT-03"
+      ],
+      "checks": {
+        "CHK-PRT-03": {
+          "verdict": "fail",
+          "measured": 27899706773664.645
+        },
+        "CHK-PRT-18": {
+          "verdict": "skip",
+          "measured": "no union"
+        },
+        "CHK-PRT-19": {
+          "verdict": "skip",
+          "measured": "no union"
+        }
+      }
     },
     {
       "file": "tools/corpus/import/lug.glb",
@@ -38,11 +54,250 @@
         "pass": 0,
         "warn": 0,
         "fail": 1,
-        "skip": 6
+        "skip": 8
       },
       "fail": [
         "CHK-PRT-01"
       ]
+    },
+    {
+      "file": "tools/corpus/import/floating-cap.stl",
+      "exit": 1,
+      "verdict": "fail",
+      "stage": "check",
+      "volumeMm3": 2024.0526756085455,
+      "triangles": 258,
+      "counts": {
+        "pass": 2,
+        "warn": 0,
+        "fail": 2,
+        "skip": 5
+      },
+      "fail": [
+        "CHK-PRT-18",
+        "CHK-PRT-19"
+      ],
+      "checks": {
+        "CHK-PRT-03": {
+          "verdict": "pass",
+          "measured": 0
+        },
+        "CHK-PRT-18": {
+          "verdict": "fail",
+          "measured": 2
+        },
+        "CHK-PRT-19": {
+          "verdict": "fail",
+          "measured": 22
+        }
+      }
+    },
+    {
+      "file": "tools/corpus/import/pile.stl",
+      "exit": 1,
+      "verdict": "fail",
+      "stage": "check",
+      "volumeMm3": 3859.4653927376494,
+      "triangles": 564,
+      "counts": {
+        "pass": 3,
+        "warn": 0,
+        "fail": 1,
+        "skip": 5
+      },
+      "fail": [
+        "CHK-PRT-03"
+      ],
+      "checks": {
+        "CHK-PRT-03": {
+          "verdict": "fail",
+          "measured": 892.153049
+        },
+        "CHK-PRT-18": {
+          "verdict": "pass",
+          "measured": 1
+        },
+        "CHK-PRT-19": {
+          "verdict": "pass",
+          "measured": 0
+        }
+      }
+    },
+    {
+      "file": "tools/corpus/import/corner-touch.stl",
+      "exit": 0,
+      "verdict": "pass",
+      "stage": "done",
+      "volumeMm3": 2000,
+      "triangles": 24,
+      "counts": {
+        "pass": 2,
+        "warn": 0,
+        "fail": 0,
+        "skip": 7
+      },
+      "fail": [],
+      "checks": {
+        "CHK-PRT-03": {
+          "verdict": "pass",
+          "measured": 0
+        },
+        "CHK-PRT-18": {
+          "verdict": "skip",
+          "measured": "no union"
+        },
+        "CHK-PRT-19": {
+          "verdict": "skip",
+          "measured": "no union"
+        }
+      }
+    },
+    {
+      "file": "tools/corpus/import/two-on-bed.stl",
+      "exit": 1,
+      "verdict": "fail",
+      "stage": "check",
+      "volumeMm3": 2000,
+      "triangles": 24,
+      "counts": {
+        "pass": 3,
+        "warn": 0,
+        "fail": 1,
+        "skip": 5
+      },
+      "fail": [
+        "CHK-PRT-18"
+      ],
+      "checks": {
+        "CHK-PRT-03": {
+          "verdict": "pass",
+          "measured": 0
+        },
+        "CHK-PRT-18": {
+          "verdict": "fail",
+          "measured": 2
+        },
+        "CHK-PRT-19": {
+          "verdict": "pass",
+          "measured": 0
+        }
+      }
+    },
+    {
+      "file": "tools/corpus/import/two-on-bed.stl#2",
+      "exit": 0,
+      "verdict": "pass",
+      "stage": "done",
+      "volumeMm3": 2000,
+      "triangles": 24,
+      "counts": {
+        "pass": 4,
+        "warn": 0,
+        "fail": 0,
+        "skip": 5
+      },
+      "fail": [],
+      "checks": {
+        "CHK-PRT-03": {
+          "verdict": "pass",
+          "measured": 0
+        },
+        "CHK-PRT-18": {
+          "verdict": "pass",
+          "measured": 2
+        },
+        "CHK-PRT-19": {
+          "verdict": "pass",
+          "measured": 0
+        }
+      }
+    },
+    {
+      "file": "tools/corpus/import/pile-union.stl",
+      "exit": 0,
+      "verdict": "pass",
+      "stage": "done",
+      "volumeMm3": 3859.470337911354,
+      "triangles": 542,
+      "counts": {
+        "pass": 4,
+        "warn": 0,
+        "fail": 0,
+        "skip": 5
+      },
+      "fail": [],
+      "checks": {
+        "CHK-PRT-03": {
+          "verdict": "pass",
+          "measured": 0
+        },
+        "CHK-PRT-18": {
+          "verdict": "pass",
+          "measured": 1
+        },
+        "CHK-PRT-19": {
+          "verdict": "pass",
+          "measured": 0
+        }
+      }
+    },
+    {
+      "file": "tools/corpus/import/hollow-box.stl",
+      "exit": 0,
+      "verdict": "pass",
+      "stage": "done",
+      "volumeMm3": 6272,
+      "triangles": 24,
+      "counts": {
+        "pass": 4,
+        "warn": 0,
+        "fail": 0,
+        "skip": 5
+      },
+      "fail": [],
+      "checks": {
+        "CHK-PRT-03": {
+          "verdict": "pass",
+          "measured": 0
+        },
+        "CHK-PRT-18": {
+          "verdict": "pass",
+          "measured": 1
+        },
+        "CHK-PRT-19": {
+          "verdict": "pass",
+          "measured": 0
+        }
+      }
+    },
+    {
+      "file": "designs/davit/legacy/stl/davit_pincap.stl",
+      "exit": 0,
+      "verdict": "pass",
+      "stage": "done",
+      "volumeMm3": 155.31063045561314,
+      "triangles": 512,
+      "counts": {
+        "pass": 4,
+        "warn": 0,
+        "fail": 0,
+        "skip": 5
+      },
+      "fail": [],
+      "checks": {
+        "CHK-PRT-03": {
+          "verdict": "pass",
+          "measured": 0
+        },
+        "CHK-PRT-18": {
+          "verdict": "pass",
+          "measured": 1
+        },
+        "CHK-PRT-19": {
+          "verdict": "pass",
+          "measured": 0
+        }
+      }
     }
   ]
 }

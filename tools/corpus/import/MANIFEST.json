@@ -16,7 +16,7 @@
       "sha256": "c25fbaf4c6639e3a1396fa003824a468edb92362054104def4d78a31b3d7a401",
       "format": "glb",
       "units": "mm",
-      "outcome": "builds: 16 closed parts (computed, trimesh agrees), positive volume; their union is refused because parts touch or overlap, so CHK-PRT-03 skips; exit 0 at the default units"
+      "outcome": "builds: 16 closed parts (computed, trimesh agrees), positive volume; their union is refused because parts touch or overlap, so CHK-PRT-03 measures the worst pairwise overlap and fails, CHK-PRT-18 and -19 skip with the no union reason; exit 1 at the default units (R1-rails-import-07, computed)"
     },
     {
       "file": "lug.glb",
@@ -32,7 +32,7 @@
       "sha256": "fa85d8374204a5e223da63159f83ec3e12f7758d6f90e557547c0bec7184c1fd",
       "format": "stl",
       "units": "mm",
-      "outcome": "builds; a dome whose base is 2 mm above its stem, 2 pieces after union (computed). expected after R1-rails-import-05 and 07: CHK-PRT-18 fails measured 2 legal 1, CHK-PRT-19 fails measured 2 mm, exit 1"
+      "outcome": "builds; a dome whose base is 2 mm above its stem, 2 pieces after union (computed). expected after R1-rails-import-05 and 07: CHK-PRT-18 fails measured 2 legal 1, CHK-PRT-19 fails measured 22 mm, the cap base above the bed plane (computed, R1-rails-import-07), exit 1"
     },
     {
       "file": "pile.stl",

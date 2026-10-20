@@ -20,6 +20,7 @@ export const spec: CommandSpec<"part.build"> = {
       units: z.enum(["mm", "cm", "m", "in"]).exactOptional().describe("file length unit; absent is m for glb, mm for the rest"),
       as: z.enum(["body", "bought"]),
       material: z.string().min(1).exactOptional().describe("profile material id; absent imports geometry for audit only"),
+      pieces: z.number().exactOptional().describe("pieces the file holds after its own union, an integer at least 1; absent is 1; on the cli, path#N"),
     }).strict()).exactOptional()
       .describe("files to build as the bodies of one part for audit, in place of chase; stl, glb and scad (where openscad is on PATH)"),
     params: params.exactOptional(),

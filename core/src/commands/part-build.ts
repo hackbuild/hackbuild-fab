@@ -9,8 +9,8 @@ import path from "node:path";
 import type {
   BodyDraft, BuildHash, BuildInputs, CheckResult, CommandInput, CommandOutput, ImportSpec, NextCall, Part, PartDraft, PartSummary, Verdict,
 } from "@hackbuild/spec";
-import { skeletonChecks } from "@hackbuild/checks";
-import { MM_PER_UNIT, assemblePart, importGlb, importStl, stageImported, type ImportedBody } from "@hackbuild/mesh";
+import { DEFAULT_PIECES, IMPORT_PATH_CHECKS, OVERLAP_CEILING_MM3, PRT03_CONSTRAINT, prt18Finding, prt19Finding, skeletonChecks } from "@hackbuild/checks";
+import { MM_PER_UNIT, assemblePart, importGlb, importStl, stageImported, type ImportedBody, type ImportedStageOutput } from "@hackbuild/mesh";
 import { constraintVersions, m00Versions, registryHashOf, runPartChecks, seedRows, stamp, type ExportPart } from "../checks.js";
 import { sourceDateEpoch } from "../epoch.js";
 import { cmdError } from "../errors.js";
@@ -233,25 +233,58 @@ function materialRows(ws: Workspace, specs: readonly ImportSpec[]): unknown[] {
 
 /**
  * The checks an imported Part runs (M04-T14 step 5). CHK-PRT-01, CHK-PRT-03
- * and CHK-3MF-04 read meshes and run on the file's parts. Every registered
- * CheckDef at part, feature or net level reads Part.features or nets
- * extracted from them (CHK-PRT-04 pocket walls, CHK-KEY-01 contacts,
+ * and CHK-3MF-04 read meshes and run on the file's shell groups. Every
+ * registered CheckDef at part, feature or net level reads Part.features or
+ * nets extracted from them (CHK-PRT-04 pocket walls, CHK-KEY-01 contacts,
  * CHK-NET-02 and CHK-NET-29 traces), so each reports skip; artifact checks
  * have no target, since part.build exports nothing. With no union of the
- * parts, CHK-PRT-03 has nothing to compare and skips with the reason.
+ * groups, CHK-PRT-03 measures the worst pairwise overlap instead
+ * (R1-rails-import-07), and fails with the reason when the kernel refused a
+ * group. CHK-PRT-18 runs per body on the pieces of its own union, CHK-PRT-19
+ * on the pieces of the part; with no union both skip with the reason, so a
+ * pass is never reported without one.
  */
-function importChecks(ws: Workspace, part: Part, parts: readonly ExportPart[], noUnion: string | null): CheckResult[] {
+function importChecks(ws: Workspace, part: Part, parts: readonly ExportPart[], stage: Omit<ImportedStageOutput, "staged" | "groups">, bodies: readonly { readonly id: string; readonly pieces: number }[]): CheckResult[] {
+  const { noUnion, pairwise, pieces, bodyPieces } = stage;
   const rows = seedRows(ws.checksSeed);
   const target = { level: "part" as const, part: part.id };
   const mesh = runPartChecks(ws.checksSeed, { partId: part.id, parts, solidVolumeMm3: part.solid.volumeMm3, ...(part.unionVolumeMm3 === undefined ? {} : { unionVolumeMm3: part.unionVolumeMm3 }) }).map((r) => {
     if (r.id !== "CHK-PRT-03" || r.verdict === "skip" || noUnion === null) return r;
     const row = rows.get("CHK-PRT-03")!;
-    return stamp(row, { verdict: "skip", target, measured: "no union", legal: { kind: "none" }, constraint: `no union of the imported parts to sum against: ${noUnion}` });
+    if (pairwise === null) {
+      const why = part.warnings.find((w) => w.code === "UNION" && w.text.startsWith("pairwise overlap is unknown"))?.text ?? "pairwise overlap is unknown";
+      return stamp(row, { verdict: "fail", target, measured: "kernel refused", legal: { kind: "none" }, constraint: `${PRT03_CONSTRAINT}; no union (${noUnion}) and ${why}` });
+    }
+    const worstMm3 = Number(pairwise.worstMm3.toFixed(6));
+    return stamp(row, {
+      verdict: worstMm3 <= OVERLAP_CEILING_MM3 ? "pass" : "fail", target, measured: worstMm3,
+      legal: { kind: "interval", lo: 0, hi: OVERLAP_CEILING_MM3, unit: "mm3", nearest: Math.min(worstMm3, OVERLAP_CEILING_MM3) },
+      constraint: PRT03_CONSTRAINT,
+      extra: { rule: "pairwise", worstPair: pairwise.pair === null ? "none" : pairwise.pair.join(" and "), groups: parts.length, noUnion },
+    });
   });
+  const noPieces = (id: string, t: CheckResult["target"]): CheckResult =>
+    stamp(rows.get(id)!, { verdict: "skip", target: t, measured: "no union", legal: { kind: "none" }, constraint: `no union of the imported parts to count pieces in: ${noUnion ?? ""}` });
+  const prt18 = bodies.map((b) => {
+    const t = { level: "body" as const, part: part.id, body: b.id };
+    return bodyPieces === null ? noPieces("CHK-PRT-18", t) : stamp(rows.get("CHK-PRT-18")!, prt18Finding(t, bodyPieces[b.id] ?? 0, b.pieces));
+  });
+  const prt19 = pieces === null ? noPieces("CHK-PRT-19", target) : stamp(rows.get("CHK-PRT-19")!, prt19Finding(target, pieces));
   const skipped = skeletonChecks({ seed: ws.checksSeed, filamentTemplate: ws.template })
     .filter((d) => d.appliesTo.level !== "artifact")
     .map((d) => stamp(rows.get(d.id)!, { verdict: "skip", target, measured: "no features", legal: { kind: "none" }, constraint: "imported part has no features" }));
-  return [...mesh, ...skipped];
+  return [...mesh, ...prt18, prt19, ...skipped];
+}
+
+/** Pieces each import declares (ImportSpec.pieces, default 1); anything but an integer at least 1 is E_SCHEMA. */
+function declaredPieces(specs: readonly ImportSpec[]): number[] {
+  return specs.map((s, i) => {
+    const n = s.pieces ?? DEFAULT_PIECES;
+    if (!Number.isInteger(n) || n < 1) {
+      throw cmdError({ code: "E_SCHEMA", path: `/import/${i}/pieces`, got: s.pieces, expected: "an integer at least 1", hint: `declare the pieces ${s.path} holds as a whole number, for example ${s.path}#2` });
+    }
+    return n;
+  });
 }
 
 /** An import built and audited: the Part, its inputs, every check result (skips included) and what the store keeps. */
@@ -285,6 +318,7 @@ async function runImportBuild(specs: readonly ImportSpec[], input: CommandInput<
 /** Read, store, stage and check the imports; writes the build, its meshes and its report to the store. */
 export async function importAudit(specs: readonly ImportSpec[], ctx: CoreCtx): Promise<ImportAudit> {
   if (specs.length === 0) throw cmdError({ code: "E_SCHEMA", path: "/import", got: 0, expected: "at least one file", hint: "name a file to import, for example --import part.stl" });
+  const declared = declaredPieces(specs);
   const ws = await loadWorkspace(workspaceRoot(ctx.workspace));
   const reads = specs.map((s, i) => readImport(s, i, ctx));
   const ids = bodyIds(specs);
@@ -298,14 +332,18 @@ export async function importAudit(specs: readonly ImportSpec[], ctx: CoreCtx): P
     id: ids[0]!, name: path.basename(specs[0]!.path), process: "fdm", machine: "",
     frame: { originOnAxis: false, carriesOffset: true, pose: "assembly" }, bodies, features: [],
   };
-  const { staged, noUnion } = await stageImported(reads.map((r, i) => ({ draft: bodies[i]!, read: r.read })));
+  const { staged, groups, ...stage } = await stageImported(reads.map((r, i) => ({ draft: bodies[i]!, read: r.read })));
   const defs = skeletonChecks({ seed: ws.checksSeed, filamentTemplate: ws.template });
-  const checkVersions = { ...Object.fromEntries(defs.map((d) => [d.id as string, d.version])), ...m00Versions(ws.checksSeed) };
+  const rows = seedRows(ws.checksSeed);
+  const checkVersions = {
+    ...Object.fromEntries(defs.map((d) => [d.id as string, d.version])), ...m00Versions(ws.checksSeed),
+    ...Object.fromEntries(IMPORT_PATH_CHECKS.map((id) => [id, rows.get(id)!.version])),
+  };
   const inputs: BuildInputs = {
     defHash: hashOf({
-      import: reads.map((r) => ({
+      import: reads.map((r, i) => ({
         source: r.source, mesh: r.meshUri, format: r.spec.format, mmPerUnit: r.mmPerUnit, as: r.spec.as,
-        material: r.spec.material ?? null, renderer: r.renderer ?? null,
+        material: r.spec.material ?? null, renderer: r.renderer ?? null, pieces: declared[i]!,
       })),
     }),
     paramsHash: hashOf({}),
@@ -325,8 +363,8 @@ export async function importAudit(specs: readonly ImportSpec[], ctx: CoreCtx): P
     source: { kind: "imported", format: first.spec.format, tier: "inferred", uri: first.source },
     buildHash: hashOf(inputs) as BuildHash,
   };
-  const fileParts = reads.flatMap((r, i) => r.read.parts.map((p) => ({ name: `${ids[i]!}/${p.name}`, mesh: p.mesh, body: ids[i]! })));
-  const results = importChecks(ws, part, fileParts, noUnion);
+  const fileParts = groups.map((g) => ({ name: `${g.body}/${g.name}`, mesh: g.mesh, body: g.body }));
+  const results = importChecks(ws, part, fileParts, stage, ids.map((id, i) => ({ id, pieces: declared[i]! })));
   const colour = (slot: number): string => ws.template.keys["filament_colour"]?.[slot - 1] ?? ws.template.keys["filament_colour"]?.[0] ?? "";
   ctx.store.putBuild({
     format: "hbf-build-1", buildHash: part.buildHash, chase: `import:${ids[0]!}`, target: specs.map((s) => s.path).join(","),
