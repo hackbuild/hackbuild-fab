@@ -177,5 +177,15 @@
       "insetAt (collar.html lines 1215 to 1218), max(0, cham - z, cham - (thk - z)), ported to packages/geom/src/edge.ts edgeInset as a 45 deg chamfer on both faces taken by max; packages/geom/test/edge.test.ts holds the port to the formula at 9 heights (R1-engine-05)"
     ],
     "dest": "packages/geom/src/edge.ts"
+  },
+  {
+    "id": "collar.bench/mesh-edge-stack",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/collar/files/collar.html",
+    "sha256": "ef0864ab66ca40e2930d12aba4cab3159aa470f743eee533d052fc99f844fd46",
+    "fixes": [
+      "planSlabs (collar.html lines 1201 to 1213) and labelSlab (1221 to 1224), one slab per layer in the edge zones with the inset taken at the slab middle, ported to packages/mesh/src/edge-stack.ts prismWithEdges as stack bands on q(layerTop(i)) with the narrower band reaching into the wider by the middle of stack.bandOverlap; holes open by the inset as the outer ring closes (R1-engine-06)"
+    ],
+    "dest": "packages/mesh/src/edge-stack.ts"
   }
 ]
