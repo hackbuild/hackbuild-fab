@@ -5,8 +5,11 @@
 // job runs runs that script as a process (an import or a mention does not
 // count, since a test that imports helpers can skip the run the row names).
 // A bare job name (CI `dxf-audit`) is proven by that job in ci.yml. A
-// workspace filter (`npm test -w packages/nest -- connect`) must also match a
-// test file of that workspace, since vitest fails a filter that matches none.
+// workspace row (`npm test -w packages/nest -- connect`) is proven by an
+// `npx vitest run` line of ci.yml whose filter holds that workspace, since CI
+// runs the workspace vitest files once from the root config (exit-a, parity;
+// R1-rails-ci-hooks-03), and its filter must match a test file of that
+// workspace, since vitest fails a filter that matches none.
 // Rows CI cannot run carry their reason in NOT_IN_CI; an exemption that no
 // longer names an Exit row fails.
 import { test } from "node:test";
@@ -30,7 +33,7 @@ const CARDS = [
 /** The script or hbf command a CI step must name for each exit command form. */
 export function anchor(cmd) {
   const ws = cmd.match(/^npm test -w (\S+)(?: -- (\S+))?/);
-  if (ws) return { kind: "workspace", key: "npm test --workspaces", workspace: ws[1], filter: ws[2] };
+  if (ws) return { kind: "workspace", key: ws[1], workspace: ws[1], filter: ws[2] };
   if (/^[a-z][a-z0-9-]*$/.test(cmd)) return { kind: "job", key: cmd };
   if (cmd === "npm ci") return { kind: "literal", key: cmd };
   // `grep -rn "<text>" <paths>` printing nothing: CI must run the same grep
@@ -113,15 +116,17 @@ const unitRunsToolTests = CI.includes("node --test tools/test/*.test.mjs");
 const parityLoop = CI.includes("for d in reference/*/*/") && CI.includes('npx --no-install hbf parity "${d%/}"');
 /** The loop also runs a reference whose chase is a surface chase (core/src/commands/surface.ts). */
 const parityLoopSurface = parityLoop && CI.includes('test -f "${d}chase.surface.ts"');
-/** Directory arguments of every `npx vitest run` line in ci.yml. */
-const vitestDirs = [...CI.matchAll(/npx vitest run ([^\n]+)/g)].flatMap((m) => m[1].trim().split(/\s+/));
+/** Directory arguments of every `npx vitest run` line in ci.yml, the `$(...)` excludes left out. */
+const vitestDirs = [...CI.matchAll(/npx vitest run ([^\n$]+)/g)].flatMap((m) => m[1].trim().split(/\s+/));
+/** A root vitest run whose directory argument is the workspace or holds it. */
+const vitestRunsWorkspace = (ws) => vitestDirs.some((d) => ws === d.replace(/\/$/, "") || ws.startsWith(`${d.replace(/\/$/, "")}/`));
 const has = (p) => existsSync(join(root, p));
 
 /** Test files of a workspace whose name contains the filter, as vitest matches a filter. */
 const filterMatches = (ws, filter) => readdirSync(join(root, ws, "test"), { recursive: true }).filter((f) => /\.test\.ts$/.test(f) && f.includes(filter));
 
 function proven(a) {
-  if (a.kind === "workspace") return CI.includes(a.key) && (a.filter === undefined || filterMatches(a.workspace, a.filter).length > 0);
+  if (a.kind === "workspace") return vitestRunsWorkspace(a.workspace) && (a.filter === undefined || filterMatches(a.workspace, a.filter).length > 0);
   if (a.kind === "job") return JOBS.includes(a.key);
   if (a.kind === "parity-all") return parityLoop;
   if (a.kind === "parity-loop") return parityLoop && (has(`${a.key}/chase.ts`) || (parityLoopSurface && has(`${a.key}/chase.surface.ts`)));
@@ -141,7 +146,7 @@ for (const card of CARDS) {
     for (const cmd of cmds) {
       const a = anchor(cmd);
       assert.ok(a, `no anchor for exit command ${cmd}`);
-      // a workspace row's anchor key is shared by every workspace row, so its exemption names the command
+      // a workspace row's anchor key is shared by every row of that workspace, so its exemption names the command
       if (exempt[a.key] || exempt[cmd]) continue;
       if (!proven(a)) missing.push(cmd);
     }
@@ -170,7 +175,7 @@ test("the M07 dxf-audit job audits the nest outputs and the corpus manifest (M07
 });
 
 test("anchor reads each command form", () => {
-  assert.deepEqual(anchor("npm test -w packages/inlay -- intake"), { kind: "workspace", key: "npm test --workspaces", workspace: "packages/inlay", filter: "intake" });
+  assert.deepEqual(anchor("npm test -w packages/inlay -- intake"), { kind: "workspace", key: "packages/inlay", workspace: "packages/inlay", filter: "intake" });
   assert.deepEqual(anchor("dxf-audit"), { kind: "job", key: "dxf-audit" });
   assert.deepEqual(anchor("bash tools/sparrow/build.sh"), { kind: "literal", key: "tools/sparrow/build.sh" });
   assert.deepEqual(anchor("npx --no-install hbf parity reference/cosmetic/coin-inlay"), { kind: "parity-loop", key: "reference/cosmetic/coin-inlay" });

@@ -36,7 +36,9 @@ function run(curveSamples: number): Metric[] {
   provideClickSolver(() => legacyCurve(V));
   const s = pipStack(p, "ffc5p", { body: "petg", trace: "cpla" });
   const face = { origin: [0, 0, s.z.floor] as [number, number, number], normal: [0, 0, 1] as [number, number, number], u: [1, 0, 0] as [number, number, number] };
-  return [...clickApply({ draft, face, profile: p, params: { ...CLICK_DEFAULTS, top: V.z.top, curveSamples } }, "click-spring-key").metrics];
+  const out = clickApply({ draft, face, profile: p, params: { ...CLICK_DEFAULTS, top: V.z.top, curveSamples } }, "click-spring-key");
+  if (out.metrics === undefined) throw new Error("click-spring-key returned no metrics");
+  return [...out.metrics];
 }
 
 const num = (ms: Metric[], id: string): number => {
@@ -75,7 +77,10 @@ describe("click spring force curve metrics", () => {
 
   test("a solver with no load steps refuses with E_KERNEL when samples are asked", () => {
     const p = shippedProfile();
-    provideClickSolver(() => ({ ...legacyCurve(V), pts: undefined }));
+    provideClickSolver(() => {
+      const { pts: _pts, ...rest } = legacyCurve(V);
+      return rest;
+    });
     const s = pipStack(p, "ffc5p", { body: "petg", trace: "cpla" });
     const face = { origin: [0, 0, s.z.floor] as [number, number, number], normal: [0, 0, 1] as [number, number, number], u: [1, 0, 0] as [number, number, number] };
     expect(() => clickApply({ draft, face, profile: p, params: { ...CLICK_DEFAULTS, top: V.z.top, curveSamples: 4 } }, "click-spring-key")).toThrow(/E_KERNEL \/params\/curveSamples/);
