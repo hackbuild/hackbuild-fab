@@ -428,6 +428,10 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-372 | vue-tsc runs on @typescript/typescript6 beside TS 7 | decided | Repos, packaging, toolchain, licensing |
 | D-373 | vue-tsc 3.3.13 rather than 3.3.12 | decided | Repos, packaging, toolchain, licensing |
 | D-374 | licence rows for the vue-tsc toolchain cite D-043 | decided | Repos, packaging, toolchain, licensing |
+| D-375 | generated import fixtures carry no lineage row | decided | Testing, docs, milestones, registry |
+| D-376 | corpus test regenerates script-sourced rows | decided | Testing, docs, milestones, registry |
+| D-377 | pile primitives at 16 segments | decided | Testing, docs, milestones, registry |
+| D-378 | floating cap is a hemisphere dome | decided | Testing, docs, milestones, registry |
 
 ## House rules and process
 
@@ -4597,6 +4601,50 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. The 11 new `tools/licences.json` rows are status adopted, load dev-only, decision `["D-043"]`, the same as other transitive dev-toolchain rows. The vue-tsc, typescript6 and `@typescript/old` rows may add D-372 in a later licences change. |
 | Rationale | D-372 had no id when the rows were written, and D-043 is the decision every other dev-toolchain row cites. |
 | Evidence | The `tools/licences.json` diff adds lines only (154, counted); `node tools/licences.mjs --check` passes over 382 rows on the merged tree (measured, 2026-10-20). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-375 generated import fixtures carry no lineage row
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The six STLs that `tools/corpus/import/make-pieces.mjs` writes (floating-cap, pile, pile-union, hollow-box, two-on-bed, corner-touch) have no `lineage/<subject>.json` fragment. Their MANIFEST.json source is the generator script, and `core/test/part-build-import.test.ts` proves the link by regenerating the files and comparing sha256. |
+| Rationale | D-222 lineage rows record ports and harvested copies. These fixtures are primitives built from numbers stated in the R1-rails-import-02 brief, with no original file to point to. |
+| Evidence | `lineage/import-corpus.lug.json` (the harvest row shape); `tools/corpus/import/MANIFEST.json`; merge of r1/R1-rails-import-02 at 72d4351 (computed, 2026-10-20). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-376 corpus test regenerates script-sourced rows
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. In `core/test/part-build-import.test.ts` the bench-source sha check runs only when a MANIFEST source path is absolute. A new test runs `make-pieces.mjs` into a temporary directory and checks that the files it writes, and their sha256, equal the MANIFEST rows whose source is the script. |
+| Rationale | A relative source path exists from the repo root, so the old check would compare the script's sha256 against the STL's and fail. Regenerating the files ties them to the script more tightly than a stored hash, and a mutant in the script fails the test. |
+| Evidence | Mutant at integration: the floating-cap dome moved from z 22 to z 21 failed the regeneration test (sha 157c1a3a... against fa85d837..., computed); the restored script passes 12 of 12. Builder's own run of the same mutant failed with sha 0cecf91b... (computed). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-377 pile primitives at 16 segments
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `pile.stl` and `pile-union.stl` use circularSegments 16; `floating-cap.stl` uses 24. |
+| Rationale | At 24 segments `pile.stl` was 77884 bytes and `pile-union.stl` 52184 bytes (computed), over the brief's 50 KB limit. |
+| Evidence | Generator output at 16 segments: `pile.stl` 36284 bytes, `pile-union.stl` 27184 bytes (computed). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-378 floating cap is a hemisphere dome
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The floating-cap fixture's cap is a sphere of r 8 centred at z 22 and cut to z 22 and above, so its flat base sits at z 22, 2 mm above the stem top at z 20. |
+| Rationale | The brief puts the cap's lowest point at z 22. A flat base makes the gap exactly 2 mm whatever the tessellation. |
+| Evidence | Builder's shellGroups probe: the cap group's z min is 22 and the stem group's z max is 20 (computed). |
 | Supersedes | new |
 | Milestone | none |
 
