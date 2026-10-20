@@ -3712,6 +3712,16 @@
     "dest": "packages/ui-core/src/viewer/scene.ts"
   },
   {
+    "id": "pip.bench-part3/ui-curve-panel",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/bench/part3.js",
+    "sha256": "594ee29b0c4ff173c0c656a818c4ea626b76c25b31e977d2e25bb20525253e24",
+    "fixes": [
+      "drawCurve (part3.js lines 394 to 417 in this copy, 396 to 419 in the canonical haft (9) copy, same text, measured 2026-10-20): the x and y scales, fmax 1.15 times the peak, the force grid step, the 0.5 mm travel ticks, the dashed contact line, the curve and the peak dot, ported to packages/ui/src/panels/curve.ts curveSvg and CurvePanel.vue as SVG with token colours; fmax also covers the claim band top so the band stays in frame, and the contact line sits where the design's ContactFn closes (R1-flagship-access-switch-12)"
+    ],
+    "dest": "packages/ui/src/panels/curve.ts"
+  },
+  {
     "id": "pip.bench-part3/ui-rail-showwhen",
     "kind": "copy",
     "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/bench/part3.js",

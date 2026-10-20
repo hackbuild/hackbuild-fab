@@ -25,5 +25,8 @@
     {
       "path": "../../../packages/catalog"
     }
+  ],
+  "exclude": [
+    "bench.entry.ts"
   ]
 }

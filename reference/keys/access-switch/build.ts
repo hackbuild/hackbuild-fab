@@ -11,13 +11,15 @@
 // -y wall and runs one lead per net on trace layer 1 from the key's routed
 // terminals to its T and S sockets. Conditionals live here (D-178).
 
-import { defineBuild, qualify, type FaceFrame, type Metric, type ShapeDecl, type Vec2 } from "@hackbuild/spec";
+import { defineBuild, qualify, type ContactFn, type FaceFrame, type Metric, type ShapeDecl, type Vec2 } from "@hackbuild/spec";
 import { chase } from "./chase";
 import { PRESS_IDS, pressBand } from "./claim";
 import { jackSeat } from "./jack";
 
 const ID = "click-spring-key";
 const SEGMENTS = 64;
+/** Force curve samples the archetype emits as spring.curve metrics, for the drive force readout and the curve panel. */
+const CURVE_SAMPLES = 24;
 const up = (z: number): FaceFrame => ({ origin: [0, 0, z], normal: [0, 0, 1], u: [1, 0, 0] });
 
 /** Prisms of a CSG union, in order, with their z spans and outer rings. */
@@ -34,7 +36,7 @@ export const build = defineBuild(chase, (p, k) => {
   const R = p.D / 2 + p.wall;
 
   // The spring element and the cap print beyond the body's near edge.
-  const out = k.arch(ID, up(floor), { l: p.l, t: p.t, Q: p.Q, w: p.w, E, loose: [-12, -R - 14] });
+  const out = k.arch(ID, up(floor), { l: p.l, t: p.t, Q: p.Q, w: p.w, E, loose: [-12, -R - 14], curveSamples: CURVE_SAMPLES });
   const metricOf = (id: string): number => {
     const v = out.metrics?.find((m) => m.id === `${ID}.0.${id}`)?.value;
     if (typeof v !== "number") throw new Error(`click-spring-key reported no ${id}`);
@@ -145,3 +147,45 @@ export const build = defineBuild(chase, (p, k) => {
     assertions: [],
   });
 });
+
+// The drive pad's contact function (bench.ts views.drive.contact, G-20): a
+// travel stimulus in mm, or a hold that presses the paddle to its stop
+// (paddle.travel). The tip closes the pad split once the travel reaches the
+// spring's contact travel cg; the force is the archetype's sampled SNAPFE
+// curve, linear between samples and held at its ends. One function for the
+// pad, the 3D pose, the readout, the curve panel and BENCH.drive.
+export const contact: ContactFn = (metrics, target, stimulus) => {
+  const num = (id: string): number | undefined => {
+    const v = metrics.find((m) => m.id === id)?.value;
+    return typeof v === "number" ? v : undefined;
+  };
+  const key = `${ID}.${target}`;
+  const cg = num(`${key}.spring.cg`);
+  const stop = num("paddle.travel") ?? 0;
+  const asked = stimulus === true ? stop : typeof stimulus === "number" ? stimulus : 0;
+  const travel = Math.min(Math.max(asked, 0), stop);
+  const n = num(`${key}.spring.curve.n`) ?? 0;
+  const d: number[] = [], F: number[] = [];
+  for (let i = 0; i < n; i++) {
+    const di = num(`${key}.spring.curve.d${i}`), Fi = num(`${key}.spring.curve.F${i}`);
+    if (di === undefined || Fi === undefined) break;
+    d.push(di);
+    F.push(Fi);
+  }
+  let forceN: number | undefined;
+  if (d.length > 0) {
+    let j = 1;
+    while (j < d.length && d[j]! < travel) j++;
+    if (travel <= d[0]!) forceN = F[0]!;
+    else if (j >= d.length) forceN = F[d.length - 1]!;
+    else {
+      const span = d[j]! - d[j - 1]!;
+      forceN = span > 0 ? F[j - 1]! + ((F[j]! - F[j - 1]!) * (travel - d[j - 1]!)) / span : F[j]!;
+    }
+  }
+  return {
+    closed: cg !== undefined && travel >= cg ? [`${key}.conductor.pad`, `${key}.conductor.padCommon`] : [],
+    pose: { travelMm: travel },
+    ...(forceN === undefined ? {} : { forceN }),
+  };
+};

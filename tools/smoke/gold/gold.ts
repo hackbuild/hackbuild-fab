@@ -44,6 +44,8 @@ export interface GoldBench {
   enter: { cam: string | null; view: string | null }[];
   /** BenchDecl.views.default; null on a legacy page. */
   defaultView: string | null;
+  /** The design folder of a fab bake, relative to the repo root, the oracle host builds; null on a legacy page. */
+  design: string | null;
 }
 
 export interface Dom {
@@ -90,6 +92,8 @@ const LEGACY_NA: Record<string, Record<string, string>> = {
 };
 
 interface Decl {
+  /** The bake.json folder, relative to the repo root. */
+  dir: string;
   chase: { meta: { kind: string }; exports: readonly { kind: string }[]; presets?: readonly unknown[]; params: readonly { fields?: readonly { commit?: string }[] }[] };
   bench: { views: { default?: string; modes?: readonly string[]; render?: readonly string[]; drive?: { contact?: string } }; rail?: readonly { panels?: readonly string[]; cam?: string; view?: string; focus?: string }[] } | null;
 }
@@ -102,7 +106,7 @@ async function declOf(b: BenchUnderTest): Promise<Decl> {
     const dir = path.dirname(m);
     const chase = ((await import(path.join(dir, "chase.ts"))) as { chase: Decl["chase"] }).chase;
     const bench = ((await import(path.join(dir, "bench.ts"))) as { bench?: Decl["bench"] }).bench ?? null;
-    return { chase, bench };
+    return { dir: path.relative(ROOT, dir), chase, bench };
   }
   throw new Error(`no bake.json writes ${b.rel}`);
 }
@@ -143,9 +147,9 @@ export async function goldBenches(): Promise<GoldBench[]> {
       if (build === undefined) continue;
       const d = await declOf(b);
       out.push({ id, under: b, origin: "fab", build, na: naOf(d), dom: FAB_DOM, focus: (d.bench?.rail ?? []).map((r) => r.focus ?? null),
-        enter: (d.bench?.rail ?? []).map((r) => ({ cam: r.cam ?? null, view: r.view ?? null })), defaultView: d.bench?.views.default ?? null });
+        enter: (d.bench?.rail ?? []).map((r) => ({ cam: r.cam ?? null, view: r.view ?? null })), defaultView: d.bench?.views.default ?? null, design: d.dir });
     } else if (b.origin === "legacy" && b.rel.startsWith(`dist${path.sep}legacy`) && b.adapter !== null && LEGACY_DOM[b.adapter] !== undefined) {
-      out.push({ id: b.adapter, under: b, origin: "legacy", build: null, na: { ...(LEGACY_NA[b.adapter] ?? {}) }, dom: LEGACY_DOM[b.adapter] as Dom, focus: [], enter: [], defaultView: null });
+      out.push({ id: b.adapter, under: b, origin: "legacy", build: null, na: { ...(LEGACY_NA[b.adapter] ?? {}) }, dom: LEGACY_DOM[b.adapter] as Dom, focus: [], enter: [], defaultView: null, design: null });
     }
   }
   cache = out;
@@ -281,9 +285,9 @@ export function rule(
           test.skip(true, `n/a: ${na}`);
           return;
         }
-        // The node build host is the oracle a rule reads check rows from, started on first use.
+        // The node build host is the oracle a rule reads check rows from, started on first use, on the bench's own design.
         let host: Host | null = null;
-        const oracle = async (): Promise<Host> => (host ??= await startHost());
+        const oracle = async (): Promise<Host> => (host ??= await startHost(b.design ?? undefined));
         try {
           await body({ page, bench: b, oracle, info });
         } finally {
