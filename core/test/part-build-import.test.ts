@@ -26,7 +26,7 @@ import { json, ROOT } from "./hbf.js";
 const CORPUS = "tools/corpus/import";
 const read = (p: string) => JSON.parse(readFileSync(path.join(ROOT, p), "utf8")) as unknown;
 const golden = read("core/test/goldens/part-build-import.json") as {
-  cases: { file: string; exit: number; verdict: string; stage: string; error?: { code: string; path: string; got: number }; volumeMm3?: number; triangles?: number; counts?: Record<string, number>; fail?: string[] }[];
+  cases: { file: string; exit: number; verdict: string; stage: string; error?: { code: string; path: string; got: number }; volumeMm3?: number; triangles?: number; counts?: Record<string, number>; fail?: string[]; checks?: Record<string, { verdict: string; measured: number | string }> }[];
 };
 const stlOracle = read("packages/mesh/test/fixtures/imported-oracle.json") as { rows: { file: string; sha256: string; signedVolumeMm3: number; areaMm2: number }[] };
 const glbOracle = read("packages/mesh/test/fixtures/imported-glb-oracle.json") as { rows: { file: string; signedVolume: number; area: number }[] };
@@ -152,9 +152,13 @@ describe("part.build import in process", () => {
     }
     expect(by.has("CHK-3MF-06")).toBe(false);
     expect(by.get("CHK-PRT-01")).toMatchObject({ verdict: "pass", measured: true });
-    // A union of the locket's parts is refused (they touch or overlap), so CHK-PRT-03 cannot sum against one.
-    expect(by.get("CHK-PRT-03")?.verdict).toBe("skip");
-    expect(by.get("CHK-PRT-03")?.constraint).toMatch(/^no union of the imported parts to sum against: the union of 16 parts is refused/);
+    // A union of the locket's parts is refused (they touch or overlap), so CHK-PRT-03 measures the worst
+    // pairwise overlap instead, and CHK-PRT-18 and -19 skip with the reason (R1-rails-import-07).
+    expect(by.get("CHK-PRT-03")).toMatchObject({ ...caseOf("locket-r2.glb").checks!["CHK-PRT-03"], extra: { rule: "pairwise" } });
+    for (const id of ["CHK-PRT-18", "CHK-PRT-19"]) {
+      expect(by.get(id)?.verdict).toBe("skip");
+      expect(by.get(id)?.constraint).toMatch(/^no union of the imported parts to count pieces in: the union of 16 parts is refused/);
+    }
     expect(a.part.warnings.map((w) => w.code)).toContain("UNION");
   }, 120_000);
 
@@ -205,4 +209,66 @@ describe("part.build import of OpenSCAD", () => {
       expect(Math.abs(r.parts[0]!.volumeMm3 - 1000)).toBeLessThanOrEqual(1e-6);
     }, 120_000);
   }
+});
+
+// R1-rails-import-07: CHK-PRT-03 by pairwise overlap when no union exists,
+// CHK-PRT-18 per body and CHK-PRT-19 on the part, wired into the verdict and
+// the exit. The goldens were computed at that run and pinned; the
+// independent source is MANIFEST.json, whose numbers make-pieces.mjs
+// computed from the primitives it wrote: the pile's summed volume less its
+// union, and the piece counts. CHK-PRT-19 measures a piece's lift above the
+// part's bed plane (packages/checks CHK-PRT-19), so the floating cap, whose
+// base is 2 mm above its 20 mm stem, measures 22 mm.
+describe("part.build --import pieces and overlap", () => {
+  const rows = golden.cases.filter((c) => c.checks !== undefined && !c.file.endsWith(".glb"));
+  const spec = (file: string) => {
+    const m = /^(.*)#(\d+)$/.exec(file);
+    return { path: m?.[1] ?? file, format: "stl" as const, as: "body" as const, ...(m === null ? {} : { pieces: Number(m[2]) }) };
+  };
+
+  for (const want of rows) {
+    it(`${want.file}: exit ${want.exit} on the cli, the pinned checks in process`, async () => {
+      const { code, r } = await json("part.build", "--import", want.file);
+      expect(code).toBe(want.exit);
+      expect(r.verdict).toBe(want.verdict);
+      expect(r.stage).toBe(want.stage);
+      expect(r.counts).toEqual(want.counts);
+      expect(r.findings.filter((f) => f.verdict === "fail").map((f) => f.id)).toEqual(want.fail);
+      const part = (r.result as unknown as CommandOutput<"part.build">).parts[0]!;
+      expect(part.volumeMm3).toBe(want.volumeMm3);
+      expect(part.triangles).toBe(want.triangles);
+      const a = await importAudit([spec(want.file)], ctx());
+      const got = Object.fromEntries(a.results.filter((x) => x.id in want.checks!).map((x) => [x.id, { verdict: x.verdict, measured: x.measured }]));
+      expect(got).toEqual(want.checks);
+    }, 120_000);
+  }
+
+  it("measures the pile's overlap as make-pieces.mjs summed it, over its five shells, against its union", async () => {
+    const row = manifest.files.find((f) => f.file === "pile.stl")!;
+    const [sum, union] = [...row.outcome.matchAll(/([\d.]+) mm3/g)].map((m) => Number(m[1]));
+    const measured = caseOf("pile.stl").checks!["CHK-PRT-03"]!.measured as number;
+    expect(Math.abs(measured - (sum! - union!))).toBeLessThanOrEqual(0.1);
+    // The mesh checks read the file's shell groups, one per primitive the manifest names.
+    expect(row.outcome).toMatch(/five overlapping primitives/);
+    const a = await importAudit([spec(`${CORPUS}/pile.stl`)], ctx());
+    for (const id of ["CHK-PRT-01", "CHK-PRT-03"]) expect(a.results.find((x) => x.id === id)?.extra?.["parts"], id).toBe(5);
+  }, 120_000);
+
+  it("measures corner-touch by pairwise overlap, never a skip, and skips the piece checks with the reason", async () => {
+    const a = await importAudit([spec(`${CORPUS}/corner-touch.stl`)], ctx());
+    const by = new Map(a.results.map((x) => [x.id as string, x]));
+    expect(by.get("CHK-PRT-03")).toMatchObject({ verdict: "pass", measured: 0, legal: { kind: "interval", lo: 0, hi: 0.001 }, extra: { rule: "pairwise" } });
+    for (const id of ["CHK-PRT-18", "CHK-PRT-19"]) expect(by.get(id)?.constraint).toMatch(/^no union of the imported parts to count pieces in: the union of 1 parts is refused/);
+  }, 120_000);
+
+  it("enters the declared pieces in the build hash, and refuses pieces that are not an integer at least 1", async () => {
+    const one = await importAudit([spec(`${CORPUS}/two-on-bed.stl`)], ctx());
+    const two = await importAudit([spec(`${CORPUS}/two-on-bed.stl#2`)], ctx());
+    expect(one.part.buildHash).not.toBe(two.part.buildHash);
+    const seed = read("packages/checks/seed/checks.seed.json") as { checks: { id: string; version: string }[] };
+    for (const id of ["CHK-PRT-18", "CHK-PRT-19"]) expect(two.checkVersions[id]).toBe(seed.checks.find((c) => c.id === id)!.version);
+    for (const pieces of [0, 1.5]) {
+      expect(await refusal({ import: [{ ...spec(`${CORPUS}/two-on-bed.stl`), pieces }] })).toMatchObject({ code: "E_SCHEMA", path: "/import/0/pieces", got: pieces });
+    }
+  }, 120_000);
 });
