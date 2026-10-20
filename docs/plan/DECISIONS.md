@@ -460,6 +460,9 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-404 | Metric record rerecorded, including claim.press rows main had left out | decided | Reference, profile, archetypes |
 | D-405 | Fix the exit-row test mapping, not ci.yml | decided | Rails, CI |
 | D-406 | CHECKS.md section 5 PRT entered count is 6 | decided | Plan, checks |
+| D-407 | The access switch press-claim README block has no automatic writer | decided | Reference, goldens |
+| D-408 | The access switch parity line names build 90e387..5c | decided | Reference, docs |
+| D-409 | The access switch coupon README takes the four verified lists | decided | Reference, docs |
 
 ## House rules and process
 
@@ -4981,6 +4984,39 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. The PRT entered count is 6 and the total entered is 86. These are computed from the section 9 rows the same way tools/counts.mjs enteredChecks reads them. |
 | Rationale | CHK-PRT-18 and -19 were entered in e66e9bc (2026-10-20) and the family table was not updated. The brief put this down to the R1-rails-import-05 import checks, but the section 9 rows point to e66e9bc. |
 | Evidence | Per-prefix tally of section 9 (computed): PRT 6, FIT 3, ASM 3, SHT 4, NET 33, BRD 16, 3MF 3, SHP 1, LNT 2, KEY 1, ART 10, DEV 4, total 86, equal to counts.json checks.entered. plan-drift test "CHECKS.md seeded counts equal counts.json" passes after the merge. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-407 The access switch press-claim README block has no automatic writer
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `reference/keys/access-switch/test/claim.test.ts` only compares the README press-claim block with this run. When they differ, the test fails and prints the expected block, and a person pastes it in. The README marker reads "paste the block the claim test prints when it fails". The test no longer reads HBF_ACCEPT. |
+| Rationale | D-227 and `tools/test/golden-writers.test.mjs` allow one HBF_ACCEPT reader, the flex-pair render writer. A second writer for README prose would need its own decision. |
+| Evidence | golden-writers 8 of 8 pass on the merged tree (computed); changing a gram figure in the README press block (180 g to 999 g) fails the claim test (builder mutant, computed). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-408 The access switch parity line names build 90e387..5c
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The verified block of `reference/keys/access-switch/README.md` cites build 90e387..5c, the hash in the committed `expected/build.json`, not the 6608e9..50 the R1-fix-01 brief named. |
+| Rationale | The goldens were re-accepted after the jack seat in commit 5c1db0e (D-397), so 6608e9..50 was right only at a1e5005. The readme-verified test checks the README against the committed golden. |
+| Evidence | `hbf parity reference/keys/access-switch` exit 0 at build 90e387..5c, four goldens equal (builder run, computed); readme-verified and access-switch tests 172 of 172 pass on the merged tree (computed). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-409 The access switch coupon README takes the four verified lists
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. R1-fix-01 also converted `reference/keys/access-switch/coupon/README.md`, outside its Writes line, to the four DOCS.md 9.3 lists, each line backed by fresh parity and check.run runs on the coupon. |
+| Rationale | The brief's done condition needs plan-drift test 28 to pass, and after the switch fix it failed only on this file's "### Not verified" heading. |
+| Evidence | plan-drift, ci-exit-rows, ci-workflow and lineage tests 68 of 68 pass on the merged tree (computed); coupon parity PASS at build d6f43d..34 and check.run 0 fail (builder runs, computed). |
 | Supersedes | new |
 | Milestone | none |
 
