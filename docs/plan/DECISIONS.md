@@ -490,6 +490,11 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-434 | The coupon result is pasted under Coupon result in the switch README | decided | Reference, docs |
 | D-435 | The word per coupon rung decides; scale and coins only record | decided | Reference, docs |
 | D-436 | plateRows is exported from the switch card and reused by the coupon card | decided | Reference, docs |
+| D-437 | @hackbuild/ui exports six panels, not five | decided | UI |
+| D-438 | @hackbuild/ui exports pageBench and pageOf beside mountBench | decided | UI |
+| D-439 | useBench reads the hook from the BENCH global | decided | UI |
+| D-440 | tsc -b leaves out the ui index; types go to dist/types | decided | Repos, packaging, toolchain, licensing |
+| D-441 | the ui exports test builds the package before importing it | decided | Testing, docs, milestones, registry |
 
 ## House rules and process
 
@@ -5341,6 +5346,61 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. `plateRows` in `reference/keys/access-switch/test/card.ts` (item 09's file) is exported and the coupon card imports it rather than copying it. |
 | Rationale | House rule: one implementation of each thing. |
 | Evidence | A one-word diff in `test/card.ts`; the switch suites pass 29 of 29 on the branch and the access-switch workspace 36 of 36 on the merged tree (computed, 2026-10-20). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-437 @hackbuild/ui exports six panels, not five
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `packages/ui/src/index.ts` (R1-engine-04) exports all six panel components: ChecksPanel, CurvePanel, ExportsPanel, FitsPanel, LogPanel and NotesPanel. |
+| Rationale | The R1-engine-04 brief says five panels and names none, while `packages/ui/src/panels/` holds six. Leaving one out would mean choosing which with nothing to go on. |
+| Evidence | `ls packages/ui/src/panels` lists 6 .vue files; `packages/ui/test/exports.test.ts` checks the exact export list (measured, 2026-10-20). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-438 @hackbuild/ui exports pageBench and pageOf beside mountBench
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The package also exports pageBench, pageOf and the MountOptions, MountedBench, BenchBuild, BenchWriter and PageBuildLike types from `packages/ui/src/bench/entry.ts`. |
+| Rationale | Every design bench entry calls `mountBench(pageBench(pageOf(...)))`, so mountBench alone does not mount a real bench. |
+| Evidence | `reference/keys/flex-pair/bench.entry.ts` line 8. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-439 useBench reads the hook from the BENCH global
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. useBench (`packages/ui/src/bench/use-bench.ts`) returns the shell store from useShell and the hook from `globalThis[BENCH_GLOBAL]`, or null when the bench was mounted with `hook: false`. `entry.ts` is unchanged; no provide or inject. |
+| Rationale | Changing `entry.ts` would change the flex-pair bake bytes, which the brief holds fixed. The kit mounts with `hook: false`, so the hook is null there. |
+| Evidence | flex-pair bake sha256 6481b19e483e5be44cdba92a0037b250386464f4ed4a995fb4d9a58146304dd2, 4537728 bytes, before and after (computed, builder). A mutant returning a null hook always failed the useBench test in `exports.test.ts` (measured, integrator). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-440 tsc -b leaves out the ui index; types go to dist/types
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `packages/ui/tsconfig.json` excludes `src/index.ts`. The vite library build (`packages/ui/vite.config.ts`) owns `dist/index.js` and `dist/style.css`; vue-tsc through `tools/vue-check.mjs` and `packages/ui/tsconfig.lib.json` owns `dist/types`. No file has two writers. |
+| Rationale | tsc cannot compile the single-file components the index names; compiling it would write a `dist/index.js` importing .vue files absent from dist and clash with the vite output. A separate `dist/types` keeps vue-tsc from overwriting the .d.ts files tsc writes. |
+| Evidence | `npx tsc -b` exit 0 and `node tools/vue-check.mjs tsconfig.lib.json` exit 0 on the merged tree (measured, 2026-10-20). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-441 the ui exports test builds the package before importing it
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `packages/ui/test/exports.test.ts` runs the vite build and the vue-tsc emit in child processes (NODE_ENV production), then imports `@hackbuild/ui` through a variable specifier. |
+| Rationale | Building first means the test never reads a stale dist, so a mutant in `src/index.ts` is caught. The variable specifier keeps `tsc -p tsconfig.tests.json` passing in CI, where the typecheck runs before any build. |
+| Evidence | Deleting the DrivePad export failed 2 of 5 tests (measured, builder); `npx tsc -p tsconfig.tests.json --noEmit` exit 0 on the merged tree (measured, integrator). |
 | Supersedes | new |
 | Milestone | none |
 
