@@ -423,6 +423,8 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-367 | worstOverlap builds every group's Manifold before the bounds prefilter | decided | Kernel, geometry |
 | D-368 | overlap.ts builds its own manifolds instead of reusing stages.ts toManifold | decided | Kernel, geometry |
 | D-369 | mesh.overlap lineage points at the original inlay validate_3mf.py | decided | Kernel, geometry |
+| D-370 | a zero or other out-of-range import count still parses | decided | Agent surface |
+| D-371 | readImports exported for its test | decided | Agent surface |
 
 ## House rules and process
 
@@ -4537,6 +4539,28 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. `lineage/mesh.overlap.json` names `fab-knowledge:originals/inlay` `validate_3mf.py` lines 257 to 269 as the canonical source. The bounds prefilter and the max over pairs, taken from `_worst_pair` in the repo copy `tools/py/validate_3mf.py` lines 809 to 830, are listed as fixes. |
 | Rationale | `_worst_pair` exists only in the modified repo copy, not in the original, and D-222 says to port from the original. |
 | Evidence | A grep for `_worst_pair` under `fab-knowledge/originals` finds nothing; the original's overlap loop is at lines 257 to 269, sha256 cdc2c7d5 recorded in the row (read, 2026-10-20). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-370 a zero or other out-of-range import count still parses
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `readImports` in `core/src/main.ts` takes any run of digits after the final `#`, so `plate.stl#0` gives `pieces: 0`. Only a non-digit tail leaves the `#` in the path. The range check is part.build's (rails item R1-rails-import-07). |
+| Rationale | One place checks the range, so `#0` gets a schema message that names pieces instead of a file-not-found on `plate.stl#0`. |
+| Evidence | `core/test/import-flag.test.ts` "passes a zero count through for part.build to refuse"; rails item R1-rails-import-06 brief step 3. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-371 readImports exported for its test
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `readImports` in `core/src/main.ts` is a named export. |
+| Rationale | Every other path to the parser goes through main and the strict zod schema, which refuses `pieces` until rails item R1-rails-import-07, so the item 06 done test could not run through main. |
+| Evidence | `core/test/import-flag.test.ts` imports `readImports` from `../src/main.js`; 4 of 4 pass on the merged tree (measured, 2026-10-20). |
 | Supersedes | new |
 | Milestone | none |
 
