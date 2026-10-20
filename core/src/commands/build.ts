@@ -31,7 +31,7 @@ import {
 } from "@hackbuild/pipeline";
 import { cmdError } from "../errors.js";
 import { findingsOf } from "../result.js";
-import { sha256Hex } from "@hackbuild/spec";
+import { sha256Hex, type Chase } from "@hackbuild/spec";
 import { hashOf } from "../jcs.js";
 import { sourceDateEpoch } from "../epoch.js";
 import { constraintVersions } from "../checks.js";
@@ -198,7 +198,13 @@ export function sourceClosure(entries: readonly string[], designDir: string): { 
     .sort((a, b) => (a.path < b.path ? -1 : a.path > b.path ? 1 : 0));
 }
 
-export async function loadDesign(target: string, cwd: string): Promise<Design> {
+/**
+ * The design in a directory. opts.chase stands in for the chase.ts value
+ * (chase.diff builds a chase from another file or git ref this way); the
+ * build module it names still resolves in this directory, and defHash is
+ * taken over it.
+ */
+export async function loadDesign(target: string, cwd: string, opts: { readonly chase?: Chase } = {}): Promise<Design> {
   const dir = path.resolve(cwd, target);
   if (!existsSync(dir) || !statSync(dir).isDirectory()) {
     throw cmdError({ code: "E_REF", path: "/chase", got: target, expected: "a design or reference directory holding chase.ts", hint: "name a directory such as reference/keys/flex-pair" });
@@ -207,11 +213,11 @@ export async function loadDesign(target: string, cwd: string): Promise<Design> {
   const ws = await loadWorkspace(root);
   const rel = posix(path.relative(root, dir));
   const chaseFile = path.join(dir, "chase.ts");
-  if (!existsSync(chaseFile)) {
+  if (opts.chase === undefined && !existsSync(chaseFile)) {
     throw cmdError({ code: "E_REF", path: "/chase", got: target, expected: "chase.ts in the directory", hint: "add chase.ts to the directory; hbf does not scaffold one yet" });
   }
   // Read as data: nothing in chase.ts runs (D-178).
-  const { chase } = readChaseSource(readFileSync(chaseFile, "utf8"), posix(path.relative(root, chaseFile)));
+  const chase = opts.chase ?? readChaseSource(readFileSync(chaseFile, "utf8"), posix(path.relative(root, chaseFile))).chase;
   const buildFile = buildModuleFile(dir, root, chase.build.module);
   const kindsFile = path.join(dir, "skeleton-kinds.ts");
   const draftKinds = existsSync(kindsFile);

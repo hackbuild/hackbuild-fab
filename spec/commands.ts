@@ -26,7 +26,7 @@ import type {
 } from "./ids";
 import type { CatalogHit, PinDef } from "./catalog";
 import type { Provenance } from "./profile";
-import type { CheckResult, ProjectGraph } from "./checks";
+import type { CheckResult, ProjectGraph, ResultTarget } from "./checks";
 import type { ConstraintDim, Interval, ParamEnvelope, ParamPointer } from "./constraints";
 import type { ArchetypeStatus, CanonOriginal, DerivedValue, MechanismStatus } from "./canon";
 import type { McuPinSpec, Net, OperatingPoint, ReadOutputs } from "./circuit";
@@ -328,15 +328,39 @@ export type PatchEdit =
   | { readonly replaceWhole: string; readonly ifDefHash: Hash }
   | { readonly param: ParamPointer; readonly set: number | string | boolean; readonly in?: "default" | { readonly preset: string } };
 
+/**
+ * One value chase.diff found changed, by JSON pointer into the migrated
+ * chase. from is null when op is added, to is null when op is removed; a
+ * subtree present on one side only is one change at its root.
+ */
 export interface ChaseChange {
+  readonly op: "added" | "removed" | "changed";
   readonly path: string;
   readonly from: unknown;
   readonly to: unknown;
 }
 
+/** One line of a chase migration report (packages/chase migrate). */
+export interface ChaseMigrationLine {
+  /** JSON pointer in the document before the migration. */
+  readonly pointer: string;
+  readonly change: "converted" | "dropped" | "filled" | "moved" | "set";
+  readonly from?: unknown;
+  readonly to?: unknown;
+  readonly why: string;
+}
+
+/** The migrations chase.diff applied to one side; from equals to and lines is empty when none ran. */
+export interface ChaseMigrations {
+  readonly from: number;
+  readonly to: number;
+  readonly lines: readonly ChaseMigrationLine[];
+}
+
 /** One check whose verdict moved between two builds, from chase.diff with build true. */
 export interface ChaseVerdictChange {
   readonly check: string;
+  readonly target: ResultTarget;
   readonly from: Verdict;
   readonly to: Verdict;
   /** Measured value before and after, in the check's unit. */
@@ -517,10 +541,23 @@ export interface CommandIO {
     output: { questions: readonly ValidateQuestion[]; resolvedChecks: readonly string[] };
   };
   "chase.diff": {
-    /** build true builds both sides and lists verdict changes; absent or false skips the build. */
+    /**
+     * against is a path to a chase.ts (or the directory holding one) or a
+     * git ref; absent means HEAD. build true builds both sides and lists
+     * verdict changes; absent or false skips the build.
+     */
     input: { chase: string; against?: string; build?: boolean };
-    /** verdictChanges is null when build was not requested. */
-    output: { changes: readonly ChaseChange[]; verdictChanges: readonly ChaseVerdictChange[] | null };
+    output: {
+      /** From against to chase, both migrated. */
+      changes: readonly ChaseChange[];
+      migrations: { readonly against: ChaseMigrations; readonly chase: ChaseMigrations };
+      /** defHash of the against side. */
+      defHashBefore: Hash;
+      /** defHash of the chase side. */
+      defHashAfter: Hash;
+      /** verdictChanges is null when build was not requested. */
+      verdictChanges: readonly ChaseVerdictChange[] | null;
+    };
   };
   "chase.patch": {
     input: { file: string; edits: readonly PatchEdit[] };
