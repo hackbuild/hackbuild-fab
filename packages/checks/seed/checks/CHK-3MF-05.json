@@ -1,0 +1,21 @@
+{
+  "id": "CHK-3MF-05",
+  "version": "1.0.0",
+  "title": "holed bands overlap full bands, never the reverse",
+  "appliesTo": {
+    "level": "part"
+  },
+  "severity": "block",
+  "needs": [
+    "3mf"
+  ],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "COLLAR 2026-08",
+    "date": "2026-08",
+    "what": "no recorded failure: COLLAR has no spirals or bands (benches-coins-inlay.md item 8), and knowledge/02-ordering-rules.md states the band order with no failure behind it",
+    "knowledge": "knowledge:kernels/3mf-dialect#geometry-rules",
+    "evidence": null
+  },
+  "status": "seed"
+}

@@ -1,0 +1,21 @@
+{
+  "id": "CHK-NET-07",
+  "version": "1.0.0",
+  "title": "no copper under a module body on a single layer",
+  "appliesTo": {
+    "level": "net"
+  },
+  "severity": "block",
+  "needs": [
+    "geom"
+  ],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "SPINDLE v4 2026-08",
+    "date": "2026-08",
+    "what": "no recorded failure: the rule is a SPINDLE v5 gate (no trace buffer may cross the module body box); the failure on record for v4 is a module buried mid-board behind a GND ring with USB unreachable",
+    "knowledge": "knowledge:01-invariants#electrical",
+    "evidence": null
+  },
+  "status": "seed"
+}

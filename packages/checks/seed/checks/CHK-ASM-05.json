@@ -1,0 +1,29 @@
+{
+  "id": "CHK-ASM-05",
+  "version": "2.0.1",
+  "title": "anything with a rotational DOF gets a swept-volume check",
+  "appliesTo": {
+    "level": "assembly",
+    "joints": [
+      "prismatic",
+      "planar"
+    ]
+  },
+  "severity": "block",
+  "needs": [
+    "sim"
+  ],
+  "legalKind": "interval",
+  "origin": {
+    "project": "OGEE R16-P 2026-08",
+    "date": "2026-08",
+    "what": "every pin head swept into its own servo",
+    "numbers": {
+      "sweptMm3PerBarCrank": 682,
+      "qualifier": "computed, per-step sum over 25 steps in check_sweep.py and the M02 port; the bench 577 is retired by D-233"
+    },
+    "knowledge": "knowledge:01-invariants#motion-and-latching",
+    "evidence": "designs/ogee16/legacy/source/check_sweep.py"
+  },
+  "status": "seed"
+}

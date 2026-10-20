@@ -1,0 +1,21 @@
+{
+  "id": "CHK-INL-02",
+  "version": "1.0.1",
+  "title": "despeckle at 0.35 x min-feature disc area",
+  "appliesTo": {
+    "level": "part"
+  },
+  "severity": "warn",
+  "needs": [
+    "inlay"
+  ],
+  "legalKind": "interval",
+  "origin": {
+    "project": "COLLAR v3 2026-08",
+    "date": "2026-08",
+    "what": "despeckle at the full disc ate the full stop of hack.build",
+    "knowledge": "knowledge:designs/collar#45-art-hygiene",
+    "evidence": null
+  },
+  "status": "seed"
+}

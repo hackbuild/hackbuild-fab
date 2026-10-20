@@ -1,0 +1,26 @@
+{
+  "id": "CHK-PRT-09",
+  "version": "1.0.0",
+  "title": "longest unsupported bridge under 9 mm",
+  "appliesTo": {
+    "level": "part"
+  },
+  "severity": "warn",
+  "needs": [
+    "mesh"
+  ],
+  "legalKind": "interval",
+  "origin": {
+    "project": "SLATE 2026-08",
+    "date": "2026-08",
+    "what": "a 15.4x109 slot left over from a removed feature",
+    "numbers": {
+      "slotMm": "15.4 x 109",
+      "longestBridgeAfterFixMm": 8.8,
+      "qualifier": "computed by the SLATE print audit (knowledge/projects/inlay-and-print.md, SLATE)"
+    },
+    "knowledge": "knowledge:projects/inlay-and-print#slate",
+    "evidence": null
+  },
+  "status": "seed"
+}

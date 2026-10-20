@@ -1,0 +1,26 @@
+{
+  "id": "CHK-FIT-06",
+  "version": "1.0.0",
+  "title": "snap beam strain at full engagement within the material limit for its bend direction",
+  "appliesTo": {
+    "level": "feature",
+    "kinds": [
+      "snap"
+    ]
+  },
+  "severity": "block",
+  "needs": [
+    "mesh",
+    "profile"
+  ],
+  "legalKind": "interval",
+  "origin": {
+    "project": "PIP 2026-09",
+    "date": "2026-09",
+    "what": "the click beam failed at 2.7 to 3.3 percent strain; the strain formula is PLINTH's",
+    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-cases/plinth"
+  },
+  "status": "entered",
+  "enteredBy": "M04-T12",
+  "pending": "M06"
+}

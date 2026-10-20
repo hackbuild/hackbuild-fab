@@ -1,0 +1,34 @@
+{
+  "id": "CHK-PRT-01",
+  "version": "1.0.1",
+  "title": "every part is a closed manifold, two faces per undirected edge",
+  "appliesTo": {
+    "level": "part"
+  },
+  "severity": "block",
+  "precondition": true,
+  "needs": [
+    "mesh"
+  ],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "COLLAR 2026-08",
+    "date": "2026-08",
+    "what": "directed-edge balancing passed coincident faces; trimesh disagreed",
+    "knowledge": "knowledge:01-invariants#mesh-and-manifoldness",
+    "evidence": null,
+    "also": [
+      {
+        "project": "CRESSET 2026-08-30",
+        "date": "2026-08-30",
+        "what": "the shipped example carried four-face edges while the README claimed 0; PLINTH fixDiag gives 0",
+        "numbers": {
+          "fourFaceEdges": "40 + 16 + 1",
+          "qualifier": "computed from the shipped 3MF (CHECKS.md 7.7)"
+        },
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-cases/cresset/cresset-132mm.3mf"
+      }
+    ]
+  },
+  "status": "seed"
+}

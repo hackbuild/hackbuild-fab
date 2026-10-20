@@ -1,0 +1,21 @@
+{
+  "id": "CHK-SHT-02",
+  "version": "1.0.0",
+  "title": "ring count >= hole count per part",
+  "appliesTo": {
+    "level": "sheet"
+  },
+  "severity": "block",
+  "needs": [
+    "geom"
+  ],
+  "legalKind": "interval",
+  "origin": {
+    "project": "OGEE R16 sheets 2026-08",
+    "date": "2026-08",
+    "what": "latch bracket 1 outline where 4 expected",
+    "knowledge": "knowledge:kernels/sheet-design#connectivity-the-check-that-refuses",
+    "evidence": null
+  },
+  "status": "seed"
+}

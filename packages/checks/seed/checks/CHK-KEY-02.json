@@ -1,0 +1,24 @@
+{
+  "id": "CHK-KEY-02",
+  "version": "2.0.0",
+  "title": "flex cap bridge at most 4.5 unsupported",
+  "appliesTo": {
+    "level": "feature",
+    "kinds": [
+      "pocket"
+    ]
+  },
+  "severity": "block",
+  "needs": [
+    "mesh"
+  ],
+  "legalKind": "interval",
+  "origin": {
+    "project": "PIP 2026-09",
+    "date": "2026-09",
+    "what": "conductive TPU spanning the hole",
+    "knowledge": "knowledge:designs/pip#51-flex-cone-key-canon-flex-cone-key",
+    "evidence": null
+  },
+  "status": "seed"
+}

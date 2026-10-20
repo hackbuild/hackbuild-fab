@@ -1,0 +1,21 @@
+{
+  "id": "CHK-MOT-06",
+  "version": "1.0.0",
+  "title": "sim never decides an outcome; state commits at command",
+  "appliesTo": {
+    "level": "project"
+  },
+  "severity": "block",
+  "needs": [
+    "motion"
+  ],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "OGEE R16 2026-08",
+    "date": "2026-08",
+    "what": "nothing latched under swiftshader",
+    "knowledge": "knowledge:kernels/motion-latch#motion-ir",
+    "evidence": null
+  },
+  "status": "seed"
+}

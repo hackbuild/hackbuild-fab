@@ -1,0 +1,21 @@
+{
+  "id": "CHK-3MF-08",
+  "version": "1.0.0",
+  "title": "no object that holds a conductor body or shares a face with one has interlocking_beam on, whether set per object or inherited from the project",
+  "appliesTo": {
+    "level": "artifact"
+  },
+  "severity": "block",
+  "needs": [
+    "3mf"
+  ],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "research 2026-10",
+    "date": "2026-10",
+    "what": "Orca, Prusa and Cura generate interlocking beams where two filaments meet and interleave them up to interlocking_depth cells deep, which eats a conductor's cross section; no printed failure on record, loss inferred (research/3dp-landscape.md section 3 and section 11 idea 8)",
+    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/research/3dp-landscape.md"
+  },
+  "status": "entered",
+  "enteredBy": "M05-T20"
+}

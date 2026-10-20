@@ -1,0 +1,21 @@
+{
+  "id": "CHK-PRT-06",
+  "version": "1.0.0",
+  "title": "no slab starts in mid air in print pose",
+  "appliesTo": {
+    "level": "part"
+  },
+  "severity": "block",
+  "needs": [
+    "mesh"
+  ],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "STYLUS 2026-08",
+    "date": "2026-08",
+    "what": "conductive TPU plug printed disconnected",
+    "knowledge": "knowledge:projects/printed-circuits#stylus",
+    "evidence": null
+  },
+  "status": "seed"
+}

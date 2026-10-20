@@ -1,0 +1,20 @@
+{
+  "id": "CHK-DEV-01",
+  "version": "1.0.0",
+  "title": "CLASP payload at most 65439 bytes, or 65535 minus the encoded PUBLISH overhead of the actual address",
+  "appliesTo": {
+    "level": "source"
+  },
+  "severity": "block",
+  "needs": [],
+  "legalKind": "interval",
+  "origin": {
+    "project": "LOUVER 2026-09-14",
+    "date": "2026-09-14",
+    "what": "LOUVER.ino line 134 enforces 65439 bytes, 65535 minus 96; 65535 minus 61 holds only for a short address",
+    "evidence": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/louver-clasp/outputs/LOUVER/LOUVER.ino"
+  },
+  "status": "entered",
+  "enteredBy": "M04-T12",
+  "pending": "M13"
+}

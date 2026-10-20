@@ -1,0 +1,22 @@
+{
+  "id": "CHK-MOT-01",
+  "version": "1.0.0",
+  "title": "every joint within limits over the programmed path",
+  "appliesTo": {
+    "level": "assembly"
+  },
+  "severity": "block",
+  "needs": [
+    "motion",
+    "sim"
+  ],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "PAWL 2026-07",
+    "date": "2026-07",
+    "what": "the first PAWL build fell over in sim: a stance above 212.5 put the leg IK on the locked knee singularity, and the stance band was clamped",
+    "knowledge": "knowledge:designs/pawl#53-closed-form-leg-ik-and-the-stance-band-c-67-to-89",
+    "evidence": null
+  },
+  "status": "seed"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "CHK-LNT-03",
+  "version": "2.0.1",
+  "title": "no hand-maintained list another file determines",
+  "appliesTo": {
+    "level": "source"
+  },
+  "severity": "block",
+  "needs": [],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "OGEE R16-P 2026-08",
+    "date": "2026-08",
+    "what": "NEED list silently dropped seven servo meshes",
+    "knowledge": "knowledge:02-ordering-rules#lints",
+    "evidence": null,
+    "also": [
+      {
+        "project": "OGEE build-it 2026-08-18",
+        "date": "2026-08-18",
+        "what": "PARTS_TBL gives 99 pieces, the scene places 124, the blurb says 124 and a check row says 115",
+        "numbers": {
+          "partsTblPieces": 99,
+          "scenePlaced": 124,
+          "checkRowSays": 115,
+          "qualifier": "computed by the OGEE build-it run"
+        },
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-ogee-stipple-mech/derived/ogee_buildit_run.json"
+      }
+    ]
+  },
+  "status": "seed"
+}

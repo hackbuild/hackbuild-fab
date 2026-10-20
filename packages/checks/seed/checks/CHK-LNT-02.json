@@ -1,0 +1,19 @@
+{
+  "id": "CHK-LNT-02",
+  "version": "2.0.0",
+  "title": "no emoji; no four-point sparkle glyph",
+  "appliesTo": {
+    "level": "source"
+  },
+  "severity": "block",
+  "needs": [],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "hackbuild design system 2026-08",
+    "date": "2026-08",
+    "what": "four point sparkle glyphs read as an AI signature and were rejected by name (table-forge); no emoji failure is on record",
+    "knowledge": "knowledge:05-taste#hackbuild-visual-language",
+    "evidence": null
+  },
+  "status": "seed"
+}

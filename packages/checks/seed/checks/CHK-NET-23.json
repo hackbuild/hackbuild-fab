@@ -1,0 +1,22 @@
+{
+  "id": "CHK-NET-23",
+  "version": "1.0.0",
+  "title": "weedable: eroding every shape by 0.75 mm leaves one skeleton per net",
+  "appliesTo": {
+    "level": "net"
+  },
+  "severity": "block",
+  "needs": [
+    "geom"
+  ],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "SPLICE rev C 2026-07-31",
+    "date": "2026-07-31",
+    "what": "the rev C README states that eroding every shape by 0.75 mm leaves one connected skeleton per net, with no code behind it",
+    "evidence": "knowledge/designs/splice.md"
+  },
+  "status": "entered",
+  "enteredBy": "M04-T12",
+  "pending": "M05"
+}

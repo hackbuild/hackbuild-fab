@@ -1,0 +1,22 @@
+{
+  "id": "CHK-NET-14",
+  "version": "1.0.0",
+  "title": "every copper net survives an erode of half the minimum feature (buffer -0.55 for 1.10 mm)",
+  "appliesTo": {
+    "level": "net"
+  },
+  "severity": "block",
+  "needs": [
+    "geom"
+  ],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "KEYWAY 2026-08",
+    "date": "2026-08",
+    "what": "all seven boards of the family gate every copper net on an erode of half the 1.10 mm minimum feature",
+    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-conductive-b.md"
+  },
+  "status": "entered",
+  "enteredBy": "M04-T12",
+  "pending": "M05"
+}

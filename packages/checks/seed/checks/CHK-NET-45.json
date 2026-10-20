@@ -1,0 +1,23 @@
+{
+  "id": "CHK-NET-45",
+  "version": "1.0.0",
+  "title": "board width fits the stock width with margin",
+  "appliesTo": {
+    "level": "sheet"
+  },
+  "severity": "block",
+  "needs": [
+    "geom"
+  ],
+  "legalKind": "interval",
+  "origin": {
+    "project": "STAVE 2026-08",
+    "date": "2026-08",
+    "what": "no recorded failure: the tape gate runs first so a wider board fails loudly, 96 mm in 101.6 mm tape with 4 mm to spare (lines 201 to 203)",
+    "knowledge": "knowledge:designs/stave#54-tape-width-gate-first-in-the-list",
+    "evidence": "reference/copper/stave/legacy/gen_stave.py"
+  },
+  "status": "entered",
+  "enteredBy": "M05-T17",
+  "pending": "M05"
+}

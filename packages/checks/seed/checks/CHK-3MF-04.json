@@ -1,0 +1,22 @@
+{
+  "id": "CHK-3MF-04",
+  "version": "2.0.0",
+  "title": "non-structure inserts inset 1 um by true edge normal",
+  "appliesTo": {
+    "level": "part"
+  },
+  "severity": "block",
+  "needs": [
+    "3mf",
+    "geom"
+  ],
+  "legalKind": "interval",
+  "origin": {
+    "project": "COLLAR 2026-08",
+    "date": "2026-08",
+    "what": "homothety pushed spirals into the wall",
+    "knowledge": "knowledge:kernels/3mf-dialect#geometry-rules",
+    "evidence": null
+  },
+  "status": "seed"
+}

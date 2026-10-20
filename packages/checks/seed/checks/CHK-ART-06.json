@@ -1,0 +1,22 @@
+{
+  "id": "CHK-ART-06",
+  "version": "1.0.0",
+  "title": "a printed QR is raised or flush in a contrasting slot, never debossed in one colour",
+  "appliesTo": {
+    "level": "artifact"
+  },
+  "severity": "block",
+  "needs": [
+    "inlay"
+  ],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "COTTER 2026-09",
+    "date": "2026-09",
+    "what": "mono kits deboss the QR 0.6 mm in one colour and the per-module warning says it will not scan",
+    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/latest/cotter-sparger.md"
+  },
+  "status": "entered",
+  "enteredBy": "M04-T12",
+  "pending": "M09"
+}

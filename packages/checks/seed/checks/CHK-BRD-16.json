@@ -1,0 +1,22 @@
+{
+  "id": "CHK-BRD-16",
+  "version": "1.0.0",
+  "title": "polarity mark on every polarised part",
+  "appliesTo": {
+    "level": "artifact"
+  },
+  "severity": "block",
+  "needs": [
+    "board"
+  ],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "SHIM 2026-08-11",
+    "date": "2026-08-11",
+    "what": "the guide dropped the polarity marks D2.K and C2.+",
+    "evidence": "knowledge/designs/shim.md"
+  },
+  "status": "entered",
+  "enteredBy": "M04-T12",
+  "pending": "M08"
+}

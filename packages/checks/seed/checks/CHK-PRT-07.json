@@ -1,0 +1,21 @@
+{
+  "id": "CHK-PRT-07",
+  "version": "1.0.0",
+  "title": "islands at layer height, run at 0.24 and 0.20",
+  "appliesTo": {
+    "level": "part"
+  },
+  "severity": "block",
+  "needs": [
+    "mesh"
+  ],
+  "legalKind": "interval",
+  "origin": {
+    "project": "STYLUS 2026-08",
+    "date": "2026-08",
+    "what": "islands.py",
+    "knowledge": "knowledge:01-invariants#printability",
+    "evidence": null
+  },
+  "status": "seed"
+}

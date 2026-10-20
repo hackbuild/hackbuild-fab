@@ -1,0 +1,21 @@
+{
+  "id": "CHK-NET-12",
+  "version": "1.0.2",
+  "title": "unrouted connections and tight spots surface as warnings, never silently",
+  "appliesTo": {
+    "level": "project"
+  },
+  "severity": "block",
+  "needs": [
+    "circuit"
+  ],
+  "legalKind": "interval",
+  "origin": {
+    "project": "PIP 2026-09",
+    "date": "2026-09",
+    "what": "routing problems were silent",
+    "knowledge": "knowledge:projects/printed-circuits#haft",
+    "evidence": null
+  },
+  "status": "seed"
+}

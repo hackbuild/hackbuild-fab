@@ -1,0 +1,21 @@
+{
+  "id": "CHK-BRD-20",
+  "version": "1.0.0",
+  "title": "solder jumpers at their declared default join no two fed supply nets",
+  "appliesTo": {
+    "level": "project"
+  },
+  "severity": "block",
+  "needs": [
+    "board"
+  ],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "TRUNNION rev A 2026-08-01",
+    "date": "2026-08-01",
+    "what": "SJ1 normally closed joins the SuperMini 5 V pin to the V5 rail that J5 feeds: \"Never feed J5 while the SJ1 bridge is intact and USB is plugged in\"; SPINDLE JP1 defaults open for the same hazard (D-088)",
+    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-copper-pcb-b.md"
+  },
+  "status": "entered",
+  "enteredBy": "M08-T12"
+}

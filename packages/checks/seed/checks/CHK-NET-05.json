@@ -1,0 +1,26 @@
+{
+  "id": "CHK-NET-05",
+  "version": "2.0.0",
+  "title": "printed button reads LOW when pressed: pullup range inside the interval set by path resistance and the MCU VIL max",
+  "appliesTo": {
+    "level": "feature",
+    "kinds": [
+      "port"
+    ]
+  },
+  "severity": "block",
+  "needs": [
+    "circuit",
+    "profile"
+  ],
+  "legalKind": "interval",
+  "origin": {
+    "project": "BLOCKS 2026-08",
+    "date": "2026-08",
+    "what": "BOSS sim at 50 kohm and one 0.5 VIO threshold read 2.05 V as HIGH; RP2040 band 0.8 to 2.0 V",
+    "knowledge": "knowledge:designs/boss#514-the-undefined-band-verdict-origin",
+    "evidence": null
+  },
+  "status": "entered",
+  "constraint": "circuit/pullup-low-read"
+}

@@ -1,0 +1,23 @@
+{
+  "id": "CHK-NET-40",
+  "version": "1.0.0",
+  "title": "every electrode plate is solid copper, at least its declared area, and as many as declared",
+  "appliesTo": {
+    "level": "sheet"
+  },
+  "severity": "block",
+  "needs": [
+    "geom"
+  ],
+  "legalKind": "interval",
+  "origin": {
+    "project": "VERNIER 2026-08",
+    "date": "2026-08",
+    "what": "no recorded failure: an inset box pokes its corners outside a rounded plate and fails a good one, so the gate tests the plate inset by 0.6 mm (pad_rr.buffer(-0.6), lines 232 to 234); SPLINE, TESSERA, FRET and STAVE floor the smallest plate at 120, 400, 450 and 600 mm2, a fingertip being about 100",
+    "knowledge": "knowledge:designs/vernier#51-capacitive-plates-six-buttons",
+    "evidence": "reference/copper/vernier/legacy/gen_vernier.py"
+  },
+  "status": "entered",
+  "enteredBy": "M05-T17",
+  "pending": "M05"
+}

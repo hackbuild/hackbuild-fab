@@ -1,0 +1,25 @@
+{
+  "id": "CHK-NET-25",
+  "version": "1.0.0",
+  "title": "encoder disc phase: quadrature or Gray code as declared",
+  "appliesTo": {
+    "level": "feature",
+    "kinds": [
+      "port"
+    ]
+  },
+  "severity": "block",
+  "needs": [
+    "circuit"
+  ],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "FEELER 2026-08",
+    "date": "2026-08",
+    "what": "the quadrature marks are step/2 long with B offset step/2, 180 electrical degrees, while the SIM uses step/4",
+    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-conductive-a.md"
+  },
+  "status": "entered",
+  "enteredBy": "M04-T12",
+  "pending": "M06"
+}

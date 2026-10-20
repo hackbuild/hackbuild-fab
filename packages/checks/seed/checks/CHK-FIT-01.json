@@ -1,0 +1,21 @@
+{
+  "id": "CHK-FIT-01",
+  "version": "1.0.0",
+  "title": "every mating pair is in its fit class band on the REAL gap",
+  "appliesTo": {
+    "level": "assembly"
+  },
+  "severity": "block",
+  "needs": [
+    "profile"
+  ],
+  "legalKind": "interval",
+  "origin": {
+    "project": "OGEE R16-P 2026-08",
+    "date": "2026-08",
+    "what": "seven of seventeen pairs out of band",
+    "knowledge": "knowledge:designs/ogee16#48-fits-table-fitspy",
+    "evidence": null
+  },
+  "status": "seed"
+}

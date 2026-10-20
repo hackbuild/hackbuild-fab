@@ -1,0 +1,23 @@
+{
+  "id": "CHK-NET-44",
+  "version": "1.0.0",
+  "title": "isomorphic key lattice: one interval set per physical move, no duplicate notes, range and diatonic coverage",
+  "appliesTo": {
+    "level": "sheet"
+  },
+  "severity": "block",
+  "needs": [
+    "geom"
+  ],
+  "legalKind": "interval",
+  "origin": {
+    "project": "FRET 2026-08",
+    "date": "2026-08",
+    "what": "no recorded failure: every physically adjacent key pair is walked and the intervals asserted {2} up a column, {7} up-right and {5} down-right, with no duplicated note, at least 24 semitones of range and 6 of the 7 diatonic degrees (lines 318 to 339), the best verification in the family",
+    "knowledge": "knowledge:designs/fret#53-isomorphic-interval-gates",
+    "evidence": "reference/copper/fret/legacy/gen_fret.py"
+  },
+  "status": "entered",
+  "enteredBy": "M05-T17",
+  "pending": "M05"
+}

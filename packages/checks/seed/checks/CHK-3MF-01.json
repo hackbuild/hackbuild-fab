@@ -1,0 +1,21 @@
+{
+  "id": "CHK-3MF-01",
+  "version": "1.0.1",
+  "title": "Application tag starts with BambuStudio- or OrcaSlicer-",
+  "appliesTo": {
+    "level": "artifact"
+  },
+  "severity": "block",
+  "needs": [
+    "3mf"
+  ],
+  "legalKind": "set",
+  "origin": {
+    "project": "challenge-coin 2026-08",
+    "date": "2026-08",
+    "what": "colours silently dropped",
+    "knowledge": "knowledge:03-diagnostics#printing",
+    "evidence": null
+  },
+  "status": "seed"
+}

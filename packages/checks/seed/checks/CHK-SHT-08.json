@@ -1,0 +1,22 @@
+{
+  "id": "CHK-SHT-08",
+  "version": "1.0.0",
+  "title": "assembled cut outlines at kerf 0 interfere at most the collision budget",
+  "appliesTo": {
+    "level": "sheet"
+  },
+  "severity": "block",
+  "needs": [
+    "geom"
+  ],
+  "legalKind": "interval",
+  "origin": {
+    "project": "COTTER 2026-09",
+    "date": "2026-09",
+    "what": "test/laser_fit.mjs assembles the cut outlines at kerf 0 against a 4 mm3 collision budget",
+    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/latest/cotter-sparger.md"
+  },
+  "status": "entered",
+  "enteredBy": "M04-T12",
+  "pending": "M07"
+}

@@ -1,0 +1,24 @@
+{
+  "id": "CHK-NET-04",
+  "version": "1.0.0",
+  "title": "every landing conductor has an explicit containment constraint",
+  "appliesTo": {
+    "level": "feature",
+    "kinds": [
+      "conductor"
+    ]
+  },
+  "severity": "block",
+  "needs": [
+    "geom"
+  ],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "STYLUS 2026-08",
+    "date": "2026-08",
+    "what": "collector post overlapped body frame by post area times EZ",
+    "knowledge": "knowledge:kernels/copper-routing#contact-and-containment",
+    "evidence": null
+  },
+  "status": "seed"
+}

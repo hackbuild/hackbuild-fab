@@ -1,0 +1,23 @@
+{
+  "id": "CHK-NET-31",
+  "version": "1.0.0",
+  "title": "every declared connection is made by name",
+  "appliesTo": {
+    "level": "part"
+  },
+  "severity": "block",
+  "needs": [
+    "geom"
+  ],
+  "legalKind": "interval",
+  "origin": {
+    "project": "KEYWAY 2026-08",
+    "date": "2026-08",
+    "what": "no recorded failure: the generator counts 20 named connections (comb spines, clip pad centres, slider spines and collector) and refuses below 20, lines 205 to 214; 20 of 20 in the 2026-10-04 rerun",
+    "knowledge": "knowledge:designs/keyway#8-tests-and-harness",
+    "evidence": "reference/copper/keyway/legacy/gen_keyway.py"
+  },
+  "status": "entered",
+  "enteredBy": "M05-T14",
+  "pending": "M05"
+}

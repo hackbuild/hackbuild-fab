@@ -1,0 +1,23 @@
+{
+  "id": "CHK-PRT-14",
+  "version": "1.0.0",
+  "title": "longest unsupported first-layer run per solid in print pose",
+  "appliesTo": {
+    "level": "part"
+  },
+  "severity": "warn",
+  "needs": [
+    "mesh",
+    "profile"
+  ],
+  "legalKind": "interval",
+  "origin": {
+    "project": "SLATE 2026-08",
+    "date": "2026-08",
+    "what": "the print audit named the longest unsupported first-layer run; no implementation is in the harvest or the downloads",
+    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-cases.md"
+  },
+  "status": "entered",
+  "enteredBy": "M04-T12",
+  "pending": "M11"
+}

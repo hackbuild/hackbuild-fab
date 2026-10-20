@@ -1,0 +1,26 @@
+{
+  "id": "CHK-SHP-02",
+  "version": "1.0.0",
+  "title": "a round or edge profile on a printed edge is at least one line width deep",
+  "appliesTo": {
+    "level": "feature",
+    "kinds": [
+      "round",
+      "edgeProfile"
+    ]
+  },
+  "severity": "warn",
+  "needs": [
+    "mesh",
+    "profile"
+  ],
+  "legalKind": "interval",
+  "origin": {
+    "project": "KNURL 2026-09",
+    "date": "2026-09",
+    "what": "64 reeds at 0.5 deep printed practically round; 40 at 1.0 deep read",
+    "knowledge": "knowledge:03-diagnostics#printing",
+    "evidence": null
+  },
+  "status": "seed"
+}

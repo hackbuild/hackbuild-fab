@@ -1,0 +1,35 @@
+{
+  "id": "CHK-MOT-04",
+  "version": "1.0.1",
+  "title": "half select never commits (addressing property)",
+  "appliesTo": {
+    "level": "assembly"
+  },
+  "severity": "block",
+  "needs": [
+    "motion"
+  ],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "OGEE R16 2026-08",
+    "date": "2026-08",
+    "what": "OGEE R16: a single 3 mm strip bar sagged 0.95 mm at the far station (computed), more than the 0.775 mm one bar margin that keeps a half select from latching; bars went to two laminated layers (0.168 mm)",
+    "numbers": {
+      "sagMm": 0.95,
+      "halfSelectMarginMm": 0.775,
+      "laminatedSagMm": 0.168,
+      "qualifier": "computed (seed origin; knowledge/kernels/sheet-design.md)"
+    },
+    "knowledge": "knowledge:kernels/sheet-design#sheet-stiffness-the-thing-that-kills-a-shrink",
+    "evidence": null,
+    "also": [
+      {
+        "project": "TAPPET R1 2026-08-11",
+        "date": "2026-08-11",
+        "what": "the half-select property stated as two signed margins, half-select clearance and full-select overshoot, each checked against print tolerance",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-sweep/tappet/tappet (3).html"
+      }
+    ]
+  },
+  "status": "seed"
+}

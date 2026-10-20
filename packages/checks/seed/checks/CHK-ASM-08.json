@@ -1,0 +1,21 @@
+{
+  "id": "CHK-ASM-08",
+  "version": "1.0.0",
+  "title": "mesh origin on the rotation axis; bores land on pivots at five states",
+  "appliesTo": {
+    "level": "part"
+  },
+  "severity": "block",
+  "needs": [
+    "mesh"
+  ],
+  "legalKind": "interval",
+  "origin": {
+    "project": "OGEE R14 2026-08",
+    "date": "2026-08",
+    "what": "link swung about a point 48 mm below its pins; zero at rest",
+    "knowledge": "knowledge:designs/ogee16#42-link-with-a-crown-struck-from-its-own-origin",
+    "evidence": null
+  },
+  "status": "seed"
+}

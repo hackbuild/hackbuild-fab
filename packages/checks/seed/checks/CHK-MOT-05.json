@@ -1,0 +1,30 @@
+{
+  "id": "CHK-MOT-05",
+  "version": "2.0.0",
+  "title": "latch identity holds: margin + overshoot = (fullRise - halfRise) - camlift - lugTot; equals stroke/2 - camlift - lugTot when halfRise = stroke/2",
+  "appliesTo": {
+    "level": "part",
+    "assertions": [
+      "identity"
+    ]
+  },
+  "severity": "block",
+  "needs": [
+    "motion"
+  ],
+  "legalKind": "interval",
+  "origin": {
+    "project": "OGEE R17b 2026-08",
+    "date": "2026-08",
+    "what": "pinning the well forced STROKE 4.8 to 5.0",
+    "numbers": {
+      "identityR16Mm": 2.175,
+      "identityR17Mm": 1.1853,
+      "identityR17bMm": 1.2853,
+      "qualifier": "computed from stipple_latch.json and kin.py (CHECKS.md section 7.7)"
+    },
+    "knowledge": "knowledge:projects/mechanisms#ogee-seventeen-revisions",
+    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-ogee-stipple-mech/derived/stipple_latch.json"
+  },
+  "status": "seed"
+}

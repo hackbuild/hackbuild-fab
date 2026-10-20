@@ -1,0 +1,22 @@
+{
+  "id": "CHK-PRT-03",
+  "version": "2.0.0",
+  "title": "parts of one object never overlap and sum to the solid",
+  "appliesTo": {
+    "level": "assembly"
+  },
+  "severity": "block",
+  "precondition": true,
+  "needs": [
+    "mesh"
+  ],
+  "legalKind": "interval",
+  "origin": {
+    "project": "COLLAR 2026-08",
+    "date": "2026-08",
+    "what": "validate_3mf --overlap",
+    "knowledge": "knowledge:01-invariants#mesh-and-manifoldness",
+    "evidence": null
+  },
+  "status": "seed"
+}

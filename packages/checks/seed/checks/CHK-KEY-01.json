@@ -1,0 +1,24 @@
+{
+  "id": "CHK-KEY-01",
+  "version": "2.1.0",
+  "title": "flex cone contact gap at least 1.2 and about 45 percent of cone height",
+  "appliesTo": {
+    "level": "feature",
+    "kinds": [
+      "contact"
+    ]
+  },
+  "severity": "block",
+  "needs": [
+    "mesh"
+  ],
+  "legalKind": "interval",
+  "origin": {
+    "project": "PIP 2026-09",
+    "date": "2026-09",
+    "what": "a pressed cone travels about half its height",
+    "knowledge": "knowledge:designs/pip#51-flex-cone-key-canon-flex-cone-key",
+    "evidence": null
+  },
+  "status": "seed"
+}

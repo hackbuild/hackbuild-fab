@@ -1,0 +1,21 @@
+{
+  "id": "CHK-ART-01",
+  "version": "1.0.0",
+  "title": "export completeness: unique resolved object names, no undefined, null or NaN in part names; STL entry count equals object count",
+  "appliesTo": {
+    "level": "artifact"
+  },
+  "severity": "block",
+  "needs": [
+    "3mf"
+  ],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "TENON 2026-09",
+    "date": "2026-09",
+    "what": "five objects named tenon-undefined and four STLs lost to one overwritten name",
+    "evidence": "tools/corpus/3mf/known-bad/tenon-undefined.3mf"
+  },
+  "status": "entered",
+  "enteredBy": "M04-T12"
+}

@@ -1,0 +1,22 @@
+{
+  "id": "CHK-NET-19",
+  "version": "1.0.0",
+  "title": "wiper stray contact under 0.01 mm2",
+  "appliesTo": {
+    "level": "sheet"
+  },
+  "severity": "block",
+  "needs": [
+    "geom"
+  ],
+  "legalKind": "interval",
+  "origin": {
+    "project": "KEYWAY 2026-08",
+    "date": "2026-08",
+    "what": "the wiper stray contact gate reads 0.000 mm2 in the run",
+    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-conductive-b.md"
+  },
+  "status": "entered",
+  "enteredBy": "M04-T12",
+  "pending": "M05"
+}

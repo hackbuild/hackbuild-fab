@@ -1,0 +1,21 @@
+{
+  "id": "CHK-ASM-07",
+  "version": "1.0.1",
+  "title": "closest approach reported with numbers, flag under 3 mm",
+  "appliesTo": {
+    "level": "assembly"
+  },
+  "severity": "warn",
+  "needs": [
+    "sim"
+  ],
+  "legalKind": "interval",
+  "origin": {
+    "project": "OGEE R16-P 2026-08",
+    "date": "2026-08",
+    "what": "2.40 mm read as contact in a render",
+    "knowledge": "knowledge:03-diagnostics#sim-and-viewer",
+    "evidence": null
+  },
+  "status": "seed"
+}

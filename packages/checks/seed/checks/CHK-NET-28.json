@@ -1,0 +1,26 @@
+{
+  "id": "CHK-NET-28",
+  "version": "1.0.1",
+  "title": "capacitive electrode path at most 30 kohm (Capricate SNR 5:1)",
+  "appliesTo": {
+    "level": "net"
+  },
+  "severity": "block",
+  "needs": [
+    "circuit"
+  ],
+  "legalKind": "interval",
+  "origin": {
+    "project": "Capricate, UIST 2015-11",
+    "date": "2015-11",
+    "what": "capacitive SNR fell under 5:1 above a 30 kohm electrode path (measured by the Capricate authors)",
+    "numbers": {
+      "resistorsKohm": "20 to 120 in steps of 10 (measured by others)",
+      "electrodesMm": "5, 10, 15, 20 (measured by others)"
+    },
+    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/web-hci-fab-research/capricate.txt"
+  },
+  "status": "entered",
+  "enteredBy": "M04-T12",
+  "constraint": "circuit/capacitive-path-ceiling"
+}

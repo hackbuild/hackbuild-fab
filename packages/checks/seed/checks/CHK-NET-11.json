@@ -1,0 +1,21 @@
+{
+  "id": "CHK-NET-11",
+  "version": "1.0.1",
+  "title": "trace layer built per net from one outline offset; post and via radii clear of half the trace width",
+  "appliesTo": {
+    "level": "net"
+  },
+  "severity": "block",
+  "needs": [
+    "geom"
+  ],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "PIP 2026-09",
+    "date": "2026-09",
+    "what": "union of capsules left lumps; a via radius at half the trace width broke traces in the sweep",
+    "knowledge": "knowledge:03-diagnostics#printed-circuit-floors-and-folding-decks",
+    "evidence": null
+  },
+  "status": "seed"
+}

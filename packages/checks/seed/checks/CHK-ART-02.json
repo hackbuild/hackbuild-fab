@@ -1,0 +1,22 @@
+{
+  "id": "CHK-ART-02",
+  "version": "1.0.0",
+  "title": "an artifact rebuilds from its shipped source to the same mesh hash",
+  "appliesTo": {
+    "level": "artifact"
+  },
+  "severity": "block",
+  "needs": [
+    "3mf",
+    "mesh"
+  ],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "NACELLE 2026-08-02",
+    "date": "2026-08-02",
+    "what": "the SCAD builds the Aug 2 console body 200 x 230 x 73 while the shipped STL is the Aug 3 CRT body 170 x 233 x 193.2",
+    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-cases/nacelle/nacelle_viewer.html"
+  },
+  "status": "entered",
+  "enteredBy": "M04-T12"
+}

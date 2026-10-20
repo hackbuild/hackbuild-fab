@@ -1,0 +1,28 @@
+{
+  "id": "CHK-FIT-03",
+  "version": "1.0.0",
+  "title": "a mixed-process pair uses PSLIP/PGUIDE, not SLIP",
+  "appliesTo": {
+    "level": "feature",
+    "kinds": [
+      "tabSlot"
+    ]
+  },
+  "severity": "block",
+  "needs": [
+    "profile"
+  ],
+  "legalKind": "set",
+  "origin": {
+    "project": "OGEE R16 sheets 2026-08",
+    "date": "2026-08",
+    "what": "printed lug in cut slot had 0.25 real",
+    "numbers": {
+      "realClearanceMm": 0.25,
+      "qualifier": "computed: a printed 3.0 lug in a 3.40 cut slot, the printed part about 0.15 over (knowledge/kernels/sheet-design.md)"
+    },
+    "knowledge": "knowledge:kernels/sheet-design#fits-cut-to-printed",
+    "evidence": null
+  },
+  "status": "seed"
+}

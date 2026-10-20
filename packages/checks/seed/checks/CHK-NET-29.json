@@ -1,0 +1,26 @@
+{
+  "id": "CHK-NET-29",
+  "version": "1.0.0",
+  "title": "charge-release path settles inside the wait: pathOhm at most rejectOhm",
+  "appliesTo": {
+    "level": "net"
+  },
+  "severity": "block",
+  "needs": [
+    "circuit"
+  ],
+  "legalKind": "interval",
+  "origin": {
+    "project": "PIP 2026-09",
+    "date": "2026-09",
+    "what": "computed settle 78 us passed a 200 us wait while the printed keys crossed at 113 to 2431 us (measured by the owner)",
+    "numbers": {
+      "settleUs": "78 (computed)",
+      "keyCrossingUs": "113 to 2431 (measured by the owner)"
+    },
+    "knowledge": "knowledge:designs/pip#510-electrical-model-and-the-charge-and-release-read-read-model-charge-release",
+    "evidence": null
+  },
+  "status": "entered",
+  "constraint": "circuit/charge-release-settle"
+}

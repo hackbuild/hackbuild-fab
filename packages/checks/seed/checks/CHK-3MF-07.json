@@ -1,0 +1,21 @@
+{
+  "id": "CHK-3MF-07",
+  "version": "2.0.0",
+  "title": "per-filament vectors in project_settings.config have one element per filament and each element has the key's per-slot type; overhang_fan_threshold elements are percent strings matching ^[0-9]+%$, never bare numbers or nil",
+  "appliesTo": {
+    "level": "artifact"
+  },
+  "severity": "block",
+  "needs": [
+    "3mf"
+  ],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "CASK 2026-09",
+    "date": "2026-09",
+    "what": "Flash Studio warned on the enum default",
+    "knowledge": "knowledge:kernels/3mf-dialect#two-more-key-facts-from-cask",
+    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-cases/cask/cask_cap_hackbuild.3mf"
+  },
+  "status": "seed"
+}

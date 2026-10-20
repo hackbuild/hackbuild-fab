@@ -1,0 +1,19 @@
+{
+  "id": "CHK-LNT-04",
+  "version": "2.0.0",
+  "title": "no two assignments on one line with a comment between",
+  "appliesTo": {
+    "level": "source"
+  },
+  "severity": "block",
+  "needs": [],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "OGEE R15 2026-08",
+    "date": "2026-08",
+    "what": "DRIVE_Y commented out, four parts parked at -1.5",
+    "knowledge": "knowledge:02-ordering-rules#lints",
+    "evidence": null
+  },
+  "status": "seed"
+}

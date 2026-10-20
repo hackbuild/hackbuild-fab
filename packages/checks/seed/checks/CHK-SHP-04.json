@@ -1,0 +1,25 @@
+{
+  "id": "CHK-SHP-04",
+  "version": "1.0.0",
+  "title": "a web meets its neighbour with real overlap, never a tangency",
+  "appliesTo": {
+    "level": "feature",
+    "kinds": [
+      "web"
+    ]
+  },
+  "severity": "block",
+  "precondition": true,
+  "needs": [
+    "geom"
+  ],
+  "legalKind": "interval",
+  "origin": {
+    "project": "OGEE R16-M 2026-08",
+    "date": "2026-08",
+    "what": "tangent weld became six bodies after the print shrink",
+    "knowledge": "knowledge:03-diagnostics#printing",
+    "evidence": null
+  },
+  "status": "seed"
+}

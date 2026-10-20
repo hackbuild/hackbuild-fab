@@ -1,0 +1,22 @@
+{
+  "id": "CHK-PRT-05",
+  "version": "1.0.0",
+  "title": "vertical dims are whole multiples of layer height",
+  "appliesTo": {
+    "level": "part"
+  },
+  "severity": "warn",
+  "needs": [
+    "mesh",
+    "profile"
+  ],
+  "legalKind": "multipleOf",
+  "origin": {
+    "project": "LOCKET rev C 2026-08",
+    "date": "2026-08",
+    "what": "quantization audit against the 2-layer rule",
+    "knowledge": "knowledge:01-invariants#printability",
+    "evidence": null
+  },
+  "status": "seed"
+}

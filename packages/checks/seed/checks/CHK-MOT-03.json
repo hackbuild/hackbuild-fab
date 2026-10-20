@@ -1,0 +1,21 @@
+{
+  "id": "CHK-MOT-03",
+  "version": "1.0.1",
+  "title": "every rule enforceable in sim AND firmware; table hash equal",
+  "appliesTo": {
+    "level": "source"
+  },
+  "severity": "block",
+  "needs": [
+    "motion"
+  ],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "BEAM PRD 2026-08",
+    "date": "2026-08",
+    "what": "DETENT field audit: app and firmware disagreed; connect pushed app defaults over the honed device setup, and firmware parseArgs capped at 6 truncated an 8 coefficient command",
+    "knowledge": "knowledge:01-invariants#motion-and-latching",
+    "evidence": null
+  },
+  "status": "seed"
+}

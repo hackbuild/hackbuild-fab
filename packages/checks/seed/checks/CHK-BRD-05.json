@@ -1,0 +1,21 @@
+{
+  "id": "CHK-BRD-05",
+  "version": "1.0.1",
+  "title": "BOM, CPL and netlist cross-checked by designator",
+  "appliesTo": {
+    "level": "artifact"
+  },
+  "severity": "block",
+  "needs": [
+    "board"
+  ],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "SPINDLE R1 2026-08",
+    "date": "2026-08",
+    "what": "stale BOM described headers that no longer existed",
+    "knowledge": "knowledge:kernels/board-pcb#board-level-gates-that-earn-their-keep",
+    "evidence": null
+  },
+  "status": "seed"
+}

@@ -1,0 +1,25 @@
+{
+  "id": "CHK-SHP-01",
+  "version": "1.0.1",
+  "title": "chamfer half-spaces applied before union, never after",
+  "appliesTo": {
+    "level": "feature",
+    "kinds": [
+      "chamfer"
+    ]
+  },
+  "severity": "block",
+  "precondition": true,
+  "needs": [
+    "mesh"
+  ],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "DETENT rev D 2026-07-30",
+    "date": "2026-07-30",
+    "what": "unbounded half-space cut a neighbouring sub-solid",
+    "knowledge": "knowledge:01-invariants#printability",
+    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-robots-machines/unzipped/detentfiles/CONTEXT.md"
+  },
+  "status": "seed"
+}

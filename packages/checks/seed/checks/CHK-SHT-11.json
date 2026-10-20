@@ -1,0 +1,25 @@
+{
+  "id": "CHK-SHT-11",
+  "version": "1.0.1",
+  "title": "finger joint tab and recess one kerf off the pitch, measured on the cut outline",
+  "appliesTo": {
+    "level": "feature",
+    "kinds": [
+      "finger"
+    ]
+  },
+  "severity": "block",
+  "needs": [
+    "geom"
+  ],
+  "legalKind": "interval",
+  "origin": {
+    "project": "TUMBLER 2026-08",
+    "date": "2026-08",
+    "what": "no recorded failure: fingerEdgePts widens each outward finger by one kerf and narrows each other segment by one kerf (tumbler.html lines 322 to 331), the rule the FINGER JOINT module prints as tab and slot; no cut joint is on record",
+    "knowledge": "knowledge:designs/tumbler#45-the-18-modules",
+    "evidence": null
+  },
+  "status": "entered",
+  "enteredBy": "M06-T02"
+}

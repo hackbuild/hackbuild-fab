@@ -1,0 +1,21 @@
+{
+  "id": "CHK-BRD-04",
+  "version": "1.0.0",
+  "title": "every GPIO audited for strapping and boot activity",
+  "appliesTo": {
+    "level": "net"
+  },
+  "severity": "block",
+  "needs": [
+    "board"
+  ],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "SPINDLE, ARMATURE 2026-08",
+    "date": "2026-08",
+    "what": "U0TXD strobes the laser at boot",
+    "knowledge": "knowledge:03-diagnostics#firmware-and-rigs",
+    "evidence": null
+  },
+  "status": "seed"
+}

@@ -1,0 +1,22 @@
+{
+  "id": "CHK-NET-18",
+  "version": "1.0.0",
+  "title": "sensor film bridges only COM and its own zone, and covers both combs",
+  "appliesTo": {
+    "level": "sheet"
+  },
+  "severity": "block",
+  "needs": [
+    "geom"
+  ],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "KEYWAY 2026-08",
+    "date": "2026-08",
+    "what": "the sensor film gate requires it to bridge only COM and its own zone, 260 of 260 per zone in the run",
+    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-conductive-b.md"
+  },
+  "status": "entered",
+  "enteredBy": "M04-T12",
+  "pending": "M05"
+}

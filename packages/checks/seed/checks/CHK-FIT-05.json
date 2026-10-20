@@ -1,0 +1,29 @@
+{
+  "id": "CHK-FIT-05",
+  "version": "1.0.0",
+  "title": "a bore that is a bearing has land L/D >= 0.8",
+  "appliesTo": {
+    "level": "feature",
+    "kinds": [
+      "bore"
+    ]
+  },
+  "severity": "warn",
+  "needs": [
+    "mesh"
+  ],
+  "legalKind": "interval",
+  "origin": {
+    "project": "OGEE R16-P 2026-08",
+    "date": "2026-08",
+    "what": "3 mm plate bearing, L/D 0.375, shaft walked 29 mm",
+    "numbers": {
+      "bearingLdBefore": 0.375,
+      "bearingLdAfter": 1,
+      "qualifier": "computed from 3/8 and 8/8 (knowledge/designs/ogee16.md 4.4)"
+    },
+    "knowledge": "knowledge:designs/ogee16#44-crank-to-yoke-drive-canon-candidate-crank-yoke",
+    "evidence": null
+  },
+  "status": "seed"
+}

@@ -1,0 +1,21 @@
+{
+  "id": "CHK-NET-02",
+  "version": "1.0.0",
+  "title": "edge-level clearance, not vertex-level",
+  "appliesTo": {
+    "level": "net"
+  },
+  "severity": "block",
+  "needs": [
+    "geom"
+  ],
+  "legalKind": "interval",
+  "origin": {
+    "project": "TANG 2026-08",
+    "date": "2026-08",
+    "what": "triangle edge crossed an obstruction a vertex test missed",
+    "knowledge": "knowledge:01-invariants#electrical",
+    "evidence": null
+  },
+  "status": "seed"
+}

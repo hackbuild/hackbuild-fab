@@ -1,0 +1,22 @@
+{
+  "id": "CHK-NET-15",
+  "version": "1.0.0",
+  "title": "slider ratio strictly monotone over 41 samples; span inside 0.10 to 0.90",
+  "appliesTo": {
+    "level": "net"
+  },
+  "severity": "block",
+  "needs": [
+    "geom"
+  ],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "VERNIER, TESSERA 2026-08",
+    "date": "2026-08",
+    "what": "the slider gate samples the ratio 41 times and requires it strictly monotone with its span inside 0.10 to 0.90",
+    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-conductive-b.md"
+  },
+  "status": "entered",
+  "enteredBy": "M04-T12",
+  "pending": "M05"
+}

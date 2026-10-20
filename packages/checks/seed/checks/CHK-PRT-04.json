@@ -1,0 +1,22 @@
+{
+  "id": "CHK-PRT-04",
+  "version": "2.0.0",
+  "title": "wall thickness is a whole multiple of line width",
+  "appliesTo": {
+    "level": "part"
+  },
+  "severity": "block",
+  "needs": [
+    "mesh",
+    "profile"
+  ],
+  "legalKind": "multipleOf",
+  "origin": {
+    "project": "STYLUS 2026-08",
+    "date": "2026-08",
+    "what": "sub-line-width wall above a skirt read as empty layers in Flash Studio",
+    "knowledge": "knowledge:01-invariants#printability",
+    "evidence": null
+  },
+  "status": "seed"
+}
