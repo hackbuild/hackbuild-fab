@@ -7,12 +7,13 @@
   "author": "Moheeb Zara <hackbuildvideo@gmail.com>",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
+      "types": "./dist/types/index.d.ts",
       "import": "./dist/index.js"
-    }
+    },
+    "./style.css": "./dist/style.css"
   },
   "scripts": {
-    "build": "tsc -b",
+    "build": "tsc -b && vite build && node ../../tools/vue-check.mjs tsconfig.lib.json",
     "test": "vitest run --passWithNoTests"
   },
   "dependencies": {

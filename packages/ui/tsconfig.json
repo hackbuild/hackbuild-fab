@@ -12,5 +12,8 @@
     {
       "path": "../ui-core"
     }
+  ],
+  "exclude": [
+    "src/index.ts"
   ]
 }
