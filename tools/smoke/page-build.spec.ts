@@ -3,7 +3,9 @@
 // buildHash and meshes, writes 3mf, stl and card, and its 3mf bytes equal
 // the CLI writer's (tools/smoke/cli-3mf.mjs) for the same values and the
 // SOURCE_DATE_EPOCH the bake wrote into the page, at the defaults and at
-// preset two. Owned wasm objects are zero after the builds.
+// preset two. The page loads its constraint versions through the registry
+// loader (packages/registry-loader pageFacts), so its registryHash equals
+// the CLI's. Owned wasm objects are zero after the builds.
 //
 // Run: npx playwright test -c tools/smoke/playwright.config.ts page-build.spec.ts
 
@@ -22,16 +24,16 @@ test.describe.configure({ mode: "serial", timeout: 240_000 });
 
 interface PageHook {
   BENCH: { state: Record<string, unknown>; buildHash: string | null; commit(): void; settled(ms?: number): Promise<void>; exportBytes(kind: string): Promise<string> };
-  HbfPageBuild: { page: { facts: { epoch: number }; liveCount(): number } };
+  HbfPageBuild: { page: { facts: { epoch: number }; liveCount(): number; build(values: unknown): Promise<{ registryHash: string }> } };
 }
 
-function cli(values: unknown, epoch: number): { buildHash: string; bytes: Buffer } {
+function cli(values: unknown, epoch: number): { buildHash: string; registryHash: string; bytes: Buffer } {
   const r = spawnSync(process.execPath, [path.join(ROOT, "tools/smoke/cli-3mf.mjs"), JSON.stringify(values)], {
     cwd: ROOT, encoding: "utf8", env: { ...process.env, SOURCE_DATE_EPOCH: String(epoch) }, maxBuffer: 64 * 1024 * 1024,
   });
   if (r.status !== 0) throw new Error(`cli-3mf exited ${String(r.status)}: ${r.stderr.slice(-400)}`);
-  const out = JSON.parse(r.stdout) as { buildHash: string; b64: string };
-  return { buildHash: out.buildHash, bytes: Buffer.from(out.b64, "base64") };
+  const out = JSON.parse(r.stdout) as { buildHash: string; registryHash: string; b64: string };
+  return { buildHash: out.buildHash, registryHash: out.registryHash, bytes: Buffer.from(out.b64, "base64") };
 }
 
 async function pageExport(page: Page, kind: string): Promise<Buffer> {
@@ -62,6 +64,8 @@ test("the flex-pair bake builds, checks and exports in the page, and its 3mf equ
     }, values);
     const state = await page.evaluate(() => (globalThis as unknown as PageHook).BENCH.state);
     const want = cli(state, epoch);
+    const registryHash = await page.evaluate(async (v) => (await (globalThis as unknown as PageHook).HbfPageBuild.page.build(v)).registryHash, state);
+    expect(registryHash, "page registryHash equals the cli build").toBe(want.registryHash);
     expect(hash, "page buildHash equals the cli build").toBe(want.buildHash);
     const got = await pageExport(page, "3mf");
     expect(got.length, "3mf bytes").toBe(want.bytes.length);

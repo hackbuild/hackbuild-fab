@@ -44,7 +44,7 @@ export interface PageFacts {
   readonly tables: ProfileTables;
   readonly checksSeed: unknown;
   readonly versions: Workspace["versions"];
-  /** core/src/checks.ts constraintVersions(), id to version. */
+  /** Constraint def id to version; a page passes the registry loader's (packages/registry-loader pageFacts), the baked value is its cross-check. */
   readonly constraints: Readonly<Record<string, string>>;
   /** SOURCE_DATE_EPOCH the bake ran under, s. */
   readonly epoch: number;
@@ -73,6 +73,8 @@ export interface PageMesh {
 /** One in-page build with its check run. */
 export interface PageResult {
   readonly buildHash: string;
+  /** BuildInputs.registryHash of this build, the one `hbf part.build` stores. */
+  readonly registryHash: string;
   readonly part: Part;
   readonly meshes: Readonly<Record<string, PageMesh>>;
   readonly metrics: readonly Metric[];
@@ -179,7 +181,7 @@ export function createPageBuild(input: PageInput): PageBuild {
       const meshes: Record<string, PageMesh> = {};
       for (const b of built.meshed.bodies) meshes[b.id] = { positions: b.mesh.positions, triangles: b.mesh.triangles };
       return {
-        buildHash: built.part.buildHash, part: built.part, meshes, metrics: built.part.metrics ?? [],
+        buildHash: built.part.buildHash, registryHash: built.inputs.registryHash, part: built.part, meshes, metrics: built.part.metrics ?? [],
         results: checked.results, warnings: mergeWarnings(built.part.warnings, checked.warnings),
       };
     },

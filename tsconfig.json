@@ -74,6 +74,9 @@
       "path": "packages/chase"
     },
     {
+      "path": "packages/registry-loader"
+    },
+    {
       "path": "packages/ui-core"
     },
     {

@@ -1,0 +1,31 @@
+{
+  "name": "@hackbuild/registry-loader",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "author": "Moheeb Zara <hackbuildvideo@gmail.com>",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "pretest": "tsc -b",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@hackbuild/chase": "0.0.0",
+    "@hackbuild/checks": "0.0.0",
+    "@hackbuild/circuit": "0.0.0",
+    "@hackbuild/constraints": "0.0.0",
+    "@hackbuild/mechanisms": "0.0.0",
+    "@hackbuild/mesh": "0.0.0",
+    "@hackbuild/pipeline": "0.0.0",
+    "@hackbuild/profile": "0.0.0",
+    "@hackbuild/sim": "0.0.0",
+    "@hackbuild/spec": "0.1.0"
+  }
+}

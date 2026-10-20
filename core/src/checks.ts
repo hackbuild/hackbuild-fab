@@ -8,7 +8,9 @@ import path from "node:path";
 import { CHECK_MODULES, checkPage, coversOf, registerChecks, type CheckPage, type ReferenceCovers } from "@hackbuild/checks";
 import { seedRows, type SeedRow } from "@hackbuild/pipeline";
 import { cmdError } from "./errors.js";
-import { collectConstraintDefs } from "./load/constraints.js";
+
+/** Every constraint def core collects at load, id to version, for registryHash. */
+export { constraintVersions } from "@hackbuild/registry-loader";
 
 export {
   M00_PART_CHECKS, gatedSkips, m00Versions, preconditionOrder, registryHashOf, runPartChecks, seedRows, stamp,
@@ -48,8 +50,4 @@ export function checkRecord(row: SeedRow, workspace: string): CheckRecord {
   return page;
 }
 
-/** Every constraint def core collects at load, id to version, for registryHash. */
-export function constraintVersions(): Record<string, string> {
-  return Object.fromEntries(collectConstraintDefs().map((c) => [c.def.id, c.def.version]));
-}
 
