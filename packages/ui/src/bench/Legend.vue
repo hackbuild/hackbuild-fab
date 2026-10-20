@@ -26,7 +26,7 @@ const slots = computed<HbMaterialSlot[]>(() =>
     slot: m.slot,
     color: m.preview ?? `var(${PART_TOKENS[i % PART_TOKENS.length]})`,
     material: m.material,
-    parts: m.label,
+    ...(m.label === undefined ? {} : { parts: m.label }),
     role: m.label === undefined ? m.role : `${m.role}, ${m.label}`,
   })),
 );

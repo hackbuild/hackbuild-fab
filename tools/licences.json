@@ -5445,6 +5445,160 @@
       "decision": [
         "D-123"
       ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@typescript/old",
+      "version": "6.0.3",
+      "published": "Apache-2.0",
+      "audited": "Apache-2.0",
+      "evidence": "package-lock.json packages[\"node_modules/@typescript/old\"].license, read 2026-10-20",
+      "use": "TypeScript 6 compiler that typescript6 carries for vue-tsc",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@volar/language-core",
+      "version": "2.4.28",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@volar/language-core\"].license, read 2026-10-20",
+      "use": "dev toolchain, transitive of vue-tsc",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@volar/source-map",
+      "version": "2.4.28",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@volar/source-map\"].license, read 2026-10-20",
+      "use": "dev toolchain, transitive of vue-tsc",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@volar/typescript",
+      "version": "2.4.28",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@volar/typescript\"].license, read 2026-10-20",
+      "use": "dev toolchain, transitive of vue-tsc",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@vue/language-core",
+      "version": "3.3.13",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@vue/language-core\"].license, read 2026-10-20",
+      "use": "dev toolchain, transitive of vue-tsc",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "alien-signals",
+      "version": "3.2.1",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/alien-signals\"].license, read 2026-10-20",
+      "use": "dev toolchain, transitive of vue-tsc",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "muggle-string",
+      "version": "0.4.1",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/muggle-string\"].license, read 2026-10-20",
+      "use": "dev toolchain, transitive of vue-tsc",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "path-browserify",
+      "version": "1.0.1",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/path-browserify\"].license, read 2026-10-20",
+      "use": "dev toolchain, transitive of vue-tsc",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "typescript6",
+      "version": "6.0.2",
+      "published": "Apache-2.0",
+      "audited": "Apache-2.0",
+      "evidence": "package-lock.json packages[\"node_modules/typescript6\"].license, read 2026-10-20",
+      "use": "TypeScript 6 compiler alias that vue-tsc runs on (tools/vue-check.mjs)",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "vscode-uri",
+      "version": "3.2.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/vscode-uri\"].license, read 2026-10-20",
+      "use": "dev toolchain, transitive of vue-tsc",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "vue-tsc",
+      "version": "3.3.13",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/vue-tsc\"].license, read 2026-10-20",
+      "use": "vue single-file component typecheck (tools/vue-check.mjs)",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
     }
   ]
 }

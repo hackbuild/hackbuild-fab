@@ -44,7 +44,7 @@ const materialsFold = computed(
   () => props.step === 0 && props.side !== "readouts" && !props.steps.some((s) => s.panels.includes("materials")),
 );
 const slots = computed<HbMaterialSlot[]>(() =>
-  props.materials.map((m) => ({ slot: m.slot, color: m.preview ?? "var(--hb-part-e)", material: m.material, parts: m.label, role: m.role })),
+  props.materials.map((m) => ({ slot: m.slot, color: m.preview ?? "var(--hb-part-e)", material: m.material, ...(m.label === undefined ? {} : { parts: m.label }), role: m.role })),
 );
 </script>
 

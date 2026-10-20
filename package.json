@@ -17,7 +17,7 @@
   "scripts": {
     "prepare": "git config core.hooksPath .githooks",
     "lint": "node tools/lint-voice.mjs",
-    "typecheck": "tsc -b && tsc -p tools/tsconfig.json && tsc -p tsconfig.tests.json",
+    "typecheck": "tsc -b && tsc -p tools/tsconfig.json && tsc -p tsconfig.tests.json && node tools/vue-check.mjs",
     "pretest": "tsc -b",
     "test": "vitest run && node --test tools/test/*.test.mjs packages/*/seed/test/*.test.mjs knowledge/test/*.test.mjs",
     "registries": "node tools/gen/registries.mjs",
@@ -44,8 +44,10 @@
     "happy-dom": "21.0.1",
     "tsdown": "0.23.0",
     "typescript": "7.0.2",
+    "typescript6": "npm:@typescript/typescript6@6.0.2",
     "vite": "8.3.2",
     "vitest": "5.0.3",
+    "vue-tsc": "3.3.13",
     "yaml": "2.9.1",
     "zod": "4.6.5"
   },
