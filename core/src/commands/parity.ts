@@ -125,20 +125,29 @@ function verdictKey(r: CheckResult): string {
   return `${r.id}\u0000${canonicalize(r.target)}`;
 }
 
-/** The results whose verdict differs between two builds, both checked without artifacts, sorted by id then target. */
-async function verdictFlips(a: Built, b: Built): Promise<Values[]> {
+/**
+ * Each check result whose verdict differs between two builds, both checked
+ * without artifacts, as the before and after runs report it, sorted by id
+ * then target. A result present in one run only is left out. chase.diff
+ * and the parity edit read this one comparison.
+ */
+export async function verdictPairs(a: Built, b: Built): Promise<{ readonly before: CheckResult; readonly after: CheckResult }[]> {
   const before = new Map((await runAllChecks(a, [], undefined)).results.map((r) => [verdictKey(r), r] as const));
-  const out: Values[] = [];
+  const out: { before: CheckResult; after: CheckResult; key: string }[] = [];
   for (const r of (await runAllChecks(b, [], undefined)).results) {
-    const was = before.get(verdictKey(r));
+    const key = verdictKey(r);
+    const was = before.get(key);
     if (was === undefined || was.verdict === r.verdict) continue;
-    out.push({ id: r.id, target: r.target, from: was.verdict, to: r.verdict, measured: r.measured, legal: r.legal, ...(r.fix === undefined ? {} : { fix: r.fix }) });
+    out.push({ before: was, after: r, key });
   }
-  return out.sort((x, y) => {
-    const kx = `${String(x["id"])}\u0000${canonicalize(x["target"])}`;
-    const ky = `${String(y["id"])}\u0000${canonicalize(y["target"])}`;
-    return kx < ky ? -1 : kx > ky ? 1 : 0;
-  });
+  return out.sort((x, y) => (x.key < y.key ? -1 : x.key > y.key ? 1 : 0)).map(({ before: was, after }) => ({ before: was, after }));
+}
+
+/** The parity golden form of verdictPairs: the after result with the verdict it left. */
+async function verdictFlips(a: Built, b: Built): Promise<Values[]> {
+  return (await verdictPairs(a, b)).map(({ before: was, after: r }) => (
+    { id: r.id, target: r.target, from: was.verdict, to: r.verdict, measured: r.measured, legal: r.legal, ...(r.fix === undefined ? {} : { fix: r.fix }) }
+  ));
 }
 
 /** Number on a 1e-9 grid, so a delta of two decimals reads as written. */

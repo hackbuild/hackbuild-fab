@@ -30,7 +30,7 @@ const M04_PENDING: readonly string[] = [];
 /** M06 commands not registered yet; mech.find, mech.derive and arch.find landed with M06-T11, arch.apply with M06-T12. */
 const M06_PENDING: readonly string[] = [];
 /** M10 commands not registered yet; chase.validate landed with M10-T04 and each card deletes its entry. */
-const M10_PENDING: readonly string[] = ["chase.scaffold", "chase.diff", "chase.render", "chase.bake"];
+const M10_PENDING: readonly string[] = ["chase.scaffold", "chase.render", "chase.bake"];
 
 describe("registered surface (M00-T13 step 1, M01-T05 step 7, M02-T11 step 9, M04-T09, M10-T04)", () => {
   const rows = surfaceRows(["M-S", "M00", "M01", "M02"]);
@@ -103,13 +103,13 @@ describe("registered surface (M00-T13 step 1, M01-T05 step 7, M02-T11 step 9, M0
     for (const n of m06.filter((x) => !M06_PENDING.includes(x))) expect(COMMANDS.find((c) => c.name === n)?.group, n).toBe(COMMAND_GROUP[n as keyof typeof COMMAND_GROUP]);
   });
 
-  it("the M10 row adds chase.validate and chase.patch in their spec group; every pending one is in the row and unregistered (M10-T04)", () => {
+  it("the M10 row adds chase.validate, chase.diff and chase.patch in their spec group; every pending one is in the row and unregistered (M10-T04)", () => {
     expect(m10).toContain("chase.validate");
     for (const n of M10_PENDING) {
       expect(m10, `${n} is not in the M10 row`).toContain(n);
       expect(COMMANDS.some((c) => c.name === n), `${n} is registered; delete it from M10_PENDING`).toBe(false);
     }
-    for (const n of ["chase.validate", "chase.patch"] as const) expect(COMMANDS.find((c) => c.name === n)?.group, n).toBe(COMMAND_GROUP[n]);
+    for (const n of ["chase.validate", "chase.diff", "chase.patch"] as const) expect(COMMANDS.find((c) => c.name === n)?.group, n).toBe(COMMAND_GROUP[n]);
   });
 
   it("the M07 row adds nest.pack in group make and motion.run in group prove (M07-T14)", () => {
