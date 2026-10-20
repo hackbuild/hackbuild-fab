@@ -1,0 +1,23 @@
+{
+  "extends": "../../../../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "composite": false,
+    "declaration": false,
+    "types": [
+      "node"
+    ]
+  },
+  "include": [
+    "*.ts",
+    "test/*.ts"
+  ],
+  "references": [
+    {
+      "path": "../../../../packages/profile"
+    },
+    {
+      "path": "../../../../packages/sim"
+    }
+  ]
+}
