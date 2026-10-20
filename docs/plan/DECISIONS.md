@@ -520,6 +520,11 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-464 | M10 pending list in the surface test | decided | Testing, docs, milestones, registry |
 | D-465 | flex-pair Q-TIER pointers are /materials/1 and /materials/3 | decided | Reference, goldens |
 | D-466 | flex-pair validate exits 2 on the contact.gap E_REF | decided | Reference, goldens |
+| D-467 | claimFns fed from registry-loader, not core | decided | Repos, packaging, toolchain, licensing |
+| D-468 | No new spring.curve metric written by R1-engine-11 | decided | Testing, docs, milestones, registry |
+| D-469 | CHK-CLAIM-01 kept out of the part build registry run | decided | Testing, docs, milestones, registry |
+| D-470 | Vendored hackbuild-3mf repacked from fee8d2d | decided | Repos, packaging, toolchain, licensing |
+| D-471 | R1-engine-11 round 3 worktree and branch use the -r3 suffix | decided | House rules and process |
 
 ## House rules and process
 
@@ -5701,6 +5706,61 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. flex-pair validates with one error, E_REF /params/1/fields/0/item/3/constraintDim contact.gap, where the brief says 0 errors. The test pins that single error and says the list empties once something registers contact.gap. |
 | Rationale | No ConstraintDef registers contact.gap, so validate reports a real missing reference. Fixing the constraint registry is outside the brief's Writes line. |
 | Evidence | `core/test/chase-validate.test.ts` line 22 and header comment line 5. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-467 claimFns fed from registry-loader, not core
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. ChaseRegistries.claimFns is assigned in packages/registry-loader chaseRegistries; core/src/chase/registries.ts stays the one-line delegate to the loader. |
+| Rationale | After R1-engine-02 the registry loader is the one place that assembles the chase registries (one implementation of each thing); brief step 4 names the loader once 02 has merged. |
+| Evidence | `packages/registry-loader/src/index.ts` chaseRegistries; `packages/registry-loader/test/hash.test.ts` asserts contact.at, spring.contactTravel, spring.forceAt and spring.peak; the mutant that drops claimFns fails 1 of 4 tests. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-468 No new spring.curve metric written by R1-engine-11
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. Brief step 2 asked for a spring.curve build metric. R1-engine-11 adds none and reads the spring.curve samples already emitted. |
+| Rationale | R1-engine-10 (715db0e) already emits the FE curve samples as metrics from archetypes click.ts; a second emitter would duplicate it and move build hashes. |
+| Evidence | `packages/archetypes/src/pip/click.ts`; `packages/checks/src/claims/fns.ts` reads spring.curve.n, dN and FN. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-469 CHK-CLAIM-01 kept out of the part build registry run
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. CLAIM_CHECKS is excluded from pipeline registryDefs, as IMPORT_PATH_CHECKS is. |
+| Rationale | The check reads chase claims, which Part IR does not carry; on a build it would only skip and could move build hashes. |
+| Evidence | `packages/pipeline/src/build.ts` registryDefs; core skeleton test 9 pass and pipeline 3 pass on the merged tree. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-470 Vendored hackbuild-3mf repacked from fee8d2d
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. tools/vendor/hackbuild-3mf-0.1.0-fee8d2d.tgz replaces aa3a173 to add the CLAIM check area to the vendored contracts; hackbuild-3mf main is fast-forwarded to fee8d2d locally, not pushed. |
+| Rationale | The R1-engine-03 guard SPEC_CHECK_RESULT_FITS fails when spec CHECK_AREAS gains CLAIM and the vendored contract types lack it. |
+| Evidence | sha256 1a0b9622a0e71e2f0edc6eda203923b5101522547a513e41040cc4eb3a7ee239 matches `tools/vendor/SHA256SUMS`; vendor test 2 pass; hackbuild-3mf js vitest 237 pass, 1 skipped on fee8d2d; split-fresh 3 pass after the fast-forward. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-471 R1-engine-11 round 3 worktree and branch use the -r3 suffix
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The builder used /Users/obsidian/Projects/hackbuild/wt/R1-engine-11-r3 and branch r1/R1-engine-11-r3 instead of the -r1 names in the task text. |
+| Rationale | The failure packet and the round note ask for -r3, and r1/R1-engine-11-r1 already exists from an earlier round. |
+| Evidence | git branch list shows r1/R1-engine-11-r1, -r2 and -r3. |
 | Supersedes | new |
 | Milestone | none |
 
