@@ -574,6 +574,13 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-518 | The fader divider and ADC formulas live in ui-core and are held to circuit by test | decided | UI |
 | D-519 | Charge-release return rail taken from the drive level | decided | UI |
 | D-520 | Widget stimuli keyed by port and by pot prefix | decided | UI |
+| D-521 | chase.bake output keeps the spec field name hash | decided | Agent surface |
+| D-522 | mode draft is refused rather than ignored, and is bakeMode over MCP | decided | Agent surface |
+| D-523 | from-chase also writes bench.entry.ts and page-build.ts when absent | decided | UI |
+| D-524 | Generated bake title is the directory name | decided | UI |
+| D-525 | Off-file check added to the baker, scripts excluded | decided | Constraints and checks |
+| D-526 | Licence row for hackbuild-3mf added outside the brief file list | decided | Repos, packaging, toolchain, licensing |
+| D-527 | No lineage row for from-chase | decided | Testing, docs, milestones, registry |
 
 ## House rules and process
 
@@ -6349,6 +6356,83 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. `WidgetBuild.closed` lists the hookup ports that are closed now. `WidgetBuild.positions` is keyed by finger-pot prefix, so a fader and a signal readout of the same pot always agree. |
 | Rationale | Models do not see each other's declarations; keying the position by the pot itself gives one source for both widgets. |
 | Evidence | `packages/ui-core/src/widgets/registry.ts` `WidgetBuild`. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-521 chase.bake output keeps the spec field name hash
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The result is `{file, bytes, hash}`, as `spec/commands.ts` declares, not `{file, bytes, sha256}` as the card text says. `hash` is the lowercase sha256 hex of the file bytes. |
+| Rationale | Renaming a declared CommandIO output field touches the spec contract and MCP output for no gain; the Hash brand already means lowercase sha256. |
+| Evidence | `spec/commands.ts` chase.bake output; `spec/ids.ts` Hash doc; `core/test/chase-bake.test.ts` compares hash to `shasum -a 256` (measured). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-522 mode draft is refused rather than ignored, and is bakeMode over MCP
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. chase.bake takes `mode` `page` or `draft`; `draft` returns E_SCHEMA at `/mode` until R1-engine-24. On the `chase_bake` MCP tool the field is `bakeMode`, because the tool selector is already named `mode`. |
+| Rationale | Ignoring draft silently would produce a release page with no DRAFT markings. The rename follows the nest.pack `nestMode` precedent. |
+| Evidence | `core/src/mcp/schema.ts` FIELD_RENAMES; `spec/commands.ts` BakeArgs; test `refuses mode draft` (measured). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-523 from-chase also writes bench.entry.ts and page-build.ts when absent
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. Beyond `bake.json`, a design without these files gets plain ones. The entry mounts chase and bench with no ContactFn. The page build runs `createPageBuild({chase, module, facts})` with no draft kinds. Existing files are never touched. |
+| Rationale | The manifest names both files, and scaffolded, drafted or adopted designs have neither, so without them chase.bake could not bake those designs. |
+| Evidence | `tools/bake/from-chase.ts`; the test that writes bake.json, the entry and the page build into an access-switch copy and bakes it (4755596 bytes, measured). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-524 Generated bake title is the directory name
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. Manifest id and title are both `basename(dir)`, so the generated manifest equals the committed flex-pair one exactly. The committed access-switch manifest has a hand-set title, `access switch`, and is not regenerated. |
+| Rationale | The acceptance requires the M09 flex-pair hash when the manifest is unchanged. |
+| Evidence | Byte-for-byte test against `reference/keys/flex-pair/bake.json` (measured). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-525 Off-file check added to the baker, scripts excluded
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `tools/bake/bake.mjs` fails on src, srcset and poster attributes and CSS url() that point to http(s) or protocol-relative URLs, outside script blocks. Script text and anchors are not checked. |
+| Rationale | D-129 requires zero network at load. Library code carries URL strings it never fetches, such as the SVG namespace, so scanning scripts would refuse valid pages. Script-side requests are left to the smoke runner network count (item 22, not run). |
+| Evidence | `tools/bake/bake.mjs` offFileRequests; `tools/bake/test/bake.test.mjs` case; all four committed bakes still pass (measured). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-526 Licence row for hackbuild-3mf added outside the brief file list
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. Added a `tools/licences.json` row for hackbuild-3mf 0.1.0: MIT, bundled, D-043, with evidence from the lock entry and the tarball LICENSE. |
+| Rationale | Since R1-engine-03, main failed `licences --check` and every ui bake. Without the row the acceptance could not run. |
+| Evidence | Before: `bake: licence manifest: hackbuild-3mf@0.1.0 is inlined and has no row in tools/licences.json`. After: licences pass, 383 rows (counted). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-527 No lineage row for from-chase
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. No lineage fragment written for `tools/bake/from-chase.ts`. |
+| Rationale | from-chase copies the in-repo M09 flex-pair manifest, not an original or a knowledge design. The baker lineage, pip.baker and cotter.baker, already covers bake.mjs. |
+| Evidence | `lineage/pip.baker.json`; byte-for-byte test against the committed flex-pair manifest (measured). |
 | Supersedes | new |
 | Milestone | none |
 
