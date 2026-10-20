@@ -523,18 +523,29 @@ export function threeMfInput(built: Built, name: string): ThreeMfInput {
   // (packages/3mf src/overrides.ts, M05-T20).
   const roleOf = new Map(part.bodies.map((b) => [b.id, b.role] as const));
   const widthOf = new Map(part.features.flatMap((f) => (f.kind === "conductor" ? [[f.id, Number(f.width.toFixed(6))] as const] : [])));
+  // Thinnest spring beam per body, for the thin-wall row (R1-flagship-access-switch-07).
+  const springOf = new Map<string, number>();
+  for (const f of part.features) {
+    if (f.kind !== "spring") continue;
+    const body = f.body ?? part.bodies[0]?.id;
+    if (body !== undefined) springOf.set(body, Math.min(springOf.get(body) ?? Infinity, f.t));
+  }
   return {
     title: chase.meta.name, chase: chase.meta.id, buildHash: part.buildHash, sourceDateEpoch: built.sourceDateEpoch,
     // License carries ChaseMeta.license (LICENSING.md 1.4). Designer and Copyright stay empty until the owner rules on them.
     license: chase.meta.license,
-    slicer: preset.slicer, nozzleMm: preset.nozzle, template: ws.template, materials: ws.materials, filaments,
+    slicer: preset.slicer, nozzleMm: preset.nozzle, lineWidthMm: preset.lineWidth, template: ws.template, materials: ws.materials, filaments,
     objects: [{
       name,
       position: [bed[0] / 2, bed[1] / 2, 0],
       bodies: built.meshed.slots.map((s) => {
         const role = roleOf.get(s.name);
         const width = widthOf.get(s.name);
-        return { name: partName(s), slot: s.slot, mesh: s.mesh, body: s.name, ...(role === undefined ? {} : { role }), ...(width === undefined ? {} : { widthMm: width }) };
+        const springT = springOf.get(s.name);
+        return {
+          name: partName(s), slot: s.slot, mesh: s.mesh, body: s.name, ...(role === undefined ? {} : { role }), ...(width === undefined ? {} : { widthMm: width }),
+          ...(springT === undefined ? {} : { springTMm: springT }),
+        };
       }),
     }],
     ...(part.bodyAdjacency === undefined ? {} : { adjacency: part.bodyAdjacency }),
