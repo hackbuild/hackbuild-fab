@@ -96,6 +96,9 @@ jobs:
       - name: "typecheck: package and core test files (outside every tsc -b project)"
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: npx tsc -p tsconfig.tests.json
+      - name: "typecheck: vue single-file components (vue-tsc on TypeScript 6)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node tools/vue-check.mjs
       - name: "tiers: import edges"
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: node tools/tiers.mjs

@@ -46,6 +46,6 @@ const rows = computed(() => visibleFields(props.group.fields, [props.values]));
     <div v-if="group.readouts?.length" class="hbf-readouts" data-hb="readouts">
       <DerivedField v-for="r in group.readouts" :key="r.id" :field="r" :path="r.id" :pointer="`/${r.id}`" />
     </div>
-    <NotesPanel :note="group.note" />
+    <NotesPanel :note="group.note ?? null" />
   </HbPanel>
 </template>
