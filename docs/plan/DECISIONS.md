@@ -404,6 +404,12 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-348 | separate browser folder for Python Playwright in parity | decided | Testing, docs, milestones, registry |
 | D-349 | uv cache on in every setup-uv, cold and determinism included | decided | Testing, docs, milestones, registry |
 | D-350 | no build cache in determinism, browser cache allowed | decided | Testing, docs, milestones, registry |
+| D-351 | stop hook block counts kept in a separate file | decided | Testing, docs, milestones, registry |
+| D-352 | stop hook finds state roots through git worktree list | decided | Testing, docs, milestones, registry |
+| D-353 | stop hook budget overrun clears the touched record | decided | Testing, docs, milestones, registry |
+| D-354 | stop hook round count resets on a non-continuation stop | decided | Testing, docs, milestones, registry |
+| D-355 | allowed stop notes carry systemMessage and additionalContext | decided | Testing, docs, milestones, registry |
+| D-356 | stop hook resolves tool binaries directly, not through npx | decided | Testing, docs, milestones, registry |
 
 ## House rules and process
 
@@ -4309,6 +4315,72 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. Brief step 4 ('no cache step in determinism') is read as build output only. The workflow test forbids every cache step in cold and bake-determinism, and lets determinism hold the Playwright browser cache on its browser legs and nothing else. |
 | Rationale | Brief step 2 asks for a Playwright cache in the determinism browser legs while step 4 forbids a cache step there; the two hold together only if step 4 means build output, which is what a determinism run must rebuild. |
 | Evidence | Brief R1-rails-ci-hooks-02 steps 2 and 4; the workflow test that cold and bake-determinism have no cache step and determinism caches browsers only (measured pass, 2026-10-20). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-351 stop hook block counts kept in a separate file
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The stop hook's per-failure block counter lives in `.hbf/agent-hooks/<session>.stop.json`, not as a `blocks` key in the touched record that item R1-rails-ci-hooks-06 writes. |
+| Rationale | `tools/agent-hooks/touched.mjs` recordTouched rewrites the record with only files and workspaces on every edit. A counter stored there would be wiped whenever the agent edits between stops, and the two-rounds rule would never trigger. |
+| Evidence | recordTouched builds `rec = {files, workspaces}` and writes only those keys. `tools/test/agent-hooks-stop.test.mjs` red-workspace case blocks, blocks, then allows with the two-rounds line; with the counter disabled the third stop blocks and the case fails (measured, builder). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-352 stop hook finds state roots through git worktree list
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The fallback to roots recorded in the state file is done by searching every worktree git lists for the root of the input cwd and of `CLAUDE_PROJECT_DIR`. |
+| Rationale | The item 06 record stores no roots, and an edit in a worktree is recorded in that worktree while the session cwd can be the main checkout. |
+| Evidence | The case "a record in a worktree is found from the start root" in `tools/test/agent-hooks-stop.test.mjs` passes (measured, 2026-10-20). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-353 stop hook budget overrun clears the touched record
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. A stop run with no failure clears files and workspaces from the touched record even when some workspaces ran out of the `HBF_STOP_BUDGET_S` budget (default 300 s). Those workspaces are named once as not run and then left to CI. |
+| Rationale | Keeping them would charge every later stop the full 300 s again. |
+| Evidence | core through the hook took 300 s and was reported as "not run: core" at load average 97 to 126 (measured, builder, shared machine). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-354 stop hook round count resets on a non-continuation stop
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. When `stop_hook_active` is false, the stop hook resets its block counts before counting. |
+| Rationale | A new user turn starts a new two-rounds window, per PLAN.md section 7 rule 1. |
+| Evidence | The red-workspace case in `tools/test/agent-hooks-stop.test.mjs` runs the first stop with false, then true, then true, and passes (measured, 2026-10-20). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-355 allowed stop notes carry systemMessage and additionalContext
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. An allowed stop with notes emits both `systemMessage` and `hookSpecificOutput.additionalContext`, with `hookEventName` Stop or SubagentStop. |
+| Rationale | The brief asks for additionalContext. Whether Stop accepts hookSpecificOutput is unknown, so systemMessage makes sure the person sees the note either way. |
+| Evidence | Brief step 3 and the hooks docs as quoted in the brief facts. The hook has not run inside a live session; wiring is item R1-rails-ci-hooks-08 (not run). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-356 stop hook resolves tool binaries directly, not through npx
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The stop hook runs `node_modules/vitest/vitest.mjs` and `tools/lint-voice.mjs` from the checked root, falling back to the copies beside the hook, in place of `npx --no-install`. |
+| Rationale | This matches item 06's tscBin pattern and avoids npx startup cost. |
+| Evidence | `tools/agent-hooks/touched-typecheck.mjs` tscBin. |
 | Supersedes | new |
 | Milestone | none |
 
