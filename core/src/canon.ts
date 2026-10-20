@@ -16,6 +16,7 @@ export function simClickCurve(s: ClickSpringIn, profile: ProfileLookup): ClickCu
   return {
     peakN: fe.peak, peakAtMm: fe.dPeak, valleyN: fe.valley, valleyAtMm: fe.dValley, drop: fe.drop,
     contactMm: r.contactMm, eStop: r.eStopPct / 100, snaps: fe.snap, bistable: fe.bistable, ok: fe.ok,
+    pts: fe.pts.map((p) => ({ d: p.d, F: p.F })),
   };
 }
 

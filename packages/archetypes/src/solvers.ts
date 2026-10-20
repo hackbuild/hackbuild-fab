@@ -33,6 +33,8 @@ export interface ClickCurve {
   readonly bistable: boolean;
   /** False when a load step did not converge. */
   readonly ok: boolean;
+  /** The load steps behind the summary, travel 0 first: centre travel d, mm, and force F, N (SNAPFE summarize). */
+  readonly pts?: readonly { readonly d: number; readonly F: number }[];
 }
 
 export type ClickSolver = (s: ClickSpringIn, profile: ProfileLookup) => ClickCurve;

@@ -48,6 +48,8 @@ describe("click spring reference", () => {
     expect([v("peakN").toFixed(3), v("drop").toFixed(3), v("cg").toFixed(3), v("eStop").toFixed(4)]).toEqual(["2.527", "0.765", "1.369", "0.0231"]);
     expect(metric("click-spring-key.0.spring.bistable")?.value).toBe("no");
     for (const id of ["peakN", "drop", "cg", "eStop"]) expect(metric(`click-spring-key.0.spring.${id}`)?.gate).toBe("CHK-KEY-04");
+    // The chase leaves curveSamples at 0: the goldens hash no metric, so the absence of the curve is read here.
+    expect(built.part.metrics.filter((m) => m.id.includes(".spring.curve.")).map((m) => m.id)).toEqual([]);
   });
 
   test("parity goldens hold off the pinned epoch", { timeout: 300_000 }, async () => {
