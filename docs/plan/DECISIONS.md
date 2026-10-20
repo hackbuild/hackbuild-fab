@@ -458,6 +458,8 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-402 | key.R.pads emitted by the click archetype | decided | Reference, profile, archetypes |
 | D-403 | R.leads written as rho L / A inside jack.ts | decided | Reference, profile, archetypes |
 | D-404 | Metric record rerecorded, including claim.press rows main had left out | decided | Reference, profile, archetypes |
+| D-405 | Fix the exit-row test mapping, not ci.yml | decided | Rails, CI |
+| D-406 | CHECKS.md section 5 PRT entered count is 6 | decided | Plan, checks |
 
 ## House rules and process
 
@@ -4957,6 +4959,28 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. Rerecorded packages/checks/test/metric-gates/builds.json and added INFORMATIONAL reasons for claim.press.*, jack.* and R.leads/R.closed. |
 | Rationale | The rerecord is needed for the new metrics. It also showed that R1-flagship-access-switch-04 never recorded its claim metrics, so those rows had no reason entries. |
 | Evidence | The builds.json diff is 40 added lines, no deletions. packages/checks 558 passed. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-405 Fix the exit-row test mapping, not ci.yml
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. tools/test/ci-exit-rows.test.mjs proves a workspace Exit row with a root `npx vitest run` line whose directory argument is or contains the workspace. The `npm test --workspaces` step was not restored. |
+| Rationale | The job merge (R1-rails-ci-hooks-03, tools/ci/test-sets.mjs) runs each vitest file once from the root config. Bringing the workspace step back would run those files twice. The root config's include list (packages/*/test, designs/**/test, core/test) covers the same files as the workspace runs. |
+| Evidence | Before the change, 5 tests failed and listed only `npm test -w` rows. After it, 15 of 15 pass. Removing the exit-a or designs vitest step makes the test fail again (both mutants killed, run by the builder). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-406 CHECKS.md section 5 PRT entered count is 6
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The PRT entered count is 6 and the total entered is 86. These are computed from the section 9 rows the same way tools/counts.mjs enteredChecks reads them. |
+| Rationale | CHK-PRT-18 and -19 were entered in e66e9bc (2026-10-20) and the family table was not updated. The brief put this down to the R1-rails-import-05 import checks, but the section 9 rows point to e66e9bc. |
+| Evidence | Per-prefix tally of section 9 (computed): PRT 6, FIT 3, ASM 3, SHT 4, NET 33, BRD 16, 3MF 3, SHP 1, LNT 2, KEY 1, ART 10, DEV 4, total 86, equal to counts.json checks.entered. plan-drift test "CHECKS.md seeded counts equal counts.json" passes after the merge. |
 | Supersedes | new |
 | Milestone | none |
 
