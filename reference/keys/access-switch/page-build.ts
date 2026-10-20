@@ -4,12 +4,14 @@
 // D-264). The switch carries no draft kinds; its spring is the registered
 // click-spring-key archetype, whose solver createPageBuild registers.
 // `hbf:facts` is the virtual module the bake writes from core's loadDesign
-// (tools/bake/design-facts.mjs). It sits outside defHash with bench.ts
-// (D-174): build.ts never imports it.
+// (tools/bake/design-facts.mjs); the constraint versions come from the
+// registry loader in the page, the baked ones are a cross-check. It
+// sits outside defHash with bench.ts (D-174): build.ts never imports it.
 
 import { createPageBuild } from "@hackbuild/pipeline";
+import { pageFacts } from "@hackbuild/registry-loader";
 import { facts } from "hbf:facts";
 import { chase } from "./chase";
 import * as module from "./build";
 
-export const page = createPageBuild({ chase, module, facts });
+export const page = createPageBuild({ chase, module, facts: pageFacts(facts) });

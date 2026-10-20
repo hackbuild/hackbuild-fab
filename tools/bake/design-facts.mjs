@@ -4,7 +4,9 @@
 // `hbf part.build` hashes. It loads the design with core's loadDesign, so
 // defHash covers the same source closure, the profile slice and check seed
 // are the ones core reads, and the versions come from the same package
-// files.
+// files. The constraint versions come from the registry loader
+// (packages/registry-loader); a page loads its own through pageFacts and
+// reads this baked copy only as a cross-check, kept for release 1.
 //
 //   node tools/bake/design-facts.mjs <design dir>   prints one JSON object
 //

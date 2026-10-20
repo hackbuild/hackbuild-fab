@@ -4,7 +4,7 @@
     "S": ["spec"],
     "0": ["profile", "catalog", "geom", "mesh"],
     "1": ["3mf", "sim", "circuit", "copper", "board", "nest", "inlay", "motion", "wiring", "constraints", "mechanisms", "archetypes"],
-    "2": ["checks", "project", "reference", "knowledge", "chase", "pipeline", "commands"],
+    "2": ["checks", "project", "reference", "knowledge", "chase", "pipeline", "registry-loader", "commands"],
     "3": ["ui-core", "ui", "link"],
     "app": ["core", "apps/fab", "apps/sketch", "apps/blocks"]
   },
@@ -33,12 +33,13 @@
     "knowledge": ["spec", "profile", "catalog", "geom", "mesh", "3mf", "sim", "circuit", "copper", "board", "nest", "inlay", "motion", "wiring", "constraints", "mechanisms", "archetypes"],
     "chase": ["spec", "profile", "catalog", "geom", "mesh", "3mf", "sim", "circuit", "copper", "board", "nest", "inlay", "motion", "wiring", "constraints", "mechanisms", "archetypes", "checks", "project", "reference"],
     "pipeline": ["spec", "profile", "catalog", "geom", "mesh", "3mf", "sim", "circuit", "inlay", "mechanisms", "archetypes", "checks"],
+    "registry-loader": ["spec", "profile", "constraints", "circuit", "mechanisms", "mesh", "sim", "checks", "chase", "pipeline"],
     "commands": ["spec"],
     "ui-core": ["spec", "profile", "catalog", "geom", "mesh", "3mf", "sim", "circuit", "copper", "board", "nest", "inlay", "motion", "wiring", "constraints", "mechanisms", "archetypes", "checks", "project", "reference", "knowledge", "chase"],
     "ui": ["spec", "checks", "ui-core"],
     "link": ["spec", "profile", "catalog", "motion", "checks"],
     "kernel": ["spec", "profile", "catalog", "geom", "mesh", "3mf", "sim", "circuit", "copper", "board", "nest", "inlay", "motion", "wiring", "constraints", "mechanisms", "archetypes", "checks", "project", "reference", "knowledge", "chase"],
-    "core": ["spec", "profile", "catalog", "geom", "mesh", "3mf", "sim", "circuit", "copper", "board", "nest", "inlay", "motion", "wiring", "constraints", "mechanisms", "archetypes", "checks", "project", "reference", "knowledge", "chase", "pipeline", "commands", "kernel"],
+    "core": ["spec", "profile", "catalog", "geom", "mesh", "3mf", "sim", "circuit", "copper", "board", "nest", "inlay", "motion", "wiring", "constraints", "mechanisms", "archetypes", "checks", "project", "reference", "knowledge", "chase", "pipeline", "registry-loader", "commands", "kernel"],
     "apps/fab": ["*"],
     "apps/sketch": ["*"],
     "apps/blocks": ["ui", "designs/blocks"]
@@ -55,7 +56,7 @@
     "tools/glue": { "mayImport": ["typescript"], "why": "the glue and bespoke-UI counter reads source as text: node built-ins and typescript 7.0.2, no workspace package (M10 package placement)" }
   },
   "edgeExceptions": [],
-  "sameTier": [["geom", "profile"], ["mesh", "profile"], ["mesh", "geom"], ["catalog", "profile"], ["catalog", "mesh"], ["pipeline", "checks"], ["ui", "ui-core"]],
+  "sameTier": [["geom", "profile"], ["mesh", "profile"], ["mesh", "geom"], ["catalog", "profile"], ["catalog", "mesh"], ["pipeline", "checks"], ["registry-loader", "checks"], ["registry-loader", "chase"], ["registry-loader", "pipeline"], ["ui", "ui-core"]],
   "headless": ["S", "0", "1", "2", "kernel"],
   "forbid": [
     {
