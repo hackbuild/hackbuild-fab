@@ -352,6 +352,10 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-296 | One owner per registry output path; exit 2 for contract errors | decided | Testing, docs, milestones, registry |
 | D-297 | A missing registry generator directory is an error, an empty one is not | decided | Testing, docs, milestones, registry |
 | D-298 | exportedConst picks the single export, else the one annotated with the type | decided | Testing, docs, milestones, registry |
+| D-299 | Stop overtravel read from the profile row inside the archetype | decided | Canons, reference, profile, catalog |
+| D-300 | Click curve samples interpolated linearly between FE load steps | decided | Sim, motion, nest, inlay, tools |
+| D-301 | Click-spring reference test asserts no curve metric at chase defaults | decided | Testing, docs, milestones, registry |
+| D-302 | Core click-curve test added outside the Writes line | decided | Testing, docs, milestones, registry |
 
 ## House rules and process
 
@@ -3685,6 +3689,50 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. `exportedConst(tsText, typeName)` in `tools/gen/lib.mjs` returns the name when the file has exactly one `export const`. Otherwise it returns the one export annotated with `typeName`, and throws when there is none or more than one. |
 | Rationale | Brief item 08 says def export names follow no single rule, and most def files call factory functions with no type annotation, so matching only on the type would miss them. |
 | Evidence | `packages/mechanisms/src/defs/*.ts`: `export const crankYoke = refusedMechanism({` against `export const capsulePocketRotor: MechanismDef<Values> = {`. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-299 Stop overtravel read from the profile row inside the archetype
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `packages/archetypes/src/pip/click.ts` reads `profile.constant("click.stopOvertravel").value` to set the curve sample range, `cg` plus overtravel. `ClickCurve` does not carry a `stopMm` field. |
+| Rationale | The R1-flagship-access-switch-03 brief names this range. Tier rules stop archetypes from importing `CLICK_RULE_IDS` from sim, so the row id appears as a literal in two places, sim and archetypes. The alternative is a `stopMm` field on `ClickCurve` filled by core. |
+| Evidence | `packages/sim/src/fe/click.ts` lines 41 to 45 and 76; `packages/profile/data/constants.json` `click.stopOvertravel` 0.3 mm (inferred tier). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-300 Click curve samples interpolated linearly between FE load steps
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. Sample i sits at d = stop * i / (n - 1) for n of 2 or more; the single sample of n = 1 sits at the stop. F is interpolated linearly between the two neighbouring SNAPFE load steps, about 0.039 mm apart at PIP defaults (computed). |
+| Rationale | The brief asks for equal travel steps. Linear interpolation does not overshoot the original's curve, and the test checks that each sample lies between its two neighbouring steps. |
+| Evidence | `packages/archetypes/test/click-curve.test.ts`; `test/legacy/pip-fits.json` `haft.defaults` has 57 points running to d = 2.2 mm. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-301 Click-spring reference test asserts no curve metric at chase defaults
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The brief's mutant premise did not hold: the click-spring goldens hold hashes, not metric ids, so they cannot see extra metrics. One assertion was added to `reference/buttons/click-spring/test/reference.test.ts`, outside the brief's Writes line: no `.spring.curve.` metric at the chase defaults. |
+| Rationale | This makes the brief's done condition hold: the click-spring test now fails under the "default 0 read as 16" mutant. |
+| Evidence | The mutant run before the assertion: 4 of 4 passed. After the assertion: 1 of 4 failed. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-302 Core click-curve test added outside the Writes line
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `core/test/click-curve.test.ts` covers the `pts` fill in `simClickCurve` in `core/src/canon.ts`, checking all 57 load steps against the original's within 1e-5 (computed). |
+| Rationale | Tier rules stop archetypes tests from importing sim or core, so the archetype test alone never runs the real solver's `pts`. |
+| Evidence | `tools/tiers.mjs` applies its edge rules to test folders as well. |
 | Supersedes | new |
 | Milestone | none |
 
