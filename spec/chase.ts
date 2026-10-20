@@ -20,6 +20,8 @@
 // D-131, D-132, D-173, D-174, D-177, D-178.
 // 2026-10-05: gold standard gaps P-01, P-02, P-03, P-12, P-14 to P-20,
 // P-25, P-26 (synthesis/gold-standard.md section 12).
+// 2026-10-20: claims (spec/claims.ts), R1-engine-10, listed in the PR as a
+// spec change.
 
 import type { FaceRef, Hash, IsoDate, KernelId, Micros, Mm, Ohm, Spdx } from "./ids";
 import type { Assertion, BodyRole, StackDecl } from "./part-ir";
@@ -27,6 +29,7 @@ import type { BuildFn } from "./build";
 import type { ConstraintDim } from "./constraints";
 import type { ReadModel } from "./circuit";
 import type { CheckId } from "./checks";
+import type { ClaimDecl } from "./claims";
 
 /**
  * Six fixed kinds (D-126). A seventh needs a measured layout sharing nothing
@@ -646,6 +649,8 @@ export interface Chase {
   readonly scene?: SceneDecl;
   /** Coupon references only (D-177): what a person measures on the print and which profile rows it can write. */
   readonly coupon?: CouponDecl;
+  /** Function claims: a registered function's number held to a toleranced band (spec/claims.ts). */
+  readonly claims?: readonly ClaimDecl[];
 }
 
 /**

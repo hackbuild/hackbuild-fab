@@ -21,6 +21,7 @@ export * from "./canon";
 export * from "./sim";
 export * from "./registry";
 export * from "./chase";
+export * from "./claims";
 export * from "./bench";
 export * from "./hook";
 export * from "./commands";

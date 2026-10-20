@@ -33,6 +33,12 @@ export interface ChaseRegistries {
   readonly machines: readonly string[];
   /** Profile material ids. */
   readonly materials: readonly string[];
+  /**
+   * Claim function registry ids (packages/checks claim registry). Absent
+   * reads as empty: a claim whose fn resolves to nothing is E_REF, never a
+   * claim that quietly goes unchecked.
+   */
+  readonly claimFns?: readonly string[];
 }
 
 function fieldsAt(fields: readonly ParamField[], base: string, out: [ParamField, string][]): void {
@@ -100,5 +106,6 @@ export function resolveRefs(chase: Chase, reg: ChaseRegistries): CommandError[] 
     const mats = typeof chase.coupon.material === "string" ? [chase.coupon.material] : chase.coupon.material;
     mats.forEach((m, i) => ref(m, reg.materials, typeof chase.coupon!.material === "string" ? "/coupon/material" : `/coupon/material/${i}`, "material", "material"));
   }
+  (chase.claims ?? []).forEach((c, i) => ref(c.fn, reg.claimFns ?? [], `/claims/${i}/fn`, "claim function", "claim-fn"));
   return out;
 }

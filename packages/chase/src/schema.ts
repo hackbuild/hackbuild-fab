@@ -133,6 +133,8 @@ const metaSchema = z.strictObject({
  * Strict where spec/chase.ts closes a type; loose (`looseObject`) only on
  * the subtrees another package's validator owns: assertions (Part IR),
  * applied (arch.apply), hookup (circuit), stack, scene and coupon.
+ * claims is strict here; its range, unit and id rules run in
+ * claimRuleErrors, and its fn resolves in resolve.ts.
  */
 export const chaseDocSchema = z.strictObject({
   meta: metaSchema,
@@ -175,6 +177,14 @@ export const chaseDocSchema = z.strictObject({
   items: z.array(z.string().min(1)).optional(),
   scene: z.looseObject({ nets: z.literal("contact") }).optional(),
   coupon: z.looseObject({ carries: z.array(z.string()), machine: z.string().min(1), method: z.literal("coupon") }).optional(),
+  claims: z.array(z.strictObject({
+    id: z.string().min(1),
+    fn: z.string().min(1),
+    args: z.record(z.string(), z.union([z.number(), z.string()])).optional(),
+    want: z.strictObject({ nominal: z.number(), lo: z.number(), hi: z.number(), unit: z.string() }),
+    why: z.string().refine((s) => s.trim() !== "", "a non-empty reason"),
+    coupon: z.string().min(1).optional(),
+  })).optional(),
 });
 
 /** Why a top-level key is not on a schema 2 chase, by key. */
@@ -454,6 +464,40 @@ export function paramRuleErrors(chase: Chase): CommandError[] {
           }
         });
       }
+    }
+  });
+  return out;
+}
+
+// ---- claims (spec/claims.ts) ----
+
+/**
+ * The claim rules on a chase value, record "chase-claim/<rule>": id-unique
+ * (one claim per id), range (lo <= nominal <= hi, absolute bounds), unit
+ * (want.unit non-empty). The fn id resolves against the registry in
+ * resolveRefs.
+ */
+export function claimRuleErrors(chase: Chase): CommandError[] {
+  const out: CommandError[] = [];
+  const seen = new Map<string, string>();
+  (chase.claims ?? []).forEach((c, i) => {
+    const p = `/claims/${i}`;
+    const first = seen.get(c.id);
+    if (first !== undefined) {
+      out.push({
+        code: "E_SCHEMA", path: `${p}/id`, got: c.id, expected: `one claim per id; ${c.id} is already declared at ${first}`,
+        hint: `rename one of the two claims ${c.id} at ${first} and ${p}`, record: "chase-claim/id-unique",
+      });
+    } else seen.set(c.id, p);
+    const { nominal, lo, hi, unit } = c.want;
+    if (!(lo <= nominal && nominal <= hi)) {
+      out.push({
+        code: "E_SCHEMA", path: `${p}/want`, got: c.want, expected: "lo at most nominal at most hi, absolute bounds",
+        hint: `set the band of claim ${c.id} so lo ${lo} <= nominal ${nominal} <= hi ${hi} holds`, record: "chase-claim/range",
+      });
+    }
+    if (unit.trim() === "") {
+      out.push({ code: "E_SCHEMA", path: `${p}/want/unit`, got: unit, expected: "a unit, for example N or mm", hint: `give claim ${c.id} the unit its function returns`, record: "chase-claim/unit" });
     }
   });
   return out;
