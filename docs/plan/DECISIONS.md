@@ -385,6 +385,10 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-329 | Quiet-output markers are case-sensitive and match anywhere in the line | decided | Repos, packaging, toolchain, licensing |
 | D-330 | Quiet-output passes through when no git repo is found | decided | Repos, packaging, toolchain, licensing |
 | D-331 | Quiet-output keeps the brief's command regex as written | decided | Repos, packaging, toolchain, licensing |
+| D-332 | Graph fixture rerecorded although access-switch's own build hash moved | decided | Testing, docs, milestones, registry |
+| D-333 | Modulus corners use plus or minus 20 percent of the profile E, not the scout's 1500 and 2200 MPa | decided | Sim, motion, nest, inlay, tools |
+| D-334 | Press claim tier typed as a spec Qualifier | decided | Scope, claim and position |
+| D-335 | No lineage row for the access-switch press claim | decided | Canons, reference, profile, catalog |
 
 ## House rules and process
 
@@ -4081,6 +4085,50 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. COMMAND in `tools/agent-hooks/quiet-output.mjs` is the brief's regex unchanged. Because of word boundaries it also matches commands like `cat vitest.config.ts`. |
 | Rationale | The match only becomes a rewrite when the output is longer than 80 lines and has failure or summary markers, so a false match does little harm. |
 | Evidence | The command filter test in `tools/test/agent-hooks-quiet.test.mjs` uses `cat README.md` as its non-match. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-332 Graph fixture rerecorded although access-switch's own build hash moved
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `packages/project/test/fixtures/graph.jsonl` was rerecorded with HBF_ACCEPT_GRAPH=1 for R1-flagship-access-switch-04, though the task text allows a rerecord only when no build hash moved. Accepted at merge because no mesh hash or volume moved. |
+| Rationale | The brief requires new metrics in `reference/keys/access-switch/build.ts`. That moves defHash, and through it the buildHash, without moving geometry. Leaving the fixture stale would leave packages/project red on merge. The rerecord touches only access-switch lines. |
+| Evidence | meshHashes and volumes in `reference/keys/access-switch/expected/build.json` equal before and after (computed, compared by script at merge); the graph diff is 20 lines changed, all access-switch; packages/project 15 tests pass on main after the merge (measured). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-333 Modulus corners use plus or minus 20 percent of the profile E, not the scout's 1500 and 2200 MPa
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The press claim's E corners are 1520 and 2280 MPa, from the profile row click.modulusSpreadPct, as the brief says. |
+| Rationale | The profile row is the source of record. The scout's 1500 and 2200 MPa are not symmetric about 1900 MPa. |
+| Evidence | `reference/keys/access-switch/README.md` generated block: E minus 127 g, E plus 190 g (computed); scout values 125 and 183 g (computed). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-334 Press claim tier typed as a spec Qualifier
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. PressClaim.tier in `reference/keys/access-switch/claim.ts` is a spec Qualifier (measured, computed, vendor, inferred, unknown), not a profile Tier. |
+| Rationale | The brief's mutant sets the tier to computed. The profile Tier union has no computed, so that mutant would fail tsc, not the test. |
+| Evidence | The first mutant run stopped at tsc TS2322; after the type change the named test in `reference/keys/access-switch/test/claim.test.ts` fails as the brief asks (measured by the builder). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-335 No lineage row for the access-switch press claim
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `reference/keys/access-switch/claim.ts` gets no lineage row. |
+| Rationale | claim.ts ports nothing from an original. The band logic is new, and the sim functions it calls already carry lineage (pip.layout/haft-9). |
+| Evidence | The header of `packages/sim/src/fe/click.ts` cites lineage row pip.layout/haft-9. |
 | Supersedes | new |
 | Milestone | none |
 
