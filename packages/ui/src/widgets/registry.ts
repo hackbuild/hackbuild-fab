@@ -6,9 +6,11 @@
 
 import type { Component } from "vue";
 import type { Bench, Chase, ContactFn, WidgetRecord } from "@hackbuild/spec";
-import { widgetRecords, type ViewPart } from "@hackbuild/ui-core";
+import { widgetRecords, type ViewPart, type WidgetClaimFn } from "@hackbuild/ui-core";
 import type { BenchReport } from "../stores/shell.js";
 import DrivePad from "../stage/DrivePad.vue";
+import DrivePress from "./DrivePress.vue";
+import PlotCurve from "./PlotCurve.vue";
 
 const components = new Map<string, Component>();
 
@@ -33,6 +35,10 @@ export function widgetComponentKinds(): string[] {
 export interface WidgetSource {
   readonly part: ViewPart | null;
   readonly report: BenchReport;
+  /** Claim functions by id, from the page build's claim registry; without them the claim widgets name what is missing. */
+  readonly claimFns?: Readonly<Record<string, WidgetClaimFn>>;
+  /** The drive.press travel, mm, the person dragged to. */
+  readonly travelMm?: number;
 }
 
 /** The records BENCH.widgets() returns for the bench's declared widgets on the current build. */
@@ -47,8 +53,13 @@ export function widgetsOf(chase: Chase, bench: Bench, contact: ContactFn | null,
     hookup: chase.hookup ?? [],
     contacts: drive !== undefined && contact !== null ? { [drive.contact]: contact } : {},
     ...(drive === undefined ? {} : { drive }),
+    ...(chase.claims === undefined ? {} : { claims: chase.claims }),
+    ...(src.claimFns === undefined ? {} : { claimFns: src.claimFns }),
+    ...(src.travelMm === undefined ? {} : { travelMm: src.travelMm }),
   });
 }
 
 // The mapped kinds, one line each.
 registerWidgetComponent("drive.tilt", DrivePad);
+registerWidgetComponent("drive.press", DrivePress);
+registerWidgetComponent("plot.curve", PlotCurve);

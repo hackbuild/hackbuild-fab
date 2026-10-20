@@ -15,3 +15,5 @@ export { default as LogPanel } from "./panels/LogPanel.vue";
 export { default as NotesPanel } from "./panels/NotesPanel.vue";
 export { default as ParamRail } from "./rail/ParamRail.vue";
 export { default as DrivePad } from "./stage/DrivePad.vue";
+export { default as DrivePress } from "./widgets/DrivePress.vue";
+export { default as PlotCurve } from "./widgets/PlotCurve.vue";

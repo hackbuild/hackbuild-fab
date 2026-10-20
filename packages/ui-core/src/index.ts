@@ -48,3 +48,7 @@ export { registerWidget, widgetEntry, widgetKinds, widgetModel, widgetRecords, i
 export type { WidgetBuild, WidgetEntry, WidgetModel } from "./widgets/registry.js";
 export { driveTilt, TILT_GESTURES } from "./widgets/tilt.js";
 export type { TiltModel } from "./widgets/tilt.js";
+export { claimAt, claimBinding, claimTarget, drivePress, PRESS_GESTURE, pressLine, pressTravel, TRAVEL_ARG } from "./widgets/press.js";
+export type { ClaimBinding, PressModel, WidgetClaimArgs, WidgetClaimFn } from "./widgets/press.js";
+export { CONTACT_TOL_MM, contactTravel, CURVE_TOLERANCE, curvePeak, plotCurve, plotLines } from "./widgets/curve.js";
+export type { CurveCursor, CurvePoint, CurveView, PlotModel } from "./widgets/curve.js";

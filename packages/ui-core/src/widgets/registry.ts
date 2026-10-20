@@ -7,9 +7,11 @@
 // M10-T06's slot registry is this registry (finding F5).
 
 import type {
-  CheckResult, ContactFn, DriveDecl, Feature, HookupDecl, Metric, WidgetDecl, WidgetRecord,
+  CheckResult, ClaimDecl, ContactFn, DriveDecl, Feature, HookupDecl, Metric, WidgetDecl, WidgetRecord,
 } from "@hackbuild/spec";
 import { driveTilt } from "./tilt.js";
+import { drivePress, type WidgetClaimFn } from "./press.js";
+import { plotCurve, type CurvePoint } from "./curve.js";
 
 export { isLive, liveOutputs } from "./live.js";
 
@@ -23,6 +25,14 @@ export interface WidgetBuild {
   readonly contacts: Readonly<Record<string, ContactFn>>;
   /** The bench's drive pad declaration, for the drive kinds that wrap it. */
   readonly drive?: DriveDecl;
+  /** The chase's function claims (Chase.claims), for the kinds that read a claim. */
+  readonly claims?: readonly ClaimDecl[];
+  /** Claim functions by id, the entries of the packages/checks registry the host hands in; WidgetDecl.fn names one. */
+  readonly claimFns?: Readonly<Record<string, WidgetClaimFn>>;
+  /** The current drive.press stimulus, travel in mm; plot.curve draws it as the cursor. */
+  readonly travelMm?: number;
+  /** Measured points by claim id, travel mm and force N, from evidence rows; absent until a person enters a coupon. */
+  readonly measured?: Readonly<Record<string, readonly CurvePoint[]>>;
 }
 
 /** A widget's model: every output the kind computes, and why it computes none. */
@@ -82,3 +92,5 @@ export function widgetRecords(decls: readonly WidgetDecl[], build: WidgetBuild):
 
 // The registered kinds, one line each.
 registerWidget("drive.tilt", driveTilt);
+registerWidget("drive.press", drivePress);
+registerWidget("plot.curve", plotCurve);

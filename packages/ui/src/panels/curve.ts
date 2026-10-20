@@ -10,6 +10,13 @@
 // pip.bench-part3) drawn as SVG paths.
 
 import type { ContactFn, DriveReadout, Metric, PlotDecl } from "@hackbuild/spec";
+import { contactTravel, curvePeak, type CurvePoint, type CurveView } from "@hackbuild/ui-core";
+
+// The view shape and the contact search live once in ui-core, beside the
+// plot.curve widget model (R1-engine-13); this panel and that widget both
+// draw a CurveView.
+export { CONTACT_TOL_MM, CURVE_TOLERANCE } from "@hackbuild/ui-core";
+export type { CurveCursor, CurvePoint, CurveView } from "@hackbuild/ui-core";
 
 /** What the panel reads; the registry entry's inputs. */
 export interface CurveInputs {
@@ -31,38 +38,6 @@ export interface CurveEntry {
   /** Agreement between this panel and the pad, in the y unit (G-20). */
   readonly tolerance: number;
 }
-
-export interface CurvePoint {
-  readonly d: number;
-  readonly F: number;
-}
-
-export interface CurveCursor {
-  readonly travelMm: number;
-  readonly forceN: number | null;
-  readonly closed: boolean;
-}
-
-export interface CurveView {
-  /** Why nothing draws; null when the curve draws. */
-  readonly problem: string | null;
-  readonly points: readonly CurvePoint[];
-  readonly band: { readonly lo: number; readonly hi: number } | null;
-  /** First travel at which fn closes a contact, mm, to `CONTACT_TOL_MM`; null when it never closes. */
-  readonly contactMm: number | null;
-  readonly peak: CurvePoint | null;
-  /** The hold travel, the cursor's top end, mm. */
-  readonly stopMm: number;
-  readonly cursor: CurveCursor | null;
-  /** Coupon points; empty until a person enters a coupon. */
-  readonly measured: readonly CurvePoint[];
-}
-
-/** Bisection stop for the contact travel, mm; far under one curve sample step. */
-export const CONTACT_TOL_MM = 1e-4;
-
-/** G-20: the pad and every panel driven by the same fn agree to 0.01. */
-export const CURVE_TOLERANCE = 0.01;
 
 const numOf = (metrics: readonly Metric[], id: string): number | null => {
   const v = metrics.find((m) => m.id === id)?.value;
@@ -95,7 +70,7 @@ export function curveView(e: CurveEntry, travelMm: number | null): CurveView {
   const lo = plot.band === undefined ? null : numOf(metrics, plot.band.lo);
   const hi = plot.band === undefined ? null : numOf(metrics, plot.band.hi);
   const band = lo !== null && hi !== null ? { lo, hi } : null;
-  const peak = points.reduce((a, b) => (b.F > a.F ? b : a));
+  const peak = curvePeak(points);
   const measured = plot.measured === undefined ? [] : sampled(metrics, plot.measured);
   const fn = e.fn;
   if (fn === null || target === null) {
@@ -103,17 +78,7 @@ export function curveView(e: CurveEntry, travelMm: number | null): CurveView {
   }
   const at = (s: boolean | number) => fn(metrics, target, s);
   const stopMm = at(true).pose?.travelMm ?? points[points.length - 1]!.d;
-  let contactMm: number | null = null;
-  if (at(stopMm).closed.length > 0) {
-    let a = 0, b = stopMm;
-    if (at(0).closed.length > 0) b = 0;
-    while (b - a > CONTACT_TOL_MM) {
-      const m = (a + b) / 2;
-      if (at(m).closed.length > 0) b = m;
-      else a = m;
-    }
-    contactMm = b;
-  }
+  const contactMm = contactTravel(fn, metrics, target, stopMm);
   const s = at(travelMm ?? e.inputs.held);
   const cursor = { travelMm: s.pose?.travelMm ?? 0, forceN: s.forceN ?? null, closed: s.closed.length > 0 };
   return { problem: null, points, band, contactMm, peak, stopMm, cursor, measured };
