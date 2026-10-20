@@ -535,6 +535,13 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-479 | patches.jsonl location and staging | decided | Agent surface |
 | D-480 | chase.patch output adds defHashBefore | decided | Agent surface |
 | D-481 | New CLI flag kind edit | decided | Agent surface |
+| D-482 | drive.tilt equality uses the flex-pair goldens, not a TOGGLE fixture | decided | UI |
+| D-483 | drive.tilt accepts gestures tilt and stick only, and fn must equal the pad's contact | decided | UI |
+| D-484 | BENCH.widgets() lives on the ui-core PageHook, not on spec BenchHook | decided | UI |
+| D-485 | ParamRef is { param: JSON pointer } | decided | UI |
+| D-486 | Absent widgetKinds reads as empty, and core does not feed it yet | decided | Architecture |
+| D-487 | Widget registry stays out of the @hackbuild/ui public exports | decided | UI |
+| D-488 | Two files outside the brief's Files list were edited | decided | UI |
 
 ## House rules and process
 
@@ -5881,6 +5888,83 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. Added an `edit` flag kind: --anchor/--replace and --pointer/--set build one edit, and --set is parsed as JSON when it parses, otherwise kept as a string. --edits still takes a JSON list. |
 | Rationale | The card acceptance lines use --anchor and --pointer --set, and the CLI form mapped each flag to its own input field. |
 | Evidence | `M10-chase.md` T05 acceptance; `packages/commands/src/spec.ts` FlagKind. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-482 drive.tilt equality uses the flex-pair goldens, not a TOGGLE fixture
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The equality test runs on reference/keys/flex-pair (Part IR, CHK-NET-29 report, build.ts contact) with the DriveDecl gesture set to tilt. The TOGGLE-shaped stick decl in spec/fixtures/gold.ts is checked only for shape equality. |
+| Rationale | No TOGGLE build has a Part IR or goldens (designs/toggle has only legacy html). padModel reads no gesture, so the flex-pair goldens hold real reads. |
+| Evidence | `designs/toggle` holds README.md and legacy/ only; `packages/ui-core/test/widgets.test.ts` header. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-483 drive.tilt accepts gestures tilt and stick only, and fn must equal the pad's contact
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. A hold or slide pad gives a problem that points to drive.press. A widget fn other than DriveDecl.contact gives a problem. |
+| Rationale | Plan 3.2 splits drive.tilt (TOGGLE stick) from drive.press (keys). One function for the pad and the widget keeps G-20 agreement. |
+| Evidence | `packages/ui-core/src/widgets/tilt.ts`. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-484 BENCH.widgets() lives on the ui-core PageHook, not on spec BenchHook
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. PageHook = BenchHook & { widgets() } in `packages/ui-core/src/bench/hook.ts`; spec/hook.ts is unchanged. |
+| Rationale | spec/hook.ts is outside the brief's Files list, and hook.test.ts keys every BenchHook member through Required<BenchHook>. Adding the member to the spec contract is an owner-visible spec change. |
+| Evidence | `packages/ui-core/test/bench/hook.test.ts` line 95. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-485 ParamRef is { param: JSON pointer }
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. spec/widgets.ts defines ParamRef as { readonly param: string }, a JSON pointer into params. |
+| Rationale | The brief names ParamRef but no such type existed. A JSON pointer matches StageTool.writes. |
+| Evidence | grep ParamRef spec/*.ts returned nothing before this change. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-486 Absent widgetKinds reads as empty, and core does not feed it yet
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. resolveBenchRefs treats a missing ChaseRegistries.widgetKinds as an empty list, so every bench widget is E_REF at hbf chase.validate until core supplies the list. |
+| Rationale | This matches claimFns (nothing passes unresolved). tools/tiers.json forbids core and registry-loader from importing ui-core, where the registry lives. |
+| Evidence | `tools/tiers.json` edges for core and registry-loader; `packages/chase/test/widgets.test.ts`. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-487 Widget registry stays out of the @hackbuild/ui public exports
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. packages/ui/src/index.ts is unchanged. |
+| Rationale | exports.test.ts pins the public list from the R1-engine-04 brief. |
+| Evidence | `packages/ui/test/exports.test.ts` EXPECTED. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-488 Two files outside the brief's Files list were edited
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. packages/chase/src/validate.ts (one call to resolveBenchRefs) and packages/ui/src/bench/entry.ts (wires widgets() into mountBench). |
+| Rationale | Step 4 needs the rule to run inside chase.validate. Step 3 needs a real bench hook to return widgets for the smoke suite. |
+| Evidence | git show 740c90d --stat. |
 | Supersedes | new |
 | Milestone | none |
 
