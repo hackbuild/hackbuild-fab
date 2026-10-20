@@ -157,7 +157,7 @@ describe("part.build import in process", () => {
     expect(by.get("CHK-PRT-03")).toMatchObject({ ...caseOf("locket-r2.glb").checks!["CHK-PRT-03"], extra: { rule: "pairwise" } });
     for (const id of ["CHK-PRT-18", "CHK-PRT-19"]) {
       expect(by.get(id)?.verdict).toBe("skip");
-      expect(by.get(id)?.constraint).toMatch(/^no union of the imported parts to count pieces in: the union of 16 parts is refused/);
+      expect(by.get(id)?.constraint).toMatch(/^no union of the imported parts to count pieces in: the union of 16 imported parts is refused/);
     }
     expect(a.part.warnings.map((w) => w.code)).toContain("UNION");
   }, 120_000);
@@ -258,7 +258,7 @@ describe("part.build --import pieces and overlap", () => {
     const a = await importAudit([spec(`${CORPUS}/corner-touch.stl`)], ctx());
     const by = new Map(a.results.map((x) => [x.id as string, x]));
     expect(by.get("CHK-PRT-03")).toMatchObject({ verdict: "pass", measured: 0, legal: { kind: "interval", lo: 0, hi: 0.001 }, extra: { rule: "pairwise" } });
-    for (const id of ["CHK-PRT-18", "CHK-PRT-19"]) expect(by.get(id)?.constraint).toMatch(/^no union of the imported parts to count pieces in: the union of 1 parts is refused/);
+    for (const id of ["CHK-PRT-18", "CHK-PRT-19"]) expect(by.get(id)?.constraint).toMatch(/^no union of the imported parts to count pieces in: the union of 1 imported part is refused/);
   }, 120_000);
 
   it("enters the declared pieces in the build hash, and refuses pieces that are not an integer at least 1", async () => {

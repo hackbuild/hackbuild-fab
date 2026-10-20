@@ -76,7 +76,7 @@ describe("stageImported: shell groups, pieces and overlap", () => {
   it("refuses the union of cubes touching at a corner and measures 0 overlap instead", async () => {
     const read = await stl("corner.stl", (c) => [c([10, 10, 10]), c([10, 10, 10], [10, 10, 10])]);
     const out = await stageImported([{ draft: draft("white"), read }]);
-    expect(out.noUnion).toMatch(/^the union of 1 parts is refused \(2 shell groups\)/);
+    expect(out.noUnion).toMatch(/^the union of 1 imported part is refused \(2 shell groups\)/);
     expect(out.pieces).toBeNull();
     expect(out.bodyPieces).toBeNull();
     expect(out.pairwise).toEqual({ worstMm3: 0, pair: null });
@@ -90,7 +90,7 @@ describe("stageImported: shell groups, pieces and overlap", () => {
     for (let i = 0; i < t.length; i += 3) [t[i + 1], t[i + 2]] = [t[i + 2]!, t[i + 1]!];
     const read = importSoup(soupOf([cube, { positions: hole.positions, triangles: t }]), "void.stl", "binary");
     const out = await stageImported([{ draft: draft("white"), read }]);
-    expect(out.noUnion).toMatch(/^1 of 1 parts fail the audit \(1 of 2 shell groups\)/);
+    expect(out.noUnion).toMatch(/^1 of 1 imported part fails the audit \(1 of 2 shell groups\)/);
     expect(out.staged.warnings.some((w) => w.code === "AUDIT" && /a void no outer shell holds, volume -64 mm3/.test(w.text))).toBe(true);
     // Only the closed cube is left to compare: one group, no pair.
     expect(out.pairwise).toEqual({ worstMm3: 0, pair: null });

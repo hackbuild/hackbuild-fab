@@ -683,7 +683,7 @@ export async function stageImported(list: readonly ImportedStageBody[]): Promise
   }
   const openParts = new Set(open.map((g) => `${g.body}/${g.part}`));
   let noUnion: string | null = open.length === 0 ? null
-    : `${openParts.size} of ${parts.length} parts fail the audit (${open.length} of ${groups.length} shell groups), first ${open[0]!.body}/${open[0]!.name}`;
+    : `${openParts.size} of ${parts.length} imported ${parts.length === 1 ? "part" : "parts"} ${openParts.size === 1 ? "fails" : "fail"} the audit (${open.length} of ${groups.length} shell groups), first ${open[0]!.body}/${open[0]!.name}`;
   let solid: MeshData | undefined;
   let unionVolumeMm3: number | undefined;
   let pieces: ImportedPiece[] | null = null;
@@ -723,7 +723,7 @@ export async function stageImported(list: readonly ImportedStageBody[]): Promise
     } catch (e) {
       const refused = (e as { hbf?: { got?: unknown; hint?: string } }).hbf;
       if (refused === undefined) throw e;
-      noUnion = `the union of ${parts.length} parts is refused (${groups.length} shell groups): ${refused.hint ?? ""} (${JSON.stringify(refused.got)})`;
+      noUnion = `the union of ${parts.length} imported ${parts.length === 1 ? "part" : "parts"} is refused (${groups.length} shell groups): ${refused.hint ?? ""} (${JSON.stringify(refused.got)})`;
       warnings.push({ code: "UNION", text: noUnion });
       pieces = null;
       bodyPieces = null;
