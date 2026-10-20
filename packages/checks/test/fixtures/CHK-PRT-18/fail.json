@@ -1,0 +1,17 @@
+{
+ "note": "the eval mushroom whose cap floated 2 mm above its stem: union NoError, genus -1, two pieces (measured); no pieces declared, so the default 1 holds",
+ "source": {
+  "file": "mush-first.stl",
+  "sha256": "4f1271ee1f3ff04d946c99359e08a112a006cbe9d477aa04725629e47952dfbd",
+  "triangles": 14814,
+  "evidence": "fab-knowledge:plan-v5/image-eval.md line 25; the STL sat in the eval workspace (/tmp, cleared on reboot)"
+ },
+ "method": "manifold-3d 3.5.4: weld on the 1/1024 mm grid, union of decompose, decompose again; bounds and volume per piece. The file is Y-up as three.js writes it; bounds are given Z-up, (x, y, z) read as (x, -z, y). Measured 2026-10-20 for R1-rails-import-05",
+ "pieces": 2,
+ "want": {
+  "verdict": "fail",
+  "measured": 2,
+  "lo": 1,
+  "hi": 1
+ }
+}

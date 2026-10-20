@@ -145,6 +145,8 @@ import { check as cprt13 } from "./prt/CHK-PRT-13.js";
 import { check as cprt14 } from "./prt/CHK-PRT-14.js";
 import { check as cprt15 } from "./prt/CHK-PRT-15.js";
 import { check as cprt16 } from "./prt/CHK-PRT-16.js";
+import { check as cprt18 } from "./prt/CHK-PRT-18.js";
+import { check as cprt19 } from "./prt/CHK-PRT-19.js";
 import { check as cshp01 } from "./shp/CHK-SHP-01.js";
 import { check as cshp02 } from "./shp/CHK-SHP-02.js";
 import { check as cshp03 } from "./shp/CHK-SHP-03.js";
@@ -180,7 +182,7 @@ export const CHECK_MODULES: readonly AnyCheckModule[] = [
   cnet30, cnet31, cnet32, cnet33, cnet34, cnet35, cnet36, cnet37, cnet38,
   cnet40, cnet41, cnet42, cnet43, cnet44, cnet45, cnet46, cprt01, cprt02,
   cprt03, cprt04, cprt05, cprt06, cprt07, cprt08, cprt09, cprt10, cprt11,
-  cprt12, cprt13, cprt14, cprt15, cprt16, cshp01, cshp02, cshp03, cshp04,
-  cshp05, csht01, csht02, csht03, csht04, csht05, csht06, csht07, csht08,
-  csht09, csht10, csht11, cui01, cui02,
+  cprt12, cprt13, cprt14, cprt15, cprt16, cprt18, cprt19, cshp01, cshp02,
+  cshp03, cshp04, cshp05, csht01, csht02, csht03, csht04, csht05, csht06,
+  csht07, csht08, csht09, csht10, csht11, cui01, cui02,
 ];

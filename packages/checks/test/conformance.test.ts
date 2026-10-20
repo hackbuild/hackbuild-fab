@@ -13,14 +13,16 @@ import { describe, expect, test } from "vitest";
 import { isThrownCommandError, type CheckLevel, type CheckResult, type KernelId } from "@hackbuild/spec";
 import { DEFAULT_TEMPLATE } from "@hackbuild/3mf";
 import { createProfileLookup, loadProfile } from "@hackbuild/profile";
-import { CHECK_MODULES, registerChecks, runRegistry, skipReason } from "../src/index";
+import { CHECK_MODULES, IMPORT_PATH_CHECKS, registerChecks, runRegistry, skipReason } from "../src/index";
 import { loadFixture } from "./fixture-load";
 
 const seed = JSON.parse(readFileSync(new URL("../seed/checks.seed.json", import.meta.url), "utf8")) as unknown;
 const defs = registerChecks({ seed, filamentTemplate: DEFAULT_TEMPLATE }, CHECK_MODULES);
 const KERNELS = new Set<KernelId>(["geom", "mesh", "profile", "3mf", "sim", "inlay"]);
 const TARGETS = new Set<CheckLevel>(["part", "body", "feature", "assembly", "artifact", "source", "project"]);
-const runnable = defs.filter((d) => skipReason({ needs: d.needs, target: d.appliesTo.level, pending: d.pending ?? null }, KERNELS, TARGETS) === null);
+// The import path checks read pieces Part IR never carries; their fixtures feed
+// prt18Finding and prt19Finding in prt18-19.test.ts.
+const runnable = defs.filter((d) => skipReason({ needs: d.needs, target: d.appliesTo.level, pending: d.pending ?? null }, KERNELS, TARGETS) === null && !IMPORT_PATH_CHECKS.includes(d.id));
 const profile = createProfileLookup(loadProfile());
 
 async function run(id: string, which: string): Promise<readonly CheckResult[]> {

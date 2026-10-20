@@ -17,7 +17,7 @@ import {
 import { createProfileLookup, lossRowId, materialFamily, type ProfileTables } from "@hackbuild/profile";
 import { assemblePart, isWatertight, meshError, type MeshData, type RasterMask, type StageOutput } from "@hackbuild/mesh";
 import { configOf, write3mf, type FilamentSlot, type FilamentTemplate, type SlicerMaterials, type ThreeMfInput } from "@hackbuild/3mf";
-import { CHECK_MODULES, PAGE_MILESTONE, kernelsAt, registerChecks, runRegistry, runSkeleton, skeletonChecks, skeletonNets, type KernelViews } from "@hackbuild/checks";
+import { CHECK_MODULES, IMPORT_PATH_CHECKS, PAGE_MILESTONE, kernelsAt, registerChecks, runRegistry, runSkeleton, skeletonChecks, skeletonNets, type KernelViews } from "@hackbuild/checks";
 import { hashOf } from "./hash.js";
 import { M00_PART_CHECKS, gatedSkips, m00Versions, registryHashOf, runPartChecks } from "./part-checks.js";
 import { machineView } from "./author.js";
@@ -331,9 +331,11 @@ const BUILD_LEVELS: readonly string[] = ["part", "body", "feature"];
  * already run (security finding 3 of the audit of 2026-10-08: CHK-PRT-16
  * and the other registry block checks never reached the D-109 export
  * gate). They run through runRegistry on the kernels of the page milestone.
+ * The import path checks (IMPORT_PATH_CHECKS) stay out: Part IR carries no
+ * pieces, so they run only where part.build --import reads the mesh.
  */
 export function registryDefs(design: Design): readonly AnyCheckDef[] {
-  const taken = new Set<string>([...checkDefs(design).map((d) => d.id as string), ...M00_PART_CHECKS]);
+  const taken = new Set<string>([...checkDefs(design).map((d) => d.id as string), ...M00_PART_CHECKS, ...IMPORT_PATH_CHECKS]);
   return registerChecks({ seed: design.ws.checksSeed, filamentTemplate: design.ws.template }, CHECK_MODULES)
     .filter((d) => BUILD_LEVELS.includes(d.appliesTo.level) && !taken.has(d.id));
 }

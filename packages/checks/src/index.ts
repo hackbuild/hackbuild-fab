@@ -20,6 +20,9 @@ export { art02Findings, statedSource, zipEpoch } from "./defs/art/CHK-ART-02.js"
 export { CHECK_MODULES } from "./defs/index.js";
 export { prt01Finding, PRT01_CONSTRAINT } from "./defs/prt/CHK-PRT-01.js";
 export { prt03Finding, prt03OfPart, PRT03_CONSTRAINT, OVERLAP_CEILING_MM3, SUM_TOLERANCE } from "./defs/prt/CHK-PRT-03.js";
+export { prt18Finding, DEFAULT_PIECES, PRT18_CONSTRAINT } from "./defs/prt/CHK-PRT-18.js";
+export { prt19Finding, LIFT_TOL_MM, PRT19_CONSTRAINT, type Piece } from "./defs/prt/CHK-PRT-19.js";
+export { IMPORT_PATH_CHECKS, IMPORT_PATH_CONSTRAINT } from "./defs/prt/import-path.js";
 export { fitRowsOf, hasFitsRows, type FitRowEval } from "./defs/fit/CHK-FIT-01.js";
 export { reportHash, reportHashInput, reportObject, sortFindings, type ReportHashInput, type ReportObject } from "./report-hash.js";
 export { QUALIFIERS, headingSlug, headingSlugs, isQualified, numberLine, numberLines, originFromSeed, parseRecordId, type OriginRecord } from "./origin.js";

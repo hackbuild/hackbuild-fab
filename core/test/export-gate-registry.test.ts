@@ -22,6 +22,11 @@ describe("the export gate runs the registry block checks", () => {
     expect(registryDefs(design).map((d) => d.id)).toContain("CHK-PRT-16");
     expect(allCheckIds(built)).toContain("CHK-PRT-16");
     expect(Object.keys(checkVersions(design))).toContain("CHK-PRT-16");
+    // The import path checks read pieces Part IR never carries: no chase build runs them or hashes their versions.
+    for (const id of ["CHK-PRT-18", "CHK-PRT-19"]) {
+      expect(registryDefs(design).map((d) => d.id), id).not.toContain(id);
+      expect(Object.keys(checkVersions(design)), id).not.toContain(id);
+    }
 
     const fits = await runAllChecks(built, [], ["CHK-PRT-16"]);
     expect(fits.results.map((r) => r.verdict)).toEqual(["pass", "pass", "pass"]);

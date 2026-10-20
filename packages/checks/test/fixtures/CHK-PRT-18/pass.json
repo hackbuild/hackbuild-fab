@@ -1,0 +1,17 @@
+{
+ "note": "the eval mushroom built from primitives: one piece of 7940.199 mm3, the 7940 mm3 the eval records as true (measured)",
+ "source": {
+  "file": "mush-prim.stl",
+  "sha256": "caaa07ac1d82fa41af8290f09cee4e298a42a5e50df19c3b2f28d990c57a40ca",
+  "triangles": 14206,
+  "evidence": "fab-knowledge:plan-v5/image-eval.md line 25; the STL sat in the eval workspace (/tmp, cleared on reboot)"
+ },
+ "method": "manifold-3d 3.5.4: weld on the 1/1024 mm grid, union of decompose, decompose again; bounds and volume per piece. The file is Y-up as three.js writes it; bounds are given Z-up, (x, y, z) read as (x, -z, y). Measured 2026-10-20 for R1-rails-import-05",
+ "pieces": 1,
+ "want": {
+  "verdict": "pass",
+  "measured": 1,
+  "lo": 1,
+  "hi": 1
+ }
+}

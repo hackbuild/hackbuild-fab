@@ -76,12 +76,17 @@ describe("origin records", () => {
     expect(numberLine("settleUs", "78 (computed)", "inferred")).toBe("78 (computed) us settle");
   });
 
-  test("a repo evidence path exists; an absolute one exists where its evidence tree is on this host", () => {
+  // fab-knowledge: names the owner's evidence archive by prefix (CLAUDE.md, tools/publish-paths.mjs).
+  const ARCHIVE_PREFIX = "fab-knowledge:";
+  test("a repo evidence path exists; an absolute or fab-knowledge: one exists where its evidence tree is on this host", () => {
     for (const p of pages) {
       const e = p.origin.evidence;
       if (e === null) continue;
       if (e.startsWith("/")) {
         if (existsSync("/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence")) expect(existsSync(e), `${p.id} ${e}`).toBe(true);
+      } else if (e.startsWith(ARCHIVE_PREFIX)) {
+        const local = `/Users/obsidian/Projects/hackbuild/fab-knowledge/${e.slice(ARCHIVE_PREFIX.length)}`;
+        if (existsSync("/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence")) expect(existsSync(local), `${p.id} ${e}`).toBe(true);
       } else {
         expect(existsSync(new URL(e, ROOT)), `${p.id} ${e}`).toBe(true);
       }
