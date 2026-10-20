@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-// Virtual print, slicer half: slice plate 1 of a 3MF headless with the
-// Flash Studio CLI (Orca-Flashforge) and write its G-code, with the command,
+// Virtual print, slicer half: slice plate 1 of a 3MF headless with an
+// Orca-family CLI (Flash Studio by default) and write its G-code, with the command,
 // slicer version, exit code and wall time recorded beside it.
 //
 //   node tools/slice/slice.mjs <file.3mf> <outdir> [options]
@@ -10,7 +10,9 @@
 //   --filament-map "<name in 3mf>=<bundled preset name>"   repeatable
 //   --time-limit <s>        kill the slicer after this many seconds (default 600)
 //   --datadir-root <dir>    parent of the fresh --datadir (default: the evidence folder)
-//   --app <path>            the Flash Studio executable
+//   --slicer <id>           flash-studio (default), orcaslicer, bambu-studio or
+//                           snapmaker-orca; tools/slice/orca-family.mjs holds the table
+//   --app <path>            the slicer executable (default: the table's macOS path)
 //   --allow-failing         slice a --design build whose checks fail (recorded)
 //
 // --design writes the 3MF bytes in process through the same path the
@@ -34,59 +36,32 @@
 // embedded keys over them, so every embedded value wins. --load-settings is
 // not used: the CLI ranks it above the 3MF, so it would override the design.
 //
-// The owner's own Flash Studio profile folder is never read or written:
+// The owner's own slicer profile folder is never read or written:
 // every run gets a new, empty --datadir under --datadir-root.
 
 import { spawn } from "node:child_process";
 import { createHash } from "node:crypto";
-import { existsSync, mkdirSync, readFileSync, readdirSync, realpathSync, statSync, writeFileSync } from "node:fs";
-import { register } from "node:module";
+import { existsSync, mkdirSync, readFileSync, realpathSync, writeFileSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import JSZip from "jszip";
+import {
+  CARD_EPOCH, DEFAULT_DATADIR_ROOT, DEFAULT_SLICER, EVIDENCE_ROOT, PROJECT, SLICERS,
+  appPresent, appVersionOf, cliVersionOf, completeProject, completed3mf, freshDatadir, inside, presetIndex, realOf, resourcesOf, sliceArgs, slicerEntry,
+} from "./orca-family.mjs";
+
+export {
+  CARD_EPOCH, DEFAULT_DATADIR_ROOT, DEFAULT_SLICER, EVIDENCE, EVIDENCE_ROOT, SLICERS,
+  appPresent, completeProject, completed3mf, flatten, freshDatadir, ownerProfileDirs, presetIndex, probe, sliceArgs,
+} from "./orca-family.mjs";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 export const ROOT = path.resolve(HERE, "..", "..");
-register(pathToFileURL(path.join(ROOT, "core/dist/resolve-hook.js")).href, import.meta.url);
+// orca-family.mjs registered the workspace resolve hook on import
 const { readEntries } = await import("@hackbuild/3mf");
-export const DEFAULT_APP = "/Applications/Flash Studio.app/Contents/MacOS/Flash Studio";
-/** The evidence folder beside the repo; every virtual print output lands under it or under the temp folder. */
-export const EVIDENCE_ROOT = path.resolve(ROOT, "..", "fab-knowledge", "evidence");
-export const EVIDENCE = path.join(EVIDENCE_ROOT, "virtual-print");
-export const DEFAULT_DATADIR_ROOT = path.join(EVIDENCE, "datadir");
-/** The epoch the print card pins, s: 1980-01-01, the zip floor (core DEFAULT_EPOCH). */
-export const { DEFAULT_EPOCH: CARD_EPOCH } = await import(pathToFileURL(path.join(ROOT, "core/dist/epoch.js")).href);
-const PROJECT = "Metadata/project_settings.config";
-/** Preset bookkeeping keys that name a preset, never a print setting. */
-const PRESET_META = new Set(["name", "inherits", "type", "from", "instantiation", "setting_id", "filament_id", "compatible_printers", "compatible_printers_condition", "compatible_prints", "compatible_prints_condition", "description", "renamed_from", "version", "is_custom_defined"]);
+export const DEFAULT_APP = SLICERS[DEFAULT_SLICER].app;
 
 const sha256 = (b) => createHash("sha256").update(b).digest("hex");
-
-/** Folders the owner's slicer keeps its profile in; a datadir here is refused. */
-export function ownerProfileDirs() {
-  const lib = path.join(os.homedir(), "Library", "Application Support");
-  return ["Flash Studio", "FlashStudio", "Orca-Flashforge", "OrcaSlicer", "Orca-Flashforge-Studio"].map((n) => path.join(lib, n));
-}
-
-function inside(child, parent) {
-  const rel = path.relative(parent, child);
-  return rel === "" || (!rel.startsWith("..") && !path.isAbsolute(rel));
-}
-
-/** The real path of dir, through its nearest existing parent, so a link or a case variant resolves as the volume does. */
-function realOf(dir) {
-  const abs = path.resolve(dir);
-  let head = abs;
-  const tail = [];
-  while (!existsSync(head)) {
-    tail.unshift(path.basename(head));
-    const up = path.dirname(head);
-    if (up === head) break;
-    head = up;
-  }
-  return path.join(realpathSync(head), ...tail);
-}
 
 /** Roots a virtual print may write under: the evidence folder and the temp folder, as real paths. */
 export function outRoots() {
@@ -98,145 +73,6 @@ export function assertOutDir(dir) {
   if (!outRoots().some((r) => inside(real, r))) {
     throw new Error(`refusing ${dir}: a virtual print writes only under ${EVIDENCE_ROOT} or the temp folder ${os.tmpdir()}, never beside gated exports`);
   }
-}
-
-/** A new empty datadir under root; never the owner's profile folder. */
-export function freshDatadir(root = DEFAULT_DATADIR_ROOT) {
-  const r = path.resolve(root);
-  for (const o of ownerProfileDirs()) if (inside(r, o) || inside(o, r)) throw new Error(`refusing datadir root ${r}: it overlaps the owner's slicer profile ${o}`);
-  mkdirSync(r, { recursive: true });
-  const stamp = new Date().toISOString().replace(/[-:]/g, "").replace(/\..*$/, "");
-  for (let i = 0; ; i++) {
-    const d = path.join(r, `run-${stamp}-${process.pid}-${i}`);
-    if (!existsSync(d)) {
-      mkdirSync(d);
-      return d;
-    }
-  }
-}
-
-function readJson(file) {
-  try {
-    return JSON.parse(readFileSync(file, "utf8"));
-  } catch {
-    return undefined;
-  }
-}
-
-function walkJson(dir, out = []) {
-  if (!existsSync(dir)) return out;
-  for (const e of readdirSync(dir, { withFileTypes: true })) {
-    const p = path.join(dir, e.name);
-    if (e.isDirectory()) walkJson(p, out);
-    else if (e.name.endsWith(".json")) out.push(p);
-  }
-  return out;
-}
-
-/**
- * Index of bundled presets by kind and name. The vendor folder that holds
- * the machine wins over OrcaFilamentLibrary, as the slicer resolves them.
- */
-export function presetIndex(resources, machineName) {
-  const profiles = path.join(resources, "profiles");
-  const vendors = readdirSync(profiles, { withFileTypes: true }).filter((e) => e.isDirectory()).map((e) => e.name);
-  const vendor = vendors.find((v) => walkJson(path.join(profiles, v, "machine")).some((f) => readJson(f)?.name === machineName));
-  if (vendor === undefined) throw new Error(`no bundled machine preset named "${machineName}" under ${profiles}`);
-  const idx = new Map();
-  for (const dir of ["OrcaFilamentLibrary", vendor]) {
-    for (const kind of ["machine", "process", "filament"]) {
-      for (const f of walkJson(path.join(profiles, dir, kind))) {
-        const d = readJson(f);
-        if (d && typeof d.name === "string") idx.set(`${dir}\u0000${kind}\u0000${d.name}`, { data: d, file: path.relative(resources, f) });
-      }
-    }
-  }
-  return { vendor, idx, folders: [vendor, "OrcaFilamentLibrary"] };
-}
-
-/**
- * A preset with its inherits chain applied, child over parent; files lists
- * the chain from leaf up. A parent resolves in its child's folder first, so
- * an OrcaFilamentLibrary preset inherits from its own base files.
- */
-export function flatten(index, kind, name) {
-  const files = [];
-  const find = (n, prefer) => {
-    for (const dir of prefer === undefined ? index.folders : [prefer, ...index.folders.filter((f) => f !== prefer)]) {
-      const hit = index.idx.get(`${dir}\u0000${kind}\u0000${n}`);
-      if (hit !== undefined) return { ...hit, dir };
-    }
-    return undefined;
-  };
-  const walk = (n, depth, prefer) => {
-    const hit = find(n, prefer);
-    if (hit === undefined) return undefined;
-    if (depth > 16) throw new Error(`inherits loop at ${kind} "${n}"`);
-    files.push(hit.file);
-    const parent = typeof hit.data.inherits === "string" && hit.data.inherits !== "" ? walk(hit.data.inherits, depth + 1, hit.dir) : {};
-    if (parent === undefined) throw new Error(`${kind} "${n}" inherits "${hit.data.inherits}", which no bundled preset holds`);
-    return { ...parent, ...hit.data };
-  };
-  const values = walk(name, 0, undefined);
-  return values === undefined ? undefined : { values, files };
-}
-
-/**
- * The project config the GUI would slice: flattened presets, then every
- * embedded key over them. Filament keys become one entry per slot.
- */
-export function completeProject(embedded, index, filamentMap = {}) {
-  const printer = flatten(index, "machine", embedded.printer_settings_id);
-  const proc = flatten(index, "process", embedded.print_settings_id);
-  if (printer === undefined) throw new Error(`machine preset "${embedded.printer_settings_id}" is not bundled`);
-  if (proc === undefined) throw new Error(`process preset "${embedded.print_settings_id}" is not bundled`);
-  const names = embedded.filament_settings_id ?? [];
-  const substitutions = [];
-  const filaments = names.map((n, i) => {
-    const direct = flatten(index, "filament", n);
-    if (direct !== undefined) return direct;
-    const mapped = filamentMap[n];
-    if (mapped === undefined) throw new Error(`slot ${i + 1} filament preset "${n}" is not bundled in this Flash Studio; pass --filament-map "${n}=<bundled name>"`);
-    const sub = flatten(index, "filament", mapped);
-    if (sub === undefined) throw new Error(`--filament-map target "${mapped}" is not bundled`);
-    substitutions.push({ slot: i + 1, named: n, used: mapped });
-    return sub;
-  });
-  const base = {};
-  for (const src of [printer.values, proc.values]) for (const [k, v] of Object.entries(src)) if (!PRESET_META.has(k)) base[k] = v;
-  const filamentKeys = new Set(filaments.flatMap((f) => Object.keys(f.values)).filter((k) => !PRESET_META.has(k)));
-  for (const k of filamentKeys) {
-    base[k] = filaments.map((f) => {
-      const v = f.values[k];
-      return Array.isArray(v) ? String(v[0] ?? "") : v === undefined ? "" : String(v);
-    });
-  }
-  const filled = Object.keys(base).filter((k) => !(k in embedded)).sort();
-  const out = { ...base, ...embedded };
-  return {
-    config: out,
-    filled,
-    embeddedKeys: Object.keys(embedded).length,
-    presets: { machine: printer.files, process: proc.files, filaments: filaments.map((f) => f.files) },
-    substitutions,
-  };
-}
-
-/**
- * Same file entries in the same order with project_settings replaced; every
- * date pinned to the card epoch. No folder entries: JSZip adds one per
- * parent folder unless createFolders is false, and it stamps those with the
- * clock, so the bytes would move with the minute of the run.
- */
-export async function completed3mf(bytes, config) {
-  const entries = await readEntries(bytes);
-  const zout = new JSZip();
-  const date = new Date(CARD_EPOCH * 1000);
-  for (const [name, data] of Object.entries(entries)) {
-    const body = name === PROJECT ? `${JSON.stringify(config, null, 4)}\n` : data;
-    zout.file(name, body, { date, compression: "DEFLATE", createFolders: false });
-  }
-  return zout.generateAsync({ type: "uint8array", compression: "DEFLATE", compressionOptions: { level: 6 } });
 }
 
 /**
@@ -353,22 +189,20 @@ function runCapped(cmd, args, logFile, limitS) {
   });
 }
 
-export function appPresent(app = DEFAULT_APP) {
-  return existsSync(app) && statSync(app).isFile();
-}
-
 /**
  * Slices plate 1. Returns the run record also written to <outDir>/slice-run.json.
  * input: { file } or { design, preset }.
  */
-export async function slice({ input, outDir: outArg, app = DEFAULT_APP, datadirRoot = DEFAULT_DATADIR_ROOT, filamentMap = {}, timeLimitS = 600, allowFailing = false }) {
+export async function slice({ input, outDir: outArg, slicer = DEFAULT_SLICER, app, datadirRoot = DEFAULT_DATADIR_ROOT, filamentMap = {}, timeLimitS = 600, allowFailing = false }) {
   // absolute from here on, so no path the slicer receives can read as an option
   const outDir = path.resolve(outArg);
   assertOutDir(outDir);
   if (!(Number.isFinite(timeLimitS) && timeLimitS > 0)) throw new Error(`--time-limit takes a positive number of seconds, got ${timeLimitS}`);
-  if (!appPresent(app)) throw new Error(`not run: no Flash Studio executable at ${app}`);
+  const entry = slicerEntry(slicer);
+  app ??= entry.app;
+  if (!appPresent(app)) throw new Error(`not run: no ${entry.label} executable at ${app}`);
   mkdirSync(outDir, { recursive: true });
-  const resources = path.resolve(path.dirname(app), "..", "Resources");
+  const resources = resourcesOf(slicer, app);
   let bytes;
   let source;
   if (input.file !== undefined) {
@@ -384,9 +218,9 @@ export async function slice({ input, outDir: outArg, app = DEFAULT_APP, datadirR
   if (input.file === undefined || path.resolve(input.file) !== original) writeFileSync(original, bytes);
   if (source.model !== undefined) writeFileSync(path.join(outDir, `${stem}.model.json`), `${JSON.stringify(source.model, null, 2)}\n`);
 
-  const entry = (await readEntries(bytes))[PROJECT];
-  if (typeof entry !== "string") throw new Error(`${PROJECT} missing from the 3MF; the CLI cannot name presets for it`);
-  const embedded = JSON.parse(entry);
+  const project = (await readEntries(bytes))[PROJECT];
+  if (typeof project !== "string") throw new Error(`${PROJECT} missing from the 3MF; the CLI cannot name presets for it`);
+  const embedded = JSON.parse(project);
   const index = presetIndex(resources, embedded.printer_settings_id);
   const done = completeProject(embedded, index, filamentMap);
   const completedBytes = await completed3mf(bytes, done.config);
@@ -396,12 +230,10 @@ export async function slice({ input, outDir: outArg, app = DEFAULT_APP, datadirR
   const datadir = freshDatadir(datadirRoot);
   const gcodeDir = path.join(outDir, "gcode");
   mkdirSync(gcodeDir, { recursive: true });
-  const args = ["--datadir", datadir, "--slice", "1", "--outputdir", gcodeDir, "--debug", "3", completedPath];
+  const args = sliceArgs(slicer, { datadir, outputDir: gcodeDir, input: completedPath, timeLimitS });
   const run = await runCapped(app, args, path.join(outDir, "slicer.log"), timeLimitS);
-  const version = /Current Orca-Flashforge Version (\S+)/.exec(run.log)?.[1] ?? "unknown";
-  let appVersion = "unknown";
-  const plist = path.resolve(path.dirname(app), "..", "Info.plist");
-  if (existsSync(plist)) appVersion = /<key>CFBundleShortVersionString<\/key>\s*<string>([^<]+)<\/string>/.exec(readFileSync(plist, "utf8"))?.[1] ?? "unknown";
+  const version = cliVersionOf(slicer, run.log);
+  const appVersion = appVersionOf(slicer, app);
   const gcodeFile = path.join(gcodeDir, "plate_1.gcode");
   const gcode = existsSync(gcodeFile) ? readFileSync(gcodeFile) : undefined;
   const record = {
@@ -410,7 +242,7 @@ export async function slice({ input, outDir: outArg, app = DEFAULT_APP, datadirR
     source,
     input3mf: { path: original, bytes: bytes.length, sha256: sha256(bytes) },
     completed3mf: { path: completedPath, bytes: completedBytes.length, sha256: sha256(completedBytes), embeddedKeys: done.embeddedKeys, filledFromPresets: done.filled.length, presetVendor: index.vendor, presets: done.presets, substitutions: done.substitutions },
-    slicer: { app, appVersion, cliVersion: version },
+    slicer: { id: slicer, app, appVersion, cliVersion: version },
     command: [app, ...args],
     datadir,
     exitCode: run.code,
@@ -440,6 +272,7 @@ function parseArgs(argv) {
     else if (a === "--time-limit") o.timeLimitS = Number(next());
     else if (a === "--datadir-root") o.datadirRoot = next();
     else if (a === "--app") o.app = next();
+    else if (a === "--slicer") o.slicer = next();
     else if (a === "--allow-failing") o.allowFailing = true;
     else if (a === "--filament-map") {
       const [k, v] = next().split("=");
@@ -458,12 +291,14 @@ async function main() {
     process.stderr.write("usage: node tools/slice/slice.mjs <file.3mf> <outdir> | --design <dir> --preset <name> <outdir>\n");
     process.exit(2);
   }
-  if (!appPresent(o.app)) {
-    process.stdout.write(`not run: no Flash Studio executable at ${o.app ?? DEFAULT_APP}\n`);
+  const slicer = o.slicer ?? DEFAULT_SLICER;
+  const entry = slicerEntry(slicer);
+  if (!appPresent(o.app ?? entry.app)) {
+    process.stdout.write(`not run: no ${entry.label} executable at ${o.app ?? entry.app}\n`);
     process.exit(3);
   }
-  const r = await slice({ input, outDir, app: o.app, datadirRoot: o.datadirRoot, filamentMap: o.filamentMap, timeLimitS: o.timeLimitS, allowFailing: o.allowFailing });
-  process.stdout.write(`${r.status}: exit ${r.exitCode}${r.signal ? ` signal ${r.signal}` : ""}, ${r.wallMs} ms wall (measured), Orca-Flashforge ${r.slicer.cliVersion}\n`);
+  const r = await slice({ input, outDir, slicer, app: o.app, datadirRoot: o.datadirRoot, filamentMap: o.filamentMap, timeLimitS: o.timeLimitS, allowFailing: o.allowFailing });
+  process.stdout.write(`${r.status}: exit ${r.exitCode}${r.signal ? ` signal ${r.signal}` : ""}, ${r.wallMs} ms wall (measured), ${entry.label} CLI ${r.slicer.cliVersion}\n`);
   if (r.gcode) process.stdout.write(`gcode ${r.gcode.path}, ${r.gcode.bytes} bytes, sha256 ${r.gcode.sha256}\n`);
   process.exit(r.status === "sliced" ? 0 : 1);
 }
