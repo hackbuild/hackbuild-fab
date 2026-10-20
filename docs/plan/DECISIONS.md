@@ -560,6 +560,8 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-504 | Band line qualifier | decided | UI |
 | D-505 | access-switch typecheck gains the DOM lib | decided | Repos, packaging, toolchain, licensing |
 | D-506 | Test-local ContactFn and placement prefix on the click-spring-window fixture | decided | Testing, docs, milestones, registry |
+| D-507 | widgetsModel takes a WidgetView carrying claimFns and travelMm | decided | UI |
+| D-508 | BindOptions gains claimFns and a travel getter | decided | UI |
 
 ## House rules and process
 
@@ -6181,6 +6183,28 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. The click-spring-window reference exports no ContactFn and writes no spring curve metrics. The test therefore builds the metrics as item 11's claims test does, prefixes them with `click-spring-key.0` the way the kernel places an archetype, and uses a ContactFn that closes at `spring.cg` with its stop at the last curve sample. |
 | Rationale | The brief names this fixture. The only other design with a contact function (access-switch) needs a `paddle.travel` metric the fixture does not have. |
 | Evidence | `packages/ui-core/test/widgets-press.test.ts` header. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-507 widgetsModel takes a WidgetView carrying claimFns and travelMm
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. ui-core `bind.ts` exports `WidgetView` (BuildView plus optional `claimFns` and `travelMm`). `widgetsModel` is the only builder of widget records and passes `chase.claims`, `claimFns` and `travelMm` into `widgetRecords`. In packages/ui, `WidgetSource` extends `WidgetView` and `widgetsOf` calls `widgetsModel`. |
+| Rationale | Keeps one implementation of the widget records without dropping the R1-engine-13 claim threading that main's `widgetsOf` carried. |
+| Evidence | `packages/ui-core/src/chase/bind.ts` widgetsModel; `packages/ui/src/widgets/registry.ts` widgetsOf; the claimFns mutant is killed by `packages/ui-core/test/chase/bind.test.ts`. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-508 BindOptions gains claimFns and a travel getter
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `bindChase` takes optional `claimFns` (claim registry entries by id) and `travel: () => number \| undefined`. `widgets()` reads both on every call. |
+| Rationale | `BENCH.widgets()` takes no arguments, so the current press travel has to come from the host through a getter. Main's `entry.ts` supplied neither, so today's pages behave the same as before. |
+| Evidence | `packages/ui-core/src/chase/bind.ts` BindOptions and widgets(); the bind.test travel 0.25 to 1.2 case (hand computed, not measured). |
 | Supersedes | new |
 | Milestone | none |
 
