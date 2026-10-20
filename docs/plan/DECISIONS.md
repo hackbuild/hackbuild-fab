@@ -505,6 +505,12 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-449 | The narrower edge band carries the stack band overlap | decided | Kernel, geometry |
 | D-450 | Edge stack body z must sit on the layer grid | decided | Kernel, geometry |
 | D-451 | The kernel package depends on mesh and geom | decided | Repos, packaging, toolchain, licensing |
+| D-452 | Page seam for constraint versions is page-build.ts, not ui-core bench core.ts | decided | Repos, packaging, toolchain, licensing |
+| D-453 | The registry loader also depends on chase, for a type | decided | Repos, packaging, toolchain, licensing |
+| D-454 | Imported builds keep a registryHash without exporters | decided | Repos, packaging, toolchain, licensing |
+| D-455 | The registry loader imports constraintDefs by name | decided | Repos, packaging, toolchain, licensing |
+| D-456 | Loaded constraint versions win over the baked fact on drift | decided | Repos, packaging, toolchain, licensing |
+| D-457 | PageResult carries registryHash | decided | Repos, packaging, toolchain, licensing |
 
 ## House rules and process
 
@@ -5521,6 +5527,72 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. `kernel/package.json` and `kernel/tsconfig.json` gain `@hackbuild/geom` and `@hackbuild/mesh`, and `package-lock.json` was updated through `npm install --package-lock-only`. These files sit outside the R1-engine-06 brief's Writes line. |
 | Rationale | The brief requires exporting `prismWithEdges` through `kernel/src/author/index.ts`. `tools/tiers.json` lets the kernel import tier 0. |
 | Evidence | `tools/tiers.json` kernel mayImport S, 0, 1, 2; `node tools/tiers.mjs` reports 0 failures on the merged tree (computed, 2026-10-20). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-452 Page seam for constraint versions is page-build.ts, not ui-core bench core.ts
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The page computes its constraint versions in `reference/keys/*/page-build.ts` with `pageFacts(facts)` from `@hackbuild/registry-loader` (R1-engine-02). `packages/ui-core/src/bench/core.ts` is not edited. |
+| Rationale | ui-core `core.ts` never sees PageFacts. The facts flow is `hbf:facts`, then `page-build.ts`, then `createPageBuild`. pipeline cannot import the loader because the loader depends on pipeline, so the per-page entry is the one place left. |
+| Evidence | `packages/pipeline/src/page.ts` `createPageBuild` reads `facts.constraints`; `reference/keys/flex-pair/page-build.ts` is the bake entry; ui-core `package.json` has no pipeline dependency. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-453 The registry loader also depends on chase, for a type
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `registry-loader` edges in `tools/tiers.json` are spec, profile, constraints, circuit, mechanisms, mesh, sim, checks, chase and pipeline; sameTier gets `registry-loader>checks`, `registry-loader>chase` and `registry-loader>pipeline`. |
+| Rationale | `chaseRegistries` returns the `ChaseRegistries` type from `@hackbuild/chase`. Declaring the type a second time would make two implementations of one thing. |
+| Evidence | `tools/tiers.json`; `node tools/tiers.mjs` reports 0 failures and `tools/test/tiers.test.mjs` 39 of 39 pass on the merged tree (computed, 2026-10-20). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-454 Imported builds keep a registryHash without exporters
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The import path in `core/src/commands/part-build.ts` still hashes no exporter into registryHash (review finding F3 of R1-engine-02, left unchanged). |
+| Rationale | `export.run` takes only a chase (a design dir), so an `import:` build cannot reach `export3mf` and exports nothing. `RegistryEntries` documents exporters as absent where the build exports nothing. Adding 3mf would also move every imported buildHash. |
+| Evidence | `core/src/commands/export-run.ts` `runExportRun` requires `input.chase` and calls `buildTarget`; `part-build.ts` `importAudit` returns `artifacts: []` with adapter `none`; `packages/pipeline/src/part-checks.ts` `RegistryEntries.exporters` doc comment. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-455 The registry loader imports constraintDefs by name
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `packages/registry-loader/src/index.ts` imports `constraintDefs` by name from the six source packages instead of namespace imports, so the clause "a package that exports none contributes nothing" is gone. |
+| Rationale | Namespace imports kept whole packages in the page bundle. All six packages export `constraintDefs` today. |
+| Evidence | flex-pair bake 4540614 bytes before the change, 4653731 with namespace imports (+113117), 4551510 with named imports (+10896, +0.24%), measured by the builder on 2026-10-20. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-456 Loaded constraint versions win over the baked fact on drift
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. When the loader's constraint versions differ from the baked fact, `pageFacts` uses the loader's versions and logs the drifting ids with `console.warn`. The baked fact stays one release as a cross-check (`tools/bake/design-facts.mjs` comment). |
+| Rationale | The R1-engine-02 brief says to compute the versions in the page and keep the baked fact only as a cross-check that logs a mismatch. |
+| Evidence | `packages/registry-loader/src/index.ts` `pageFacts`; the cross-check test in `packages/registry-loader/test/hash.test.ts` asserts no drift today and passes (4 of 4 on the merged tree, computed 2026-10-20). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-457 PageResult carries registryHash
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `packages/pipeline/src/page.ts` sets `PageResult.registryHash` to `built.inputs.registryHash`. |
+| Rationale | The smoke spec and `hash.test.ts` compare registryHash directly instead of through buildHash, so a registry drift names itself. |
+| Evidence | `tools/smoke/page-build.spec.ts` checks the page registryHash equals the one `tools/smoke/cli-3mf.mjs` prints; `packages/registry-loader/test/hash.test.ts`. |
 | Supersedes | new |
 | Milestone | none |
 
