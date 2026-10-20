@@ -348,6 +348,10 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-292 | No inferred panel-hole field on the PJ398SM row | decided | Canons, reference, profile, catalog |
 | D-293 | No pins field on the PJ398SM row; pad names serve as pin names | decided | Canons, reference, profile, catalog |
 | D-294 | KiCad LICENSE.md committed beside the PJ398SM footprint | decided | Canons, reference, profile, catalog |
+| D-295 | Registry module listing order lives in a lib helper | decided | Testing, docs, milestones, registry |
+| D-296 | One owner per registry output path; exit 2 for contract errors | decided | Testing, docs, milestones, registry |
+| D-297 | A missing registry generator directory is an error, an empty one is not | decided | Testing, docs, milestones, registry |
+| D-298 | exportedConst picks the single export, else the one annotated with the type | decided | Testing, docs, milestones, registry |
 
 ## House rules and process
 
@@ -3637,6 +3641,50 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. KiCad LICENSE.md is copied verbatim next to the footprint. Both files join the existing CC-BY-SA-4.0 KiCad row in `tools/licences.json`. A lint-voice exclaim allow row covers line 27 of the licence text. |
 | Rationale | CC-BY-SA redistribution asks for the licence documents to travel with the files. Without the new paths the catch-all MIT row would have matched the footprint. The allow row follows the precedent of the verbatim fonts LICENSE text. |
 | Evidence | `tools/licences.json` KiCad row (D-090); `tools/lint-voice.allow.json` row for `tools/py/board/fonts/LICENSE-*.txt`. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-295 Registry module listing order lives in a lib helper
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `tools/gen/registries.mjs` lists its modules through `generatorFiles(readdirSync(dir))` in `tools/gen/lib.mjs`, which keeps `*.mjs` files, skips dotfiles and sorts. The frame does not sort inline. |
+| Rationale | On this machine node's `readdirSync` already returns names in byte order, so a frame that drops its own sort passes any end to end order test and the sort mutant could not be killed. Testing a pure helper makes the sort load-bearing in a test. |
+| Evidence | A probe on APFS showed `readdirSync` returning 10, 9, B, Z, _x, a, m1, m4, m6 (byte order, measured) while `ls -f` printed another order; the libuv alphasort cause is inferred. The frame-only no-sort mutant left 11 of 11 passing; with the helper, the no-sort mutant gives 1 fail (measured). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-296 One owner per registry output path; exit 2 for contract errors
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. Two registry modules returning the same output path is an error naming both modules, as is a path outside the root. Exit codes of `tools/gen/registries.mjs`: 0 fresh or written, 1 stale under `--check`, 2 a usage or module contract error. |
+| Rationale | With file name order a second writer would silently replace the first module's output; the error keeps one gathered file under one generator. Separate exit codes let CI tell stale output apart from a broken module. |
+| Evidence | `tools/gen/registries.mjs` and the contract-errors test in `tools/test/gen-registries.test.mjs`. Disabling the duplicate-owner check fails 1 of 12 tests (measured, integrator mutant). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-297 A missing registry generator directory is an error, an empty one is not
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. If `<root>/tools/gen/registries` does not exist, the frame exits 2. If it exists with no `.mjs` modules (only README.md), it exits 0. |
+| Rationale | A wrong `--root` should never make `--check` pass silently. The brief requires an empty directory to exit 0. |
+| Evidence | The empty-registries test in `tools/test/gen-registries.test.mjs` passes; README.md in the directory is ignored because only `.mjs` files load. `node tools/gen/registries.mjs --check` on main prints 0 generators, 0 outputs, exit 0 (measured). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-298 exportedConst picks the single export, else the one annotated with the type
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `exportedConst(tsText, typeName)` in `tools/gen/lib.mjs` returns the name when the file has exactly one `export const`. Otherwise it returns the one export annotated with `typeName`, and throws when there is none or more than one. |
+| Rationale | Brief item 08 says def export names follow no single rule, and most def files call factory functions with no type annotation, so matching only on the type would miss them. |
+| Evidence | `packages/mechanisms/src/defs/*.ts`: `export const crankYoke = refusedMechanism({` against `export const capsulePocketRotor: MechanismDef<Values> = {`. |
 | Supersedes | new |
 | Milestone | none |
 
