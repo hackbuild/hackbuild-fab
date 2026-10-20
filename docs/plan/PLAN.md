@@ -1930,7 +1930,7 @@ fails on drift. Until then each row names the method that produced it.
 | seeded checks | 86 (77 block, 9 warn); by level feature 24, part 18, assembly 12, artifact 7, net 7, source 7, sheet 6, project 3, page 2 | `packages/checks/seed/checks.seed.json` `checks[]` by `severity` and `appliesTo.level` |
 | registered checks | 158 (145 block, 13 warn): the seeded rows and the rows entered with enteredBy | `packages/checks/seed/checks.seed.json` `checks[]` by `severity` |
 | entered checks | 84 in CHECKS.md section 9 (excluding the reserved rows of 9.10), 169 distinct with the seeded rows (CHK-NET-29 is in both) | `CHK-` table rows under the section 9 headings of `docs/plan/CHECKS.md`; distinct ids in their union with `checks[].id` of the seed |
-| decision entries | 365, D-001 to D-366 with D-176 never issued: 308 decided, 49 owner, 8 superseded; owner queue 49 | `### D-` headings, the Index status column and the Owner queue rows of `docs/plan/DECISIONS.md` |
+| decision entries | 368, D-001 to D-369 with D-176 never issued: 311 decided, 49 owner, 8 superseded; owner queue 49 | `### D-` headings, the Index status column and the Owner queue rows of `docs/plan/DECISIONS.md` |
 | registry tools | 59 (29 mechanical or cosmetic, 23 electrical, 6 device, 1 meta) | `registry/tools.json` `tools[]` by `group` |
 | seed files | 64 (41 imported, 23 skipped) | `tools/seed-manifest.json` |
 | seeded mechanisms | 24 (11 with no inputs, governs or derived; 5 with only id, family and provenance) | `packages/mechanisms/seed/mechanisms.seed.yaml` |
