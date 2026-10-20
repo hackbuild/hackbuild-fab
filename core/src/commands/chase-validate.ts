@@ -78,9 +78,27 @@ const failed = (ctx: CoreCtx, errors: readonly CommandError[]): CommandOut<Comma
   result: { questions: [], resolvedChecks: [] },
 });
 
-export async function runChaseValidate(input: CommandInput<"chase.validate">, ctx: CoreCtx): Promise<CommandOut<CommandOutput<"chase.validate">>> {
+/**
+ * The chase.patch validator for one design directory: the errors
+ * chase.validate gives for a chase.ts text, with the bench.ts and build
+ * module on disk beside it and the workspace registries.
+ */
+export async function chaseSourceErrors(ctx: CoreCtx, dir: string): Promise<(source: string) => readonly CommandError[]> {
   const root = workspaceRoot(ctx.workspace);
-  const dir = chaseDir(root, ctx.cwd, input.chase);
+  const ws = await loadWorkspace(root);
+  const registries = chaseRegistries(ws.checksSeed);
+  const profile = createProfileLookup(ws.tables);
+  const label = path.relative(root, dir).split(path.sep).join("/");
+  return (text) => {
+    const v = validateDir(dir, label, text, registries, profile);
+    return "errors" in v ? v.errors : v.validation.errors;
+  };
+}
+
+type DirValidation = { readonly errors: readonly CommandError[] } | { readonly validation: ReturnType<typeof validateDocument> };
+
+/** chase.validate over one chase.ts text and the files beside it in dir. */
+function validateDir(dir: string, label: string, text: string, registries: ChaseRegistries, profile: ProfileLookup): DirValidation {
   const read = <T>(f: () => T): T | CommandError => {
     try {
       return f();
@@ -89,25 +107,33 @@ export async function runChaseValidate(input: CommandInput<"chase.validate">, ct
       throw e;
     }
   };
-  const source = read(() => readChaseSource(readFileSync(path.join(dir, "chase.ts"), "utf8"), `${rel(root, dir)}/chase.ts`));
-  if ("code" in source) return failed(ctx, [source]);
+  const source = read(() => readChaseSource(text, `${label}/chase.ts`));
+  if ("code" in source) return { errors: [source] };
   const benchFile = path.join(dir, "bench.ts");
   let bench: unknown;
   if (existsSync(benchFile)) {
-    const b = read(() => readBenchSource(readFileSync(benchFile, "utf8"), `${rel(root, dir)}/bench.ts`));
-    if ("code" in b) return failed(ctx, [b]);
+    const b = read(() => readBenchSource(readFileSync(benchFile, "utf8"), `${label}/bench.ts`));
+    if ("code" in b) return { errors: [b] };
     bench = b.bench;
   }
   const chase = source.chase;
-  const ws = await loadWorkspace(root);
-  const registries = chaseRegistries(ws.checksSeed);
-  const facts: QuestionFacts = { resistivity: rowsInForce(chase, createProfileLookup(ws.tables)), fabricationExports: FABRICATION_EXPORTS };
+  const facts: QuestionFacts = { resistivity: rowsInForce(chase, profile), fabricationExports: FABRICATION_EXPORTS };
   let build: Pick<ValidateInputs, "buildSource"> = {};
   if (buildPathProblem(chase.build.module) === undefined) {
     const file = path.join(dir, chase.build.module);
     build = { buildSource: existsSync(file) && statSync(file).isFile() ? readFileSync(file, "utf8") : undefined };
   }
-  const v = validateDocument({ chase, ...(bench === undefined ? {} : { bench }), ...build, registries, facts });
+  return { validation: validateDocument({ chase, ...(bench === undefined ? {} : { bench }), ...build, registries, facts }) };
+}
+
+export async function runChaseValidate(input: CommandInput<"chase.validate">, ctx: CoreCtx): Promise<CommandOut<CommandOutput<"chase.validate">>> {
+  const root = workspaceRoot(ctx.workspace);
+  const dir = chaseDir(root, ctx.cwd, input.chase);
+  const ws = await loadWorkspace(root);
+  const registries = chaseRegistries(ws.checksSeed);
+  const r = validateDir(dir, rel(root, dir), readFileSync(path.join(dir, "chase.ts"), "utf8"), registries, createProfileLookup(ws.tables));
+  if ("errors" in r) return failed(ctx, r.errors);
+  const v = r.validation;
   return {
     verdict: v.errors.length > 0 ? "fail" : "pass", stage: v.errors.length > 0 ? "input" : "done", inputsHash: ctx.inputsHash,
     findings: [], counts: { pass: 0, warn: 0, fail: 0, skip: 0 }, errors: v.errors, artifacts: [], next: [],
