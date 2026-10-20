@@ -29,3 +29,4 @@ export { GLYPH_QUAD_POINTS, TEXT_FACES, contourRing, measureText, textFace, text
 export type { FaceTable, TextPlacement } from "./text/outline.js";
 export { EDGE_PROFILES, edgeExtent, edgeInset, edgeMaxInset, profileInset } from "./edge.js";
 export type { EdgeKind, EdgeProfile, EdgeSpec } from "./edge.js";
+export { chamferCorner, roundCorner } from "./profile-corner.js";

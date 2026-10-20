@@ -1,0 +1,12 @@
+[
+  {
+    "id": "geom.profile-corner/tenon-src",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/tenon/files/src/src/part2.js",
+    "sha256": "ac5f68c3ac6454a3f500a2c941786090ac5fbb5436fc92b2e8155767432d8003",
+    "fixes": [
+      "buildTip circular fillet (part2.js lines 414 to 418), the flat face then n points on a quarter circle of radius rf to the rim, ported to packages/geom/src/profile-corner.ts roundCorner for a corner of any angle, cos and sin from the D-175 table; packages/geom/test/profile-corner.test.ts holds the arc to its tangent circle and the profile area to the closed form (R1-engine-07)"
+    ],
+    "dest": "packages/geom/src/profile-corner.ts"
+  }
+]
