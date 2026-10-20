@@ -29,8 +29,8 @@ const ROOT = `${path.resolve(HERE, "../../..")}${path.sep}`;
 const NAME = "@hackbuild/ui";
 
 const EXPECTED = [
-  "BenchShell", "ChecksPanel", "CurvePanel", "DrivePad", "ExportsPanel", "FitsPanel", "LogPanel", "NotesPanel",
-  "ParamRail", "mountBench", "pageBench", "pageOf", "useBench", "useShell",
+  "BenchShell", "ChecksPanel", "CurvePanel", "DrivePad", "DrivePress", "ExportsPanel", "FitsPanel", "LogPanel", "NotesPanel",
+  "ParamRail", "PlotCurve", "mountBench", "pageBench", "pageOf", "useBench", "useShell",
 ];
 
 let ui: typeof Ui;

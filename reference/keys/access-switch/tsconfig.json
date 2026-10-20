@@ -4,6 +4,10 @@
     "noEmit": true,
     "composite": false,
     "declaration": false,
+    "lib": [
+      "ES2023",
+      "DOM"
+    ],
     "types": [
       "node"
     ]

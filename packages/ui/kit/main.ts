@@ -4,8 +4,9 @@
 // M09-T13 as dist/kit/kit.html. It moves under apps/fab as the /kit route
 // at M12. Fixtures are committed sources only: PIP's layout groups
 // (test/fixtures/pip-layout.ts) and notes (test/fixtures/pip-notes.ts), the
-// flex-pair chase, bench and contact function, the flex-pair report golden
-// and the ui-core part fixture.
+// flex-pair chase, bench and contact function, the flex-pair report golden,
+// the ui-core part fixture and the toy press (test/fixtures/press-toy.ts)
+// for the drive.press and plot.curve widgets.
 
 import { createApp, defineComponent, h, type Component } from "vue";
 import {
@@ -19,6 +20,10 @@ import ExportsPanel from "../src/panels/ExportsPanel.vue";
 import Legend from "../src/bench/Legend.vue";
 import Rail from "../src/bench/Rail.vue";
 import DrivePad from "../src/stage/DrivePad.vue";
+import DrivePress from "../src/widgets/DrivePress.vue";
+import PlotCurve from "../src/widgets/PlotCurve.vue";
+import { plotLines, widgetModel, type PlotModel } from "@hackbuild/ui-core";
+import { TOY_CONTACT_MM, TOY_PLOT, TOY_PRESS, toyBuild } from "../test/fixtures/press-toy";
 import { padOf } from "../src/stage/pad";
 import type { PanelCtx } from "../src/bench/panels";
 import { mountBench } from "../src/bench/entry";
@@ -97,6 +102,16 @@ const padStage = (held: readonly string[]): unknown =>
     }),
   ]);
 
+/** drive.press over the stage, and plot.curve with its cursor, on the toy press at a travel. */
+const pressStage = (travelMm: number): unknown =>
+  h("div", { class: "hbf-kit-stage" }, [
+    h(HbStageOverlay, { graph: true }, { bl: () => h(DrivePress, { model: widgetModel(TOY_PRESS, toyBuild(travelMm)), onTravel: noop }) }),
+  ]);
+const curveAt = (travelMm: number): unknown => {
+  const m = widgetModel(TOY_PLOT, toyBuild(travelMm)) as PlotModel;
+  return h(PlotCurve, { view: m.view, plotId: m.id, xUnit: m.units.x, yUnit: m.units.y, ...plotLines(m), onTravel: noop });
+};
+
 const flexValues = { W: 60, H: 30, r: 4, keys: [{ x: 0, d: 10, cone: 4, gap: 1.84 }], w: 1.4, pads: "clip" };
 const noop = (): void => undefined;
 
@@ -131,6 +146,10 @@ const Kit: Component = defineComponent({
         section("notes: PIP print pane, notes panels after fits and exports", notesRail(3)),
         section("drive pad: idle, from the flex-pair golden build", padStage([])),
         section("drive pad: first key held", padStage([firstKey])),
+        section("drive.press: toy key released", pressStage(0)),
+        section("drive.press: toy key dragged past contact", pressStage(TOY_CONTACT_MM + 0.1)),
+        section("plot.curve: toy curve, cursor below contact", curveAt(0.25)),
+        section("plot.curve: toy curve, cursor past contact", curveAt(TOY_CONTACT_MM + 0.1)),
         section("checks and fits from the flex-pair report golden",
           h(ChecksPanel, { results: findings, part: part as never }),
           h(FitsPanel, { metrics, results: findings, part: part as never })),
