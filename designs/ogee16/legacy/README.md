@@ -73,3 +73,21 @@ unassigned.
 - The rerun of `cutfiles.py` with ezdxf 1.4.4 and shapely 2.1.2 gives the
   shipped rings, vertex for vertex, but sheets 1 and 2 list some rings in
   another order (computed, `packages/nest/records/ogee16-cut-legacy.json`).
+
+## The R16-P assembly page (M10-T01)
+
+| field | value |
+|---|---|
+| file | `ogee16p.html`, 3209119 bytes, sha256 eec1e191cea91a6d04d5b47b68ef334a85b9eedc1446f30b1838fa937f035dc4 (measured 2026-10-14) |
+| copied from | `fab-work-directory:benches/ogee16/outputs/ogee16p.html` (harvest snapshot of 2026-08-18 05:05) |
+| equal to | `fab-knowledge:originals/ogee16/files/ogee16p.html`, the canonical page of `knowledge/designs/ogee16.md` section 1 |
+| lineage rows | `ogee16.bench/r16p` (canonical, originals), `ogee16.bench/bench-outputs` |
+| UX of record | `knowledge/designs/ogee16.md` section 5; `shots/p02` to `p09` copied from `fab-knowledge:originals/ogee16/shots/` |
+
+The page keeps `globalThis.__ogeep` (line 603), assigned after the boot
+line's first `apply()` and `buildCheck()` (line 600). The adapter
+`ogee16` is ready once it exists, drives a pixel through `__ogeep.drive`
+or the latch tab through `pull`, and reports the latched count from
+`__ogeep.latched`; the page shows no readout for a drive, and design JSON
+and exports are not provided by the legacy bench. Its Google fonts link
+(line 7) is the one request off file; offline the faces fall back.

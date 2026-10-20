@@ -6,6 +6,19 @@ file it was copied from; its `SHA256SUMS` checks it, and its `README.md`
 says where it came from. A `legacy/` tree takes the licence its folder's
 `chase.ts` declares (D-185, `tools/licences.json` path map).
 
+A legacy file whose bytes carry a character RULES.md bans in every repo
+file (an emoji entity, a dash in a third-party comment) is kept byte
+identical as a member of a stored zip written by
+`tools/legacy/stored-zip.mjs`; `SHA256SUMS` lists the zip, and the
+folder's README lists the member's sha256 (M10-T01: `stylus/legacy/` and
+`knurl/legacy/three-0.185.1.zip`). `tang/` and `gudgeon/` are archive
+folders: a lineage README and a `SHA256SUMS`, no chase or build.
+
+Legacy copies added from M10-T01 on stay out of git (D-286): the folder
+keeps its `README.md` and `SHA256SUMS` in the repo, the files themselves
+live in the owner's archive (`fab-knowledge:originals/`), and a test that
+reads one reports not run when it is absent.
+
 ## Paths inside legacy files
 
 The legacy harnesses ran on the owner's machines and in chat sandboxes, so
@@ -77,6 +90,11 @@ JSZip, pako and qrcode-generator with these copyright lines:
     qrcode-generator  Copyright (c) 2009 Kazuhiko Arase
 
 The Apache-2.0 text for manifold-3d is in `THIRD-PARTY-NOTICES.txt`.
+
+`knurl/legacy/google-fonts-20261018.zip` keeps six Google Fonts families
+as served (Amiri, IBM Plex Mono, Noto Naskh Arabic, Scheherazade New and
+VT323 under the SIL Open Font License 1.1, Permanent Marker under
+Apache-2.0); each licence text is a member under `LICENSES/`.
 earcut is under ISC:
 
     ISC License

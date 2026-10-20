@@ -1,0 +1,12 @@
+{
+  "meta": { "id": "template", "kind": "single", "name": "TEMPLATE", "version": 1, "chase": 1, "kernels": ["geom", "mesh", "3mf"], "machine": "ffc5p", "shell": "paper" },
+  "materials": [{ "slot": 1, "material": "petg", "role": "body" }],
+  "params": [{ "id": "main", "label": "MAIN", "fields": [{ "id": "d", "type": "mm", "range": [20, 80], "default": 44 }] }],
+  "build": { "module": "./build", "fn": "build" },
+  "views": { "default": "assembled", "modes": ["assembled", "plate"], "render": ["solid", "ghost"], "overlays": ["cams", "hud"] },
+  "rail": [{ "step": "shape", "goal": "set the size", "panels": ["params.main"] }, { "step": "print", "goal": "pick filaments and export", "panels": ["checks", "exports"] }],
+  "checks": ["CHK-PRT-*", "CHK-3MF-*"],
+  "exports": [{ "kind": "3mf", "machine": "ffc5p", "gated": true }],
+  "assertions": [],
+  "status": ["checks.verdict", "build.hash"]
+}

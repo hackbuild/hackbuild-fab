@@ -101,6 +101,24 @@ export function workspaceLines(root: string, built: ReadonlySet<string>): MadeLi
   return out;
 }
 
+/** Every SHA256SUMS row of the workspace's legacy trees, file to sha256. */
+export function legacyRows(root: string): Map<string, string> {
+  return new Map([...legacyTrees(root).values()].flat().map((s) => [s.file, s.sha256]));
+}
+
+/**
+ * A legacy file as the workspace holds it now: its bytes when on disk, else
+ * its SHA256SUMS row, since copies held out of git (D-286) are current at
+ * their row; a file no row names is missing.
+ */
+export function legacyItem(root: string, file: string, rows: () => ReadonlyMap<string, string>): Item | undefined {
+  const id = ids.legacy(file);
+  const abs = path.join(root, file);
+  if (existsSync(abs)) return { id, kind: "legacy", uri: file, hash: sha256File(abs) };
+  const sha = rows().get(file);
+  return sha === undefined ? undefined : { id, kind: "legacy", uri: file, hash: sha };
+}
+
 /** Source items as the workspace holds them now, for every link target no made line provides. */
 async function currentItems(root: string, made: readonly MadeLine[]): Promise<Item[]> {
   const madeIds = new Set(made.map((l) => l.item.id));
@@ -130,6 +148,7 @@ async function currentItems(root: string, made: readonly MadeLine[]): Promise<It
     for (const [k, v] of Object.entries({ ...(d.stages ? d.kinds : {}), ...(d.onUseKinds ?? {}) })) kinds.set(k, v);
   }
   const out: Item[] = [];
+  let recorded: Map<string, string> | undefined;
   for (const id of targets) {
     const p = parseItemId(id);
     if (p === undefined) continue;
@@ -153,8 +172,8 @@ async function currentItems(root: string, made: readonly MadeLine[]): Promise<It
       const v = at < 0 ? kinds.get(kind) : (await design(p.key.slice(0, at)))?.kinds[kind];
       if (v !== undefined) out.push({ id, kind: p.kind, uri: `hbf://feature-kind/${p.key}`, hash: defHash(kind, v) });
     } else if (p.kind === "legacy") {
-      const file = path.join(root, p.key);
-      if (existsSync(file)) out.push({ id, kind: p.kind, uri: p.key, hash: sha256File(file) });
+      const item = legacyItem(root, p.key, () => (recorded ??= legacyRows(root)));
+      if (item !== undefined) out.push(item);
     }
   }
   return out;

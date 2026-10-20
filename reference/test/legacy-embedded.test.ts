@@ -6,6 +6,7 @@
 // designs/ or reference/ names a local scratch folder, and no legacy
 // README names a home directory.
 
+import { execFileSync } from "node:child_process";
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -36,8 +37,11 @@ function walk(dir: string, keep: (rel: string) => boolean, out: string[] = []): 
 
 const rel = (p: string): string => path.relative(ROOT, p).split(path.sep).join("/");
 const isLegacy = (r: string): boolean => /^designs\/[^/]+\/legacy\//.test(r) || /^reference\/[^/]+\/[^/]+\/legacy\//.test(r);
-const code = walk(ROOT + "/designs", (r) => isLegacy(r) && /\.(html|js|mjs|cjs)$/.test(r))
-  .concat(walk(ROOT + "/reference", (r) => isLegacy(r) && /\.(html|js|mjs|cjs)$/.test(r)));
+// The notices cover what the repo publishes: legacy copies kept on disk but
+// out of git (D-286) are not scanned.
+const tracked = new Set(execFileSync("git", ["ls-files", "--cached", "--", "designs", "reference"], { cwd: ROOT, encoding: "utf8" }).split("\n"));
+const code = walk(ROOT + "/designs", (r) => tracked.has(r) && isLegacy(r) && /\.(html|js|mjs|cjs)$/.test(r))
+  .concat(walk(ROOT + "/reference", (r) => tracked.has(r) && isLegacy(r) && /\.(html|js|mjs|cjs)$/.test(r)));
 
 /** The rows of the "Third-party code inside legacy files" table: library to the files it lists. */
 function tableRows(): Map<string, string> {

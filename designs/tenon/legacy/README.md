@@ -31,3 +31,21 @@ after 5.6 s; members `ready`, `getState`, `setState`, `build`, `rebuild`,
 `state()`, `model()`, `derive`, `blankState`, `presetState` and 15 more;
 scrollWidth 390, 768 and 1280 at those widths; 0 requests off file and
 data, 0 workers, 0 console errors.
+
+## Source and export (M10-T01)
+
+M10-T01 adds the bench's source zip and its shipped 3MF, byte identical,
+as the parity inputs of M10-T16. Sizes and hashes measured 2026-10-14.
+
+| file | copied from | sha256 (12) | bytes | lineage rows |
+|---|---|---|---|---|
+| `tenon-src.zip` | `fab-knowledge:evidence/x/tenon/` | c57ea2256297 | 46228 | `tenon.bench/src-zip`, `tenon.bench/src-zip-x` (copies under the bench; `mesh.revolve` also reads it) |
+| `tenon.3mf` | same | b82c11254e6c | 5197121 | `tenon.export-3mf/tenon-html` (canonical, `originals/tenon/files/known-bad/tenon.node-export-undefined-names.3mf`), `/x` |
+| `shots/t01` to `t06` | `fab-knowledge:originals/tenon/shots/` | per SHA256SUMS | | side by side review |
+
+`tenon.3mf` is kept as a known bad export: 11 objects, 5 of them named
+`tenon-undefined`, and the matching STL zip keeps only the last of the
+five (M10 seed records). The port must name every object; M10-T16 holds
+it to 11 named objects and 11 STL entries. `tenon.bench/tenon-html` now
+names `tenon.html` here as its dest. The record of UX is
+`knowledge/designs/tenon.md` section 6.

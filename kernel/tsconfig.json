@@ -2,10 +2,15 @@
   "extends": "../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "dist",
-    "rootDir": "src"
+    "rootDir": "src",
+    "skipLibCheck": true
   },
   "include": [
     "src"
   ],
-  "references": []
+  "references": [
+    {
+      "path": "../packages/chase"
+    }
+  ]
 }

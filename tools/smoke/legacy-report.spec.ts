@@ -1,7 +1,7 @@
 // The legacy report (M09-T14 step 5, D-142): the overflow, pink and network
 // measures of smoke.spec.ts on every legacy bench that installs BENCH
 // (tools/hook/benches.ts lists them; M09 names PIP, TOGGLE, KNUCKLE, TENON
-// and COTTER), written to out/smoke/legacy-report.json. The measures never
+// and COTTER, M10-T01 adds BOSS, BLOCKS and HAFT), written to out/smoke/legacy-report.json. The measures never
 // fail the job; the run fails only when a page cannot be measured or a
 // legacy file changed a byte. Pink is counted raw, since legacy pages
 // carry no structural marks: `pinkBgBorder` is the 2026-10-04 baseline's
@@ -53,7 +53,11 @@ async function measure(page: Page, rel: string): Promise<Omit<Row, "bench" | "re
   await page.setViewportSize({ width: 1280, height: HEIGHT });
   const t0 = Date.now();
   await page.goto(pathToFileURL(path.join(ROOT, rel)).href);
-  await page.waitForFunction(() => (globalThis as unknown as { BENCH?: { ready?: unknown } }).BENCH?.ready === true, undefined, { timeout: READY_MS });
+  // BOSS and BLOCKS expose ready as a function (boss.html line 2855).
+  await page.waitForFunction(() => {
+    const r = (globalThis as unknown as { BENCH?: { ready?: unknown } }).BENCH?.ready;
+    return r === true || (typeof r === "function" && (r as () => unknown)() === true);
+  }, undefined, { timeout: READY_MS });
   const readyMs = Date.now() - t0;
   const steps = page.locator("#steps button");
   const n = await steps.count();
@@ -78,7 +82,8 @@ async function measure(page: Page, rel: string): Promise<Omit<Row, "bench" | "re
 test("legacy report: overflow, pink and network on every legacy bench", async ({ browser }) => {
   test.setTimeout(540_000);
   const { benches } = await listBenches();
-  const legacy = benches.filter((b) => b.origin === "legacy" && b.rel.startsWith("designs"));
+  // Pages an adapter reads through other globals (KNURL, STYLUS, KEYWAY, OGEE; M10-T01) have no BENCH to wait on.
+  const legacy = benches.filter((b) => b.origin === "legacy" && b.rel.startsWith("designs") && b.installsBench);
   expect(legacy.map((b) => b.name), "the five named legacy benches are listed").toEqual(expect.arrayContaining(NAMED));
   const rows: Row[] = [];
   for (const b of legacy) {

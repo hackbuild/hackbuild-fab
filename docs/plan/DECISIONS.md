@@ -339,6 +339,7 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-283 | Hash-only mutant survivors M04, M05, P02 and P04 are killed by behaviour tests | decided | Testing, docs, milestones, registry |
 | D-284 | spindle-r2 goldens pinned at epoch 315532800 | decided | Testing, docs, milestones, registry |
 | D-285 | The four owner calls of 2026-10-14 verified independently | decided | Testing, docs, milestones, registry |
+| D-286 | M10-T01 legacy copies stay out of git; the folders commit their README and SHA256SUMS | decided | Testing, docs, milestones, registry |
 
 ## House rules and process
 
@@ -3525,6 +3526,21 @@ Taken by the agent under owner delegation on 2026-10-14: the owner asked the wor
 | Decision | Taken by the agent under owner delegation on 2026-10-14. D-274 to D-284 stand after an independent recheck. |
 | Rationale | Each call was made by one agent on its own evidence; a second agent reran the evidence before the commit. |
 | Evidence | Computed, in `fab-knowledge:evals/2026-10-14/calls/verify.md` and `calls/verify/`: pip-buried-route, an independent script reproduces the symmetric differences to 6 decimals on five moved traces and the new emit is 0 to 8e-7 mm3 from the original; SLUG, two arm64 runs and a linux/amd64 container run give identical results on the 8-trial, 30-trial and mouth58 sets with equal row hashes; boards, every exit-m06-m08 board step behaves as asserted locally; mutants, 7 run rebuild-first, all killed, a host Math.sin in rotZ caught only after the source guard in `packages/sim/test/trig.test.ts`. Gates: tsc on all three configs, lint-voice, lint-authors, tiers, counts, licences; tools tests 386 of 386; hbf parity on all 55 references, one at a time. Renders were looked at by an agent, not a person. Not run: `validate_3mf.py --overlap` and the design sweep (the export gate needs a person at a TTY), `tools/cold-rebuild.mjs`, and the hosted CI jobs before the push. |
+| Supersedes | new |
+| Milestone | none |
+
+## Calls of release 1, from 2026-10-20
+
+Taken by the agent under the owner delegation of 2026-10-20 for release 1 of plan v9 (`fab-knowledge:plan-v5/PLAN.md` section 6). The owner can reverse any of them.
+
+### D-286 M10-T01 legacy copies stay out of git; the folders commit their README and SHA256SUMS
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The M10-T01 commit holds the ten `designs/<id>/legacy/` folders as their lineage README.md and SHA256SUMS only. The 115 copied files (66 MB, measured, owner slicer saves among them) stay on the owner's disk, named one per line in a `.gitignore` block that `tools/legacy/held.mjs` reads; the canonical copies are in `fab-knowledge:originals/`. Legacy files tracked before stay tracked until their readers move (PLAN.md section 5, rails item R1-rails-public-11). A test that reads a held copy reports not run when the copy is absent. `reference/test/legacy-embedded.test.ts` scans tracked legacy files only, since the notices cover what the repo publishes. |
+| Rationale | PLAN.md section 5 moves the legacy copies to the private archive and leaves the history rewrite to the owner; a committed copy stays in public history until that rewrite. Holding the files out is reversible (commit them later); committing them is not. |
+| Evidence | `git diff --cached --numstat` lists 0 binary rows after the change (measured). Suites one workspace at a time with the copies present, and the same suites in a worktree built from the commit tree without them, logged in `.hbf-notes/r1/health/` and `.hbf-notes/r1/m10ci/` (computed, 2026-10-20). |
 | Supersedes | new |
 | Milestone | none |
 

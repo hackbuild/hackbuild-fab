@@ -1,0 +1,198 @@
+{
+ "app": "pip-bench",
+ "v": 1,
+ "state": {
+  "shape": {
+   "style": "stadium",
+   "W": 150,
+   "H": 64,
+   "drop": 14,
+   "corner": 10,
+   "bezelChamfer": 0.96
+  },
+  "stack": {
+   "layer": 0.24,
+   "skin": 0.72,
+   "trace": 0.72,
+   "iso": 0.96,
+   "pad": 0.72,
+   "bezel": 2.4
+  },
+  "route": {
+   "w": 1.4,
+   "clr": 0.8,
+   "grid": 0.5,
+   "via": 0.8,
+   "post": 0.6,
+   "margin": 3,
+   "iters": 24
+  },
+  "groups": {
+   "left": {
+    "on": true,
+    "kind": "dpad",
+    "type": "flex",
+    "x": -44,
+    "y": 1,
+    "pitch": 14
+   },
+   "face": {
+    "on": true,
+    "type": "clicky",
+    "x": 42,
+    "y": 1,
+    "pitch": 17
+   },
+   "menu": {
+    "on": true,
+    "type": "touch",
+    "x": 0,
+    "y": -15,
+    "pitch": 17
+   },
+   "shoulder": {
+    "on": false,
+    "type": "flex",
+    "x": 27,
+    "y": 22
+   }
+  },
+  "flex": {
+   "face": 10,
+   "Hs": 4,
+   "alpha": 40,
+   "wall": 0.6,
+   "hole": 3.6,
+   "cap": 0.72,
+   "faceT": 1.2,
+   "protrude": 2.6,
+   "gapPct": 45,
+   "colGap": 0.8
+  },
+  "clicky": {
+   "l": 24,
+   "t": 0.55,
+   "Q": 2,
+   "w": 1.6,
+   "g": 1,
+   "sw": 3,
+   "eb": 2.2,
+   "tip": 3.2,
+   "cap": 10,
+   "rib": 0.8,
+   "flange": 1.2,
+   "flangeT": 1,
+   "protrude": 3,
+   "E": 1900,
+   "slotClr": 0.3,
+   "relief": 1.2,
+   "endClr": 0.4,
+   "capMat": "tpu"
+  },
+  "touch": {
+   "d": 12,
+   "finger": 1,
+   "gap": 0.8,
+   "spine": 1.8,
+   "rim": 0.6
+  },
+  "stick": {
+   "neckD": 3,
+   "neckH": 2.4,
+   "bandR": 4.8,
+   "bandH": 2.4,
+   "tilt": 14,
+   "over": 3,
+   "stemD": 6,
+   "capD": 15,
+   "capH": 1.2,
+   "capDish": 1.6,
+   "capRings": 3,
+   "top": "inplace",
+   "padGap": 0.8
+  },
+  "board": {
+   "mode": "press",
+   "L": 23.5,
+   "W": 18,
+   "T": 1,
+   "pitch": 2.54,
+   "inset": 1.38,
+   "usbH": 3.26,
+   "usbOver": 0.8,
+   "bumpW": 1.5,
+   "bumpH": 0.48,
+   "clr": 0.3,
+   "press": 0.3,
+   "window": true
+  },
+  "cups": {
+   "od": 3.2,
+   "bore": 1,
+   "h": 3,
+   "pitch": 5.2,
+   "perRow": 6
+  },
+  "bezel": {
+   "on": true,
+   "labels": true,
+   "mark": true,
+   "pins": true,
+   "labelH": 2.4
+  },
+  "pins": {
+   "UP": "GP29",
+   "LEFT": "GP28",
+   "RIGHT": "GP27",
+   "DOWN": "GP26",
+   "X": "GP3",
+   "A": "GP4",
+   "Y": "GP5",
+   "B": "GP6",
+   "SELECT": "GP12",
+   "START": "GP10",
+   "L": "GP15",
+   "R": "GP1"
+  },
+  "phys": {
+   "rhoC": 500,
+   "rhoCz": 2000,
+   "rhoT": 400,
+   "cpin": 7,
+   "leak": 1,
+   "waitMech": 0.2,
+   "waitTouch": 1.5
+  },
+  "slots": [
+   {
+    "color": "#F4F1EA",
+    "type": "PETG",
+    "name": "white PETG"
+   },
+   {
+    "color": "#1A1A1A",
+    "type": "PLA",
+    "name": "conductive PLA"
+   },
+   {
+    "color": "#FE0386",
+    "type": "TPU",
+    "name": "pink TPU 95A"
+   },
+   {
+    "color": "#6E6E6E",
+    "type": "TPU",
+    "name": "conductive TPU"
+   }
+  ],
+  "print": {
+   "printer": "Flashforge Creator 5 Pro 0.4 nozzle",
+   "process": "0.24mm Standard @FF C5",
+   "pattern": "Generic {TYPE} @FF C5P",
+   "writeFilaments": true,
+   "bedW": 256,
+   "bedD": 256
+  },
+  "seg": 40
+ }
+}

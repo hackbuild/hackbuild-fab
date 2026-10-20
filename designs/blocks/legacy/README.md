@@ -80,3 +80,38 @@ dependency tree trips lint-voice, `.hbf-notes/m00-report.md`); earcut
   M05-T06).
 - The TOUCH finger needs a ground found earlier in insertion order (line
   81; `knowledge/designs/blocks.md` 5.22).
+
+## BOSS and BLOCKS benches (M10-T01)
+
+M10-T01 adds the two shipped benches and the BOSS example set beside the
+source, byte identical, as the parity inputs of M10-T10 and the BenchHook
+adapter targets `boss` and `blocks`. `SHA256SUMS` in this folder now lists
+every file, the `boss-src/` block above included.
+
+| file | copied from | sha256 (12) | bytes | lineage rows |
+|---|---|---|---|---|
+| `blocks.html` | `fab-knowledge:evidence/x/plan-to-refine/handoff/hbf/designs/blocks/legacy/blocks.html` (2026-09-15 15:11) | 96bf187a3c56 | 1201487 | `blocks.bench/blocks-1` (canonical, `originals/blocks/files/blocks.html`), `blocks.bench/handoff` |
+| `boss.html` | `fab-work-directory:benches/blocks/outputs/boss/boss.html` | 00badce59c66 | 1131340 | `blocks.bench/boss-v1`, `blocks.bench/boss-v1-bench-outputs` (copies: BOSS v1 is the parent revision) |
+| `boss-examples.zip` | `fab-work-directory:benches/blocks/outputs/boss-examples.zip` | df211c444d19 | 16508691 | `blocks.boss-examples/bench-outputs` (21 project 3MFs, STL zips, print cards) |
+| `shots/blocks-d-*.png`, `shots/boss/` | `fab-knowledge:originals/blocks/shots/`, `originals/boss/shots/` | per SHA256SUMS | | side by side review |
+
+Sizes and hashes measured 2026-10-14. `blocks.html` equals
+`originals/blocks/files/blocks.html`, the canonical `blocks (1).html` of
+2026-09-14 16:59 (every later download is byte identical), and
+`boss.html` equals `originals/boss/files/boss.html`
+(`knowledge/designs/blocks.md` section 1, `boss.md` section 1). The
+record of UX is `knowledge/designs/blocks.md` section 6.
+
+Both pages install the same `window.BENCH` (boss.html line 2855,
+blocks.html line 3948): `state`, `setPart`, `goStep`, `run`, `example`,
+`exportBytes` resolving to a Uint8Array, and `ready()` as a function. The
+adapters synthesise `rev` and `built`, take design JSON in the save
+button's shape (part and scene) and give exports as base64; no drive pad
+is provided by the legacy bench.
+
+Inherited defects the port must not carry, beyond the solver notes above
+(`knowledge/designs/blocks.md` section 8): the PALETTE chip `PLATE 8x8`
+calls `partFor('plate')`, which throws since BLOCKS replaced PLATE with
+DECK; `seatAt: 'gutter'` never applies; BUTTON travel 2.20 of a 3.20 cone
+fails the flex cone rule at its defaults (D-241; the chase default
+carries the fix, M10-T10); `MINWALL` is declared and never checked.

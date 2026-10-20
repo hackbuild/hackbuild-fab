@@ -382,3 +382,65 @@ test('an inline normal x u outside packages/geom/src fails; the geom face-frame 
   const r = run(root);
   assert.equal(r.status, 0, r.stdout);
 });
+
+// M10-T01 step 4: the designs and tools rows of tools/tiers.json.
+test('a design build.ts importing @hackbuild/ui fails; the same import under slots/ or test/ passes', () => {
+  const root = scratch();
+  put(root, 'designs/knurl/build.ts', 'import { x } from "@hackbuild/ui";\nexport { x };\n');
+  let r = run(root);
+  assert.equal(r.status, 1, r.stdout);
+  assert.match(r.stdout, /designs\/knurl\/build\.ts: designs\/knurl imports @hackbuild\/ui, outside tools\/tiers\.json designs mayImport \(node runs this file\)/);
+  for (const file of ['designs/knurl/slots/sequence.ts', 'designs/knurl/test/x.test.ts']) {
+    const ok = scratch();
+    put(ok, 'designs/knurl/build.ts', 'import { m } from "@hackbuild/mesh";\nexport { m };\n');
+    put(ok, file, 'import { x } from "@hackbuild/ui";\nexport { x };\n');
+    r = run(ok);
+    assert.equal(r.status, 0, `${file}: ${r.stdout}`);
+  }
+});
+
+test('a design chase.ts or src/ touching the DOM fails; a legacy/ page under the design is not scanned', () => {
+  for (const file of ['designs/knurl/chase.ts', 'designs/knurl/src/raster.ts']) {
+    const root = scratch();
+    put(root, file, 'export const c = document.createElement("canvas");\n');
+    const r = run(root);
+    assert.equal(r.status, 1, r.stdout);
+    assert.match(r.stdout, new RegExp(`${file.replace(/[./]/g, '\\$&')} touches the DOM; node runs it`));
+  }
+  const root = scratch();
+  put(root, 'designs/knurl/legacy/app.js', 'import * as T from "@hackbuild/ui";\nexport const c = document.body;\n');
+  const r = run(root);
+  assert.equal(r.status, 0, r.stdout);
+});
+
+test('a design importing another design fails', () => {
+  const root = scratch();
+  put(root, 'designs/pip/test/x.ts', 'import { b } from "@hackbuild/design-blocks";\nexport { b };\n');
+  const r = run(root);
+  assert.equal(r.status, 1, r.stdout);
+  assert.match(r.stdout, /designs\/pip imports another design/);
+});
+
+test('apps/blocks may import designs/blocks; a tier 3 package may not', () => {
+  const root = scratch();
+  writeJson(path.join(root, 'apps/blocks/package.json'), { name: '@hackbuild/app-blocks', version: '0.0.0', private: true, dependencies: { '@hackbuild/design-blocks': '0.0.0', '@hackbuild/ui': '0.0.0' } });
+  const ts = JSON.parse(fs.readFileSync(path.join(root, 'tsconfig.json'), 'utf8'));
+  writeJson(path.join(root, 'tsconfig.json'), { ...ts, references: [...ts.references, { path: 'apps/blocks' }] });
+  let r = run(root);
+  assert.equal(r.status, 0, r.stdout);
+  depend(root, 'packages/ui', ['design-blocks']);
+  r = run(root);
+  assert.equal(r.status, 1, r.stdout);
+  assert.match(r.stdout, /ui \(tier 3\) imports designs\/blocks, which only an app whose edges name it may import/);
+});
+
+test('tools/glue imports node built-ins and typescript only', () => {
+  const root = scratch();
+  put(root, 'tools/glue/count.mjs', 'import fs from "node:fs";\nimport ts from "typescript";\nexport { fs, ts };\n');
+  let r = run(root);
+  assert.equal(r.status, 0, r.stdout);
+  put(root, 'tools/glue/count.mjs', 'import { x } from "@hackbuild/spec";\nexport { x };\n');
+  r = run(root);
+  assert.equal(r.status, 1, r.stdout);
+  assert.match(r.stdout, /tools\/glue\/count\.mjs: tools\/glue imports @hackbuild\/spec/);
+});

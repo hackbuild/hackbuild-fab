@@ -9,7 +9,9 @@
 // list a workspace before one it depends on, and a line matching a `forbid`
 // pattern under its folder (Math.random in packages/sim/src), and a trig
 // placement formula of a machine the kinematics module owns written outside
-// that module (`placement`, D-139). Edges are read from
+// that module (`placement`, D-139), a design file importing past its
+// `designs` rows or touching the DOM where node runs it, and a `tools` row
+// importing past its list (M10-T01). Edges are read from
 // package.json and every code file of the workspace (outside src/ and
 // scenes/, a relative import that lands in another workspace counts as an
 // edge to it).
@@ -64,9 +66,11 @@ const edges = table.edges ?? {};
 for (const w of workspaces.values()) {
   if (!Array.isArray(edges[w.name])) fail(`tools/tiers.json edges has no list for ${w.name}`);
 }
+// A design is named in edges as designs/<id> and imported as @hackbuild/design-<id> (designs/blocks/package.json).
+const designDir = (t) => (t.startsWith('designs/') ? path.join(root, t) : null);
 for (const [name, list] of Object.entries(edges)) {
   if (!workspaces.has(name)) fail(`tools/tiers.json edges names ${name}, which no tier lists`);
-  for (const t of list) if (t !== '*' && !workspaces.has(t)) fail(`tools/tiers.json edges.${name} names ${t}, which no tier lists`);
+  for (const t of list) if (t !== '*' && !workspaces.has(t) && !designDir(t)) fail(`tools/tiers.json edges.${name} names ${t}, which no tier lists`);
 }
 const exceptions = new Map();
 for (const e of table.edgeExceptions ?? []) {
@@ -97,6 +101,12 @@ const isVue = (spec) => spec === 'vue' || spec.startsWith('vue/');
 
 function checkEdge(src, targetName, where) {
   if (targetName === src.name) return;
+  if (targetName.startsWith('design-')) {
+    // Only an app mounts a design, and only one its edges name (M10 package placement: apps/blocks mounts designs/blocks).
+    const d = `designs/${targetName.slice('design-'.length)}`;
+    if (src.tier !== 'app' || !(edges[src.name] ?? []).some((t) => t === '*' || t === d)) fail(`${where}: ${src.name} (tier ${src.tier}) imports ${d}, which only an app whose edges name it may import`);
+    return;
+  }
   const target = workspaces.get(targetName);
   if (!target) { fail(`${where}: @hackbuild/${targetName} is not listed in tools/tiers.json`); return; }
   const list = edges[src.name] ?? [];
@@ -288,6 +298,71 @@ if (placement) {
     for (const m of machines) {
       const part = text.match(m.re);
       if (part !== null) fail(`${path.relative(root, file)}: calls ${call[0].replace(/\s*\($/, '')} and names ${m.machine} part ${part[0]}; place ${m.machine} parts through ${placement.home.join(', ')} (${placement.why})`);
+    }
+  }
+}
+
+// designs (M10-T01): every folder under designs/ is held to the `designs`
+// rows whether or not it is a workspace. Files node runs (build.ts,
+// chase.ts, migrate/, src/) import spec, tiers 0 to 2 and the kernel, and
+// touch no DOM or vue; every other code file (test/, slots/, configs) may
+// also import the slotsMayImport tiers. A design imports no other design.
+const dsec = table.designs;
+if (dsec) {
+  const names = (tiers) => new Set(tiers.flatMap((t) => (t === 'kernel' ? [kernelName] : table.tiers[t] ?? [])));
+  const headlessMay = names(dsec.mayImport);
+  const restMay = new Set([...headlessMay, ...names(dsec.slotsMayImport)]);
+  const dRoot = path.join(root, dsec.root);
+  const ids = fs.existsSync(dRoot) ? fs.readdirSync(dRoot, { withFileTypes: true }).filter((e) => e.isDirectory()).map((e) => e.name).sort() : [];
+  for (const id of ids) {
+    const abs = path.join(dRoot, id);
+    const skip = new Set(dsec.skip);
+    const headless = new Set(dsec.headless.flatMap((h) => {
+      const p = path.join(abs, h);
+      if (!fs.existsSync(p)) return [];
+      return fs.statSync(p).isFile() ? [p] : walk(p).filter((f) => !f.split(path.sep).some((seg) => skip.has(seg)));
+    }));
+    const all = walk(abs, [], skip).filter((f) => !path.relative(abs, f).split(path.sep).some((seg) => skip.has(seg)));
+    for (const file of all) {
+      const rel = path.relative(root, file);
+      const text = fs.readFileSync(file, 'utf8');
+      const isHeadless = headless.has(file);
+      const may = isHeadless ? headlessMay : restMay;
+      for (const s of specifiers(text)) {
+        if (s.startsWith('.')) {
+          // Leaving the folder for repo config is allowed; landing in a workspace or another design is an edge by path.
+          const to = path.resolve(path.dirname(file), s);
+          if (inside(to, abs)) continue;
+          const other = workspaceAt(to);
+          if (other) fail(`${rel}: relative import ${s} reaches ${other.dir}; import it by @hackbuild name so the edge is checked`);
+          else if (inside(to, dRoot)) fail(`${rel}: relative import ${s} reaches another design`);
+          continue;
+        }
+        const t = hackbuildTarget(s);
+        if (t === null) continue;
+        if (t.startsWith('design-')) { fail(`${rel}: designs/${id} imports another design (${s})`); continue; }
+        if (!may.has(t)) fail(`${rel}: designs/${id} imports @hackbuild/${t}, outside tools/tiers.json designs ${isHeadless ? 'mayImport (node runs this file)' : 'mayImport and slotsMayImport'}`);
+      }
+      if (isHeadless) {
+        const vue = specifiers(text).some(isVue);
+        const dom = DOM.test(code(text));
+        if (vue || dom) fail(`${rel} ${[dom ? 'touches the DOM' : null, vue ? 'imports vue' : null].filter(Boolean).join(' and ')}; node runs it (D-045)`);
+      }
+    }
+  }
+}
+
+// tools rows (M10-T01): a tool folder imports node built-ins and the bare
+// packages its row lists, and no workspace package.
+for (const [dir, row] of Object.entries(table.tools ?? {})) {
+  const abs = path.join(root, dir);
+  if (!fs.existsSync(abs)) { console.log(`tiers: ${dir} absent`); continue; }
+  for (const file of walk(abs)) {
+    const rel = path.relative(root, file);
+    for (const s of specifiers(fs.readFileSync(file, 'utf8'))) {
+      if (s.startsWith('.') || s.startsWith('node:')) continue;
+      const pkg = s.startsWith('@') ? s.split('/').slice(0, 2).join('/') : s.split('/')[0];
+      if (!row.mayImport.includes(pkg)) fail(`${rel}: ${dir} imports ${s}; tools/tiers.json tools.${dir} admits node built-ins and ${row.mayImport.join(', ') || 'nothing else'} (${row.why})`);
     }
   }
 }

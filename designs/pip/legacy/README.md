@@ -91,3 +91,37 @@ installed above designs/pip/legacy. run npm ci first." The CI jobs `bake`
 and `bake-determinism` run this step after the root `npm ci`, and
 `bake-determinism` deletes the folder between its two cold runs.
 `designs/pip/test/legacy-install.test.ts` holds both jobs to it.
+
+## The original of record and the shipped outputs (M10-T01)
+
+`pip.html` above is the pip-controller b137deb page. PIP's bench of record
+is `haft (9).html` (`knowledge/designs/pip.md` 1.1, INDEX.md): the two
+descend from `haft (6)` and neither contains the other. HAFT (9) carries
+every PIP UI behaviour and adds the fixes from handling the first printed
+set (bezel lip, header socket contact, datum corner, grip ledge, anti-smear
+slots, print bleed, pry scallops, socket fits); pip-controller carries the
+firmware `GUARD_US 2000` fix, which haft (9) lacks (it ships
+`KEY_WAIT_US 200`). M10-T01 step 5 copies the original into `original/`
+and marks it canonical; the pip-controller page stays as a `copy` row
+naming the firmware fix it carries, and every parity and UX parity test of
+M10-T13 and M10-T14 runs against `original/haft.html`.
+
+| file | copied from | sha256 (12) | bytes | lineage rows |
+|---|---|---|---|---|
+| `original/haft.html` | `fab-knowledge:originals/pip/files/haft.html` | 6c9717338b2e | 1932855 | `pip.baked/haft-9` (canonical); `pip.baked/pip-controller-b137deb` is now a copy |
+| `original/haft-src.zip` | same folder | b7b9ca40f5e0 | 401201 | `pip.src-zip/haft-9` |
+| `original/haft-design.json`, `haft-header-design.json` | same folder | per SHA256SUMS | | `pip.example-design/haft-9`, `pip.example-header/haft-9` |
+| `original/haft.3mf`, `print-card.txt`, `haft-stick-card.txt`, `haft.ino`, `haft-wiring.svg`, `haft-coupon.zip` | same folder (bench outputs; `haft.ino` lacks `GUARD_US`) | per SHA256SUMS | | `pip.print-3mf`, `pip.print-card`, `pip.stick-card`, `pip.haft-ino`, `pip.wiring-svg`, `pip.coupon-zip` (each `/haft-9`) |
+| `examples/pip-design.json`, `examples/pip-stick-design.json` | `fab-knowledge:evidence/x/pip-controller/examples/` | e36e1de1189f, e48065b8ae3a | 2971, 2971 | `pip.example-design/pip-controller-b137deb` (copy), `pip.example-stick/pip-controller-b137deb` |
+| `print/pip.3mf`, `pip-stick.3mf`, `pip-stl.zip`, `print-card.txt`, `pip-wiring.svg`, `pip-coupon.zip` | `fab-knowledge:evidence/x/pip-controller/print/` | per SHA256SUMS | | `pip.print-3mf`, `pip.print-3mf-stick`, `pip.print-stl`, `pip.print-card`, `pip.wiring-svg`, `pip.coupon-zip` (each `/pip-controller-b137deb`) |
+| `shots/` | `fab-knowledge:originals/pip/shots/` | per SHA256SUMS | | side by side review against the gold drive shots |
+
+Sizes and hashes measured 2026-10-14. `pip-stick.3mf`, `pip-stl.zip` and
+`pip-coupon.zip` are not in the originals set (the record copied
+pip-controller without its large print blobs); the other pip-controller
+files equal `originals/pip/files/pip-controller/`.
+
+`original/haft.html` installs the same `BENCH` as `pip.html`
+(haft-src `bench/part2.js` lines 394 to 417, export kinds 3mf, stl, card,
+json, ino, svg, coupon); the adapter `pip-haft` is the PIP adapter at the
+haft sha256. The record of UX is `knowledge/designs/pip.md` section 6.

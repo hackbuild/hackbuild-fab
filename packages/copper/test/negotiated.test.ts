@@ -8,7 +8,7 @@
 // here is computed, none measured.
 
 import { createHash } from "node:crypto";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { describe, expect, test } from "vitest";
 import { createProfileLookup, loadProfile } from "@hackbuild/profile";
 import { isThrownCommandError } from "@hackbuild/spec";
@@ -58,7 +58,9 @@ describe("the PIP b137deb fixture", () => {
     expect(fixture.meta.manifold).toBe("3.5.3");
     const sums = read("designs/pip/legacy/SHA256SUMS").trim().split("\n").map((l) => l.split(/\s+/) as [string, string]);
     expect(sums.map(([, f]) => f)).toContain("src/router.js");
-    for (const [want, f] of sums) expect(sha(`designs/pip/legacy/${f}`), f).toBe(want);
+    // Copies added at M10-T01 stay out of git (D-286); the tracked src rows always run.
+    const here = sums.filter(([, f]) => f.startsWith("src/") || existsSync(new URL(`designs/pip/legacy/${f}`, repo)));
+    for (const [want, f] of here) expect(sha(`designs/pip/legacy/${f}`), f).toBe(want);
     const canonical = lineage.filter((r) => r.id.startsWith("router/") && r.kind === "canonical");
     expect(canonical.map((r) => r.id)).toEqual(["router/pip-controller-b137deb"]);
     expect(canonical[0]!.sha256).toBe(sha("designs/pip/legacy/src/router.js"));

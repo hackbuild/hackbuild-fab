@@ -38,3 +38,22 @@ console errors.
 - scrollWidth 395 at 390 wide on the first view (measured), 768 and 1280
   at those widths. The overflow goes into the M09-T14 legacy report and is
   fixed when KNUCKLE is rebuilt from a chase at M10.
+
+## Source, designs and exports (M10-T01)
+
+M10-T01 adds the bench's source zip, its two worked designs and their
+3MFs, byte identical, as the parity inputs of M10-T15. Sizes and hashes
+measured 2026-10-14; each equals `fab-knowledge:originals/knuckle/files/`
+except `knuckle-clam.3mf`, which the originals set does not hold.
+
+| file | copied from | sha256 (12) | bytes | lineage rows |
+|---|---|---|---|---|
+| `knuckle-src.zip` | `fab-knowledge:evidence/x/knuckle/` | 76098e29ab79 | 62654 | `knuckle.bench/src-zip`, `knuckle.bench/src-zip-x` (copies under the bench; the face editor part6.js inside it is `inlay.face-editor`) |
+| `knuckle-flip.json` | same | 0b5f7fa04ee6 | 6209 | `knuckle.flip-json/knuckle-html` (canonical), `/x` |
+| `knuckle-clam.json` | same | 5e41096f66a2 | 6198 | `knuckle.clam-json/knuckle-html` (canonical), `/x` |
+| `knuckle-flip.3mf` | same | 94acbdbb3cde | 1231858 | `knuckle.flip-3mf/knuckle-html` (canonical), `/x` |
+| `knuckle-clam.3mf` | same | 50d50cd71470 | 1390241 | `knuckle.clam-3mf/x` |
+| `shots/k01` to `k08` | `fab-knowledge:originals/knuckle/shots/` | per SHA256SUMS | | side by side review |
+
+`knuckle.bench/knuckle-html` now names `knuckle.html` here as its dest.
+The record of UX is `knowledge/designs/knuckle.md` section 6.

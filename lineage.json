@@ -111,6 +111,38 @@
     "dest": null
   },
   {
+    "id": "blocks.bench/blocks-1",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/blocks/files/blocks.html",
+    "sha256": "96bf187a3c56fcc04cca7491c4a2ff22c1d4ed1e87954c7694d953c04faf8b6c",
+    "fixes": [],
+    "dest": "designs/blocks/legacy/blocks.html"
+  },
+  {
+    "id": "blocks.bench/boss-v1",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/boss/files/boss.html",
+    "sha256": "00badce59c6638dbfd6c920bed481d93a683c605330780fb197686cda4e413f5",
+    "fixes": [],
+    "dest": "designs/blocks/legacy/boss.html"
+  },
+  {
+    "id": "blocks.bench/boss-v1-bench-outputs",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/blocks/outputs/boss/boss.html",
+    "sha256": "00badce59c6638dbfd6c920bed481d93a683c605330780fb197686cda4e413f5",
+    "fixes": [],
+    "dest": "designs/blocks/legacy/boss.html"
+  },
+  {
+    "id": "blocks.bench/handoff",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/plan-to-refine/handoff/hbf/designs/blocks/legacy/blocks.html",
+    "sha256": "96bf187a3c56fcc04cca7491c4a2ff22c1d4ed1e87954c7694d953c04faf8b6c",
+    "fixes": [],
+    "dest": "designs/blocks/legacy/blocks.html"
+  },
+  {
     "id": "blocks.body/blocks-1",
     "kind": "canonical",
     "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/blocks/files/src-extracted/blocks.js",
@@ -151,6 +183,14 @@
       "ported to packages/archetypes/src/defs/blocks-stud.ts, as its header cites boss.js (packages/archetypes/src/defs/blocks-stud.ts line 3: \"column (boss.js lines 93 to 110); the port lives in src/blocks/stud.ts.\"); recorded by the M06 and M08 integration"
     ],
     "dest": null
+  },
+  {
+    "id": "blocks.boss-examples/bench-outputs",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/blocks/outputs/boss-examples.zip",
+    "sha256": "df211c444d19c2cba0c2b2c1b2e32e8746141c17aa097fc11b7892ece583e146",
+    "fixes": [],
+    "dest": "designs/blocks/legacy/boss-examples.zip"
   },
   {
     "id": "blocks.export/blocks-1",
@@ -1626,7 +1666,7 @@
       "ported to packages/archetypes/src/thinpot/strip.ts, as its header cites feeler_thinpot.html (packages/archetypes/src/thinpot/strip.ts line 3: \"originals/thinpot/files/feeler_thinpot.html, archetype `thinpot` (lines\"); recorded by the M06 and M08 integration",
       "ported to packages/archetypes/src/thinpot/switch.ts, as its header cites feeler_thinpot.html (packages/archetypes/src/thinpot/switch.ts line 2: \"from originals/thinpot/files/feeler_thinpot.html, archetype `switch`\"); recorded by the M06 and M08 integration"
     ],
-    "dest": null
+    "dest": "designs/stylus/legacy/feeler-thinpot.zip!feeler.html"
   },
   {
     "id": "feeler.bench/thinpot-16-apart",
@@ -1637,6 +1677,14 @@
       "Ctx.apartExcept (line 1071) and its articulation check (lines 1180 to 1190), makesContact (line 1102) and slabsTouch (line 967) ported to packages/circuit/src/extract/actuated.ts over net extraction and its touch rule, run by packages/checks/src/net/net26.ts (CHK-NET-26) and packages/checks/src/net/net27.ts (CHK-NET-27), which moves the declared actuator by the gap as the source note's idea 2 asks (M05-T19)"
     ],
     "dest": "packages/circuit/src/extract/actuated.ts"
+  },
+  {
+    "id": "feeler.bench/thinpot-16-bench-outputs",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/feeler-thinpot/outputs/feeler.html",
+    "sha256": "35467f4b022178334c6aba422985854b6bc298927f5f552bc38e79465219b222",
+    "fixes": [],
+    "dest": "designs/stylus/legacy/feeler-thinpot.zip!feeler.html"
   },
   {
     "id": "feeler.bench/thinpot-16-ladder",
@@ -1672,7 +1720,55 @@
     "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/feeler-v1/files/feeler_v1.html",
     "sha256": "0671193edade919aea986d5a3af3b8ce76d7a4af180b5568b3bae33887f8f8eb",
     "fixes": [],
-    "dest": null
+    "dest": "designs/stylus/legacy/feeler-v1.zip!feeler.html"
+  },
+  {
+    "id": "feeler.bench/v1-bench-outputs",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/feeler-v1/outputs/feeler.html",
+    "sha256": "0671193edade919aea986d5a3af3b8ce76d7a4af180b5568b3bae33887f8f8eb",
+    "fixes": [],
+    "dest": "designs/stylus/legacy/feeler-v1.zip!feeler.html"
+  },
+  {
+    "id": "feeler.ladder-3mf/dl",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-gudgeon-tang-keyway/feeler/feeler-ladder (1).3mf",
+    "sha256": "8f61c82cdfb2b9b308738cae21b27d268952e05fe5a85c267c92fc6768e426cf",
+    "fixes": [],
+    "dest": "designs/stylus/legacy/feeler-ladder (1).3mf"
+  },
+  {
+    "id": "feeler.ladder-json/dl",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-gudgeon-tang-keyway/feeler/feeler-ladder.json",
+    "sha256": "a01cc14d16a0d8885b13286663e4526ea4113f29ce9e586a68d664bed2458912",
+    "fixes": [],
+    "dest": "designs/stylus/legacy/feeler-ladder.json"
+  },
+  {
+    "id": "feeler.ladder-json/thinpot-16",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/thinpot/files/feeler-ladder.json",
+    "sha256": "a01cc14d16a0d8885b13286663e4526ea4113f29ce9e586a68d664bed2458912",
+    "fixes": [],
+    "dest": "designs/stylus/legacy/feeler-ladder.json"
+  },
+  {
+    "id": "feeler.ladder-sample/bench-outputs",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/feeler-thinpot/outputs/feeler-ladder-inplace-sample.3mf",
+    "sha256": "02c1ac43a12ebdcddbcf19712259cc6a39003bdd4d6a443cac0247ba6295f88c",
+    "fixes": [],
+    "dest": "designs/stylus/legacy/feeler-ladder-inplace-sample.3mf"
+  },
+  {
+    "id": "feeler.ladder-sample/thinpot-16",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/thinpot/files/feeler-ladder-inplace-sample.3mf",
+    "sha256": "02c1ac43a12ebdcddbcf19712259cc6a39003bdd4d6a443cac0247ba6295f88c",
+    "fixes": [],
+    "dest": "designs/stylus/legacy/feeler-ladder-inplace-sample.3mf"
   },
   {
     "id": "font.permanent-marker/board-fonts",
@@ -1899,12 +1995,20 @@
     "dest": null
   },
   {
+    "id": "gudgeon.bench/dl",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-gudgeon-tang-keyway/gudgeon/gudgeon.html",
+    "sha256": "6ab837e3e233ffbed8c635ab9230649109c3a05cd525ce6db9d6aa89aded3735",
+    "fixes": [],
+    "dest": "designs/gudgeon/legacy/gudgeon.html"
+  },
+  {
     "id": "gudgeon.bench/gudgeon-html",
     "kind": "canonical",
     "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/gudgeon/files/gudgeon.html",
     "sha256": "6ab837e3e233ffbed8c635ab9230649109c3a05cd525ce6db9d6aa89aded3735",
     "fixes": [],
-    "dest": null
+    "dest": "designs/gudgeon/legacy/gudgeon.html"
   },
   {
     "id": "gudgeon.build/07-part2f",
@@ -2366,12 +2470,20 @@
     "dest": "reference/copper/keyway/legacy/run-2026-10-04.txt"
   },
   {
+    "id": "keyway.sim/bench",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/cricut-midi-seven/outputs/keyway/keyway_sim.html",
+    "sha256": "7922d05d4e12387156a2103192149c8258ec15cbf9f354f153c4009b078618d9",
+    "fixes": [],
+    "dest": "designs/keyway/legacy/keyway_sim.html"
+  },
+  {
     "id": "keyway.sim/rev-a",
     "kind": "canonical",
     "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/keyway/files/keyway_sim.html",
     "sha256": "7922d05d4e12387156a2103192149c8258ec15cbf9f354f153c4009b078618d9",
     "fixes": [],
-    "dest": null
+    "dest": "designs/keyway/legacy/keyway_sim.html"
   },
   {
     "id": "kicad-viewer/trunnion-layers-3d",
@@ -2461,7 +2573,7 @@
     "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/knuckle/files/knuckle.html",
     "sha256": "c1cd25122127954b162df7925e0b85e0f044b120e01cc0f582776161d2c63c74",
     "fixes": [],
-    "dest": null
+    "dest": "designs/knuckle/legacy/knuckle.html"
   },
   {
     "id": "knuckle.bench/m09-legacy",
@@ -2472,12 +2584,52 @@
     "dest": "designs/knuckle/legacy/knuckle.html"
   },
   {
+    "id": "knuckle.bench/src-zip",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/knuckle/files/knuckle-src.zip",
+    "sha256": "76098e29ab79bb32d0aef58ab155a09727b7277c76531e779c1469d8671527e2",
+    "fixes": [],
+    "dest": "designs/knuckle/legacy/knuckle-src.zip"
+  },
+  {
+    "id": "knuckle.bench/src-zip-x",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/knuckle/knuckle-src.zip",
+    "sha256": "76098e29ab79bb32d0aef58ab155a09727b7277c76531e779c1469d8671527e2",
+    "fixes": [],
+    "dest": "designs/knuckle/legacy/knuckle-src.zip"
+  },
+  {
     "id": "knuckle.build/part4",
     "kind": "canonical",
     "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/knuckle/files/src/part4.js",
     "sha256": "7463845cf6f7b91f116aa588f14da497da81bade341763333567a2bd6930b7ab",
     "fixes": [],
     "dest": null
+  },
+  {
+    "id": "knuckle.clam-3mf/x",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/knuckle/knuckle-clam.3mf",
+    "sha256": "50d50cd714704392c0dc19995996c7b1ac3263f31d434b80d4a201567924f2eb",
+    "fixes": [],
+    "dest": "designs/knuckle/legacy/knuckle-clam.3mf"
+  },
+  {
+    "id": "knuckle.clam-json/knuckle-html",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/knuckle/files/knuckle-clam.json",
+    "sha256": "5e41096f66a2996e7e21d03de2c2c5a2abbe44974251f7de93a074c2e0154638",
+    "fixes": [],
+    "dest": "designs/knuckle/legacy/knuckle-clam.json"
+  },
+  {
+    "id": "knuckle.clam-json/x",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/knuckle/knuckle-clam.json",
+    "sha256": "5e41096f66a2996e7e21d03de2c2c5a2abbe44974251f7de93a074c2e0154638",
+    "fixes": [],
+    "dest": "designs/knuckle/legacy/knuckle-clam.json"
   },
   {
     "id": "knuckle.derive/part2",
@@ -2504,6 +2656,38 @@
     "dest": null
   },
   {
+    "id": "knuckle.flip-3mf/knuckle-html",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/knuckle/files/knuckle-flip.3mf",
+    "sha256": "94acbdbb3cde39cfdaa78bed5e2fa2d31f92e2fe95ffca7b7609e7a2855580d7",
+    "fixes": [],
+    "dest": "designs/knuckle/legacy/knuckle-flip.3mf"
+  },
+  {
+    "id": "knuckle.flip-3mf/x",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/knuckle/knuckle-flip.3mf",
+    "sha256": "94acbdbb3cde39cfdaa78bed5e2fa2d31f92e2fe95ffca7b7609e7a2855580d7",
+    "fixes": [],
+    "dest": "designs/knuckle/legacy/knuckle-flip.3mf"
+  },
+  {
+    "id": "knuckle.flip-json/knuckle-html",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/knuckle/files/knuckle-flip.json",
+    "sha256": "0b5f7fa04ee687d3de54b60379c7010dc2c105959fee2c28395b6a442a5b2026",
+    "fixes": [],
+    "dest": "designs/knuckle/legacy/knuckle-flip.json"
+  },
+  {
+    "id": "knuckle.flip-json/x",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/knuckle/knuckle-flip.json",
+    "sha256": "0b5f7fa04ee687d3de54b60379c7010dc2c105959fee2c28395b6a442a5b2026",
+    "fixes": [],
+    "dest": "designs/knuckle/legacy/knuckle-flip.json"
+  },
+  {
     "id": "knuckle.kernel/part3",
     "kind": "canonical",
     "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/knuckle/files/src/part3.js",
@@ -2512,12 +2696,108 @@
     "dest": null
   },
   {
+    "id": "knurl.bench/bench-outputs",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/knurl/outputs/knurl/knurl.html",
+    "sha256": "90a7f98e708e3fa850e11ce3e58f3ab5fa612b8446f15b5f8a7efbde575e9af1",
+    "fixes": [],
+    "dest": "designs/knurl/legacy/knurl.html"
+  },
+  {
     "id": "knurl.bench/knurl-8",
     "kind": "canonical",
     "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/knurl/files/knurl.html",
     "sha256": "90a7f98e708e3fa850e11ce3e58f3ab5fa612b8446f15b5f8a7efbde575e9af1",
     "fixes": [],
-    "dest": null
+    "dest": "designs/knurl/legacy/knurl.html"
+  },
+  {
+    "id": "knurl.example-default/bench-outputs",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/knurl/outputs/knurl/examples/knurl_default.json",
+    "sha256": "0a1ca507e485d7290bf287c0906ced05643ed194aac5da90472486689ecfc38c",
+    "fixes": [],
+    "dest": "designs/knurl/legacy/examples/knurl_default.json"
+  },
+  {
+    "id": "knurl.example-default/knurl-8",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/knurl/files/examples/knurl_default.json",
+    "sha256": "0a1ca507e485d7290bf287c0906ced05643ed194aac5da90472486689ecfc38c",
+    "fixes": [],
+    "dest": "designs/knurl/legacy/examples/knurl_default.json"
+  },
+  {
+    "id": "knurl.example-keffiyeh/bench-outputs",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/knurl/outputs/knurl/examples/knurl_keffiyeh.json",
+    "sha256": "cfb67046f0e6e6cf1ea557ed24e98c5d28f9001647aaa622616c6a089c749f3e",
+    "fixes": [],
+    "dest": "designs/knurl/legacy/examples/knurl_keffiyeh.json"
+  },
+  {
+    "id": "knurl.example-keffiyeh/knurl-8",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/knurl/files/examples/knurl_keffiyeh.json",
+    "sha256": "cfb67046f0e6e6cf1ea557ed24e98c5d28f9001647aaa622616c6a089c749f3e",
+    "fixes": [],
+    "dest": "designs/knurl/legacy/examples/knurl_keffiyeh.json"
+  },
+  {
+    "id": "knurl.example-stl/bench-outputs",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/knurl/outputs/knurl/examples/knurl_default_stl.zip",
+    "sha256": "0132c744e569083cfdf552e683def15a026907263abdae19aacaed953fef71b0",
+    "fixes": [],
+    "dest": "designs/knurl/legacy/examples/knurl_default_stl.zip"
+  },
+  {
+    "id": "knurl.readme/bench-outputs",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/knurl/outputs/knurl/README.md",
+    "sha256": "f8a0cc539d641316105edc3d3d845b19bc892eff408b260e6830f5377b1c3711",
+    "fixes": [],
+    "dest": "designs/knurl/legacy/bench/README.md"
+  },
+  {
+    "id": "knurl.readme/knurl-8",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/knurl/files/README.md",
+    "sha256": "f8a0cc539d641316105edc3d3d845b19bc892eff408b260e6830f5377b1c3711",
+    "fixes": [],
+    "dest": "designs/knurl/legacy/bench/README.md"
+  },
+  {
+    "id": "knurl.three-core/npm-0-185-1",
+    "kind": "canonical",
+    "source": "designs/knurl/legacy/three-0.185.1.zip!three@0.185.1/build/three.core.js",
+    "sha256": "3718df126d69c125362a03340913204470d8c50238605150e57f808840fb7759",
+    "fixes": [],
+    "dest": "designs/knurl/legacy/three-0.185.1.zip!three@0.185.1/build/three.core.js"
+  },
+  {
+    "id": "knurl.three-license/npm-0-185-1",
+    "kind": "canonical",
+    "source": "designs/knurl/legacy/three-0.185.1.zip!three@0.185.1/LICENSE",
+    "sha256": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+    "fixes": [],
+    "dest": "designs/knurl/legacy/three-0.185.1.zip!three@0.185.1/LICENSE"
+  },
+  {
+    "id": "knurl.three-module/npm-0-185-1",
+    "kind": "canonical",
+    "source": "designs/knurl/legacy/three-0.185.1.zip!three@0.185.1/build/three.module.js",
+    "sha256": "bbf5ed13fe4373f5bd38b14ea8e62e9f157327da5638edc6d3863e08b167c9c7",
+    "fixes": [],
+    "dest": "designs/knurl/legacy/three-0.185.1.zip!three@0.185.1/build/three.module.js"
+  },
+  {
+    "id": "knurl.three-orbit-controls/npm-0-185-1",
+    "kind": "canonical",
+    "source": "designs/knurl/legacy/three-0.185.1.zip!three@0.185.1/examples/jsm/controls/OrbitControls.js",
+    "sha256": "faabb4e8dfd9235ee4a9fd7c9a3d75f90f1689dbd4944bd6fd32117dacec5f93",
+    "fixes": [],
+    "dest": "designs/knurl/legacy/three-0.185.1.zip!three@0.185.1/examples/jsm/controls/OrbitControls.js"
   },
   {
     "id": "locket.build/rev-j",
@@ -2722,6 +3002,22 @@
       "autoGap() of lines 331 to 339 takes the packer as a function of the gap instead of setting the page's global gap; a gap that leaves more copies oversize never wins (the OGEE16 bills drop none in 2 to 16 mm)"
     ],
     "dest": "packages/nest/src/autogap.ts"
+  },
+  {
+    "id": "ogee16.bench/bench-outputs",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/ogee16/outputs/ogee16p.html",
+    "sha256": "eec1e191cea91a6d04d5b47b68ef334a85b9eedc1446f30b1838fa937f035dc4",
+    "fixes": [],
+    "dest": "designs/ogee16/legacy/ogee16p.html"
+  },
+  {
+    "id": "ogee16.bench/r16p",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/ogee16/files/ogee16p.html",
+    "sha256": "eec1e191cea91a6d04d5b47b68ef334a85b9eedc1446f30b1838fa937f035dc4",
+    "fixes": [],
+    "dest": "designs/ogee16/legacy/ogee16p.html"
   },
   {
     "id": "ogee16.check-servos/bench-source-zip",
@@ -3230,11 +3526,21 @@
     "dest": null
   },
   {
-    "id": "pip.baked/pip-controller-b137deb",
+    "id": "pip.baked/haft-9",
     "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft.html",
+    "sha256": "6c9717338b2e09a2364a464876da47116727f5c3fd8911beb6e87af0bd0b82ea",
+    "fixes": [],
+    "dest": "designs/pip/legacy/original/haft.html"
+  },
+  {
+    "id": "pip.baked/pip-controller-b137deb",
+    "kind": "copy",
     "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/pip.html",
     "sha256": "a1fa88bd6ffa603c76059567c8b27c804536e39e7c07ec56c58daad55b001263",
-    "fixes": [],
+    "fixes": [
+      "firmware generator GUARD_US 2000 (pip-controller firmware/pip/pip.ino); haft (9) ships KEY_WAIT_US 200 without the guard (knowledge/designs/pip.md 1.1 and 3.13)"
+    ],
     "dest": "designs/pip/legacy/pip.html"
   },
   {
@@ -3372,6 +3678,22 @@
     "dest": "designs/pip/legacy/build.sh"
   },
   {
+    "id": "pip.coupon-zip/haft-9",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft-coupon.zip",
+    "sha256": "4d38c8f392adfb25717916091738177c5c839cc2cde6865725efa0404cda06a8",
+    "fixes": [],
+    "dest": "designs/pip/legacy/original/haft-coupon.zip"
+  },
+  {
+    "id": "pip.coupon-zip/pip-controller-b137deb",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/print/pip-coupon.zip",
+    "sha256": "3ce6d4c2ef8aef756c8f11408dc53049fc9bf6595cd35ba0165d58ea83be0177",
+    "fixes": [],
+    "dest": "designs/pip/legacy/print/pip-coupon.zip"
+  },
+  {
     "id": "pip.coupon/haft-9",
     "kind": "canonical",
     "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft-src/src/coupon.js",
@@ -3386,6 +3708,54 @@
     "sha256": "c621103d81e35959d9262ce6cd9e7d6af9c156a9c78308c3e738ecaf3bfe82ad",
     "fixes": [],
     "dest": "designs/pip/legacy/src/coupon.js"
+  },
+  {
+    "id": "pip.example-design/haft-9",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft-design.json",
+    "sha256": "c6f86f7ee54d13243df49b3dca135a92a3cba89e2c89acde41e12490be45a4fa",
+    "fixes": [],
+    "dest": "designs/pip/legacy/original/haft-design.json"
+  },
+  {
+    "id": "pip.example-design/legacy-save-fixture",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/examples/pip-design.json",
+    "sha256": "e36e1de1189fa2a7d6ee42a51e09f6eb7cb1135fa22ba2976baf6d770f95d0ef",
+    "fixes": [],
+    "dest": "designs/pip/test/fixtures/legacy/pip-design.json"
+  },
+  {
+    "id": "pip.example-design/pip-controller-b137deb",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/examples/pip-design.json",
+    "sha256": "e36e1de1189fa2a7d6ee42a51e09f6eb7cb1135fa22ba2976baf6d770f95d0ef",
+    "fixes": [],
+    "dest": "designs/pip/legacy/examples/pip-design.json"
+  },
+  {
+    "id": "pip.example-header/haft-9",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft-header-design.json",
+    "sha256": "61472a889cfc887e08913f32870fe1ae1b229a29a19f045a4cc94159005dde79",
+    "fixes": [],
+    "dest": "designs/pip/legacy/original/haft-header-design.json"
+  },
+  {
+    "id": "pip.example-stick/legacy-save-fixture",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/examples/pip-stick-design.json",
+    "sha256": "e48065b8ae3a0d1600614e6b44695b8b600aa961820e48d3137de26a8d6f6c7e",
+    "fixes": [],
+    "dest": "designs/pip/test/fixtures/legacy/pip-stick-design.json"
+  },
+  {
+    "id": "pip.example-stick/pip-controller-b137deb",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/examples/pip-stick-design.json",
+    "sha256": "e48065b8ae3a0d1600614e6b44695b8b600aa961820e48d3137de26a8d6f6c7e",
+    "fixes": [],
+    "dest": "designs/pip/legacy/examples/pip-stick-design.json"
   },
   {
     "id": "pip.firmware-stick/pip-controller-b137deb",
@@ -3483,6 +3853,14 @@
       "segsFor, the half-step circle and the spine stroke offset once with Round joins (geom.js lines 72, 77 to 82 and 100 to 114) ported to packages/copper/src/emit/trace-layer.ts (M05-T10); circle points come from the D-175 unit-circle table at twice the count, odd indices, and every entry snaps to 1/1024 mm (D-054)"
     ],
     "dest": "packages/copper/src/emit/trace-layer.ts"
+  },
+  {
+    "id": "pip.haft-ino/haft-9",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft.ino",
+    "sha256": "b345f15eb93361d5ede9f7c2defc9723ff65d9bd881fc938cb73fe9160e2b939",
+    "fixes": [],
+    "dest": "designs/pip/legacy/original/haft.ino"
   },
   {
     "id": "pip.islands/pip-controller",
@@ -3815,6 +4193,54 @@
     "dest": "designs/pip/legacy/src/pkg.js"
   },
   {
+    "id": "pip.print-3mf-stick/pip-controller-b137deb",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/print/pip-stick.3mf",
+    "sha256": "507d7c8c738b35986455002e2b3a43f1eeae0eb6549eadd2f2363f4471165270",
+    "fixes": [],
+    "dest": "designs/pip/legacy/print/pip-stick.3mf"
+  },
+  {
+    "id": "pip.print-3mf/haft-9",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft.3mf",
+    "sha256": "04a2e6c2a1589bd3892e87ac3812b053e9bda70b035462adecc51f748ac1e554",
+    "fixes": [],
+    "dest": "designs/pip/legacy/original/haft.3mf"
+  },
+  {
+    "id": "pip.print-3mf/pip-controller-b137deb",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/print/pip.3mf",
+    "sha256": "bc0135dd5d37a7b195105851366024f2be4dc1f1417f3c291d1a2580200af76f",
+    "fixes": [],
+    "dest": "designs/pip/legacy/print/pip.3mf"
+  },
+  {
+    "id": "pip.print-card/haft-9",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/print-card.txt",
+    "sha256": "4e7f7d22f6a9de7a804a226fba26ce50146e0db309fb2bcedc27d7d9f4b67ca6",
+    "fixes": [],
+    "dest": "designs/pip/legacy/original/print-card.txt"
+  },
+  {
+    "id": "pip.print-card/pip-controller-b137deb",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/print/print-card.txt",
+    "sha256": "62d6ac06d579de12b6c5e952b15815fd0d9881215bc00a9a3dce3d4626c578ac",
+    "fixes": [],
+    "dest": "designs/pip/legacy/print/print-card.txt"
+  },
+  {
+    "id": "pip.print-stl/pip-controller-b137deb",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/print/pip-stl.zip",
+    "sha256": "0c4b3ea7476291eb7749fa8af33d7afe4aad995d8331abd544881cb0ca77254c",
+    "fixes": [],
+    "dest": "designs/pip/legacy/print/pip-stl.zip"
+  },
+  {
     "id": "pip.probe/pip-controller-b137deb",
     "kind": "canonical",
     "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/pip-controller/firmware/pip_probe/pip_probe.ino",
@@ -3831,6 +4257,22 @@
     "dest": "designs/pip/legacy/test/smoke.py"
   },
   {
+    "id": "pip.src-zip/haft-9",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft-src.zip",
+    "sha256": "b7b9ca40f5e029da404e9c46e958898c379deabe85c15f2ba2aff6d4ce379b00",
+    "fixes": [],
+    "dest": "designs/pip/legacy/original/haft-src.zip"
+  },
+  {
+    "id": "pip.stick-card/haft-9",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft-stick-card.txt",
+    "sha256": "7ce4086d0dd0236cb460cfae44e8a776e2f6c23c9a099458eda184f3f26acad1",
+    "fixes": [],
+    "dest": "designs/pip/legacy/original/haft-stick-card.txt"
+  },
+  {
     "id": "pip.sweep-prng/haft-src",
     "kind": "canonical",
     "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft-src/test/sweep.mjs",
@@ -3839,6 +4281,22 @@
       "parameter draws (sweep.mjs lines 5 to 26, the same lines in pip-controller test/sweep.mjs at b137deb) replayed by tools/legacy/pip/dump-route.mjs for the seed 1 router fixture packages/copper/test/fixtures/pip-b137deb-sweep-route.json (M05-T08)"
     ],
     "dest": "packages/sim/src/prng.ts"
+  },
+  {
+    "id": "pip.wiring-svg/haft-9",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft-wiring.svg",
+    "sha256": "eaa0fa575bddc3931ef9b1f8aa50f7efc690afa4444bfb407389f770be4c5f8b",
+    "fixes": [],
+    "dest": "designs/pip/legacy/original/haft-wiring.svg"
+  },
+  {
+    "id": "pip.wiring-svg/pip-controller-b137deb",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/print/pip-wiring.svg",
+    "sha256": "61f61bdfa53cfc12dfc483dbc08796c993026cf12003c98fda1f9807df1bc4ef",
+    "fixes": [],
+    "dest": "designs/pip/legacy/print/pip-wiring.svg"
   },
   {
     "id": "plenum.bench/plenum-html",
@@ -5133,6 +5591,22 @@
     "dest": null
   },
   {
+    "id": "tang-r5.circuit-files/dl",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-gudgeon-tang-keyway/tang/tang_r5_circuit_files.zip",
+    "sha256": "a153df328416f98ebf64cc9f30412c699015a81b2f923987d733ee7af958db3c",
+    "fixes": [],
+    "dest": "designs/tang/legacy/tang_r5_circuit_files.zip"
+  },
+  {
+    "id": "tang-r5.circuit-files/r5",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/tang-r5/files/tang_r5_circuit_files.zip",
+    "sha256": "a153df328416f98ebf64cc9f30412c699015a81b2f923987d733ee7af958db3c",
+    "fixes": [],
+    "dest": "designs/tang/legacy/tang_r5_circuit_files.zip"
+  },
+  {
     "id": "tang-r5.circuit/circuit-data",
     "kind": "canonical",
     "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/tang-r5/files/src/tang_r5_circuit_data.js",
@@ -5157,12 +5631,36 @@
     "dest": null
   },
   {
-    "id": "tang-r5.wiring/dl",
+    "id": "tang-r5.sim/dl",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-gudgeon-tang-keyway/tang/tang_r5_sim (13).html",
+    "sha256": "f251530457b2338c7403cae94dd0f43ab9847725062b3ba1c7ae9eddfcad2add",
+    "fixes": [],
+    "dest": "designs/tang/legacy/tang_r5_sim (13).html"
+  },
+  {
+    "id": "tang-r5.sim/sim-13",
     "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/tang-r5/files/tang_r5_sim_13.html",
+    "sha256": "f251530457b2338c7403cae94dd0f43ab9847725062b3ba1c7ae9eddfcad2add",
+    "fixes": [],
+    "dest": "designs/tang/legacy/tang_r5_sim (13).html"
+  },
+  {
+    "id": "tang-r5.wiring/dl",
+    "kind": "copy",
     "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-gudgeon-tang-keyway/tang/tang_r5_wiring.html",
     "sha256": "1b4f1347b15b6d5f0d09214d7081a4a1f31310964d5ff2a7e4a31395d5cf3331",
     "fixes": [],
-    "dest": null
+    "dest": "designs/tang/legacy/tang_r5_wiring.html"
+  },
+  {
+    "id": "tang-r5.wiring/r5",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/tang-r5/files/tang_r5_wiring.html",
+    "sha256": "1b4f1347b15b6d5f0d09214d7081a4a1f31310964d5ff2a7e4a31395d5cf3331",
+    "fixes": [],
+    "dest": "designs/tang/legacy/tang_r5_wiring.html"
   },
   {
     "id": "tang-r6.app/r6-4",
@@ -5171,6 +5669,22 @@
     "sha256": "9de0d5e7e4b0404e09fab65df1bfbfba1a4339b05d6d11050257b3421fa8378c",
     "fixes": [],
     "dest": null
+  },
+  {
+    "id": "tang-r6.bench/dl",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-gudgeon-tang-keyway/tang/tang_r6 (4).html",
+    "sha256": "9a12993fb5ebff4a2f4d577a4bf396698564cfc538cd213113cd4ed0332482eb",
+    "fixes": [],
+    "dest": "designs/tang/legacy/tang_r6 (4).html"
+  },
+  {
+    "id": "tang-r6.bench/r6-4",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/tang-r6/files/tang_r6_4.html",
+    "sha256": "9a12993fb5ebff4a2f4d577a4bf396698564cfc538cd213113cd4ed0332482eb",
+    "fixes": [],
+    "dest": "designs/tang/legacy/tang_r6 (4).html"
   },
   {
     "id": "tang-r6.design3/r6-4",
@@ -5290,12 +5804,44 @@
     "dest": "designs/tenon/legacy/tenon.html"
   },
   {
+    "id": "tenon.bench/src-zip",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/tenon/files/tenon-src.zip",
+    "sha256": "c57ea22562979007b849cdb42fd076611db1cd783c6815216035f617e99820b5",
+    "fixes": [],
+    "dest": "designs/tenon/legacy/tenon-src.zip"
+  },
+  {
+    "id": "tenon.bench/src-zip-x",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/tenon/tenon-src.zip",
+    "sha256": "c57ea22562979007b849cdb42fd076611db1cd783c6815216035f617e99820b5",
+    "fixes": [],
+    "dest": "designs/tenon/legacy/tenon-src.zip"
+  },
+  {
     "id": "tenon.bench/tenon-html",
     "kind": "canonical",
     "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/tenon/files/tenon.html",
     "sha256": "37fee2f32d1adda1e1cd999d3d75086bd83bfe4a41c1eaea75add359a4dd4713",
     "fixes": [],
-    "dest": null
+    "dest": "designs/tenon/legacy/tenon.html"
+  },
+  {
+    "id": "tenon.export-3mf/tenon-html",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/tenon/files/known-bad/tenon.node-export-undefined-names.3mf",
+    "sha256": "b82c11254e6c3532fdedb1a5ae273a86e46567f511c6999fd25abd52ec02dc77",
+    "fixes": [],
+    "dest": "designs/tenon/legacy/tenon.3mf"
+  },
+  {
+    "id": "tenon.export-3mf/x",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/tenon/tenon.3mf",
+    "sha256": "b82c11254e6c3532fdedb1a5ae273a86e46567f511c6999fd25abd52ec02dc77",
+    "fixes": [],
+    "dest": "designs/tenon/legacy/tenon.3mf"
   },
   {
     "id": "tenon.kernel/part2",

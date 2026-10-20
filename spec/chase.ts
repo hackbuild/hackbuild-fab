@@ -879,10 +879,14 @@ type CheckedPresets<C extends Chase> =
 
 /**
  * The chase as written, with field id uniqueness, enum defaults, showWhen
- * references and preset keys checked (CHASE_PARAM_RULES 1, 2, 4, 5).
+ * references and preset keys checked (CHASE_PARAM_RULES 1, 2, 4, 5), and
+ * no top-level key Chase lacks: a generic parameter skips excess property
+ * checks, so a retired `checks` selector (D-173) would otherwise compile.
  * default-range stays a runtime rule.
  */
-export type CheckedChase<C extends Chase> = C & CheckedParams<C> & CheckedPresets<C>;
+export type CheckedChase<C extends Chase> = C & CheckedParams<C> & CheckedPresets<C> & CheckedKeys<C>;
+
+type CheckedKeys<C> = { readonly [K in Exclude<keyof C, keyof Chase>]: `no such field on Chase: ${K & string}` };
 
 /**
  * Identity that keeps literal types, so ParamsOf sees option values and ids,

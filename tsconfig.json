@@ -107,6 +107,9 @@
       "path": "designs/pip"
     },
     {
+      "path": "designs/knurl"
+    },
+    {
       "path": "reference/exports/orca-3mf-roundtrip"
     },
     {

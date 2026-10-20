@@ -15,7 +15,7 @@ const notes = join(root, ".hbf-notes");
 const handoff = join(root, "..", "fab-knowledge", "HANDOFF.md");
 const milestones = join(root, "docs", "plan", "milestones");
 
-const STATUS_VALUES = ["not started", "in progress", "exit A green", "green", "blocked"];
+const STATUS_VALUES = ["not started", "in progress", "exit A green", "green", "blocked", "superseded"];
 
 const reports = () =>
   existsSync(notes)

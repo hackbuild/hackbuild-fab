@@ -1,6 +1,7 @@
 // lineage.json against tools/lineage.schema.json and the README tables that mirror it (M-1-T09, D-156).
 // No schema library: the checks below read the patterns and field list from the schema file itself.
 import { test } from 'node:test';
+import { heldSha, legacySums } from '../legacy/held.mjs';
 import assert from 'node:assert/strict';
 import { readFileSync, existsSync, readdirSync, realpathSync } from 'node:fs';
 import { createHash } from 'node:crypto';
@@ -11,6 +12,20 @@ const rows = JSON.parse(readFileSync(root + 'lineage.json', 'utf8'));
 const schema = JSON.parse(readFileSync(root + 'tools/lineage.schema.json', 'utf8'));
 const FIELDS = ['id', 'kind', 'source', 'sha256', 'fixes', 'dest'];
 const sha = (path) => createHash('sha256').update(readFileSync(path)).digest('hex');
+const { readStored } = await import(new URL('../legacy/stored-zip.mjs', import.meta.url).href);
+
+/**
+ * Bytes at a lineage path: a file, or `<zip>!<member>` for a legacy file kept
+ * as a stored zip member (tools/legacy/stored-zip.mjs); null when absent.
+ */
+function bytesAt(path) {
+  const [file, member] = path.split('!');
+  if (!existsSync(file)) return null;
+  if (member === undefined) return readFileSync(file);
+  const data = readStored(readFileSync(file)).get(member);
+  return data ? Buffer.from(data) : null;
+}
+const shaOf = (buf) => createHash('sha256').update(buf).digest('hex');
 
 // README tables that mirror lineage rows, keyed by the subject they copy.
 const MIRRORS = { healer: 'packages/mesh/seed/README.md' };
@@ -103,16 +118,18 @@ test('a file that is a copy under one subject is canonical under no other subjec
 test('every sha256 matches its source when the source exists', (t) => {
   let checked = 0;
   for (const r of rows) {
-    const path = r.source.startsWith('/') ? r.source : root + r.source;
-    if (!existsSync(path)) { t.diagnostic(`source not on this machine, sha256 not checked: ${r.source}`); continue; }
-    assert.equal(sha(path), r.sha256, `row ${r.id} sha256`);
+    const bytes = bytesAt(r.source.startsWith('/') ? r.source : root + r.source);
+    if (bytes === null) { t.diagnostic(`source not on this machine, sha256 not checked: ${r.source}`); continue; }
+    assert.equal(shaOf(bytes), r.sha256, `row ${r.id} sha256`);
     checked++;
   }
   t.diagnostic(`${checked} of ${rows.length} sources hashed`);
 });
 
 test('every dest exists in the repo', () => {
-  for (const r of rows) if (r.dest !== null) assert.ok(existsSync(root + r.dest), `row ${r.id} dest ${r.dest} missing`);
+  // A held copy (D-286, tools/legacy/held.mjs) exists as its SHA256SUMS row.
+  const sums = legacySums(root);
+  for (const r of rows) if (r.dest !== null) assert.ok(bytesAt(root + r.dest) !== null || heldSha(root, r.dest, sums) !== null, `row ${r.id} dest ${r.dest} missing`);
 });
 
 // M00-T05 done-when: one canonical row per ported route. Each route file
@@ -500,4 +517,51 @@ test('every proven archetype and typed mechanism has a lineage row whose dest li
     if (!hit) missing.push(d.file);
   }
   assert.deepEqual(missing, []);
+});
+
+// M10-T01 acceptance (D-222, D-156): for each design of the M10 card's
+// "Original UX of record" table, the canonical lineage row is the file
+// knowledge/designs/INDEX.md names for that design's record slug: its
+// source is originals/<slug>/files/<file>, its sha256 is the INDEX sha256,
+// and its dest is a repo copy with those bytes. The eight slugs are read
+// from the card, the file and sha256 from INDEX.md.
+export function uxOfRecordSlugs(card) {
+  const section = card.split(/^## /m).find((s) => s.startsWith('Original UX of record'));
+  if (!section) return null;
+  return [...section.matchAll(/^\| [A-Z]+ \| `knowledge\/designs\/([a-z0-9-]+)\.md`/gm)].map((m) => m[1]);
+}
+
+export function indexCanonical(index, slug) {
+  const row = index.split('\n').find((l) => l.startsWith(`| **${slug}** |`));
+  if (!row) return null;
+  const file = row.match(/file `files\/([^`]+)`/);
+  const hash = row.match(/\| `([0-9a-f]{64})` \|/);
+  return file && hash ? { file: file[1], sha256: hash[1] } : null;
+}
+
+test('each M10 design has a canonical row at its INDEX.md original, copied into the repo (M10-T01)', () => {
+  const slugs = uxOfRecordSlugs(readFileSync(root + 'docs/plan/milestones/M10-chase.md', 'utf8'));
+  assert.ok(slugs, 'M10-chase.md has no "Original UX of record" section');
+  assert.equal(slugs.length, 8, `the UX of record table names ${slugs.length} designs: ${slugs.join(', ')}`);
+  const index = readFileSync(root + 'knowledge/designs/INDEX.md', 'utf8');
+  for (const slug of slugs) {
+    const want = indexCanonical(index, slug);
+    assert.ok(want, `knowledge/designs/INDEX.md has no file and sha256 for ${slug}`);
+    const row = rows.find((r) => r.kind === 'canonical' && r.source.endsWith(`/originals/${slug}/files/${want.file}`));
+    assert.ok(row, `${slug}: no canonical lineage row has source originals/${slug}/files/${want.file}`);
+    assert.equal(row.sha256, want.sha256, `${row.id} sha256 differs from INDEX.md ${slug}`);
+    const copy = row.dest === null ? null : bytesAt(root + row.dest);
+    const held = row.dest === null ? null : heldSha(root, row.dest);
+    assert.ok(copy !== null || held !== null, `${row.id} points at no repo copy (dest ${row.dest})`);
+    if (copy !== null) assert.equal(shaOf(copy), want.sha256, `${row.id} dest ${row.dest} is not the original's bytes`);
+    else assert.ok(held.length >= 12 && want.sha256.startsWith(held), `${row.id} held dest ${row.dest} records ${held}, not the original's sha256`);
+  }
+});
+
+test('the M10 slug and INDEX readers name what they read', () => {
+  const card = '## Original UX of record\n\n| design | record |\n|---|---|\n| KNURL | `knowledge/designs/knurl.md` section 6 |\n| PIP | `knowledge/designs/pip.md` section 6 |\n\n## Next\n| X | `knowledge/designs/x.md` |\n';
+  assert.deepEqual(uxOfRecordSlugs(card), ['knurl', 'pip']);
+  const index = `| **pip** | haft (9).html; file \`files/haft.html\` | \`${'a'.repeat(64)}\` | x |\n`;
+  assert.deepEqual(indexCanonical(index, 'pip'), { file: 'haft.html', sha256: 'a'.repeat(64) });
+  assert.equal(indexCanonical(index, 'knurl'), null);
 });

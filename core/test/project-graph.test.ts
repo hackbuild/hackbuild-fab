@@ -10,15 +10,16 @@
 // that fixture still equals a fresh recording, and writes it when
 // HBF_ACCEPT_GRAPH=1 is set by a person who has read the diff.
 
-import { existsSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { createHash } from "node:crypto";
+import { existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { canonicalize, type BuildInputs, type FitBand } from "@hackbuild/spec";
-import { encodeLines, foldLines, type ProjectGraph } from "@hackbuild/project";
+import { assembleGraph, encodeLines, foldLines, type ProjectGraph } from "@hackbuild/project";
 import { defParts, loadDesign, readRow } from "../src/commands/build.js";
 import { runPartBuild } from "../src/commands/part-build.js";
-import { projectGraph, runProjectGraph, viewOf, workspaceLines, type GraphOut } from "../src/commands/project-graph.js";
+import { legacyItem, legacyRows, projectGraph, runProjectGraph, viewOf, workspaceLines, type GraphOut } from "../src/commands/project-graph.js";
 import { isWiringDesign } from "../src/exporters/wiring.js";
 import { hashOf } from "../src/jcs.js";
 import { fullProfile } from "../src/load-build.js";
@@ -177,4 +178,39 @@ describe("the packages/project stale fixture equals a fresh recording of every r
     expect(text).toBe(readFileSync(FIXTURE, "utf8"));
     expect(viewOf(await projectGraph(ROOT, store), { stale: true }).stale).toEqual([]);
   }, 300_000);
+});
+
+describe("legacy copies held out of git (D-286)", () => {
+  // A synthetic workspace: one legacy tree whose SHA256SUMS names a copy that
+  // is on disk and one that is not, and an oracle record that names the tree.
+  const sha = (s: string): string => createHash("sha256").update(s).digest("hex");
+  let ws: string;
+  beforeAll(() => {
+    ws = mkdtempSync(path.join(tmpdir(), "hbf-held-"));
+    tmps.push(ws);
+    mkdirSync(path.join(ws, "designs", "x", "legacy"), { recursive: true });
+    mkdirSync(path.join(ws, "packages", "p", "records"), { recursive: true });
+    writeFileSync(path.join(ws, "designs", "x", "legacy", "kept.txt"), "kept\n");
+    writeFileSync(path.join(ws, "designs", "x", "legacy", "SHA256SUMS"), `${sha("kept\n")}  kept.txt\n${sha("held\n")}  held.txt\n`);
+    writeFileSync(path.join(ws, "packages", "p", "records", "r.json"), JSON.stringify({ source: "designs/x/legacy/kept.txt" }));
+  });
+
+  const graphOf = (): ProjectGraph => {
+    const made = foldLines(workspaceLines(ws, new Set()));
+    const targets = [...new Set(made.flatMap((l) => l.links.map((k) => k.to)))];
+    const rows = legacyRows(ws);
+    const current = targets.map((t) => legacyItem(ws, t.slice("legacy:".length), () => rows)).filter((i) => i !== undefined);
+    return assembleGraph(made, current);
+  };
+
+  it("an absent copy is current at its SHA256SUMS row, so nothing is stale", () => {
+    const g = graphOf();
+    expect(g.links.map((l) => l.to).sort()).toEqual(["legacy:designs/x/legacy/held.txt", "legacy:designs/x/legacy/kept.txt"]);
+    expect(g.stale).toEqual([]);
+  });
+
+  it("a copy on disk that no longer equals its row makes the record stale", () => {
+    writeFileSync(path.join(ws, "designs", "x", "legacy", "kept.txt"), "edited\n");
+    expect(graphOf().stale.map((s) => s.id)).toEqual(["oracleRecord:packages/p/records/r.json"]);
+  });
 });

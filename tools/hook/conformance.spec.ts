@@ -5,19 +5,22 @@
 // parsed state for legacy pages as PIP smoke.py compares it), exportBytes
 // for each declared kind, the unknown kind message (G-51), and drive on the
 // first declared target. Legacy pages answer through legacy-adapters.ts,
-// bundled into the page. Each test writes its rows under out/hook/parts;
+// bundled into the page; a row an adapter declares the page lacks is not
+// run with NOT_PROVIDED, and a request off file the adapter declares is
+// answered locally and reported, never counted as a pass (M10-T01). Each test writes its rows under out/hook/parts;
 // the global teardown merges them into out/hook/report.json.
 //
 // Run: npx playwright test -c tools/hook/playwright.config.ts
 
-import { mkdirSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test, type BrowserContext, type Page } from "@playwright/test";
 import type { BenchHook } from "@hackbuild/spec";
 import { UNKNOWN_EXPORT_KIND } from "@hackbuild/spec";
 import { listBenches, ROOT, type BenchUnderTest } from "./benches.ts";
-import { ADAPTERS, NO_DRIVE } from "./legacy-adapters.ts";
+import { ADAPTERS, NO_DRIVE, NOT_PROVIDED, type LegacyAdapter } from "./legacy-adapters.ts";
 import { roundtrip } from "./roundtrip.ts";
+import { readStored } from "../legacy/stored-zip.mjs";
 import { partFile, PARTS_DIR, type BenchReport, type Row } from "./rows.ts";
 
 /** What a member of BenchHook must be at runtime; keyed by every key of the spec type, so a new member fails tsc here. */
@@ -74,26 +77,39 @@ async function bundleAdapters(): Promise<string> {
   return adapterBundle;
 }
 
-type HookGlobal = { __hbfHook: BenchHook; __HBF_ADAPTERS: Record<string, { adapt(g: unknown): BenchHook; example?(g: unknown): void; driveTargets(g: unknown): string[] }>; BENCH?: { ready?: unknown } };
+type HookGlobal = { __hbfHook: BenchHook; __HBF_ADAPTERS: Record<string, { adapt(g: unknown): BenchHook; example?(g: unknown): void; driveTargets(g: unknown): string[]; isReady?(g: unknown): boolean }>; BENCH?: { ready?: unknown } };
+
+const adapterOf = (b: BenchUnderTest): LegacyAdapter | null => (b.adapter === null ? null : ADAPTERS[b.adapter]);
 
 async function installHook(page: Page, b: BenchUnderTest): Promise<void> {
-  try {
-    await page.waitForFunction(() => (globalThis as unknown as HookGlobal).BENCH?.ready === true, null, { timeout: READY_MS });
-  } catch {
-    const has = await page.evaluate(() => typeof (globalThis as unknown as HookGlobal).BENCH);
-    throw new Error(has === "undefined" ? `no BENCH global after ${READY_MS} ms` : `BENCH.ready not true after ${READY_MS} ms`);
+  const id = b.adapter ?? "";
+  if (adapterOf(b)?.isReady) {
+    // A page that keeps no BENCH (or a BENCH whose ready is a function) is ready when its adapter says so.
+    await page.addScriptTag({ content: await bundleAdapters() });
+    try {
+      await page.waitForFunction((a) => (globalThis as unknown as HookGlobal).__HBF_ADAPTERS[a]?.isReady?.(globalThis) === true, id, { timeout: READY_MS });
+    } catch {
+      throw new Error(`${b.adapter}: adapter isReady not true after ${READY_MS} ms`);
+    }
+  } else {
+    try {
+      await page.waitForFunction(() => (globalThis as unknown as HookGlobal).BENCH?.ready === true, null, { timeout: READY_MS });
+    } catch {
+      const has = await page.evaluate(() => typeof (globalThis as unknown as HookGlobal).BENCH);
+      throw new Error(has === "undefined" ? `no BENCH global after ${READY_MS} ms` : `BENCH.ready not true after ${READY_MS} ms`);
+    }
+    if (b.adapter === null) {
+      await page.evaluate(() => { const g = globalThis as unknown as HookGlobal; g.__hbfHook = g.BENCH as unknown as BenchHook; });
+      return;
+    }
+    await page.addScriptTag({ content: await bundleAdapters() });
   }
-  if (b.adapter === null) {
-    await page.evaluate(() => { const g = globalThis as unknown as HookGlobal; g.__hbfHook = g.BENCH as unknown as BenchHook; });
-    return;
-  }
-  await page.addScriptTag({ content: await bundleAdapters() });
-  await page.evaluate((id) => {
+  await page.evaluate((a) => {
     const g = globalThis as unknown as HookGlobal;
-    const a = g.__HBF_ADAPTERS[id];
-    if (!a) throw new Error(`adapter ${id} missing from the bundle`);
-    g.__hbfHook = a.adapt(globalThis);
-  }, b.adapter);
+    const ad = g.__HBF_ADAPTERS[a];
+    if (!ad) throw new Error(`adapter ${a} missing from the bundle`);
+    g.__hbfHook = ad.adapt(globalThis);
+  }, id);
 }
 
 async function memberErrors(page: Page): Promise<string[]> {
@@ -140,6 +156,34 @@ async function driveTargets(page: Page, b: BenchUnderTest): Promise<string[]> {
   }, decl.targets);
 }
 
+const MIME: Readonly<Record<string, string>> = { ".js": "text/javascript", ".mjs": "text/javascript", ".css": "text/css", ".json": "application/json" };
+
+/** Answers the requests an adapter declares (OfflineDecl): served prefixes from the repo copy, empty prefixes with no body. */
+async function routeDeclared(context: BrowserContext, a: LegacyAdapter | null): Promise<string[]> {
+  const prefixes: string[] = [];
+  for (const [prefix, where] of Object.entries(a?.offline?.serve ?? {})) {
+    prefixes.push(prefix);
+    // `<zip>!<member prefix>` serves stored zip members, anything else a repo directory.
+    const [zip, inZip] = where.includes("!") ? where.split("!") : [null, null];
+    const members = zip ? readStored(readFileSync(path.join(ROOT, zip))) : null;
+    await context.route(`${prefix}**`, (route) => {
+      const rel = route.request().url().slice(prefix.length).split(/[?#]/)[0] ?? "";
+      const body = members ? members.get(`${inZip ?? ""}${rel}`) : readFileSync(path.join(ROOT, where, rel));
+      if (!body) {
+        route.abort().catch(() => undefined);
+        return;
+      }
+      route.fulfill({ status: 200, contentType: MIME[path.extname(rel)] ?? "application/octet-stream", body: Buffer.from(body) })
+        .catch(() => route.abort());
+    });
+  }
+  for (const prefix of a?.offline?.empty ?? []) {
+    prefixes.push(prefix);
+    await context.route(`${prefix}**`, (route) => route.fulfill({ status: 200, contentType: "text/css", body: "" }));
+  }
+  return prefixes;
+}
+
 test.describe.configure({ mode: "parallel" });
 
 test("the bake wrote at least one fab bench", () => {
@@ -156,8 +200,10 @@ for (const b of corpus.benches) {
       mkdirSync(PARTS_DIR, { recursive: true });
       writeFileSync(partFile(b.name), JSON.stringify(report, null, 1) + "\n");
     };
-    const example = b.adapter !== null && ADAPTERS[b.adapter].example !== undefined;
-    const steps = ["ready", "members", "settled", ...(example ? ["example"] : []), "roundtrip", ...b.exports.map((k) => `export ${k}`), "unknown kind", "drive", "network", "console"];
+    const adapter = adapterOf(b);
+    const example = adapter?.example !== undefined;
+    const lacks = new Set(adapter?.lacks ?? []);
+    const steps = ["ready", "members", "settled", ...(example ? ["example"] : []), "roundtrip", ...b.exports.map((k) => `export ${k}`), "unknown kind", "drive", ...(lacks.has("readout") ? ["drive readout"] : []), "network", "console"];
     const notRun = (reason: string, from: string) => {
       for (const s of steps.slice(steps.indexOf(from))) if (!rows[s]) rows[s] = { result: "not run", reason };
     };
@@ -179,10 +225,15 @@ for (const b of corpus.benches) {
 
     const context = await browser.newContext({ viewport: { width: 1280, height: 820 } });
     await context.setOffline(true);
+    const declaredPrefixes = await routeDeclared(context, adapter);
     const page = await context.newPage();
     const requests: string[] = [];
+    const declared: string[] = [];
     const errors: string[] = [];
-    page.on("request", (r) => { if (!/^(file|data|blob):/.test(r.url())) requests.push(r.url()); });
+    page.on("request", (r) => {
+      if (/^(file|data|blob):/.test(r.url())) return;
+      (declaredPrefixes.some((p) => r.url().startsWith(p)) ? declared : requests).push(r.url());
+    });
     page.on("pageerror", (e) => errors.push(e.message));
     page.on("console", (m) => { if (m.type() === "error") errors.push(m.text()); });
     try {
@@ -193,6 +244,8 @@ for (const b of corpus.benches) {
         await step("members", async () => {
           const bad = await memberErrors(page);
           if (bad.length) throw new Error(bad.join("; "));
+          const none = (["state", "model"] as const).filter((m) => lacks.has(m));
+          if (none.length) return { result: "pass", reason: `${none.join(", ")} ${NOT_PROVIDED}; the hook answers null` };
         });
         const settled = await step("settled", () => page.evaluate((ms) => (globalThis as unknown as HookGlobal).__hbfHook.settled(ms), READY_MS));
         const seeded = settled && (!example || await step("example", () => page.evaluate(async ([id, ms]) => {
@@ -208,7 +261,8 @@ for (const b of corpus.benches) {
         } else if (!seeded) {
           notRun("the example design did not load", "roundtrip");
         } else {
-          await step("roundtrip", () => roundtrip(page, b.origin, READY_MS));
+          if (lacks.has("roundtrip")) rows["roundtrip"] = { result: "not run", reason: `${b.name}: designJson and loadDesign ${NOT_PROVIDED}` };
+          else await step("roundtrip", () => roundtrip(page, b.origin, READY_MS));
           for (const kind of b.exports) {
             await step(`export ${kind}`, async () => {
               const b64 = await page.evaluate((k) => (globalThis as unknown as HookGlobal).__hbfHook.exportBytes(k), kind);
@@ -220,7 +274,8 @@ for (const b of corpus.benches) {
               }
             });
           }
-          await step("unknown kind", async () => {
+          if (lacks.has("exports")) rows["unknown kind"] = { result: "not run", reason: `${b.name}: exportBytes ${NOT_PROVIDED}` };
+          else await step("unknown kind", async () => {
             const msg = await page.evaluate(async (k) => {
               try {
                 await (globalThis as unknown as HookGlobal).__hbfHook.exportBytes(k);
@@ -252,6 +307,12 @@ for (const b of corpus.benches) {
             if (r["target"] !== target) throw new Error(`drive(${target}) answered target ${String(r["target"])}`);
             const said = Object.entries(r).filter(([k, v]) => k !== "target" && v !== "" && v !== NO_DRIVE);
             if (said.length === 0) throw new Error(`drive(${target}) readout is empty: ${JSON.stringify(r)}`);
+            if (lacks.has("readout")) {
+              // The page moved (the record names what) but shows no readout; the readout row is not run.
+              if (r["readout"] !== NOT_PROVIDED) throw new Error(`drive(${target}) readout ${String(r["readout"])}, adapter declares none`);
+              rows["drive readout"] = { result: "not run", reason: `${b.name}: drive readout ${NOT_PROVIDED}` };
+              return { result: "pass", reason: `drive(${target}) moved the page: ${JSON.stringify(r)}` };
+            }
             if (typeof r["readout"] === "string" && !r["readout"].includes(target)) {
               throw new Error(`drive(${target}) readout does not name the target: ${r["readout"]}`);
             }
@@ -259,7 +320,11 @@ for (const b of corpus.benches) {
           });
         }
       }
-      rows["network"] = requests.length === 0 ? { result: "pass" } : { result: "fail", reason: `${requests.length} requests off file and data: ${requests.slice(0, 3).join(", ")}` };
+      rows["network"] = requests.length > 0
+        ? { result: "fail", reason: `${requests.length} requests off file and data: ${requests.slice(0, 3).join(", ")}` }
+        : declared.length > 0
+          ? { result: "not run", reason: `zero network ${NOT_PROVIDED}: ${declared.length} declared requests answered locally (${[...new Set(declared.map((u) => new URL(u).host))].join(", ")}; ${adapter?.offline?.record ?? ""})` }
+          : { result: "pass" };
       rows["console"] = errors.length === 0 ? { result: "pass" } : { result: "fail", reason: `${errors.length} console errors: ${errors.slice(0, 2).join(" | ")}` };
     } finally {
       write();
