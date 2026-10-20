@@ -13,6 +13,7 @@
 
 import { defineBuild, qualify, type FaceFrame, type Feature, type Metric, type ShapeDecl, type Vec2 } from "@hackbuild/spec";
 import { chase } from "./chase";
+import { PRESS_IDS, pressBand } from "./claim";
 
 const ID = "click-spring-key";
 const SEGMENTS = 64;
@@ -114,9 +115,21 @@ export const build = defineBuild(chase, (p, k) => {
     { kind: "pad", id: "pad.1", body: "body", net: net("Common"), size: [3, 3], for: "clip", note: "placeholder clip pad where lead 1 meets the +y edge, until the jack seat (computed)" },
   ];
 
+  // The press claim's band (claim.ts), so the panel and the card read it
+  // from the build; the spread needs the sim and lives in the claim test.
+  const target = k.profile.constant(PRESS_IDS.targetN), bandPct = k.profile.constant(PRESS_IDS.bandPct);
+  const band = pressBand(target.value, bandPct.value);
+  const bandTiers = [target.provenance.tier, bandPct.provenance.tier];
+  const claimNote = "press.peak band, unproven until coupon; the spread over beam print error and modulus is in the claim test";
+
   const tier = petg.provenance.tier;
   const metric = (group: string, id: string, value: number, unit: string, note: string, tiers: Parameters<typeof qualify>[0]): Metric =>
     ({ id, value: Number(value.toFixed(3)), unit, ...qualify(tiers), note, gate: "informational", group });
+  const claimMetrics: Metric[] = [
+    metric("claim", "claim.press.targetN", band.targetN, "N", `${claimNote}; target`, [target.provenance.tier]),
+    metric("claim", "claim.press.lo", band.lo, "N", `${claimNote}; low edge`, bandTiers),
+    metric("claim", "claim.press.hi", band.hi, "N", `${claimNote}; high edge`, bandTiers),
+  ];
   const metrics: Metric[] = [
     ...(out.metrics ?? []),
     metric("paddle", "paddle.massG", massG, "g", `solid paddle volume ${volMm3.toFixed(0)} mm3 at petg density; it rests on the cap and preloads the spring, never subtracted from peakN`, [tier]),
@@ -126,6 +139,7 @@ export const build = defineBuild(chase, (p, k) => {
     metric("layout", "layout.diameter", 2 * R, "mm", "body, paddle diameter plus two walls", []),
     metric("layout", "layout.top", top, "mm", "body top, the spring's need", []),
     metric("layout", "layout.rimTop", rimTop, "mm", "rim top, the cap top snapped up a layer", []),
+    ...claimMetrics,
   ];
 
   return k.part({
