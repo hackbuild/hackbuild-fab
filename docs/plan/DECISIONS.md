@@ -417,6 +417,9 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-361 | hook-script scan covers every .mjs in tools/agent-hooks | decided | Testing, docs, milestones, registry |
 | D-362 | CLAUDE.md hooks line added over the 200 line cap | decided | Testing, docs, milestones, registry |
 | D-363 | hooks check also rejects export_run | decided | Testing, docs, milestones, registry |
+| D-364 | kernel tests join the root run instead of a root test.projects split | decided | Testing, docs, milestones, registry |
+| D-365 | three packages/ui test files now run only under the node environment | decided | Testing, docs, milestones, registry |
+| D-366 | unit keeps setup-uv and loses its owner-files report step | decided | Testing, docs, milestones, registry |
 
 ## House rules and process
 
@@ -4465,6 +4468,39 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. The export check in `tools/test/settings.test.mjs` rejects a hook entry that names `export_run` as well as `export.run`. |
 | Rationale | The ask list names `mcp__hbf__export_run`, so a hook could reach the export by that name too. The export gate stays person-only. |
 | Evidence | `settings.test.mjs` test "no hook entry names export.run" (passes, measured, 2026-10-20). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-364 kernel tests join the root run instead of a root test.projects split
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. Add `kernel/test/**/*.test.ts` to the root vitest include and to `TEST_FILE` in `.github/scripts/owner-files.mjs`, and add `kernel` to the exit-a vitest filters. No vitest `test.projects`. |
+| Rationale | Only one file was missing from the root set, and it has no config of its own. An include line is the smallest change that makes the root set a superset of the workspace sets. |
+| Evidence | `tools/ci/test-sets.mjs` before the change reported only in workspaces 1 (`kernel/test/author.test.ts`) and exited 1 (measured by the builder); on merged main it reports workspace files 312, root files 347, only in workspaces 0, and exits 0 (measured, 2026-10-20). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-365 three packages/ui test files now run only under the node environment
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. Accept that `page-bench`, `range` and `steps` in `packages/ui/test/` run in exit-a under node, where the workspace loop ran them under happy-dom. No `@vitest-environment` comment and no project split. |
+| Rationale | None of the three touches the DOM; they import `node:fs` or pure modules. The browser job still runs `range` under the ui config (`npm test -w packages/ui -- range`). `tools/ci/test-sets.mjs` prints them under environment differs so the gap stays visible. |
+| Evidence | A grep found no `document`, `window` or `mount` in the three files (builder). The three run from the root config on merged main: 3 files, 12 tests pass (measured, 2026-10-20). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-366 unit keeps setup-uv and loses its owner-files report step
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The `unit` job no longer prints the owner-files not-run list, since it runs no vitest. `setup-uv` stays, and `SPAWNS_UV` in `.github/scripts/ci-workflow.test.mjs` points `unit` at its `node --test` step. |
+| Rationale | `tools/test/pytest.test.mjs` spawns uv. The not-run report belongs to the job that applies the excludes, which is exit-a. |
+| Evidence | `tools/test/pytest.test.mjs` line 14 calls `spawnSync("uv", ...)`. `node --test .github/scripts/ci-workflow.test.mjs` passes 16 of 16 on merged main, and fails 1 of 16 with an `npm test --workspaces` step put back into unit (measured, 2026-10-20). |
 | Supersedes | new |
 | Milestone | none |
 
