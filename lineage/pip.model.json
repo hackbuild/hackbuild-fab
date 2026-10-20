@@ -61,6 +61,16 @@
     "dest": "packages/archetypes/src/pip/touch.ts"
   },
   {
+    "id": "pip.model/haft-9-thin-wall",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft-src/src/model.js",
+    "sha256": "95a996433e54d586cdaa970a844ee8f8f02196f80b23ba36983c95ed456d1f34",
+    "fixes": [
+      "click spring fit note 'one line, needs thin wall handling on' at C.t < 0.6 (model.js line 540; pip-controller model.js line 474; pip RECORD.md line 350) ported to packages/3mf/src/overrides.ts as the detect_thin_wall 1 object row; the bound is 1.5 preset line widths (0.63 mm at ffc5p line width 0.42, computed) where PIP read a fixed 0.6 mm, so it follows the 0.25 nozzle preset (R1-flagship-access-switch-07)"
+    ],
+    "dest": "packages/3mf/src/overrides.ts"
+  },
+  {
     "id": "pip.model/pip-controller-b137deb",
     "kind": "copy",
     "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/pip-controller/src/model.js",
