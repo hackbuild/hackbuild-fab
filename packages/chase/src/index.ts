@@ -5,7 +5,7 @@ export {
   chaseDocSchema, claimRuleErrors, inputFields, isNumeric, issuesToErrors, onStep, paramRuleErrors, paramsErrors, paramsJsonSchema, paramsSchema, seg, shapeErrors,
 } from "./schema.js";
 export { checkDeclares, enclosingField, type Computes, type Declared, type DeclaresVerdict } from "./declares.js";
-export { allFields, resolveRefs, type ChaseRegistries, type CheckEntry } from "./resolve.js";
+export { allFields, resolveBenchRefs, resolveRefs, type ChaseRegistries, type CheckEntry } from "./resolve.js";
 export {
   EXPORT_STEPS, KIND_RULES, buildExports, buildFnErrors, kindRuleErrors, validateChase, validateDocument,
   type KindRule, type ValidateInputs, type Validation,

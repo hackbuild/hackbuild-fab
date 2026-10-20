@@ -39,6 +39,12 @@ export interface ChaseRegistries {
    * claim that quietly goes unchecked.
    */
   readonly claimFns?: readonly string[];
+  /**
+   * Widget kinds a widget registry holds (packages/ui-core widgetKinds).
+   * Absent reads as empty: a bench widget whose kind resolves to nothing
+   * is E_REF, never a control that quietly draws nothing.
+   */
+  readonly widgetKinds?: readonly string[];
 }
 
 function fieldsAt(fields: readonly ParamField[], base: string, out: [ParamField, string][]): void {
@@ -107,5 +113,29 @@ export function resolveRefs(chase: Chase, reg: ChaseRegistries): CommandError[] 
     mats.forEach((m, i) => ref(m, reg.materials, typeof chase.coupon!.material === "string" ? "/coupon/material" : `/coupon/material/${i}`, "material", "material"));
   }
   (chase.claims ?? []).forEach((c, i) => ref(c.fn, reg.claimFns ?? [], `/claims/${i}/fn`, "claim function", "claim-fn"));
+  return out;
+}
+
+/**
+ * E_REF for every bench widget whose kind no widget registry holds
+ * (spec/widgets.ts, R1-engine-12), record "chase-ref/widget-kind". The
+ * bench is read as data, so each field is guarded; pointers start at the
+ * bench literal (/views/widgets/0/kind). [] when every kind resolves.
+ */
+export function resolveBenchRefs(bench: unknown, reg: Pick<ChaseRegistries, "widgetKinds">): CommandError[] {
+  const rec = (v: unknown): v is Record<string, unknown> => typeof v === "object" && v !== null && !Array.isArray(v);
+  if (!rec(bench) || !rec(bench["views"])) return [];
+  const widgets = bench["views"]["widgets"];
+  if (!Array.isArray(widgets)) return [];
+  const kinds = reg.widgetKinds ?? [];
+  const out: CommandError[] = [];
+  widgets.forEach((w: unknown, i) => {
+    const got = String(rec(w) ? w["kind"] : w);
+    if (kinds.includes(got)) return;
+    out.push({
+      code: "E_REF", path: `/views/widgets/${i}/kind`, got, didYouMean: didYouMean(got, kinds),
+      hint: `bench.ts: name a registered widget kind, not ${got}`, record: "chase-ref/widget-kind",
+    });
+  });
   return out;
 }

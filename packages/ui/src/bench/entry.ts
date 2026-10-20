@@ -24,6 +24,7 @@ import { kindError } from "./kinds.js";
 import { defaultsOf } from "../rail/model.js";
 import { useShell, type BenchReport, type Values } from "../stores/shell.js";
 import { padOf } from "../stage/pad.js";
+import { widgetsOf } from "../widgets/registry.js";
 
 /** Names the bake manifest gives the classic manifold factory and its wasm. */
 export const MANIFOLD_GLOBALS = { factory: "ManifoldModule", wasm: "MANIFOLD_WASM_B64" } as const;
@@ -286,6 +287,7 @@ export function mountBench(opts: MountOptions): MountedBench | null {
     model,
     drive,
     release: async (target?: string): Promise<void> => pad.release(target),
+    widgets: () => widgetsOf(chase, bench, contact, { part: core.result?.part ?? null, report: core.result?.report ?? {} }),
     pause,
     boot: boot(),
   };

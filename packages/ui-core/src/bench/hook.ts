@@ -11,6 +11,7 @@
 import {
   BENCH_GLOBAL, EXPORT_ALIASES, SEVERITY_EFFECT, UNKNOWN_EXPORT_KIND,
   type BenchHook, type CheckResult, type DriveReadoutRecord, type DriveStimulus, type ParamField, type ParamGroup,
+  type WidgetRecord,
 } from "@hackbuild/spec";
 import type { BenchCore, BuildResult } from "./core.js";
 import { cancel, later, type TimerId } from "./timers.js";
@@ -51,14 +52,23 @@ export interface HookOptions<P = unknown, R = unknown> {
   readonly model?: (result: BuildResult<P, R>) => unknown;
   readonly drive?: (target: string, value: DriveStimulus) => Promise<DriveReadoutRecord>;
   readonly release?: (target?: string) => Promise<void>;
+  /** Each declared widget on the current build (src/widgets/registry.ts widgetRecords); absent reads as none. */
+  readonly widgets?: () => readonly WidgetRecord[];
   /** Pauses the viewer for an export and returns the resume (G-46, hb-viewer `paused`). */
   readonly pause?: () => () => void;
   /** Resolves when the page has booted (kernel, share link); the first build runs after it. */
   readonly boot?: Promise<unknown>;
 }
 
+/**
+ * BENCH as this package builds it: the spec BenchHook plus widgets(), each
+ * declared widget's outputs on the current build (R1-engine-12), which
+ * liveness tests and the smoke suite read.
+ */
+export type PageHook = BenchHook & { widgets(): readonly WidgetRecord[] };
+
 export interface Hook {
-  readonly hook: BenchHook;
+  readonly hook: PageHook;
   /** Resolves when `ready` turns true. */
   readonly whenReady: Promise<void>;
 }
@@ -165,7 +175,7 @@ export function createHook<S, P, R>(core: BenchCore<S, P, R>, opts: HookOptions<
     return JSON.stringify(inner ? { ...doc, state } : state);
   };
 
-  const hook: BenchHook = {
+  const hook: PageHook = {
     get ready() {
       return ready;
     },
@@ -239,6 +249,7 @@ export function createHook<S, P, R>(core: BenchCore<S, P, R>, opts: HookOptions<
     release: async (target) => {
       await opts.release?.(target);
     },
+    widgets: () => [...(opts.widgets?.() ?? [])],
     async exportBytes(kind) {
       const resolved = (EXPORT_ALIASES as Readonly<Record<string, string>>)[kind] ?? kind;
       const x = byKind.get(resolved);

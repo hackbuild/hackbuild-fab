@@ -7,7 +7,7 @@
 
 import { didYouMean, isThrownCommandError, type Chase, type CommandError, type ValidateQuestion } from "@hackbuild/spec";
 import { claimRuleErrors, paramRuleErrors, shapeErrors } from "./schema.js";
-import { resolveRefs, type ChaseRegistries } from "./resolve.js";
+import { resolveBenchRefs, resolveRefs, type ChaseRegistries } from "./resolve.js";
 import { buildPathProblem } from "./source.js";
 import { migrateChase, type MigrationReport } from "./migrate/index.js";
 import { chaseQuestions, type QuestionFacts } from "./questions.js";
@@ -131,6 +131,7 @@ export function validateDocument(inputs: ValidateInputs): Validation {
     ...errors,
     ...("buildSource" in inputs ? buildFnErrors(chase, inputs.buildSource) : []),
     ...kindRuleErrors(chase, inputs.bench),
+    ...(inputs.registries === undefined || inputs.bench === undefined ? [] : resolveBenchRefs(inputs.bench, inputs.registries)),
   ];
   return { errors: all, questions: chaseQuestions(chase, inputs.facts), migration: migrated.report, chase };
 }
