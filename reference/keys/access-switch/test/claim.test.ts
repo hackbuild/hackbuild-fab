@@ -3,10 +3,11 @@
 // (drawn, beam thickness minus and plus click.beamPrintErrorMm, modulus
 // minus and plus click.modulusSpreadPct), each run through packages/sim
 // clickRigid and clickReadout here because claim.ts may not run the sim.
-// The spread table is written into the README block; HBF_ACCEPT=1
-// rewrites it, otherwise the README must equal what this run computes.
+// The README block must equal what this run computes. The test writes
+// nothing: when it fails, a person reads the printed block and pastes it
+// into the README by hand (D-227 names one HBF_ACCEPT reader, flex-pair).
 
-import { readFileSync, writeFileSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { beforeAll, describe, expect, test } from "vitest";
@@ -21,8 +22,7 @@ const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, "..", "..", "..", "..");
 const REF = "reference/keys/access-switch";
 const README = path.join(ROOT, REF, "README.md");
-const ACCEPT = process.env["HBF_ACCEPT"] === "1";
-const START = "<!-- generated: press claim; rewrite with HBF_ACCEPT=1 npx vitest run reference/keys/access-switch -->";
+const START = "<!-- generated: press claim; paste the block the claim test prints when it fails -->";
 const END = "<!-- end generated: press claim -->";
 
 let design: Design;
@@ -142,13 +142,7 @@ describe("access switch press claim", () => {
 
   test("the README press claim block equals this run", () => {
     const want = block();
-    let text = readFileSync(README, "utf8");
-    if (ACCEPT) {
-      const a = text.indexOf(START), b = text.indexOf(END);
-      if (a < 0 || b < a) throw new Error(`readme: markers ${START} and ${END} missing or out of order`);
-      text = text.slice(0, a) + want + text.slice(b + END.length);
-      writeFileSync(README, text);
-    }
+    const text = readFileSync(README, "utf8");
     const a = text.indexOf(START), b = text.indexOf(END);
     expect(a >= 0 && b > a ? text.slice(a, b + END.length) : undefined).toBe(want);
   });
