@@ -528,6 +528,13 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-472 | noUnion text says imported part(s) with singular agreement (amends D-379) | decided | Kernel, geometry |
 | D-473 | Per-fixture piece counts in the import corpus spelled as words | decided | Testing, docs, milestones, registry |
 | D-474 | No new INFORMATIONAL reason for the spring.curve metrics | decided | Testing, docs, milestones, registry |
+| D-475 | chase.patch writes designs/<name> only | decided | Agent surface |
+| D-476 | A patch is refused only for errors it adds | decided | Constraints and checks |
+| D-477 | Adding an absent object key is internal to arch.apply | decided | Agent surface |
+| D-478 | chase.patch branch order and git failures | decided | Agent surface |
+| D-479 | patches.jsonl location and staging | decided | Agent surface |
+| D-480 | chase.patch output adds defHashBefore | decided | Agent surface |
+| D-481 | New CLI flag kind edit | decided | Agent surface |
 
 ## House rules and process
 
@@ -5797,6 +5804,83 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. The 49 spring.curve metrics on reference/keys/access-switch stay gated CHK-KEY-04 as the build emits them, so no INFORMATIONAL row was added to `packages/checks/test/metric-gates.test.ts`. The done mutant ungated one curve row instead of removing a reason. |
 | Rationale | The brief expected new informational metrics. The recorded diff holds none: every new row carries gate CHK-KEY-04 from 715db0e. The record holds no mesh hash or volume. |
 | Evidence | The metric-record diff was 49 added rows, none removed or relabelled. Ungating curve.d5 fails both metric-gates ('neither a gate nor informational (D-075)') and metric-record (computed, 2026-10-20). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-475 chase.patch writes designs/<name> only
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The writer refuses any `chase.ts` or `build.ts` whose directory, relative to its git top, is not `designs/<name>`. chase.patch returns E_REF; arch.apply returns written false and says why. |
+| Rationale | `reference/` holds committed goldens, and test fixtures are not designs. Without this rule, the arch.apply tests (which apply to `reference/conductors/blocks-stud-applied` with exit 0) would switch the branch of the checkout the tests run in. `scaffold --from reference` is the path to a writable copy. |
+| Evidence | `core/test/arch-apply.test.ts` lines 58 to 60 and the blocks-stud standards case; the brief risk line "tests must use a temp git repo, never the main checkout". |
+| Supersedes | new |
+| Milestone | none |
+
+### D-476 A patch is refused only for errors it adds
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The writer compares validation errors before and after the patch by code, path and record, and refuses only when the patch adds one. The card says "a patch that leaves errors is not written", and the writer reads that narrowly. |
+| Rationale | `reference/keys/flex-pair` already fails chase.validate with E_REF contact.gap (no ConstraintDef registers it). Under the strict reading the card acceptance, the pointer --set 1.44 exiting 0, could not pass, and no chase with a known error could ever be patched. |
+| Evidence | `hbf chase.validate reference/keys/flex-pair --json` gives an E_REF at `/params/1/fields/0/item/3/constraintDim`; the R1-engine-16 commit message records the same. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-477 Adding an absent object key is internal to arch.apply
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. A pointer naming an absent key of an existing object is E_REF for edits a model writes. arch.apply passes addMembers so it can add `chase.applied` when the chase has none. |
+| Rationale | Keeps the spec rule (a pointer that names no node is E_REF with didYouMean) for typos, while arch.apply can still record a first placement. |
+| Evidence | `spec/errors.ts` E_REF text; `spec/chase.ts` ChaseSourceSpan lists only replace, `/-` append and remove. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-478 chase.patch branch order and git failures
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. If `hbf/<chase>` exists, the writer checks it out before planning, so the edits apply to that branch text. If it does not exist, the writer creates it from HEAD only after the patch validates. A git checkout failure is E_REF with record `chase-patch/write` and the first line of the git message; there is no git-specific error code. |
+| Rationale | A refused patch never creates a branch, and an existing branch is never patched against the wrong text. |
+| Evidence | `core/test/chase-patch.test.ts`: after the E_STALE and schema refusals the branch stays main and no `hbf/*` branch exists. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-479 patches.jsonl location and staging
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The log lives at `<git top>/.hbf/patches.jsonl` and is not staged; only the `chase.ts` or `build.ts` is staged. The revert field is the id of the latest entry whose inverse equals the edits of this patch, otherwise null. The entry id is a 12-hex hash over the entry count and the entry. |
+| Rationale | M12-T13 undo sends the recorded inverse as a new chase.patch, and the log must mark that entry as a revert. `.hbf/` is gitignored in this repository. |
+| Evidence | `docs/plan/milestones/M12-app-mcp.md` lines 1125 to 1142. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-480 chase.patch output adds defHashBefore
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. Added defHashBefore to the chase.patch output in `spec/commands.ts`. |
+| Rationale | Card step 3 says the command reports the defHash before and after; the spec output carried only defHash. |
+| Evidence | `M10-chase.md` T05 step 3. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-481 New CLI flag kind edit
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. Added an `edit` flag kind: --anchor/--replace and --pointer/--set build one edit, and --set is parsed as JSON when it parses, otherwise kept as a string. --edits still takes a JSON list. |
+| Rationale | The card acceptance lines use --anchor and --pointer --set, and the CLI form mapped each flag to its own input field. |
+| Evidence | `M10-chase.md` T05 acceptance; `packages/commands/src/spec.ts` FlagKind. |
 | Supersedes | new |
 | Milestone | none |
 
