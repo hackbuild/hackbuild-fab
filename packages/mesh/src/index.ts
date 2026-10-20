@@ -6,6 +6,7 @@ export { audit, MIN_TRIANGLE_AREA_MM2 } from "./audit.js";
 export type { AuditOptions, MeshAudit } from "./audit.js";
 export { decodeHbfm, encodeHbfm, HBFM_HEADER_BYTES, HBFM_MAGIC, HBFM_VERSION, hbfmLength } from "./hbfm.js";
 export { bounds, isWatertight, meshHash, meshOf, meshRef, signedVolume, snap, snapMesh, snapWeld } from "./hash.js";
+export { shellGroups, type ShellGroup } from "./shells.js";
 /** spec/jcs.ts sha256Hex (D-206), re-exported for callers that load only this package (tools/determinism). */
 export { sha256Hex } from "@hackbuild/spec";
 export type { MeshData } from "./hash.js";

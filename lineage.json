@@ -2945,6 +2945,16 @@
     "dest": null
   },
   {
+    "id": "mesh.shells/davit-parts-r4",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/davit/files/src/parts_r4.py",
+    "sha256": "ddae2111221fb45608190cedf31cc9b05cd916fce12fd8afd11ab812da885a36",
+    "fixes": [
+      "finalize (parts_r4.py lines 328 to 333) split a mesh into trimesh bodies by face adjacency and counted the real ones; ported to packages/mesh/src/shells.ts as an edge union-find over the D-054 welded indices, with each void shell kept on the outer shell that holds it (bounds then ray parity), which trimesh split left out"
+    ],
+    "dest": "packages/mesh/src/shells.ts"
+  },
+  {
     "id": "mesh.stack/blocks-src",
     "kind": "canonical",
     "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/blocks/files/src-extracted/kernel.js",
