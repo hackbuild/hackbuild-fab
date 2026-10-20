@@ -478,6 +478,10 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-422 | Declared pieces enter defHash as the resolved count | decided | Rails, goldens |
 | D-423 | With no union, CHK-PRT-18 and CHK-PRT-19 skip with the no-union reason | decided | Rails, checks |
 | D-424 | A kernel-refused pairwise fails CHK-PRT-03 with measured kernel refused | decided | Rails, checks |
+| D-425 | The access switch print card has no tip into the dovetail step | decided | Reference, docs |
+| D-426 | The access switch card reuses the flex-pair card helpers | decided | Reference, docs |
+| D-427 | The access switch card derives its brim line from the 3MF | decided | Reference, virtual print |
+| D-428 | The access switch card names USE.md before it is written | decided | Reference, docs |
 
 ## House rules and process
 
@@ -5197,6 +5201,50 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. When the kernel refuses a shell group, CHK-PRT-03 fails with measured "kernel refused", legal kind none, and a constraint that quotes the UNION warning's pairwise reason. |
 | Rationale | Under D-064 the measured value must be a real value, and the interval legal kind needs a number, which does not exist here. |
 | Evidence | `core/src/commands/part-build.ts` importChecks. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-425 The access switch print card has no tip into the dovetail step
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The access switch print card (R1-flagship-access-switch-09) has no "tip into the dovetail" step. Step 1 peels the spring with its grey tip as one piece, and step 2 sets the spring with the tip down toward the floor pads, as the PIP print card does. |
+| Rationale | `click-spring-key` has no dovetail: grep finds no hits in `packages/archetypes/src/pip/click.ts`. PIP prints the tip on the spring element (original print card: click elements are springs in slot 1, tips in slot 4), so the brief's step does not match the geometry. |
+| Evidence | `fab-knowledge:originals/pip/files/print-card.txt` lines 13 and 36; `packages/archetypes/src/pip/click.ts` header lines 12 to 14. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-426 The access switch card reuses the flex-pair card helpers
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `reference/keys/flex-pair/test/card.ts` exports `overrideLines`, and the access switch card imports it with `splice` and `between` from that file rather than copying them. |
+| Rationale | House rule: one implementation of each thing. The change is one keyword in a file outside the item's Writes line. |
+| Evidence | `reference/keys/flex-pair/test/card.ts` line 44; the flex-pair suite passes 32 of 32 on the merged tree (computed, 2026-10-20). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-427 The access switch card derives its brim line from the 3MF
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. When the 3MF sets no `brim_type`, the print card tells the person to turn the brim off and cites the virtual slice finding that the slicer laid the brim in TPU 95A. The line changes by itself once the writer sets the key. |
+| Rationale | Item 08 found `auto_brim` laid in TPU on PETG. Until the writer sets `brim_type`, the card is where the person learns about it. |
+| Evidence | `reference/keys/access-switch/README.md` Virtual slice block, finding on `brim_type` `auto_brim`, 2143 mm2 (computed). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-428 The access switch card names USE.md before it is written
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The access switch print card links `USE.md` at the repository root and says the file is not written yet. |
+| Rationale | Plan v9 section 5 says the use policy is linked from the print card, but no `USE.md` exists in the repo. |
+| Evidence | The repo root has no `USE.md` (measured, 2026-10-20); `fab-knowledge:plan-v5/PLAN.md` line 167. |
 | Supersedes | new |
 | Milestone | none |
 
