@@ -42,7 +42,13 @@ jobs:
         run: node --test tools/test/lint-plan-types.test.mjs && node tools/lint-plan-types.mjs --warn
       - name: the committed plan-types report is the one the lint writes
         run: git diff --exit-code tools/reports/plan-types.txt
-  typecheck:
+  build:
+    # The small checks that ran as their own jobs until R1 (typecheck,
+    # derived, tiers, contract, seed, property, vtracer-eval), one checkout
+    # and one install. derived runs first so no later step can dirty the
+    # tree before its clean check. Every check step runs while the install
+    # succeeded, so one red step still lets the rest report; read the first.
+    # SOURCE_DATE_EPOCH stays unset, as in typecheck, seed and contract.
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v7
@@ -50,40 +56,71 @@ jobs:
         with:
           node-version-file: .nvmrc
           cache: npm
-      - run: npm ci
-      - name: board stack pinned exactly (M08-T01, R-07)
-        run: node --test tools/test/pins-exact.test.mjs && node tools/pins-exact.mjs
-      - run: npx tsc -b
-      - run: npx tsc -p tools/tsconfig.json
-      - name: package and core test files (outside every tsc -b project)
-        run: npx tsc -p tsconfig.tests.json
-      - run: npx vitest run spec/test
-  derived:
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-node@v7
-        with:
-          node-version-file: .nvmrc
-          cache: npm
-      - run: npm ci
-      - run: node --test tools/test/counts.test.mjs
-      - run: node tools/counts.mjs
-      - run: npx tsc -b
-      - run: node tools/gen-check-pages.mjs
-      - name: tree is clean after regeneration
+      - uses: astral-sh/setup-uv@v10.2.0
+      - id: install
+        run: npm ci
+      - name: "derived: counts test"
+        run: node --test tools/test/counts.test.mjs
+      - name: "derived: counts"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node tools/counts.mjs
+      - name: "derived: tsc -b"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: npx tsc -b
+      - name: "derived: check pages"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node tools/gen-check-pages.mjs
+      - name: "derived: tree is clean after regeneration"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: |
           git status --porcelain
           test -z "$(git status --porcelain)"
-  tiers:
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-node@v7
-        with:
-          node-version-file: .nvmrc
-      - run: node tools/tiers.mjs
-      - run: node --test tools/test/tiers.test.mjs
+      - name: "typecheck: board stack pinned exactly (M08-T01, R-07)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node --test tools/test/pins-exact.test.mjs && node tools/pins-exact.mjs
+      - name: "typecheck: tools"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: npx tsc -p tools/tsconfig.json
+      - name: "typecheck: package and core test files (outside every tsc -b project)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: npx tsc -p tsconfig.tests.json
+      - name: "tiers: import edges"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node tools/tiers.mjs
+      - name: "tiers: test"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node --test tools/test/tiers.test.mjs
+      - name: "contract: spec tests and every CommandDef (level 3, M00-T13 step 14)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: npx vitest run spec/test core/test/contract.test.ts
+      - name: "seed: conformance"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: npx vitest run tools/test/seed-conformance.test.ts
+      - name: "seed: healer, board seed and lineage tests"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: ls packages/mesh/seed/test/heal.test.mjs packages/board/seed/test/check3d.test.mjs tools/test/lineage.test.mjs > /dev/null && node --test packages/mesh/seed/test/heal.test.mjs packages/board/seed/test/check3d.test.mjs tools/test/lineage.test.mjs
+      - name: "seed: filament template matches the gold round trip"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: uv run --project tools/py tools/py/harvest_filament_template.py --check
+      # property: live count 0; the nightly FC_RUNS=2000 job is outside M00
+      - name: "property: the 100-design sweep (level 2, M00-T06 step 5)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: npm run sweep -w packages/mesh
+        env:
+          FC_RUNS: 100
+      # vtracer-eval, M03-T11 exit row: vtracer 1.0.0-alpha.4 against the
+      # in-house route over the ten pinned corpus inputs. tools/eval only,
+      # never a package dependency. run.mjs exits 2 while a route A binding
+      # is missing, so a partial table never reads as a pass.
+      - name: "vtracer-eval: install"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: npm ci --prefix tools/eval/vtracer
+      - name: "vtracer-eval: corpus bytes equal their pins"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: cd tools/corpus/inlay/vtracer && sha256sum -c SHA256SUMS
+      - name: "vtracer-eval: route table"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node tools/eval/vtracer/run.mjs tools/corpus/inlay/vtracer
   unit:
     # level 1 of TESTING.md (D-152), M00-T01 step 8. The epoch is pinned as
     # in exit-a: the flex-pair goldens (expected/build.json buildHash) are
@@ -106,36 +143,6 @@ jobs:
       - name: every tools node test (a test reading a gitignored or host-only file skips with its reason)
         if: ${{ !cancelled() }}
         run: npx tsc -b && node --test tools/test/*.test.mjs packages/*/seed/test/*.test.mjs knowledge/test/*.test.mjs
-  property:
-    # level 2 of TESTING.md (D-152), M00-T06 step 5: the 100-design sweep
-    # with live count 0; the nightly FC_RUNS=2000 job is outside M00
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-node@v7
-        with:
-          node-version-file: .nvmrc
-          cache: npm
-      - run: npm ci
-      - run: npm run sweep -w packages/mesh
-        env:
-          FC_RUNS: 100
-  seed:
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-node@v7
-        with:
-          node-version-file: .nvmrc
-          cache: npm
-      - uses: astral-sh/setup-uv@v10.2.0
-      - run: npm ci
-      - name: seed conformance
-        run: npx vitest run tools/test/seed-conformance.test.ts
-      - name: healer, board seed and lineage tests
-        run: ls packages/mesh/seed/test/heal.test.mjs packages/board/seed/test/check3d.test.mjs tools/test/lineage.test.mjs > /dev/null && node --test packages/mesh/seed/test/heal.test.mjs packages/board/seed/test/check3d.test.mjs tools/test/lineage.test.mjs
-      - name: filament template matches the gold round trip
-        run: uv run --project tools/py tools/py/harvest_filament_template.py --check
   exit-a:
     # M-S exit A: package, reference and core tests, the hbf commands and the
     # seed validator on a fresh export (M-S-T09). npm ci builds core (prepare).
@@ -178,19 +185,6 @@ jobs:
         run: uv run --project tools/py tools/py/validate_3mf.py --overlap reference/keys/flex-pair/out/x01_flex-pair.3mf
       - if: ${{ !cancelled() }}
         run: npx --no-install hbf parity reference/keys/flex-pair
-  contract:
-    # level 3 of TESTING.md 4.3 (D-152), M00-T13 step 14: every registered
-    # CommandDef has a valid example and a description that passes the
-    # standard; the registry row (FeatureKindDef, CheckDef) joins at M04.
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-node@v7
-        with:
-          node-version-file: .nvmrc
-          cache: npm
-      - run: npm ci
-      - run: npx vitest run spec/test core/test/contract.test.ts
   corpus:
     # TESTING.md 6 and 15.1, M00-T10: every 3MF corpus row through the
     # Python validator and the TypeScript mirror; a row outside its
@@ -412,24 +406,6 @@ jobs:
             echo "$drive: $n plates"
             test "$n" -gt 0
           done
-  vtracer-eval:
-    # M03-T11 exit row: vtracer 1.0.0-alpha.4 against the in-house route over
-    # the ten pinned corpus inputs. tools/eval only, never a package
-    # dependency. run.mjs exits 2 while a route A binding is missing, so a
-    # partial table never reads as a pass.
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-node@v7
-        with:
-          node-version-file: .nvmrc
-          cache: npm
-      - run: npm ci
-      - run: npx tsc -b
-      - run: npm ci --prefix tools/eval/vtracer
-      - name: corpus bytes equal their pins
-        run: cd tools/corpus/inlay/vtracer && sha256sum -c SHA256SUMS
-      - run: node tools/eval/vtracer/run.mjs tools/corpus/inlay/vtracer
   determinism:
     # TESTING.md 7 and 15.1, M00-T14 (D-052, D-056, D-175). Node legs build
     # every reference, the M00-T05 route fixtures and the ring set, and the
@@ -582,7 +558,21 @@ jobs:
           test "$(shasum -a 256 dist/legacy/pip-legacy.html | cut -d' ' -f1)" = a1fa88bd6ffa603c76059567c8b27c804536e39e7c07ec56c58daad55b001263
           test "$(wc -c < dist/legacy/pip-legacy.html | tr -d ' ')" = 1924558
           cmp dist/legacy/pip-legacy.html designs/pip/legacy/pip.html
-      - uses: actions/upload-artifact@v7
+      - name: "ui-css: the inlined hackbuild-ui CSS equals the lock (M09-T13 step 5, D-116)"
+        if: ${{ !cancelled() }}
+        run: node tools/bake/check-ui-css.mjs
+      - name: "size: every bake at most 16777216 bytes (D-129)"
+        if: ${{ !cancelled() }}
+        run: |
+          status=0
+          for f in dist/*/*.html; do
+            n=$(wc -c < "$f" | tr -d ' ')
+            echo "$f $n bytes"
+            if [ "$n" -gt 16777216 ]; then echo "$f over 16777216 bytes"; status=1; fi
+          done
+          exit $status
+      - if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v7
         with:
           name: bake
           path: dist
@@ -650,40 +640,6 @@ jobs:
             out/smoke/*.json
             out/gold/report.json
           if-no-files-found: warn
-  ui-css:
-    # M09-T13 step 5 (D-116): the inlined hackbuild-ui CSS equals the lock.
-    needs: bake
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-node@v7
-        with:
-          node-version-file: .nvmrc
-          cache: npm
-      - run: npm ci
-      - uses: actions/download-artifact@v8
-        with:
-          name: bake
-          path: dist
-      - run: node tools/bake/check-ui-css.mjs
-  size:
-    # M09-T13 (D-129): every bake at most 16777216 bytes (the baker fails
-    # over budget too); prints each size so the run records it.
-    needs: bake
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/download-artifact@v8
-        with:
-          name: bake
-          path: dist
-      - run: |
-          status=0
-          for f in dist/*/*.html; do
-            n=$(wc -c < "$f" | tr -d ' ')
-            echo "$f $n bytes"
-            if [ "$n" -gt 16777216 ]; then echo "$f over 16777216 bytes"; status=1; fi
-          done
-          exit $status
   owner-files:
     # The test files .github/scripts/owner-files.mjs derives as reading the
     # owner's originals or benches, which no hosted runner holds. Manual
