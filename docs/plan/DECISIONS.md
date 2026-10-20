@@ -364,6 +364,13 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-308 | No line width means no thin-wall row | decided | Constraints and checks |
 | D-309 | Rerecorded the click-spring 3mf artifact hash | decided | Testing, docs, milestones, registry |
 | D-310 | Spring thickness and line width carried through the writer input | decided | Architecture |
+| D-311 | The access-switch paddle skirt is the hard stop | decided | Canons, reference, profile, catalog |
+| D-312 | Access-switch rim and paddle sizes come from existing numbers | decided | Canons, reference, profile, catalog |
+| D-313 | Access-switch body uses the stack route with two bands | decided | Architecture |
+| D-314 | No bezel plate on the access switch | decided | Canons, reference, profile, catalog |
+| D-315 | Access-switch parity edit golden moves paddle D | decided | Testing, docs, milestones, registry |
+| D-316 | Access-switch paddle preload reported, not subtracted | decided | Canons, reference, profile, catalog |
+| D-317 | Rerecorded the access-switch 3mf artifact hash | decided | Testing, docs, milestones, registry |
 
 ## House rules and process
 
@@ -3829,6 +3836,83 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. Added optional `WriterPart.springTMm`, `BodyEntry.springTMm`, and `lineWidthMm` on `ThreeMfInput`, `BuildConfig` and `CardInput`. The pipeline fills them from spring features (a feature without a body falls back to the part's first body) and from `preset.lineWidth`; the print card lists the key. |
 | Rationale | The writer had no feature data apart from conductor width, so a row in overrides.ts alone could never fire on a real build. This follows the existing widthMm pattern. |
 | Evidence | `packages/pipeline/src/build.ts` threeMfInput; `packages/3mf/src/writer/index.ts` configOf; `npx tsc -b` exit 0 on the merged tree |
+| Supersedes | new |
+| Milestone | none |
+
+### D-311 The access-switch paddle skirt is the hard stop
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. In `reference/keys/access-switch`, at rest the paddle skirt edge sits over the body top by contact travel plus `click.stopOvertravel`, snapped down a layer (1.56 mm, computed). The skirt bottoming on the body top is the end stop, so travel never passes the point where eStop is read. |
+| Rationale | This keeps beam strain inside the 1.67 percent computed at the stop, with no new number. The R1-flagship-access-switch-02 brief did not name a stop. |
+| Evidence | `reference/keys/access-switch/build.ts`; metric paddle.travel 1.56 mm (computed); the reference test asserts contact < travel <= contact + 0.3 mm. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-312 Access-switch rim and paddle sizes come from existing numbers
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. Rim top is the cap top snapped up a layer. Plate thickness and skirt thickness both equal the body wall param. Boss radius is the cap stem radius, read from the archetype cap body. Every paddle face snaps to a layer top. A paddle H too short for the skirt to outreach the plate and rim is raised, with a CLAMP warning. |
+| Rationale | No new physical constants are typed. Off-layer faces would shift the stop by up to half a layer. |
+| Evidence | `reference/keys/access-switch/build.ts`; README section Body and paddle; CHK-PRT-02 passes at 0.0146 mm band overlap (computed). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-313 Access-switch body uses the stack route with two bands
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The access-switch body is a stack route: a disc band and a rim band overlapping by the middle of `stack.bandOverlap`. A csg union of prisms was tried first and dropped. |
+| Rationale | circuit path1d `bodyOutline` reads only prism or stack bases in the M-S slice; the csg body failed with E_SCHEMA. |
+| Evidence | `packages/circuit/src/path1d.ts` line 191; the builder's first parity attempt error. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-314 No bezel plate on the access switch
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. Following `reference/buttons/click-spring`, the access switch has no PIP bezel. The ribs and slot locate the spring end blocks, and nothing holds them down. |
+| Rationale | Keeps item R1-flagship-access-switch-02 to its brief. A bezel is a separate printed part the brief does not name. |
+| Evidence | README section Deviations of `reference/keys/access-switch`; archetype fits row "under the bezel 0.12". |
+| Supersedes | new |
+| Milestone | none |
+
+### D-315 Access-switch parity edit golden moves paddle D
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `reference/keys/access-switch/expected/edit.json` was written by hand once: pointer `/params/1/fields/0/default`, from 56 to 60. |
+| Rationale | No chase param carries a constraintDim, so parity has no default edit to make. |
+| Evidence | `core/src/commands/parity.ts` defaultEdit; edit.json metricDelta layout.diameter 4 mm and paddle.massG 1.873 g (computed). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-316 Access-switch paddle preload reported, not subtracted
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. paddle.massG is 15.926 g solid (computed). The README gives about 0.156 N at standard gravity (computed). No preload metric in N is emitted, because no gravity profile row exists. |
+| Rationale | The brief says to report the preload and never subtract it silently. Typing standard gravity into build.ts would be an unprofiled number. |
+| Evidence | `reference/keys/access-switch/build.ts` metrics; a search for gravity in `packages/profile/data` returned only a source string (builder). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-317 Rerecorded the access-switch 3mf artifact hash
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. At the merge of R1-flagship-access-switch-02, accepted the new `reference/keys/access-switch/expected/artifacts.json` 3mf hash (c822edc8... to 504f54c8...), and rerecorded `packages/project/test/fixtures/graph.jsonl` with 21 access-switch lines added and none removed. |
+| Rationale | The branch recorded its goldens before main gained the detect_thin_wall object row (D-307). Its spring t 0.55 mm is under the 0.63 mm bound (computed), so only the package bytes move, by one `model_settings.config` line. The mesh, build, report and edit goldens are equal, so this is not a geometry move. |
+| Evidence | Package members of the branch tip and the merged tree, read in memory: only `Metadata/model_settings.config` differs, by `<metadata key="detect_thin_wall" value="1"/>`; `3D/3dmodel.model` is byte-equal (computed). hbf parity: build.json, report.json, edit.json equal. `npx vitest run reference/keys/access-switch` 6 passed; core/test/project-graph.test.ts 11 passed. |
 | Supersedes | new |
 | Milestone | none |
 
