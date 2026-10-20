@@ -381,6 +381,10 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-325 | Build steps guarded on install success | decided | Repos, packaging, toolchain, licensing |
 | D-326 | CI job count is 15, not 14 | decided | Repos, packaging, toolchain, licensing |
 | D-327 | A ui-css or size failure now blocks browser | decided | Repos, packaging, toolchain, licensing |
+| D-328 | Gap marker lines count toward the 150-line cap | decided | Repos, packaging, toolchain, licensing |
+| D-329 | Quiet-output markers are case-sensitive and match anywhere in the line | decided | Repos, packaging, toolchain, licensing |
+| D-330 | Quiet-output passes through when no git repo is found | decided | Repos, packaging, toolchain, licensing |
+| D-331 | Quiet-output keeps the brief's command regex as written | decided | Repos, packaging, toolchain, licensing |
 
 ## House rules and process
 
@@ -4033,6 +4037,50 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. ui-css and size run inside `bake`, so either one failing fails bake, and `browser` (needs bake) is skipped. The bake upload still runs under `!cancelled()`. |
 | Rationale | This follows from the merge in D-324. It is accepted because both are hard gates on the bake. |
 | Evidence | `.github/scripts/ci-workflow.test.mjs` test that bake runs bake:all before ui-css and size, and both before the upload, passes on main after the merge (measured). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-328 Gap marker lines count toward the 150-line cap
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `reduce()` in `tools/agent-hooks/quiet-output.mjs` (R1-rails-ci-hooks-05) writes a `[n lines omitted]` line at each gap, and these lines count within the 150-line cap. When the failure context overflows, the earliest failures stay and the last 15 lines are always kept. |
+| Rationale | Without a marker, lines from far-apart parts of the log would sit next to each other and look continuous. Keeping the end of the log keeps the summary the brief requires. |
+| Evidence | `tools/test/agent-hooks-quiet.test.mjs`: the tsc 40-error test asserts at most 150 lines, that the first error and the Found line are kept, and that an omitted marker is present. Mutant CAP = 1500 fails that test (measured, 2026-10-20). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-329 Quiet-output markers are case-sensitive and match anywhere in the line
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. FAILURE and SUMMARY in `tools/agent-hooks/quiet-output.mjs` are the brief's literal lists, case-sensitive. Pytest's `E   ` is anchored to the start of the line. The U+00D7 sign matches anywhere in a line. |
+| Rationale | This follows the brief word for word. `Failed Tests` with a capital F is not a marker, but the FAIL lines that follow it are. |
+| Evidence | The marker-per-line test in `tools/test/agent-hooks-quiet.test.mjs` covers each FAILURE entry; deleting `/FAIL/` fails 2 tests (measured by the builder). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-330 Quiet-output passes through when no git repo is found
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. When `git rev-parse` fails for the cwd, the hook prints nothing and does not rewrite the output. |
+| Rationale | With nowhere to write the full log, a rewrite would hide output. |
+| Evidence | `handle()` in `tools/agent-hooks/quiet-output.mjs` returns null when `repoRoot()` is null. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-331 Quiet-output keeps the brief's command regex as written
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. COMMAND in `tools/agent-hooks/quiet-output.mjs` is the brief's regex unchanged. Because of word boundaries it also matches commands like `cat vitest.config.ts`. |
+| Rationale | The match only becomes a rewrite when the output is longer than 80 lines and has failure or summary markers, so a false match does little harm. |
+| Evidence | The command filter test in `tools/test/agent-hooks-quiet.test.mjs` uses `cat README.md` as its non-match. |
 | Supersedes | new |
 | Milestone | none |
 
