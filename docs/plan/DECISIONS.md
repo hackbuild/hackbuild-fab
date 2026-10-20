@@ -467,6 +467,12 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-411 | Beam road check passes despite the 0.60 mm planned road | decided | Reference, virtual print |
 | D-412 | The access switch README drops its stale not-sliced line | decided | Reference, docs |
 | D-413 | slice.mjs keeps its preset-name output for now | decided | Rails, virtual print |
+| D-414 | plot.curve registers through the existing plot.<id> panel id | decided | UI, bench |
+| D-415 | The access switch contact closes the pad halves, not a contact feature | decided | Reference, bench |
+| D-416 | The access switch chase gains a json export | decided | Reference, goldens |
+| D-417 | The gold check host builds the bench's own design | decided | Rails, gold |
+| D-418 | Curve scale fmax also covers the claim band top | decided | UI, lineage |
+| D-419 | The integrator rerecords graph.jsonl when only the build hash moves | decided | Rails, goldens |
 
 ## House rules and process
 
@@ -5065,6 +5071,72 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. R1-flagship-access-switch-08 left `tools/slice/slice.mjs` unchanged and skipped the optional preset-name step. |
 | Rationale | The step is optional, the switch declares a preset, and slice.mjs is shared by every virtual print. |
 | Evidence | The run wrote `access-switch-default.3mf` in the evidence folder. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-414 plot.curve registers through the existing plot.<id> panel id
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. R1-flagship-access-switch-12 adds no panel id to `spec/bench.ts`. `PanelRef` is already a string and `defineBench` already checks `plot.<id>` against `BenchDecl.plots`, so `packages/ui/src/bench/panels.ts` resolves any `plot.` prefix to `CurvePanel`. `PlotDecl` gains optional `band` and `measured` fields instead. |
+| Rationale | One implementation. The gold fixture already uses `plots.spring` with metric `spring.curve`, so the sampled metric form fits the existing contract. |
+| Evidence | `spec/bench.ts` PanelRef doc and PlotDecl; `spec/fixtures/gold.ts` plots.spring; `packages/ui/src/bench/panels.ts` resolvePanel. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-415 The access switch contact closes the pad halves, not a contact feature
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `ContactFn.closed` in `reference/keys/access-switch/build.ts` lists `click-spring-key.0.conductor.pad` and `conductor.padCommon`, the split the tip bridges. |
+| Rationale | The archetype emits no contact feature because the loose tip cannot be named (scout finding 7). The pad therefore shows no logic or ohm read, since there is no hookup and no contact feature, and its line says so. |
+| Evidence | `reference/keys/access-switch/build.ts` contact; `packages/ui-core/src/drive/drive.ts` readOf. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-416 The access switch chase gains a json export
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. Added `{ kind: "json" }` to the keys-access-switch exports. This moves defHash; goldens were re-accepted with mesh hashes and volumes equal (computed, field by field), and the graph fixture was rerecorded with only access-switch build, golden and link lines moved. |
+| Rationale | The header save verb and gold G-57 export json, and the bench failed G-57 with `unknown export kind: json`. flex-pair declares json too. |
+| Evidence | `tools/smoke/gold/perf.spec.ts` line 52; `reference/keys/flex-pair/chase.ts` line 73; `packages/project/test/fixtures/graph.jsonl` rerecord commit. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-417 The gold check host builds the bench's own design
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `startHost(design)` passes the folder of the bench `bake.json` to `tools/smoke/flex-pair-host.mjs`, which still defaults to flex-pair. |
+| Rationale | With the host hardwired to flex-pair, G-33, G-36, G-40 and the check report failed with E_SCHEMA on every other fab bench. That was a harness defect, not a bench defect. |
+| Evidence | Builder first gold run: `E_SCHEMA /H set H inside its range`; second run: those rows pass. flex-pair was not re-graded after the change (not run). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-418 Curve scale fmax also covers the claim band top
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `curveSvg` takes fmax as 1.15 times the larger of the curve peak and `band.hi`. PIP drawCurve used the peak only. |
+| Rationale | This keeps the shaded claim band inside the frame when the band top is above the peak. It is recorded as a fix in the lineage row. |
+| Evidence | `lineage/pip.bench-part3.json` row `pip.bench-part3/ui-curve-panel`; `packages/ui/src/panels/curve.ts`. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-419 The integrator rerecords graph.jsonl when only the build hash moves
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The R1-flagship-access-switch-12 builder left `packages/project/test/fixtures/graph.jsonl` for the integrator, who rerecorded it with `HBF_ACCEPT_GRAPH=1` after checking that every mesh item hash and volume was unchanged and that no line outside access-switch moved. |
+| Rationale | The build hash moved by design from the chase json export, not from geometry. Item 02 took the same path after a mesh-equal re-accept. |
+| Evidence | `core/test/project-graph.test.ts` 11 pass after the rerecord (computed); graph diff 26 lines, all access-switch, mesh hashes equal; LOG.md line for R1-flagship-access-switch-02. |
 | Supersedes | new |
 | Milestone | none |
 
