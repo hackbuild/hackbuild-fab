@@ -55,7 +55,7 @@ import { allCheckIds, runAllChecks } from "../src/commands/check-run.js";
 import { isBoardDesign } from "../src/board.js";
 import { solveBuilt, type CircuitSolveOutput } from "../src/commands/circuit-solve.js";
 import { DEFAULT_TEMPLATE } from "@hackbuild/3mf";
-import { CHECK_MODULES, KERNEL_LANDS, MILESTONE_IDS, TARGET_LANDS, registerChecks, runRegistry, CHECK_LEVELS } from "@hackbuild/checks";
+import { CHECK_MODULES, IMPORT_PATH_CHECKS, KERNEL_LANDS, MILESTONE_IDS, TARGET_LANDS, registerChecks, runRegistry, CHECK_LEVELS } from "@hackbuild/checks";
 import { loadFixture } from "../../packages/checks/test/fixture-load.js";
 import { W, budgetFloor, capCeiling, fixtureRegistry, rowFloor } from "./fixtures/query-defs.js";
 import { ROOT, hbf, json } from "./hbf.js";
@@ -602,9 +602,13 @@ describe("message numbers on every check fixture", () => {
     const notRun = [...new Set(fixtureCases().map((c) => c.id).filter((id) => !registered.has(id)))];
     for (const id of notRun) console.info(`not run: fixtures/${id} names no registered check`);
     expect(notRun.every((id) => /^CHK-[A-Z0-9]+-\d+$/.test(id))).toBe(true);
+    // The import path checks' fixtures hold pieces for the finding functions core calls on an import;
+    // Part IR carries no pieces, so no registry run reads them.
+    const importPath = [...new Set(fixtureCases().map((c) => c.id).filter((id) => IMPORT_PATH_CHECKS.includes(id)))];
+    for (const id of importPath) console.info(`not run: fixtures/${id} feeds the import path finding function, not a registry run`);
   });
 
-  for (const c of fixtureCases().filter((x) => registered.has(x.id))) {
+  for (const c of fixtureCases().filter((x) => registered.has(x.id) && !IMPORT_PATH_CHECKS.includes(x.id))) {
     test(`${c.id}/${path.basename(c.file)}`, async () => {
       const first = await runFixture(c);
       expect(first.results.length, "the fixture gives a result").toBeGreaterThan(0);

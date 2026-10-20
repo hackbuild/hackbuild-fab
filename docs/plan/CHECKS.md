@@ -1079,6 +1079,8 @@ row says otherwise.
 | CHK-PRT-14 | longest unsupported first-layer run per solid in print pose | part; mesh, profile | interval, mm | warn | SLATE 2026-08 print audit; implementation absent from the harvest and from the downloads (`notes/benches/benches-cases.md:867`); SLATE r5 and r6 ship a hinge `sweepCheck` instead (see below) | M11 with its reference |
 | CHK-PRT-15 | layer height and first layer height equal the written process preset; every feature z, Z snap and `pauseBefore.z` lies on a layer top, firstLayer + n x layer | part; mesh, profile, 3mf | multipleOf with offset firstLayer, mm | block | COLLAR 2026-08: default 0.2 under "0.24mm Standard @FF C5"; NFC floor 1.8 landed mid layer; HAFT 2026-09-18: a 0.24 stack saved at 0.20mm Standard over a 0.25 first layer (`fab-knowledge:evidence/x/downloads/dl-pip-latest/haft/haft (3).3mf`); BAFFLE R3 puts every feature boundary on a 0.24 layer line | M04 |
 | CHK-PRT-16 | every print fits the machine's build volume in print pose, listed before export | part; mesh, profile | interval, mm (AABB per axis at most the machine row's build volume) | block | COTTER 2026-09: `platePlan()` lists oversize prints apart and the BOM warns on parts too big for the bed (`sources/latest/cotter-sparger.md` lines 267, 271); KNUCKLE 2026-09: the build warns on bed fit and suggests side tabs (`sources/latest/knuckle-tenon-gusset.md` line 334) | M04 |
+| CHK-PRT-18 | each imported file has the declared number of pieces | part; mesh | interval, count (lo = hi = the pieces the import declares, default 1) | block | hbf image eval 2026-10-20: an img2threejs cap floated 2 mm above its stem and imported with no warning; union NoError, genus -1, two shells, measured (`fab-knowledge:plan-v5/image-eval.md` line 25) | R1, part.build --import |
+| CHK-PRT-19 | every piece of an imported part rests on the bed or on another piece | part; mesh | interval, mm (largest lift of a piece's lowest point above the part's lowest point, 0 to 1/1024) | block | hbf image eval 2026-10-20: the same floating cap (`fab-knowledge:plan-v5/image-eval.md` line 25) | R1, part.build --import |
 | CHK-FIT-06 | snap beam strain at full engagement within the material limit for its bend direction | feature snap; mesh, profile | interval, percent | block | PIP 2026-09: click beam failed at 2.7 to 3.3 percent; formula from PLINTH 2026-08-31 (snap strain first in plinth (3).html, 01:32; copies in `fab-knowledge:evidence/x/downloads/dl-cases/plinth/`) | M06 with the snap family (D-096) |
 | CHK-FIT-07 | a printed conductive socket on a printed stud: diametral interference 0.08 to 0.2, at least 3 collet fingers, axial squeeze 0.06 to 0.2 | feature; mesh, profile | interval, mm | block | BAFFLE R3 2026-09-18 tile: slots added after the first tile print (`fab-knowledge:evidence/x/downloads/dl-baffle-inlay-coin/baffle/baffle-tile-tile (1).3mf`) | M05 |
 
@@ -1088,6 +1090,19 @@ preconditions are reserved for Part IR that is wrong for every later check
 (section 3). Block already stops the export. The finding names the axis, the overshoot and the
 machine id; `next` names the split or side-tab change the design declares,
 since no single param fixes a bed overshoot.
+
+CHK-PRT-18 and CHK-PRT-19 run where an imported mesh is read
+(`part.build --import`): the import unions the file's shells, decomposes
+the union and counts the pieces, the PIP net pass
+(`packages/circuit/src/extract/nets.ts` lines 3 to 5). Part IR carries no
+pieces, so the registered run skips on every part with "runs where the
+import is read (part.build --import)", and the build registry leaves both
+out of a chase build's registryHash. CHK-PRT-18 is measured per file
+against the pieces the import declares (default 1). CHK-PRT-19 measures
+the largest lift of a piece above the part's lowest point; a lift past
+1/1024 mm (one D-054 grid step) fails even when the pieces are declared.
+CHK-PRT-03 keeps 2.0.0: its rule and legal are unchanged, only the input
+the import path gives it changes.
 
 Draft beside CHK-PRT-12 and CHK-PRT-16 (not entered; the id is held):
 

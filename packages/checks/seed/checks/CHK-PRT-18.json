@@ -1,0 +1,21 @@
+{
+  "id": "CHK-PRT-18",
+  "version": "1.0.0",
+  "title": "each imported file has the declared number of pieces",
+  "appliesTo": {
+    "level": "part"
+  },
+  "severity": "block",
+  "needs": [
+    "mesh"
+  ],
+  "legalKind": "interval",
+  "origin": {
+    "project": "hbf image eval 2026-10-20",
+    "date": "2026-10-20",
+    "what": "an img2threejs cap floated 2 mm above its stem and imported with no warning",
+    "evidence": "fab-knowledge:plan-v5/image-eval.md"
+  },
+  "status": "entered",
+  "enteredBy": "R1-rails-import"
+}
