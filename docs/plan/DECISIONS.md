@@ -463,6 +463,10 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-407 | The access switch press-claim README block has no automatic writer | decided | Reference, goldens |
 | D-408 | The access switch parity line names build 90e387..5c | decided | Reference, docs |
 | D-409 | The access switch coupon README takes the four verified lists | decided | Reference, docs |
+| D-410 | Slice into the temp folder, then copy into fab-knowledge | decided | Rails, virtual print |
+| D-411 | Beam road check passes despite the 0.60 mm planned road | decided | Reference, virtual print |
+| D-412 | The access switch README drops its stale not-sliced line | decided | Reference, docs |
+| D-413 | slice.mjs keeps its preset-name output for now | decided | Rails, virtual print |
 
 ## House rules and process
 
@@ -5017,6 +5021,50 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. R1-fix-01 also converted `reference/keys/access-switch/coupon/README.md`, outside its Writes line, to the four DOCS.md 9.3 lists, each line backed by fresh parity and check.run runs on the coupon. |
 | Rationale | The brief's done condition needs plan-drift test 28 to pass, and after the switch fix it failed only on this file's "### Not verified" heading. |
 | Evidence | plan-drift, ci-exit-rows, ci-workflow and lineage tests 68 of 68 pass on the merged tree (computed); coupon parity PASS at build d6f43d..34 and check.run 0 fail (builder runs, computed). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-410 Slice into the temp folder, then copy into fab-knowledge
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. R1-flagship-access-switch-08 ran `tools/slice/slice.mjs` with its output and datadir under the temp folder and copied the run byte for byte to `fab-knowledge/evidence/virtual-print/2026-10-20-access-switch/`. Paths inside the run record name the temp folder. |
+| Rationale | From a worktree, slice.mjs resolves its evidence root to `wt/fab-knowledge/evidence`, and its out-dir guard refuses the real fab-knowledge path. Editing slice.mjs was outside the item. |
+| Evidence | `tools/slice/slice.mjs` evidence root `path.resolve(ROOT, '..', 'fab-knowledge', 'evidence')` and its out-dir guard; `SLICE.md` section "How it ran" in the evidence folder. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-411 Beam road check passes despite the 0.60 mm planned road
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The access switch beam check is recorded as pass, since every beam is deposited and continuous on layers 0 to 6, and the 0.587 to 0.601 mm planned road width (computed) against the drawn 0.55 mm is recorded as a separate finding. Beam t is not changed. |
+| Rationale | The item asks whether the beams are deposited, and they are. Changing t to suit the slicer needs a claim note first. The width risk is covered by the inferred press claim and the thickness ladder coupon. |
+| Evidence | `beam-roads.json` in the evidence folder, road cover 1.000 and longest gap 0.00 mm (computed); the Virtual slice block of `reference/keys/access-switch/README.md`. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-412 The access switch README drops its stale not-sliced line
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. R1-flagship-access-switch-08 changed "Not sliced; no force has been on a gauge (unknown)." to "No force has been on a gauge (unknown). The slice below is virtual." outside its own README block. |
+| Rationale | After the virtual slice the old line would be false. The edit is one line in the same README. |
+| Evidence | Commit 13e095b, merged in 9e74d75. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-413 slice.mjs keeps its preset-name output for now
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. R1-flagship-access-switch-08 left `tools/slice/slice.mjs` unchanged and skipped the optional preset-name step. |
+| Rationale | The step is optional, the switch declares a preset, and slice.mjs is shared by every virtual print. |
+| Evidence | The run wrote `access-switch-default.3mf` in the evidence folder. |
 | Supersedes | new |
 | Milestone | none |
 
