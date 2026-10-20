@@ -400,6 +400,10 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-344 | touched hook accepts MultiEdit and resolves symlinks | decided | Agent surface |
 | D-345 | derived split into derived and derived:counts | decided | Testing, docs, milestones, registry |
 | D-346 | Builder branches do not regenerate counts.json | decided | Testing, docs, milestones, registry |
+| D-347 | actions/cache major v5 in ci | decided | Testing, docs, milestones, registry |
+| D-348 | separate browser folder for Python Playwright in parity | decided | Testing, docs, milestones, registry |
+| D-349 | uv cache on in every setup-uv, cold and determinism included | decided | Testing, docs, milestones, registry |
+| D-350 | no build cache in determinism, browser cache allowed | decided | Testing, docs, milestones, registry |
 
 ## House rules and process
 
@@ -4261,6 +4265,50 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. Builder branches skip `node tools/counts.mjs` and never commit `docs/plan/counts.json` or PLAN.md Appendix B, even where the generic done list asks for it. The integrator regenerates both after each merge and with each decision commit. Package tests compute their counts from the sources they already load, and the D-010 cross-check lives in `tools/test/counts.test.mjs`. |
 | Rationale | One writer for the generated counts removes the drift conflicts between parallel branches (see D-306). |
 | Evidence | `tools/counts.mjs` header lines 5 to 10 in commit 39491f1; `git grep counts.json packages/` has no hits; `node --test tools/test/counts.test.mjs` 9 pass, 0 fail on merged main (measured). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-347 actions/cache major v5 in ci
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `.github/workflows/ci.yml` uses `actions/cache@v5` and `actions/cache/restore@v5`, and the version floor in `.github/scripts/ci-workflow.test.mjs` sets cache to 5. The brief named v4 as the node24 floor; this call reads that as wrong. |
+| Rationale | The repo already pins the node24 majors of the other actions (checkout and setup-node v7, upload-artifact v7). That v4 of actions/cache runs on node20 is inferred by the builder, not checked against the vendor release notes. |
+| Evidence | `.github/scripts/ci-workflow.test.mjs` floor map; the `uses:` lines of `ci.yml`; 16 of 16 workflow tests pass (measured, 2026-10-20). No CI run was pushed, so the major is not checked on a runner. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-348 separate browser folder for Python Playwright in parity
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. Python Playwright in the parity job installs into `${{ runner.temp }}/ms-playwright-py` through PLAYWRIGHT_BROWSERS_PATH, with its own cache key `pw-py-<os>-<hash of tools/py/uv.lock>-chromium`, apart from the Node Playwright cache in `~/.cache/ms-playwright`. |
+| Rationale | Node and Python Playwright both default to `~/.cache/ms-playwright` and may pin different chromium builds, so two cache entries on one path would each save both browsers. runner.temp is used because `~` is not expanded in an env value. |
+| Evidence | The parity steps in `.github/workflows/ci.yml` (step id pwpy and the M03 browser rows step); the workflow test that every Playwright cache id is read by a later cache-hit check (measured pass, 2026-10-20). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-349 uv cache on in every setup-uv, cold and determinism included
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. Every setup-uv step in `.github/workflows/ci.yml` sets `enable-cache: true` with `cache-dependency-glob: tools/py/uv.lock`, the cold job and the determinism legs included. |
+| Rationale | The brief asks for every setup-uv. The uv cache holds downloaded Python packages only, never built project output, so cold and determinism still build from nothing. |
+| Evidence | Brief R1-rails-ci-hooks-02 step 1; the workflow test 'every setup-uv caches on the uv lock' (measured pass, 2026-10-20). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-350 no build cache in determinism, browser cache allowed
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. Brief step 4 ('no cache step in determinism') is read as build output only. The workflow test forbids every cache step in cold and bake-determinism, and lets determinism hold the Playwright browser cache on its browser legs and nothing else. |
+| Rationale | Brief step 2 asks for a Playwright cache in the determinism browser legs while step 4 forbids a cache step there; the two hold together only if step 4 means build output, which is what a determinism run must rebuild. |
+| Evidence | Brief R1-rails-ci-hooks-02 steps 2 and 4; the workflow test that cold and bake-determinism have no cache step and determinism caches browsers only (measured pass, 2026-10-20). |
 | Supersedes | new |
 | Milestone | none |
 
