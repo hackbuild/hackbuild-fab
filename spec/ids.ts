@@ -171,7 +171,7 @@ export type KernelId = (typeof KERNEL_IDS)[number];
  * MeshRouteDef (build.ts). brep is opt-in, lazy, M14 only (D-024).
  */
 export const MESH_ROUTES = [
-  "raster", "prism", "stack", "revolve", "lathe", "trace", "csg", "imported", "brep",
+  "raster", "prism", "stack", "revolve", "lathe", "trace", "loft", "sweep", "csg", "imported", "brep",
 ] as const;
 export type MeshRoute = (typeof MESH_ROUTES)[number];
 

@@ -24,6 +24,8 @@ import {
 import { bandOverlap, checkBandOverlaps, stackMesh } from "./routes/stack.js";
 import { raster, type RasterVolume } from "./routes/raster.js";
 import { revolveShape } from "./routes/revolve.js";
+import { loftMesh } from "./routes/loft.js";
+import { sweepMesh } from "./routes/sweep.js";
 import { IMPORTED_ROUTE, importStl, type ImportedBody } from "./routes/imported.js";
 import { importGlb } from "./routes/imported-glb.js";
 import { shellGroups } from "./shells.js";
@@ -197,6 +199,16 @@ function insetProfile(ctx: RouteCtx, profile: readonly Vec2[], path: string): Ve
   return cleanRing(one.outer).map(([r, z]) => [Math.abs(r) < 1e-9 ? 0 : r, z] as Vec2);
 }
 
+/**
+ * Loft and sweep sections carry no outline the stage 6 inset can shrink
+ * point for point, so an inserted body on either route is refused, as an
+ * imported one is.
+ */
+function noInset(ctx: RouteCtx, route: string): void {
+  if (ctx.inset.d === 0) return;
+  throw meshError({ code: "E_KERNEL", path: ctx.path, got: ctx.inset.d, expected: `no stage 6 inset on a ${route} body`, hint: `give the ${route} body the body role, or build the insert as a prism or revolve`, record: "mesh-kernel" });
+}
+
 function prismOf(ctx: RouteCtx, outline: readonly Ring[], z: readonly [Mm, Mm], path: string): PrismMesh {
   if (ctx.inset.d === 0) return prismMesh(ctx.geom, outline, z, path);
   return prismFromComponents(insetOutline(ctx, outline, path), z, path);
@@ -275,13 +287,30 @@ const ROUTES: readonly RouteEntry[] = [
       return { shells: [revolveShape({ ...s, profile }, ctx.path)], warnings: [] };
     },
   },
+  {
+    route: "loft", guarantees: { manifold: true, exactZ: false, perSlotDisjoint: false }, lazy: false,
+    build: (shape, _body, ctx) => {
+      const s = shape as Extract<ShapeDecl, { route: "loft" }>;
+      noInset(ctx, "loft");
+      return { shells: [loftMesh(s.sections, `${ctx.path}/sections`)], warnings: [] };
+    },
+  },
+  {
+    route: "sweep", guarantees: { manifold: true, exactZ: false, perSlotDisjoint: false }, lazy: false,
+    build: (shape, _body, ctx) => {
+      const s = shape as Extract<ShapeDecl, { route: "sweep" }>;
+      noInset(ctx, "sweep");
+      return { shells: [sweepMesh(s.section, s.path)], warnings: [] };
+    },
+  },
   { route: "lathe", guarantees: { manifold: true, exactZ: false, perSlotDisjoint: false }, lazy: false, lowersTo: "revolve", landsAt: "the milestone of the first lathe design" },
   { route: "trace", guarantees: { manifold: true, exactZ: true, perSlotDisjoint: false }, lazy: false, lowersTo: "prism", landsAt: "the milestone of the first trace design" },
   {
     route: "csg", guarantees: { manifold: true, exactZ: false, perSlotDisjoint: false }, lazy: false,
-    // Operands go through their own routes; union batches then verifies (D-055). At stage 6 the
-    // inset reaches every operand of a union or an intersection and the first operand of a
-    // difference; a subtracted operand keeps its size, since shrinking it would grow the result.
+    // Operands go through their own routes; union batches then verifies (D-055); hull is
+    // Manifold.hull over every operand. At stage 6 the inset reaches every operand of a union, an
+    // intersection or a hull and the first operand of a difference; a subtracted operand keeps its
+    // size, since shrinking it would grow the result.
     build: (shape, body, ctx) => {
       const s = shape as Extract<ShapeDecl, { route: "csg" }>;
       if (s.of.length === 0) {
@@ -298,6 +327,7 @@ const ROUTES: readonly RouteEntry[] = [
       const [first, ...rest] = s.of.map((x, i) => operand(x, i, s.op === "difference" && i > 0 ? none : ctx.inset));
       let solid: Manifold;
       if (s.op === "union") solid = rest.length === 0 ? first! : ctx.scope.own(unionReport([first!, ...rest], { path: `${ctx.path}/of`, members: s.of.map((_, i) => `${body.id} of/${i}`) }).solid);
+      else if (s.op === "hull") solid = ctx.scope.own(ctx.wasm.Manifold.hull([first!, ...rest]));
       else if (s.op === "intersection") solid = rest.reduce((a, b) => ctx.scope.own(a.intersect(b)), first!);
       else solid = rest.length === 0 ? first! : ctx.scope.own(first!.subtract(ctx.scope.own(unionReport(rest, { path: `${ctx.path}/of`, members: rest.map((_, i) => `${body.id} of/${i + 1}`) }).solid)));
       return { shells: [], solid, warnings };
@@ -338,7 +368,7 @@ function baseShape(shape: ShapeDecl, body: BodyDraft, ctx: RouteCtx): BaseShape 
   if (entry === undefined || entry.build === undefined) {
     throw meshError({
       code: "E_KERNEL", path: `${ctx.path}/route`, got: shape.route, expected: `one of ${ROUTES.filter((r) => r.build !== undefined).map((r) => r.route).join(", ")}`,
-      hint: `route ${shape.route} is not available in this kernel build${entry?.landsAt === undefined ? "" : ` (it arrives with ${entry.landsAt})`}; use raster, prism, stack, revolve, csg or imported`, record: "mesh-kernel",
+      hint: `route ${shape.route} is not available in this kernel build${entry?.landsAt === undefined ? "" : ` (it arrives with ${entry.landsAt})`}; use ${ROUTES.filter((r) => r.build !== undefined).map((r) => r.route).join(", ")}`, record: "mesh-kernel",
     });
   }
   return entry.build(shape, body, ctx);

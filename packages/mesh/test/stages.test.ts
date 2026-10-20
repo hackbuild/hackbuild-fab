@@ -44,7 +44,7 @@ describe("stage runner (D-047)", () => {
   });
 
   it("registers every route of the MeshRoute union with its guarantees", () => {
-    expect([...MESH_ROUTE_DEFS.keys()].sort()).toEqual(["brep", "csg", "imported", "lathe", "prism", "raster", "revolve", "stack", "trace"]);
+    expect([...MESH_ROUTE_DEFS.keys()].sort()).toEqual(["brep", "csg", "imported", "lathe", "loft", "prism", "raster", "revolve", "stack", "sweep", "trace"]);
     expect(MESH_ROUTE_DEFS.get("raster")!.guarantees).toEqual({ manifold: true, exactZ: true, perSlotDisjoint: true });
     expect(MESH_ROUTE_DEFS.get("stack")!.lowersTo).toBe("prism");
   });
