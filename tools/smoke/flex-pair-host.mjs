@@ -25,7 +25,8 @@ register(pathToFileURL(path.join(ROOT, "core/dist/resolve-hook.js")).href, impor
 const { buildPart, defaultsOf, loadDesign, resolveParams } = await import(pathToFileURL(path.join(ROOT, "core/dist/commands/build.js")).href);
 const { runAllChecks } = await import(pathToFileURL(path.join(ROOT, "core/dist/commands/check-run.js")).href);
 
-const design = await loadDesign("reference/keys/flex-pair", ROOT);
+// argv[2] names another design folder (the gold specs pass the bench's own); flex-pair by default.
+const design = await loadDesign(process.argv[2] ?? "reference/keys/flex-pair", ROOT);
 const out = (o) => process.stdout.write(`${JSON.stringify(o)}\n`);
 
 async function serve(req) {

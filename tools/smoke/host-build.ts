@@ -18,8 +18,9 @@ export interface Host {
   close(): void;
 }
 
-export async function startHost(): Promise<Host> {
-  const child: ChildProcess = spawn(process.execPath, [path.join(ROOT, "tools/smoke/flex-pair-host.mjs")], { cwd: ROOT, stdio: ["pipe", "pipe", "inherit"] });
+/** design: the design folder relative to the repo root; flex-pair when absent. */
+export async function startHost(design?: string): Promise<Host> {
+  const child: ChildProcess = spawn(process.execPath, [path.join(ROOT, "tools/smoke/flex-pair-host.mjs"), ...(design === undefined ? [] : [design])], { cwd: ROOT, stdio: ["pipe", "pipe", "inherit"] });
   const rl = readline.createInterface({ input: child.stdout! });
   const waiting = new Map<number, (r: Reply) => void>();
   let ready: () => void = () => undefined;

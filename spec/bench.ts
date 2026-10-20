@@ -102,12 +102,29 @@ export interface PlotBehaviour {
  * thresholds. Rendered by the "plot.<id>" panel.
  */
 export interface PlotDecl {
-  /** Metric id of the curve, a series of [x, y] points in the axes' units. */
+  /**
+   * Metric id of the curve in the axes' units. Metric values are scalars
+   * (part-ir.ts), so the curve is sampled metrics `<metric>.n`,
+   * `<metric>.d<i>` (x) and `<metric>.F<i>` (y), as click-spring-key
+   * emits spring.curve.
+   */
   readonly metric: string;
   readonly x: { readonly label: string; readonly unit: string };
   readonly y: { readonly label: string; readonly unit: string };
   readonly marks: readonly ("contact" | "peak" | "zero")[];
   readonly behaviour?: PlotBehaviour;
+  /**
+   * A claim band shaded behind the curve, as metric ids of its low and
+   * high edges in the y unit (a design-local claim until function claims
+   * land, plan v9 section 3.2).
+   */
+  readonly band?: { readonly lo: string; readonly hi: string };
+  /**
+   * Prefix of measured points in the axes' units, `<prefix>.n`,
+   * `<prefix>.d<i>`, `<prefix>.F<i>`, as the curve's sampled metrics are
+   * written; the panel draws none until a coupon enters them.
+   */
+  readonly measured?: string;
 }
 
 /** A stage tool (P-13): BLOCKS place, wire, rotate, delete; COTTER move on the lattice. */

@@ -316,6 +316,10 @@ const ctx = computed<PanelCtx>(() => ({
   valueAt: (p: string) => props.core.get(p.slice(1).split("/").join(".")),
   log: shell.log,
   notes: shell.report.notes ?? {},
+  plots: props.bench.plots ?? {},
+  drive: props.bench.views.drive ?? null,
+  contact: props.contact,
+  held: shell.held,
 }));
 
 const pill = computed<{ status: "ok" | "warn" | "err"; text: string }>(() => {

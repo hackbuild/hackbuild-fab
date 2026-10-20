@@ -51,7 +51,7 @@ export const chase = defineChase({
     { id: "default", label: "default", params: {}, note: "span 28, beam 0.55: about 158 g at the snap (computed, modulus inferred)." },
   ],
   build: { module: "./build.ts", fn: "build" },
-  exports: [{ kind: "3mf", machine: "ffc5p", pose: "print" }, { kind: "stl" }],
+  exports: [{ kind: "3mf", machine: "ffc5p", pose: "print" }, { kind: "stl" }, { kind: "json" }],
   assertions: [
     { type: "apart", nets: ["KEY", "GND"] },
   ],
