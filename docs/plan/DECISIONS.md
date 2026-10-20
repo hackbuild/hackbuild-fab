@@ -525,6 +525,9 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-469 | CHK-CLAIM-01 kept out of the part build registry run | decided | Testing, docs, milestones, registry |
 | D-470 | Vendored hackbuild-3mf repacked from fee8d2d | decided | Repos, packaging, toolchain, licensing |
 | D-471 | R1-engine-11 round 3 worktree and branch use the -r3 suffix | decided | House rules and process |
+| D-472 | noUnion text says imported part(s) with singular agreement (amends D-379) | decided | Kernel, geometry |
+| D-473 | Per-fixture piece counts in the import corpus spelled as words | decided | Testing, docs, milestones, registry |
+| D-474 | No new INFORMATIONAL reason for the spring.curve metrics | decided | Testing, docs, milestones, registry |
 
 ## House rules and process
 
@@ -5761,6 +5764,39 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. The builder used /Users/obsidian/Projects/hackbuild/wt/R1-engine-11-r3 and branch r1/R1-engine-11-r3 instead of the -r1 names in the task text. |
 | Rationale | The failure packet and the round note ask for -r3, and r1/R1-engine-11-r1 already exists from an earlier round. |
 | Evidence | git branch list shows r1/R1-engine-11-r1, -r2 and -r3. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-472 noUnion text says imported part(s) with singular agreement (amends D-379)
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `packages/mesh/src/stages.ts` noUnion now reads 'N of M imported part(s) fail(s) the audit (x of y shell groups), first ...' and 'the union of N imported part(s) is refused (y shell groups): ...'. The part-count prefix that D-379 kept is still there. |
+| Rationale | The old text produced '1 parts' and '1 of 1 parts fail'. Tests quoting it beside '16 parts' tripped CHK-LNT-03 as two totals for one bill noun. Fixing the string at its source keeps the rule as it is. The core prefix already says 'imported parts'. CHK-LNT-03 matches only a digit directly followed by the noun, so it no longer matches these messages. |
+| Evidence | rules-audit failed with CHK-LNT-03 on `core/test/part-build-import.test.ts` and `packages/mesh/test/imported-pieces.test.ts`. After the change rules-audit 9 of 9, part-build-import 23 of 23 and packages/mesh 191 of 191 pass (computed, 2026-10-20). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-473 Per-fixture piece counts in the import corpus spelled as words
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `tools/corpus/import/MANIFEST.json` outcome text and the `tools/corpus/import/make-pieces.mjs` header now say 'one piece', 'two pieces' and 'one void' instead of digits. |
+| Rationale | Each count describes a different fixture, not a hand-kept total. CHK-LNT-03 reads a whole file as one bill and cannot tell them apart, so words avoid a false drift while the rule stays strict. The comment already used 'two shells' and 'five'. |
+| Evidence | rules-audit passes. Putting the digits back fails it with CHK-LNT-03 on make-pieces.mjs (mutant killed). No STL sha in MANIFEST.json changed (computed, 2026-10-20). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-474 No new INFORMATIONAL reason for the spring.curve metrics
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The 49 spring.curve metrics on reference/keys/access-switch stay gated CHK-KEY-04 as the build emits them, so no INFORMATIONAL row was added to `packages/checks/test/metric-gates.test.ts`. The done mutant ungated one curve row instead of removing a reason. |
+| Rationale | The brief expected new informational metrics. The recorded diff holds none: every new row carries gate CHK-KEY-04 from 715db0e. The record holds no mesh hash or volume. |
+| Evidence | The metric-record diff was 49 added rows, none removed or relabelled. Ungating curve.d5 fails both metric-gates ('neither a gate nor informational (D-075)') and metric-record (computed, 2026-10-20). |
 | Supersedes | new |
 | Milestone | none |
 
