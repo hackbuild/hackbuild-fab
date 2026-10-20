@@ -1,5 +1,5 @@
 // The registered surface (M00-T13 step 1, M01-T05 step 7, M02-T11 step 9, M04-T13, M05-T06, M07-T14,
-// MILESTONES.md 1.3): the commands and utility verbs equal the cumulative
+// M10-T04, MILESTONES.md 1.3): the commands and utility verbs equal the cumulative
 // M-S, M00, M01 and M02 rows of the 1.3 table, read from the file, so the
 // count is never typed here. M01_PENDING names the M01 commands whose card
 // has not landed; each card deletes its entry, and M01-T11 checks the list
@@ -29,8 +29,10 @@ const M01_PENDING: readonly string[] = [];
 const M04_PENDING: readonly string[] = [];
 /** M06 commands not registered yet; mech.find, mech.derive and arch.find landed with M06-T11, arch.apply with M06-T12. */
 const M06_PENDING: readonly string[] = [];
+/** M10 commands not registered yet; chase.validate landed with M10-T04 and each card deletes its entry. */
+const M10_PENDING: readonly string[] = ["chase.scaffold", "chase.diff", "chase.patch", "chase.render", "chase.bake"];
 
-describe("registered surface (M00-T13 step 1, M01-T05 step 7, M02-T11 step 9, M04-T09)", () => {
+describe("registered surface (M00-T13 step 1, M01-T05 step 7, M02-T11 step 9, M04-T09, M10-T04)", () => {
   const rows = surfaceRows(["M-S", "M00", "M01", "M02"]);
   const m04 = surfaceRows(["M04"]).flatMap(([, cell]) => mentioned(cell, COMMAND_NAMES));
   const m05 = surfaceRows(["M05"]).flatMap(([, cell]) => mentioned(cell, COMMAND_NAMES));
@@ -38,10 +40,11 @@ describe("registered surface (M00-T13 step 1, M01-T05 step 7, M02-T11 step 9, M0
   /** catalog.find and catalog.pins landed with M08-T04 and M08-T05; M08-T14 pins the exit count. */
   const m08 = surfaceRows(["M08"]).flatMap(([, cell]) => mentioned(cell, COMMAND_NAMES));
   const m06 = surfaceRows(["M06"]).flatMap(([, cell]) => mentioned(cell, COMMAND_NAMES));
+  const m10 = surfaceRows(["M10"]).flatMap(([, cell]) => mentioned(cell, COMMAND_NAMES));
 
-  it("registers exactly the commands of the M-S, M00, M01, M02, M04, M05, M06, M07 and M08 rows, less the pending M01, M04 and M06 ones", () => {
-    const all = new Set([...rows.flatMap(([, cell]) => mentioned(cell, COMMAND_NAMES)), ...m04, ...m05, ...m06, ...m07, ...m08]);
-    const want = [...all].filter((n) => !M01_PENDING.includes(n) && !M04_PENDING.includes(n) && !M06_PENDING.includes(n));
+  it("registers exactly the commands of the M-S, M00, M01, M02, M04, M05, M06, M07, M08 and M10 rows, less the pending M01, M04, M06 and M10 ones", () => {
+    const all = new Set([...rows.flatMap(([, cell]) => mentioned(cell, COMMAND_NAMES)), ...m04, ...m05, ...m06, ...m07, ...m08, ...m10]);
+    const want = [...all].filter((n) => !M01_PENDING.includes(n) && !M04_PENDING.includes(n) && !M06_PENDING.includes(n) && !M10_PENDING.includes(n));
     expect(COMMANDS.map((c) => c.name).sort()).toEqual(want.sort());
     expect(COMMANDS.length).toBe(want.length);
   });
@@ -98,6 +101,15 @@ describe("registered surface (M00-T13 step 1, M01-T05 step 7, M02-T11 step 9, M0
       expect(COMMANDS.some((c) => c.name === n), `${n} is registered; delete it from M06_PENDING`).toBe(false);
     }
     for (const n of m06.filter((x) => !M06_PENDING.includes(x))) expect(COMMANDS.find((c) => c.name === n)?.group, n).toBe(COMMAND_GROUP[n as keyof typeof COMMAND_GROUP]);
+  });
+
+  it("the M10 row adds chase.validate in its spec group; every pending one is in the row and unregistered (M10-T04)", () => {
+    expect(m10).toContain("chase.validate");
+    for (const n of M10_PENDING) {
+      expect(m10, `${n} is not in the M10 row`).toContain(n);
+      expect(COMMANDS.some((c) => c.name === n), `${n} is registered; delete it from M10_PENDING`).toBe(false);
+    }
+    expect(COMMANDS.find((c) => c.name === "chase.validate")?.group).toBe(COMMAND_GROUP["chase.validate"]);
   });
 
   it("the M07 row adds nest.pack in group make and motion.run in group prove (M07-T14)", () => {
