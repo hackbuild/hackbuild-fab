@@ -13,7 +13,8 @@
 // after build() settles, the queue holds the final polygons (every nudge is
 // written back into them, part2.js lines 108 to 113), and each part's union
 // is measured in manifold-3d. The page's own part volume (float32 soup) and
-// bounding box stand beside it.
+// bounding box stand beside it. A finger case also records simFinger (part2.js
+// line 431), the divider the page's wiper reads, at five finger positions.
 
 import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
@@ -46,6 +47,7 @@ const mf = await Module();
 mf.setup();
 
 const r6 = (v) => Number(v.toFixed(6));
+const SIM_AT = [0, 0.25, 0.5, 0.75, 1];
 function run(over) {
   const S = C.blankState();
   for (const [k, v] of Object.entries(over)) { if (typeof v === "object") Object.assign(S[k], v); else S[k] = v; }
@@ -82,6 +84,7 @@ function run(over) {
   return {
     state: S, T: G.T, objectSizes: G.objects.map((o) => o.size), f: G.f, stack: G.stack, warn: G.warn, notes: G.notes, nudges: G.nudges, memInstall: G.memInstall ?? null,
     phys: G.phys, geom: Object.fromEntries(Object.entries(G.geom).filter(([, v]) => typeof v === "number")), parts,
+    ...(S.sense === "finger" ? { sim: SIM_AT.map((x) => ({ x01: x, ...C.simFinger(G, x) })) } : {}),
   };
 }
 

@@ -107,7 +107,7 @@ describe("widgets: the registry", () => {
   it("an unregistered kind refuses, naming the registered ones", () => {
     const view = { ...decl, kind: "view.netlens" as const };
     expect(widgetKinds()).not.toContain("view.netlens");
-    expect(() => widgetModel(view, build())).toThrow("widget kind view.netlens is not registered. registered: drive.press, drive.tilt, plot.curve");
+    expect(() => widgetModel(view, build())).toThrow("widget kind view.netlens is not registered. registered: drive.fader, drive.press, drive.tilt, drive.touch, plot.curve, readout.signal");
     expect(() => widgetRecords([view], build())).toThrow("is not registered");
   });
 

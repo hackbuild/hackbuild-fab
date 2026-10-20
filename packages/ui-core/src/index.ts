@@ -52,5 +52,11 @@ export { claimAt, claimBinding, claimTarget, drivePress, PRESS_GESTURE, pressLin
 export type { ClaimBinding, PressModel, WidgetClaimArgs, WidgetClaimFn } from "./widgets/press.js";
 export { CONTACT_TOL_MM, contactTravel, CURVE_TOLERANCE, curvePeak, plotCurve, plotLines } from "./widgets/curve.js";
 export type { CurveCursor, CurvePoint, CurveView, PlotModel } from "./widgets/curve.js";
+export { chargeReadNow, driveTouch, TOUCH_FN, touchLine, touchPorts } from "./widgets/touch.js";
+export type { ChargeReadNow, TouchModel } from "./widgets/touch.js";
+export { adcCounts, adcEntry, driveFader, FADER_REST, FADER_ROWS, faderLine, faderRead, faderRows, fingerLegs, fingerPos, wiperV } from "./widgets/fader.js";
+export type { FaderModel, FaderRead, FaderRows } from "./widgets/fader.js";
+export { fingerPrefix, readoutSignal, signalLevel, signalLine } from "./widgets/signal.js";
+export type { SignalModel } from "./widgets/signal.js";
 export { bindChase, chaseStarts, driveModel, EXPORT_STEPS, NO_BUILD, NOT_A_DESIGN, NOT_IN_BAKE, panelRow, railEndError, railRows, widgetsModel } from "./chase/bind.js";
 export type { BindOptions, BuildView, ChaseBinding, ChaseReport, ChaseWriter, PanelRow, RailRow, WidgetView } from "./chase/bind.js";

@@ -174,7 +174,7 @@ describe("drive.press liveness", () => {
 
 describe("drive.press and plot.curve refuse, naming why", () => {
   it("both kinds are registered", () => {
-    expect(widgetKinds()).toEqual(["drive.press", "drive.tilt", "plot.curve"]);
+    expect(widgetKinds()).toEqual(expect.arrayContaining(["drive.press", "drive.tilt", "plot.curve"]));
     expect(widgetEntry("drive.press")).toBe(drivePress);
     expect(widgetEntry("plot.curve")).toBe(plotCurve);
   });

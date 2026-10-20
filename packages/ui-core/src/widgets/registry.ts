@@ -12,6 +12,9 @@ import type {
 import { driveTilt } from "./tilt.js";
 import { drivePress, type WidgetClaimFn } from "./press.js";
 import { plotCurve, type CurvePoint } from "./curve.js";
+import { driveTouch } from "./touch.js";
+import { driveFader } from "./fader.js";
+import { readoutSignal } from "./signal.js";
 
 export { isLive, liveOutputs } from "./live.js";
 
@@ -33,6 +36,10 @@ export interface WidgetBuild {
   readonly travelMm?: number;
   /** Measured points by claim id, travel mm and force N, from evidence rows; absent until a person enters a coupon. */
   readonly measured?: Readonly<Record<string, readonly CurvePoint[]>>;
+  /** Hookup ports whose path is closed now: a touched pad or a held key (drive.touch, readout.signal). */
+  readonly closed?: readonly string[];
+  /** Finger positions 0 to 1 by finger-pot prefix (drive.fader, readout.signal). */
+  readonly positions?: Readonly<Record<string, number>>;
 }
 
 /** A widget's model: every output the kind computes, and why it computes none. */
@@ -94,3 +101,6 @@ export function widgetRecords(decls: readonly WidgetDecl[], build: WidgetBuild):
 registerWidget("drive.tilt", driveTilt);
 registerWidget("drive.press", drivePress);
 registerWidget("plot.curve", plotCurve);
+registerWidget("drive.touch", driveTouch);
+registerWidget("drive.fader", driveFader);
+registerWidget("readout.signal", readoutSignal);

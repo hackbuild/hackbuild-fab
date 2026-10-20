@@ -11,6 +11,9 @@ import type { BenchReport } from "../stores/shell.js";
 import DrivePad from "../stage/DrivePad.vue";
 import DrivePress from "./DrivePress.vue";
 import PlotCurve from "./PlotCurve.vue";
+import DriveTouch from "./DriveTouch.vue";
+import DriveFader from "./DriveFader.vue";
+import ReadoutSignal from "./ReadoutSignal.vue";
 
 const components = new Map<string, Component>();
 
@@ -46,3 +49,6 @@ export function widgetsOf(chase: Chase, bench: Bench, contact: ContactFn | null,
 registerWidgetComponent("drive.tilt", DrivePad);
 registerWidgetComponent("drive.press", DrivePress);
 registerWidgetComponent("plot.curve", PlotCurve);
+registerWidgetComponent("drive.touch", DriveTouch);
+registerWidgetComponent("drive.fader", DriveFader);
+registerWidgetComponent("readout.signal", ReadoutSignal);
