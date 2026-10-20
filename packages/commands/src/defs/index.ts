@@ -7,6 +7,7 @@ import { spec as archFind } from "./arch-find.js";
 import { spec as asmSolve } from "./asm-solve.js";
 import { spec as catalogFind } from "./catalog-find.js";
 import { spec as catalogPins } from "./catalog-pins.js";
+import { spec as chaseValidate } from "./chase-validate.js";
 import { spec as checkRun } from "./check-run.js";
 import { spec as circuitSolve } from "./circuit-solve.js";
 import { spec as constraintsQuery } from "./constraints-query.js";
@@ -32,6 +33,7 @@ export const SPECS: readonly AnySpec[] = [
   asmSolve,
   catalogFind,
   catalogPins,
+  chaseValidate,
   checkRun,
   circuitSolve,
   constraintsQuery,

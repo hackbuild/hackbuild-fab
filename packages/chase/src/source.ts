@@ -20,7 +20,23 @@ import {
 
 /** Modules a chase.ts may import from; the value import is defineChase only. */
 export const CHASE_IMPORT_MODULES = ["@hackbuild/kernel/author", "@hackbuild/spec"] as const;
-const VALUE_IMPORTS: ReadonlySet<string> = new Set(["defineChase"]);
+
+/**
+ * What a source file holds: the exported constant, the define call that
+ * wraps the literal, and for a bench the leading chase argument imported
+ * from the chase.ts beside it. The chase and the bench are read by the one
+ * parser, so neither is ever executed (D-178).
+ */
+interface SourceForm {
+  readonly name: "chase" | "bench";
+  readonly call: "defineChase" | "defineBench";
+  /** The identifier passed before the literal, imported from one of localModules. */
+  readonly lead?: "chase";
+  readonly localModules: readonly string[];
+}
+
+const CHASE_FORM: SourceForm = { name: "chase", call: "defineChase", localModules: [] };
+const BENCH_FORM: SourceForm = { name: "bench", call: "defineBench", lead: "chase", localModules: ["./chase", "./chase.ts", "./chase.js"] };
 
 /** Object keys the reader refuses: assigning one would set a prototype instead of a key. */
 const FORBIDDEN_KEYS: ReadonlySet<string> = new Set(["__proto__"]);
@@ -218,7 +234,7 @@ class Parser {
   private defineChaseImported = false;
   readonly spans: { pointer: string; start: number; end: number }[] = [];
 
-  constructor(private readonly src: string, private readonly toks: readonly Token[]) {}
+  constructor(private readonly src: string, private readonly toks: readonly Token[], private readonly form: SourceForm = CHASE_FORM) {}
 
   private peek(n = 0): Token | undefined {
     return this.toks[this.i + n];
@@ -254,11 +270,12 @@ class Parser {
 
   parse(): unknown {
     while (this.peek() !== undefined) this.statement();
+    const { name, call } = this.form;
     if (!this.chaseSeen) {
-      throw new SourceError("export", this.src.length, "", "no chase", "export const chase = defineChase({...})", "export the chase as export const chase = defineChase({...})");
+      throw new SourceError("export", this.src.length, "", `no ${name}`, `export const ${name} = ${call}({...})`, `export the ${name} as export const ${name} = ${call}({...})`);
     }
     if (!this.defineChaseImported) {
-      throw new SourceError("imports", 0, "", "no import", `import { defineChase } from "${CHASE_IMPORT_MODULES[0]}"`, "import defineChase from the kernel author module or @hackbuild/spec");
+      throw new SourceError("imports", 0, "", "no import", `import { ${call} } from "${CHASE_IMPORT_MODULES[0]}"`, `import ${call} from the kernel author module or @hackbuild/spec`);
     }
     return this.chase;
   }
@@ -276,8 +293,8 @@ class Parser {
       if (n?.text === "default") {
         this.i += 2;
         const name = this.next();
-        if (name?.kind !== "ident" || name.text !== "chase") {
-          throw new SourceError("export", name?.start ?? this.src.length, "", name?.text ?? "end of file", "export default chase", "export default only the chase constant");
+        if (name?.kind !== "ident" || name.text !== this.form.name) {
+          throw new SourceError("export", name?.start ?? this.src.length, "", name?.text ?? "end of file", `export default ${this.form.name}`, `export default only the ${this.form.name} constant`);
         }
         this.semicolon();
         return;
@@ -300,8 +317,9 @@ class Parser {
   private moduleName(): string {
     const m = this.next();
     if (m?.kind !== "string") throw new SourceError("imports", m?.start ?? this.src.length, "", m?.text ?? "end of file", "a module string", "import from a quoted module name");
-    if (!(CHASE_IMPORT_MODULES as readonly string[]).includes(m.value!)) {
-      throw new SourceError("imports", m.start, "", m.value!, CHASE_IMPORT_MODULES.join(" or "), `import only from ${CHASE_IMPORT_MODULES.join(" or ")}`);
+    const allowed = [...CHASE_IMPORT_MODULES, ...this.form.localModules];
+    if (!allowed.includes(m.value!)) {
+      throw new SourceError("imports", m.start, "", m.value!, allowed.join(" or "), `import only from ${allowed.join(" or ")}`);
     }
     return m.value!;
   }
@@ -327,7 +345,7 @@ class Parser {
         this.i += 1;
         const alias = this.next();
         if (alias?.kind !== "ident") throw new SourceError("imports", this.at(), "", alias?.text ?? "end of file", "an alias", "name the alias");
-        if (!typed) throw new SourceError("imports", name.start, "", `${name.text} as ${alias.text}`, "defineChase under its own name", "import defineChase without renaming it");
+        if (!typed) throw new SourceError("imports", name.start, "", `${name.text} as ${alias.text}`, `${name.text} under its own name`, `import ${name.text} without renaming it`);
       }
       if (!typed) values.push(name.text);
       if (this.is(",")) this.i += 1;
@@ -335,12 +353,13 @@ class Parser {
     }
     this.i += 1;
     this.expect("from", "imports", "import { ... } from a module");
-    this.moduleName();
+    const local = this.form.localModules.includes(this.moduleName());
+    const want = local ? this.form.lead : this.form.call;
     for (const v of values) {
-      if (!VALUE_IMPORTS.has(v)) {
-        throw new SourceError("imports", start, "", v, "defineChase, or names marked type", `import ${v} as a type (import { type ${v} }) or remove it; the only value import is defineChase`);
+      if (v !== want) {
+        throw new SourceError("imports", start, "", v, `${want ?? this.form.call}, or names marked type`, `import ${v} as a type (import { type ${v} }) or remove it; the only value import is ${want ?? this.form.call}`);
       }
-      this.defineChaseImported = true;
+      if (!local) this.defineChaseImported = true;
     }
     this.semicolon();
   }
@@ -380,19 +399,24 @@ class Parser {
 
   private chaseDecl(): void {
     const start = this.peek()!.start;
+    const { name: want, call: fn, lead } = this.form;
     this.i += 2;
     const name = this.next();
-    if (name?.kind !== "ident" || name.text !== "chase") {
-      throw new SourceError("export", start, "", name?.text ?? "end of file", "export const chase", "the one exported constant is named chase");
+    if (name?.kind !== "ident" || name.text !== want) {
+      throw new SourceError("export", start, "", name?.text ?? "end of file", `export const ${want}`, `the one exported constant is named ${want}`);
     }
-    if (this.chaseSeen) throw new SourceError("export", start, "", "chase", "one chase export", "export the chase once");
-    if (this.is(":")) throw new SourceError("export", this.at(), "", ":", "export const chase = defineChase(...)", "drop the type annotation; defineChase types the chase");
-    this.expect("=", "export", "assign the chase with =");
+    if (this.chaseSeen) throw new SourceError("export", start, "", want, `one ${want} export`, `export the ${want} once`);
+    if (this.is(":")) throw new SourceError("export", this.at(), "", ":", `export const ${want} = ${fn}(...)`, `drop the type annotation; ${fn} types the ${want}`);
+    this.expect("=", "export", `assign the ${want} with =`);
     const call = this.next();
-    if (call?.kind !== "ident" || call.text !== "defineChase") {
-      throw new SourceError("export", call?.start ?? this.src.length, "", call?.text ?? "end of file", "defineChase(", "wrap the literal in defineChase(...)");
+    if (call?.kind !== "ident" || call.text !== fn) {
+      throw new SourceError("export", call?.start ?? this.src.length, "", call?.text ?? "end of file", `${fn}(`, `wrap the literal in ${fn}(...)`);
     }
-    this.expect("(", "export", "call defineChase with the chase literal");
+    this.expect("(", "export", `call ${fn} with the ${want} literal`);
+    if (lead !== undefined) {
+      this.expect(lead, "export", `pass ${fn} the imported ${lead} first`);
+      this.expect(",", "export", `pass ${fn} the ${lead}, then the literal`);
+    }
     this.chase = this.value("", 1);
     if (this.is(",")) this.i += 1;
     this.expect(")", "export", "pass defineChase one literal");
@@ -600,4 +624,33 @@ export function readChaseSource(source: string, file: string): ChaseSourceRead {
     fail("build-path", span?.start ?? 0, "/build/module", module, "./<file>.ts inside the design directory", problem);
   }
   return { chase: chase as Chase, spans, sourceHash: sha256Hex(source) as Hash };
+}
+
+/**
+ * Read a bench.ts source as data: `export const bench = defineBench(chase,
+ * {...})` over a literal, with chase imported from the chase.ts beside it.
+ * The same parser and source rules as the chase apply, so validating a
+ * bench runs none of its code. A breach throws E_SCHEMA with record
+ * "bench-source/<rule>". The layout is returned unchecked; chase.validate
+ * applies the kind rules to it.
+ */
+export function readBenchSource(source: string, file: string): { readonly bench: unknown; readonly spans: readonly ChaseSourceSpan[] } {
+  const bytes = byteOffsets(source);
+  const size = bytes[source.length]!;
+  if (size > CHASE_SOURCE_LIMITS.maxBytes) {
+    throw thrown({ code: "E_SCHEMA", path: "/", got: size, expected: `at most ${CHASE_SOURCE_LIMITS.maxBytes} bytes`, hint: `${file}: split the bench; the source is over the size budget`, record: "bench-source/size" });
+  }
+  try {
+    const p = new Parser(source, tokenize(source), BENCH_FORM);
+    const bench = p.parse();
+    return { bench, spans: p.spans.map((s) => ({ pointer: s.pointer, start: bytes[s.start]!, end: bytes[s.end]! })) };
+  } catch (e) {
+    if (e instanceof SourceError) {
+      throw thrown({
+        code: "E_SCHEMA", path: e.pointer === "" ? "/" : e.pointer, got: e.got, expected: e.expected,
+        hint: `${file}:${lineCol(source, e.at)} ${e.message}`, record: `bench-source/${e.rule}`,
+      });
+    }
+    throw e;
+  }
 }
