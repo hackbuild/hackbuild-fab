@@ -929,6 +929,112 @@
       ]
     },
     {
+      "build": "reference/keys/access-switch",
+      "part": "body",
+      "metrics": [
+        {
+          "id": "click-spring-key.0.host.top",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.0.spring.peakN",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.spring.drop",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.spring.cg",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.spring.eStop",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.spring.bistable",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.key.R.switch",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.0.key.fits.slot-at-the-end-blocks",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.0.key.fits.slot-over-the-arch",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.0.key.fits.slot-length-over-spring",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.0.key.fits.rib-in-the-block-groove",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.0.key.fits.under-the-bezel",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.0.key.fits.cap-through-bezel-hole",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.0.key.fits.cap-flange-in-its-well",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.0.key.fits.travel-to-contact",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.0.key.fits.tip-over-each-pad",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.0.key.fits.beam-thickness",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.0.key.fits.strain-at-the-stop",
+          "gate": "informational"
+        },
+        {
+          "id": "paddle.massG",
+          "gate": "informational"
+        },
+        {
+          "id": "paddle.guideClr",
+          "gate": "informational"
+        },
+        {
+          "id": "paddle.travel",
+          "gate": "informational"
+        },
+        {
+          "id": "paddle.boss",
+          "gate": "informational"
+        },
+        {
+          "id": "layout.diameter",
+          "gate": "informational"
+        },
+        {
+          "id": "layout.top",
+          "gate": "informational"
+        },
+        {
+          "id": "layout.rimTop",
+          "gate": "informational"
+        }
+      ]
+    },
+    {
       "build": "reference/keys/click-spring-window",
       "part": "spring",
       "metrics": [

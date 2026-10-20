@@ -99,6 +99,8 @@ const INFORMATIONAL: readonly { readonly pattern: RegExp; readonly why: string }
   { pattern: /^[a-z0-9-]+\.\d+\.pot\.(preload|leafForce|marginArc|marginCol|hubClear|arcColGap|stopClear|terminal\.[a-z0-9]+)$/, why: "TANG printed rotary pot readouts (05_design.js lines 120 and 262 to 301); a clearance under zero warns FIT at build" },
   { pattern: /^[a-z0-9-]+\.\d+\.gib\.(F|capVal|gap|settle|span|trackL|R[A-Za-z]*)$/, why: "GIB part2.js physics values as the bench computes them (packages/archetypes gib.ts); no failure on record sets a bound" },
   { pattern: /^layout\.(width|depth|faderOverhang|top)$/, why: "keys/midi-pad body extents and top as build.ts lays the archetypes out; the top is the seat's host.top and no failure on record sets a bound on the others" },
+  { pattern: /^layout\.(diameter|rimTop)$/, why: "keys/access-switch body diameter and rim top as build.ts lays them out from the paddle and the cap top; no failure on record sets a bound" },
+  { pattern: /^paddle\.(massG|guideClr|travel|boss)$/, why: "keys/access-switch paddle readouts: solid mass (a spring preload, never subtracted), guide clearance from profile access.paddleGuideClr, stop travel and boss length; no CHK-FIT row covers the guide and no failure on record sets a bound (R1-flagship-access-switch-02)" },
 ];
 
 /** The builds a recording must hold: reference/<area>/<id> and designs/<id> with a chase.ts. */
