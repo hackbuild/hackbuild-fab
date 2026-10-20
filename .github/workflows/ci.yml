@@ -52,11 +52,23 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v7
+      - name: "tsc: restore and save build info and dist, the one writer"
+        uses: actions/cache@v5
+        with:
+          path: |
+            **/dist
+            **/*.tsbuildinfo
+            !**/node_modules/**
+          key: tsc-${{ hashFiles('package-lock.json', 'tsconfig*.json', '**/tsconfig.json') }}-${{ github.sha }}
+          restore-keys: tsc-${{ hashFiles('package-lock.json', 'tsconfig*.json', '**/tsconfig.json') }}-
       - uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
           cache: npm
       - uses: astral-sh/setup-uv@v10.2.0
+        with:
+          enable-cache: true
+          cache-dependency-glob: tools/py/uv.lock
       - id: install
         run: npm ci
       - name: "derived: counts test"
@@ -131,11 +143,23 @@ jobs:
       SOURCE_DATE_EPOCH: "315532800"
     steps:
       - uses: actions/checkout@v7
+      - name: "tsc: restore build info and dist saved by build"
+        uses: actions/cache/restore@v5
+        with:
+          path: |
+            **/dist
+            **/*.tsbuildinfo
+            !**/node_modules/**
+          key: tsc-${{ hashFiles('package-lock.json', 'tsconfig*.json', '**/tsconfig.json') }}-${{ github.sha }}
+          restore-keys: tsc-${{ hashFiles('package-lock.json', 'tsconfig*.json', '**/tsconfig.json') }}-
       - uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
           cache: npm
       - uses: astral-sh/setup-uv@v10.2.0
+        with:
+          enable-cache: true
+          cache-dependency-glob: tools/py/uv.lock
       - run: npm ci
       - name: owner-file tests not run here
         run: node .github/scripts/owner-files.mjs report
@@ -153,11 +177,23 @@ jobs:
       SOURCE_DATE_EPOCH: "315532800"
     steps:
       - uses: actions/checkout@v7
+      - name: "tsc: restore build info and dist saved by build"
+        uses: actions/cache/restore@v5
+        with:
+          path: |
+            **/dist
+            **/*.tsbuildinfo
+            !**/node_modules/**
+          key: tsc-${{ hashFiles('package-lock.json', 'tsconfig*.json', '**/tsconfig.json') }}-${{ github.sha }}
+          restore-keys: tsc-${{ hashFiles('package-lock.json', 'tsconfig*.json', '**/tsconfig.json') }}-
       - uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
           cache: npm
       - uses: astral-sh/setup-uv@v10.2.0
+        with:
+          enable-cache: true
+          cache-dependency-glob: tools/py/uv.lock
       - run: npm ci
       - run: npx tsc -b
       - name: owner-file tests not run here
@@ -193,11 +229,23 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v7
+      - name: "tsc: restore build info and dist saved by build"
+        uses: actions/cache/restore@v5
+        with:
+          path: |
+            **/dist
+            **/*.tsbuildinfo
+            !**/node_modules/**
+          key: tsc-${{ hashFiles('package-lock.json', 'tsconfig*.json', '**/tsconfig.json') }}-${{ github.sha }}
+          restore-keys: tsc-${{ hashFiles('package-lock.json', 'tsconfig*.json', '**/tsconfig.json') }}-
       - uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
           cache: npm
       - uses: astral-sh/setup-uv@v10.2.0
+        with:
+          enable-cache: true
+          cache-dependency-glob: tools/py/uv.lock
       - run: npm ci
       - run: npx tsc -b
       - name: the flex-pair agreement input equals the current build
@@ -228,15 +276,37 @@ jobs:
       SOURCE_DATE_EPOCH: "315532800"
     steps:
       - uses: actions/checkout@v7
+      - name: "tsc: restore build info and dist saved by build"
+        uses: actions/cache/restore@v5
+        with:
+          path: |
+            **/dist
+            **/*.tsbuildinfo
+            !**/node_modules/**
+          key: tsc-${{ hashFiles('package-lock.json', 'tsconfig*.json', '**/tsconfig.json') }}-${{ github.sha }}
+          restore-keys: tsc-${{ hashFiles('package-lock.json', 'tsconfig*.json', '**/tsconfig.json') }}-
       - uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
           cache: npm
       - run: npm ci
-      - run: npx playwright install --with-deps chromium
+      # browsers from the cache on a hit, system packages always (apt is not cached)
+      - name: "playwright: chromium browser cache"
+        id: pw
+        uses: actions/cache@v5
+        with:
+          path: ~/.cache/ms-playwright
+          key: pw-${{ runner.os }}-${{ hashFiles('package-lock.json') }}-chromium
+      - if: steps.pw.outputs.cache-hit == 'true'
+        run: npx playwright install-deps chromium
+      - if: steps.pw.outputs.cache-hit != 'true'
+        run: npx playwright install --with-deps chromium
       # tools/parity/sprue.test.ts runs validate_3mf.py through uv, and a
       # board reference runs its generator through uv (core/src/board.ts)
       - uses: astral-sh/setup-uv@v10.2.0
+        with:
+          enable-cache: true
+          cache-dependency-glob: tools/py/uv.lock
       - run: npx tsc -b
       - name: legacy COLLAR dump reproduces the committed grids
         run: |
@@ -268,13 +338,29 @@ jobs:
           npx vitest run designs/collar/test/nfc-pause.test.ts
           npx vitest run designs $(node .github/scripts/owner-files.mjs excludes)
           npx --no-install hbf check.run reference/cosmetic/coin-inlay --json
+      # Python Playwright pins its own chromium build, so it keeps its own
+      # browser directory and key, on the uv lock
+      - name: "playwright: python chromium browser cache"
+        id: pwpy
+        if: ${{ !cancelled() }}
+        uses: actions/cache@v5
+        with:
+          path: ${{ runner.temp }}/ms-playwright-py
+          key: pw-py-${{ runner.os }}-${{ hashFiles('tools/py/uv.lock') }}-chromium
       - name: M03 browser rows (M03-T10, M03-T12), SPRUE parity and the art board smoke in Playwright Chromium
         if: ${{ !cancelled() }}
         # COLLAR parity (M03-T09) reads its fonts, mark and 3MFs from lineage
         # sources outside the repo, so it runs on the owner's machine only
         # (tools/test/ci-exit-rows.test.mjs NOT_IN_CI).
+        env:
+          PLAYWRIGHT_BROWSERS_PATH: ${{ runner.temp }}/ms-playwright-py
+          PW_HIT: ${{ steps.pwpy.outputs.cache-hit }}
         run: |
-          uv run --project tools/py --extra bench python -m playwright install --with-deps chromium
+          if [ "$PW_HIT" = true ]; then
+            uv run --project tools/py --extra bench python -m playwright install-deps chromium
+          else
+            uv run --project tools/py --extra bench python -m playwright install --with-deps chromium
+          fi
           uv run --project tools/py --extra bench tools/py/harness/sprue_parity.py designs/sprue/legacy/sprue.html designs/sprue/test/parity.html
           uv run --project tools/py --extra bench tools/py/harness/artboard_smoke.py packages/ui-core/test/artboard/fixture.html "$RUNNER_TEMP/artboard"
   exit-m06-m08:
@@ -294,11 +380,23 @@ jobs:
       SOURCE_DATE_EPOCH: "315532800"
     steps:
       - uses: actions/checkout@v7
+      - name: "tsc: restore build info and dist saved by build"
+        uses: actions/cache/restore@v5
+        with:
+          path: |
+            **/dist
+            **/*.tsbuildinfo
+            !**/node_modules/**
+          key: tsc-${{ hashFiles('package-lock.json', 'tsconfig*.json', '**/tsconfig.json') }}-${{ github.sha }}
+          restore-keys: tsc-${{ hashFiles('package-lock.json', 'tsconfig*.json', '**/tsconfig.json') }}-
       - uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
           cache: npm
       - uses: astral-sh/setup-uv@v10.2.0
+        with:
+          enable-cache: true
+          cache-dependency-glob: tools/py/uv.lock
       - run: npm ci
       - run: npx tsc -b
       - name: AILERON differential derivation refused while candidate, E_REF exit 2 with the solveHorns horns 46.1 and 0.6 deg in the hint (M06 row unmet, typed at M11-T09)
@@ -374,11 +472,23 @@ jobs:
       SOURCE_DATE_EPOCH: "315532800"
     steps:
       - uses: actions/checkout@v7
+      - name: "tsc: restore build info and dist saved by build"
+        uses: actions/cache/restore@v5
+        with:
+          path: |
+            **/dist
+            **/*.tsbuildinfo
+            !**/node_modules/**
+          key: tsc-${{ hashFiles('package-lock.json', 'tsconfig*.json', '**/tsconfig.json') }}-${{ github.sha }}
+          restore-keys: tsc-${{ hashFiles('package-lock.json', 'tsconfig*.json', '**/tsconfig.json') }}-
       - uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
           cache: npm
       - uses: astral-sh/setup-uv@v10.2.0
+        with:
+          enable-cache: true
+          cache-dependency-glob: tools/py/uv.lock
       - run: npm ci
       - run: npx tsc -b
       - name: the nest suites hold every written DXF and SVG twin to its committed bytes
@@ -434,6 +544,9 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
       - uses: astral-sh/setup-uv@v10.2.0
+        with:
+          enable-cache: true
+          cache-dependency-glob: tools/py/uv.lock
         if: matrix.kind == 'node'
       - run: npm ci
       - run: npx tsc -b
@@ -468,10 +581,21 @@ jobs:
         run: |
           mkdir -p "$RUNNER_TEMP/det"
           node tools/compare-snapshots.mjs record --runs 2 --out "$RUNNER_TEMP/det/snapshots-${{ matrix.leg }}.json"
+      - name: "playwright: browser cache for this leg"
+        id: pw
+        if: matrix.kind == 'browser'
+        uses: actions/cache@v5
+        with:
+          path: ~/.cache/ms-playwright
+          key: pw-${{ runner.os }}-${{ hashFiles('package-lock.json') }}-${{ matrix.leg }}
       - name: browser hashes from file://
         if: ${{ !cancelled() && (matrix.kind == 'browser') }}
         run: |
-          npx playwright install --with-deps ${{ matrix.leg }}
+          if [ "${{ steps.pw.outputs.cache-hit }}" = true ]; then
+            npx playwright install-deps ${{ matrix.leg }}
+          else
+            npx playwright install --with-deps ${{ matrix.leg }}
+          fi
           mkdir -p "$RUNNER_TEMP/det"
           DETERMINISM_OUT="$RUNNER_TEMP/det" npx playwright test tools/determinism/browser.spec.ts --browser=${{ matrix.leg }}
       - if: ${{ !cancelled() }}
@@ -528,6 +652,9 @@ jobs:
           cache: npm
       # shunt-art and spindle-r1 run their board generators through uv
       - uses: astral-sh/setup-uv@v10.2.0
+        with:
+          enable-cache: true
+          cache-dependency-glob: tools/py/uv.lock
       - run: npm ci
       - run: npx tsc -b
       - run: node --test tools/test/cold-rebuild.test.mjs
@@ -612,6 +739,15 @@ jobs:
       SOURCE_DATE_EPOCH: "315532800"
     steps:
       - uses: actions/checkout@v7
+      - name: "tsc: restore build info and dist saved by build"
+        uses: actions/cache/restore@v5
+        with:
+          path: |
+            **/dist
+            **/*.tsbuildinfo
+            !**/node_modules/**
+          key: tsc-${{ hashFiles('package-lock.json', 'tsconfig*.json', '**/tsconfig.json') }}-${{ github.sha }}
+          restore-keys: tsc-${{ hashFiles('package-lock.json', 'tsconfig*.json', '**/tsconfig.json') }}-
       - uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc

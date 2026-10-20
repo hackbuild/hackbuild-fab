@@ -22,8 +22,8 @@ test("triggers: push to main, pull requests, manual; one run per ref", () => {
 });
 
 test("no action runs at a node20 major", () => {
-  for (const m of text.matchAll(/uses: (actions\/[\w-]+)@v(\d+)/g)) {
-    const min = { checkout: 5, "setup-node": 5, "upload-artifact": 6, "download-artifact": 7 }[m[1].slice("actions/".length)];
+  for (const m of text.matchAll(/uses: (actions\/[\w-]+)(?:\/[\w-]+)?@v(\d+)/g)) {
+    const min = { checkout: 5, "setup-node": 5, "upload-artifact": 6, "download-artifact": 7, cache: 5 }[m[1].slice("actions/".length)];
     assert.ok(min !== undefined, `${m[1]} has a node24 floor here`);
     assert.ok(Number(m[2]) >= min, `${m[0]} is below v${min}, the first node24 major`);
   }
@@ -138,4 +138,63 @@ test("bake runs ui-css and size before it uploads", () => {
   const upload = at("bake", (s) => /^actions\/upload-artifact@/.test(s.uses ?? ""));
   const bake = at("bake", (s) => s.run === "npm run bake:all");
   assert.ok(bake >= 0 && bake < css && css < upload && bake < size && size < upload, `bake ${bake}, ui-css ${css}, size ${size}, upload ${upload}`);
+});
+
+// R1 rails caches. tsc build info and dist are saved by build alone and
+// restored elsewhere; cold, bake-determinism and determinism build from
+// nothing, so none restores them. Every setup-uv caches on the uv lock.
+const isCache = (s) => /^actions\/cache(\/restore)?@/.test(s.uses ?? "");
+const isTscCache = (s) => isCache(s) && /tsbuildinfo/.test(String(s.with?.path ?? ""));
+const TSC_RESTORED = ["build", "unit", "exit-a", "corpus", "parity", "exit-m06-m08", "dxf-audit", "browser"];
+
+test("tsc build info is restored in the build-from-cache jobs, saved by build only, before npm ci", () => {
+  for (const [name, job] of Object.entries(ci.jobs)) {
+    const i = job.steps.findIndex(isTscCache);
+    if (!TSC_RESTORED.includes(name)) {
+      assert.equal(i, -1, `${name} restores the tsc cache`);
+      continue;
+    }
+    assert.ok(i >= 0, `${name} restores the tsc cache`);
+    const install = job.steps.findIndex((s) => s.run === "npm ci");
+    assert.ok(i < install, `${name}: tsc cache at step ${i}, npm ci (core prepare runs tsc -b) at ${install}`);
+    const s = job.steps[i];
+    assert.equal(s.uses, name === "build" ? "actions/cache@v5" : "actions/cache/restore@v5", `${name} writer`);
+    assert.match(s.with.key, /^tsc-\$\{\{ hashFiles\(.*\) \}\}-\$\{\{ github\.sha \}\}$/);
+    assert.equal(s.with["restore-keys"], s.with.key.replace("${{ github.sha }}", ""));
+    assert.ok(s.with.path.includes("!**/node_modules/**"), `${name} excludes node_modules`);
+  }
+});
+
+test("cold, bake-determinism and determinism restore no build output", () => {
+  for (const name of ["cold", "bake-determinism"]) {
+    assert.ok(!ci.jobs[name].steps.some(isCache), `${name} has a cache step`);
+  }
+  for (const s of ci.jobs.determinism.steps.filter(isCache)) {
+    assert.equal(s.with.path, "~/.cache/ms-playwright", "determinism caches browsers only");
+    assert.equal(s.if, "matrix.kind == 'browser'");
+  }
+});
+
+test("every setup-uv caches on the uv lock", () => {
+  let n = 0;
+  for (const [name, job] of Object.entries(ci.jobs)) {
+    for (const s of job.steps.filter((s) => /^astral-sh\/setup-uv@/.test(s.uses ?? ""))) {
+      n++;
+      assert.equal(s.with?.["enable-cache"], true, `${name}: enable-cache`);
+      assert.equal(s.with?.["cache-dependency-glob"], "tools/py/uv.lock", `${name}: cache-dependency-glob`);
+    }
+  }
+  assert.ok(n > 0, "a setup-uv step exists");
+});
+
+test("a Playwright browser cache hit installs system packages only", () => {
+  for (const [name, job] of Object.entries(ci.jobs)) {
+    for (const s of job.steps.filter((s) => isCache(s) && /ms-playwright/.test(String(s.with?.path)))) {
+      assert.ok(s.id, `${name}: the browser cache step has an id`);
+      const after = job.steps.map((t) => `${t.if ?? ""}\n${t.run ?? ""}\n${JSON.stringify(t.env ?? {})}`).join("\n");
+      assert.ok(after.includes(`steps.${s.id}.outputs.cache-hit`), `${name} reads ${s.id} cache-hit`);
+      assert.match(s.with.key, /^pw-/);
+    }
+  }
+  assert.ok(runs("browser").includes("npx playwright install --with-deps chrome"), "browser keeps system Chrome uncached");
 });
