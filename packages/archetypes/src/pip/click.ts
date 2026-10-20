@@ -51,6 +51,8 @@ export const clickParams = z.object({
   loose: z.tuple([z.number(), z.number()]).default([0, -24]),
   net: z.string().min(1).default("KEY"),
   common: z.string().min(1).default("GND"),
+  /** Force curve samples emitted as spring.curve metrics, 0 for none (each sample adds two metrics). */
+  curveSamples: z.number().int().min(0).max(64).default(0),
 }).strict();
 export type ClickParams = z.infer<typeof clickParams>;
 export const CLICK_PARAMS = clickParams as unknown as SchemaLike<unknown, ClickParams>;
@@ -75,6 +77,30 @@ export function clickZ(C: ClickParams, s: PipStack, fe: ClickCurve) {
   const raw = Math.max(s.z.floor, top - C.flangeT - cd.vTop);
   const floor = Math.max(s.z.floor, Math.floor((raw + 1e-6) / s.layer) * s.layer);
   return { cd, need, top, floor, vTopEff: top - C.flangeT - floor, zbt: top + C.bezel, capR: C.cap / 2 + C.flange + 0.4 };
+}
+
+/** The profile row the stop travel is read from, cg + this (layout.js line 95). */
+const STOP_OVERTRAVEL = "click.stopOvertravel";
+
+/** n force samples at equal travel steps from 0 to stopMm, linear between the solver's load steps. */
+export function clickCurveSamples(fe: ClickCurve, stopMm: number, n: number): { d: number; F: number }[] {
+  const pts = fe.pts ?? [];
+  if (pts.length < 2 || pts[pts.length - 1]!.d < stopMm - 1e-9) {
+    throw commandError({
+      code: "E_KERNEL", path: "/params/curveSamples", got: pts.length === 0 ? "no curve points" : `points to ${pts[pts.length - 1]!.d} mm`, expected: `curve points to ${stopMm.toFixed(3)} mm`,
+      hint: "the registered click solver returns no load steps that reach the stop; call the archetype through core, or set curveSamples 0", record: "viewer-sim",
+    });
+  }
+  const out: { d: number; F: number }[] = [];
+  let j = 0;
+  for (let i = 0; i < n; i++) {
+    const d = n === 1 ? stopMm : (stopMm * i) / (n - 1);
+    while (j < pts.length - 2 && pts[j + 1]!.d < d) j++;
+    const a = pts[j]!, b = pts[j + 1]!;
+    const k = b.d === a.d ? 0 : Math.min(1, Math.max(0, (d - a.d) / (b.d - a.d)));
+    out.push({ d, F: a.F + k * (b.F - a.F) });
+  }
+  return out;
 }
 
 const springIn = (C: ClickParams) => ({ l: C.l, t: C.t, Q: C.Q, w: C.w, E: C.E, sw: C.sw });
@@ -219,6 +245,15 @@ export function clickApply(input: ApplyIn<ClickParams>, id: string): ApplyOut {
   e.metric("spring.cg", cd.cg, "mm", "travel to contact, just past the snap", [], "CHK-KEY-04", "spring");
   e.metric("spring.eStop", cd.eStop, "ratio", "largest strain to the stop", [], "CHK-KEY-04", "spring");
   e.metric("spring.bistable", fe.bistable ? "yes" : "no", undefined, "a bistable spring latches the key down", [], "CHK-KEY-04", "spring");
+  if (C.curveSamples > 0) {
+    const stopMm = cd.cg + input.profile.constant(STOP_OVERTRAVEL).value;
+    const curve = clickCurveSamples(fe, stopMm, C.curveSamples);
+    e.metric("spring.curve.n", curve.length, "count", `force samples from 0 to cg + ${STOP_OVERTRAVEL} (computed, SNAPFE)`, [], "CHK-KEY-04", "spring");
+    curve.forEach((p, i) => {
+      e.metric(`spring.curve.d${i}`, p.d, "mm", `travel at sample ${i} (computed, SNAPFE)`, [], "CHK-KEY-04", "spring");
+      e.metric(`spring.curve.F${i}`, p.F, "N", `force at sample ${i}, linear between load steps (computed, SNAPFE)`, [], "CHK-KEY-04", "spring");
+    });
+  }
   if (fe.bistable) e.warnings.push({ code: "SPRING", text: "click springs are bistable at this rise, keys will latch down" });
   if (!fe.snaps) e.warnings.push({ code: "SPRING", text: "click springs do not snap at this rise, raise Q above 2" });
   const sw = clickSwitch(C, s, fe, input.profile);
