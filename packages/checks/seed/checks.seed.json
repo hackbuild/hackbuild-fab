@@ -3698,6 +3698,25 @@
       "pending": "M13"
     },
     {
+      "id": "CHK-CLAIM-01",
+      "version": "1.0.0",
+      "title": "each function claim's value lies in its band, lo to hi; a value on an inferred basis with no evidence warns",
+      "appliesTo": {
+        "level": "part"
+      },
+      "severity": "block",
+      "needs": [],
+      "legalKind": "interval",
+      "origin": {
+        "project": "access switch 2026-10-20",
+        "date": "2026-10-20",
+        "what": "the 150 g press band was held to the drawn spring peak only by a design-local test, reference/keys/access-switch/claim.ts",
+        "evidence": "fab-knowledge:plan-v5/old-skills-scenarios.md"
+      },
+      "status": "entered",
+      "enteredBy": "R1-engine-11"
+    },
+    {
       "id": "CHK-PRT-18",
       "version": "1.0.0",
       "title": "each imported file has the declared number of pieces",

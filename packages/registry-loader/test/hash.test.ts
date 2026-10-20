@@ -68,5 +68,7 @@ describe("registry loader", () => {
     const chaseReg = chaseRegistries(reg);
     expect(chaseReg.constraintDims).toEqual([...reg.constraints.dims()]);
     expect(chaseReg.machines.length).toBeGreaterThan(0);
+    // A chase's claims resolve against the checks claim registry (R1-engine-11).
+    for (const fn of ["contact.at", "spring.contactTravel", "spring.forceAt", "spring.peak"]) expect(chaseReg.claimFns).toContain(fn);
   });
 });

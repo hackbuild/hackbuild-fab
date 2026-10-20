@@ -13,7 +13,7 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
-import { IMPORT_PATH_CHECKS } from "@hackbuild/checks";
+import { CLAIM_CHECKS, IMPORT_PATH_CHECKS } from "@hackbuild/checks";
 import { liveCount } from "@hackbuild/mesh";
 import type { CommandResult } from "@hackbuild/spec";
 import { main } from "../src/main.js";
@@ -94,9 +94,10 @@ describe("hbf CLI on the flex pair", () => {
     // The skeleton and M00 checks, then every seeded row of the part, body
     // and feature levels the registry runs on the build (security finding 3,
     // 2026-10-08), read from the seed, not from core. The import path checks
-    // run only where part.build --import reads a mesh.
+    // run only where part.build --import reads a mesh, the claim check
+    // only where the chase claims are read.
     const seed = JSON.parse(readFileSync(path.join(ROOT, "packages", "checks", "seed", "checks.seed.json"), "utf8")) as { checks: { id: string; appliesTo: { level: string } }[] };
-    const levels = seed.checks.filter((c) => ["part", "body", "feature"].includes(c.appliesTo.level) && !IMPORT_PATH_CHECKS.includes(c.id)).map((c) => c.id);
+    const levels = seed.checks.filter((c) => ["part", "body", "feature"].includes(c.appliesTo.level) && !IMPORT_PATH_CHECKS.includes(c.id) && !CLAIM_CHECKS.includes(c.id)).map((c) => c.id);
     const skeletonAndM00 = ["CHK-3MF-04", "CHK-3MF-06", "CHK-3MF-07", "CHK-KEY-01", "CHK-NET-02", "CHK-NET-29", "CHK-PRT-01", "CHK-PRT-03", "CHK-PRT-04"];
     // The chase lists the circuit kernel, whose exported conductors carry CHK-3MF-08 (core/src/kinds.ts, M05-T20).
     const kernel = ["CHK-3MF-08"];

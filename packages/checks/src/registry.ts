@@ -22,6 +22,7 @@ import { skipReason } from "./skip.js";
 import { failedOn, failedPreconditions, gatedBy, partsOfTarget, preconditionIds, preconditionReason, runOrder, withSeverity } from "./severity.js";
 import { checkError } from "./skeleton/common.js";
 import type { KernelViews, RegistryCtx } from "./views.js";
+import type { ClaimsInput } from "./claims/scope.js";
 
 /** What the module factories may read besides the target and the context. */
 export interface CheckSources {
@@ -153,6 +154,8 @@ export interface RegistryRun {
    * the exactSet legal kind of an expect finding (expect.ts).
    */
   readonly expect?: readonly { readonly check: string; readonly target: string; readonly verdict: "fail" | "warn"; readonly set?: readonly string[] }[];
+  /** The chase claims; CHK-CLAIM-01 skips without them. */
+  readonly claims?: ClaimsInput;
 }
 
 export interface RegistryReport {
@@ -260,6 +263,7 @@ export async function runRegistry(defs: readonly AnyCheckDef[], input: RegistryR
       ...(def.needs.includes("circuit") && hookup !== undefined ? { hookup } : {}),
       ...(input.views === undefined ? {} : { views: input.views }),
       ...(expect.length === 0 ? {} : { expect }),
+      ...(input.claims === undefined ? {} : { claims: input.claims }),
     };
     const failed = failedPreconditions(slots.flat(), order);
     for (const target of targetsFor(def, input.targets)) {
