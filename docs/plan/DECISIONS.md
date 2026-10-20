@@ -565,6 +565,10 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-509 | loft and sweep refuse a stage 6 inset | decided | Kernel, geometry |
 | D-510 | hull takes the stage 6 inset on every operand | decided | Kernel, geometry |
 | D-511 | part.build proof for loft, sweep and hull is a manual CLI run plus a mesh test | decided | Testing, docs, milestones, registry |
+| D-512 | bambu-studio extraArgs track the harness time limit | decided | Rails, virtual print |
+| D-513 | Owner profile guard extended to the new slicers | decided | Rails, virtual print |
+| D-514 | Version regexes for the unverified slicer rows are inferred from the Flash Studio log line | decided | Rails, virtual print |
+| D-515 | probe reports cliVersion unknown | decided | Rails, virtual print |
 
 ## House rules and process
 
@@ -6241,6 +6245,50 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. The mesh test runs the loft-sweep-hull fixture build.ts with a stub author (body, part, ring.circle from geom) through runStages. The part.build run is recorded as a manual CLI verification and is not a vitest case. |
 | Rationale | @hackbuild/kernel depends on mesh, and core is a higher tier, so a mesh test cannot import either one without breaking `tools/tiers.json`. |
 | Evidence | `kernel/package.json` dependencies; `tools/tiers.mjs` edge rules; `hbf part.build packages/mesh/test/fixtures/loft-sweep-hull --json` verdict pass, 12 pass, 0 fail, 44 skip (computed, builder run 2026-10-20). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-512 bambu-studio extraArgs track the harness time limit
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `extraArgs` in each `SLICERS` row of `tools/slice/orca-family.mjs` is a function of the run options. For bambu-studio it returns `['--mstpp', ceil(timeLimitS)]`, so the slicer's own per-plate cap equals the harness kill limit; the other rows return `[]`. |
+| Rationale | A fixed `--mstpp` value would disagree with `--time-limit`. Tying the two lets Bambu Studio stop by itself before the harness kills it. The flag comes from the vendor docs and is unverified here, since no Bambu Studio is installed (measured). |
+| Evidence | `fab-knowledge:plan-v5/slicers.md` Bambu Studio section (vendor); `tools/slice/orca-family.mjs` `SLICERS['bambu-studio']`; `tools/test/orca-family.test.mjs` args test fails when extraArgs returns `[]` (mutant killed, measured). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-513 Owner profile guard extended to the new slicers
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `ownerProfileDirs` is the union of each `SLICERS` row's `profileDirs`. This adds `BambuStudio`, `Snapmaker_Orca` and `Snapmaker Orca` to the five Flash Studio names. The added names are inferred. |
+| Rationale | A fresh datadir must never overlap the owner's profile of any slicer the driver can run. The only change in behaviour is more refusals; the five existing names still refuse as before. |
+| Evidence | `tools/test/slice.test.mjs` datadir test passes on the merged tree (measured); `tools/slice/orca-family.mjs` `ownerProfileDirs`. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-514 Version regexes for the unverified slicer rows are inferred from the Flash Studio log line
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The orcaslicer, bambu-studio and snapmaker-orca rows match `Current <AppName> Version (\S+)`, following the measured `Current Orca-Flashforge Version` line of Flash Studio. A miss stays `unknown`. |
+| Rationale | These forks share the Orca CLI logging. No binary is installed to measure the real line, so the pattern is inferred and a miss degrades to `unknown` instead of a wrong version. |
+| Evidence | `tools/slice/orca-family.mjs` `SLICERS` versionRe comments; Flash Studio run record appVersion 1.7.14, cliVersion 2.3.2 (measured, builder run). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-515 probe reports cliVersion unknown
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `probe` in `tools/slice/orca-family.mjs` never launches the slicer, so its `cliVersion` is always `unknown`. Only a slice log names the CLI version, and the run record carries it. |
+| Rationale | The brief says probe works without slicing, and the CLI prints its version only in the `--debug 3` log of a run. |
+| Evidence | `tools/slice/orca-family.mjs` `probe`; `tools/test/orca-family.test.mjs` missing-app probe test (measured). |
 | Supersedes | new |
 | Milestone | none |
 
