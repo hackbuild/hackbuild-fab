@@ -414,6 +414,9 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-358 | zero-volume shell components count as voids | decided | Kernel, geometry |
 | D-359 | ShellGroup.shells counts the outer shell | decided | Kernel, geometry |
 | D-360 | shell parity ray uses fixed slopes sqrt2/7 and pi/11 | decided | Kernel, geometry |
+| D-361 | hook-script scan covers every .mjs in tools/agent-hooks | decided | Testing, docs, milestones, registry |
+| D-362 | CLAUDE.md hooks line added over the 200 line cap | decided | Testing, docs, milestones, registry |
+| D-363 | hooks check also rejects export_run | decided | Testing, docs, milestones, registry |
 
 ## House rules and process
 
@@ -4429,6 +4432,39 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. The void containment parity ray in `shellGroups` is `[1, SQRT2/7, PI/11]` from the void's first-use vertex. A test pins the case where a pure +x ray fails: manifold-3d 3.5.4 splits a cube's x = 10 face along y + z = 10 (computed, read from getMesh). |
 | Rationale | A ray grazing a shared face diagonal counts twice and calls a held void outside. The fixed slopes make the result deterministic. |
 | Evidence | `shells.test.ts` case "keeps a void whose ray from its first vertex meets the outer face diagonal"; the builder's mutant with a pure +x ray failed that case (computed, 2026-10-20). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-361 hook-script scan covers every .mjs in tools/agent-hooks
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The permissionDecision check in `tools/test/settings.test.mjs` reads every top-level `.mjs` in `tools/agent-hooks/`, including `touched.mjs`, beyond the three scripts named in `.claude/settings.json`. |
+| Rationale | A helper the hooks import could also return a permission decision; scanning the folder covers that and any hook added later. |
+| Evidence | `settings.test.mjs` test "no hook script approves a call"; the builder's mutant appending a permissionDecision allow comment to `quiet-output.mjs` failed it (measured, 2026-10-20). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-362 CLAUDE.md hooks line added over the 200 line cap
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. R1-rails-ci-hooks-08 adds the one line its brief asks for to the end of Verification lessons in `CLAUDE.md`, naming the three hooks and the `.hbf/agent-hooks/` state and log folder, which takes the file from 214 to 215 lines. |
+| Rationale | The file was already over the D-003 cap before this change. The brief asks for exactly one line, and trimming other text is outside the item's writes. The cap breach stays open for a later trim. |
+| Evidence | `wc -l CLAUDE.md`: 214 at main 38d666f, 215 after (measured). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-363 hooks check also rejects export_run
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The export check in `tools/test/settings.test.mjs` rejects a hook entry that names `export_run` as well as `export.run`. |
+| Rationale | The ask list names `mcp__hbf__export_run`, so a hook could reach the export by that name too. The export gate stays person-only. |
+| Evidence | `settings.test.mjs` test "no hook entry names export.run" (passes, measured, 2026-10-20). |
 | Supersedes | new |
 | Milestone | none |
 
