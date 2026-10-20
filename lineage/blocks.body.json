@@ -1,0 +1,44 @@
+[
+  {
+    "id": "blocks.body/blocks-1",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/blocks/files/src-extracted/blocks.js",
+    "sha256": "36feb99134fd23227ec4db6fbf8668de4f9c8527febba8034401f50cb77d7b9b",
+    "fixes": [
+      "prismY draws hinge profiles in (x, z) so seat knuckles land on the body (blocks.js:251 to 258); BOSS parts.js:210 and 235 put them under the body",
+      "ported to packages/archetypes/src/blocks/stud.ts, as its header cites blocks.js (packages/archetypes/src/blocks/stud.ts line 2: \"ported from originals/blocks/files/src-extracted/blocks.js column and\"); recorded by the M06 and M08 integration",
+      "ported to packages/archetypes/src/blocks/wire.ts, as its header cites blocks.js (packages/archetypes/src/blocks/wire.ts line 3: \"trimPath, wire) on the blocks-html standard (blocks.js lines 14 to 44,\"); recorded by the M06 and M08 integration",
+      "ported to packages/archetypes/src/defs/blocks-stud.ts, as its header cites blocks.js (packages/archetypes/src/defs/blocks-stud.ts line 2: \"from the BLOCKS column (blocks.js lines 168 to 220) and the BOSS v1\"); recorded by the M06 and M08 integration"
+    ],
+    "dest": null
+  },
+  {
+    "id": "blocks.body/blocks-1-port-stud",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/blocks/files/src-extracted/blocks.js",
+    "sha256": "36feb99134fd23227ec4db6fbf8668de4f9c8527febba8034401f50cb77d7b9b",
+    "fixes": [],
+    "dest": "packages/archetypes/src/blocks/stud.ts"
+  },
+  {
+    "id": "blocks.body/boss-legacy",
+    "kind": "copy",
+    "source": "designs/blocks/legacy/boss-src/src/boss.js",
+    "sha256": "fad77485920bb29d996610adf577d4d10c60f813ce4abc036a10f5a4aa8bfcf7",
+    "fixes": [
+      "STD (boss.js lines 11 to 25) and snap (line 6) as the seat layout reads them ported to designs/blocks/src/route-seat.ts BOSS_STD (M05-T09)"
+    ],
+    "dest": "designs/blocks/legacy/boss-src/src/boss.js"
+  },
+  {
+    "id": "blocks.body/boss-src",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/boss/files/boss-src/src/boss.js",
+    "sha256": "fad77485920bb29d996610adf577d4d10c60f813ce4abc036a10f5a4aa8bfcf7",
+    "fixes": [
+      "ported to packages/archetypes/src/blocks/stud.ts, as its header cites boss.js (packages/archetypes/src/blocks/stud.ts line 4: \"and from originals/boss/files/boss-src/src/boss.js column (lines 93 to\"); recorded by the M06 and M08 integration",
+      "ported to packages/archetypes/src/defs/blocks-stud.ts, as its header cites boss.js (packages/archetypes/src/defs/blocks-stud.ts line 3: \"column (boss.js lines 93 to 110); the port lives in src/blocks/stud.ts.\"); recorded by the M06 and M08 integration"
+    ],
+    "dest": null
+  }
+]

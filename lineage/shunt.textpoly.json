@@ -1,0 +1,10 @@
+[
+  {
+    "id": "shunt.textpoly/r1",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/shunt/files/textpoly.py",
+    "sha256": "253202dccc4eda01eba47df6eb7566fc9d2519c3f4c7d3386b21594baa6820ee",
+    "fixes": [],
+    "dest": null
+  }
+]

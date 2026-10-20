@@ -1,0 +1,10 @@
+[
+  {
+    "id": "shunt.check-fab/r1",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/shunt/files/check_fab.py",
+    "sha256": "cb9902bfc157afd390b89405369f271c79e81030192f39447c5b341214942f14",
+    "fixes": [],
+    "dest": null
+  }
+]

@@ -1,0 +1,12 @@
+[
+  {
+    "id": "mesh.raster/seed-rastermesh",
+    "kind": "canonical",
+    "source": "packages/mesh/seed/rastermesh.js",
+    "sha256": "390736e35f58a901c4651f630490520c5828e3ba9ec747b97fd39483b2eb130c",
+    "fixes": [
+      "TOGGLE healer: flips map, freeze at 3 flips, 200 passes, converged flag (lineage healer/toggle-part2e)"
+    ],
+    "dest": "packages/mesh/src/routes/raster.ts"
+  }
+]

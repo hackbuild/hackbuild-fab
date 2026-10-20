@@ -1,0 +1,41 @@
+[
+  {
+    "id": "blocks.kernel/blocks-1",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/blocks/files/src-extracted/kernel.js",
+    "sha256": "e514477f4a8a9f2996b8f4880fc774c07801467db9899cebcd21d03724b57188",
+    "fixes": [
+      "clip retry with jitter on a polygon-clipping throw (kernel.js clipRetry, lines 108 to 120)",
+      "rotY(zTop, xMid), 180 deg about y, keeps handedness where flipZ mirrors (kernel.js lines 314 to 315); a print-pose reference, not the required transform (D-063)"
+    ],
+    "dest": null
+  },
+  {
+    "id": "blocks.kernel/boss-legacy",
+    "kind": "copy",
+    "source": "designs/blocks/legacy/boss-src/src/kernel.js",
+    "sha256": "344d80b3df3b6b15e5861de343a03c79663669fd700578bf162f97afba499de1",
+    "fixes": [],
+    "dest": "designs/blocks/legacy/boss-src/src/kernel.js"
+  },
+  {
+    "id": "blocks.kernel/boss-legacy-netcheck",
+    "kind": "copy",
+    "source": "designs/blocks/legacy/boss-src/src/kernel.js",
+    "sha256": "344d80b3df3b6b15e5861de343a03c79663669fd700578bf162f97afba499de1",
+    "fixes": [
+      "netCheck union-find over conductive prisms with taps resolved by containment at the tap z (kernel.js lines 351 to 382) ported to packages/circuit/src/extract/nets.ts extractNets (M05-T04): components of the built conductive bodies joined on manifold minGap, taps found by a cube at the lead meeting a component"
+    ],
+    "dest": null
+  },
+  {
+    "id": "blocks.kernel/boss-src",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/boss/files/boss-src/src/kernel.js",
+    "sha256": "344d80b3df3b6b15e5861de343a03c79663669fd700578bf162f97afba499de1",
+    "fixes": [
+      "auditIndexed edge pairing on raw indices (kernel.js lines 321 to 335) ported to packages/mesh/src/audit.ts and its tier 1 copy packages/3mf/src/mesh.ts (CHK-PRT-01)"
+    ],
+    "dest": null
+  }
+]

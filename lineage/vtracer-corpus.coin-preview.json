@@ -1,0 +1,10 @@
+[
+  {
+    "id": "vtracer-corpus.coin-preview/harvest",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/collar-coin/outputs/hackbuild-coin/hackbuild-coin-preview.png",
+    "sha256": "9f82d49b265f48d51dbd39cf63f4d8a76a8d7a1bca44bf9b397f0e97c9e687e0",
+    "fixes": [],
+    "dest": "tools/corpus/inlay/vtracer/05-python-coin-preview.png"
+  }
+]

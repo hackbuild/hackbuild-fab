@@ -1,0 +1,18 @@
+[
+  {
+    "id": "tang-r6.kernel/r6-4",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/tang-r6/files/src/02_kernel.js",
+    "sha256": "e4012a32c15fe0ba2b10ce95844e3e40dc461d2d1c4bec8b8c6951cde0e955a7",
+    "fixes": [],
+    "dest": null
+  },
+  {
+    "id": "tang-r6.kernel/r6-4-port-common",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/tang-r6/files/src/02_kernel.js",
+    "sha256": "e4012a32c15fe0ba2b10ce95844e3e40dc461d2d1c4bec8b8c6951cde0e955a7",
+    "fixes": [],
+    "dest": "packages/archetypes/src/tang/common.ts"
+  }
+]

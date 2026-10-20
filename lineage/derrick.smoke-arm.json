@@ -1,0 +1,10 @@
+[
+  {
+    "id": "derrick.smoke-arm/r3",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/derrick/files/src/smoke_arm.js",
+    "sha256": "ef6ca086ddd5bae9f95dab304d5cf7f8f9cf2460ed4fe30dc3ec183354e6c2ae",
+    "fixes": [],
+    "dest": "designs/derrick/legacy/smoke_arm.js"
+  }
+]

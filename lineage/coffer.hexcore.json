@@ -1,0 +1,15 @@
+[
+  {
+    "id": "coffer.hexcore/harvest",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/coffer/files/hexcore.py",
+    "sha256": "b1bc9905fb4c5bb8bbf25ef4ff25cf20b3f201b22299c65f6572ce053e00de23",
+    "fixes": [
+      "ported to packages/archetypes/src/coffer/fillet.ts, as its header cites hexcore.py (packages/archetypes/src/coffer/fillet.ts line 5: \"Source of record: originals/coffer/files/hexcore.py lines 65 to 75\"); recorded by the M06 and M08 integration",
+      "ported to packages/archetypes/src/coffer/port.ts, as its header cites hexcore.py (packages/archetypes/src/coffer/port.ts line 2: \"coffer-port), ported from originals/coffer/files/hexcore.py: the\"); recorded by the M06 and M08 integration",
+      "ported to packages/archetypes/src/coffer/tiles.ts, as its header cites hexcore.py (packages/archetypes/src/coffer/tiles.ts line 4: \"`tile_D1` lines 168 to 182, with hexcore.py `hexlet` lines 97 to 102 and\"); recorded by the M06 and M08 integration",
+      "ported to packages/archetypes/src/defs/coffer-port.ts, as its header cites hexcore.py (packages/archetypes/src/defs/coffer-port.ts line 2: \"Ported at M06-T09 from originals/coffer/files/hexcore.py (src/coffer/port.ts);\"); recorded by the M06 and M08 integration"
+    ],
+    "dest": null
+  }
+]

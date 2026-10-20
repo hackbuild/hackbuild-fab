@@ -1,0 +1,18 @@
+[
+  {
+    "id": "toggle.bench/m09-legacy",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/toggle/toggle.html",
+    "sha256": "865fabfd703dad5c7fefdd1adcb21be715356e3fa1e5d202f986ca4ab9a1977b",
+    "fixes": [],
+    "dest": "designs/toggle/legacy/toggle.html"
+  },
+  {
+    "id": "toggle.bench/toggle-html",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/toggle/files/toggle.html",
+    "sha256": "865fabfd703dad5c7fefdd1adcb21be715356e3fa1e5d202f986ca4ab9a1977b",
+    "fixes": [],
+    "dest": null
+  }
+]

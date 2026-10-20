@@ -1,0 +1,10 @@
+[
+  {
+    "id": "tappet.bench/r3",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/tappet/files/tappet-r3.html",
+    "sha256": "f321a1772ee597bb71abc53258fbb4bb5c9d99afa97c9b70b82ded0ad6e84a06",
+    "fixes": [],
+    "dest": null
+  }
+]

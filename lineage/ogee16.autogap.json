@@ -1,0 +1,12 @@
+[
+  {
+    "id": "ogee16.autogap/r16p",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/ogee16/files/src/source/plate_template.html",
+    "sha256": "59507bfae682869fb87d9ff5d6aa59fe2746f51ece249359ab69b223290f04bf",
+    "fixes": [
+      "autoGap() of lines 331 to 339 takes the packer as a function of the gap instead of setting the page's global gap; a gap that leaves more copies oversize never wins (the OGEE16 bills drop none in 2 to 16 mm)"
+    ],
+    "dest": "packages/nest/src/autogap.ts"
+  }
+]

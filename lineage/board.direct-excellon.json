@@ -1,0 +1,12 @@
+[
+  {
+    "id": "board.direct-excellon/shunt-r1",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/shunt/files/gen_fab.py",
+    "sha256": "eeffed1bc78e44dfc06acc09e04b4f6dd1cb3a62834a6fd6da09e0b979374013",
+    "fixes": [
+      "excellon (gen_fab.py lines 231 to 249) with G90, G05 and M71 inside the header, fix 16, which SPINDLE pcb.py lines 434 to 451 lacked (M08 Records: gerbonara header warning on spindle-PTH.drl line 11)"
+    ],
+    "dest": "tools/py/board/direct/excellon.py"
+  }
+]

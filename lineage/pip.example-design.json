@@ -1,0 +1,26 @@
+[
+  {
+    "id": "pip.example-design/haft-9",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft-design.json",
+    "sha256": "c6f86f7ee54d13243df49b3dca135a92a3cba89e2c89acde41e12490be45a4fa",
+    "fixes": [],
+    "dest": "designs/pip/legacy/original/haft-design.json"
+  },
+  {
+    "id": "pip.example-design/legacy-save-fixture",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/examples/pip-design.json",
+    "sha256": "e36e1de1189fa2a7d6ee42a51e09f6eb7cb1135fa22ba2976baf6d770f95d0ef",
+    "fixes": [],
+    "dest": "designs/pip/test/fixtures/legacy/pip-design.json"
+  },
+  {
+    "id": "pip.example-design/pip-controller-b137deb",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/examples/pip-design.json",
+    "sha256": "e36e1de1189fa2a7d6ee42a51e09f6eb7cb1135fa22ba2976baf6d770f95d0ef",
+    "fixes": [],
+    "dest": "designs/pip/legacy/examples/pip-design.json"
+  }
+]

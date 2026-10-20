@@ -1,0 +1,30 @@
+[
+  {
+    "id": "tenon.bench-part3/tenon-src",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/tenon/files/src/src/part3.js",
+    "sha256": "f80686c2e6e1610e819da476a6d841db04c1b594e2b28ac23a469016b3103eed",
+    "fixes": [],
+    "dest": null
+  },
+  {
+    "id": "tenon.bench-part3/ui-core-bench-light",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/tenon/src/src/part3.js",
+    "sha256": "f80686c2e6e1610e819da476a6d841db04c1b594e2b28ac23a469016b3103eed",
+    "fixes": [
+      "commitLight, mass and colour only with no geometry build (part3.js lines 49 to 53), ported as the light commit of packages/ui-core/src/bench/core.ts with built set to rev"
+    ],
+    "dest": "packages/ui-core/src/bench/core.ts"
+  },
+  {
+    "id": "tenon.bench-part3/ui-core-viewer-scene",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/tenon/src/src/part3.js",
+    "sha256": "f80686c2e6e1610e819da476a6d841db04c1b594e2b28ac23a469016b3103eed",
+    "fixes": [
+      "explode as a fixed step per gap in the declared axial order, explodeOffsets (part3.js lines 199 to 204; the port cites 191 to 197, measured 2026-10-13), ported to the explode of packages/ui-core/src/viewer/scene.ts (M09-T06)"
+    ],
+    "dest": "packages/ui-core/src/viewer/scene.ts"
+  }
+]

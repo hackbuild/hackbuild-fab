@@ -1,0 +1,10 @@
+[
+  {
+    "id": "quench.bench/quench-html",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/quench/files/quench.html",
+    "sha256": "0ed5fed220e786c3f953ccbb7fdf0505f10dca27332b54fd04d4c8dacb1f818c",
+    "fixes": [],
+    "dest": null
+  }
+]

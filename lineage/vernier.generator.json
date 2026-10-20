@@ -1,0 +1,21 @@
+[
+  {
+    "id": "vernier.generator/bench",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/cricut-midi-seven/outputs/vernier/gen_vernier.py",
+    "sha256": "ed2f18042496b51573e7d4e9542f6d328e980f3bebc2ea6315b7b76e70366ea7",
+    "fixes": [],
+    "dest": "reference/copper/vernier/legacy/gen_vernier.py"
+  },
+  {
+    "id": "vernier.generator/rev-a",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/vernier/files/gen_vernier.py",
+    "sha256": "ed2f18042496b51573e7d4e9542f6d328e980f3bebc2ea6315b7b76e70366ea7",
+    "fixes": [
+      "tools/py/copper/run_legacy_gen.py runs it byte identical from a temp dir with the shipped inputs and the logo literal replaced in memory; tools/py/copper/test_oracle.py holds the run to the M05-T13 table (M05-T13)",
+      "ported to packages/copper as declarations: reference/copper/vernier/build.ts with its P dict in chase.surface.ts, evaluated by packages/copper/src/vinyl/draft.ts; the gates as a program run by packages/checks/src/copper/program.ts, one run body per family (M05-T15)"
+    ],
+    "dest": "reference/copper/vernier/legacy/gen_vernier.py"
+  }
+]

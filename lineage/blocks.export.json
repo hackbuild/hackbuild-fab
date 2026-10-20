@@ -1,0 +1,18 @@
+[
+  {
+    "id": "blocks.export/blocks-1",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/blocks/files/src-extracted/export.js",
+    "sha256": "0a28db91236b5d2d923e2b8e74b1e81f0fe260a270677c3241bb6a1200231f2d",
+    "fixes": [],
+    "dest": null
+  },
+  {
+    "id": "blocks.export/boss-legacy",
+    "kind": "copy",
+    "source": "designs/blocks/legacy/boss-src/src/export.js",
+    "sha256": "0d3df6a1859ad71e3c9718c2a9ab3d9b1f3e524187d5dde5331fa961b67b8318",
+    "fixes": [],
+    "dest": "designs/blocks/legacy/boss-src/src/export.js"
+  }
+]

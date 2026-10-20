@@ -1,0 +1,14 @@
+[
+  {
+    "id": "circuit.trace-resistance-floor/m01-card-snippet",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/tsc/m01/snippet.ts",
+    "sha256": "a62a8a595337222690065928011fa5fca959f54ca27e7b614b1717ea0ec45ba7",
+    "fixes": [
+      "rho read through ProfileLookup.resistivity(material, \"along\", \"printed\") and R = rho L / A through profile sectionResistance, in place of the stand-in resistivityOhmCm",
+      "side, units and qualify([row tier]) on the bound, tier named in the reason",
+      "expectedFor rounds the fitting budget up to the ohm (71760, not the snippet Math.round 71759, which does not fit 6.00 mm)"
+    ],
+    "dest": "packages/circuit/src/constraints/trace-resistance-floor.ts"
+  }
+]

@@ -1,0 +1,23 @@
+[
+  {
+    "id": "cotter.audit-dxf/m07-legacy",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/cotter-src/tools/audit_dxf.py",
+    "sha256": "647a963711a10d0249ac1d14d9c0fe43c0764911f7742ac32251c17276daf755",
+    "fixes": [],
+    "dest": "designs/cotter/legacy/audit_dxf.py"
+  },
+  {
+    "id": "cotter.audit-dxf/r5",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/cotter/files/cotter-src/tools/audit_dxf.py",
+    "sha256": "647a963711a10d0249ac1d14d9c0fe43c0764911f7742ac32251c17276daf755",
+    "fixes": [
+      "ported into tools/py/audit_dxf.py with the entity type checked before any attribute: the original read e.closed on every entity and crashed with AttributeError on POLYLINE (the SLUG sheets) before any verdict",
+      "$ACADVER, $INSUNITS, $HANDSEED, layers and handles read from the raw group codes: ezdxf fills a missing $ACADVER with AC1009 and assigns handles on read, which hid both faults",
+      "closure requires the closed flag and the first vertex repeated; layers are the five of the nest template; the twin rule compares all four edges of the SVG's drawn content box within 0.6 mm where the original compared the SVG size less 10 mm; --expect holds each corpus file to its listed rules (tools/corpus/dxf/MANIFEST.json)",
+      "the same rules less the ezdxf audit run in TypeScript in packages/checks/src/sheet/chk-sht-03.ts on a reader of its own (CHK-SHT-03 2.0.0)"
+    ],
+    "dest": "tools/py/audit_dxf.py"
+  }
+]

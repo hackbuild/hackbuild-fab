@@ -1,0 +1,10 @@
+[
+  {
+    "id": "snapfe.fe/scratch",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/scratch/fe.cjs",
+    "sha256": "411df6784c49c262808d66022c20569bd1f2eab6f143ef5850fd038ef9ef8348",
+    "fixes": [],
+    "dest": "packages/sim/test/legacy/fe.stdout.txt"
+  }
+]

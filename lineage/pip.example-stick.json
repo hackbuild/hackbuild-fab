@@ -1,0 +1,18 @@
+[
+  {
+    "id": "pip.example-stick/legacy-save-fixture",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/examples/pip-stick-design.json",
+    "sha256": "e48065b8ae3a0d1600614e6b44695b8b600aa961820e48d3137de26a8d6f6c7e",
+    "fixes": [],
+    "dest": "designs/pip/test/fixtures/legacy/pip-stick-design.json"
+  },
+  {
+    "id": "pip.example-stick/pip-controller-b137deb",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/examples/pip-stick-design.json",
+    "sha256": "e48065b8ae3a0d1600614e6b44695b8b600aa961820e48d3137de26a8d6f6c7e",
+    "fixes": [],
+    "dest": "designs/pip/legacy/examples/pip-stick-design.json"
+  }
+]

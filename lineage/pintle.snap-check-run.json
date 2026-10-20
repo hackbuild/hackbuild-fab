@@ -1,0 +1,10 @@
+[
+  {
+    "id": "pintle.snap-check-run/2026-10-05",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pintle/files/records/snap_check_run_2026-10-05.txt",
+    "sha256": "9c0ccc97948dd83e8cb3f5324e6905b76ab301f64c9ce272d87db5fe5494354a",
+    "fixes": [],
+    "dest": "designs/derrick/legacy/capture/snap_check_run_2026-10-05.txt"
+  }
+]

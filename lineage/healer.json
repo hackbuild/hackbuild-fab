@@ -1,0 +1,72 @@
+[
+  {
+    "id": "healer/hbf-seed-rastermesh",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/plan-to-refine/handoff/hbf/seed/mesh/rastermesh.js",
+    "sha256": "a99a159b91c9d392987b22393f04caf035762fe5301013c601c6e5f3a6697fe0",
+    "fixes": [],
+    "dest": null
+  },
+  {
+    "id": "healer/inlay-print-forge-rastermesh",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/inlay/files/skill/print-forge/assets/rastermesh.js",
+    "sha256": "a99a159b91c9d392987b22393f04caf035762fe5301013c601c6e5f3a6697fe0",
+    "fixes": [],
+    "dest": null
+  },
+  {
+    "id": "healer/knuckle-extracted-rastermesh",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/knuckle/files/extracted/rastermesh.js",
+    "sha256": "e93f927955d50561b87597f4f98f5868eeb3235b94b4786745eb6fc9ac12c27a",
+    "fixes": [],
+    "dest": null
+  },
+  {
+    "id": "healer/latest-toggle-rastermesh",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/latest-haft-toggle/rastermesh.js",
+    "sha256": "6c8c99a3abdead869331878d5dd467d237ebf1741be9cffff3ec48e85efc77f7",
+    "fixes": [],
+    "dest": null
+  },
+  {
+    "id": "healer/pip-controller-legacy",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/tools/rastermesh.js",
+    "sha256": "a99a159b91c9d392987b22393f04caf035762fe5301013c601c6e5f3a6697fe0",
+    "fixes": [],
+    "dest": "designs/pip/legacy/tools/rastermesh.js"
+  },
+  {
+    "id": "healer/pip-controller-rastermesh",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/pip-controller/tools/rastermesh.js",
+    "sha256": "a99a159b91c9d392987b22393f04caf035762fe5301013c601c6e5f3a6697fe0",
+    "fixes": [],
+    "dest": null
+  },
+  {
+    "id": "healer/toggle-extracted-rastermesh",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/toggle/files/extracted/rastermesh.js",
+    "sha256": "7ce1ed15c2f13e62999e36853d6fef5cf62ab27770a54ee19143033047eb548f",
+    "fixes": [],
+    "dest": null
+  },
+  {
+    "id": "healer/toggle-part2e",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/toggle/src/src/part2e.js",
+    "sha256": "3b08811c0d5011bc331d905a604d74e36ff4c152f1876e0706046890dc89060c",
+    "fixes": [
+      "flips map per cell (part2e.js:25)",
+      "freeze at 3 flips (part2e.js:51 to 53)",
+      "200 passes (part2e.js:33)",
+      "dirty-window revisits (part2e.js:32, 36, 102)",
+      "packages/mesh/src/routes/raster.ts: TypeScript port of the seed rastermesh.js with this healer, D-054 grid snap per slab bound"
+    ],
+    "dest": "packages/mesh/seed/rastermesh.js"
+  }
+]

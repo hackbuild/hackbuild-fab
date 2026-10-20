@@ -1,0 +1,10 @@
+[
+  {
+    "id": "knurl.three-orbit-controls/npm-0-185-1",
+    "kind": "canonical",
+    "source": "designs/knurl/legacy/three-0.185.1.zip!three@0.185.1/examples/jsm/controls/OrbitControls.js",
+    "sha256": "faabb4e8dfd9235ee4a9fd7c9a3d75f90f1689dbd4944bd6fd32117dacec5f93",
+    "fixes": [],
+    "dest": "designs/knurl/legacy/three-0.185.1.zip!three@0.185.1/examples/jsm/controls/OrbitControls.js"
+  }
+]

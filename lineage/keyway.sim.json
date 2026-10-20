@@ -1,0 +1,18 @@
+[
+  {
+    "id": "keyway.sim/bench",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/cricut-midi-seven/outputs/keyway/keyway_sim.html",
+    "sha256": "7922d05d4e12387156a2103192149c8258ec15cbf9f354f153c4009b078618d9",
+    "fixes": [],
+    "dest": "designs/keyway/legacy/keyway_sim.html"
+  },
+  {
+    "id": "keyway.sim/rev-a",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/keyway/files/keyway_sim.html",
+    "sha256": "7922d05d4e12387156a2103192149c8258ec15cbf9f354f153c4009b078618d9",
+    "fixes": [],
+    "dest": "designs/keyway/legacy/keyway_sim.html"
+  }
+]

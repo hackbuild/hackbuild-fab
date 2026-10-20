@@ -1,0 +1,12 @@
+[
+  {
+    "id": "slug.funnel/slug-12",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/slug/files/slug.html",
+    "sha256": "2d09238c27d5ca4bf023eeee44939b1500470ad2058822b8d0add48ec9bf3241",
+    "fixes": [
+      "packages/sim/src/rapier/granular.ts builds the Rapier convex-hull funnel panels and the spawn lattice of lines 236 to 262 and 685 to 705 from funnelPanel and spawnPos in packages/sim/src/capsule/geometry.ts (row slug.capsule-geometry/slug-12, the one port of those formulas) and no longer ports them itself; the page's hand-written capsule solver is not ported here"
+    ],
+    "dest": "packages/sim/src/rapier/granular.ts"
+  }
+]

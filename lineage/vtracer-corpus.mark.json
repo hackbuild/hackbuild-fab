@@ -1,0 +1,10 @@
+[
+  {
+    "id": "vtracer-corpus.mark/seed-brand",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/plan-to-refine/handoff/hbf/seed/brand/hackbuild-mark.svg",
+    "sha256": "c0b0c1f6d2f065f4630788e34488c5949eb205fc31505db46681bf851c9c8c02",
+    "fixes": [],
+    "dest": "tools/corpus/inlay/vtracer/01-hackbuild-mark.png"
+  }
+]

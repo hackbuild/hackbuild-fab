@@ -1,0 +1,12 @@
+[
+  {
+    "id": "shunt.sim/r1",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/shunt/files/sim.html",
+    "sha256": "14a920023e795562eb4c49d005a4704508b1ac8b9cf28b13da555d99e6297fb6",
+    "fixes": [
+      "SIM_MODELS in sim.html is the independent cross-check of reference/boards/shunt-art/models.json; the leads there are computed by tools/py/board/model_leads.py through wrl.py from KiCad .wrl models held outside the repo"
+    ],
+    "dest": "reference/boards/shunt-art/models.json"
+  }
+]

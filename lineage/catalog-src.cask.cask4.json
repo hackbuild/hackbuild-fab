@@ -1,0 +1,10 @@
+[
+  {
+    "id": "catalog-src.cask.cask4/m08",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/cask/files/cask4/cask4.scad",
+    "sha256": "6baabf54c562c084a7e501206f034242403755664ffea72cd9555376f3d8efea",
+    "fixes": [],
+    "dest": null
+  }
+]

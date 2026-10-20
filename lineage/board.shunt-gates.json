@@ -1,0 +1,12 @@
+[
+  {
+    "id": "board.shunt-gates/r1",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/shunt/files/gen_board.py",
+    "sha256": "dfab6bdf0cb365e4e88f5e583e7e76fb734d3f8a55fb143d7730fca7375691bf",
+    "fixes": [
+      "gates G1 to G6 (gen_board.py lines 466 to 697) on the committed board.json; G6 compares the committed outline with outline_pts(0) where the legacy asserted the function against itself; G7 moves to the chase expect set (M08-T09); BOM note split at '. ' (shunt record failure 17)"
+    ],
+    "dest": "reference/boards/shunt-art/gen.py"
+  }
+]

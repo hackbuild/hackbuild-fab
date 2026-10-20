@@ -1,0 +1,10 @@
+[
+  {
+    "id": "blocks.app2/blocks-1",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/blocks/files/src-extracted/app2.js",
+    "sha256": "3eeeab36a1dd9977e95cf85f43fa8b4c026c7f077f9f7bc9c2a39b42a85086bc",
+    "fixes": [],
+    "dest": null
+  }
+]

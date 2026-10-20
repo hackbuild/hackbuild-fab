@@ -1,0 +1,20 @@
+[
+  {
+    "id": "blocks.verdict/boss-legacy",
+    "kind": "copy",
+    "source": "designs/blocks/legacy/boss-src/src/app2.js",
+    "sha256": "698ae1233dd66e1e041532ef16573b6fcf96f398d4d8358d6ce6d253a824dce8",
+    "fixes": [],
+    "dest": "designs/blocks/legacy/boss-src/src/app2.js"
+  },
+  {
+    "id": "blocks.verdict/boss-src-app2",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/boss/files/boss-src/src/app2.js",
+    "sha256": "698ae1233dd66e1e041532ef16573b6fcf96f398d4d8358d6ce6d253a824dce8",
+    "fixes": [
+      "undefined band hint, a pin in IN or PULLUP strictly inside 0.3 to 0.7 vio (app2.js line 236), ported to packages/circuit/src/solve/legacy-scene.ts bossHint with the fractions from the catalog boss-legacy row (M05-T07)"
+    ],
+    "dest": null
+  }
+]

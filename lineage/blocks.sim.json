@@ -1,0 +1,40 @@
+[
+  {
+    "id": "blocks.sim/blocks-1",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/blocks/files/src-extracted/sim.js",
+    "sha256": "8b3435df11e5adcd38d435089aee3ac98b6fcaa466ff3f599beb8431ffca898d",
+    "fixes": [
+      "solve() and solveDense() (sim.js lines 66 to 157, BOSS lines 63 to 154, identical) ported to packages/circuit/src/dc/nodal.ts solveDc with the BOSS stamping order, ground row and leak kept for bit parity; the LED kept as the legacy ledPwl element; parity on every BOSS scene in packages/circuit/test/nodal.test.ts (M05-T03)",
+      "the PULLUP element (sim.js line 94, BOSS line 91, 50e3 to the pin node) is the divider VDD R / (R + Rpu) of packages/circuit/src/read/pullup.ts dividerV, evaluated at each end of the catalog pin row pullup range instead of the one 50 kohm and classified against the row VIL and VIH (M05-T05, D-076)"
+    ],
+    "dest": "packages/circuit/src/dc/nodal.ts"
+  },
+  {
+    "id": "blocks.sim/boss-legacy",
+    "kind": "copy",
+    "source": "designs/blocks/legacy/boss-src/src/sim.js",
+    "sha256": "27e4b12212b75c63d3e812db7f2dbb6137e7875049b63419676965706a38e6f5",
+    "fixes": [
+      "BOSS parity source of packages/circuit/src/dc/nodal.ts: tools/legacy/boss/dump-elements.cjs evaluates this sim.js with the 50e3 pullup (line 91) read from globalThis.__PU and the element list dumped after line 101, the file on disk unchanged (M05-T03)",
+      "digital read p.v > vio x 0.5 (sim.js line 135) and the PULLUP element tag that names the pin node (line 91), ported to packages/circuit/src/solve/legacy-scene.ts bossDigital and solveScene for the BLOCKS reproduction (M05-T07)"
+    ],
+    "dest": "designs/blocks/legacy/boss-src/src/sim.js"
+  },
+  {
+    "id": "blocks.sim/boss-legacy-zip",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/blocks/outputs/boss/boss-src.zip",
+    "sha256": "185c1d1bb6692945a3d2b956c7512ee7fd3b9766576396f404d2501a28ffa3b2",
+    "fixes": [],
+    "dest": "designs/blocks/legacy/boss-src.zip"
+  },
+  {
+    "id": "blocks.sim/boss-src",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/boss/files/boss-src/src/sim.js",
+    "sha256": "27e4b12212b75c63d3e812db7f2dbb6137e7875049b63419676965706a38e6f5",
+    "fixes": [],
+    "dest": null
+  }
+]

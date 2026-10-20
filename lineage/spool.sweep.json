@@ -1,0 +1,10 @@
+[
+  {
+    "id": "spool.sweep/spool-cad",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/spool/files/src/sweep.py",
+    "sha256": "3b1854fcad12828ba8118476abd6d42cff92d70c8c11de27756890aa6c10f1af",
+    "fixes": [],
+    "dest": null
+  }
+]

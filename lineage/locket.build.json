@@ -1,0 +1,10 @@
+[
+  {
+    "id": "locket.build/rev-j",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/locket/files/src/build.py",
+    "sha256": "20ad46eead8132a69f69ec3d9142d1ded7ef1e5e3255acc7b61d4e8de96eb90b",
+    "fixes": [],
+    "dest": null
+  }
+]

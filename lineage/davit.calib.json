@@ -1,0 +1,12 @@
+[
+  {
+    "id": "davit.calib/r4",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/davit/files/src/pack_sim.py",
+    "sha256": "57b266f8ad2e3ae7ff332c21e5c007382b2741523c3c07d684754194e9b4aa82",
+    "fixes": [
+      "packages/sim/src/proxy/build.ts: prox_record is the shape reference for the proxy layout, not ported (D-180)"
+    ],
+    "dest": "designs/davit/legacy/r4/pack_sim.py"
+  }
+]

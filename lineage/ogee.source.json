@@ -1,0 +1,10 @@
+[
+  {
+    "id": "ogee.source/printed-line",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/ogee/files/ogee-source.zip",
+    "sha256": "700e8cb9b21b785e34e000e0e83d9e0605062979543fddccc798054cb10cc2ee",
+    "fixes": [],
+    "dest": null
+  }
+]

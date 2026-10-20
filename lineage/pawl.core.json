@@ -1,0 +1,36 @@
+[
+  {
+    "id": "pawl.core/bench",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/pawl/outputs/pawl/core.mjs",
+    "sha256": "d1869500a5a871ff3f0bed2f55cb0a92367fc4f112d2494222aac44e03d1f9c8",
+    "fixes": [],
+    "dest": "designs/pawl/legacy/core.mjs"
+  },
+  {
+    "id": "pawl.core/final",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pawl/files/src/core.mjs",
+    "sha256": "d1869500a5a871ff3f0bed2f55cb0a92367fc4f112d2494222aac44e03d1f9c8",
+    "fixes": [
+      "packages/sim/src/programs/pawl/core.ts: ported with the legacy operand order; every typed number moves to a PawlModel row in packages/sim/scenes/pawl.ts; meshVerts, the hull collider path and the AE envelope not ported"
+    ],
+    "dest": "designs/pawl/legacy/core.mjs"
+  },
+  {
+    "id": "pawl.core/sim-model",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pawl/files/src/core.mjs",
+    "sha256": "d1869500a5a871ff3f0bed2f55cb0a92367fc4f112d2494222aac44e03d1f9c8",
+    "fixes": [],
+    "dest": "packages/sim/src/programs/pawl/core.ts"
+  },
+  {
+    "id": "pawl.core/sim-world",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pawl/files/src/core.mjs",
+    "sha256": "d1869500a5a871ff3f0bed2f55cb0a92367fc4f112d2494222aac44e03d1f9c8",
+    "fixes": [],
+    "dest": "packages/sim/test/fixtures/pawl-world.json"
+  }
+]

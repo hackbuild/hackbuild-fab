@@ -1,0 +1,10 @@
+[
+  {
+    "id": "tack.bundle/rev-a",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/tack/files/tack-rev-a.zip",
+    "sha256": "069f16b8de66b0413e4693d22fffcc43e99004bd057021de7fed9f13f75ecb90",
+    "fixes": [],
+    "dest": null
+  }
+]

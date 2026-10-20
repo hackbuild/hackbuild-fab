@@ -1,0 +1,18 @@
+[
+  {
+    "id": "knuckle.clam-json/knuckle-html",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/knuckle/files/knuckle-clam.json",
+    "sha256": "5e41096f66a2996e7e21d03de2c2c5a2abbe44974251f7de93a074c2e0154638",
+    "fixes": [],
+    "dest": "designs/knuckle/legacy/knuckle-clam.json"
+  },
+  {
+    "id": "knuckle.clam-json/x",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/knuckle/knuckle-clam.json",
+    "sha256": "5e41096f66a2996e7e21d03de2c2c5a2abbe44974251f7de93a074c2e0154638",
+    "fixes": [],
+    "dest": "designs/knuckle/legacy/knuckle-clam.json"
+  }
+]

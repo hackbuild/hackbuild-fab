@@ -1,0 +1,10 @@
+[
+  {
+    "id": "pip.example-header/haft-9",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft-header-design.json",
+    "sha256": "61472a889cfc887e08913f32870fe1ae1b229a29a19f045a4cc94159005dde79",
+    "fixes": [],
+    "dest": "designs/pip/legacy/original/haft-header-design.json"
+  }
+]

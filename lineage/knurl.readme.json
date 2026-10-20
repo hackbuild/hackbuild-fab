@@ -1,0 +1,18 @@
+[
+  {
+    "id": "knurl.readme/bench-outputs",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/knurl/outputs/knurl/README.md",
+    "sha256": "f8a0cc539d641316105edc3d3d845b19bc892eff408b260e6830f5377b1c3711",
+    "fixes": [],
+    "dest": "designs/knurl/legacy/bench/README.md"
+  },
+  {
+    "id": "knurl.readme/knurl-8",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/knurl/files/README.md",
+    "sha256": "f8a0cc539d641316105edc3d3d845b19bc892eff408b260e6830f5377b1c3711",
+    "fixes": [],
+    "dest": "designs/knurl/legacy/bench/README.md"
+  }
+]

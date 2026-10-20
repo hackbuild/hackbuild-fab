@@ -1,0 +1,15 @@
+[
+  {
+    "id": "pawl.fdm/mk3",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pawl/files/src/fdm.py",
+    "sha256": "a37ad7d868ef4e353409eb43e4e2aa8e7c034638e0636bfccdd5af6d321dfc0e",
+    "fixes": [
+      "a face within 1e-4 deg of the limit is at it, not past it; fdm.py ang <= 45 in float32 counts modelled 45 deg faces by rounding (PAWL foot 6 of 8 flip, computed); the 0.35 mm bed band (line 43) is read from profile overhang.bedBandMm",
+      "packages/checks/src/defs/prt/CHK-PRT-12.ts: analyse() (lines 27 to 50) per triangle overhang area through overhang.ts, the bed contact band left out of the verdict",
+      "packages/checks/src/defs/prt/CHK-PRT-13.ts: the same overhang rule through overhang.ts, its bed band and face at limit tie shared with CHK-PRT-12",
+      "notes: fdm.py's 6 percent 'needs support' flag is a report line and is not carried into any verdict"
+    ],
+    "dest": "packages/checks/src/defs/prt/overhang.ts"
+  }
+]

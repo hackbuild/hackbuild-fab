@@ -1,0 +1,26 @@
+[
+  {
+    "id": "inlay.parts/inlay-hygiene-recipe",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/inlay/files/skill/print-forge/assets/bench/part2.js",
+    "sha256": "b207f95f8bf4c01d212ec56014f1f52f6bf1dfc2f996bc2cd60fe798d816e651",
+    "fixes": [],
+    "dest": "packages/inlay/src/hygiene/recipes.ts"
+  },
+  {
+    "id": "inlay.parts/inlay-kind-recipe",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/inlay/files/skill/print-forge/assets/bench/part2.js",
+    "sha256": "b207f95f8bf4c01d212ec56014f1f52f6bf1dfc2f996bc2cd60fe798d816e651",
+    "fixes": [],
+    "dest": "reference/cosmetic/coin-inlay/build.ts"
+  },
+  {
+    "id": "inlay.parts/part2",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/inlay/files/skill/print-forge/assets/bench/part2.js",
+    "sha256": "b207f95f8bf4c01d212ec56014f1f52f6bf1dfc2f996bc2cd60fe798d816e651",
+    "fixes": [],
+    "dest": null
+  }
+]

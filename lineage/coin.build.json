@@ -1,0 +1,10 @@
+[
+  {
+    "id": "coin.build/coin-v2",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/coin/files/src/build.py",
+    "sha256": "7d30f58573c5d2b9af5fb35c30ebae971086c1224346df0029d9cbb3f8cd48fe",
+    "fixes": [],
+    "dest": null
+  }
+]

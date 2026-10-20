@@ -1,0 +1,10 @@
+[
+  {
+    "id": "import-corpus.rp2040-standin/harvest",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/cresset-plinth/outputs/board-rp2040-pizero-standin.stl",
+    "sha256": "bcb1a5f1639589d69ccbb11e7a590253aba1471ff1bd77694aef3e65d9d6e028",
+    "fixes": [],
+    "dest": "tools/corpus/import/board-rp2040-pizero-standin.stl"
+  }
+]

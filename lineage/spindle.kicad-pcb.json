@@ -1,0 +1,10 @@
+[
+  {
+    "id": "spindle.kicad-pcb/r1",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/spindle/files/kicad/spindle-r1.kicad_pcb",
+    "sha256": "55d09eba04102cd70885849c045311c4752c9afaf1d925f7543e59e598a03cd8",
+    "fixes": [],
+    "dest": null
+  }
+]

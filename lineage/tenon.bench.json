@@ -1,0 +1,34 @@
+[
+  {
+    "id": "tenon.bench/m09-legacy",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/tenon/tenon.html",
+    "sha256": "37fee2f32d1adda1e1cd999d3d75086bd83bfe4a41c1eaea75add359a4dd4713",
+    "fixes": [],
+    "dest": "designs/tenon/legacy/tenon.html"
+  },
+  {
+    "id": "tenon.bench/src-zip",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/tenon/files/tenon-src.zip",
+    "sha256": "c57ea22562979007b849cdb42fd076611db1cd783c6815216035f617e99820b5",
+    "fixes": [],
+    "dest": "designs/tenon/legacy/tenon-src.zip"
+  },
+  {
+    "id": "tenon.bench/src-zip-x",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/tenon/tenon-src.zip",
+    "sha256": "c57ea22562979007b849cdb42fd076611db1cd783c6815216035f617e99820b5",
+    "fixes": [],
+    "dest": "designs/tenon/legacy/tenon-src.zip"
+  },
+  {
+    "id": "tenon.bench/tenon-html",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/tenon/files/tenon.html",
+    "sha256": "37fee2f32d1adda1e1cd999d3d75086bd83bfe4a41c1eaea75add359a4dd4713",
+    "fixes": [],
+    "dest": "designs/tenon/legacy/tenon.html"
+  }
+]

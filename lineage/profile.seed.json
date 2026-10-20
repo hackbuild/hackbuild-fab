@@ -1,0 +1,18 @@
+[
+  {
+    "id": "profile.seed/hbf-handoff",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/plan-to-refine/handoff/hbf/seed/profile.seed.json",
+    "sha256": "86d194e97db270062216184092540f0e85ebc3dc3657e92aa5b36052d45f80f9",
+    "fixes": [],
+    "dest": "packages/profile/data/materials.json"
+  },
+  {
+    "id": "profile.seed/repo",
+    "kind": "copy",
+    "source": "packages/profile/seed/profile.seed.json",
+    "sha256": "86d194e97db270062216184092540f0e85ebc3dc3657e92aa5b36052d45f80f9",
+    "fixes": [],
+    "dest": "packages/profile/seed/profile.seed.json"
+  }
+]

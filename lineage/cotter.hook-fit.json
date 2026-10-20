@@ -1,0 +1,59 @@
+[
+  {
+    "id": "cotter.hook-fit/evidence-x",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/cotter-src/tools/hook_fit.py",
+    "sha256": "adb0f875c932e268726076e5b5bd4b857fa06fec9f0d6bcf3ad883b4f31739cd",
+    "fixes": [],
+    "dest": "packages/mechanisms/src/constraints/hook-rule.ts"
+  },
+  {
+    "id": "cotter.hook-fit/m02-clip",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/cotter/files/cotter-src/tools/hook_fit.py",
+    "sha256": "adb0f875c932e268726076e5b5bd4b857fa06fec9f0d6bcf3ad883b4f31739cd",
+    "fixes": [
+      "hook_centreline, clip_poly and board (lines 13 to 42) ported onto manifold CrossSection; LineString.buffer(r, resolution=16) becomes the union of hulls of consecutive 64-sided circles, equal in area to 0.05 percent and in bounds to 0.01 mm (computed, packages/sim/test/cotter-insert.test.ts); design_full stays ported once as mech/hook-rule in packages/constraints, which sim may not import (M02-T09)"
+    ],
+    "dest": "packages/sim/src/programs/cotter/hook.ts"
+  },
+  {
+    "id": "cotter.hook-fit/m02-insert",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/cotter/files/cotter-src/tools/hook_fit.py",
+    "sha256": "adb0f875c932e268726076e5b5bd4b857fa06fec9f0d6bcf3ad883b4f31739cd",
+    "fixes": [
+      "search() (lines 44 to 71) ported onto manifold CrossSection: prepared shapely intersects becomes a non-empty intersection, which differs only on a touching boundary (the board is inset 0.01 mm first, as in the source); the eleven moves, priority, push-order tie break, limits, clear test and budget are kept; every number is a hookFit.* profile row (M02-T09)"
+    ],
+    "dest": "packages/sim/src/sweep/insert.ts"
+  },
+  {
+    "id": "cotter.hook-fit/m02-legacy",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/cotter-src/tools/hook_fit.py",
+    "sha256": "adb0f875c932e268726076e5b5bd4b857fa06fec9f0d6bcf3ad883b4f31739cd",
+    "fixes": [],
+    "dest": "designs/cotter/legacy/tools/hook_fit.py"
+  },
+  {
+    "id": "cotter.hook-fit/m02-oracle",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/cotter/files/cotter-src/tools/hook_fit.py",
+    "sha256": "adb0f875c932e268726076e5b5bd4b857fa06fec9f0d6bcf3ad883b4f31739cd",
+    "fixes": [],
+    "dest": "packages/sim/scripts/cotter_insert_oracle.py"
+  },
+  {
+    "id": "cotter.hook-fit/r5",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/cotter/files/cotter-src/tools/hook_fit.py",
+    "sha256": "adb0f875c932e268726076e5b5bd4b857fa06fec9f0d6bcf3ad883b4f31739cd",
+    "fixes": [
+      "design and design_full (lines 81 to 100) copied verbatim into packages/mechanisms/test/legacy/hook-rule.py, which writes test/legacy/hook-rule.py.stdout.txt; the closed form is ported to packages/mechanisms/src/constraints/hook-rule.ts (moved at M06-T03) (M01-T10)",
+      "packages/checks/src/defs/asm/CHK-ASM-10.ts: the verdict over the search() measurement (lines 44 to 71) the sim.sweep insert mode hands in (D-055); the check ports no search code",
+      "packages/sim/src/programs/cotter/hook.ts: hook_centreline, clip_poly and board (lines 13 to 42) through row cotter.hook-fit/m02-clip",
+      "packages/sim/src/sweep/insert.ts: search() (lines 44 to 71) through row cotter.hook-fit/m02-insert"
+    ],
+    "dest": "packages/mechanisms/test/legacy/hook-rule.py"
+  }
+]

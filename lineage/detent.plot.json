@@ -1,0 +1,60 @@
+[
+  {
+    "id": "detent.plot/beam",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/detent/files/beam/detent-plot.html",
+    "sha256": "81cdd5d8100dee9d77fce80599adf3244011df1b27e5709a7917ce8d45428bbd",
+    "fixes": [
+      "planSpeeds (lines 1104 to 1151) ported to packages/motion/src/planners/detent-steps.ts on Float64 arrays with the page's arithmetic order; S.rate, S.travel, the mAccel default, vFloor, the 60 floor and TICKHZ read from profile rows detent.*; every interval of the 400 step square equals the legacy run in packages/motion/records/detent-plan.json (packages/motion/test/planners.test.ts, M07-T12); beside each speed the ceiling that set it (feed, junction, floor, accel), the readout D-139 asks for",
+      "stepToU, uToStep, mmToUV, uvToMm, mmToSteps and stepsToMm (lines 503 to 533) ported to packages/motion/src/kinematics/detent.ts with S.hom and S.homInv passed in; solveH and invertH (lines 537 to 565) and the SOLVE handler residual and quad aspect (lines 1883 to 1915) to packages/motion/src/calibrate.ts; the caltest corners map back with 0 step error and a 0.2876 mm worst round trip, equal to packages/motion/records/detent-cal.json (packages/motion/test/calibrate.test.ts)",
+      "streamCmds batch lines (lines 1768 to 1793) ported to packages/motion/src/serialise.ts detentBatchLines with no transport; batchMax from profile detent.batchMax"
+    ],
+    "dest": null
+  },
+  {
+    "id": "detent.plot/m07-calibrate",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/detent/files/beam/detent-plot.html",
+    "sha256": "81cdd5d8100dee9d77fce80599adf3244011df1b27e5709a7917ce8d45428bbd",
+    "fixes": [
+      "the M07-T12 port of solveH and invertH (lines 537 to 565) with the SOLVE handler residual (lines 1883 to 1915); listed on row detent.plot/beam"
+    ],
+    "dest": "packages/motion/src/calibrate.ts"
+  },
+  {
+    "id": "detent.plot/m07-kin",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/detent/files/beam/detent-plot.html",
+    "sha256": "81cdd5d8100dee9d77fce80599adf3244011df1b27e5709a7917ce8d45428bbd",
+    "fixes": [
+      "the M07-T10 port of stepToU to stepsToMm (lines 503 to 533); listed on row detent.plot/beam"
+    ],
+    "dest": "packages/motion/src/kinematics/detent.ts"
+  },
+  {
+    "id": "detent.plot/m07-latest-zip",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/detent-beam/outputs/detent-latest.zip",
+    "sha256": "10e5caf9cc75a62fd70a602584c90c01771d4cce746a4a6a5cb8738463dac6c3",
+    "fixes": [],
+    "dest": "designs/detent/legacy/detent-latest.zip"
+  },
+  {
+    "id": "detent.plot/m07-legacy",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/detent-beam/outputs/detent-plot.html",
+    "sha256": "81cdd5d8100dee9d77fce80599adf3244011df1b27e5709a7917ce8d45428bbd",
+    "fixes": [],
+    "dest": "designs/detent/legacy/detent-plot.html"
+  },
+  {
+    "id": "detent.plot/m07-planner",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/detent/files/beam/detent-plot.html",
+    "sha256": "81cdd5d8100dee9d77fce80599adf3244011df1b27e5709a7917ce8d45428bbd",
+    "fixes": [
+      "the M07-T12 port of planSpeeds (lines 1104 to 1151); listed on row detent.plot/beam"
+    ],
+    "dest": "packages/motion/src/planners/detent-steps.ts"
+  }
+]

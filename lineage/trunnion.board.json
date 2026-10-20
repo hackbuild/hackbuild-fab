@@ -1,0 +1,10 @@
+[
+  {
+    "id": "trunnion.board/rev-a",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/trunnion/files/trunnion.kicad_pcb",
+    "sha256": "632e04b1be088d632c75fb861603f52caa163639762a0a9221af19f7325e8ac9",
+    "fixes": [],
+    "dest": null
+  }
+]

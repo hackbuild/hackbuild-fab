@@ -1,0 +1,10 @@
+[
+  {
+    "id": "catalog-src.kicad-footprints.sot-23/m08",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/m08-catalog/kicad/SOT-23.kicad_mod",
+    "sha256": "db5b998f0d36708205a4b8edc0db1501deb0246a81b52e9cb036cfd58b7570d3",
+    "fixes": [],
+    "dest": null
+  }
+]

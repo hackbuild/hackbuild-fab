@@ -1,0 +1,18 @@
+[
+  {
+    "id": "ogee16.check-servos/bench-source-zip",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/ogee16/outputs/ogee16-source.zip",
+    "sha256": "47d6077e0596eb4e9722a0a9f687cb82ec472c7bc031d8d2f61a98266aa94dd5",
+    "fixes": [],
+    "dest": "packages/constraints/src/fixtures/ogee16-latch-servo-window.ts"
+  },
+  {
+    "id": "ogee16.check-servos/r16p",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/ogee16/files/src/source/check_servos.py",
+    "sha256": "dcf9f16862f68415515250dd16f6585ca83f29cc2460a33bb9d73b908af6fd5c",
+    "fixes": [],
+    "dest": "packages/constraints/src/fixtures/ogee16-latch-servo-window.ts"
+  }
+]

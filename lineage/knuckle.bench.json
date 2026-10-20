@@ -1,0 +1,34 @@
+[
+  {
+    "id": "knuckle.bench/knuckle-html",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/knuckle/files/knuckle.html",
+    "sha256": "c1cd25122127954b162df7925e0b85e0f044b120e01cc0f582776161d2c63c74",
+    "fixes": [],
+    "dest": "designs/knuckle/legacy/knuckle.html"
+  },
+  {
+    "id": "knuckle.bench/m09-legacy",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/knuckle/knuckle.html",
+    "sha256": "c1cd25122127954b162df7925e0b85e0f044b120e01cc0f582776161d2c63c74",
+    "fixes": [],
+    "dest": "designs/knuckle/legacy/knuckle.html"
+  },
+  {
+    "id": "knuckle.bench/src-zip",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/knuckle/files/knuckle-src.zip",
+    "sha256": "76098e29ab79bb32d0aef58ab155a09727b7277c76531e779c1469d8671527e2",
+    "fixes": [],
+    "dest": "designs/knuckle/legacy/knuckle-src.zip"
+  },
+  {
+    "id": "knuckle.bench/src-zip-x",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/knuckle/knuckle-src.zip",
+    "sha256": "76098e29ab79bb32d0aef58ab155a09727b7277c76531e779c1469d8671527e2",
+    "fixes": [],
+    "dest": "designs/knuckle/legacy/knuckle-src.zip"
+  }
+]

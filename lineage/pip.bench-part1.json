@@ -1,0 +1,20 @@
+[
+  {
+    "id": "pip.bench-part1/haft-9",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft-src/bench/part1.html",
+    "sha256": "987a4ff51203315c0f974be9b5b4a15e1873d7c56a7655431c0abfa7358c6fb5",
+    "fixes": [
+      "packages/checks/src/skeleton/key01.ts and profile key.flexGapFracMin, key.flexGapFracMax: the contact gap slider flex.gapPct 35 to 50 (line 233) and the note \"35 to 50 percent of the cone, never under 1.2 mm\" (line 238), the same lines in pip-controller bench/part1.html (D-241)"
+    ],
+    "dest": null
+  },
+  {
+    "id": "pip.bench-part1/pip-controller-legacy",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/bench/part1.html",
+    "sha256": "b878559160b27d7fc63e28d728b777fcb5cda2ed93649f4172b1740537c82f06",
+    "fixes": [],
+    "dest": "designs/pip/legacy/bench/part1.html"
+  }
+]

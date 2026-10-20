@@ -1,0 +1,18 @@
+[
+  {
+    "id": "sash.smoke/benches-coins-inlay",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/benches-coins-inlay/sash-src/smoke.py",
+    "sha256": "2ddcfbfd16180501a2b98f4047e788dd120d98f45c76753154e892e673c1212d",
+    "fixes": [],
+    "dest": null
+  },
+  {
+    "id": "sash.smoke/sash-src",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/sash/files/src/smoke.py",
+    "sha256": "2ddcfbfd16180501a2b98f4047e788dd120d98f45c76753154e892e673c1212d",
+    "fixes": [],
+    "dest": "tools/py/harness/artboard_smoke.py"
+  }
+]

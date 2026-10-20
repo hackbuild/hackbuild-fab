@@ -1,0 +1,34 @@
+[
+  {
+    "id": "blocks.bench/blocks-1",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/blocks/files/blocks.html",
+    "sha256": "96bf187a3c56fcc04cca7491c4a2ff22c1d4ed1e87954c7694d953c04faf8b6c",
+    "fixes": [],
+    "dest": "designs/blocks/legacy/blocks.html"
+  },
+  {
+    "id": "blocks.bench/boss-v1",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/boss/files/boss.html",
+    "sha256": "00badce59c6638dbfd6c920bed481d93a683c605330780fb197686cda4e413f5",
+    "fixes": [],
+    "dest": "designs/blocks/legacy/boss.html"
+  },
+  {
+    "id": "blocks.bench/boss-v1-bench-outputs",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/blocks/outputs/boss/boss.html",
+    "sha256": "00badce59c6638dbfd6c920bed481d93a683c605330780fb197686cda4e413f5",
+    "fixes": [],
+    "dest": "designs/blocks/legacy/boss.html"
+  },
+  {
+    "id": "blocks.bench/handoff",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/plan-to-refine/handoff/hbf/designs/blocks/legacy/blocks.html",
+    "sha256": "96bf187a3c56fcc04cca7491c4a2ff22c1d4ed1e87954c7694d953c04faf8b6c",
+    "fixes": [],
+    "dest": "designs/blocks/legacy/blocks.html"
+  }
+]

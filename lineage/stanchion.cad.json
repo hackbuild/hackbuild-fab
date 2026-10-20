@@ -1,0 +1,10 @@
+[
+  {
+    "id": "stanchion.cad/v2",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/stanchion/files/src/cad.py",
+    "sha256": "4fe0bf820f885dd229901f8608cf9e4ac11a1def46bfb08afbcad212e4cefec8",
+    "fixes": [],
+    "dest": null
+  }
+]

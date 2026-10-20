@@ -1,0 +1,13 @@
+[
+  {
+    "id": "stave.rerun/2026-10-04",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/stave/files/rerun/run-2026-10-04.txt",
+    "sha256": "f6d9c9468933986dc2f47dbacc11cdaf23338e7796b61c7ef606a93d841342a9",
+    "fixes": [
+      "tools/py/copper/test_oracle.py: the gate list, verdicts and order the oracle run must equal, numbers masked (M05-T13)",
+      "reference/copper/stave/test/parity.test.ts holds the packages/copper port's gate lines equal to these, the clearance line's pair checked as a member of the port's tie (M05-T15)"
+    ],
+    "dest": "reference/copper/stave/legacy/run-2026-10-04.txt"
+  }
+]

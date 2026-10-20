@@ -1,0 +1,21 @@
+[
+  {
+    "id": "keyway.geometry/bench",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/cricut-midi-seven/outputs/keyway/keyway_geometry.json",
+    "sha256": "2525a6ec0e849627100b56c16bfec056bf9cbeb42df50c5979e3b6c106de0ba9",
+    "fixes": [],
+    "dest": "reference/copper/keyway/legacy/keyway_geometry.json"
+  },
+  {
+    "id": "keyway.geometry/rev-a",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/keyway/files/keyway_geometry.json",
+    "sha256": "2525a6ec0e849627100b56c16bfec056bf9cbeb42df50c5979e3b6c106de0ba9",
+    "fixes": [
+      "tools/py/copper/test_oracle.py: params and stats are the oracle golden, compared exactly; path strings are not compared (M05-T13 step 5)",
+      "reference/copper/keyway/test/parity.test.ts holds the packages/copper port to its params (equal), stats (copper area within 0.2 percent, clearance within 0.005 mm, span within 0.002, travel within 0.1 mm) and nets (area within 0.2 percent, symmetric difference within 0.5 percent) (M05-T14)"
+    ],
+    "dest": "reference/copper/keyway/legacy/keyway_geometry.json"
+  }
+]

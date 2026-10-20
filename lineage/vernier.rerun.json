@@ -1,0 +1,13 @@
+[
+  {
+    "id": "vernier.rerun/2026-10-04",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/vernier/files/rerun/run-2026-10-04.txt",
+    "sha256": "25230f36d1f30d2fc31dfbe52625f4be756a41d19a3d3067698d5f5e02f3cc3b",
+    "fixes": [
+      "tools/py/copper/test_oracle.py: the gate list, verdicts and order the oracle run must equal, numbers masked (M05-T13)",
+      "reference/copper/vernier/test/parity.test.ts holds the packages/copper port's gate lines equal to these, the clearance line's pair checked as a member of the port's tie (M05-T15)"
+    ],
+    "dest": "reference/copper/vernier/legacy/run-2026-10-04.txt"
+  }
+]

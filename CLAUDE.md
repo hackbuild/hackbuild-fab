@@ -111,8 +111,9 @@ Empty dirs hold a README naming their milestone (D-026); see PACKAGES.md.
   section 16 and proving parity against it before any of our own code is written.
 - Parity is a triple: geometry matches, params round-trip, and an edit to one param produces the
   expected delta.
-- Port from the row marked canonical in the root `lineage.json` (created at M-1-T09); append a row
-  for every copy a port reads. A fix found in a design is ported to its package in the same
+- Port from the row marked canonical in the root `lineage.json` (created at M-1-T09). For every
+  copy a port reads, add or edit `lineage/<subject>.json`, then run `npm run registries`; root
+  lineage.json is generated. A fix found in a design is ported to its package in the same
   milestone.
 - Every feature kind, check, archetype, mechanism, kind or export a milestone admits gets its
   reference under `reference/` in that same milestone. A milestone is green only when references

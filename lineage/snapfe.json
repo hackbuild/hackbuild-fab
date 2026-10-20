@@ -1,0 +1,82 @@
+[
+  {
+    "id": "snapfe/pip-controller-b137deb",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/pip-controller/src/snapfe.js",
+    "sha256": "ccd3a8a428bf19cf02f0b88e9a5ae739a60658d9e9f6b85e75106def206cdf90",
+    "fixes": [],
+    "dest": "packages/sim/src/fe/snapfe.ts"
+  },
+  {
+    "id": "snapfe/pip-controller-legacy",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/src/snapfe.js",
+    "sha256": "ccd3a8a428bf19cf02f0b88e9a5ae739a60658d9e9f6b85e75106def206cdf90",
+    "fixes": [],
+    "dest": "designs/pip/legacy/src/snapfe.js"
+  },
+  {
+    "id": "snapfe/pip-haft-9",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft-src/src/snapfe.js",
+    "sha256": "c6eea76f6456049675aec53ff08d8bdd901819e8c4f1106efafcbb23e536c3ae",
+    "fixes": [],
+    "dest": "packages/sim/src/fe/snapfe.ts"
+  },
+  {
+    "id": "snapfe/pip-haft-9-click-parity",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft-src/src/snapfe.js",
+    "sha256": "c6eea76f6456049675aec53ff08d8bdd901819e8c4f1106efafcbb23e536c3ae",
+    "fixes": [],
+    "dest": "packages/sim/test/legacy/qfine.stdout.txt"
+  },
+  {
+    "id": "snapfe/scratch-pipb",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/scratch/pipb/src/snapfe.js",
+    "sha256": "ccd3a8a428bf19cf02f0b88e9a5ae739a60658d9e9f6b85e75106def206cdf90",
+    "fixes": [],
+    "dest": null
+  },
+  {
+    "id": "snapfe/x-haft",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/haft/src/haft/src/snapfe.js",
+    "sha256": "c6eea76f6456049675aec53ff08d8bdd901819e8c4f1106efafcbb23e536c3ae",
+    "fixes": [],
+    "dest": null
+  },
+  {
+    "id": "snapfe/x-pip-controller",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/src/snapfe.js",
+    "sha256": "ccd3a8a428bf19cf02f0b88e9a5ae739a60658d9e9f6b85e75106def206cdf90",
+    "fixes": [],
+    "dest": "packages/sim/src/fe/snapfe.ts"
+  },
+  {
+    "id": "snapfe/x-pip-controller-click-parity",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/src/snapfe.js",
+    "sha256": "ccd3a8a428bf19cf02f0b88e9a5ae739a60658d9e9f6b85e75106def206cdf90",
+    "fixes": [],
+    "dest": "packages/sim/test/legacy/qfine.stdout.txt"
+  },
+  {
+    "id": "snapfe/x-pip-controller-fe",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/src/snapfe.js",
+    "sha256": "ccd3a8a428bf19cf02f0b88e9a5ae739a60658d9e9f6b85e75106def206cdf90",
+    "fixes": [],
+    "dest": "packages/sim/test/legacy/fe.stdout.txt"
+  },
+  {
+    "id": "snapfe/x-pip-controller-fe2pip",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/src/snapfe.js",
+    "sha256": "ccd3a8a428bf19cf02f0b88e9a5ae739a60658d9e9f6b85e75106def206cdf90",
+    "fixes": [],
+    "dest": "packages/sim/test/legacy/fe2pip.stdout.txt"
+  }
+]

@@ -1,0 +1,24 @@
+[
+  {
+    "id": "pip.firmware-stick/pip-controller-b137deb",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/pip-controller/firmware/pip_stick/pip_stick.ino",
+    "sha256": "388adba596c83e765c97d6302f0cc06f5b37fff9d104f9168608ee708cdb2847",
+    "fixes": [
+      "raw mode with a shared float window and RAW line (pip_stick.ino:118 to 162)",
+      "charge, float and read sequence (pip_stick.ino lines 54 to 59) and KEY_WAIT_US 3500 (line 25) ported to packages/circuit/src/release.ts chargeRelease (M-S-T05, D-079)",
+      "packages/circuit/src/flex-switch.ts: rcCrossingUs is the charge-release read of lines 54 to 59 (drive, float, read after the wait) as a crossing time over the whole node capacitance"
+    ],
+    "dest": "packages/circuit/src/release.ts"
+  },
+  {
+    "id": "pip.firmware-stick/pip-controller-b137deb-emit-wait",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/pip-controller/firmware/pip_stick/pip_stick.ino",
+    "sha256": "388adba596c83e765c97d6302f0cc06f5b37fff9d104f9168608ee708cdb2847",
+    "fixes": [
+      "KEY_WAIT_US 3500 (pip_stick.ino line 25) and the drive, float and read sequence (lines 54 to 59) carried by packages/circuit/src/read/charge-release.ts emitWait and chargeReleaseRead as wait.emit, qualifier inferred (M05-T05, D-079)"
+    ],
+    "dest": "packages/circuit/src/read/charge-release.ts"
+  }
+]

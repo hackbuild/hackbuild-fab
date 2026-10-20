@@ -1,0 +1,33 @@
+[
+  {
+    "id": "sketch.bench/m07-arcs",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/sketch/files/sketch.html",
+    "sha256": "39b5ebce5ce14ac50233f16f3875e5bbcf32136c8ba47fb1e28558243b8a98d5",
+    "fixes": [
+      "the M07-T03 port of IO.fitArcs and IO.wholeCircle (lines 2884 to 2964); the edge midpoint rule it adds is listed on row sketch.bench/v3"
+    ],
+    "dest": "packages/nest/src/arcs.ts"
+  },
+  {
+    "id": "sketch.bench/m07-svg",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/sketch/files/sketch.html",
+    "sha256": "39b5ebce5ce14ac50233f16f3875e5bbcf32136c8ba47fb1e28558243b8a98d5",
+    "fixes": [
+      "the M07-T06 port of IO.sheetSVG (lines 3003 to 3043) as the svg-cut twin, drawing the DXF writer's entity list; listed on row sketch.bench/v3"
+    ],
+    "dest": "packages/nest/src/svg.ts"
+  },
+  {
+    "id": "sketch.bench/v3",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/sketch/files/sketch.html",
+    "sha256": "39b5ebce5ce14ac50233f16f3875e5bbcf32136c8ba47fb1e28558243b8a98d5",
+    "fixes": [
+      "IO.fitArcs and IO.wholeCircle of lines 2884 to 2964 ported into packages/nest/src/arcs.ts; wholeCircle now also holds every edge midpoint within the 0.02 mm tolerance, so a regular octagon (every vertex on one circle) stays an octagon",
+      "IO.sheetDXF of lines 3046 to 3102 (bulge tan(sweep/4) on the start vertex, CIRCLE for whole circles, holes before outlines) ported into packages/nest/src/dxf.ts with $ACADVER, handles and the repeated first vertex it lacked; IO.sheetSVG of lines 3003 to 3043 (mm units, one y flip at the root, circles as two half arcs) into packages/nest/src/svg.ts"
+    ],
+    "dest": null
+  }
+]

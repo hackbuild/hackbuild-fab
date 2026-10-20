@@ -1,0 +1,22 @@
+[
+  {
+    "id": "pip.firmware/pip-controller-b137deb",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/pip-controller/firmware/pip/pip.ino",
+    "sha256": "1a117eec10d86abe85021e221b09868e477a98f34589df191591fbcf0040f15d",
+    "fixes": [
+      "GUARD_US 2000 and the crossing timer (pip.ino:63 to 81); the bench firmware() in part2.js lacks GUARD_US. KEY_WAIT_US ships 200 at line 20; the 3500 us key wait is pip_stick.ino line 25 (D-080)"
+    ],
+    "dest": null
+  },
+  {
+    "id": "pip.firmware/pip-controller-b137deb-shipped-wait",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/pip-controller/firmware/pip/pip.ino",
+    "sha256": "1a117eec10d86abe85021e221b09868e477a98f34589df191591fbcf0040f15d",
+    "fixes": [
+      "KEY_WAIT_US 200 (pip.ino line 20) is the wait the published firmware ships; packages/circuit/src/read/charge-release.ts shippedWait carries it as wait.firmwareShipped with qualifier unknown so the gap to the emitted 3500 us stays visible (M05-T05, D-080)"
+    ],
+    "dest": "packages/circuit/src/read/charge-release.ts"
+  }
+]

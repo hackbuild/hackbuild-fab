@@ -1,0 +1,10 @@
+[
+  {
+    "id": "knurl.three-module/npm-0-185-1",
+    "kind": "canonical",
+    "source": "designs/knurl/legacy/three-0.185.1.zip!three@0.185.1/build/three.module.js",
+    "sha256": "bbf5ed13fe4373f5bd38b14ea8e62e9f157327da5638edc6d3863e08b167c9c7",
+    "fixes": [],
+    "dest": "designs/knurl/legacy/three-0.185.1.zip!three@0.185.1/build/three.module.js"
+  }
+]

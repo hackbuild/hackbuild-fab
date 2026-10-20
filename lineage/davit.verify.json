@@ -1,0 +1,10 @@
+[
+  {
+    "id": "davit.verify/r4",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/davit/files/src/verify_sim.py",
+    "sha256": "9164f30980815f977dcf2838835abb69f9a607ddac031153f01093517986b9af",
+    "fixes": [],
+    "dest": "designs/davit/legacy/r4/verify_sim.py"
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "id": "snapfe.fe2pip/x",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/fe2pip.cjs",
+    "sha256": "393aef345104622e1d3a2d542bdd19250161d8a0f11ad9d031bebde272d32f5b",
+    "fixes": [],
+    "dest": "packages/sim/test/fe/snapfe.test.ts"
+  },
+  {
+    "id": "snapfe.fe2pip/x-click-parity",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/fe2pip.cjs",
+    "sha256": "393aef345104622e1d3a2d542bdd19250161d8a0f11ad9d031bebde272d32f5b",
+    "fixes": [],
+    "dest": "packages/sim/test/legacy/fe2pip.stdout.txt"
+  }
+]

@@ -1,0 +1,13 @@
+[
+  {
+    "id": "tang-r6.design3/r6-4",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/tang-r6/files/src/03_design.js",
+    "sha256": "66212020941634972bd533944ca8e90d69b6195a18859d1a6e38589af921b9b1",
+    "fixes": [
+      "ported to packages/archetypes/src/tang/neck.ts, as its header cites 03_design.js (packages/archetypes/src/tang/neck.ts line 5: \"of D.runChecks (lines 293 to 297). Defaults are 03_design.js line 23.\"); recorded by the M06 and M08 integration",
+      "ported to packages/archetypes/src/tang/pot.ts, as its header cites 03_design.js (packages/archetypes/src/tang/pot.ts line 7: \"Defaults are the pots row, 03_design.js line 22; the face stack is\"); recorded by the M06 and M08 integration"
+    ],
+    "dest": null
+  }
+]

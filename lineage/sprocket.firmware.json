@@ -1,0 +1,12 @@
+[
+  {
+    "id": "sprocket.firmware/0024",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/sprocket/files/sprocket_fw/sprocket_fw.ino",
+    "sha256": "a6e63caf887af18ffe8639dad3776d62b5461dce4c925a99c2486d82f187317e",
+    "fixes": [
+      "split and interleaved BLE telemetry fixed against the 00:09 build (sprocket record section 1)"
+    ],
+    "dest": null
+  }
+]

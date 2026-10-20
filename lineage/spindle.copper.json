@@ -1,0 +1,10 @@
+[
+  {
+    "id": "spindle.copper/v5",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/spindle/files/gen_board.py",
+    "sha256": "e973bfc1266cd5633a1baddeb0cb0927fa199f8b3bec5709fc21c7a2b0156901",
+    "fixes": [],
+    "dest": null
+  }
+]

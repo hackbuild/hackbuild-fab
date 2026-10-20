@@ -1,0 +1,10 @@
+[
+  {
+    "id": "import-corpus.lug/harvest",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/round-pi-board/outputs/lug.glb",
+    "sha256": "15f3ea44045856ccead71b934b56f4b49b2f5d89940950b89287311568746b9e",
+    "fixes": [],
+    "dest": "tools/corpus/import/lug.glb"
+  }
+]

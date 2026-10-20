@@ -1,0 +1,10 @@
+[
+  {
+    "id": "validate-3mf/inlay-skill-script",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/inlay/files/skill/print-forge/scripts/validate_3mf.py",
+    "sha256": "cdc2c7d5fc170240e36e1e52bcdd3d5af03036607c242a8e48b9c0d00896aecf",
+    "fixes": [],
+    "dest": "tools/py/validate_3mf.py"
+  }
+]

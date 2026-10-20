@@ -1,0 +1,34 @@
+[
+  {
+    "id": "sprue.py/design-build",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/sprue/files/sprue.py",
+    "sha256": "1c2f22a66394abff83774c9dbcac2c0c5766959cbc22564c362530b7b8c5da4b",
+    "fixes": [],
+    "dest": "designs/sprue/build.ts"
+  },
+  {
+    "id": "sprue.py/design-legacy",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/sprue/files/sprue.py",
+    "sha256": "1c2f22a66394abff83774c9dbcac2c0c5766959cbc22564c362530b7b8c5da4b",
+    "fixes": [],
+    "dest": "designs/sprue/legacy/sprue.py"
+  },
+  {
+    "id": "sprue.py/harvest",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/sprue/outputs/sprue/sprue.py",
+    "sha256": "1c2f22a66394abff83774c9dbcac2c0c5766959cbc22564c362530b7b8c5da4b",
+    "fixes": [],
+    "dest": null
+  },
+  {
+    "id": "sprue.py/sprue-py",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/sprue/files/sprue.py",
+    "sha256": "1c2f22a66394abff83774c9dbcac2c0c5766959cbc22564c362530b7b8c5da4b",
+    "fixes": [],
+    "dest": null
+  }
+]

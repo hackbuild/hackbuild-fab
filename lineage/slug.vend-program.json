@@ -1,0 +1,12 @@
+[
+  {
+    "id": "slug.vend-program/slug-12",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/slug/files/slug.html",
+    "sha256": "2d09238c27d5ca4bf023eeee44939b1500470ad2058822b8d0add48ec9bf3241",
+    "fixes": [
+      "STEPS_VEND (lines 224 to 226) is a fractional 4075.7728 half steps that btnVend (lines 965 to 969) adds to a fractional target; packages/motion/src/programs/slug.ts commands whole steps with the residual carried, target round(k x 4075.7728) after vend k, so the axis stays within 0.5 half step of the arithmetic (M07-T11 step 3)"
+    ],
+    "dest": "packages/motion/src/programs/slug.ts"
+  }
+]

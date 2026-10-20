@@ -1,0 +1,52 @@
+[
+  {
+    "id": "blocks.parts/blocks-1",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/blocks/files/src-extracted/parts.js",
+    "sha256": "8822104bf031a6c803218f98791346e7015448f00af774f21a0cc13a42686b1f",
+    "fixes": [
+      "its SEAT (lines 222 to 330: pin sockets with 2.6 x 1.9 landings, body height 9.6 or 12.8, pegs) is not what designs/blocks/src/route-seat.ts ports: while D-087 keeps the reproduction at BOSS v1 the seat comes from blocks.parts/boss-legacy; the BLOCKS-1 seat waits for the M10 chase port (M05-T09)",
+      "ported to packages/archetypes/src/blocks/wire.ts, as its header cites parts.js (packages/archetypes/src/blocks/wire.ts line 2: \"originals/blocks/files/src-extracted/parts.js lines 565 to 710 (wirePath,\"); recorded by the M06 and M08 integration",
+      "ported to packages/archetypes/src/defs/blocks-wire.ts, as its header cites parts.js (packages/archetypes/src/defs/blocks-wire.ts line 2: \"from the BLOCKS wire (parts.js lines 565 to 710); the port lives in\"); recorded by the M06 and M08 integration"
+    ],
+    "dest": null
+  },
+  {
+    "id": "blocks.parts/blocks-1-port-wire",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/blocks/files/src-extracted/parts.js",
+    "sha256": "8822104bf031a6c803218f98791346e7015448f00af774f21a0cc13a42686b1f",
+    "fixes": [],
+    "dest": "packages/archetypes/src/blocks/wire.ts"
+  },
+  {
+    "id": "blocks.parts/blocks-1-wire-verdict",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/blocks/files/src-extracted/parts.js",
+    "sha256": "8822104bf031a6c803218f98791346e7015448f00af774f21a0cc13a42686b1f",
+    "fixes": [
+      "wire verdict bands, R under 1e5 signal and ADC fine, under 1e6 a 100 nF at the pin, else digital only (parts.js line 702; BOSS boss-src parts.js line 426 holds the same line), ported to packages/circuit/src/read/adc.ts adcRead over profile constants read.adc.lineOhm, read.adc.analogCeilOhm and read.adc.holdCapNf (M05-T05)"
+    ],
+    "dest": "packages/circuit/src/read/adc.ts"
+  },
+  {
+    "id": "blocks.parts/boss-legacy",
+    "kind": "copy",
+    "source": "designs/blocks/legacy/boss-src/src/parts.js",
+    "sha256": "e9e44eaca651fac61e248e5d066cb523ec7d71252c8a792d1ef09057f801d9e6",
+    "fixes": [
+      "SEAT router setup (parts.js lines 14 to 36 BOARDS and boardPins, 72 to 100 autosize and seatTargets, 101 to 111 params, 112 to 172 pin selection, targets, obstacles and nets) ported to designs/blocks/src/route-seat.ts at BOSS v1 (D-087); the config equals BOSS's for the five seats of packages/copper/test/fixtures/boss-seats/ (tools/legacy/boss/dump-route-cfg.cjs); seat params are schema checked, so pins: 'all', an unknown key, a pin the board lacks, an off-step length or an empty pin list is E_SCHEMA where BOSS built a vacuous seat (M05-T09)"
+    ],
+    "dest": "designs/blocks/legacy/boss-src/src/parts.js"
+  },
+  {
+    "id": "blocks.parts/boss-src",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/boss/files/boss-src/src/parts.js",
+    "sha256": "e9e44eaca651fac61e248e5d066cb523ec7d71252c8a792d1ef09057f801d9e6",
+    "fixes": [
+      "TOUCH works with control key touched (boss parts.js:479 to 498); BLOCKS renamed it to touch0..N and broke it"
+    ],
+    "dest": null
+  }
+]

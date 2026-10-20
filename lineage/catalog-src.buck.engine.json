@@ -1,0 +1,10 @@
+[
+  {
+    "id": "catalog-src.buck.engine/m08",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/buck/files/src/engine.js",
+    "sha256": "e33e66a83ad3c6c746f85ab474997a045371181fbd5811691f1365f0d6cbc01c",
+    "fixes": [],
+    "dest": null
+  }
+]

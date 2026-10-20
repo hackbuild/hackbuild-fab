@@ -1,0 +1,12 @@
+[
+  {
+    "id": "shunt.fab/r1",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/shunt/files/gen_fab.py",
+    "sha256": "eeffed1bc78e44dfc06acc09e04b4f6dd1cb3a62834a6fd6da09e0b979374013",
+    "fixes": [
+      "ported to packages/board/src/writers/assembly.ts, as its header cites gen_fab.py (packages/board/src/writers/assembly.ts line 6: \"CPL dialects, both ported: `body-centre` is SHUNT's (gen_fab.py lines\"); recorded by the M06 and M08 integration"
+    ],
+    "dest": null
+  }
+]

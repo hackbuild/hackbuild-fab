@@ -1,0 +1,22 @@
+[
+  {
+    "id": "tessera.geometry/bench",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/cricut-midi-seven/outputs/tessera/tessera_geometry.json",
+    "sha256": "2d30108d2af19c4faf8816d57f02d4e379ec50106ace3284af82421328d0ffa5",
+    "fixes": [],
+    "dest": "reference/copper/tessera/legacy/tessera_geometry.json"
+  },
+  {
+    "id": "tessera.geometry/rev-a",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/tessera/files/tessera_geometry.json",
+    "sha256": "2d30108d2af19c4faf8816d57f02d4e379ec50106ace3284af82421328d0ffa5",
+    "fixes": [
+      "tools/py/copper/test_oracle.py: params and stats are the oracle golden, compared exactly; path strings are not compared (M05-T13 step 5)",
+      "reference/copper/tessera/test/parity.test.ts (through reference/copper/_harness/family.ts) holds the packages/copper port to its params (equal), stats (copper area within 0.2 percent, clearance within 0.005 mm, the board's own figures) and nets (area within 0.2 percent, symmetric difference within 0.5 percent) (M05-T15)",
+      "reference/copper/tessera/test/parity.test.ts holds the seeds reference/copper/tessera/pyrandom.ts draws for random.Random(11) equal to the pads' seeds recorded here, digit for digit (M05-T15)"
+    ],
+    "dest": "reference/copper/tessera/legacy/tessera_geometry.json"
+  }
+]

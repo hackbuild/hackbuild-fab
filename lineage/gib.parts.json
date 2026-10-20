@@ -1,0 +1,30 @@
+[
+  {
+    "id": "gib.parts/gib-4",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/gib/files/src/src/part2.js",
+    "sha256": "2ca8ce4a73db2091fc56ad70cae37439288f5fc8fdcb6c970ff00214347bf2fe",
+    "fixes": [
+      "ported to packages/archetypes/src/gib/gib.ts, as its header cites part2.js (packages/archetypes/src/gib/gib.ts line 2: \"from originals/gib/files/src/src/part2.js (canonical gib_4.html): the\"); recorded by the M06 and M08 integration"
+    ],
+    "dest": null
+  },
+  {
+    "id": "gib.parts/gib-4-adc-source",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/gib/files/src/src/part2.js",
+    "sha256": "2ca8ce4a73db2091fc56ad70cae37439288f5fc8fdcb6c970ff00214347bf2fe",
+    "fixes": [
+      "wiper source over 100 kohm wants a 100 nF capacitor and any no-touch pull-down at least 20 times the source (part2.js line 544): the 20 times rule in packages/circuit/src/read/ratiometric.ts and the 100 kohm and 100 nF figures beside the BLOCKS verdict in packages/circuit/src/read/adc.ts (M05-T05)"
+    ],
+    "dest": "packages/circuit/src/read/ratiometric.ts"
+  },
+  {
+    "id": "gib.parts/gib-4-port-gib",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/gib/files/src/src/part2.js",
+    "sha256": "2ca8ce4a73db2091fc56ad70cae37439288f5fc8fdcb6c970ff00214347bf2fe",
+    "fixes": [],
+    "dest": "packages/archetypes/src/gib/gib.ts"
+  }
+]

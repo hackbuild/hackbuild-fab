@@ -1,0 +1,10 @@
+[
+  {
+    "id": "auger.board/rev-b",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/auger/files/src/auger.board.tsx",
+    "sha256": "7319c3e1d2490ea53d8c25d2f5174dd13ed32490b8a2ec1e4f83c31d37a586ef",
+    "fixes": [],
+    "dest": null
+  }
+]
