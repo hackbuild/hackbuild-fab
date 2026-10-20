@@ -114,11 +114,21 @@ function readFlag(kind: CliForm["flags"][string]["kind"], name: string, raw: str
 /** File extension to ImportSpec.format; an extension outside it stays as written and the schema refuses it. */
 const IMPORT_FORMAT: Readonly<Record<string, string>> = { stl: "stl", glb: "glb", step: "step", stp: "step", wrl: "wrl", scad: "scad" };
 
-/** --import as paths joined by commas, each one body for audit at its format's default units. */
-function readImports(raw: string): unknown[] {
-  return raw.split(",").map((s) => s.trim()).filter((s) => s !== "").map((p) => {
+/** `path#N` declares N pieces; a # with anything but digits after it stays in the path. */
+const PIECES = /^(.+)#(\d+)$/;
+
+/**
+ * --import as paths joined by commas, each one body for audit at its
+ * format's default units; `plate.stl#2` declares two pieces (ImportSpec.pieces).
+ * The range check is part.build's; here a count only parses.
+ */
+export function readImports(raw: string): unknown[] {
+  return raw.split(",").map((s) => s.trim()).filter((s) => s !== "").map((entry) => {
+    const m = PIECES.exec(entry);
+    const p = m === null ? entry : m[1]!;
     const ext = p.slice(p.lastIndexOf(".") + 1).toLowerCase();
-    return { path: p, format: IMPORT_FORMAT[ext] ?? ext, as: "body" };
+    const spec = { path: p, format: IMPORT_FORMAT[ext] ?? ext, as: "body" };
+    return m === null ? spec : { ...spec, pieces: Number(m[2]) };
   });
 }
 

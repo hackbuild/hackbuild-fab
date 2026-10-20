@@ -388,6 +388,12 @@ export interface ImportSpec {
    * on another tool's output (the reverse check, M05-T12).
    */
   readonly material?: string;
+  /**
+   * Pieces the file holds after its own union, default 1, an integer at
+   * least 1. A plate of several pieces is legal only when declared, and the
+   * declaration enters the build hash. On the cli, `path#N`.
+   */
+  readonly pieces?: number;
 }
 
 export interface CommandIO {
