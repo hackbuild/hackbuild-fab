@@ -23,6 +23,26 @@
     "dest": "packages/sim/src/fe/click.ts"
   },
   {
+    "id": "pip.layout/haft-9-access-switch",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft-src/src/layout.js",
+    "sha256": "2d1c6c10554b5c7d8dc333496529abee82e937d2d3fe85c41a8d7ee22bb2468c",
+    "fixes": [
+      "PIP's four material slots (layout.js lines 47 to 52) and the clicky rise and width Q 2.0, w 1.6 (layout.js line 36) declared by reference/keys/access-switch/chase.ts; span 28 and beam 0.55 are the access switch point (scout sweep, R1-flagship-access-switch-02), and E is the petg modulus row in profile, not a chase param"
+    ],
+    "dest": "reference/keys/access-switch/chase.ts"
+  },
+  {
+    "id": "pip.layout/haft-9-access-switch-stack",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft-src/src/layout.js",
+    "sha256": "2d1c6c10554b5c7d8dc333496529abee82e937d2d3fe85c41a8d7ee22bb2468c",
+    "fixes": [
+      "the buried stack (layout.js line 27: skin 0.72, trace 0.72, iso 0.96) read through the profile stack rows for the floor face and the lead layer of reference/keys/access-switch/build.ts, as reference/buttons/click-spring/build.ts reads them"
+    ],
+    "dest": "reference/keys/access-switch/build.ts"
+  },
+  {
     "id": "pip.layout/haft-9-click-spring-window",
     "kind": "copy",
     "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft-src/src/layout.js",
