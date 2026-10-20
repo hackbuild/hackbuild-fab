@@ -17,7 +17,7 @@ import {
 } from "@hackbuild/project";
 import { readSeedRows } from "../checks.js";
 import { cmdError, didYouMean } from "../errors.js";
-import type { CoreCtx } from "../registry.js";
+import type { CoreCtx } from "../ctx.js";
 import type { CommandOut } from "../result.js";
 import { fullProfile } from "../load-build.js";
 import { Store } from "../store.js";

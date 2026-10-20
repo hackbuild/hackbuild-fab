@@ -23,7 +23,7 @@ import { legacyItem, legacyRows, projectGraph, runProjectGraph, viewOf, workspac
 import { isWiringDesign } from "../src/exporters/wiring.js";
 import { hashOf } from "../src/jcs.js";
 import { fullProfile } from "../src/load-build.js";
-import type { CoreCtx } from "../src/registry.js";
+import type { CoreCtx } from "../src/ctx.js";
 import { Store } from "../src/store.js";
 import { ROOT } from "./hbf.js";
 

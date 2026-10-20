@@ -41,7 +41,7 @@ import { solveBuilt } from "./circuit-solve.js";
 import { mcuPinRow } from "@hackbuild/catalog";
 import { hashOf } from "../jcs.js";
 import { finish } from "../result.js";
-import type { CoreCtx } from "../registry.js";
+import type { CoreCtx } from "../ctx.js";
 import { buildSurface, isSurfaceDir } from "./surface.js";
 import { boardArtifacts, boardCheckVersions, buildBoard, fabZip, isBoardDesign, runBoardChecks, zipHash } from "../board.js";
 import { boardViews } from "../board-views.js";

@@ -25,7 +25,7 @@ import { runBoardExport } from "../src/exporters/board-export.js";
 import { boardExporter } from "../src/exporters/board-exporters.js";
 import { boardViews } from "../src/board-views.js";
 import { Store } from "../src/store.js";
-import type { CoreCtx } from "../src/registry.js";
+import type { CoreCtx } from "../src/ctx.js";
 import type { GateStreams } from "../src/tty-gate.js";
 import { BIN, ROOT } from "./hbf.js";
 

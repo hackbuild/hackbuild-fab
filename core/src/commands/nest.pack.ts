@@ -26,7 +26,7 @@ import { kerfNext, packPlates, packScene, sheetNames, type PlateScene, type Shee
 import { cmdError, didYouMean } from "../errors.js";
 import { fullProfile } from "../load-build.js";
 import { countsOf, errorResult, findingsOf, worst, type CommandOut } from "../result.js";
-import type { CoreCtx } from "../registry.js";
+import type { CoreCtx } from "../ctx.js";
 import { PACK_CHECKS, sceneEntry, sceneManifest, sceneParams, sheetChecks, type SceneEntry } from "../exporters/sheets.js";
 
 /** The CLI input: the spec input widened by the transitional scene and its params (until M10). */

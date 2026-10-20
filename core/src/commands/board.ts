@@ -13,7 +13,7 @@ import { boardArtifacts, boardCheckVersions, boardPart, buildBoard, fabZip, runB
 import { cmdError } from "../errors.js";
 import { boardViews } from "../board-views.js";
 import { countsOf, findingsOf, worst, type CommandOut } from "../result.js";
-import type { CoreCtx } from "../registry.js";
+import type { CoreCtx } from "../ctx.js";
 import { defParts, loadWorkspace, workspaceRoot, type Design, type Values } from "./build.js";
 
 /** A refused generator as a result: no store write, the gate lines as one E_KERNEL error. */

@@ -9,7 +9,7 @@ import { catalogFind, catalogPins } from "@hackbuild/catalog";
 import { workspaceCatalog } from "../catalog-files.js";
 import { fetchKicadRows, networkKicadSource, type KicadSource } from "../catalog-fetch.js";
 import type { CommandOut } from "../result.js";
-import type { CoreCtx } from "../registry.js";
+import type { CoreCtx } from "../ctx.js";
 
 const ZERO = { pass: 0, warn: 0, fail: 0, skip: 0 } as const;
 

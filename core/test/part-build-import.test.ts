@@ -18,7 +18,7 @@ import path from "node:path";
 import { describe, expect, it } from "vitest";
 import type { CommandInput, CommandOutput, Hash } from "@hackbuild/spec";
 import { importAudit, openscadVersion, renderScad, runPartBuild } from "../src/commands/part-build.js";
-import type { CoreCtx } from "../src/registry.js";
+import type { CoreCtx } from "../src/ctx.js";
 import { PROCESS_STREAMS } from "../src/tty-gate.js";
 import { Store } from "../src/store.js";
 import { json, ROOT } from "./hbf.js";

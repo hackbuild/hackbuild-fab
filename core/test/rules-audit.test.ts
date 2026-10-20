@@ -18,7 +18,7 @@ import { buildPart, export3mf, loadDesign, resolveParams } from "../src/commands
 import { AUDIT_LEVELS, auditSources, gitFiles, runRulesAudit, sourceSkip, type AuditOut } from "../src/commands/rules-audit.js";
 import { exitOf } from "../src/errors.js";
 import { finish } from "../src/result.js";
-import type { CoreCtx } from "../src/registry.js";
+import type { CoreCtx } from "../src/ctx.js";
 import { Store } from "../src/store.js";
 import { ROOT, REF } from "./hbf.js";
 

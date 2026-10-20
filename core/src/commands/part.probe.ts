@@ -7,7 +7,7 @@
 import type { CommandInput, ProbeResult } from "@hackbuild/spec";
 import { probePair, type ProbeRun } from "@hackbuild/sim";
 import { cmdError } from "../errors.js";
-import type { CoreCtx } from "../registry.js";
+import type { CoreCtx } from "../ctx.js";
 import type { CommandOut } from "../result.js";
 import { sceneDeps, sceneOf, simResult } from "./sim.run.js";
 

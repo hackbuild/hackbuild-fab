@@ -17,7 +17,7 @@ import { isWiringDesign, runWiringExport, wiringCommandError, wiringDraft, wirin
 import { workspaceCatalog } from "../src/catalog-files.js";
 import { PROCESS_STREAMS } from "../src/tty-gate.js";
 import { Store } from "../src/store.js";
-import type { CoreCtx } from "../src/registry.js";
+import type { CoreCtx } from "../src/ctx.js";
 import { ROOT } from "./hbf.js";
 import { originalPath } from "../../tools/test-support/originals-root.js";
 

@@ -20,7 +20,7 @@ import { boardArtifacts, boardCheckVersions, buildBoard, fabZip, runBoardChecks 
 import { boardViews } from "../board-views.js";
 import { cmdError } from "../errors.js";
 import { countsOf, findingsOf, worst, type CommandOut } from "../result.js";
-import type { CoreCtx } from "../registry.js";
+import type { CoreCtx } from "../ctx.js";
 import { askHost } from "../tty-gate.js";
 import type { Design, Values } from "../commands/build.js";
 import type { BoardExporter } from "./board-exporter.js";

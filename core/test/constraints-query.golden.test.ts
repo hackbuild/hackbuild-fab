@@ -12,7 +12,7 @@ import { runConstraintsQuery } from "../src/commands/constraints-query.js";
 import { errorResult, finish } from "../src/result.js";
 import { exitOf } from "../src/errors.js";
 import { hashOf } from "../src/jcs.js";
-import type { CoreCtx } from "../src/registry.js";
+import type { CoreCtx } from "../src/ctx.js";
 import { renderResult } from "../src/text.js";
 import { FLOOR_CONSTANT, LEN, W, fixtureRegistry } from "./fixtures/query-defs.js";
 import { ROOT, hbf, json } from "./hbf.js";

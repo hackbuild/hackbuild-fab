@@ -13,7 +13,7 @@ import { mechanisms } from "@hackbuild/mechanisms";
 import { archetypes } from "../src/canon.js";
 import { runMechDerive } from "../src/commands/mech.derive.js";
 import { explainUri } from "../src/commands/explain.js";
-import type { CoreCtx } from "../src/registry.js";
+import type { CoreCtx } from "../src/ctx.js";
 import { ROOT, json } from "./hbf.js";
 import { originalPath } from "../../tools/test-support/originals-root.js";
 

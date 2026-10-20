@@ -15,7 +15,7 @@ import { cmdError, didYouMean } from "../errors.js";
 import { fmtIn } from "../text/fmt.js";
 import { fullProfile } from "../load-build.js";
 import { loadConstraints } from "../load/constraints.js";
-import type { CoreCtx } from "../registry.js";
+import type { CoreCtx } from "../ctx.js";
 import type { CommandOut } from "../result.js";
 import type { Built, Values } from "./build.js";
 import { buildTarget } from "./part-build.js";

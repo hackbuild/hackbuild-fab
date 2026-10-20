@@ -7,7 +7,7 @@
 import type { CanonHit, CommandInput, CommandOutput, MechanismDef, Process } from "@hackbuild/spec";
 import { mechanisms } from "@hackbuild/mechanisms";
 import type { CommandOut } from "../result.js";
-import type { CoreCtx } from "../registry.js";
+import type { CoreCtx } from "../ctx.js";
 import { ZERO, capped, rank, type Scored } from "./canon-hits.js";
 
 /** One mechanism as the hit list shows it. */

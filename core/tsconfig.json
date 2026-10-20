@@ -33,6 +33,9 @@
       "path": "../packages/pipeline"
     },
     {
+      "path": "../packages/commands"
+    },
+    {
       "path": "../packages/constraints"
     },
     {

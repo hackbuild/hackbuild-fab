@@ -6,7 +6,7 @@
 
 import type { CommandInput } from "@hackbuild/spec";
 import { runSweep, type SweepRun } from "@hackbuild/sim";
-import type { CoreCtx } from "../registry.js";
+import type { CoreCtx } from "../ctx.js";
 import type { CommandOut } from "../result.js";
 import { sceneDeps, sceneOf, simResult, type SceneArg } from "./sim.run.js";
 
