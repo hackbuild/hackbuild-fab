@@ -12,6 +12,7 @@ import type { MeshData } from "@hackbuild/mesh";
 import type { InsertCaseView } from "@hackbuild/sim";
 import type { Catalog } from "@hackbuild/catalog";
 import type { AdcPort, ChargePort, Extraction, PullupPort, SeriesPort } from "@hackbuild/circuit";
+import type { ClaimsInput } from "./claims/scope.js";
 
 /** What a 3MF states about its source in Metadata/hackbuild_chase.json and its zip mtime (CHK-ART-02, D-052). */
 export interface StatedSource {
@@ -156,8 +157,8 @@ export interface InterferenceDecl {
 /** The interference declaration of one assembly; undefined when the caller has none for it. */
 export type InterferenceView = (assembly: string) => InterferenceDecl | undefined;
 
-/** CheckCtx as the registry builds it: the spec fields plus the kernel views. */
-export type RegistryCtx = CheckCtx & { readonly views?: KernelViews };
+/** CheckCtx as the registry builds it: the spec fields plus the kernel views and, for CHK-CLAIM-01, the chase claims. */
+export type RegistryCtx = CheckCtx & { readonly views?: KernelViews; readonly claims?: ClaimsInput };
 
 export const viewsOf = (ctx: CheckCtx): KernelViews => (ctx as RegistryCtx).views ?? {};
 

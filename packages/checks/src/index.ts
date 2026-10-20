@@ -46,3 +46,5 @@ export { routeFinding, runNet12 } from "./net/net12.js";
 export { BEAM_CONSTANTS, interlockingDefaults, run3mf08 } from "./3mf/chk-3mf-08.js";
 export { CHK_3MF_04, CHK_3MF_04_VERSION, INSET_CONSTANTS, chk3mf04, type BodyOutline, type Chk04Input } from "./3mf/chk-3mf-04.js";
 export { conductorPackageChecks } from "./3mf/package-checks.js";
+// Function claims and CHK-CLAIM-01 (R1-engine-11).
+export * from "./claims/index.js";

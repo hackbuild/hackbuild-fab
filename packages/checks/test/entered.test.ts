@@ -87,6 +87,7 @@ const LANDED: Readonly<Record<string, string>> = {
   "CHK-BRD-19": "M08-T09", "CHK-BRD-22": "M08-T08",
   "CHK-NET-46": "K-04",
   "CHK-PRT-18": "R1-rails-import", "CHK-PRT-19": "R1-rails-import",
+  "CHK-CLAIM-01": "R1-engine-11",
 };
 
 const enteredBy = (r: Row): string | undefined => (r as { enteredBy?: string }).enteredBy;
@@ -98,7 +99,8 @@ const T12 = seed.checks.filter((r) => !SEEDED_IDS.has(r.id) && enteredBy(r) === 
  * body, M08-T08 the KiCad readback, M08-T12 the jumper default and the
  * island and short check, K-04 (the 2026-10-13 flagship finding) the
  * seat tap landing, R1-rails-import the import piece count and floating
- * piece (hbf image eval 2026-10-20).
+ * piece (hbf image eval 2026-10-20), R1-engine-11 the function claim
+ * band.
  */
 const LATER: Readonly<Record<string, readonly string[]>> = {
   "M05-T14": ["CHK-NET-31", "CHK-NET-32", "CHK-NET-33", "CHK-NET-34", "CHK-NET-35", "CHK-NET-36", "CHK-NET-37", "CHK-NET-38"],
@@ -109,6 +111,7 @@ const LATER: Readonly<Record<string, readonly string[]>> = {
   "M08-T12": ["CHK-BRD-20", "CHK-BRD-21"],
   "K-04": ["CHK-NET-46"],
   "R1-rails-import": ["CHK-PRT-18", "CHK-PRT-19"],
+  "R1-engine-11": ["CHK-CLAIM-01"],
 };
 const KERNELS = new Set<KernelId>(["geom", "mesh", "profile", "3mf", "sim", "inlay"]);
 const TARGETS = new Set<CheckLevel>(["part", "body", "feature", "assembly", "artifact", "source", "project"]);

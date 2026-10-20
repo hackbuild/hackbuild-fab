@@ -17,7 +17,7 @@ import {
 import { createProfileLookup, lossRowId, materialFamily, type ProfileTables } from "@hackbuild/profile";
 import { assemblePart, isWatertight, meshError, type MeshData, type RasterMask, type StageOutput } from "@hackbuild/mesh";
 import { configOf, write3mf, type FilamentSlot, type FilamentTemplate, type SlicerMaterials, type ThreeMfInput } from "@hackbuild/3mf";
-import { CHECK_MODULES, IMPORT_PATH_CHECKS, PAGE_MILESTONE, kernelsAt, registerChecks, runRegistry, runSkeleton, skeletonChecks, skeletonNets, type KernelViews } from "@hackbuild/checks";
+import { CHECK_MODULES, CLAIM_CHECKS, IMPORT_PATH_CHECKS, PAGE_MILESTONE, kernelsAt, registerChecks, runRegistry, runSkeleton, skeletonChecks, skeletonNets, type KernelViews } from "@hackbuild/checks";
 import { hashOf } from "./hash.js";
 import { M00_PART_CHECKS, gatedSkips, m00Versions, registryHashOf, runPartChecks } from "./part-checks.js";
 import { machineView } from "./author.js";
@@ -332,10 +332,12 @@ const BUILD_LEVELS: readonly string[] = ["part", "body", "feature"];
  * and the other registry block checks never reached the D-109 export
  * gate). They run through runRegistry on the kernels of the page milestone.
  * The import path checks (IMPORT_PATH_CHECKS) stay out: Part IR carries no
- * pieces, so they run only where part.build --import reads the mesh.
+ * pieces, so they run only where part.build --import reads the mesh. The
+ * claim check (CLAIM_CHECKS) stays out too: it reads the chase claims,
+ * which Part IR does not carry.
  */
 export function registryDefs(design: Design): readonly AnyCheckDef[] {
-  const taken = new Set<string>([...checkDefs(design).map((d) => d.id as string), ...M00_PART_CHECKS, ...IMPORT_PATH_CHECKS]);
+  const taken = new Set<string>([...checkDefs(design).map((d) => d.id as string), ...M00_PART_CHECKS, ...IMPORT_PATH_CHECKS, ...CLAIM_CHECKS]);
   return registerChecks({ seed: design.ws.checksSeed, filamentTemplate: design.ws.template }, CHECK_MODULES)
     .filter((d) => BUILD_LEVELS.includes(d.appliesTo.level) && !taken.has(d.id));
 }

@@ -54,6 +54,7 @@ import { check as cbrd19 } from "./brd/CHK-BRD-19.js";
 import { check as cbrd20 } from "./brd/CHK-BRD-20.js";
 import { check as cbrd21 } from "./brd/CHK-BRD-21.js";
 import { check as cbrd22 } from "./brd/CHK-BRD-22.js";
+import { check as cclaim01 } from "./claim/CHK-CLAIM-01.js";
 import { check as cdev01 } from "./dev/CHK-DEV-01.js";
 import { check as cdev02 } from "./dev/CHK-DEV-02.js";
 import { check as cdev03 } from "./dev/CHK-DEV-03.js";
@@ -172,17 +173,17 @@ export const CHECK_MODULES: readonly AnyCheckModule[] = [
   casm03, casm04, casm05, casm06, casm07, casm08, casm09, casm10, casm11,
   cbrd01, cbrd02, cbrd03, cbrd04, cbrd05, cbrd06, cbrd07, cbrd08, cbrd09,
   cbrd10, cbrd11, cbrd12, cbrd13, cbrd14, cbrd15, cbrd16, cbrd17, cbrd18,
-  cbrd19, cbrd20, cbrd21, cbrd22, cdev01, cdev02, cdev03, cfit01, cfit02,
-  cfit03, cfit04, cfit05, cfit06, cfit07, cinl01, cinl02, cinl03, cinl04,
-  ckey01, ckey02, ckey03, ckey04, ckey05, ckey06, clnt01, clnt02, clnt03,
-  clnt04, cmot01, cmot02, cmot03, cmot04, cmot05, cmot06, cnet01, cnet02,
-  cnet03, cnet04, cnet05, cnet06, cnet07, cnet08, cnet09, cnet10, cnet11,
-  cnet12, cnet13, cnet14, cnet15, cnet16, cnet17, cnet18, cnet19, cnet20,
-  cnet21, cnet22, cnet23, cnet24, cnet25, cnet26, cnet27, cnet28, cnet29,
-  cnet30, cnet31, cnet32, cnet33, cnet34, cnet35, cnet36, cnet37, cnet38,
-  cnet40, cnet41, cnet42, cnet43, cnet44, cnet45, cnet46, cprt01, cprt02,
-  cprt03, cprt04, cprt05, cprt06, cprt07, cprt08, cprt09, cprt10, cprt11,
-  cprt12, cprt13, cprt14, cprt15, cprt16, cprt18, cprt19, cshp01, cshp02,
-  cshp03, cshp04, cshp05, csht01, csht02, csht03, csht04, csht05, csht06,
-  csht07, csht08, csht09, csht10, csht11, cui01, cui02,
+  cbrd19, cbrd20, cbrd21, cbrd22, cclaim01, cdev01, cdev02, cdev03, cfit01,
+  cfit02, cfit03, cfit04, cfit05, cfit06, cfit07, cinl01, cinl02, cinl03,
+  cinl04, ckey01, ckey02, ckey03, ckey04, ckey05, ckey06, clnt01, clnt02,
+  clnt03, clnt04, cmot01, cmot02, cmot03, cmot04, cmot05, cmot06, cnet01,
+  cnet02, cnet03, cnet04, cnet05, cnet06, cnet07, cnet08, cnet09, cnet10,
+  cnet11, cnet12, cnet13, cnet14, cnet15, cnet16, cnet17, cnet18, cnet19,
+  cnet20, cnet21, cnet22, cnet23, cnet24, cnet25, cnet26, cnet27, cnet28,
+  cnet29, cnet30, cnet31, cnet32, cnet33, cnet34, cnet35, cnet36, cnet37,
+  cnet38, cnet40, cnet41, cnet42, cnet43, cnet44, cnet45, cnet46, cprt01,
+  cprt02, cprt03, cprt04, cprt05, cprt06, cprt07, cprt08, cprt09, cprt10,
+  cprt11, cprt12, cprt13, cprt14, cprt15, cprt16, cprt18, cprt19, cshp01,
+  cshp02, cshp03, cshp04, cshp05, csht01, csht02, csht03, csht04, csht05,
+  csht06, csht07, csht08, csht09, csht10, csht11, cui01, cui02,
 ];

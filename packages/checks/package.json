@@ -36,6 +36,7 @@
     "jszip": "3.10.1"
   },
   "devDependencies": {
+    "@hackbuild/archetypes": "0.0.0",
     "@hackbuild/motion": "0.0.0"
   }
 }

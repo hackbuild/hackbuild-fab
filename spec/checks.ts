@@ -25,10 +25,11 @@ import type { PatchEdit } from "./commands";
 
 /**
  * Fixed check areas: the 13 seeded prefixes (api-library-ai-design.md
- * section 4) plus ART and DEV, confirmed in CHECKS.md section 5.
+ * section 4) plus ART and DEV, confirmed in CHECKS.md section 5, and
+ * CLAIM, function claims held to their bands (R1-engine-11, 2026-10-20).
  */
 export const CHECK_AREAS = [
-  "PRT", "FIT", "ASM", "SHT", "NET", "BRD", "MOT", "3MF", "INL", "LNT", "SHP", "KEY", "UI", "ART", "DEV",
+  "PRT", "FIT", "ASM", "SHT", "NET", "BRD", "MOT", "3MF", "INL", "LNT", "SHP", "KEY", "UI", "ART", "DEV", "CLAIM",
 ] as const;
 export type CheckArea = (typeof CHECK_AREAS)[number];
 /** CHK-<AREA>-NN, for example "CHK-KEY-04". */

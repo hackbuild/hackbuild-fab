@@ -6,7 +6,7 @@
 // headless, so `hbf part.build` and a baked bench page load the same
 // registry and hash the same constraint versions.
 
-import { CHECK_ID_ALIASES, CHECK_MODULES, registerChecks, type RegisteredCheck } from "@hackbuild/checks";
+import { CHECK_ID_ALIASES, CHECK_MODULES, claimFnIds, registerChecks, type RegisteredCheck } from "@hackbuild/checks";
 import type { ChaseRegistries } from "@hackbuild/chase";
 import { constraintDefs as circuit } from "@hackbuild/circuit";
 import { constraintDefs as constraints, createRegistry, type ConstraintRegistry } from "@hackbuild/constraints";
@@ -107,7 +107,7 @@ export function loadRegistry(input: LoadRegistryInput = {}): LoadedRegistry {
   };
 }
 
-/** Registries for packages/chase resolveRefs (D-132): the loaded registry plus machines and materials from the full profile. */
+/** Registries for packages/chase resolveRefs (D-132): the loaded registry plus machines and materials from the full profile and the claim function ids. */
 export function chaseRegistries(reg: LoadedRegistry): ChaseRegistries {
   const prof = loadProfile();
   return {
@@ -117,6 +117,7 @@ export function chaseRegistries(reg: LoadedRegistry): ChaseRegistries {
     constraintDims: [...reg.constraints.dims()],
     machines: sorted(prof.machines.map((m) => m.id)),
     materials: sorted(prof.materials.map((m) => m.id)),
+    claimFns: claimFnIds(),
   };
 }
 
