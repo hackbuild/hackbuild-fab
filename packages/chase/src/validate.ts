@@ -4,7 +4,7 @@
 // (M10-T04) adds the typed questions on top of these errors.
 
 import type { Chase, CommandError } from "@hackbuild/spec";
-import { paramRuleErrors, shapeErrors } from "./schema.js";
+import { claimRuleErrors, paramRuleErrors, shapeErrors } from "./schema.js";
 import { resolveRefs, type ChaseRegistries } from "./resolve.js";
 import { buildPathProblem } from "./source.js";
 
@@ -19,6 +19,7 @@ export function validateChase(value: unknown, reg?: ChaseRegistries): CommandErr
     out.push({ code: "E_SCHEMA", path: "/build/module", got: chase.build.module, expected: "./<file>.ts inside the design directory", hint: problem, record: "chase-source/build-path" });
   }
   out.push(...paramRuleErrors(chase));
+  out.push(...claimRuleErrors(chase));
   if (reg !== undefined) out.push(...resolveRefs(chase, reg));
   return out;
 }
