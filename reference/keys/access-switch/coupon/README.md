@@ -68,13 +68,24 @@ decimal (brief finding 2). CHK-KEY-04 passes on each cell.
   reference/keys/access-switch/coupon --accept` wrote the first goldens at
   build d6f43d..34; the edit golden sets cup depth 8 to 10 mm and only the
   three cups change (cup.massG up 0.314 g, computed).
-- `npx --no-install hbf check.run reference/keys/access-switch/coupon`
-  reports 0 fail, 1 warn (CHK-PRT-05, 5.40 mm off the layer grid, the same
-  warn the switch carries), 25 pass, 42 skip.
 - `npx vitest run reference/keys/access-switch/coupon` passes 5 tests; with
   rung 2 set to 0.50 the stepping test fails.
+- 2026-10-20 (R1-fix-01): `npx --no-install hbf parity
+  reference/keys/access-switch/coupon` exit 0 at build d6f43d..34, all four
+  goldens equal (computed).
 
-### Not verified
+### Measured on a printed body
+
+- none
+
+### Checked by machine, on geometry rather than hardware
+
+- 2026-10-20 (R1-fix-01): `npx --no-install hbf check.run
+  reference/keys/access-switch/coupon` exit 0 at build d6f43d..34: 0 fail,
+  1 warn (CHK-PRT-05, 5.40 mm off the layer grid, the same warn the switch
+  carries), 25 pass, 42 skip (computed).
+
+### Not verified by anything
 
 - No print and no slice of this coupon. No 3MF export (the export gate is
   the owner's).

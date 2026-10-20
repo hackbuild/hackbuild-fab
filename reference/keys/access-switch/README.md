@@ -42,7 +42,7 @@ engine function claims; build.ts emits the band as metrics
 `test/claim.test.ts` runs the five corners through packages/sim and
 writes the block below (R1-flagship-access-switch-04).
 
-<!-- generated: press claim; rewrite with HBF_ACCEPT=1 npx vitest run reference/keys/access-switch -->
+<!-- generated: press claim; paste the block the claim test prints when it fails -->
 
 Claim `press.peak`, tier inferred, unproven until coupon. Band 1.176 to 1.764 N
 (120 to 180 g), target 1.470 N (150 g) plus or minus
@@ -150,21 +150,30 @@ device before the card claims the switch closes for it.
 
 ### Verified on this machine
 
-- 2026-10-20 (R1-flagship-access-switch-02): `npx --no-install hbf parity
-  reference/keys/access-switch --accept` wrote the first goldens at build
-  88a134..57; `npx --no-install hbf check.run reference/keys/access-switch`
-  reports 0 fail, 1 warn (CHK-PRT-05), 31 pass, 49 skip; CHK-KEY-04 passes
-  at Q 2.0 inside 1.72 to 2.31 (computed).
-- 2026-10-20: `npx vitest run reference/keys/access-switch` passes 6 tests;
-  with the default span set to 24 the band test fails at 2.527 N.
+- 2026-10-20 (R1-fix-01): `npx --no-install hbf parity
+  reference/keys/access-switch` exit 0 at build 90e387..5c, all four
+  goldens equal (computed). The goldens were accepted at this build after
+  the jack seat moved the body mesh (commit 5c1db0e, D-397); the first
+  accept was at 88a134..57 (R1-flagship-access-switch-02).
+- 2026-10-20 (R1-fix-01): `npx vitest run reference/keys/access-switch`
+  passes 21 of 21 tests; the README press claim block equals the run.
 
 ### Measured on a printed body
 
-- None. Nothing here has been printed.
+- none
+
+### Checked by machine, on geometry rather than hardware
+
+- 2026-10-20 (R1-fix-01): `npx --no-install hbf check.run
+  reference/keys/access-switch` exit 0 at build 90e387..5c: 0 fail, 1 warn
+  (CHK-PRT-05, body face at 5.40 mm off the 0.24 mm layer grid), 47 pass,
+  55 skip (computed).
 
 ### Not verified by anything
 
 - Not sliced; no force has been on a gauge (unknown).
+- The press band and the corner spread above are computed; the claim
+  stays inferred until a reading from the thickness ladder coupon.
 
 <!-- R1-flagship-access-switch-08: virtual slice -->
 <!-- end R1-flagship-access-switch-08 -->
