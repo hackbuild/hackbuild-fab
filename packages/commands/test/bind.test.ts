@@ -84,11 +84,11 @@ describe("bind", () => {
   });
 
   it("a run body with no spec stops the load with E_KERNEL naming it", () => {
-    const missing: CommandName = "chase.validate";
+    const missing: CommandName = "chase.diff";
     expect(SPECS.some((s) => s.name === missing)).toBe(false);
     const e = kernelError(() => bind(SPECS, { ...allRuns(), [missing]: stub }, host));
     expect(e.code).toBe("E_KERNEL");
-    expect(e.got).toBe("chase.validate has a run body and no spec");
+    expect(e.got).toBe("chase.diff has a run body and no spec");
   });
 
   it("a repeated spec stops the load with E_KERNEL", () => {

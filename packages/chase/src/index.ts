@@ -1,4 +1,4 @@
-export { CHASE_IMPORT_MODULES, buildPathProblem, readChaseSource } from "./source.js";
+export { CHASE_IMPORT_MODULES, buildPathProblem, readBenchSource, readChaseSource } from "./source.js";
 export { defineBuild, defineChase, type BuildFn, type CheckedChase } from "./define.js";
 export type { ParamIdOf, ParamsOf } from "./params-of.js";
 export {
@@ -6,7 +6,11 @@ export {
 } from "./schema.js";
 export { checkDeclares, enclosingField, type Computes, type Declared, type DeclaresVerdict } from "./declares.js";
 export { allFields, resolveRefs, type ChaseRegistries, type CheckEntry } from "./resolve.js";
-export { validateChase } from "./validate.js";
+export {
+  EXPORT_STEPS, KIND_RULES, buildExports, buildFnErrors, kindRuleErrors, validateChase, validateDocument,
+  type KindRule, type ValidateInputs, type Validation,
+} from "./validate.js";
+export { QUESTION_RULES, chaseQuestions, type QuestionFacts, type QuestionRule, type RowInForce } from "./questions.js";
 export {
   MIGRATIONS, chaseVersionOf, migrate1to2, migrateChase, type Migrated, type Migration, type MigrationLine, type MigrationReport,
 } from "./migrate/index.js";

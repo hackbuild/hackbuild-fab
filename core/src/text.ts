@@ -4,7 +4,7 @@
 // printed line passes through oneLine (text/safe.ts), so a string from a
 // design cannot carry a control sequence or a line break to the terminal.
 
-import type { CheckResult, CommandError, CommandResult, FitRow, LegalValues, NextCall, ResultTarget } from "@hackbuild/spec";
+import type { CheckResult, CommandError, CommandResult, FitRow, LegalValues, NextCall, ResultTarget, ValidateQuestion } from "@hackbuild/spec";
 import { findingLabel } from "@hackbuild/checks";
 import { decimalsOf, fixed, fmt } from "./text/fmt.js";
 import { queryLines, queryStatus } from "./text/interval-mirror.js";
@@ -112,6 +112,8 @@ const RESULT_TEXT: Readonly<Record<string, (result: unknown) => string[]>> = {
       return b === undefined ? `fresh  ${i.id}  ${i.hash.slice(0, 12)}` : `stale  ${i.id}  because ${b.join(", ")}`;
     });
   },
+  "chase.validate": (res) => ((res as { questions?: readonly ValidateQuestion[] }).questions ?? [])
+    .map((q) => `question  ${q.id}  ${q.path}  ${q.question}${q.defaultInForce === undefined ? "" : `  default ${q.defaultInForce}`}`),
   "fits.table": (res) => ((res as { rows?: readonly FitRow[] }).rows ?? []).map((r) => {
     const d = decimalsOf("mm");
     const band = r.band === undefined ? "" : `  band ${fixed(r.band[0], d, "up")} to ${fixed(r.band[1], d, "down")} mm`;
@@ -122,6 +124,10 @@ const RESULT_TEXT: Readonly<Record<string, (result: unknown) => string[]>> = {
 /** Status lines that replace the counts form, by command: a query has no findings to count. */
 const STATUS_TEXT: Readonly<Record<string, (target: string, r: CommandResult<unknown>) => string>> = {
   "constraints.query": queryStatus,
+  "chase.validate": (target, r) => {
+    const q = (r.result as { questions?: readonly unknown[] } | undefined)?.questions?.length ?? 0;
+    return `${r.verdict.toUpperCase()} chase.validate ${target}   ${r.errors.length} errors  ${q} questions`;
+  },
 };
 
 export function renderResult(command: string, target: string, r: CommandResult<unknown>): string {
