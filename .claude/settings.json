@@ -13,5 +13,35 @@
       "Read(./.hbf/gate.key)",
       "Read(./.hbf/http.token)"
     ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          { "type": "command", "command": "node \"$CLAUDE_PROJECT_DIR/tools/agent-hooks/quiet-output.mjs\"", "timeout": 30 }
+        ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          { "type": "command", "command": "node \"$CLAUDE_PROJECT_DIR/tools/agent-hooks/touched-typecheck.mjs\"", "timeout": 90 }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          { "type": "command", "command": "node \"$CLAUDE_PROJECT_DIR/tools/agent-hooks/stop-acceptance.mjs\"", "timeout": 420 }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "hooks": [
+          { "type": "command", "command": "node \"$CLAUDE_PROJECT_DIR/tools/agent-hooks/stop-acceptance.mjs\"", "timeout": 420 }
+        ]
+      }
+    ]
   }
 }

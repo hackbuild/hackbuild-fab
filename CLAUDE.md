@@ -212,3 +212,4 @@ From `knowledge/03-diagnostics.md`; each one cost a round.
   check that passes for another reason proves nothing about the claim.
 - Never take a legacy DRC OK or a README count as the record. Reparse the output and run the
   checks (D-249).
+- Hooks quiet-output, touched-typecheck, stop-acceptance keep state and logs in `.hbf/agent-hooks/`.
