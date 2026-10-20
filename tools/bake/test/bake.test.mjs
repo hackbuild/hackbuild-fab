@@ -8,7 +8,7 @@ import { spawnSync } from 'node:child_process';
 import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { REPO, bake, BakeError, pageModules, sha256, styleTag } from '../bake.mjs';
+import { REPO, bake, BakeError, offFileRequests, pageModules, sha256, styleTag } from '../bake.mjs';
 import { checkBaked, checkInstalled } from '../check-ui-css.mjs';
 import { licenceManifest } from '../licence-manifest.mjs';
 
@@ -288,4 +288,13 @@ test('a page build reads the manifold and jszip globals the manifest lists befor
   assert.throws(() => pageModules({ id: 'fx', shell: 'ui', build, wasm, classic: [manifold], blocks }, null), /list build after wasm, classic and blocks/);
   assert.throws(() => pageModules({ id: 'fx', shell: 'ui', wasm, classic: [manifold], build }, null), /needs the jszip block/);
   assert.throws(() => pageModules({ id: 'fx', shell: 'ui', blocks, build }, null), /needs the manifold-3d classic script/);
+});
+
+test('off-file requests: src, srcset, poster and css url outside scripts; anchors and script text pass (D-129)', () => {
+  const page =
+    '<style>a{background:url(data:image/png;base64,AA)}b{background:url("https://cdn.example/b.png")}</style>\n' +
+    '<img src="//cdn.example/i.png"><video poster=http://cdn.example/p.jpg></video><img srcset="https://cdn.example/s.png 2x">\n' +
+    '<img src="data:image/png;base64,AA"><a href="https://hack.build">site</a>\n' +
+    '<script>const ns="http://www.w3.org/2000/svg"; el.src="https://never.example/x.js";</script>\n';
+  assert.deepEqual(offFileRequests(page), ['//cdn.example/i.png', 'http://cdn.example/p.jpg', 'https://cdn.example/s.png', 'https://cdn.example/b.png']);
 });

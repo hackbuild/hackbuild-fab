@@ -780,7 +780,14 @@ export interface CommandIO {
   };
 
   "chase.bake": {
-    input: { chase: string };
+    input: {
+      chase: string;
+      /**
+       * page (default) bakes the release page. draft is reserved for the
+       * DRAFT page of hbf draft (R1-engine-24) and is refused until then.
+       */
+      mode?: "page" | "draft";
+    };
     output: {
       file: string;
       /** Baked file size, bytes; at most 16 MB (D-129). */
@@ -1079,6 +1086,8 @@ type Merge<A, B> = Flat<
 type In<N extends CommandName> = StrictArgs<McpCommandInput<N>>;
 /** nest.pack's input as layout_solve carries it: `mode` renamed `nestMode` so no nest field reads as a selector. */
 type NestArgs = Flat<Omit<In<"nest.pack">, "mode"> & { nestMode: In<"nest.pack">["mode"] }>;
+/** chase.bake's input as chase_bake carries it: `mode` renamed `bakeMode` so it does not read as the selector. */
+type BakeArgs = Flat<Omit<In<"chase.bake">, "mode"> & { bakeMode: In<"chase.bake">["mode"] }>;
 
 export interface McpToolIO {
   constraints_query: In<"constraints.query">;
@@ -1106,8 +1115,8 @@ export interface McpToolIO {
   /** Selector: `op` run runs motion.run, audit runs rules.audit. */
   motion_run: Flat<{ op: "run" | "audit" } & Merge<In<"motion.run">, In<"rules.audit">>>;
   view_render: In<"view.render">;
-  /** Selector: `mode` bake runs chase.bake, render runs chase.render. */
-  chase_bake: Flat<{ mode: "bake" | "render" } & Merge<In<"chase.bake">, In<"chase.render">>>;
+  /** Selector: `mode` bake runs chase.bake (its own mode as `bakeMode`), render runs chase.render. */
+  chase_bake: Flat<{ mode: "bake" | "render" } & Merge<BakeArgs, In<"chase.render">>>;
   /** export.run alone, gated when the exporter has fabrication true (D-109, D-193). */
   export_run: In<"export.run">;
 }
