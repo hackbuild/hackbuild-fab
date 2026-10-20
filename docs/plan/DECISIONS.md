@@ -344,6 +344,10 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-288 | coin mass at vendor tier from a search excerpt | decided | Canons, reference, profile, catalog |
 | D-289 | pressBandPct ties to modulusSpreadPct | decided | Canons, reference, profile, catalog |
 | D-290 | no lineage row for profile constants | decided | Canons, reference, profile, catalog |
+| D-291 | PJ398SM pad tier is community, not vendor | decided | Canons, reference, profile, catalog |
+| D-292 | No inferred panel-hole field on the PJ398SM row | decided | Canons, reference, profile, catalog |
+| D-293 | No pins field on the PJ398SM row; pad names serve as pin names | decided | Canons, reference, profile, catalog |
+| D-294 | KiCad LICENSE.md committed beside the PJ398SM footprint | decided | Canons, reference, profile, catalog |
 
 ## House rules and process
 
@@ -3589,6 +3593,50 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. The six R1-flagship-access-switch-01 rows in `packages/profile/data/constants.json` add no `lineage.json` row; each row names its source inline. |
 | Rationale | No code or file was ported. Existing `click.*` rows cite originals inline without lineage rows. |
 | Evidence | `constants.json` `click.rigidSpanMin` source text; `lineage.json` has no profile rows. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-291 PJ398SM pad tier is community, not vendor
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The `pads` and `dims.body` fields of the `pj398sm` catalog row carry tier community, method listing. |
+| Rationale | The footprint is a KiCad library file drawn by the KiCad librarians, not a vendor drawing. The parts audit already gives a KiCad library footprint the tier community, and the catalog data README admits community rows whose source file is committed beside them. |
+| Evidence | `packages/catalog/test/parts-audit.test.ts` lines 126 and 155; `packages/catalog/data/README.md` lines 3 to 10. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-292 No inferred panel-hole field on the PJ398SM row
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The KERF panel-hole radius (r 3.2 mm, inferred) is left out of the `pj398sm` row. The row tier stays community. |
+| Rationale | One inferred geometry field would make the whole row tier inferred, because the row tier is its weakest field. The data README admits inferred rows only when a design on record reads them, and no design reads this one yet. The jack seat (item R1-flagship-access-switch-06) can carry the hole size with its own provenance. |
+| Evidence | `packages/catalog/src/load.ts` `weakest()` and the row tier; `packages/catalog/data/README.md` lines 8 to 10; `knowledge/designs/kerf-eurorack.md` line 73. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-293 No pins field on the PJ398SM row; pad names serve as pin names
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The `pj398sm` row has no `pins` field. The pad names S, TN and T come straight from the footprint. |
+| Rationale | The v5 mirror has no `.kicad_sym`. A literal pins list needs an integer n, and `catalogPins` joins pins to pads by `String(n)`, so pins numbered 1 to 3 would match no pad named S, TN or T, and the numbering would be invented. |
+| Evidence | `packages/catalog/src/load.ts` `checkValue` pins (an integer n is required); `packages/catalog/src/pins.ts` line 47. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-294 KiCad LICENSE.md committed beside the PJ398SM footprint
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. KiCad LICENSE.md is copied verbatim next to the footprint. Both files join the existing CC-BY-SA-4.0 KiCad row in `tools/licences.json`. A lint-voice exclaim allow row covers line 27 of the licence text. |
+| Rationale | CC-BY-SA redistribution asks for the licence documents to travel with the files. Without the new paths the catch-all MIT row would have matched the footprint. The allow row follows the precedent of the verbatim fonts LICENSE text. |
+| Evidence | `tools/licences.json` KiCad row (D-090); `tools/lint-voice.allow.json` row for `tools/py/board/fonts/LICENSE-*.txt`. |
 | Supersedes | new |
 | Milestone | none |
 
