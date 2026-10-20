@@ -42,7 +42,13 @@ export interface WidgetDecl {
   /** Unique within the bench. */
   readonly id: string;
   readonly kind: WidgetKind;
-  /** A claim function id (packages/checks claim registry) or the name of a ContactFn build.ts exports. */
+  /**
+   * What the widget calls: a claim function id (packages/checks claim
+   * registry) or the name of a ContactFn build.ts exports; for drive.touch
+   * the charge-release check id (CHK-NET-29), for drive.fader the metric
+   * prefix of the placed finger pot (finger-pot.0), for readout.signal the
+   * hookup port it reads.
+   */
   readonly fn: string;
   /** Inputs beside the build, a param binding or a number; units in the key suffix. */
   readonly inputs: Readonly<Record<string, ParamRef | number>>;

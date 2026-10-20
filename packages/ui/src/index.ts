@@ -18,3 +18,6 @@ export { default as ParamRail } from "./rail/ParamRail.vue";
 export { default as DrivePad } from "./stage/DrivePad.vue";
 export { default as DrivePress } from "./widgets/DrivePress.vue";
 export { default as PlotCurve } from "./widgets/PlotCurve.vue";
+export { default as DriveTouch } from "./widgets/DriveTouch.vue";
+export { default as DriveFader } from "./widgets/DriveFader.vue";
+export { default as ReadoutSignal } from "./widgets/ReadoutSignal.vue";

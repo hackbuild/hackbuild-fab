@@ -26,5 +26,15 @@
     "sha256": "2ca8ce4a73db2091fc56ad70cae37439288f5fc8fdcb6c970ff00214347bf2fe",
     "fixes": [],
     "dest": "packages/archetypes/src/gib/gib.ts"
+  },
+  {
+    "id": "gib.parts/gib-4-sim-finger",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/gib/files/src/src/part2.js",
+    "sha256": "2ca8ce4a73db2091fc56ad70cae37439288f5fc8fdcb6c970ff00214347bf2fe",
+    "fixes": [
+      "simFinger (part2.js lines 431 to 436), the finger pot divider Ra = (Rdead - Rret) + Rtrack pos, Rb = Rret + Rtrack (1 - pos), ported to packages/ui-core/src/widgets/fader.ts fingerLegs over the finger-pot archetype's gib.Rtrack, gib.Rret and gib.Rdead, with VDD from the catalog pin row in place of the page's 3.3 V; packages/archetypes/scripts/gib-legacy.mjs records the page's own simFinger at five positions as the parity source (R1-engine-14)"
+    ],
+    "dest": "packages/ui-core/src/widgets/fader.ts"
   }
 ]
