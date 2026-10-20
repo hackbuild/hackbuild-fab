@@ -1,0 +1,20 @@
+{
+  "id": "CHK-DEV-03",
+  "version": "1.0.0",
+  "title": "heartbeat cadence under half the dead-man time: 0 to deadmanMs / 2, and heartbeatMs at least 300 (the washer.html floor), so a deadmanMs under 600 fails at check time (never an arm refusal)",
+  "appliesTo": {
+    "level": "source"
+  },
+  "severity": "block",
+  "needs": [],
+  "legalKind": "interval",
+  "origin": {
+    "project": "SPROCKET 2026-08-02",
+    "date": "2026-08-02",
+    "what": "the page sends a heartbeat every 400 ms so the 1200 ms dead-man stays fed while the chassis idles",
+    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-robots-b.md"
+  },
+  "status": "entered",
+  "enteredBy": "M04-T12",
+  "pending": "M13"
+}

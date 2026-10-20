@@ -1,0 +1,30 @@
+{
+  "id": "CHK-INL-03",
+  "version": "2.0.0",
+  "title": "inlay depth meets opacity floor for the filament pair",
+  "appliesTo": {
+    "level": "feature",
+    "kinds": [
+      "inlay"
+    ]
+  },
+  "severity": "block",
+  "needs": [
+    "inlay",
+    "profile"
+  ],
+  "legalKind": "interval",
+  "origin": {
+    "project": "python hackbuild coin v1 2026-08",
+    "date": "2026-08",
+    "what": "0.8 inlay over black tinted pink and white grey; 1.2 fixed it",
+    "numbers": {
+      "failedMm": 0.8,
+      "fixedMm": 1.2,
+      "qualifier": "inferred: the drawn inlay depths of coin v1 and v2 (knowledge/designs/coin.md 1.1); the tint is the owner print observation"
+    },
+    "knowledge": "knowledge:designs/coin#11-every-revision-and-why-this-one-is-canonical",
+    "evidence": null
+  },
+  "status": "seed"
+}

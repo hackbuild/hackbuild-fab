@@ -1,0 +1,25 @@
+{
+  "id": "CHK-SHT-09",
+  "version": "1.0.0",
+  "title": "living hinge radius at least the declared minHingeRadius",
+  "appliesTo": {
+    "level": "feature",
+    "kinds": [
+      "flexCut"
+    ]
+  },
+  "severity": "block",
+  "needs": [
+    "geom"
+  ],
+  "legalKind": "interval",
+  "origin": {
+    "project": "SKETCH 2026-09-14",
+    "date": "2026-09-14",
+    "what": "material ply3 declares minHingeRadius 14 and the living hinge never reads it",
+    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-robots-b.md"
+  },
+  "status": "entered",
+  "enteredBy": "M04-T12",
+  "pending": "M07"
+}

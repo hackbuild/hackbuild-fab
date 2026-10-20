@@ -1,0 +1,39 @@
+{
+  "id": "CHK-SHT-05",
+  "version": "1.0.1",
+  "title": "sag under self weight below the margin it must hold",
+  "appliesTo": {
+    "level": "part"
+  },
+  "severity": "block",
+  "needs": [
+    "sim"
+  ],
+  "legalKind": "interval",
+  "origin": {
+    "project": "OGEE R13, R17 2026-08",
+    "date": "2026-08",
+    "what": "single strip drooped 0.95 against 0.775 margin",
+    "numbers": {
+      "sagMm": 0.95,
+      "halfSelectMarginMm": 0.775,
+      "qualifier": "computed (knowledge/kernels/sheet-design.md; the margin in knowledge/designs/ogee16.md 4.1)"
+    },
+    "knowledge": "knowledge:kernels/sheet-design#sheet-stiffness-the-thing-that-kills-a-shrink",
+    "evidence": null,
+    "also": [
+      {
+        "project": "STIPPLE R17 2026-08",
+        "date": "2026-08",
+        "what": "R17 reference comb sag against the margin it must hold",
+        "numbers": {
+          "sagMm": 0.073,
+          "marginMm": 0.785,
+          "qualifier": "sag computed by the downloads read on 2026-10-04, no record saved; margin 0.7853 in stipple_latch.json"
+        },
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-ogee-stipple-mech/derived/stipple_latch.json"
+      }
+    ]
+  },
+  "status": "seed"
+}

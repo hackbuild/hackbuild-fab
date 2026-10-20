@@ -1,0 +1,22 @@
+{
+  "id": "CHK-NET-21",
+  "version": "1.0.0",
+  "title": "adjacent clip pads stagger rows or alternate depth by at least 4 mm",
+  "appliesTo": {
+    "level": "sheet"
+  },
+  "severity": "block",
+  "needs": [
+    "geom"
+  ],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "KEYWAY, QUADRANT 2026-08",
+    "date": "2026-08",
+    "what": "adjacent clip jaws sat 14.0 mm apart; the boards stagger rows or alternate depth",
+    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-conductive-b.md"
+  },
+  "status": "entered",
+  "enteredBy": "M04-T12",
+  "pending": "M05"
+}

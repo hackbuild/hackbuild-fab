@@ -1,0 +1,20 @@
+{
+  "id": "CHK-BRD-06",
+  "version": "1.0.1",
+  "title": "inferred provenance refused at fabrication export",
+  "appliesTo": {
+    "level": "project"
+  },
+  "severity": "block",
+  "needs": [
+    "board"
+  ],
+  "legalKind": "set",
+  "origin": {
+    "project": "board-forge 2026-08",
+    "date": "2026-08",
+    "what": "the number one cause of dead boards",
+    "evidence": null
+  },
+  "status": "seed"
+}

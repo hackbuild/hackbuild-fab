@@ -1,0 +1,21 @@
+{
+  "id": "CHK-3MF-02",
+  "version": "1.0.1",
+  "title": "every per-filament key exactly N long",
+  "appliesTo": {
+    "level": "artifact"
+  },
+  "severity": "block",
+  "needs": [
+    "3mf"
+  ],
+  "legalKind": "interval",
+  "origin": {
+    "project": "COLLAR v4 2026-08",
+    "date": "2026-08",
+    "what": "filament list collapsed to one",
+    "knowledge": "knowledge:01-invariants#3mf-and-export",
+    "evidence": null
+  },
+  "status": "seed"
+}

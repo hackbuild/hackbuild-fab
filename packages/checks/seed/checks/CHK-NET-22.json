@@ -1,0 +1,22 @@
+{
+  "id": "CHK-NET-22",
+  "version": "1.0.0",
+  "title": "lane graph acyclic and ranked; same-lane spans disjoint",
+  "appliesTo": {
+    "level": "sheet"
+  },
+  "severity": "block",
+  "needs": [
+    "geom"
+  ],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "TESSERA 2026-08",
+    "date": "2026-08",
+    "what": "the lane graph gate requires it acyclic and ranked with same-lane spans disjoint",
+    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-conductive-b.md"
+  },
+  "status": "entered",
+  "enteredBy": "M04-T12",
+  "pending": "M05"
+}

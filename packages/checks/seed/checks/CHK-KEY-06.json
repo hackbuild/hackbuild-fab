@@ -1,0 +1,22 @@
+{
+  "id": "CHK-KEY-06",
+  "version": "1.0.1",
+  "title": "no mesh vertex sits exactly on a cavity face",
+  "appliesTo": {
+    "level": "part"
+  },
+  "severity": "block",
+  "precondition": true,
+  "needs": [
+    "mesh"
+  ],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "PIP 2026-09",
+    "date": "2026-09",
+    "what": "a flex cone kink on a cavity face exported a broken shell",
+    "knowledge": "knowledge:03-diagnostics#printed-circuit-floors-and-folding-decks",
+    "evidence": null
+  },
+  "status": "seed"
+}

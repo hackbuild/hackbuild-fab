@@ -1,0 +1,22 @@
+{
+  "id": "CHK-BRD-10",
+  "version": "1.0.0",
+  "title": "no duplicate supplier code on different values",
+  "appliesTo": {
+    "level": "project"
+  },
+  "severity": "block",
+  "needs": [
+    "board"
+  ],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "ARMATURE 2026-08",
+    "date": "2026-08",
+    "what": "ARMATURE R1 would have failed four of the five netlist lints: pin completeness, nodes without components and single-node nets, duplicate supplier codes, port voltage",
+    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-copper-pcb-a.md"
+  },
+  "status": "entered",
+  "enteredBy": "M04-T12",
+  "pending": "M08"
+}

@@ -1,0 +1,23 @@
+{
+  "id": "CHK-NET-46",
+  "version": "1.0.0",
+  "title": "a seated board pin lands on its printed contact: pin centre on the contact, press depth in range",
+  "appliesTo": {
+    "level": "net"
+  },
+  "severity": "block",
+  "needs": [
+    "circuit",
+    "profile"
+  ],
+  "legalKind": "interval",
+  "origin": {
+    "project": "PIP 2026-09",
+    "date": "2026-09",
+    "what": "the seat presses each used castellation onto a conductive PLA bump under bezel ribs 0.3 mm deep (model.js lines 209 and 313 to 319) and only its fits rows claim the contact (lines 575 to 576); the flagship MIDI pad (2026-10-13, finding K-04) could not end a read path at the seat and ran four test leads to the body edge",
+    "knowledge": "knowledge:designs/pip#57-rp2040-zero-seat-canon-rp2040-zero-seat",
+    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evals/2026-10-13/flagship-midi-pad.md"
+  },
+  "status": "entered",
+  "enteredBy": "K-04"
+}

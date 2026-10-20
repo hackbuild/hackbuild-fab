@@ -1,0 +1,23 @@
+{
+  "id": "CHK-NET-35",
+  "version": "1.0.0",
+  "title": "the top wiper lands on its collector: film 1.5 mm off the collector, tail over 8 mm2, holding slot over the film for more than 99.5 percent",
+  "appliesTo": {
+    "level": "sheet"
+  },
+  "severity": "block",
+  "needs": [
+    "geom"
+  ],
+  "legalKind": "interval",
+  "origin": {
+    "project": "KEYWAY 2026-08",
+    "date": "2026-08",
+    "what": "no recorded failure: the wiper trick folds the top copper onto the SC pad past the spacer, lines 277 to 284; 2.70 mm clear, 34.8 mm2 landed, the slot fully over the film in the rerun",
+    "knowledge": "knowledge:designs/keyway#53-graded-wedge-slider-with-top-copper-wiper",
+    "evidence": "reference/copper/keyway/legacy/gen_keyway.py"
+  },
+  "status": "entered",
+  "enteredBy": "M05-T14",
+  "pending": "M05"
+}

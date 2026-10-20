@@ -1,0 +1,21 @@
+{
+  "id": "CHK-BRD-22",
+  "version": "1.0.0",
+  "title": "KiCad board reads back to the record by kicadts",
+  "appliesTo": {
+    "level": "artifact"
+  },
+  "severity": "block",
+  "needs": [
+    "board"
+  ],
+  "legalKind": "set",
+  "origin": {
+    "project": "SPINDLE R1 2026-08-01",
+    "date": "2026-08-01",
+    "what": "kicad_out.py wrote a KiCad 7 board whose README readback (kiutils) gave 55 of 55 pads, offsets exact, 15 vias and 19 nets one island each; the readback script was never harvested (D-180) and kiutils is GPL-3.0 (D-090)",
+    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/spindle/files/README.md"
+  },
+  "status": "entered",
+  "enteredBy": "M08-T08"
+}

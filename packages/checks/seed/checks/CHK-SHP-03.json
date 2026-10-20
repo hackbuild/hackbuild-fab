@@ -1,0 +1,24 @@
+{
+  "id": "CHK-SHP-03",
+  "version": "1.0.1",
+  "title": "window roof carries itself: gabled or cone at 45 or steeper, or flat under 9 mm",
+  "appliesTo": {
+    "level": "feature",
+    "kinds": [
+      "window"
+    ]
+  },
+  "severity": "block",
+  "needs": [
+    "mesh"
+  ],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "DAVIT R4, DETENT rev D 2026-07-30",
+    "date": "2026-07-30",
+    "what": "gabled web windows and 45 cone roofs need no support",
+    "knowledge": "knowledge:05-taste#part-styling",
+    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-robots-machines/unzipped/detentfiles/DETENT-build-notes.md"
+  },
+  "status": "seed"
+}

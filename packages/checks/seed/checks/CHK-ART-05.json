@@ -1,0 +1,22 @@
+{
+  "id": "CHK-ART-05",
+  "version": "1.0.0",
+  "title": "QR module at least 1.9 mm in every artifact that carries a code",
+  "appliesTo": {
+    "level": "artifact"
+  },
+  "severity": "block",
+  "needs": [
+    "inlay"
+  ],
+  "legalKind": "interval",
+  "origin": {
+    "project": "COTTER 2026-09",
+    "date": "2026-09",
+    "what": "the QR tile and kit cards warn per module when a QR module is under 1.9 mm",
+    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/latest/cotter-sparger.md"
+  },
+  "status": "entered",
+  "enteredBy": "M04-T12",
+  "pending": "M09"
+}

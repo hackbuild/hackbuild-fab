@@ -1,0 +1,24 @@
+{
+  "id": "CHK-PRT-10",
+  "version": "1.0.0",
+  "title": "inner and outer wall lines parallel on every cone",
+  "appliesTo": {
+    "level": "feature",
+    "kinds": [
+      "boss"
+    ]
+  },
+  "severity": "block",
+  "needs": [
+    "mesh"
+  ],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "STYLUS 2026-08",
+    "date": "2026-08",
+    "what": "non-parallel cone left a sub-line-width wall",
+    "knowledge": "knowledge:01-invariants#printability",
+    "evidence": null
+  },
+  "status": "seed"
+}

@@ -1,0 +1,22 @@
+{
+  "id": "CHK-BRD-12",
+  "version": "1.0.0",
+  "title": "regulator feedback divider sets the declared output from the part's Vref",
+  "appliesTo": {
+    "level": "project"
+  },
+  "severity": "block",
+  "needs": [
+    "board"
+  ],
+  "legalKind": "interval",
+  "origin": {
+    "project": "GROMMET rev A 2026-07-28",
+    "date": "2026-07-28",
+    "what": "R4 100k over R5 16.9k on the TPS61088 FB against a declared 5.1 V",
+    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-boards-tools/grommet/files (23)/grommet.tsx"
+  },
+  "status": "entered",
+  "enteredBy": "M04-T12",
+  "pending": "M08"
+}

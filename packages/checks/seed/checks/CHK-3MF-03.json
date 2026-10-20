@@ -1,0 +1,21 @@
+{
+  "id": "CHK-3MF-03",
+  "version": "1.0.1",
+  "title": "no printer or process scoped keys; preset names only",
+  "appliesTo": {
+    "level": "artifact"
+  },
+  "severity": "block",
+  "needs": [
+    "3mf"
+  ],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "STYLUS 2026-08",
+    "date": "2026-08",
+    "what": "layer_height in project_settings crashed Flash Studio",
+    "knowledge": "knowledge:kernels/3mf-dialect#the-key-template",
+    "evidence": null
+  },
+  "status": "seed"
+}

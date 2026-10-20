@@ -1,0 +1,23 @@
+{
+  "id": "CHK-NET-41",
+  "version": "1.0.0",
+  "title": "slider travel and arc sweep inside the board's declared range",
+  "appliesTo": {
+    "level": "sheet"
+  },
+  "severity": "block",
+  "needs": [
+    "geom"
+  ],
+  "legalKind": "interval",
+  "origin": {
+    "project": "VERNIER 2026-08",
+    "date": "2026-08",
+    "what": "no recorded failure: the wedge pair slider travel must exceed 60 mm (lines 255 to 256); QUADRANT, SPLINE, TESSERA and FRET gate their arc sweep at over 100, 40 to 100, 25 to 70 and over 70 mm",
+    "knowledge": "knowledge:designs/vernier#54-wedge-pair-sliders-three-straight-bands",
+    "evidence": "reference/copper/vernier/legacy/gen_vernier.py"
+  },
+  "status": "entered",
+  "enteredBy": "M05-T17",
+  "pending": "M05"
+}

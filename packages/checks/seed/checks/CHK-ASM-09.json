@@ -1,0 +1,26 @@
+{
+  "id": "CHK-ASM-09",
+  "version": "2.0.0",
+  "title": "revolute joint between two sheet parts declares bought round stock (JointDecl.stock)",
+  "appliesTo": {
+    "level": "assembly",
+    "joints": [
+      "revolute"
+    ]
+  },
+  "severity": "block",
+  "needs": [],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "OGEE R12 2026-08",
+    "date": "2026-08",
+    "what": "square peg contact radius 1.500 to 2.121; a cam not a bearing",
+    "numbers": {
+      "contactRadiusMm": "1.500 to 2.121",
+      "qualifier": "computed: half side and half diagonal of the square peg (knowledge/03-diagnostics.md, Mechanism)"
+    },
+    "knowledge": "knowledge:03-diagnostics#mechanism",
+    "evidence": null
+  },
+  "status": "seed"
+}

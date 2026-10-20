@@ -1,0 +1,22 @@
+{
+  "id": "CHK-PRT-16",
+  "version": "1.0.0",
+  "title": "every print fits the machine's build volume in print pose, listed before export",
+  "appliesTo": {
+    "level": "part"
+  },
+  "severity": "block",
+  "needs": [
+    "mesh",
+    "profile"
+  ],
+  "legalKind": "interval",
+  "origin": {
+    "project": "COTTER 2026-09",
+    "date": "2026-09",
+    "what": "platePlan() lists oversize prints apart and the BOM warns on parts too big for the bed",
+    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/latest/cotter-sparger.md"
+  },
+  "status": "entered",
+  "enteredBy": "M04-T12"
+}

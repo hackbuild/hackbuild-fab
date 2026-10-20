@@ -1,0 +1,21 @@
+{
+  "id": "CHK-BRD-07",
+  "version": "1.0.0",
+  "title": "routing complete: zero unrouted, every vertex inside outline, routed width at least declared",
+  "appliesTo": {
+    "level": "project"
+  },
+  "severity": "block",
+  "needs": [
+    "board"
+  ],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "AUGER 2026-07",
+    "date": "2026-07",
+    "what": "58 nets unroutable and 1178 of 1322 segments at 0.1 mm",
+    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-boards-tools/auger"
+  },
+  "status": "entered",
+  "enteredBy": "M04-T12"
+}

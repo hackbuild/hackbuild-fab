@@ -1,0 +1,19 @@
+{
+  "id": "CHK-UI-02",
+  "version": "1.0.2",
+  "title": "plate view switches to a high camera; section view cuts the near half",
+  "appliesTo": {
+    "level": "page"
+  },
+  "severity": "warn",
+  "needs": [],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "PIP 2026-09",
+    "date": "2026-09",
+    "what": "plate kept the last angle and hid the bezel; section showed no cut face",
+    "knowledge": "knowledge:projects/printed-circuits#haft",
+    "evidence": null
+  },
+  "status": "seed"
+}

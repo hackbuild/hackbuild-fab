@@ -1,0 +1,21 @@
+{
+  "id": "CHK-ASM-04",
+  "version": "1.0.0",
+  "title": "bought bodies (body AND flange) clash-checked in every pose",
+  "appliesTo": {
+    "level": "assembly"
+  },
+  "severity": "block",
+  "needs": [
+    "sim"
+  ],
+  "legalKind": "interval",
+  "origin": {
+    "project": "OGEE R16-P 2026-08",
+    "date": "2026-08",
+    "what": "servos invisible to a part-only audit",
+    "knowledge": "knowledge:kernels/motion-latch#servo-orientation-is-usually-forced-and-the-reason-is-the-flange",
+    "evidence": null
+  },
+  "status": "seed"
+}

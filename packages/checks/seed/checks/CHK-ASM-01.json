@@ -1,0 +1,24 @@
+{
+  "id": "CHK-ASM-01",
+  "version": "1.0.1",
+  "title": "every screw has driver reach along driverAxis",
+  "appliesTo": {
+    "level": "feature",
+    "kinds": [
+      "screw"
+    ]
+  },
+  "severity": "block",
+  "needs": [
+    "mesh"
+  ],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "DAVIT R4 2026-08-02",
+    "date": "2026-08-02",
+    "what": "roll and wrist horn screws undrivable behind a D2.8 waist",
+    "knowledge": "knowledge:designs/davit#53-horn-capture-joint-slibpy-174-to-197-spartsr4py-67-to-78",
+    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-robots-machines/unzipped/davit_r4/README_R4.md"
+  },
+  "status": "seed"
+}

@@ -1,0 +1,22 @@
+{
+  "id": "CHK-BRD-17",
+  "version": "1.0.0",
+  "title": "silk clearance from exact font metrics",
+  "appliesTo": {
+    "level": "artifact"
+  },
+  "severity": "block",
+  "needs": [
+    "board"
+  ],
+  "legalKind": "interval",
+  "origin": {
+    "project": "SHUNT 2026-08",
+    "date": "2026-08",
+    "what": "estimated silk widths 15 percent narrow hid 3 collisions",
+    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-copper-pcb-a.md"
+  },
+  "status": "entered",
+  "enteredBy": "M04-T12",
+  "pending": "M08"
+}

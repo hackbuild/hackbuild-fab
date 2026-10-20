@@ -1,0 +1,21 @@
+{
+  "id": "CHK-MOT-02",
+  "version": "1.0.0",
+  "title": "programmed-path sweep clash-free",
+  "appliesTo": {
+    "level": "assembly"
+  },
+  "severity": "block",
+  "needs": [
+    "sim"
+  ],
+  "legalKind": "interval",
+  "origin": {
+    "project": "DAVIT 2026-08",
+    "date": "2026-08",
+    "what": "DAVIT tested collision per slider pose with an explicit skip between left and right arms, and right arm only mask calibration missed the left arm's mirrored hub contacts",
+    "knowledge": "knowledge:designs/davit#511-two-level-sphere-proxy-collision-with-calibrated-masks-spacksimpy-47-to-143-h-482-to-600",
+    "evidence": null
+  },
+  "status": "seed"
+}

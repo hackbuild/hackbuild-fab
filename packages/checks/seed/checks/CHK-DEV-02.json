@@ -1,0 +1,20 @@
+{
+  "id": "CHK-DEV-02",
+  "version": "1.0.0",
+  "title": "one-shot signals never declared as Param",
+  "appliesTo": {
+    "level": "source"
+  },
+  "severity": "block",
+  "needs": [],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "LOUVER, SPROCKET 2026-08",
+    "date": "2026-08",
+    "what": "a one-shot declared as a Param is replayed from the SNAPSHOT, so a rebooting camera acts on a snap command from an hour ago",
+    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-tools-devices.md"
+  },
+  "status": "entered",
+  "enteredBy": "M04-T12",
+  "pending": "M13"
+}

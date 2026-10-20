@@ -1,0 +1,23 @@
+{
+  "id": "CHK-NET-42",
+  "version": "1.0.0",
+  "title": "declared zones stay apart: sliders in their band, routing channels and the wiring zone clear of the keys",
+  "appliesTo": {
+    "level": "sheet"
+  },
+  "severity": "block",
+  "needs": [
+    "geom"
+  ],
+  "legalKind": "interval",
+  "origin": {
+    "project": "TESSERA 2026-08",
+    "date": "2026-08",
+    "what": "no recorded failure: the five channel strips and the slider band stay clear of every tile and the arc stays inside its band (lines 292 to 295, 329 to 330 and 334 to 336); STAVE ends its wiring zone before the keys (gen_stave.py lines 255 to 256)",
+    "knowledge": "knowledge:designs/tessera#51-voronoi-tiles-with-snapped-channels",
+    "evidence": "reference/copper/tessera/legacy/gen_tessera.py"
+  },
+  "status": "entered",
+  "enteredBy": "M05-T17",
+  "pending": "M05"
+}

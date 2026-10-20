@@ -1,0 +1,25 @@
+{
+  "id": "CHK-INL-01",
+  "version": "2.0.0",
+  "title": "no stroke below line width",
+  "appliesTo": {
+    "level": "feature",
+    "kinds": [
+      "inlay"
+    ]
+  },
+  "severity": "block",
+  "needs": [
+    "inlay",
+    "profile"
+  ],
+  "legalKind": "interval",
+  "origin": {
+    "project": "SPRUE 2026-08",
+    "date": "2026-08",
+    "what": "no recorded failure: knowledge/kernels/art-inlay.md lists it under checks that belong to inlay and nobody writes",
+    "knowledge": "knowledge:kernels/art-inlay#checks-that-belong-to-inlay-and-nobody-writes",
+    "evidence": null
+  },
+  "status": "seed"
+}

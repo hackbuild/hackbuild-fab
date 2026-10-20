@@ -1,0 +1,22 @@
+{
+  "id": "CHK-NET-01",
+  "version": "1.0.0",
+  "title": "single island per net (union-find over overlap and z)",
+  "appliesTo": {
+    "level": "net"
+  },
+  "severity": "block",
+  "needs": [
+    "circuit",
+    "geom"
+  ],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "STYLUS 2026-08",
+    "date": "2026-08",
+    "what": "most archetypes electrically broken",
+    "knowledge": "knowledge:01-invariants#electrical",
+    "evidence": null
+  },
+  "status": "seed"
+}

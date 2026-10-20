@@ -1,0 +1,23 @@
+{
+  "id": "CHK-NET-43",
+  "version": "1.0.0",
+  "title": "channel count equals the controller budget (one MPR121 is 12, two are 24)",
+  "appliesTo": {
+    "level": "sheet"
+  },
+  "severity": "block",
+  "needs": [
+    "geom"
+  ],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "VERNIER 2026-08",
+    "date": "2026-08",
+    "what": "no recorded failure: exactly 12 terminals and 12 nets, one MPR121 or 12 ESP32-S3 touch pins (line 268); SPLINE, TESSERA and FRET assert 18, 18 and 21 of the 24 channels of two MPR121 on one bus",
+    "knowledge": "knowledge:kernels/copper-routing#channel-budgets",
+    "evidence": "reference/copper/vernier/legacy/gen_vernier.py"
+  },
+  "status": "entered",
+  "enteredBy": "M05-T17",
+  "pending": "M05"
+}

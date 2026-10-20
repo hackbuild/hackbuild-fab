@@ -1,0 +1,29 @@
+{
+  "id": "CHK-SHT-07",
+  "version": "1.0.1",
+  "title": "crank hub not severed by bore plus pin hole",
+  "appliesTo": {
+    "level": "sheet"
+  },
+  "severity": "block",
+  "needs": [
+    "geom"
+  ],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "OGEE R17 2026-08",
+    "date": "2026-08",
+    "what": "hole at radius r spans r plus or minus d/2",
+    "knowledge": "knowledge:kernels/sheet-design#connectivity-the-check-that-refuses",
+    "evidence": null,
+    "also": [
+      {
+        "project": "STIPPLE R17 2026-08",
+        "date": "2026-08",
+        "what": "STIPPLE R17 added beside OGEE R17 for the crank hub rule",
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-ogee-stipple-mech/stipple/stipple (1).html"
+      }
+    ]
+  },
+  "status": "seed"
+}

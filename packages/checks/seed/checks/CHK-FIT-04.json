@@ -1,0 +1,24 @@
+{
+  "id": "CHK-FIT-04",
+  "version": "2.0.0",
+  "title": "checker constants are derived from params, never copied",
+  "appliesTo": {
+    "level": "source"
+  },
+  "severity": "block",
+  "needs": [],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "OGEE R16-P 2026-08",
+    "date": "2026-08",
+    "what": "fits.py reported 0.55 after FIT_SLIDE went to 0.75; three times",
+    "numbers": {
+      "reportedMm": 0.55,
+      "drawnMm": 0.75,
+      "qualifier": "computed: fits.py hardcoded FIT_SLIDE and reported 0.55 while printed.scad drew 0.75 (knowledge/designs/ogee16.md 4.8)"
+    },
+    "knowledge": "knowledge:designs/ogee16#48-fits-table-fitspy",
+    "evidence": null
+  },
+  "status": "seed"
+}

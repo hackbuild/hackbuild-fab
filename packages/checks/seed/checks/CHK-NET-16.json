@@ -1,0 +1,22 @@
+{
+  "id": "CHK-NET-16",
+  "version": "1.0.0",
+  "title": "wedge end overlap clears the opposite escape",
+  "appliesTo": {
+    "level": "net"
+  },
+  "severity": "block",
+  "needs": [
+    "geom"
+  ],
+  "legalKind": "interval",
+  "origin": {
+    "project": "VERNIER 2026-08",
+    "date": "2026-08",
+    "what": "a wedge end overlap failed the opposite escape by 0.4 mm",
+    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-conductive-b.md"
+  },
+  "status": "entered",
+  "enteredBy": "M04-T12",
+  "pending": "M05"
+}

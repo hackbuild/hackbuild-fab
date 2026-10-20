@@ -1,0 +1,19 @@
+{
+  "id": "CHK-UI-01",
+  "version": "1.0.2",
+  "title": "no sideways overflow at 390, 768, 1280 on every step",
+  "appliesTo": {
+    "level": "page"
+  },
+  "severity": "block",
+  "needs": [],
+  "legalKind": "interval",
+  "origin": {
+    "project": "PIP 2026-09",
+    "date": "2026-09",
+    "what": "9 px overflow at 390; cams wrap, card fits, rows wrap, legend hidden under 640",
+    "knowledge": "knowledge:projects/printed-circuits#haft",
+    "evidence": null
+  },
+  "status": "seed"
+}

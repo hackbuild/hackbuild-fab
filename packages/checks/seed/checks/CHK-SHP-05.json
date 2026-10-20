@@ -1,0 +1,18 @@
+{
+  "id": "CHK-SHP-05",
+  "version": "1.0.0",
+  "title": "an imported part with inferred provenance is refused at fabrication export",
+  "appliesTo": {
+    "level": "part"
+  },
+  "severity": "block",
+  "needs": [],
+  "legalKind": "set",
+  "origin": {
+    "project": "catalog rule 2026-09",
+    "date": "2026-09",
+    "what": "same gate as bought parts",
+    "evidence": null
+  },
+  "status": "seed"
+}

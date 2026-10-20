@@ -1,0 +1,29 @@
+{
+  "id": "CHK-SHT-03",
+  "version": "2.0.0",
+  "title": "DXF reloads closed with an independent parser",
+  "appliesTo": {
+    "level": "sheet"
+  },
+  "severity": "block",
+  "needs": [
+    "geom"
+  ],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "OGEE R16 sheets 2026-08",
+    "date": "2026-08",
+    "what": "closure flag, repeated vertex, $ACADVER",
+    "knowledge": "knowledge:01-invariants#3mf-and-export",
+    "evidence": null,
+    "also": [
+      {
+        "project": "DXF corpus 2026-10-04",
+        "date": "2026-10-04",
+        "what": "every shipped DXF emitter fails a reload rule: SLUG sheets carry no $ACADVER and POLYLINE, OGEE16 cutfiles.py and COFFER write millimetres under $INSUNITS 6 (metres), the OpenSCAD export writes loose LINE, COTTER repeats no first vertex",
+        "evidence": "packages/nest/records/dxf-inventory.json"
+      }
+    ]
+  },
+  "status": "seed"
+}

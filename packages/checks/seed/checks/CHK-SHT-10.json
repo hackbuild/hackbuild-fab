@@ -1,0 +1,22 @@
+{
+  "id": "CHK-SHT-10",
+  "version": "1.0.0",
+  "title": "a box corner column assembled at kerf 0 is solid material within 99.5 to 100.5 percent",
+  "appliesTo": {
+    "level": "sheet"
+  },
+  "severity": "warn",
+  "needs": [
+    "geom"
+  ],
+  "legalKind": "interval",
+  "origin": {
+    "project": "COTTER 2026-09",
+    "date": "2026-09",
+    "what": "test/laser_fit.mjs requires the l_bin front corner column at 100 plus or minus 0.5 percent wood",
+    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/latest/cotter-sparger.md"
+  },
+  "status": "entered",
+  "enteredBy": "M04-T12",
+  "pending": "M07"
+}

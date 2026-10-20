@@ -1,0 +1,21 @@
+{
+  "id": "CHK-BRD-01",
+  "version": "1.0.1",
+  "title": "gerbers reparse to source geometry with an independent parser",
+  "appliesTo": {
+    "level": "artifact"
+  },
+  "severity": "block",
+  "needs": [
+    "board"
+  ],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "SPINDLE R1 2026-08",
+    "date": "2026-08",
+    "what": "ring identity test wrote every hole as filled copper",
+    "knowledge": "knowledge:02-ordering-rules#gerber-emission-order",
+    "evidence": null
+  },
+  "status": "seed"
+}

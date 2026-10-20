@@ -1,0 +1,25 @@
+{
+  "id": "CHK-ASM-06",
+  "version": "2.0.0",
+  "title": "whitelisted pair gets a clearance-through-travel check",
+  "appliesTo": {
+    "level": "assembly",
+    "joints": [
+      "prismatic",
+      "planar"
+    ]
+  },
+  "severity": "block",
+  "needs": [
+    "sim"
+  ],
+  "legalKind": "interval",
+  "origin": {
+    "project": "OGEE R16-P 2026-08",
+    "date": "2026-08",
+    "what": "pin never engaged its yoke; clash audit blind",
+    "knowledge": "knowledge:03-diagnostics#mechanism",
+    "evidence": null
+  },
+  "status": "seed"
+}

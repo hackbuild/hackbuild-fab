@@ -1,0 +1,21 @@
+{
+  "id": "CHK-BRD-19",
+  "version": "1.0.0",
+  "title": "lead landing through an independently derived transform",
+  "appliesTo": {
+    "level": "assembly"
+  },
+  "severity": "block",
+  "needs": [
+    "board"
+  ],
+  "legalKind": "interval",
+  "origin": {
+    "project": "SHUNT 2026-08",
+    "date": "2026-08",
+    "what": "check3d_shunt.mjs proves 55 lead landings at 0.000 mm through an independently derived transform",
+    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-copper-pcb-a.md"
+  },
+  "status": "entered",
+  "enteredBy": "M04-T12"
+}

@@ -1,0 +1,23 @@
+{
+  "id": "CHK-PRT-15",
+  "version": "1.0.0",
+  "title": "layer height and first layer height equal the written process preset; every feature z, Z snap and pauseBefore.z lies on a layer top, firstLayer + n x layer",
+  "appliesTo": {
+    "level": "part"
+  },
+  "severity": "block",
+  "needs": [
+    "mesh",
+    "profile",
+    "3mf"
+  ],
+  "legalKind": "multipleOf",
+  "origin": {
+    "project": "COLLAR 2026-08",
+    "date": "2026-08",
+    "what": "layer height defaulted to 0.2 under the 0.24mm Standard @FF C5 preset, so the NFC floor at 1.8 landed mid layer",
+    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-baffle-inlay-coin/collar/collar-print-card (1).txt"
+  },
+  "status": "entered",
+  "enteredBy": "M04-T12"
+}

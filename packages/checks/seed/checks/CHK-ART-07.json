@@ -1,0 +1,19 @@
+{
+  "id": "CHK-ART-07",
+  "version": "1.0.0",
+  "title": "no placeholder URL in card or metadata text: no example.com, example.org, localhost, or a bare home page where a design page is declared",
+  "appliesTo": {
+    "level": "artifact"
+  },
+  "severity": "block",
+  "needs": [],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "COTTER 2026-09",
+    "date": "2026-09",
+    "what": "a waiver card still pointed at the home page",
+    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/latest/cotter-sparger.md"
+  },
+  "status": "entered",
+  "enteredBy": "M04-T12"
+}

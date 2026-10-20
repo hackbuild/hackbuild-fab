@@ -1,0 +1,25 @@
+{
+  "id": "CHK-FIT-02",
+  "version": "1.0.0",
+  "title": "snap fit passes catch AND closure",
+  "appliesTo": {
+    "level": "feature",
+    "kinds": [
+      "snap"
+    ]
+  },
+  "severity": "block",
+  "needs": [
+    "mesh",
+    "profile"
+  ],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "OGEE R16-P 2026-08",
+    "date": "2026-08",
+    "what": "barb had to close 1.4 to pass a 1.0 slot; could not go in",
+    "knowledge": "knowledge:00-constants#fit-classes",
+    "evidence": null
+  },
+  "status": "seed"
+}

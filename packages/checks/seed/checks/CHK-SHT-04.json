@@ -1,0 +1,21 @@
+{
+  "id": "CHK-SHT-04",
+  "version": "2.0.1",
+  "title": "kerf lives in one place, from the coupon",
+  "appliesTo": {
+    "level": "source"
+  },
+  "severity": "block",
+  "needs": [
+    "profile"
+  ],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "OGEE R12 2026-08",
+    "date": "2026-08",
+    "what": "no recorded failure: the OGEE R12 to R15 apps hold no kerf text, and the OGEE16 notes state the rule (set KERF from the coupon, never change part geometry for kerf) with no failure behind it",
+    "knowledge": "knowledge:kernels/sheet-design#fits-cut-to-cut",
+    "evidence": null
+  },
+  "status": "seed"
+}

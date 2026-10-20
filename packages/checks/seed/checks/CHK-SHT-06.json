@@ -1,0 +1,22 @@
+{
+  "id": "CHK-SHT-06",
+  "version": "1.0.0",
+  "title": "living hinge rows at or under 13 degrees each",
+  "appliesTo": {
+    "level": "feature",
+    "kinds": [
+      "flexCut"
+    ]
+  },
+  "severity": "block",
+  "needs": [],
+  "legalKind": "interval",
+  "origin": {
+    "project": "TUMBLER 2026-08",
+    "date": "2026-08",
+    "what": "no recorded failure: the TUMBLER living hinge module flags rows over 13 degrees or ligaments under 0.6 mm as a bench rule, and no failed hinge is on record",
+    "knowledge": "knowledge:designs/tumbler#45-the-18-modules",
+    "evidence": null
+  },
+  "status": "seed"
+}

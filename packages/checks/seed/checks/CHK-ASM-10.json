@@ -1,0 +1,35 @@
+{
+  "id": "CHK-ASM-10",
+  "version": "1.0.1",
+  "title": "insertion proven by motion search",
+  "appliesTo": {
+    "level": "assembly",
+    "assertions": [
+      "insertable"
+    ]
+  },
+  "severity": "block",
+  "needs": [
+    "sim"
+  ],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "COTTER 2026-09",
+    "date": "2026-09",
+    "what": "hook_fit.py proves each hook inserts by a best-first motion search over 7 hole and board pairs; a sharp bend traps",
+    "evidence": "designs/cotter/legacy/tools/hook_fit.py",
+    "also": [
+      {
+        "project": "BUCK 2026-10-06",
+        "date": "2026-10-06",
+        "what": "the jaw is inserted along a 135 deg path checked by intersection volume at 1.5, 4, 8, 14 and 22 mm of travel; every BUCK check reads 0",
+        "numbers": {
+          "qualifier": "measured 2026-10-06 on the buck and stag presets (CHECKS.md 7.7)"
+        },
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/buck/files/src/engine.js"
+      }
+    ]
+  },
+  "status": "entered",
+  "enteredBy": "M04-T12"
+}

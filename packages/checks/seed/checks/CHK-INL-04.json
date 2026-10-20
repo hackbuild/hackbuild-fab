@@ -1,0 +1,21 @@
+{
+  "id": "CHK-INL-04",
+  "version": "1.0.1",
+  "title": "bed-face art mirrored in X at extrude",
+  "appliesTo": {
+    "level": "part"
+  },
+  "severity": "block",
+  "needs": [
+    "inlay"
+  ],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "python hackbuild coin v1 2026-08",
+    "date": "2026-08",
+    "what": "back wordmark printed backwards",
+    "knowledge": "knowledge:designs/coin#11-every-revision-and-why-this-one-is-canonical",
+    "evidence": null
+  },
+  "status": "seed"
+}

@@ -1,0 +1,23 @@
+{
+  "id": "CHK-NET-10",
+  "version": "1.0.1",
+  "title": "port interfaces compatible at every connection",
+  "appliesTo": {
+    "level": "feature",
+    "kinds": [
+      "port"
+    ]
+  },
+  "severity": "block",
+  "needs": [
+    "circuit"
+  ],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "BLOCKS 2026-08",
+    "date": "2026-08",
+    "what": "composition typing, after TypedSchematics",
+    "evidence": null
+  },
+  "status": "seed"
+}

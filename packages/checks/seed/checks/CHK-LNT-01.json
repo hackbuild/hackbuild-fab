@@ -1,0 +1,23 @@
+{
+  "id": "CHK-LNT-01",
+  "version": "2.0.0",
+  "title": "no em or en dash anywhere in source, prose or UI",
+  "appliesTo": {
+    "level": "source"
+  },
+  "severity": "block",
+  "needs": [],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "BEAM PRD 2026-08",
+    "date": "2026-08",
+    "what": "no recorded failure in BEAM PRD, which states the ban as a lint rule; the skills that ban dashes carried them in their own text, 139 in the clasp and explainer references imported at M-1 (computed)",
+    "numbers": {
+      "dashesInImportedSkills": 139,
+      "qualifier": "computed at M-1 over the clasp and explainer references (seed origin)"
+    },
+    "knowledge": "knowledge:02-ordering-rules#lints",
+    "evidence": null
+  },
+  "status": "seed"
+}

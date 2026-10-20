@@ -1,0 +1,25 @@
+{
+  "id": "CHK-NET-08",
+  "version": "1.0.0",
+  "title": "copper >= 1.0 mm from the cut outline",
+  "appliesTo": {
+    "level": "sheet"
+  },
+  "severity": "block",
+  "needs": [
+    "geom"
+  ],
+  "legalKind": "interval",
+  "origin": {
+    "project": "SPINDLE 2026-08",
+    "date": "2026-08",
+    "what": "no recorded failure: SPINDLE v5 gates copper at 1.0 mm from the shared outline and reached 1.02 mm tightest (computed by gen_board.py)",
+    "numbers": {
+      "tightestMm": 1.02,
+      "qualifier": "computed by SPINDLE v5 gen_board.py (seed origin)"
+    },
+    "knowledge": "knowledge:01-invariants#electrical",
+    "evidence": null
+  },
+  "status": "seed"
+}

@@ -1,0 +1,25 @@
+{
+  "id": "CHK-NET-27",
+  "version": "1.0.0",
+  "title": "makesContact executed by the actuated sim move and a touch test",
+  "appliesTo": {
+    "level": "feature",
+    "kinds": [
+      "contact"
+    ]
+  },
+  "severity": "block",
+  "needs": [
+    "circuit",
+    "sim"
+  ],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "FEELER 2026-08",
+    "date": "2026-08",
+    "what": "makesContact records a gap that closes when actuated and was never tested on geometry, so the wiper bug went through",
+    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-conductive-a.md"
+  },
+  "status": "entered",
+  "enteredBy": "M04-T12"
+}

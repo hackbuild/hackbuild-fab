@@ -1,0 +1,22 @@
+{
+  "id": "CHK-PRT-02",
+  "version": "1.0.0",
+  "title": "stacked prisms in one part z-overlap 0.01 to 0.02",
+  "appliesTo": {
+    "level": "part"
+  },
+  "severity": "block",
+  "precondition": true,
+  "needs": [
+    "mesh"
+  ],
+  "legalKind": "interval",
+  "origin": {
+    "project": "COAMING 2026-08",
+    "date": "2026-08",
+    "what": "coincident rings fused into 4-face edges",
+    "knowledge": "knowledge:01-invariants#mesh-and-manifoldness",
+    "evidence": null
+  },
+  "status": "seed"
+}

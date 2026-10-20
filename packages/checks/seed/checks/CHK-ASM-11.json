@@ -1,0 +1,33 @@
+{
+  "id": "CHK-ASM-11",
+  "version": "1.0.1",
+  "title": "every pair of bodies clear in every declared pose, except declared touch pairs under their squeeze ceiling; volumes reported",
+  "appliesTo": {
+    "level": "assembly"
+  },
+  "severity": "block",
+  "needs": [
+    "mesh",
+    "sim"
+  ],
+  "legalKind": "interval",
+  "origin": {
+    "project": "OGEE R16-P 2026-08",
+    "date": "2026-08",
+    "what": "audit_print.py reads a boolean that throws as 0 mm3, so a crashed intersection reads as clear",
+    "evidence": "designs/ogee16/legacy/source/audit_print.py",
+    "also": [
+      {
+        "project": "BUCK 2026-10-06",
+        "date": "2026-10-06",
+        "what": "the jaw is checked against head, mount and servo at 0, 50 and 100 percent of its 22 deg swing with volumes reported; every BUCK check reads 0 mm3",
+        "numbers": {
+          "qualifier": "measured 2026-10-06 on the buck and stag presets (CHECKS.md 7.7)"
+        },
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/buck/files/src/engine.js"
+      }
+    ]
+  },
+  "status": "entered",
+  "enteredBy": "M04-T12"
+}

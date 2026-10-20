@@ -1,0 +1,20 @@
+{
+  "id": "CHK-ART-04",
+  "version": "1.0.0",
+  "title": "every parameter a bench echoes equals its source parameter",
+  "appliesTo": {
+    "level": "page"
+  },
+  "severity": "block",
+  "needs": [],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "SLUG 2026-08",
+    "date": "2026-08",
+    "what": "tie_r2 is 52 in slug.scad and 70 in params.json and the slug.html P table",
+    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-robots-b.md"
+  },
+  "status": "entered",
+  "enteredBy": "M04-T12",
+  "pending": "M09"
+}

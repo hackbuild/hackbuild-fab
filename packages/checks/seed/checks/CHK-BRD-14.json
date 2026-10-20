@@ -1,0 +1,22 @@
+{
+  "id": "CHK-BRD-14",
+  "version": "1.0.0",
+  "title": "amplifier output connected to its load",
+  "appliesTo": {
+    "level": "project"
+  },
+  "severity": "block",
+  "needs": [
+    "board"
+  ],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "AUGER 2026-07",
+    "date": "2026-07",
+    "what": "the U8 amplifier output was left unconnected to its load",
+    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-boards-tools/auger"
+  },
+  "status": "entered",
+  "enteredBy": "M04-T12",
+  "pending": "M08"
+}

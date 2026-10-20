@@ -1,0 +1,23 @@
+{
+  "id": "CHK-NET-32",
+  "version": "1.0.0",
+  "title": "art in the copper weeds: islands at least 0.70 mm apart, every counter survives a 0.3 mm erode",
+  "appliesTo": {
+    "level": "net"
+  },
+  "severity": "block",
+  "needs": [
+    "geom"
+  ],
+  "legalKind": "interval",
+  "origin": {
+    "project": "KEYWAY 2026-08",
+    "date": "2026-08",
+    "what": "no recorded failure: brand art moved behind a flag after the weeding test; the generator gates art islands at 0.70 mm and counters at a 0.3 mm erode, lines 231 to 237; 15.17 mm with the brand off, 0.85 mm with it on",
+    "knowledge": "knowledge:designs/keyway#56-brand-art-as-a-switch",
+    "evidence": "reference/copper/keyway/legacy/gen_keyway.py"
+  },
+  "status": "entered",
+  "enteredBy": "M05-T14",
+  "pending": "M05"
+}

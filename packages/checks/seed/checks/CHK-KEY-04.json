@@ -1,0 +1,30 @@
+{
+  "id": "CHK-KEY-04",
+  "version": "2.0.1",
+  "title": "click spring rise Q inside the FE-backed window: snaps, drop at least click.dropMin, strain at the stop within the bend-direction limit, not bistable",
+  "appliesTo": {
+    "level": "feature",
+    "kinds": [
+      "spring"
+    ]
+  },
+  "severity": "block",
+  "needs": [
+    "sim",
+    "profile"
+  ],
+  "legalKind": "interval",
+  "origin": {
+    "project": "PIP 2026-09",
+    "date": "2026-09",
+    "what": "0.6 beam reached 2.7 to 3.3 percent",
+    "numbers": {
+      "beamStrainPct": "2.7 to 3.3",
+      "qualifier": "inferred: empirical from HAFT print failures (knowledge/designs/pip.md 5.2)"
+    },
+    "knowledge": "knowledge:designs/pip#52-click-spring-key-canon-click-spring-key",
+    "evidence": null
+  },
+  "status": "seed",
+  "constraint": "sim/click-spring-window"
+}

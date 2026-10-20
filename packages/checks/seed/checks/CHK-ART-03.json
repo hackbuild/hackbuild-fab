@@ -1,0 +1,20 @@
+{
+  "id": "CHK-ART-03",
+  "version": "1.0.0",
+  "title": "derived artifacts match their generator (pin maps, BUILD tables, sim payloads)",
+  "appliesTo": {
+    "level": "artifact"
+  },
+  "severity": "block",
+  "needs": [],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "SPINDLE 2026-08",
+    "date": "2026-08",
+    "what": "the pin map labels GPIO21 while the code drives GPIO20",
+    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-copper-pcb-b.md"
+  },
+  "status": "entered",
+  "enteredBy": "M04-T12",
+  "pending": "M09"
+}

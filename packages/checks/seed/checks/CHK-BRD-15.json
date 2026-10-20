@@ -1,0 +1,22 @@
+{
+  "id": "CHK-BRD-15",
+  "version": "1.0.0",
+  "title": "HAT ID EEPROM present or waived; back-power protection when a HAT drives 5 V",
+  "appliesTo": {
+    "level": "project"
+  },
+  "severity": "block",
+  "needs": [
+    "board"
+  ],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "LUG 2026-07",
+    "date": "2026-07",
+    "what": "LUG carries no HAT ID EEPROM and no back-power protection between the Pi USB 5 V and the boost output on header pins 2 and 4",
+    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-copper-pcb-b.md"
+  },
+  "status": "entered",
+  "enteredBy": "M04-T12",
+  "pending": "M08"
+}

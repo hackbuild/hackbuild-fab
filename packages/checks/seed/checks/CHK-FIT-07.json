@@ -1,0 +1,22 @@
+{
+  "id": "CHK-FIT-07",
+  "version": "1.0.0",
+  "title": "a printed conductive socket on a printed stud: diametral interference 0.08 to 0.2, at least 3 collet fingers, axial squeeze 0.06 to 0.2",
+  "appliesTo": {
+    "level": "feature"
+  },
+  "severity": "block",
+  "needs": [
+    "mesh",
+    "profile"
+  ],
+  "legalKind": "interval",
+  "origin": {
+    "project": "BAFFLE R3 2026-09-18",
+    "date": "2026-09-18",
+    "what": "the printed conductive tile socket got collet slots only after the first tile print",
+    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-baffle-inlay-coin/baffle/baffle-tile-tile (1).3mf"
+  },
+  "status": "entered",
+  "enteredBy": "M04-T12"
+}

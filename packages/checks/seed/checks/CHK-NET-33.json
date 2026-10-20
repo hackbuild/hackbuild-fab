@@ -1,0 +1,23 @@
+{
+  "id": "CHK-NET-33",
+  "version": "1.0.0",
+  "title": "both wedges of a slider keep at least 1.8 mm of copper across the travel",
+  "appliesTo": {
+    "level": "net"
+  },
+  "severity": "block",
+  "needs": [
+    "geom"
+  ],
+  "legalKind": "interval",
+  "origin": {
+    "project": "KEYWAY 2026-08",
+    "date": "2026-08",
+    "what": "no recorded failure: the generator samples 41 cuts over 67.9 mm of travel and refuses a wedge under 1.8 mm, line 245; trapezoids replaced triangles, which pin the ratio to the rails (knowledge/designs/keyway.md 5.3)",
+    "knowledge": "knowledge:designs/keyway#53-graded-wedge-slider-with-top-copper-wiper",
+    "evidence": "reference/copper/keyway/legacy/gen_keyway.py"
+  },
+  "status": "entered",
+  "enteredBy": "M05-T14",
+  "pending": "M05"
+}

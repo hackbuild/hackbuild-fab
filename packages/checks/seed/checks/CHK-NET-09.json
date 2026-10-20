@@ -1,0 +1,26 @@
+{
+  "id": "CHK-NET-09",
+  "version": "1.0.0",
+  "title": "vinyl mask one piece, follows outline, 1.2 mm border, 100% per edge",
+  "appliesTo": {
+    "level": "sheet"
+  },
+  "severity": "block",
+  "needs": [
+    "geom"
+  ],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "SPINDLE 2026-08",
+    "date": "2026-08",
+    "what": "no recorded failure: SPINDLE v5 reports its vinyl mask as one piece with 37 openings and every edge strip covered above 99.9 percent (computed by layers.py)",
+    "numbers": {
+      "maskOpenings": 37,
+      "edgeCoverPct": "above 99.9",
+      "qualifier": "computed by SPINDLE v5 layers.py (knowledge/designs/spindle.md 4.4)"
+    },
+    "knowledge": "knowledge:designs/spindle#44-three-registered-layers-off-one-outline-lay",
+    "evidence": null
+  },
+  "status": "seed"
+}

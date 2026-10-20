@@ -1,0 +1,23 @@
+{
+  "id": "CHK-NET-34",
+  "version": "1.0.0",
+  "title": "a spacer window over a force zone exposes more than 15 mm2 of each comb",
+  "appliesTo": {
+    "level": "sheet"
+  },
+  "severity": "block",
+  "needs": [
+    "geom"
+  ],
+  "legalKind": "interval",
+  "origin": {
+    "project": "KEYWAY 2026-08",
+    "date": "2026-08",
+    "what": "no recorded failure: the lower spacer's windows let the Velostat tent onto both combs; the generator gates each at 15 mm2, line 274; 197 and 247 mm2 per zone in the rerun",
+    "knowledge": "knowledge:designs/keyway#51-interdigitated-force-comb-four-zones",
+    "evidence": "reference/copper/keyway/legacy/gen_keyway.py"
+  },
+  "status": "entered",
+  "enteredBy": "M05-T14",
+  "pending": "M05"
+}

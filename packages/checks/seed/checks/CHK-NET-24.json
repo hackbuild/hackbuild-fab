@@ -1,0 +1,22 @@
+{
+  "id": "CHK-NET-24",
+  "version": "1.0.0",
+  "title": "mask mode declared and honoured: soldermask or dielectric faceplate",
+  "appliesTo": {
+    "level": "sheet"
+  },
+  "severity": "block",
+  "needs": [
+    "geom"
+  ],
+  "legalKind": "set",
+  "origin": {
+    "project": "SPINDLE 2026-08",
+    "date": "2026-08",
+    "what": "the copper row of plan-deltas R54 splits soldermask from a dielectric faceplate; CHK-NET-09 carries the SPINDLE story",
+    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/synthesis/plan-deltas.md"
+  },
+  "status": "entered",
+  "enteredBy": "M04-T12",
+  "pending": "M05"
+}

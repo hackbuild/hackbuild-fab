@@ -1,0 +1,21 @@
+{
+  "id": "CHK-BRD-03",
+  "version": "1.0.0",
+  "title": "back-mounted asymmetric parts checked for chirality",
+  "appliesTo": {
+    "level": "assembly"
+  },
+  "severity": "block",
+  "needs": [
+    "board"
+  ],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "TACK 2026-08",
+    "date": "2026-08",
+    "what": "SOT-23 B/E swap",
+    "knowledge": "knowledge:kernels/board-pcb#footprint-and-chirality",
+    "evidence": null
+  },
+  "status": "seed"
+}

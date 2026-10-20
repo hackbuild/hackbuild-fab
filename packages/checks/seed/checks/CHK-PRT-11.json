@@ -1,0 +1,22 @@
+{
+  "id": "CHK-PRT-11",
+  "version": "1.0.0",
+  "title": "print pose is a reorientation: volume matches assembly twin",
+  "appliesTo": {
+    "level": "part"
+  },
+  "severity": "block",
+  "precondition": true,
+  "needs": [
+    "mesh"
+  ],
+  "legalKind": "interval",
+  "origin": {
+    "project": "OGEE R16-P 2026-08",
+    "date": "2026-08",
+    "what": "latch pull print export never cut its mortise; four parts shrunk in one pose only",
+    "knowledge": "knowledge:01-invariants#3mf-and-export",
+    "evidence": null
+  },
+  "status": "seed"
+}

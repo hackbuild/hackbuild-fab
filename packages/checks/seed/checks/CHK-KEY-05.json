@@ -1,0 +1,24 @@
+{
+  "id": "CHK-KEY-05",
+  "version": "1.0.1",
+  "title": "click spring tip lands over each floor pad by at least 0.5 past the snap",
+  "appliesTo": {
+    "level": "feature",
+    "kinds": [
+      "contact"
+    ]
+  },
+  "severity": "block",
+  "needs": [
+    "sim"
+  ],
+  "legalKind": "interval",
+  "origin": {
+    "project": "PIP 2026-09",
+    "date": "2026-09",
+    "what": "pads split by 0.60",
+    "knowledge": "knowledge:designs/pip#52-click-spring-key-canon-click-spring-key",
+    "evidence": null
+  },
+  "status": "seed"
+}

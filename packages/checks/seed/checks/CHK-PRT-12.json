@@ -1,0 +1,25 @@
+{
+  "id": "CHK-PRT-12",
+  "version": "2.0.1",
+  "title": "bed contact face excluded from overhang",
+  "appliesTo": {
+    "level": "part"
+  },
+  "severity": "warn",
+  "needs": [
+    "mesh"
+  ],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "PAWL 2026-07",
+    "date": "2026-07",
+    "what": "flat cover read 41.7% overhang",
+    "numbers": {
+      "overhangPctFlatCover": 41.7,
+      "qualifier": "computed by PAWL fdm.py with the bed contact faces counted (knowledge/designs/pawl.md 5.8)"
+    },
+    "knowledge": "knowledge:designs/pawl#58-checkers-fsrc",
+    "evidence": null
+  },
+  "status": "seed"
+}

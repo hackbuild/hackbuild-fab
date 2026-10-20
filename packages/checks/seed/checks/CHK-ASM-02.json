@@ -1,0 +1,33 @@
+{
+  "id": "CHK-ASM-02",
+  "version": "1.0.1",
+  "title": "every part can reach its position past parts installed before it",
+  "appliesTo": {
+    "level": "assembly"
+  },
+  "severity": "block",
+  "needs": [
+    "mesh",
+    "sim"
+  ],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "OGEE R16-P 2026-08",
+    "date": "2026-08",
+    "what": "fused rod and cap made the face unassemblable",
+    "knowledge": "knowledge:01-invariants#assembly-and-reach",
+    "evidence": null,
+    "also": [
+      {
+        "project": "BUCK 2026-10-06",
+        "date": "2026-10-06",
+        "what": "the jaw's servo stub pocket, horn groove and screw head pocket are swept along the 135 deg insertion path, checked by intersection volume at 1.5, 4, 8, 14 and 22 mm of travel; every BUCK check reads 0",
+        "numbers": {
+          "qualifier": "measured 2026-10-06 on the buck and stag presets (CHECKS.md 7.7)"
+        },
+        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/buck/files/src/engine.js"
+      }
+    ]
+  },
+  "status": "seed"
+}

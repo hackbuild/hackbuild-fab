@@ -1,0 +1,29 @@
+{
+  "id": "CHK-BRD-02",
+  "version": "1.0.0",
+  "title": "drill inside its own pad with margin",
+  "appliesTo": {
+    "level": "feature",
+    "kinds": [
+      "pad"
+    ]
+  },
+  "severity": "block",
+  "needs": [
+    "board"
+  ],
+  "legalKind": "interval",
+  "origin": {
+    "project": "SPINDLE R1 2026-08",
+    "date": "2026-08",
+    "what": "drilled at pad centre, row spacing 17.5 not 15.24",
+    "numbers": {
+      "drilledRowMm": 17.5,
+      "moduleRowMm": 15.24,
+      "qualifier": "computed: drilling at the pad centre against the module row (knowledge/kernels/board-pcb.md; knowledge/designs/spindle.md section 6)"
+    },
+    "knowledge": "knowledge:kernels/board-pcb#drill-position-is-not-pad-centre",
+    "evidence": null
+  },
+  "status": "seed"
+}

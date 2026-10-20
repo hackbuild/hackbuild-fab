@@ -1,0 +1,21 @@
+{
+  "id": "CHK-3MF-06",
+  "version": "2.0.0",
+  "title": "every component p:path resolves to a model part in the package, other than the root model, and the referenced object id exists in that part",
+  "appliesTo": {
+    "level": "artifact"
+  },
+  "severity": "block",
+  "needs": [
+    "3mf"
+  ],
+  "legalKind": "boolean",
+  "origin": {
+    "project": "CASK 2026-09",
+    "date": "2026-09",
+    "what": "self-referential p:path never resolved; object loaded with no volumes; empty plate, no error",
+    "knowledge": "knowledge:kernels/3mf-dialect#ppath-on-a-root-component-the-empty-plate-bug",
+    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-cases/cask/cask_cap_hackbuild.3mf"
+  },
+  "status": "seed"
+}
