@@ -62,7 +62,7 @@ function num(metrics: readonly Metric[], id: string): number {
  * The objects the writer put on the plate, one row per object and slot,
  * each part named by its body id (the writer prefixes the slot label).
  */
-function plateRows(xml: string, labels: ReadonlyMap<number, string>): string[] {
+export function plateRows(xml: string, labels: ReadonlyMap<number, string>): string[] {
   const meta = (s: string, key: string): string => new RegExp(`<metadata key="${key}" value="([^"]*)"/>`).exec(s)?.[1] ?? "";
   return [...xml.matchAll(/<object id="\d+">([\s\S]*?)<\/object>/g)].flatMap((o) => {
     const name = meta(o[1]!.replace(/<part [\s\S]*?<\/part>/g, ""), "name");

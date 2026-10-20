@@ -7,14 +7,17 @@
 // report golden, and the parity goldens are rerun without accept off the
 // pinned epoch.
 
-import { readFileSync } from "node:fs";
+import { createHash } from "node:crypto";
+import { readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import JSZip from "jszip";
 import { beforeAll, describe, expect, test } from "vitest";
 import type { Metric } from "@hackbuild/spec";
 import { createProfileLookup } from "@hackbuild/profile";
-import { buildPart, loadDesign, resolveParams, type Built, type Design } from "../../../../../core/src/commands/build.js";
+import { buildPart, export3mf, loadDesign, resolveParams, type Built, type Design } from "../../../../../core/src/commands/build.js";
 import { runParity } from "../../../../../core/src/commands/parity.js";
+import { COUPON_END, COUPON_START, between, couponCard, splice } from "./card";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, "..", "..", "..", "..", "..");
@@ -96,5 +99,42 @@ describe("access switch coupon", () => {
     } finally {
       if (saved === undefined) delete process.env["SOURCE_DATE_EPOCH"]; else process.env["SOURCE_DATE_EPOCH"] = saved;
     }
+  });
+});
+
+// The coupon card (R1-flagship-access-switch-11): the COUPON.md block
+// equals the card written from this build and the 3MF bytes the writer
+// makes in process at the pinned epoch, so a coupon change that leaves the
+// owner checklist behind fails here. HBF_ACCEPT=1 rewrites the block. No
+// export is run.
+describe("access switch coupon card", () => {
+  const PRESET = "default";
+  const CHECKLIST = path.join(ROOT, "reference/keys/access-switch/COUPON.md");
+
+  test("the card's preset resolves to the values the build ran, at the pinned epoch", () => {
+    expect(resolveParams(design.chase, undefined, PRESET)).toEqual(resolveParams(design.chase, undefined, undefined));
+    expect(built.sourceDateEpoch).toBe(315532800);
+  });
+
+  test("COUPON.md coupon card block equals this build", { timeout: 120_000 }, async () => {
+    const pkg = await export3mf(built);
+    const zip = await JSZip.loadAsync(pkg.bytes);
+    const settings = JSON.parse(await zip.file("Metadata/project_settings.config")!.async("string")) as Record<string, unknown>;
+    const machine = design.ws.tables.machines.find((m) => m.id === built.part.machine)!;
+    const preset = machine.presets[0]!;
+    const card = couponCard({
+      chase: design.chase, preset: PRESET, metrics: built.part.metrics,
+      buildHash: built.part.buildHash, artifactHash: pkg.artifactHash, bytes: pkg.bytes.length,
+      fileSha256: createHash("sha256").update(pkg.bytes).digest("hex"),
+      sourceDateEpoch: built.sourceDateEpoch, settings,
+      modelSettings: await zip.file("Metadata/model_settings.config")!.async("string"),
+      profilePreset: { id: preset.id, layer: preset.layer, firstLayer: preset.firstLayer },
+    });
+    if (process.env["HBF_ACCEPT"] === "1") writeFileSync(CHECKLIST, splice(readFileSync(CHECKLIST, "utf8"), COUPON_START, COUPON_END, card));
+    expect(between(readFileSync(CHECKLIST, "utf8"), COUPON_START, COUPON_END)).toBe(card);
+    // The rung table holds the sweep's peaks, an independent source.
+    for (const [i, n] of SWEEP_N.entries()) expect(card).toMatch(new RegExp(`\\| ${i + 1} \\| ${i + 1} \\| [0-9.]+ \\| ${n.replace(".", "\\.")} \\|`));
+    // The one-line beams are flagged for thin-wall handling (R1-flagship-access-switch-07).
+    expect(card).toContain("detect_thin_wall 1");
   });
 });

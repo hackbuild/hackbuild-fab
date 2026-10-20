@@ -269,4 +269,20 @@ Use policy: USE.md at the repository root (plan v9 section 5); the file is not w
 <!-- end R1-flagship-access-switch-09 -->
 
 <!-- R1-flagship-access-switch-11: coupon result and owner checklist -->
+
+## Coupon
+
+Every force in this README is computed until the block below holds a
+coupon reading. The print card above is for the switch; the spring
+coupon (`coupon/`) has its own card and the owner's steps in
+[COUPON.md](COUPON.md): export, Flash Studio checks, print, then per rung
+calipers on the beam, a kitchen scale press, coins in a cup and one word
+(too soft, right or too stiff). The rung marked right sets the default
+beam `spring.t`; a person enters the reading, and an agent only proposes
+the change it implies.
+
+### Coupon result
+
+- none yet
+
 <!-- end R1-flagship-access-switch-11 -->
