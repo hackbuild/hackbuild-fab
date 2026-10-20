@@ -420,6 +420,9 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-364 | kernel tests join the root run instead of a root test.projects split | decided | Testing, docs, milestones, registry |
 | D-365 | three packages/ui test files now run only under the node environment | decided | Testing, docs, milestones, registry |
 | D-366 | unit keeps setup-uv and loses its owner-files report step | decided | Testing, docs, milestones, registry |
+| D-367 | worstOverlap builds every group's Manifold before the bounds prefilter | decided | Kernel, geometry |
+| D-368 | overlap.ts builds its own manifolds instead of reusing stages.ts toManifold | decided | Kernel, geometry |
+| D-369 | mesh.overlap lineage points at the original inlay validate_3mf.py | decided | Kernel, geometry |
 
 ## House rules and process
 
@@ -4501,6 +4504,39 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. The `unit` job no longer prints the owner-files not-run list, since it runs no vitest. `setup-uv` stays, and `SPAWNS_UV` in `.github/scripts/ci-workflow.test.mjs` points `unit` at its `node --test` step. |
 | Rationale | `tools/test/pytest.test.mjs` spawns uv. The not-run report belongs to the job that applies the excludes, which is exit-a. |
 | Evidence | `tools/test/pytest.test.mjs` line 14 calls `spawnSync("uv", ...)`. `node --test .github/scripts/ci-workflow.test.mjs` passes 16 of 16 on merged main, and fails 1 of 16 with an `npm test --workspaces` step put back into unit (measured, 2026-10-20). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-367 worstOverlap builds every group's Manifold before the bounds prefilter
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `worstOverlap` in `packages/mesh/src/overlap.ts` builds a Manifold for every group first, so a group the kernel refuses throws E_KERNEL with path `groups/<i>` even when its bounds touch no other group. |
+| Rationale | Building manifolds only for pairs that pass the bounds prefilter would leave a broken group far from the others unbuilt, and it would read as 0 overlap, a pass. A refusal must be a fail. The Python version collects such groups in its broken list instead of skipping them. |
+| Evidence | The test that refuses an open group in `packages/mesh/test/overlap.test.ts` places that group at x 50, apart from the other group, and expects E_KERNEL at path `groups/1`; it passes on merged main (measured, 2026-10-20). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-368 overlap.ts builds its own manifolds instead of reusing stages.ts toManifold
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `packages/mesh/src/overlap.ts` builds its manifolds with a try/catch around the constructor, the way `packages/checks/src/capture.ts` `interferenceMm3` does, instead of calling `toManifold` from `packages/mesh/src/stages.ts`. This is a third copy of the mesh to Manifold step; merging the three is a followup. |
+| Rationale | `toManifold` does not catch the constructor throw that manifold-3d 3.5.4 gives for an open mesh, so that case would escape as a ManifoldError instead of E_KERNEL. Its hint also names a route shell and the declaration, which is wrong for an imported group. |
+| Evidence | `packages/checks/src/capture.ts` lines 54 to 66 wrap `new wasm.Manifold(mesh)` in a try/catch; `toManifold` in `packages/mesh/src/stages.ts` does not (read, 2026-10-20). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-369 mesh.overlap lineage points at the original inlay validate_3mf.py
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `lineage/mesh.overlap.json` names `fab-knowledge:originals/inlay` `validate_3mf.py` lines 257 to 269 as the canonical source. The bounds prefilter and the max over pairs, taken from `_worst_pair` in the repo copy `tools/py/validate_3mf.py` lines 809 to 830, are listed as fixes. |
+| Rationale | `_worst_pair` exists only in the modified repo copy, not in the original, and D-222 says to port from the original. |
+| Evidence | A grep for `_worst_pair` under `fab-knowledge/originals` finds nothing; the original's overlap loop is at lines 257 to 269, sha256 cdc2c7d5 recorded in the row (read, 2026-10-20). |
 | Supersedes | new |
 | Milestone | none |
 
