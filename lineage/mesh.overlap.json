@@ -1,0 +1,12 @@
+[
+  {
+    "id": "mesh.overlap/inlay-validate-3mf",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/inlay/files/skill/print-forge/scripts/validate_3mf.py",
+    "sha256": "cdc2c7d5fc170240e36e1e52bcdd3d5af03036607c242a8e48b9c0d00896aecf",
+    "fixes": [
+      "the --overlap block (validate_3mf.py lines 257 to 269) intersected every pair of parts with manifold3d and failed each over 1e-3 mm3; ported to packages/mesh/src/overlap.ts as worstOverlap over named MeshData groups, with the bounds prefilter and the max over pairs that tools/py/validate_3mf.py _worst_pair (lines 809 to 830) added, and a group the kernel refuses thrown as E_KERNEL instead of left out"
+    ],
+    "dest": "packages/mesh/src/overlap.ts"
+  }
+]
