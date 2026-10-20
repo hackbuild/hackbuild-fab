@@ -12,7 +12,7 @@ BLOCKS seat rows); the export gate refuses every one of them.
 ## Where a row lives
 
 - `<kind>/<id>.json`, or `<kind>/<id>/row.json` when files sit beside it.
-- Kind folders: `mcu`, `modules`, `actuators`, `displays`.
+- Kind folders: `mcu`, `modules`, `actuators`, `displays`, `connectors`.
 - `mcu-pins.json` is the M05 threshold table (D-076); MCU rows point at it by
   id and never copy a threshold.
 

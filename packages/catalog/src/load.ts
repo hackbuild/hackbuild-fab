@@ -24,7 +24,7 @@ import { mcuPinRow, type McuPinRow } from "./mcu.js";
 export type CatalogFiles = ReadonlyMap<string, Uint8Array>;
 
 /** Folders that hold rows, one per PartRow kind family. */
-export const ROW_DIRS = ["mcu", "modules", "actuators", "displays"] as const;
+export const ROW_DIRS = ["mcu", "modules", "actuators", "displays", "connectors"] as const;
 
 const ROW_FILE = new RegExp(`^(?:${ROW_DIRS.join("|")})/(?:[a-z0-9][a-z0-9-]*\\.json|[a-z0-9][a-z0-9-]*/row\\.json)$`);
 
