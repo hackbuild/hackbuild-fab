@@ -9,16 +9,19 @@
 // from the committed footprint, and the closed path resistance sums the
 // archetype's readouts and the leads, held to sectionResistance.
 
-import { readFileSync } from "node:fs";
+import { createHash } from "node:crypto";
+import { readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import JSZip from "jszip";
 import { beforeAll, describe, expect, test } from "vitest";
 import type { Feature, Metric } from "@hackbuild/spec";
 import { KICAD_RESOLVERS, loadCatalog } from "@hackbuild/catalog";
 import { createProfileLookup, sectionResistance } from "@hackbuild/profile";
 import { PJ398SM_BODY, PJ398SM_PADS, toWall } from "../jack";
-import { buildPart, loadDesign, resolveParams, type Built, type Design } from "../../../../core/src/commands/build.js";
+import { buildPart, export3mf, loadDesign, resolveParams, type Built, type Design } from "../../../../core/src/commands/build.js";
 import { runParity } from "../../../../core/src/commands/parity.js";
+import { CARD_END, CARD_START, between, printCard, splice } from "./card";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, "..", "..", "..", "..");
@@ -202,5 +205,40 @@ describe("access switch", () => {
     } finally {
       if (saved === undefined) delete process.env["SOURCE_DATE_EPOCH"]; else process.env["SOURCE_DATE_EPOCH"] = saved;
     }
+  });
+});
+
+// The print card (R1-flagship-access-switch-09): the README block equals
+// the card written from this build and the 3MF bytes the writer makes in
+// process at the pinned epoch, so a geometry change that leaves the card
+// behind fails here. HBF_ACCEPT=1 rewrites the block. No export is run.
+describe("access switch print card", () => {
+  const PRESET = "default";
+  const README = path.join(ROOT, REF, "README.md");
+
+  test("the card's preset resolves to the values the build ran, at the pinned epoch", () => {
+    expect(resolveParams(design.chase, undefined, PRESET)).toEqual(resolveParams(design.chase, undefined, undefined));
+    expect(built.sourceDateEpoch).toBe(315532800);
+  });
+
+  test("README print card block equals this build", { timeout: 120_000 }, async () => {
+    const pkg = await export3mf(built);
+    const zip = await JSZip.loadAsync(pkg.bytes);
+    const settings = JSON.parse(await zip.file("Metadata/project_settings.config")!.async("string")) as Record<string, unknown>;
+    const machine = design.ws.tables.machines.find((m) => m.id === built.part.machine)!;
+    const preset = machine.presets[0]!;
+    const card = printCard({
+      chase: design.chase, preset: PRESET, draft: built.draft, metrics: built.part.metrics,
+      buildHash: built.part.buildHash, artifactHash: pkg.artifactHash, bytes: pkg.bytes.length,
+      fileSha256: createHash("sha256").update(pkg.bytes).digest("hex"),
+      sourceDateEpoch: built.sourceDateEpoch, settings,
+      modelSettings: await zip.file("Metadata/model_settings.config")!.async("string"),
+      profilePreset: { id: preset.id, layer: preset.layer, firstLayer: preset.firstLayer },
+    });
+    if (process.env["HBF_ACCEPT"] === "1") writeFileSync(README, splice(readFileSync(README, "utf8"), CARD_START, CARD_END, card));
+    expect(between(readFileSync(README, "utf8"), CARD_START, CARD_END)).toBe(card);
+    // The card names the jack lugs on the nets the build wires them to.
+    expect(card).toContain("| T | tip | KEY | conductor.socketT |");
+    expect(card).toContain("| S | sleeve | GND | conductor.socketS |");
   });
 });

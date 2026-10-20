@@ -41,7 +41,7 @@ const list = (v: unknown, i: number): string => (Array.isArray(v) ? String(v[i] 
  * the GUI does is open until the owner opens the export in it, so the card
  * asks the person to confirm each one in the slicer.
  */
-function overrideLines(xml: string): string[] {
+export function overrideLines(xml: string): string[] {
   const kv = (s: string): [string, string][] => [...s.matchAll(/<metadata key="([^"]+)" value="([^"]*)"\/>/g)].map((m) => [m[1]!, m[2]!]);
   const plain = new Set(["name", "extruder", "matrix", "source_file", "source_object_id", "source_volume_id", "source_offset_x", "source_offset_y", "source_offset_z"]);
   const out: string[] = [];

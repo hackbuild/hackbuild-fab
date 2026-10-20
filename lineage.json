@@ -4366,6 +4366,16 @@
     "dest": "designs/pip/legacy/original/print-card.txt"
   },
   {
+    "id": "pip.print-card/haft-9-access-switch-card",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/print-card.txt",
+    "sha256": "4e7f7d22f6a9de7a804a226fba26ce50146e0db309fb2bcedc27d7d9f4b67ca6",
+    "fixes": [
+      "the click spring and cap assembly steps (print-card.txt lines 36 to 37: spring on edge, grey tip down toward the floor pads, block groove over the floor rib, wiggle until it seats, upside down it will not click; cap flange down onto the stem) ported to the assembly list of reference/keys/access-switch/test/card.ts, with the pip.md 5.2 lesson that an arch loose in its slot flattens (R1-flagship-access-switch-09)"
+    ],
+    "dest": "reference/keys/access-switch/test/card.ts"
+  },
+  {
     "id": "pip.print-card/pip-controller-b137deb",
     "kind": "copy",
     "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/print/print-card.txt",
