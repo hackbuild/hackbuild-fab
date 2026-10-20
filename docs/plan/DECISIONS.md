@@ -356,6 +356,10 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-300 | Click curve samples interpolated linearly between FE load steps | decided | Sim, motion, nest, inlay, tools |
 | D-301 | Click-spring reference test asserts no curve metric at chase defaults | decided | Testing, docs, milestones, registry |
 | D-302 | Core click-curve test added outside the Writes line | decided | Testing, docs, milestones, registry |
+| D-303 | Lineage fragments are one JSON array per subject, sorted by id on gather | decided | Testing, docs, milestones, registry |
+| D-304 | CLAUDE.md lineage bullet rewrapped over three lines | decided | Testing, docs, milestones, registry |
+| D-305 | The cross-file duplicate lineage test accepts either refusal | decided | Testing, docs, milestones, registry |
+| D-306 | Counts drift committed in the R1-rails-registries-03 branch | decided | Testing, docs, milestones, registry |
 
 ## House rules and process
 
@@ -3733,6 +3737,50 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. `core/test/click-curve.test.ts` covers the `pts` fill in `simClickCurve` in `core/src/canon.ts`, checking all 57 load steps against the original's within 1e-5 (computed). |
 | Rationale | Tier rules stop archetypes tests from importing sim or core, so the archetype test alone never runs the real solver's `pts`. |
 | Evidence | `tools/tiers.mjs` applies its edge rules to test folders as well. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-303 Lineage fragments are one JSON array per subject, sorted by id on gather
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `lineage/<subject>.json` holds a JSON array of rows in the shape of `tools/lineage.schema.json`. `tools/gen/registries/lineage.mjs` sorts all rows by id when it gathers them into the root `lineage.json` and does not require a fragment to be sorted inside itself. The split wrote each fragment in its current id order. |
+| Rationale | Follows the R1-rails-registries-03 brief (lineage stays sorted by id) and keeps `tools/test/lineage.test.mjs` as the schema checker on the gathered file, so each check has one implementation. |
+| Evidence | `tools/gen/registries/lineage.mjs`; `git diff --exit-code lineage.json` clean after regeneration; `node tools/gen/registries.mjs --check` exit 0 on merged main (computed, 2026-10-20). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-304 CLAUDE.md lineage bullet rewrapped over three lines
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The brief scoped the CLAUDE.md edit to line 114. The new wording did not fit that line at the file's wrap width, so lines 114 to 116 of the same bullet were rewrapped (3 insertions, 2 deletions). No other line changed. |
+| Rationale | Keeps the file's line width without changing any other rule. |
+| Evidence | `git show 4c4c93b -- CLAUDE.md` |
+| Supersedes | new |
+| Milestone | none |
+
+### D-305 The cross-file duplicate lineage test accepts either refusal
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. While the subject rule holds, two fragments cannot hold the same id. The cross-file test in `tools/test/lineage-fragments.test.mjs` therefore asserts only that gather refuses and names the second file: the subject rule refuses first, and the duplicate rule refuses when the subject rule is removed. The duplicate rule itself is tested with an in-file duplicate. |
+| Rationale | The brief asks for a cross-file duplicate test. This keeps the test meaningful without a mutant that only one of the two rules can expose. |
+| Evidence | `tools/test/lineage-fragments.test.mjs` tests 5 and 6; deleting the duplicate check line in `tools/gen/registries/lineage.mjs` fails test 5, run by the builder and again by the integrator on merged main (measured, 2026-10-20). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-306 Counts drift committed in the R1-rails-registries-03 branch
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `node tools/counts.mjs` moved `docs/plan/counts.json` and the PLAN.md Appendix B row because D-295 to D-298 were on main without a counts run. The builder committed both in a separate commit, 0c1010e. PLAN.md is outside the brief's Writes line, but `tools/counts.mjs` writes it; it was not edited by hand. At merge both files conflicted with main's later counts; main's side was taken and `tools/counts.mjs` rerun, with no diff. |
+| Rationale | The task says to commit counts.json when it moves, and counts.mjs writes the PLAN.md table in the same run. |
+| Evidence | `git show 0c1010e`; merge d379850 |
 | Supersedes | new |
 | Milestone | none |
 
