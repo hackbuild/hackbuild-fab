@@ -93,3 +93,10 @@ decimal (brief finding 2). CHK-KEY-04 passes on each cell.
   kitchen scale pressing the cap is the other method.
 
 <!-- coupon card (R1-flagship-access-switch-11) -->
+
+## Card and checklist
+
+The coupon card (file, hash, slicer settings, rung table) and the owner's
+read steps live in [../COUPON.md](../COUPON.md), generated from this build
+by `test/card.ts`; `test/reference.test.ts` fails when the two disagree.
+The result goes in the switch README under "Coupon result".
