@@ -398,6 +398,8 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-342 | touched hook calls the tsc bin directly instead of npx --no-install | decided | Agent surface |
 | D-343 | projectFor ignores files that are not TypeScript | decided | Agent surface |
 | D-344 | touched hook accepts MultiEdit and resolves symlinks | decided | Agent surface |
+| D-345 | derived split into derived and derived:counts | decided | Testing, docs, milestones, registry |
+| D-346 | Builder branches do not regenerate counts.json | decided | Testing, docs, milestones, registry |
 
 ## House rules and process
 
@@ -4237,6 +4239,28 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. The touched-package type check hook acts on Edit, Write and MultiEdit. The edited path is resolved through symlinks before it is made relative to the git root. |
 | Rationale | `git rev-parse --show-toplevel` prints the resolved path (/private/var on macOS). Without resolving symlinks, temp-dir and symlinked worktrees would map to null. |
 | Evidence | The worktree-copy test and the hook spawn test in `tools/test/agent-hooks-touched.test.mjs` use `realpathSync(mkdtemp)` under /var/folders; 11 pass on merged main (measured). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-345 derived split into derived and derived:counts
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The `derived` script runs only `node tools/gen/registries.mjs --check`. A new `derived:counts` script runs `node tools/counts.mjs` and then `git diff --exit-code` on `docs/plan/counts.json` and `docs/plan/PLAN.md`, for the integrator after each merge and for CI on main. |
+| Rationale | Builder branches stop failing on counts drift that only the integrator can fix, since decisions land on main after each merge. |
+| Evidence | `package.json` scripts in commit 39491f1, merged to main; `node tools/gen/registries.mjs --check` reports 2 generators, 3 outputs, all fresh on merged main (measured). CI wiring for `derived:counts` is not changed yet. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-346 Builder branches do not regenerate counts.json
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. Builder branches skip `node tools/counts.mjs` and never commit `docs/plan/counts.json` or PLAN.md Appendix B, even where the generic done list asks for it. The integrator regenerates both after each merge and with each decision commit. Package tests compute their counts from the sources they already load, and the D-010 cross-check lives in `tools/test/counts.test.mjs`. |
+| Rationale | One writer for the generated counts removes the drift conflicts between parallel branches (see D-306). |
+| Evidence | `tools/counts.mjs` header lines 5 to 10 in commit 39491f1; `git grep counts.json packages/` has no hits; `node --test tools/test/counts.test.mjs` 9 pass, 0 fail on merged main (measured). |
 | Supersedes | new |
 | Milestone | none |
 
