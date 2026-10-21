@@ -659,6 +659,8 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-602 | Legacy adapter bundle shared in tools/hook/adapter-page.ts | decided | reach |
 | D-603 | Drive pad readout at the note size under 640 px | decided | reach |
 | D-604 | midi-pad drive targets, default preset and json export | decided | reach |
+| D-605 | PIP chase shape for release 1 | decided | reach |
+| D-606 | Metric record skips a chase whose build has not landed | decided | reach |
 
 ## House rules and process
 
@@ -7344,6 +7346,28 @@ Status: decided (delegated, R1-spike-01). The WASM run changes one value of the 
 | Decision | Taken by the agent under owner delegation on 2026-10-20. reference/keys/midi-pad build.ts emits `keys.<n>.travel` for n 1 to 4, copied from `flex-cone-key.<n-1>.key.travel`, and its ContactFn `contact` closes `flex-cone-key.<n-1>.contact.key` while key n is held. The chase gains preset `default` with empty params (the defaults are the worked example) and the json export the G-57 drive calls. The goldens were re-accepted at build 47b6df..ed. |
 | Rationale | The drive pad reads targets from a `metrics.<group>` prefix, which archetype metrics do not carry; one copy per key in the build gives the pad its targets without changing the archetype. The preset gives the welcome card and the virtual slice a name for the defaults. |
 | Evidence | `hbf parity reference/keys/midi-pad --accept`: only defHash moved, 107 mesh hashes and volumes equal to dc7800..a1, report.json and edit.json equal (computed, 2026-10-21); a mutant contact that closes nothing fails the reference test. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-605 PIP chase shape for release 1
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. designs/pip/chase.ts is kind single with four fixed button groups (left, face, menu, shoulder, field ids `<group>On`, `<group>Type` and so on) in place of the M09 fixture's list param; the stack, trace width, bleed, beam modulus, phys fold and RP2040-Zero dimensions are profile and catalog rows, never params; bezel pegs default off as the canonical haft (9) layout.js line 41 has it, and the worked example preset turns them on as pip-controller b137deb does; five legacy defaults off their slider step keep the default and take the largest step holding both (flexHs 0.08, clickBeam 0.01, clickWidth 0.08, clickFlangeT 0.04, cupH 0.12), and stickCapH starts its range at its 1.2 default under the 1.92 slider floor. |
+| Rationale | A list param carries one default per item field, so PIP's four different default groups would load as four left clusters at the origin; fixed groups keep every legacy default. Profile owns every physical number (RULES.md). The chase validator refuses a default off its step (G-09). |
+| Evidence | designs/pip/test/chase.test.ts: 16 pass, the defaults equal legacy layout.js defaults() through migrate/legacy.ts with only pegs differing, both example saves load with no unknown key and equal their presets; a key wait mutant of 200 us fails 3 tests and a flexHole default mutant fails 3 (computed, 2026-10-21). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-606 metric record skips a chase whose build has not landed
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. core/test/metric-record.test.ts holds a BUILD_PENDING list, today designs/pip, whose chases it does not build; a second test fails while any listed design has a build.ts, so R1-designs-reach-09 removes the entry when it lands designs/pip/build.ts. |
+| Rationale | The PIP chase (R1-designs-reach-08) lands before its build (R1-designs-reach-09), and metric-record builds every chase.ts in the tree; the ratchet keeps the skip to the one design and ends it with the build. |
+| Evidence | Without the entry `builds designs/pip` fails on the missing module; with it core vitest 1359 pass on the branch before rebase (computed, 2026-10-21). `hbf chase.validate designs/pip` reports the one error chase-ref/build-module. |
 | Supersedes | new |
 | Milestone | none |
 
