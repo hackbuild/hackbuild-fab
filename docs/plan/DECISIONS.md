@@ -681,6 +681,8 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-624 | PIP lands with CHK-KEY-05 misreading its flex contacts | decided | reach |
 | D-625 | PIP's release 1 build: what it ports and what it leaves | decided | reach |
 | D-626 | PIP's routed terminals take the stack's posts and discs | decided | reach |
+| D-627 | Harness moves to extract folders; upstream copies stay in legacy tools folders | decided | Testing, registry |
+| D-628 | Committed records keep their recorded paths; project.graph reads extract SHA256SUMS | decided | Testing, registry |
 
 ## House rules and process
 
@@ -7601,6 +7603,28 @@ Status: decided (delegated). The lead closed four reds from the wave 4 health ru
 | Decision | Taken by the agent under owner delegation on 2026-10-20. In designs/pip the router's terminals are the posts each archetype emits, but on a routed net the build drops the archetypes' own terminal posts and layer discs and takes the ones packages/copper emitTraceLayers emits with the layer regions, as reference/electrical/pip-buried-route does. The stack is then the original's union (model.js lines 43 and 50) and no piece is declared twice. |
 | Rationale | With the archetype discs kept and the emit given no terminals, a short stub's region lay inside a disc and was empty after partition; with the archetype posts kept beside the emitted discs, the stage 8 union of every body was refused (open edges 2, winding errors 4, computed) on the original's own route. The emitted posts build clean, as they do in pip-buried-route. |
 | Evidence | `hbf part.build designs/pip` E_KERNEL at /features/conductor.GND.l2.2/bodies, then at /bodies, before the change; 0 errors after (computed). designs/pip/test/build.test.ts holds the count of stack posts to PIP's terminal count and no archetype disc or post id in the draft. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-627 Harness moves to extract folders; upstream copies stay in legacy tools folders
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. R1-rails-public-07 moves fab's own harness out of the legacy trees with git mv, names kept: record and extraction scripts to `designs/<id>/extract/`, captured fixtures to `designs/<id>/extract/fixtures/` (the ogee16 proud-head set with its SHA256SUMS, the 22 sash runCheck fixtures), and the two fits.py stdout records to `reference/fit/ogee16-r16p/extract/`. A moved script names its legacy folder from the repo root (`legacyDir(id)` in `tools/legacy/record.mjs`, a ROOT join in the Python scripts). Six files the item 01 inventory classed harness by folder name stay: `designs/cotter/legacy/tools/hook_fit.py` and `designs/pip/legacy/tools/{build_bench.py,orca3mf.js,rastermesh.js}` are byte copies of originals (and the pip three are PIP bake inputs item 10 keeps), and `designs/pawl/legacy/records/{final_det,snap}.mjs` are byte copies of `fab-knowledge:evidence/x/pawlrun/` listed in pawl's SHA256SUMS. `tools/legacy/inventory.mjs` no longer classes by folder name, so the harness class is retired: those six class as original (4) and unmatched (2) and follow item 11. The brief's done grep therefore prints the four tools rows, which the inventory test pins. |
+| Rationale | The brief's reason for the move is that harness files are fab's code and not originals; moving a byte copy of an upstream tool into an extract folder would label upstream code as fab's and break the SHA256SUMS that list it. The folder rule was the only source of the misclass. |
+| Evidence | sha256 lookup of the 46 harness rows against fab-knowledge:originals found the four copies; the two pawl files hash equal to the evidence copies (measured). `node tools/legacy/inventory.mjs --write` with HBF_ORIGINALS set prints lineage 61, original 206, unmatched 143 over 410 rows (measured). Restoring a folder rule in `fixedClass` fails 3 of 4 legacy-inventory tests (measured). vitest nest 103, sim sash-sweep 30, motion 213 pass before and after the move, 0 skipped both times (measured). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-628 Committed records keep their recorded paths; project.graph reads extract SHA256SUMS
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. After the R1-rails-public-07 move, the committed records under `packages/*/records/` and `packages/sim/test/goldens/` keep the `command` and `dir` text of the run that wrote them (for example `node designs/ogee16/legacy/tools/extract-plate.mjs`); the moved scripts write the new path on their next `--write`. Profile constant sources, check seed evidence and the generated check pages that cite `designs/cotter/legacy/tools/hook_fit.py` are unchanged, since that file did not move. `legacyTrees` in `core/src/commands/project-graph.ts` walks `designs/<id>/extract` as well as `designs/<id>/legacy`, so a scene that reads the proud-head fixture keeps its links to it; `packages/project/test/fixtures/graph.jsonl` was rerecorded with HBF_ACCEPT_GRAPH=1. |
+| Rationale | A record states how it was made; editing its text by hand would be a hand edit of a generated file and would move its oracleRecord hash without a rerun. Without the extract walk the ogee16-cranks scene would lose its staleness links to the four fixture files it reads. |
+| Evidence | Rerecorded graph.jsonl differs in 11 lines: the ogee16-cranks and sash-slide scene source hashes (both files edited), the ogee16-cranks links renamed from legacy to extract paths at the same hashAtLink, and the proud-head links dropped from eight records and the ogee16-printed scene that named only the whole ogee16 legacy tree; no hbf://build hash moved (computed). The node record scripts and the four ogee16 Python record scripts exit 0 in compare mode from their new place (measured). |
 | Supersedes | new |
 | Milestone | none |
 
