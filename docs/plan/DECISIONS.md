@@ -699,6 +699,9 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-642 | Package, core and reference tests read plan cards through plan-root | decided | tooling |
 | D-643 | A refused build keeps the last good model; range-end kernel faults go to the owner | decided | UI |
 | D-644 | A refusal names the fields changed from the last good build and closes every export | decided | UI |
+| D-645 | Held legacy copies are inventory rows with an archive id; SHA256SUMS keeps two columns | decided | tooling |
+| D-646 | Legacy pages the smoke report names and the copper oracles stay tracked | decided | tooling |
+| D-647 | The ogee16 record scripts read held copies by repo path | decided | tooling |
 
 ## House rules and process
 
@@ -7817,6 +7820,39 @@ Status: decided (delegated). The lead closed four reds from the wave 4 health ru
 | Decision | Taken by the agent under owner delegation on 2026-10-20. R1-fix-26 lands D-643 in packages/ui-core: the bench core keeps a refusal record (rev, code, hint, refused state, last good state) beside the kept result, and the fields a refusal names are those whose value differs from the last good build, read against the chase params, since a BENCH.state write passes loadDesign and names no field. While the current rev is refused every export, the free json included, is closed with one reason line, in BENCH.exportBytes and in the exports panel. spec/hook.ts settled() is left as written: it still rejects on a refused build, so gold G-10 and G-15 on a bench whose range end refuses stop there. |
 | Rationale | A diff against the drawn model names what the person changed even when the write came through the hook or a loaded file. Closing json keeps one gate rule and matches the core, whose ensureMesh already throws for a refused rev. Changing settled() would change the BenchHook contract and the gold rules, which the brief forbids. |
 | Evidence | packages/ui-core/test/bench/refusal.test.ts (a clear-the-scene mutant fails it); tools/smoke/refused.spec.ts on a TOGGLE bake at minGap 0.8 (computed, 2026-10-21); gold G-10 and G-15 on TOGGLE fail at tools/smoke/gold/gold.ts hookSettled with the E_KERNEL union refusal, and pass on flex-pair and blocks. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-645 Held legacy copies are inventory rows with an archive id; SHA256SUMS keeps two columns
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. R1-rails-public-11 records each held copy (a file a SHA256SUMS under designs/<id>/legacy lists and git does not track) as a `where: private` row of tools/legacy/inventory.json with sha256, bytes, class and its archive id: the original when fab-knowledge:originals holds the bytes, else `fab-knowledge:originals/_legacy/<repo path>`, the parking folder the classing lookup skips. The rows cover the copies held before this item too; the nine of those the originals lack were parked from the owner checkout's ignored copies, sha256 checked. SHA256SUMS keeps its two-column form and each touched legacy README points to the inventory row, where the brief asked for the id beside each SHA256SUMS line. The ogee16 legacy poses/ and records/ files, fab's own export_poses output that item 08 copied to packages/sim/scenes/ogee16-poses, are deleted with no row (parked all the same). |
+| Rationale | tools/legacy/held.mjs, core/src/commands/project-graph.ts parseSums, tools/test/m10-legacy.test.mjs, the ogee16 record scripts and `shasum -a 256 -c` all read two columns; a third column would break each. The inventory already carries the originals id per row, so one record holds it. A held row with no archive copy is refused at --write, so no copy leaves git unrecorded. |
+| Evidence | inventory --write with HBF_ORIGINALS: 502 rows, 369 private, 129 parked (computed 2026-10-21); every copied file sha256 equal after copy (133 of 133); legacy-inventory.test.mjs fixture case refuses an unparked held row and fails when SHA256SUMS drops it; a mutant that skips the parked lookup fails it. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-646 Legacy pages the smoke report names and the copper oracles stay tracked
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. R1-rails-public-11 keeps designs/cotter/legacy/cotter.html, designs/knuckle/legacy/knuckle.html and designs/tenon/legacy/tenon.html in git, since tools/smoke/legacy-report.spec.ts in the hosted smoke job requires them (NAMED), and keeps every reference/copper/*/legacy file, since reference/copper/_harness/family.ts and core/test/surface-parity.test.ts read the geometry json, the 2026-10-04 run text and splice-copper.svg there; the inventory finds neither reader by text. reference/fit/ogee16-r16p/legacy/fits_golden.py, fab's own golden writer that item 07 missed, moves to reference/fit/ogee16-r16p/extract/ instead of the archive. |
+| Rationale | The brief moves only copies whose readers are converted; these readers are not, and converting the smoke report or the copper parity jobs is outside the item. A golden writer is harness code and stays public with its golden. |
+| Evidence | tools/smoke/legacy-report.spec.ts line 23; reference/copper/_harness/family.ts lines 87 and 127; core/test/surface-parity.test.ts line 58. Tracked legacy size 42456 KB before, 10356 KB after (du -ck over the inventory globs, measured 2026-10-21; the brief's baseline 125460 KB). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-647 The ogee16 record scripts read held copies by repo path
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. tools/py/legacy_record.py gains legacy_file and legacy_dir: a designs/<id>/legacy path resolves to the checkout's copy when one is on disk, else to the archive copy its inventory row names, through hbf_archives.local_source; finish() keys each input by the repo path, so the committed records keep their input keys. connect-record.py, cut-record.py, footprint-record.py and kin-record.py under designs/ogee16/extract read through them, and a script that imports from the archive writes no __pycache__ there. |
+| Rationale | These four scripts were the last code readers of designs/ogee16/legacy (the item 08 done grep misses a ROOT join). Keeping the keys means no record is rewritten, the same route D-641 took for tools/legacy/record.mjs. |
+| Evidence | All four exit 0 against the committed records with the legacy folder absent and HBF_ORIGINALS set (computed 2026-10-21, same numbers as on main: 231 rings, 183 pieces on 3 sheets, 128 placements 0 mismatches); a mutant that keys inputs by local path fails kin-record.py. |
 | Supersedes | new |
 | Milestone | none |
 
