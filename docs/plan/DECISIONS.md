@@ -703,6 +703,7 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-646 | Legacy pages the smoke report names and the copper oracles stay tracked | decided | tooling |
 | D-647 | The ogee16 record scripts read held copies by repo path | decided | tooling |
 | D-648 | Plan process files leave the repo for the plan archive | decided | tooling |
+| D-649 | The TOGGLE bench lands with gold G-10 and G-15 held at combined range-end kernel refusals | decided | UI |
 
 ## House rules and process
 
@@ -7865,6 +7866,17 @@ Status: decided (delegated). The lead closed four reds from the wave 4 health ru
 | Decision | Taken by the agent under owner delegation on 2026-10-20. The milestone cards, MILESTONES.md, RISKS.md and extractions.md move from `docs/plan/` to `fab-knowledge:plan-archive/` and are removed from git. CLAUDE.md and the CHANGELOG.md header point at the archive (the root README named none, so the CHANGELOG line is the pointer fixed). The `docs/plan/**` lint-voice allow row stays for the REPOS.md hook text it still covers. `tools/lint-plan-types.mjs` reads `docs/plan/milestones` only when present, as its registry generator already did, and `tools/reports/plan-types.txt` is regenerated. The `docs/plan` branch of `planRoot` stays as a plan-root default; `tools/test/plan-root.test.mjs` now expects the sibling archive when HBF_PLAN is unset. Provenance strings in data that cite a card path (profile constants, sim scenes, a circuit goldens note) stay as citations, as in D-642. Earlier decision records that cite card paths stay as written. |
 | Rationale | PLAN.md section 5 bullet 1 moves the plan process files out of the public repo. A worktree outside the repo parent finds no sibling archive, so plan tests there skip as not run unless HBF_PLAN is set; the main checkout finds the archive by default. Retargeting data provenance would move fragment files and hashed scene data for no change in behaviour. |
 | Evidence | `git ls-files docs/plan` lists none of the moved files; the archive copies compare byte equal (diff -r and cmp, measured 2026-10-21). Node gate list in the worktree: 94 pass 37 skip unset, 127 pass 4 skip with HBF_PLAN on the archive (measured). A mutant that drops the existsSync filter makes `node tools/lint-plan-types.mjs --warn` exit 2 (measured). plan-types.txt moves from 14 hits over 37 docs to 9 over 15 (computed). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-649 The TOGGLE bench lands with gold G-10 and G-15 held at combined range-end kernel refusals
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. designs/toggle lands its bench (bench.ts with the tilt drive pad, the package-import bench.entry.ts of D-634, bake.json, page-build.ts) while gold G-10 and G-15 fail on it: both rules leave earlier fields at their range ends, and the build then refuses with E_KERNEL at the /bodies union (G-10 at collarD 20, G-15 at tilt 25). Under D-643 these range-end kernel faults stay unfixed in release 1 with no range narrowed, and under D-644 settled() still rejects on a refusal, so the two rules cannot pass on TOGGLE without contradicting either. No views.widgets drive.tilt entry is declared, since core chase.validate passes no widgetKinds and would refuse it with E_REF. R1-designs-reach-12. |
+| Rationale | The other 23 applicable bench-layer rules pass and the bench keeps the last good model with a named refusal (D-643), so holding the bench back would block it on an owner-held kernel fault it cannot fix. The fault is in combined ends: alone, collarD 20 and tilt 25 build in node with check fails and no E_KERNEL (wt/R1-fix-21-r1 sweep, computed). Reversible: the owner can unland the bench or take the kernel fix. |
+| Evidence | Gold on the bake sha256 721c7c6a (computed 2026-10-21): report --only on the bench-layer list gives 23 pass, 1 n/a (G-05), 2 fail (G-10, G-15); out-of-scope G-55 fails at commit to settled p90 5867 ms over the 4500 ms bound (measured). vitest designs/toggle 16 pass; inverting the tilt azimuth in build.ts contact fails the drive readout test (measured). Side-by-side shots in fab-knowledge:evidence/r1/side-by-side/toggle, no sideways scroll at 390 or 1280. |
 | Supersedes | new |
 | Milestone | none |
 
