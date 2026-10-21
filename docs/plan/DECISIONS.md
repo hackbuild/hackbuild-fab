@@ -647,6 +647,7 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-590 | The legacy inventory rows tracked files of the four globs only | decided | Testing, registry |
 | D-591 | Legacy readers are recorded per folder and found by text | decided | Testing, registry |
 | D-592 | Check evidence names archives by prefix and tests resolve them by variable | decided | Testing, registry |
+| D-593 | A private corpus row runs where its copy is present | decided | Testing, corpus |
 
 ## House rules and process
 
@@ -7214,6 +7215,17 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. Check seed evidence, the generated check pages and the CHK-PRT-12 golden name owner files in the `fab-knowledge:` and `fab-work-directory:` prefix form that `publishText()` in `tools/publish-paths.mjs` writes. `packages/checks/test/origin.test.ts` refuses an evidence path that starts with `/` or `~` and resolves each prefix through `HBF_FAB_KNOWLEDGE` or `HBF_FAB_WORK_DIRECTORY`, else the owner folder of that name under `Projects/hackbuild` in the home directory, checking existence only where that folder is present. `fdm_golden.py` reads fdm.py from `HBF_ORIGINALS`, else the owner originals, and records the prefix form. The item also covered `packages/checks/test/entered.test.ts` and `packages/checks/test/originals/pawl/` beyond its Writes line, because its done grep spans all of packages/checks. |
 | Rationale | One transform writes the publish form, so the seed matches every other published record. A variable per archive keeps the existence check on the owner host without a local path in tracked text, and mirrors `HBF_ORIGINALS`. |
 | Evidence | `git grep -c /Users/obsidian -- packages/checks docs/reference` prints nothing (measured); vitest packages/checks 604 passed, 1 skipped (measured); a seed row put back to the absolute form fails origin.test.ts (measured); the fdm_golden.py rerun changed only the source line of fdm-golden.json (measured). registryHash reads id and version only, so no hash moved. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-593 A private corpus row runs where its copy is present
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. Each row of `tools/corpus/3mf/manifest.json` carries `where`, `repo` or `private`. A private row resolves under `HBF_CORPUS`, else `originals/_corpus/` in the fab-knowledge archive (`HBF_FAB_KNOWLEDGE`, else the owner folder, as D-592 reads it). It runs where its own copy is present and is otherwise counted: `run.py` prints "N private rows not run" and skips the owner key-set and round-trip reports and the set asserts, which read every row; `packages/3mf/test/validate.test.ts` registers each absent row as a skipped case. A repo row whose copy is missing stays a failure in both. Manifest `source` fields and the regenerated `reports/owner-keysets.json` carry the `publishText()` form, and `run.py` resolves that form by archive variable, else under the owner's Projects/hackbuild folder. |
+| Rationale | The item's done case marks a row private with `HBF_CORPUS` on an empty directory that exists, so presence is judged per row, never per directory. Reports computed over a partial set would rewrite tracked reports with rows missing. Resolving archives the way D-592 does keeps one rule and lets the source drift check run from a worktree. |
+| Evidence | Full `run.py` run: 126 rows, 0 outside, exit 0, per-row JSON outcomes byte-equal to the run before the change (measured); `tools/py/test/test_corpus.py` 11 passed; marking tenon-known-good and its sameAs target private with an empty `HBF_CORPUS` prints "1 private rows not run" (test); mutants on the repo guard and the private skip each fail a test (measured); 126 of 126 publish-form sources resolve with matching sha256 (measured). |
 | Supersedes | new |
 | Milestone | none |
 
