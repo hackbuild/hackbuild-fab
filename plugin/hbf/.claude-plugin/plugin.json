@@ -1,0 +1,12 @@
+{
+  "name": "hbf",
+  "version": "0.0.0",
+  "description": "hbf for Claude Code: the hbf skill, the hbf MCP server for the hackbuild-fab workspace, and a hook that asks a person before every fabrication export",
+  "author": {
+    "name": "Moheeb Zara",
+    "email": "hackbuildvideo@gmail.com"
+  },
+  "repository": "https://github.com/hackbuild/hackbuild-fab",
+  "license": "MIT",
+  "keywords": ["3d-printing", "multicolour", "3mf", "printed-circuits", "mcp"]
+}

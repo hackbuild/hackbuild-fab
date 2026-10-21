@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "hbf": {
+      "command": "sh",
+      "args": ["-c", "cd \"$1\" && exec npx --no-install hbf mcp --workspace . --tools all", "hbf-mcp", "${CLAUDE_PROJECT_DIR}"]
+    }
+  }
+}

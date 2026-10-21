@@ -1,0 +1,4 @@
+# the owner archive copies tools/plugin/build.mjs writes when they are on disk (D-576)
+skills/hbf/references/archive/
+# the root .gitignore drops .mcp.json for host configs; this one is the plugin server
+!.mcp.json

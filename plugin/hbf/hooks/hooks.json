@@ -1,0 +1,12 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "mcp__plugin_hbf_hbf__export_run|mcp__hbf__export_run",
+        "hooks": [
+          { "type": "command", "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/ask-export.mjs\"", "timeout": 10 }
+        ]
+      }
+    ]
+  }
+}
