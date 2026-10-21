@@ -6,7 +6,7 @@
 // legacy SHA256SUMS. Scenario (a) edits the SLIDE fit band row in this
 // worker's loaded profile, the tables the build sandbox is handed, so no
 // file in the workspace changes. The packages/project stale scenarios read
-// packages/project/test/fixtures/graph.jsonl; the last describe here checks
+// packages/project/test/fixtures/graph.jsonl; the first describe here checks
 // that fixture still equals a fresh recording, and writes it when
 // HBF_ACCEPT_GRAPH=1 is set by a person who has read the diff.
 
@@ -65,12 +65,38 @@ async function staleView(store: Store, opts: { stale?: boolean; from?: string } 
   return (await runProjectGraph(opts, ctxOf(store))).result as GraphOut;
 }
 
+// Every reference is built once into one store, one test per reference so
+// each build has its own time limit; a single test over all of them timed
+// out at 300 s under load in full core runs (R1-fix-06). The links describe
+// reads the same store.
+const recorded = freshStore();
+const builtHash = new Map<string, string>();
+
+describe("the packages/project stale fixture equals a fresh recording of every reference", () => {
+  for (const ref of references()) {
+    it(`records ${ref}`, async () => {
+      // A wiring design builds no part, and part.build refuses it; its goldens are the drawing's.
+      if (isWiringDesign(await loadDesign(path.join(ROOT, ref), ROOT))) return;
+      builtHash.set(ref, await build(recorded, ref));
+    }, 120_000);
+  }
+
+  it("graph.jsonl holds the made lines of every reference build, report and workspace record", async () => {
+    const stored = foldLines(recorded.graphLines());
+    const lines = foldLines([...stored, ...workspaceLines(ROOT, new Set(stored.map((l) => l.item.id)))])
+      .sort((a, b) => a.item.id.localeCompare(b.item.id));
+    const text = encodeLines(lines);
+    if (process.env["HBF_ACCEPT_GRAPH"] === "1") writeFileSync(FIXTURE, text);
+    expect(text).toBe(readFileSync(FIXTURE, "utf8"));
+    expect(viewOf(await projectGraph(ROOT, recorded), { stale: true }).stale).toEqual([]);
+  }, 120_000);
+});
+
 describe("links written when a build is stored (card step 2)", () => {
-  let store: Store;
+  const store = recorded;
   let g: ProjectGraph;
   beforeAll(async () => {
-    store = freshStore();
-    expect(await build(store, OGEE)).toBe(golden(OGEE).buildHash);
+    expect(builtHash.get(OGEE)).toBe(golden(OGEE).buildHash);
     g = await projectGraph(ROOT, store);
   }, 120_000);
 
@@ -160,24 +186,6 @@ describe("scenario (a) through project.graph: the SLIDE fit band row edited", ()
     expect(await build(store, OGEE)).toBe(golden(OGEE).buildHash);
     expect((await staleView(store)).stale).toEqual([]);
   }, 120_000);
-});
-
-describe("the packages/project stale fixture equals a fresh recording of every reference", () => {
-  it("graph.jsonl holds the made lines of every reference build, report and workspace record", async () => {
-    const store = freshStore();
-    for (const ref of references()) {
-      // A wiring design builds no part, and part.build refuses it; its goldens are the drawing's.
-      if (isWiringDesign(await loadDesign(path.join(ROOT, ref), ROOT))) continue;
-      await build(store, ref);
-    }
-    const stored = foldLines(store.graphLines());
-    const lines = foldLines([...stored, ...workspaceLines(ROOT, new Set(stored.map((l) => l.item.id)))])
-      .sort((a, b) => a.item.id.localeCompare(b.item.id));
-    const text = encodeLines(lines);
-    if (process.env["HBF_ACCEPT_GRAPH"] === "1") writeFileSync(FIXTURE, text);
-    expect(text).toBe(readFileSync(FIXTURE, "utf8"));
-    expect(viewOf(await projectGraph(ROOT, store), { stale: true }).stale).toEqual([]);
-  }, 300_000);
 });
 
 describe("legacy copies held out of git (D-286)", () => {
