@@ -3400,7 +3400,7 @@
         "project": "COTTER 2026-09",
         "date": "2026-09",
         "what": "hook_fit.py proves each hook inserts by a best-first motion search over 7 hole and board pairs; a sharp bend traps",
-        "evidence": "designs/cotter/legacy/tools/hook_fit.py",
+        "evidence": "fab-knowledge:originals/cotter/files/cotter-src/tools/hook_fit.py",
         "also": [
           {
             "project": "BUCK 2026-10-06",
