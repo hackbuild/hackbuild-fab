@@ -1938,7 +1938,7 @@ fails on drift. Until then each row names the method that produced it.
 | registered mechanisms | 107 (candidate 88, typed 19) | def files under `packages/mechanisms/src/defs/` by their `status` |
 | registered archetypes | 109 (candidate 97, proven 11, unproven 1), plus 2 seed ids resolved by alias | def files under `packages/archetypes/src/defs/` by their `status`; alias rows of `packages/archetypes/src/aliases.ts` |
 | spec commands, MCP tools | 33, 19 | string-literal members of `CommandName` and `McpToolName` in `spec/commands.ts` |
-| knowledge files | 110, with 419,715 words | tracked files under `knowledge/` outside `knowledge/references/`; words as `wc -w` splits them |
+| knowledge files | 111, with 420,450 words | tracked files under `knowledge/` outside `knowledge/references/`; words as `wc -w` splits them |
 | reference words | 17,277 | tracked files under `knowledge/references/`; words as `wc -w` splits them |
 | hackbuild-ui `.hb-` classes | 203 in the stylesheet packages/ui installs (file:../../tools/vendor/hackbuild-ui-0.3.0-b3962ab.tgz) | distinct `.hb-` names in `dist/styles/hackbuild.css` of the `@virgilvox/hackbuild-ui` dependency of `packages/ui/package.json` |
 | handoff knowledge files | 26 files, 36,223 words | `cat hbf/knowledge/*.md hbf/knowledge/*/*.md \| wc -w`, after the M-1-T00 step 0 restore (the edited worked-sessions.md gave 36,451) (snapshot 2026-10-04, `tools/counts.external.json` handoff.knowledge) |

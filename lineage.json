@@ -2624,6 +2624,27 @@
     "dest": "knowledge/kernels/art-inlay.md"
   },
   {
+    "id": "knowledge.datasheet-forge/skills-20261006",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/skills-2026-10-06/datasheet-forge/SKILL.md",
+    "sha256": "c08b3fcc334bd561229102a544d607651969181d982580debe2414a127140d4a",
+    "fixes": [
+      "knowledge/references/board-forge/datasheet-intake.md (kept out of git, owner archive): step 1 and the ten non-negotiables, each citing its SKILL.md line, in place of the intake.md the package never shipped",
+      "knowledge/references/board-forge/datasheets.md (kept out of git): the build and scaffold script lines, the writing-style reference and the /mnt/skills paths replaced by what exists"
+    ],
+    "dest": null
+  },
+  {
+    "id": "knowledge.hardware-diagrams/skills-20261006",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/skills-2026-10-06/hardware-diagrams/SKILL.md",
+    "sha256": "f77d1c7b2385de3f79566c7d1e6a551a1878541c82fab8ec17836f68d46acf26",
+    "fixes": [
+      "knowledge/references/board-forge/doc-figures.md (kept out of git, owner archive): the trigger scope from the frontmatter description, the one part of the SKILL.md the folded copy lacked; the three references diffed equal apart from dashes"
+    ],
+    "dest": null
+  },
+  {
     "id": "knowledge.print-reality/hbf-seed",
     "kind": "copy",
     "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/plan-to-refine/handoff/hbf/seed/references/print-forge/print-reality.md",
@@ -2677,6 +2698,24 @@
     "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/skills-2026-10-06/print-forge/references/print-reality.md",
     "sha256": "4b042b60c3f0f3ad1553a2a3d381923e2d93a59ff23e0611c329ec5420e24b49",
     "fixes": [],
+    "dest": null
+  },
+  {
+    "id": "knowledge.sensor-surfaces/cricut-midi-seven",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/cricut-midi-seven/outputs/board-forge-changed/sensor-surfaces.md",
+    "sha256": "f6ddd778ac77a2f1a7cef9fdfd31e7f49e6f5d091338d313fd269f604dc4cfb6",
+    "fixes": [],
+    "dest": null
+  },
+  {
+    "id": "knowledge.sensor-surfaces/keyway-lessons",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/keyway/files/lessons/sensor-surfaces.md",
+    "sha256": "f6ddd778ac77a2f1a7cef9fdfd31e7f49e6f5d091338d313fd269f604dc4cfb6",
+    "fixes": [
+      "knowledge/references/board-forge/sensor-surfaces.md (kept out of git, owner archive): a provenance header, and the controller table bullet reworded for lint-voice"
+    ],
     "dest": null
   },
   {

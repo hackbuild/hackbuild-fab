@@ -1,0 +1,12 @@
+[
+  {
+    "id": "knowledge.hardware-diagrams/skills-20261006",
+    "kind": "canonical",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/skills-2026-10-06/hardware-diagrams/SKILL.md",
+    "sha256": "f77d1c7b2385de3f79566c7d1e6a551a1878541c82fab8ec17836f68d46acf26",
+    "fixes": [
+      "knowledge/references/board-forge/doc-figures.md (kept out of git, owner archive): the trigger scope from the frontmatter description, the one part of the SKILL.md the folded copy lacked; the three references diffed equal apart from dashes"
+    ],
+    "dest": null
+  }
+]
