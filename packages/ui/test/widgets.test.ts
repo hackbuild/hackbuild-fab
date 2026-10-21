@@ -18,7 +18,7 @@ describe("ui widget registry", () => {
   });
 
   it("a kind with no component refuses", () => {
-    expect(() => widgetComponent("view.light")).toThrow("widget kind view.light has no component");
+    expect(() => widgetComponent("view.none")).toThrow("widget kind view.none has no component");
   });
 
   it("widgetsOf reads the bench's widgets with the pad's contact", () => {

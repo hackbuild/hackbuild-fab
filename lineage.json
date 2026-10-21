@@ -3844,6 +3844,26 @@
     "dest": "packages/ui-core/src/viewer/scene.ts"
   },
   {
+    "id": "pip.bench-part3/ui-core-widget-light",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/bench/part3.js",
+    "sha256": "594ee29b0c4ff173c0c656a818c4ea626b76c25b31e977d2e25bb20525253e24",
+    "fixes": [
+      "the key light at (60, -90, 140) and 0.85 (part3.js line 16) is the rest pose of the view.light widget, packages/ui-core/src/widgets/light.ts: the widget keeps the key's distance and turns its position into an azimuth and elevation, and the viewer's keyLight moves that light (R1-engine-15)"
+    ],
+    "dest": "packages/ui-core/src/widgets/light.ts"
+  },
+  {
+    "id": "pip.bench-part3/ui-core-widget-netlens",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/bench/part3.js",
+    "sha256": "594ee29b0c4ff173c0c656a818c4ea626b76c25b31e977d2e25bb20525253e24",
+    "fixes": [
+      "the xray net colouring of VIEW.update (part3.js lines 219 to 225) as ported to packages/ui-core/src/viewer/scene.ts: the body to net rule moved to packages/ui-core/src/widgets/netlens.ts bodyNets, read by the scene and the view.netlens widget, and the lens mode lights one net and ghosts every other body (R1-engine-15)"
+    ],
+    "dest": "packages/ui-core/src/widgets/netlens.ts"
+  },
+  {
     "id": "pip.bench-part3/ui-curve-panel",
     "kind": "copy",
     "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/bench/part3.js",
@@ -6325,6 +6345,16 @@
       "ported to packages/checks/src/defs/sht/CHK-SHT-11.ts, as its header cites tumbler.html (packages/checks/src/defs/sht/CHK-SHT-11.ts line 4: \"(originals/tumbler/files/tumbler.html lines 322 to 331) splits an edge of\"); recorded by the M06 and M08 integration"
     ],
     "dest": "packages/mechanisms/src/constraints/cascade-slop.ts"
+  },
+  {
+    "id": "tumbler.bench/ui-core-widget-code",
+    "kind": "copy",
+    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/tumbler/files/tumbler.html",
+    "sha256": "fe14c0cd07d8b10f8852317942fb86aa6ae3e30d12b60af344890e68cbc47178",
+    "fixes": [
+      "the code digit buttons of buildParams (tumbler.html lines 1900 to 1907; a click takes a digit to (v + 1) mod (max + 1) at line 1906) ported to packages/ui-core/src/widgets/code.ts nextDigit and the wheels of packages/ui/src/widgets/DriveCode.vue; the verdict is tumbSolve (line 473, packages/mechanisms tumbler/modules.ts) at its SIMS inputs KEY and WRONG (line 1714), WRONG set when the dialed code differs from the cut code (R1-engine-15)"
+    ],
+    "dest": "packages/ui-core/src/widgets/code.ts"
   },
   {
     "id": "ui-anatomy/handoff",

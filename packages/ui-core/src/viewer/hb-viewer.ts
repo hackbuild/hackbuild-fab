@@ -70,6 +70,10 @@ export interface HbViewer extends HTMLElement {
   section: number | null;
   plate: boolean;
   focusIds: readonly string[];
+  /** The one net lit, every other body ghosted (view.netlens); null is off. */
+  lens: string | null;
+  /** Key light position, mm (view.light lightAt); null is PIP's key light. */
+  light: readonly [number, number, number] | null;
   paused: boolean;
   /** Frames a box, min then max, mm; sets the section when `sectionZ` is given. */
   frame(bbox: readonly [Vec3, Vec3], sectionZ?: number): void;
@@ -122,9 +126,10 @@ export function defineHbViewer(): void {
     #slots: Readonly<Record<number, string>> = {};
     #cam: CamName = "iso";
     #camMoved = false;
-    #modes: { explode: boolean; layers: boolean; xray: boolean; section: number | null; plate: boolean; focus: readonly string[] } = {
-      explode: false, layers: false, xray: false, section: null, plate: false, focus: [],
+    #modes: { explode: boolean; layers: boolean; xray: boolean; section: number | null; plate: boolean; focus: readonly string[]; lens: string | null } = {
+      explode: false, layers: false, xray: false, section: null, plate: false, focus: [], lens: null,
     };
+    #light: readonly [number, number, number] | null = null;
     #paused = false;
     #dirty = false;
     #frame = 0;
@@ -165,6 +170,7 @@ export function defineHbViewer(): void {
       r.setClearColor(0x000000, 0);
       this.#renderer = r;
       this.#stage = createStageScene(this.#owner);
+      this.#stage.keyLight(this.#light);
       this.#unbind = bindControls(this.#canvas, this.#orbit, {
         change: () => {
           this.#leavePreset();
@@ -266,6 +272,20 @@ export function defineHbViewer(): void {
     }
     set focusIds(ids: readonly string[]) {
       this.#setMode({ focus: [...ids] });
+    }
+    get lens(): string | null {
+      return this.#modes.lens;
+    }
+    set lens(net: string | null) {
+      this.#setMode({ lens: net });
+    }
+    get light(): readonly [number, number, number] | null {
+      return this.#light;
+    }
+    set light(at: readonly [number, number, number] | null) {
+      this.#light = at === null ? null : [at[0], at[1], at[2]];
+      this.#stage?.keyLight(this.#light);
+      this.requestRender();
     }
     get paused(): boolean {
       return this.#paused;
