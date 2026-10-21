@@ -663,6 +663,7 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-606 | Metric record skips a chase whose build has not landed | decided | reach |
 | D-607 | Spindle board goldens re-recorded for the archive-prefix pcb.py source | decided | Testing, boards |
 | D-608 | Remaining owner paths read through sourcePath, localSource and hbf_archives.py | decided | Testing, publish |
+| D-609 | Owner slicer saves move to the private corpus; rows record bytes | decided | Testing, publish |
 
 ## House rules and process
 
@@ -7392,6 +7393,17 @@ Status: decided (delegated, R1-spike-01). The WASM run changes one value of the 
 | Decision | Taken by the agent under owner delegation on 2026-10-20. Test reads guarded by `existsSync` (board cpl and kicad, geom fill's fixture, the three node tests under tools/test) use `sourcePath`; unguarded reads (core wiring-export, catalog actuator, gate and parts-audit) and the record scripts use `localSource`. Python reads go through a new `tools/py/hbf_archives.py` (`source_path`, `local_source`) with the same variables and defaults as `originals-root.ts`; pytest keeps its existing skips. `.github/scripts/owner-files.mjs` counts a `sourcePath(...)` result as an owner path, follows a template that starts with an owner name, and seeds a test's names with the owner paths a fixture one import down exports. As a result board cpl and kicad, geom fill and inlay lineage are listed as guarded and run in hosted CI with their skips; kicad.test reads its file only behind the guard. Dump scripts take their source in publish form and record it as given. `tools/counts.mjs --external` resolves each row through `sourcePath`. The two bare `fab-work-directory` rows of counts.external.json became `fab-work-directory:`. |
 | Rationale | `localSource` throws, so a guarded read through it would fail a hosted runner in place of skipping; `sourcePath` keeps the skip and owner-files still has to list the file. One Python helper avoids eleven copies of an environment lookup. Recording the source as given keeps the regenerated fixtures equal to the rewritten ones. |
 | Evidence | `owner-files.mjs report`: 29 excluded and 14 guarded files, was 31 and 10 (measured). Dropping the sourcePath rule fails 3 owner-files tests, dropping the fixture seed fails 1 (measured). The four new guarded files pass with the archive variables pointing nowhere: 46 pass, 10 skipped (measured). tenon-revolve-dump, toggle dump-route, harvest-presets and coffer-legacy reruns are byte equal to the rewritten files (measured). `counts.mjs --external` prints the same 10 ok rows before and after (measured). The three decision records D-592, D-594 and DECISIONS.md still hold the home path pattern inside their evidence commands; item 18 decides whether they stay allowed. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-609 Owner slicer saves move to the private corpus; rows record bytes
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. Every file under `tools/corpus/3mf/owner/`, `legacy/` and `boss/` (110 3MF and the knurl round trip sidecar) is copied to `fab-knowledge:originals/_corpus/` at the same relative path and removed from the repo; the 113 rows whose path sits there say `where: "private"`, including the tenon known-good row the brief did not name, because its copy sits under `owner/downloads/`. gold, known-bad and sprue stay as repo rows. Every copied manifest row records `bytes` beside its sha256, and the M00-T10 fixture size check in `tools/test/plan-drift.test.mjs` sums the repo files on disk and the private rows' bytes, so the card's 62 MB figure stays checked on a hosted runner. `tools/legacy/inventory.json` is regenerated without the corpus legacy folder, and `packages/3mf/test/validate.test.ts` marks its missing-copy probe row as repo. |
+| Rationale | Counting repo rows only would leave the card's 62 MB figure unmatched by a factor of four, and reading the private copies would skip the check wherever the archive is absent. The bytes field is part of each copy's identity record, beside sha256, and `test_corpus.py` checks it against every copy present. |
+| Evidence | sha256 equal on all 111 copied files (computed). run.py with the private copies: 126 rows, 0 outside, `--json` outcomes byte equal to the run before the move; with HBF_CORPUS empty: 13 rows, 113 private rows not run (measured). Tracked 3MF under tools/corpus/3mf 122 to 12; tracked 3MF total 56,352 KB to 8,356 KB by du (computed). Dropping the private bytes from the size check fails it, card 62 MB against disk 15.7 MiB (measured). |
 | Supersedes | new |
 | Milestone | none |
 
