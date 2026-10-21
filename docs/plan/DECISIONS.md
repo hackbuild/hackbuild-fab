@@ -594,6 +594,16 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-538 | the seeed fetch example queries XIAO-RP2040-SMD | decided | Canons, reference, profile, catalog |
 | D-539 | chase.bake page hash goes through spec sha256Hex | decided | Testing, docs, milestones, registry |
 | D-540 | gate-mcp exports at a params set of its own | decided | Testing, docs, milestones, registry |
+| D-541 | draft is a new command, the 31st, CLI only | decided | Agent surface |
+| D-542 | E_DRAFT is error code 12: exit 2, HTTP 409, isError true, stage gate | decided | Agent surface |
+| D-543 | a directory is a draft when it holds draft.json | decided | Architecture |
+| D-544 | hbf:draft 3MF metadata goes under a declared xmlns prefix, written by post-processing | decided | Repos, packaging, toolchain, licensing |
+| D-545 | draft fails become warnings through the existing waiver shape | decided | Constraints and checks |
+| D-546 | draft page lands in the draft directory, and chase.bake refuses a page bake of a draft | decided | Architecture |
+| D-547 | draft bake files are regenerated on every draft bake | decided | Architecture |
+| D-548 | inline draft widget contract | decided | UI |
+| D-549 | chase validation still runs on a draft | decided | Constraints and checks |
+| D-550 | counts.json and the PLAN.md Appendix B row committed on the R1-engine-24 branch | decided | Testing, docs, milestones, registry |
 
 ## House rules and process
 
@@ -6589,6 +6599,116 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. `core/test/gate-mcp.test.ts` exports flex-pair with params `{"/keys/0/gap": 1.86}`, not the defaults. A `beforeAll` approved export names the artifact hash, and the writes-nothing snapshot covers only the out folder, that artifact and the graph lines naming it. |
 | Rationale | `gate.test.ts` and `skeleton.test.ts` write the default-params artifact into the shared store at the same time, so no snapshot of the default hash can tell their writes from a gate leak. A private workspace with symlinks back to the checkout is refused by the build sandbox (node permission model, fs-read), and moving the store would mean changing `core/src`, which the brief does not allow. |
 | Evidence | The first fix (golden-hash scope) failed in a full core run with only the artifact mtime and graph line count moving and no out file (measured). The final version passed gate-mcp in three full core runs (measured), and the cancel-writes mutant at `core/src/mcp/handlers.ts` line 176 is killed (measured). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-541 draft is a new command, the 31st, CLI only
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. Added `draft` to COMMAND_NAMES in group make and to CLI_ONLY, raising the D-106 count from 30 to 31. The MCP tool list stays at 19, so the MCP form waits on engine brief finding F4 (selector values on chase_scaffold). |
+| Rationale | The brief asks for a def file and `core/src/commands/draft.ts` with --json output. F4 keeps 19 MCP tools but has no decision row yet, and CLI_ONLY is the existing way to hold a command off MCP. A utility verb would have needed the same plan edit and has no CommandResult. |
+| Evidence | `spec/commands.ts` COMMAND_NAMES and CLI_ONLY; `spec/test/surface.test.ts` (31, make 4); MILESTONES.md 1.3 R1 row; counts.json spec.commands 31 (computed by counts.mjs). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-542 E_DRAFT is error code 12: exit 2, HTTP 409, isError true, stage gate
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. E_DRAFT maps to EXIT_CODES.input (2) and HTTP 409, and reports stage gate. |
+| Rationale | The caller fixes it by acting (adopt); nothing about the design failed. 409 marks a conflict with the resource state. Exit 4 belongs to provenance and keeps that meaning. |
+| Evidence | `spec/errors.ts` ERROR_TRANSPORT.E_DRAFT; `core/src/result.ts` STAGE_OF_ERROR; `spec/test/surface.test.ts`. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-543 a directory is a draft when it holds draft.json
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. isDraftDir checks only for draft.json. export.run and chase.bake use it, and the draft: copy in adopt does not carry draft.json. |
+| Rationale | A draft copied elsewhere stays a draft, and one rule is shared by export.run, chase.bake and adopt. The export gate stays the real safeguard. |
+| Evidence | `core/src/draft-block.ts` isDraftDir; `spec/draft.ts` DRAFT_BLOCK_FILE. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-544 hbf:draft 3MF metadata goes under a declared xmlns prefix, written by post-processing
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The pipeline rewrites the writer's 3D/3dmodel.model entry: it adds xmlns:hbf="https://tools.hack.build/3mf/2026/draft" (tools.hack.build is a working name) and the metadata line before resources, then zips with the writer's own zipEntries. The vendored hackbuild-3mf writer is not changed. |
+| Rationale | A metadata name with an undeclared prefix is not namespace-valid XML, and the writer has no hook for extra metadata. The writer lives in another repo (D-027). Package checks still pass on the marked bytes. A slicer opening a draft 3MF was not run. |
+| Evidence | `packages/pipeline/src/draft-mark.ts`; `core/test/draft.test.ts` package checks 0 fail (computed). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-545 draft fails become warnings through the existing waiver shape
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. Each unwaived fail becomes verdict warn with waived.reason set to the draft waiver; measured, legal and fix are kept. |
+| Rationale | Reuses D-173, so blockingChecks and the export gate in the page treat draft results the way the bench already handles waived fails, with no new UI path. |
+| Evidence | draftResults in `packages/pipeline/src/draft-mark.ts`; draft.test waiver case. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-546 draft page lands in the draft directory, and chase.bake refuses a page bake of a draft
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `tools/bake/draft.ts` sets manifest out "." and chase.bake defaults the out root of a draft to its own directory. chase.bake without --mode draft on a draft gives E_DRAFT. |
+| Rationale | Keeps draft pages out of dist/bench, where they could collide with a design of the same name. Only adopted designs bake without the banner (plan v9 3.1). |
+| Evidence | `core/src/commands/chase-bake.ts`; `core/test/draft.test.ts`. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-547 draft bake files are regenerated on every draft bake
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `tools/bake/draft.ts` overwrites bake.json, bench.entry.ts and page-build.ts each time, while from-chase still never touches the existing files of a design. draft.json is also rewritten before each bake, keeping goal and from. |
+| Rationale | A widget.ts or source edit made after the first draft must reach the page, and these files are generated output in a draft. |
+| Evidence | draft.test widget case. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-548 inline draft widget contract
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. widget.ts exports widget { id, model(state, metrics) returning a record of numbers or strings, render(el, model) }. It is drawn in a host element beside the banner after each build. |
+| Rationale | Item 12 defined no inline contract. This one has no framework dependency, and adopt can lift it to designs/<name>/widgets/. |
+| Evidence | `packages/ui/src/bench/entry.ts` DraftWidget; DraftBanner.vue; `packages/ui/test/draft-banner.test.ts`. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-549 chase validation still runs on a draft
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. hbf draft goes through the scaffold plan, so chase.validate errors still refuse the draft. Only check results are relaxed to warnings. |
+| Rationale | No validator rule restricting routes was found to relax, and a chase that fails to read would not bake. |
+| Evidence | `core/src/commands/draft.ts` uses plan() from `core/src/commands/chase-scaffold.ts`. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-550 counts.json and the PLAN.md Appendix B row committed on the R1-engine-24 branch
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The builder committed the counts.mjs output (spec commands 31) on the branch, although the counts.mjs header calls these files integrator-only. The integrator reran counts.mjs on the merged tree and it did not move. |
+| Rationale | plan-drift fails while the staged counts lag, and the task prompt allowed counts.json through counts.mjs. |
+| Evidence | plan-drift and the other plan tests 98 of 98 on the merged tree; counts.mjs then git diff --exit-code docs/plan/counts.json exit 0 (computed). |
 | Supersedes | new |
 | Milestone | none |
 
