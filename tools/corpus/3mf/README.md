@@ -17,3 +17,11 @@ gold file; `--check` fails when either drifts.
 `inputs/flex-pair-two.json` is generated: `npx tsc -b && node
 tools/corpus/3mf/dump-input.mjs` writes it from the keys flex-pair build on
 preset two as export3mf lays it out, and `--check` fails when it drifts.
+
+`manifest.json` rows whose copy sits here say `where: "repo"`: gold,
+known-bad and sprue, which tests read directly. The owner slicer saves
+(`owner/`, `legacy/`, `boss/`, which hold the owner, cotter, round trip and
+download rows) say `where: "private"` and sit under `HBF_CORPUS`, default
+`fab-knowledge:originals/_corpus/`, at the same relative paths. Each copied
+row records its sha256 and bytes. Without that folder `run.py` and
+`packages/3mf/test/validate.test.ts` count the private rows as not run.

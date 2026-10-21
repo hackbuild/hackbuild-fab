@@ -249,7 +249,7 @@ describe("corpus manifest (M00-T10)", () => {
     if (tenon === undefined) throw new Error("manifest lost row tenon-known-good");
     const empty = mkdtempSync(join(tmpdir(), "hbf-corpus-"));
     TEMPS.push(empty);
-    expect(() => corpusRows({ rows: [{ ...tenon, path: "owner/downloads/absent.3mf" }] }, empty)).toThrow(/tenon-known-good names a missing file/);
+    expect(() => corpusRows({ rows: [{ ...tenon, where: "repo", path: "owner/downloads/absent.3mf" }] }, empty)).toThrow(/tenon-known-good names a missing file/);
     expect(() => corpusRows({ rows: [{ ...tenon, where: undefined }] }, empty)).toThrow(/neither repo nor private/);
     expect(corpusRows({ rows: [{ ...tenon, where: "private" }] }, empty)).toEqual({ rows: [], notRun: ["tenon-known-good"] });
   });

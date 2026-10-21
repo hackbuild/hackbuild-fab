@@ -197,7 +197,7 @@ test("M00-T02 preset ids are the ids the profile loads", () => {
   }
 });
 
-test("M00-T10 fixture size is within 15 percent of the corpus on disk", () => {
+test("M00-T10 fixture size is within 15 percent of the repo and private corpus copies", () => {
   let bytes = 0;
   const walk = (d) => {
     for (const n of readdirSync(d)) {
@@ -211,6 +211,11 @@ test("M00-T10 fixture size is within 15 percent of the corpus on disk", () => {
   const dir = join(root, "tools/corpus/3mf");
   if (!existsSync(dir)) return;
   walk(dir);
+  // Private rows (owner slicer saves) sit outside the repo; the manifest records each copy's bytes.
+  const { rows } = json("tools/corpus/3mf/manifest.json");
+  const priv = rows.filter((r) => r.where === "private" && !("sameAs" in r));
+  assert.ok(priv.every((r) => Number.isInteger(r.bytes)), "every private row records its bytes");
+  bytes += priv.reduce((n, r) => n + r.bytes, 0);
   const [m] = all(section(M00, "M00-T10"), /the fixture set is about (\d+) MB/g, "fixture size");
   const mb = bytes / 2 ** 20;
   assert.ok(Math.abs(+m[1] - mb) / mb <= 0.15, `card ${m[1]} MB, disk ${mb.toFixed(1)} MiB`);

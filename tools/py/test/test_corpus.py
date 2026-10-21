@@ -55,13 +55,35 @@ def test_two_sources_on_one_destination_fail():
 
 
 def test_owner_copies_and_gold_once():
-    owner = [p for p in (CORPUS / "owner").rglob("*.3mf") if "roundtrip" not in p.parts and "downloads" not in p.parts]
+    # Owner saves sit under the private root (where "private"), so the counts read the manifest, not the tree.
+    copied = [r for r in rows() if "sameAs" not in r]
+    owner = [r for r in copied if r["path"].startswith("owner/") and r["path"].split("/")[1] not in ("roundtrip", "downloads")]
     assert len(owner) == 24
-    assert len(list((CORPUS / "owner/downloads").glob("*.3mf"))) == 11
+    assert len([r for r in copied if r["path"].startswith("owner/downloads/")]) == 11
+    assert not [r["id"] for r in rows() if " " in r["path"] or "(" in r["path"]]
     assert not [p for p in CORPUS.rglob("*") if " " in p.name or "(" in p.name]
     gold = next(r for r in rows() if r["id"] == "gold")
+    assert [r["path"] for r in copied if r["sha256"] == gold["sha256"]] == [gold["path"]]
     copies = [p for p in CORPUS.rglob("*.3mf") if run.sha256(p) == gold["sha256"]]
     assert [p.relative_to(CORPUS).as_posix() for p in copies] == [gold["path"]]
+
+
+def test_owner_slicer_saves_are_private():
+    # PLAN.md 5: owner, legacy and boss saves leave the repo; gold, known-bad and sprue stay for their readers.
+    for r in rows():
+        top = r["path"].split("/")[0]
+        assert r["where"] == ("private" if top in ("owner", "legacy", "boss") else "repo"), r["id"]
+    assert not [p for p in (CORPUS / d for d in ("owner", "legacy", "boss")) if p.exists()]
+
+
+def test_copied_rows_record_bytes_that_match_their_copy():
+    for r in rows():
+        if "sameAs" in r:
+            assert "bytes" not in r, r["id"]
+            continue
+        assert isinstance(r["bytes"], int) and r["bytes"] > 0, r["id"]
+        if run.present(r):
+            assert run.file_of(r).stat().st_size == r["bytes"], r["id"]
 
 
 def test_every_row_says_where_its_copy_sits():
@@ -78,6 +100,7 @@ def test_a_repo_row_without_its_copy_fails():
     tenon = next(r for r in rs if r["id"] == "tenon-known-good")
     target = next(r for r in rs if r["id"] == tenon["sameAs"])
     target["path"] = tenon["path"] = "owner/downloads/absent.3mf"
+    target["where"] = tenon["where"] = "repo"
     problems = []
     run.check_manifest(rs, problems)
     assert "manifest: %s has no copy at owner/downloads/absent.3mf" % target["id"] in problems
