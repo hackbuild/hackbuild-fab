@@ -41,9 +41,11 @@ describe("registered surface (M00-T13 step 1, M01-T05 step 7, M02-T11 step 9, M0
   const m08 = surfaceRows(["M08"]).flatMap(([, cell]) => mentioned(cell, COMMAND_NAMES));
   const m06 = surfaceRows(["M06"]).flatMap(([, cell]) => mentioned(cell, COMMAND_NAMES));
   const m10 = surfaceRows(["M10"]).flatMap(([, cell]) => mentioned(cell, COMMAND_NAMES));
+  /** draft landed with R1-engine-24 (plan v9 3.1). The word also reads in the M-S cell ("draft contracts"), so the R1 row is what lists it. */
+  const r1 = surfaceRows(["R1"]).flatMap(([, cell]) => mentioned(cell, COMMAND_NAMES));
 
-  it("registers exactly the commands of the M-S, M00, M01, M02, M04, M05, M06, M07, M08 and M10 rows, less the pending M01, M04, M06 and M10 ones", () => {
-    const all = new Set([...rows.flatMap(([, cell]) => mentioned(cell, COMMAND_NAMES)), ...m04, ...m05, ...m06, ...m07, ...m08, ...m10]);
+  it("registers exactly the commands of the M-S, M00, M01, M02, M04, M05, M06, M07, M08, M10 and R1 rows, less the pending M01, M04, M06 and M10 ones", () => {
+    const all = new Set([...rows.flatMap(([, cell]) => mentioned(cell, COMMAND_NAMES)), ...m04, ...m05, ...m06, ...m07, ...m08, ...m10, ...r1]);
     const want = [...all].filter((n) => !M01_PENDING.includes(n) && !M04_PENDING.includes(n) && !M06_PENDING.includes(n) && !M10_PENDING.includes(n));
     expect(COMMANDS.map((c) => c.name).sort()).toEqual(want.sort());
     expect(COMMANDS.length).toBe(want.length);

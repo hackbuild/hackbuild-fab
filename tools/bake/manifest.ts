@@ -3,7 +3,7 @@
 // Paths in `from` resolve against the manifest's folder. A path starting
 // `npm:` names a file inside an installed package, found by walking up from
 // the manifest folder to the first node_modules that holds the package.
-// Script-producing fields (`wasm`, `classic`, `blocks`, `build`, `entry`) are
+// Script-producing fields (`data`, `wasm`, `classic`, `blocks`, `build`, `entry`) are
 // emitted in the order their keys appear in the manifest.
 
 /** One inline script block, written as `<script>/* label *\/` plus source plus `</script>`. */
@@ -70,6 +70,17 @@ export interface BakeBuild {
   label: string;
 }
 
+/**
+ * A JSON file written as a data block, `<script type="<type>">` plus the
+ * JSON with every `</` escaped; the page reads it and never runs it. An
+ * hbf draft carries its sources this way (application/hbf-draft+json).
+ */
+export interface BakeData {
+  from: string;
+  type: string;
+  label: string;
+}
+
 export interface BakeManifest {
   /** Output name: dist/<out>/<id>.html. */
   id: string;
@@ -90,6 +101,7 @@ export interface BakeManifest {
   css?: BakeCss[];
   blocks?: BakeBlock[];
   build?: BakeBuild;
+  data?: BakeData[];
   /** Size ceiling in bytes; default 16777216 (16 MB, D-129). */
   budget?: number;
 }

@@ -33,7 +33,7 @@ export function finish<T>(r: CommandOut<T>): CommandResult<T> {
 }
 
 const STAGE_OF_ERROR: Readonly<Partial<Record<CommandError["code"], Stage>>> = {
-  E_KERNEL: "build", E_PARAM_MISSING: "check", E_GATE: "gate", E_GATE_UNAVAILABLE: "gate", E_STALE: "gate",
+  E_KERNEL: "build", E_PARAM_MISSING: "check", E_GATE: "gate", E_GATE_UNAVAILABLE: "gate", E_STALE: "gate", E_DRAFT: "gate",
 };
 
 /** A result that carries one error and no evidence. */

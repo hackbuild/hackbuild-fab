@@ -14,7 +14,7 @@
 
 import { createApp } from "vue";
 import { createPinia } from "pinia";
-import type { Bench, BuildWarning, Chase, CheckResult, ContactFn, Metric, Part } from "@hackbuild/spec";
+import { draftName, type Bench, type BuildWarning, type Chase, type CheckResult, type ContactFn, type Metric, type Part } from "@hackbuild/spec";
 import {
   bindChase, blockedLine, blockingChecks, bootManifold, HB_VIEWER_TAG, NO_BUILD, NOT_IN_BAKE, openShare, setStorageLog,
   type BenchCore, type BuildOutput, type BuildResult, type ChaseBinding, type HbViewer, type ViewMesh, type ViewPart,
@@ -42,6 +42,8 @@ export interface BenchWriter {
 /** What a page build gives a bench (packages/pipeline PageBuild, named by shape so ui imports no tier 2 build). */
 export interface PageBuildLike {
   readonly facts: { readonly name: string };
+  /** An hbf draft page: downloads take DRAFT_ and the bench shows the draft banner. */
+  readonly draft?: boolean;
   build(values: Values): Promise<{
     readonly buildHash: string; readonly part: Part; readonly meshes: Readonly<Record<string, ViewMesh>>;
     readonly metrics: readonly Metric[]; readonly results: readonly CheckResult[]; readonly warnings: readonly BuildWarning[];
@@ -78,7 +80,7 @@ export function pageOf(global: string): PageBuildLike | undefined {
  * export runs on. A 3mf whose package checks hold a blocking fail is
  * refused with the export gate's line (D-264).
  */
-export function pageBench(page: PageBuildLike | undefined): Pick<MountOptions, "build" | "writers"> {
+export function pageBench(page: PageBuildLike | undefined): Pick<MountOptions, "build" | "writers" | "draft"> {
   if (page === undefined) return {};
   const build: BenchBuild = async (state) => {
     const r = await page.build(state);
@@ -99,13 +101,15 @@ export function pageBench(page: PageBuildLike | undefined): Pick<MountOptions, "
     },
   });
   const name = page.facts.name;
+  const file = (n: string): string => (page.draft === true ? draftName(n) : n);
   return {
     build,
     writers: {
-      "3mf": writer("3mf", `${name}.3mf`, "model/3mf"),
-      stl: writer("stl", `${name}-stl.zip`, "application/zip"),
-      card: writer("card", `${name}-card.txt`, "text/plain"),
+      "3mf": writer("3mf", file(`${name}.3mf`), "model/3mf"),
+      stl: writer("stl", file(`${name}-stl.zip`), "application/zip"),
+      card: writer("card", file(`${name}-card.txt`), "text/plain"),
     },
+    ...(page.draft === true ? { draft: true } : {}),
   };
 }
 
@@ -126,6 +130,22 @@ export interface MountOptions {
   readonly hook?: boolean;
   /** The ContactFn the bench's DriveDecl.contact names, from the design's build.ts; none leaves the pad unable to drive. */
   readonly contact?: ContactFn;
+  /** An hbf draft page (pageBench sets it from the page build): the status strip shows the draft banner. */
+  readonly draft?: boolean;
+  /** The draft's one inline widget (widget.ts), drawn beside the banner; only a draft page carries one. */
+  readonly widget?: DraftWidget;
+}
+
+/**
+ * The inline widget a draft may carry (plan v9 3.2: it graduates to a
+ * registered kind through hbf adopt). Framework free: model reads the
+ * bench state and the last build's metrics, render draws that model into
+ * the element the banner gives it and returns nothing.
+ */
+export interface DraftWidget {
+  readonly id: string;
+  model(state: Values, metrics: readonly Metric[]): Readonly<Record<string, number | string>>;
+  render(el: HTMLElement, model: Readonly<Record<string, number | string>>): void;
 }
 
 export interface MountedBench {
@@ -192,7 +212,10 @@ export function mountBench(opts: MountOptions): MountedBench | null {
   setStorageLog((line) => core.appendLog(line));
   void binding.whenReady.then(() => shell.mirror(core));
 
-  const app = createApp(ChaseBench, { binding, stage: opts.stage !== false });
+  const app = createApp(ChaseBench, {
+    binding, stage: opts.stage !== false, draft: opts.draft === true,
+    ...(opts.draft === true && opts.widget !== undefined ? { widget: opts.widget } : {}),
+  });
   app.use(pinia);
   app.mount(el);
 

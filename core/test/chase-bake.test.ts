@@ -111,7 +111,7 @@ describe("chase.bake (M10-T07 step 2)", () => {
     expect(r.errors[0]!.hint).toContain("https://example.invalid/a.png");
   }, 180_000);
 
-  it("refuses mode draft with E_SCHEMA at /mode and writes nothing", async () => {
+  it("refuses mode draft on a design without draft.json with E_SCHEMA at /mode and writes nothing", async () => {
     const dir = switchCopy();
     const { code, r } = await bake(dir, scratch(), "--mode", "draft");
     expect(code).toBe(2);

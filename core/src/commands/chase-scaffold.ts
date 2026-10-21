@@ -39,7 +39,7 @@ type Output = CommandOutput<"chase.scaffold">;
 const posix = (p: string): string => p.split(path.sep).join("/");
 
 /** A design to copy: its directory, a label for messages and the golden build hash when it has one. */
-interface Source {
+export interface Source {
   readonly dir: string;
   readonly label: string;
   readonly buildHash: string | undefined;
@@ -61,7 +61,7 @@ function fromForms(root: string): string[] {
 }
 
 /** The source a `from` names, or E_REF with the nearest forms. */
-function resolveFrom(from: string, root: string, top: string, cwd: string): Source {
+export function resolveFrom(from: string, root: string, top: string, cwd: string): Source {
   const miss = (hint: string): never => {
     throw cmdError({ code: "E_REF", path: "/from", got: from, expected: "reference:<area>/<id>, reference:<meta.id>, design:<id> or draft:<dir>", didYouMean: didYouMean(from, fromForms(root)), hint });
   };
@@ -137,14 +137,17 @@ function legalDefaultEdits(chase: Chase): PatchEdit[] {
   return edits;
 }
 
-interface Plan {
+export interface Plan {
   readonly files: ReadonlyMap<string, string>;
 }
 
-/** The files to write, validated in a scratch directory; a refusal lists the errors. */
-async function plan(ctx: CoreCtx, input: CommandInput<"chase.scaffold">, root: string, top: string): Promise<Plan | { readonly errors: readonly CommandError[] }> {
+/**
+ * The files to write at `target` (relative to the git top; designs/<name>
+ * for chase.scaffold, .hbf/drafts/<name> for hbf draft), validated in a
+ * scratch directory; a refusal lists the errors.
+ */
+export async function plan(ctx: CoreCtx, input: CommandInput<"chase.scaffold">, root: string, top: string, target = `designs/${input.name}`): Promise<Plan | { readonly errors: readonly CommandError[] }> {
   const { kind, name } = input;
-  const target = `designs/${name}`;
   let files: Map<string, string>;
   let chaseFrom: { readonly text: string; readonly label: string; readonly edits: readonly PatchEdit[] } | undefined;
   if (input.from === undefined) {

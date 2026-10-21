@@ -34,6 +34,7 @@ const MEANING = {
   E_REPEAT: "the same call a third time or the same failing report a fourth; read the named diagnostics record",
   E_KERNEL: "a kernel refused; record names the knowledge record to read",
   E_PARAM_MISSING: "a check's measured value is NaN or missing; path is the pointer to fill",
+  E_DRAFT: "the design is an hbf draft; fabrication exports refuse it until hbf adopt lifts it into a design",
 } as const satisfies Record<ErrorCode, string>;
 
 export type Explained =

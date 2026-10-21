@@ -368,7 +368,17 @@ export async function bake(manifestPath, opts = {}) {
   const inlined = npmSources(m).map((f) => packageOf(resolveFrom(base, f))).filter((p) => p !== null);
   const blocks = [];
   for (const key of Object.keys(m)) {
-    if (key === 'wasm') {
+    if (key === 'data') {
+      for (const d of m.data) {
+        if (!/^application\/[a-z0-9.+-]+\+json$/.test(d.type)) fail(`data block ${d.label}: type ${d.type} is not an application/<name>+json type`);
+        const src = readText(resolveFrom(base, d.from));
+        noDash(src, rel(resolveFrom(base, d.from)));
+        // Parse and reprint so the block is one line of JSON; "</" cannot close the script element.
+        let json;
+        try { json = JSON.stringify(JSON.parse(src)); } catch (e) { fail(`data block ${d.label}: ${rel(resolveFrom(base, d.from))} is not JSON (${e.message})`); }
+        blocks.push(`<script type="${d.type}">${json.replace(/<\//g, '<\\/')}</script>\n`);
+      }
+    } else if (key === 'wasm') {
       const w = m.wasm;
       const p = resolveFrom(base, w.from);
       if (!existsSync(p)) fail(`missing wasm ${rel(p)}. run npm ci first.`);

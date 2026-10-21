@@ -22,6 +22,8 @@ import { KINDS, kindError } from "./kinds.js";
 import { tagPink } from "./pink-marks.js";
 import { railEndError, type PanelCtx } from "./panels.js";
 import LogPanel from "../panels/LogPanel.vue";
+import DraftBanner from "./DraftBanner.vue";
+import type { DraftWidget } from "./entry.js";
 import { bedFits, stepMarks } from "./steps.js";
 import { useShell, type BenchReport, type Values } from "../stores/shell.js";
 import type { CommitKind } from "../rail/context.js";
@@ -41,9 +43,13 @@ interface Props {
   contact?: ContactFn | null;
   /** The drive pad's held set; BENCH.drive writes the same one. */
   pad?: Pad | null;
+  /** An hbf draft page: the status strip opens with the draft banner. */
+  draft?: boolean;
+  /** A draft's inline widget, drawn beside the banner. */
+  widget?: DraftWidget | null;
 }
 
-const props = withDefaults(defineProps<Props>(), { writable: () => ["json"], fabrication: () => [], stage: true, contact: null, pad: null });
+const props = withDefaults(defineProps<Props>(), { writable: () => ["json"], fabrication: () => [], stage: true, contact: null, pad: null, draft: false, widget: null });
 const emit = defineEmits<{ export: [kind: string]; open: [json: string]; start: [id: string] }>();
 const shell = useShell();
 
@@ -455,6 +461,7 @@ const dims = computed(() => {
 
     <template #statusbar>
       <HbStatusBar data-hb="status">
+        <DraftBanner v-if="props.draft" :widget="props.widget" />
         <span class="hbf-scope" :data-scope="scope" title="what this strip describes">{{ scope }}</span>
         <span v-if="dims !== null" title="computed" data-hb="dims">{{ dims }} mm</span>
         <span v-if="shell.report.tris !== undefined" title="computed" data-hb="tris">{{ shell.report.tris }} tris</span>

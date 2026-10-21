@@ -10,7 +10,11 @@
 //
 // A bake is a page, so no ExporterDef.fabrication applies and no gate
 // runs; exports made inside the baked bench pass D-109 there. mode draft
-// is refused until hbf draft (R1-engine-24) gives it a behaviour.
+// bakes an hbf draft (a directory holding draft.json, R1-engine-24): it
+// rewrites draft.json from the files on disk, then tools/bake/draft.ts
+// writes the draft's bake.json, bench.entry.ts and page-build.ts, so the
+// page carries its sources, shows the banner and marks every export. A
+// draft bakes only as a draft and a design never does (E_DRAFT, E_SCHEMA).
 
 import { spawn } from "node:child_process";
 import { readFileSync } from "node:fs";
@@ -20,6 +24,7 @@ import { sha256Hex, type CommandError, type CommandInput, type CommandOutput, ty
 import type { CoreCtx } from "../ctx.js";
 import { cmdError } from "../errors.js";
 import type { CommandOut } from "../result.js";
+import { draftOrigin, isDraftDir, writeDraftBlock } from "../draft-block.js";
 import { workspaceRoot } from "./build.js";
 import { chaseDir } from "./chase-validate.js";
 
@@ -66,23 +71,30 @@ const failed = (ctx: CoreCtx, errors: readonly CommandError[]): CommandOut<Outpu
 const lastLine = (s: string): string => s.trim().split("\n").filter((l) => l !== "").at(-1) ?? "";
 
 export async function runChaseBake(input: CommandInput<"chase.bake">, ctx: CoreCtx): Promise<CommandOut<Output>> {
-  if (input.mode === "draft") {
-    throw cmdError({ code: "E_SCHEMA", path: "/mode", got: "draft", expected: "page", hint: "bake without mode draft; the draft page lands with hbf draft" });
-  }
   const root = workspaceRoot(ctx.cwd);
   const dir = chaseDir(root, ctx.cwd, input.chase);
+  const draft = isDraftDir(dir);
+  if (draft && input.mode !== "draft") {
+    throw cmdError({ code: "E_DRAFT", path: "/chase", got: input.chase, expected: "mode draft", hint: `${input.chase} is an hbf draft; bake it with --mode draft, or run hbf adopt to lift it into a design` });
+  }
+  if (!draft && input.mode === "draft") {
+    throw cmdError({ code: "E_SCHEMA", path: "/mode", got: "draft", expected: "page", hint: `${input.chase} holds no draft.json, so it is no hbf draft; bake it without --mode draft, or start a draft with hbf draft --from` });
+  }
   // The chase must read as data (D-178) before anything is generated from it; a breach throws E_SCHEMA.
   readChaseSource(readFileSync(path.join(dir, "chase.ts"), "utf8"), posix(path.relative(root, path.join(dir, "chase.ts"))));
   ctx.signal.throwIfAborted();
+  if (draft) await writeDraftBlock(dir, ctx.cwd, draftOrigin(dir));
+  ctx.signal.throwIfAborted();
 
-  const gen = await node(ctx, root, [path.join(root, "tools/bake/from-chase.ts"), dir]);
+  const gen = await node(ctx, root, [path.join(root, draft ? "tools/bake/draft.ts" : "tools/bake/from-chase.ts"), dir]);
   if (gen.code !== 0) {
-    return failed(ctx, [{ code: "E_KERNEL", path: "/chase", got: input.chase, record: "bake/manifest", hint: lastLine(gen.err).replace(/^from-chase: /, "") || "bake.json generation failed" }]);
+    return failed(ctx, [{ code: "E_KERNEL", path: "/chase", got: input.chase, record: "bake/manifest", hint: lastLine(gen.err).replace(/^(from-chase|draft): /, "") || "bake.json generation failed" }]);
   }
   const manifest = (JSON.parse(lastLine(gen.out)) as { manifest: string }).manifest;
   ctx.signal.throwIfAborted();
 
-  const outRoot = path.resolve(ctx.cwd, ctx.cli.out ?? path.join(root, "dist"));
+  // A draft's page lands in its own directory (tools/bake/draft.ts sets out "."), a design's under dist.
+  const outRoot = path.resolve(ctx.cwd, ctx.cli.out ?? (draft ? dir : path.join(root, "dist")));
   const baked = await node(ctx, root, [path.join(root, "tools/bake/bake.mjs"), manifest, "--out-root", outRoot]);
   if (baked.code !== 0) {
     const why = lastLine(baked.err).replace(/^bake: /, "");

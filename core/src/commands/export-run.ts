@@ -27,6 +27,7 @@ import { WIRING_EXPORTER, isWiringDesign, runWiringExport } from "../exporters/w
 import { isBoardDesign } from "../board.js";
 import { resolveTarget } from "../load-build.js";
 import { loadDesign } from "./build.js";
+import { isDraftDir } from "../draft-block.js";
 
 /**
  * Exporters hbf registers: 3mf and the sheet exporters (M07-T14), the board
@@ -72,6 +73,13 @@ export async function runExportRun(wide: ExportInput, ctx: CoreCtx): Promise<Com
     throw cmdError({ code: "E_PARAM_MISSING", path: "/chase", expected: "a chase or --scene <id>", hint: "name the design to export, or a nest scene with --scene until M10" });
   }
   const input = wide as CommandInput<"export.run">;
+  // A draft never reaches the gate (plan v9 3.1): the gate is unchanged, this refusal comes first.
+  if (isDraftDir(resolveTarget(input.chase, ctx.cwd, ctx.workspace, "/chase"))) {
+    throw cmdError({
+      code: "E_DRAFT", path: "/chase", got: input.chase, expected: "an adopted design",
+      hint: `${input.chase} is an hbf draft, and a draft exports only from its page, marked DRAFT; run hbf adopt ${input.chase} to lift it into a design, then export`,
+    });
+  }
   const board = boardExporter(input.kind);
   if (board !== undefined || input.kind === WIRING_EXPORTER.id) {
     // Board kinds (M08-T14) and wiring (M08-T13): the design names a board chase.

@@ -14,19 +14,20 @@
 // carries only build.ts files the bake's author chose to inline.
 
 import {
-  commandError as cmdError, didYouMean,
+  commandError as cmdError, didYouMean, draftName,
   type BuildWarning, type Chase, type CheckResult, type Hash, type Metric, type Part, type SchemaLike,
   type FeatureKind, type FeatureOf, type GeneratedGeometry, type KernelCtx,
 } from "@hackbuild/spec";
 import { createProfileLookup, type ProfileTables } from "@hackbuild/profile";
 import { loadManifold, liveCount, type RasterMask } from "@hackbuild/mesh";
-import { DEFAULT_MATERIALS, DEFAULT_TEMPLATE, build as build3mf } from "@hackbuild/3mf";
+import { DEFAULT_MATERIALS, DEFAULT_TEMPLATE, build as build3mf, clampEpoch, threeMfEntries, zipEntries } from "@hackbuild/3mf";
 import { mcuPinRow } from "@hackbuild/catalog";
 import { makeAuthor } from "./author.js";
 import {
   assembleBuild, export3mf, mergeWarnings, packageCheckIds, runAllChecks, threeMfConfig,
-  type Built, type Design, type DraftRun, type Workspace,
+  threeMfInput, type Built, type Design, type DraftRun, type Workspace,
 } from "./build.js";
+import { draftCard, draftEntries, draftResults } from "./draft-mark.js";
 import { kernelKindsOf } from "./kinds.js";
 import { resolveParams, type Values } from "./params.js";
 import { registerSolvers } from "./solvers.js";
@@ -62,6 +63,8 @@ export interface PageInput {
   readonly module: Readonly<Record<string, unknown>>;
   readonly kinds?: DraftKinds;
   readonly facts: PageFacts;
+  /** An hbf draft page (plan v9 3.1): fails show as warnings and every export carries the DRAFT marks. */
+  readonly draft?: boolean;
 }
 
 /** One body mesh as the stage reads it, the build's own arrays. */
@@ -98,6 +101,8 @@ export type PageExportKind = (typeof PAGE_EXPORTS)[number];
 export interface PageBuild {
   readonly chase: Chase;
   readonly facts: PageFacts;
+  /** True on an hbf draft page; the ui names its downloads with DRAFT_ from it. */
+  readonly draft: boolean;
   /** Builds and checks one set of values; the values are resolved against the chase as part.build resolves them. */
   build(values: Values): Promise<PageResult>;
   /** Writes one export from a build this page made, by its buildHash. */
@@ -148,6 +153,13 @@ export async function runDraft(design: Design, module: Readonly<Record<string, u
   });
 }
 
+/** The 3mf of a draft: the writer's entries with the draft model (draft-mark.ts), zipped as the writer zips them. */
+export async function draft3mf(built: Built, name: string): Promise<{ readonly bytes: Uint8Array; readonly name: string }> {
+  const input = threeMfInput(built, name);
+  const entries = draftEntries(threeMfEntries(input));
+  return { bytes: await zipEntries(entries, clampEpoch(input.sourceDateEpoch)), name: `${name}.3mf` };
+}
+
 /** The page build of one design. The manifold kernel loads on the first build. */
 export function createPageBuild(input: PageInput): PageBuild {
   registerSolvers();
@@ -171,8 +183,12 @@ export function createPageBuild(input: PageInput): PageBuild {
     while (kept.size > KEPT_BUILDS) kept.delete(kept.keys().next().value as string);
   };
 
+  const draft = input.draft === true;
+  const shown = (results: readonly CheckResult[]): readonly CheckResult[] => (draft ? draftResults(results) : results);
+  const named = (n: string): string => (draft ? draftName(n) : n);
+
   return {
-    chase, facts,
+    chase, facts, draft,
     async build(state) {
       const values = resolveParams(chase, state, undefined);
       const built = await assemble(values);
@@ -182,21 +198,21 @@ export function createPageBuild(input: PageInput): PageBuild {
       for (const b of built.meshed.bodies) meshes[b.id] = { positions: b.mesh.positions, triangles: b.mesh.triangles };
       return {
         buildHash: built.part.buildHash, registryHash: built.inputs.registryHash, part: built.part, meshes, metrics: built.part.metrics ?? [],
-        results: checked.results, warnings: mergeWarnings(built.part.warnings, checked.warnings),
+        results: shown(checked.results), warnings: mergeWarnings(built.part.warnings, checked.warnings),
       };
     },
     async exportFile(kind, buildHash) {
       const built = kept.get(buildHash);
       if (built === undefined) throw new Error(`build ${buildHash.slice(0, 12)} is no longer held. rebuild, then export.`);
       if (kind === "3mf") {
-        const pkg = await export3mf(built, facts.name);
+        const pkg = draft ? await draft3mf(built, facts.name) : await export3mf(built, facts.name);
         const checked = await runAllChecks(built, [{ exporter: "3mf", name: pkg.name, bytes: pkg.bytes, part: built.part }], packageCheckIds(built), rebuild);
-        return { name: pkg.name, media: MEDIA["3mf"], bytes: pkg.bytes, results: checked.results };
+        return { name: named(pkg.name), media: MEDIA["3mf"], bytes: pkg.bytes, results: shown(checked.results) };
       }
       const out = build3mf(threeMfConfig(built, facts.name));
       if (!out.ok) throw new Error(`${kind} export refused: ${out.completeness.id} failed. name every object and part once, then export.`);
-      if (kind === "stl") return { name: `${facts.name}-stl.zip`, media: MEDIA.stl, bytes: await out.stlZip(), results: [] };
-      return { name: `${facts.name}-card.txt`, media: MEDIA.card, bytes: out.card(), results: [] };
+      if (kind === "stl") return { name: named(`${facts.name}-stl.zip`), media: MEDIA.stl, bytes: await out.stlZip(), results: [] };
+      return { name: named(`${facts.name}-card.txt`), media: MEDIA.card, bytes: draft ? draftCard(out.card()) : out.card(), results: [] };
     },
     liveCount,
   };
