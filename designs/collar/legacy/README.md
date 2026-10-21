@@ -38,3 +38,13 @@ other labels below are inferred from build order.
 
 The sha256 lives in `sha256.txt` (M00), which every reader of this copy
 checks; there is no `collar.html.sha256`.
+
+## Public through release 1 (R1-rails-public-10)
+
+Kept in git: `collar.html`, `README.md` and `sha256.txt`. The CI step
+"legacy COLLAR dump reproduces the committed grids"
+(`tools/legacy/collar-dump.mjs`), `tools/parity/collar`, the geom fill and
+shapes tests and `packages/inlay/scripts/hygiene-fixtures.mjs` read the
+page, and release 1 grades the COLLAR chase side by side with it
+(`fab-knowledge:plan-v5/PLAN.md` 6, designs row). The folder holds no
+slicer save, shot or print zip.

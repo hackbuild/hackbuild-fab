@@ -45,7 +45,6 @@ test('rows are sorted, classed, and an original names its archive path', () => {
   const tools = inv.files.filter((r) => /^designs\/[^/]+\/legacy\/tools\//.test(r.path));
   assert.deepEqual(tools.map((r) => [r.path, r.class]), [
     ['designs/cotter/legacy/tools/hook_fit.py', 'original'],
-    ['designs/pip/legacy/tools/build_bench.py', 'original'],
     ['designs/pip/legacy/tools/orca3mf.js', 'original'],
     ['designs/pip/legacy/tools/rastermesh.js', 'original'],
   ]);

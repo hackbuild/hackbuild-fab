@@ -64,10 +64,10 @@ and equals that checkout's working file.
 | `bench/part3.js` | viewer, rail UI, drive pad, `data-show` rules, `BENCH.ready` | `pip.bench-part3/pip-controller-legacy` |
 | `src/*.js` | the kernel (section above) | `pip.<file>/pip-controller-legacy`, `snapfe/pip-controller-legacy`, `router/pip-controller-legacy` |
 | `vendor/manifold-classic.js` | manifold-3d as a classic script, inlined by the baker | `manifold-classic/pip-controller-b137deb` |
-| `tools/build_bench.py` | the baker, seed of `tools/bake/` (D-129) | `pip.baker/pip-controller-b137deb` |
+| `tools/build_bench.py` | the baker, seed of `tools/bake/` (D-129); held (section below) | `pip.baker/pip-controller-b137deb` |
 | `tools/rastermesh.js`, `tools/orca3mf.js` | print-forge kernels the baker inlines | `healer/pip-controller-legacy`, `orca3mf/pip-controller-legacy` |
-| `build.sh`, `package.json`, `package-lock.json` | build entry and the pinned dependency set of the bake | `pip.build-sh`, `pip.package`, `pip.package-lock` (each `/pip-controller-b137deb`) |
-| `test/smoke.py`, `test/overflow.py` | smoke pattern and overflow at three widths | `pip.smoke`, `pip.overflow` (each `/pip-controller-b137deb`) |
+| `build.sh`, `package.json`, `package-lock.json` | build entry (held, section below) and the pinned dependency set of the bake | `pip.build-sh`, `pip.package`, `pip.package-lock` (each `/pip-controller-b137deb`) |
+| `test/smoke.py`, `test/overflow.py` | smoke pattern and overflow at three widths; held (section below) | `pip.smoke`, `pip.overflow` (each `/pip-controller-b137deb`) |
 | `LICENSE` | pip-controller licence, kept with the copy | `pip.license/pip-controller-b137deb` |
 
 Hook shape at load, measured 2026-10-04 with the network off (M09 card,
@@ -125,3 +125,22 @@ files equal `originals/pip/files/pip-controller/`.
 (haft-src `bench/part2.js` lines 394 to 417, export kinds 3mf, stl, card,
 json, ino, svg, coupon); the adapter `pip-haft` is the PIP adapter at the
 haft sha256. The record of UX is `knowledge/designs/pip.md` section 6.
+
+## Public through release 1 (R1-rails-public-10)
+
+The CI bake job reproduces `pip.html` byte for byte from this folder
+(sha256 a1fa88bd6ffa603c76059567c8b27c804536e39e7c07ec56c58daad55b001263,
+1924558 bytes) and the CI browser job grades that bake beside the fab bench
+(D-279), so the page and every bake input stay in git through release 1:
+`pip.html`, `bake.json`, `package.json`, `package-lock.json`, `bench/`,
+`src/`, `tools/rastermesh.js`, `tools/orca3mf.js`,
+`vendor/manifold-classic.js`, with `LICENSE`, `README.md` and
+`SHA256SUMS`.
+
+Held out of git like the M10-T01 set (D-286): `build.sh`,
+`tools/build_bench.py`, `test/smoke.py` and `test/overflow.py`. The bake
+reads none of them (`tools/bake/bake.mjs` replaces `build.sh` and
+`build_bench.py`) and no test or CI step opens them. Each equals
+`fab-knowledge:originals/pip/files/pip-controller/<same path>` byte for byte
+(compared 2026-10-21); `SHA256SUMS` keeps its row and the `.gitignore`
+held block names it.

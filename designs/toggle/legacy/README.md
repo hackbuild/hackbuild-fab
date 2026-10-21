@@ -30,3 +30,11 @@ Measured 2026-10-04 with the network off (M09 card, load table): ready
 after 3.7 s; members `ready`, `model()`, `state()`, `geom()`, `setTilt`,
 `set`, `exportBytes`; scrollWidth 390, 768 and 1280 at those widths; 0
 requests off file and data, 0 workers, 0 console errors.
+
+## Public through release 1 (R1-rails-public-10)
+
+Kept in git: `toggle.html`, `README.md` and `SHA256SUMS`. The page is the
+original release 1 grades the TOGGLE chase beside
+(`fab-knowledge:plan-v5/PLAN.md` 6, designs row) and the `toggle` adapter
+target of the hook suite; the folder holds no slicer save, shot or print
+zip.

@@ -115,3 +115,16 @@ calls `partFor('plate')`, which throws since BLOCKS replaced PLATE with
 DECK; `seatAt: 'gutter'` never applies; BUTTON travel 2.20 of a 3.20 cone
 fails the flex cone rule at its defaults (D-241; the chase default
 carries the fix, M10-T10); `MINWALL` is declared and never checked.
+
+## Public through release 1 (R1-rails-public-10)
+
+Kept in git: `boss-src.zip`, `boss-src/`, `README.md` and `SHA256SUMS`.
+`packages/circuit/test/nodal.test.ts` hashes the zip and every unpacked
+file against the block above and counts the solves of `test_sim.js` and
+`test_sim2.js`; `designs/blocks/test/route-seat.test.ts` hashes
+`src/parts.js` and `src/boss.js`.
+
+Held out of git since M10-T01 (D-286): `blocks.html`, `boss.html`,
+`boss-examples.zip` and `shots/`. `blocks.html` is the original release 1
+grades the BLOCKS chase beside (`fab-knowledge:plan-v5/PLAN.md` 6, designs
+row); on a runner without the owner's archive that comparison is not run.

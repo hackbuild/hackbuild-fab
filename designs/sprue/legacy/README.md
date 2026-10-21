@@ -26,3 +26,14 @@ presets (956 to 992), `geo` (996 to 1033), `drawLayer` (1040 to 1095),
 `compose` (1097 to 1111) and `checkThin` (1114 to 1125). From `sprue.py`:
 `motif_bolt` (312) and `build_object` (487 to 525). `print-card.txt` is
 read by the parity harness for the informational volume table.
+
+## Public through release 1 (R1-rails-public-10)
+
+Kept in git: `sprue.html`, `sprue.py`, `print-card.txt`, `README.md` and
+`sha256.txt`. The CI sprue parity step
+(`tools/py/harness/sprue_parity.py designs/sprue/legacy/sprue.html`) reads
+the page and `print-card.txt`, and the geom trace test cuts code from the
+page. `sprue.py` has no reader; it stays because the held mechanism
+(D-286, `tools/legacy/held.mjs`) records held bytes through a
+`SHA256SUMS` and this folder pins by `sha256.txt`. The folder holds no
+slicer save, shot or print zip.

@@ -91,6 +91,7 @@ tools/corpus/inlay/vtracer/07-user-art-reference.png
 /designs/ogee16/legacy/shots/p06-r16p-tab-pulled-all-clear.png
 /designs/ogee16/legacy/shots/p07-plate-page-knob-drive.png
 /designs/ogee16/legacy/shots/p09-r16-lasercut-full-select-0-0.png
+/designs/pip/legacy/build.sh
 /designs/pip/legacy/examples/pip-design.json
 /designs/pip/legacy/examples/pip-stick-design.json
 /designs/pip/legacy/original/haft-coupon.zip
@@ -117,6 +118,9 @@ tools/corpus/inlay/vtracer/07-user-art-reference.png
 /designs/pip/legacy/shots/d-step2-spring-Q2p6-latches.png
 /designs/pip/legacy/shots/d-step3-panel-hookup.png
 /designs/pip/legacy/shots/d-step4-panel-fits.png
+/designs/pip/legacy/test/overflow.py
+/designs/pip/legacy/test/smoke.py
+/designs/pip/legacy/tools/build_bench.py
 /designs/stylus/legacy/feeler-ladder (1).3mf
 /designs/stylus/legacy/feeler-ladder-inplace-sample.3mf
 /designs/stylus/legacy/feeler-ladder.json
