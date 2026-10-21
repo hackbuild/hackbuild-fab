@@ -661,6 +661,8 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-604 | midi-pad drive targets, default preset and json export | decided | reach |
 | D-605 | PIP chase shape for release 1 | decided | reach |
 | D-606 | Metric record skips a chase whose build has not landed | decided | reach |
+| D-607 | Spindle board goldens re-recorded for the archive-prefix pcb.py source | decided | Testing, boards |
+| D-608 | Remaining owner paths read through sourcePath, localSource and hbf_archives.py | decided | Testing, publish |
 
 ## House rules and process
 
@@ -7368,6 +7370,28 @@ Status: decided (delegated, R1-spike-01). The WASM run changes one value of the 
 | Decision | Taken by the agent under owner delegation on 2026-10-20. core/test/metric-record.test.ts holds a BUILD_PENDING list, today designs/pip, whose chases it does not build; a second test fails while any listed design has a build.ts, so R1-designs-reach-09 removes the entry when it lands designs/pip/build.ts. |
 | Rationale | The PIP chase (R1-designs-reach-08) lands before its build (R1-designs-reach-09), and metric-record builds every chase.ts in the tree; the ratchet keeps the skip to the one design and ends it with the build. |
 | Evidence | Without the entry `builds designs/pip` fails on the missing module; with it core vitest 1359 pass on the branch before rebase (computed, 2026-10-21). `hbf chase.validate designs/pip` reports the one error chase-ref/build-module. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-607 Spindle board goldens re-recorded for the archive-prefix pcb.py source
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `reference/boards/spindle-r1/gen.py` and `spindle-r2/gen.py` name pcb.py as `fab-work-directory:benches/spindle/outputs/spindle/pcb.py`, the home path removed. `hbf parity --accept` re-recorded both boards' build.json (defHash, buildHash, recordHash) and report.json (the path inside the CHK-BRD-06 messages): spindle-r1 build e2222c..57 (was 2d395a..ac), spindle-r2 593326..bc (was b31992..a2). `packages/project/test/fixtures/graph.jsonl` was re-recorded with `HBF_ACCEPT_GRAPH=1` although a build hash moved, which the round rules allow only when no build hash moved. A person has not accepted the goldens (D-152). |
+| Rationale | The brief requires the path out of gen.py and the goldens and says to rerun the generator and record any hash move. No geometry moved, so the D-273 equal geometry rule applies: the build hash moved only because the generator source and the provenance strings changed. Leaving the graph fixture stale would keep the stale test red on every later branch. |
+| Evidence | Before the accept, `hbf parity` on both boards: build.json and report.json differ, artifacts.json (the fab zip sha256) and reparse.json equal (computed). Board metrics equal; build.json differs only in buildHash, inputs.defHash and recordHash (computed). Each new report.json equals `publishText()` of the old one (computed). After the accept both parities pass. The graph.jsonl re-record moved 7 lines: the two spindle builds, their two build.json goldens, their two report lines (hash unchanged, links moved) and the dxf-inventory record; no other reference's build hash moved (computed). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-608 Remaining owner paths read through sourcePath, localSource and hbf_archives.py
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. Test reads guarded by `existsSync` (board cpl and kicad, geom fill's fixture, the three node tests under tools/test) use `sourcePath`; unguarded reads (core wiring-export, catalog actuator, gate and parts-audit) and the record scripts use `localSource`. Python reads go through a new `tools/py/hbf_archives.py` (`source_path`, `local_source`) with the same variables and defaults as `originals-root.ts`; pytest keeps its existing skips. `.github/scripts/owner-files.mjs` counts a `sourcePath(...)` result as an owner path, follows a template that starts with an owner name, and seeds a test's names with the owner paths a fixture one import down exports. As a result board cpl and kicad, geom fill and inlay lineage are listed as guarded and run in hosted CI with their skips; kicad.test reads its file only behind the guard. Dump scripts take their source in publish form and record it as given. `tools/counts.mjs --external` resolves each row through `sourcePath`. The two bare `fab-work-directory` rows of counts.external.json became `fab-work-directory:`. |
+| Rationale | `localSource` throws, so a guarded read through it would fail a hosted runner in place of skipping; `sourcePath` keeps the skip and owner-files still has to list the file. One Python helper avoids eleven copies of an environment lookup. Recording the source as given keeps the regenerated fixtures equal to the rewritten ones. |
+| Evidence | `owner-files.mjs report`: 29 excluded and 14 guarded files, was 31 and 10 (measured). Dropping the sourcePath rule fails 3 owner-files tests, dropping the fixture seed fails 1 (measured). The four new guarded files pass with the archive variables pointing nowhere: 46 pass, 10 skipped (measured). tenon-revolve-dump, toggle dump-route, harvest-presets and coffer-legacy reruns are byte equal to the rewritten files (measured). `counts.mjs --external` prints the same 10 ok rows before and after (measured). The three decision records D-592, D-594 and DECISIONS.md still hold the home path pattern inside their evidence commands; item 18 decides whether they stay allowed. |
 | Supersedes | new |
 | Milestone | none |
 
