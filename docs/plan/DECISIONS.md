@@ -687,6 +687,8 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-630 | Drive pads over four targets dock below the stage at 390 px | decided | UI |
 | D-631 | rules.audit skips extracted legacy fixtures | decided | tooling |
 | D-632 | Chase waivers apply in runAllChecks, matched by target id, lapsed by build day | decided | Constraints and checks |
+| D-633 | Welcome preset starts take the id preset:<id>; blank stays a legal preset id | decided | UI |
+| D-634 | chase.bake gives the design's package.json the ui devDependency with the entry | decided | UI |
 
 ## House rules and process
 
@@ -7673,6 +7675,28 @@ Status: decided (delegated). The lead closed four reds from the wave 4 health ru
 | Decision | Taken by the agent under owner delegation on 2026-10-20. packages/pipeline runAllChecks, the runner part.build, check.run, export.run and a baked bench share, applies chase.waive (D-173) in waive.ts. A waiver matches a fail by check id (aliases followed) and the result target's own id (part, body, feature, net, assembly, sheet, artifact; a pair as its two ids joined by "\|"). A waiver lapses when the build day, SOURCE_DATE_EPOCH as a UTC date, is past `until`, so a report stays reproducible; a lapsed waiver leaves the fail and warns WAIVER_LAPSED. An unused waiver warns WAIVER_UNUSED on a full run only, never under `only`. designs/toggle's CHK-PRT-04 waiver on part toggle also covers the blocks8 1.60 mm socket to footprint edge wall, the original's number, and its reason says so. R1-fix-20. |
 | Rationale | One runner keeps the CLI and the bench gate in step (D-264). Lapsing on wall-clock time would make the same inputs give two reports. A waiver target is an exact id (WaiverDecl), and a part-level check names the part, so one waiver covers every preset's wall on that part. |
 | Evidence | part.build designs/toggle --preset solo4: 0 fail, one waived CHK-PRT-04 row at 0.6396 mm (computed); solo8 and blocks8 keep their CHK-NET-02 fails. Mutant (runner passes no waivers) fails 2 of 6 in packages/pipeline/test/waive.test.ts after tsc -b (measured). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-633 Welcome preset starts take the id preset:<id>; blank stays a legal preset id
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. ui-core welcomeStarts gives the blank start the id `blank` (BLANK_START) and each preset start the id `preset:<preset id>` (presetStart); bindChase start reads the preset back through startPreset, so any other id resets to blank. chase.validate does not reserve `blank`: a chase may declare a preset named blank. This replaces the R1-fix-22 done line "a blank preset fails chase.validate". R1-fix-22. |
+| Rationale | designs/pip, designs/collar and reference/exports/orca-3mf-roundtrip each declare a preset named blank, so reserving the id would fail three chases and move their defHash; a prefix on the start id ends the collision for every preset id with no chase change. |
+| Evidence | packages/ui-core/test/chase/bind.test.ts: a flex-pair chase with a preset named blank loads two keys from preset:blank and start blank resets to one; the mutant presetStart returning the bare id fails 4 tests in bind.test.ts and storage.test.ts (measured). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-634 chase.bake writes the design's package.json with the @hackbuild/ui devDependency when it writes the entry
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. tools/bake/from-chase.ts writes the plain bench.entry.ts with the `@hackbuild/ui/bench/entry` import, as designs/blocks does, and in the same step adds `@hackbuild/ui` at the ui workspace version to the design's package.json devDependencies; with no package.json it writes one in the designs/blocks form (private, type module, the root package's licence and author). It never touches package.json when the entry already exists, so chase.bake on a committed reference leaves its folder as it was. The design does not join the root workspaces; the import resolves through the root node_modules link. R1-fix-22. |
+| Rationale | tools/tiers.mjs refuses a relative import from designs/ into packages/; the package name lets tiers check the edge, and the devDependency records it where a later workspace entry would need it. |
+| Evidence | core/test/chase-bake.test.ts: the access-switch copy bakes with the package import and gets a package.json whose ui devDependency equals designs/blocks/package.json's; 8 of 8 pass (measured). |
 | Supersedes | new |
 | Milestone | none |
 
