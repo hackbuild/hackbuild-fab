@@ -664,6 +664,7 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-607 | Spindle board goldens re-recorded for the archive-prefix pcb.py source | decided | Testing, boards |
 | D-608 | Remaining owner paths read through sourcePath, localSource and hbf_archives.py | decided | Testing, publish |
 | D-609 | Owner slicer saves move to the private corpus; rows record bytes | decided | Testing, publish |
+| D-610 | counts.json moves to tools/reports as generated test data | decided | Tooling |
 
 ## House rules and process
 
@@ -7404,6 +7405,17 @@ Status: decided (delegated, R1-spike-01). The WASM run changes one value of the 
 | Decision | Taken by the agent under owner delegation on 2026-10-20. Every file under `tools/corpus/3mf/owner/`, `legacy/` and `boss/` (110 3MF and the knurl round trip sidecar) is copied to `fab-knowledge:originals/_corpus/` at the same relative path and removed from the repo; the 113 rows whose path sits there say `where: "private"`, including the tenon known-good row the brief did not name, because its copy sits under `owner/downloads/`. gold, known-bad and sprue stay as repo rows. Every copied manifest row records `bytes` beside its sha256, and the M00-T10 fixture size check in `tools/test/plan-drift.test.mjs` sums the repo files on disk and the private rows' bytes, so the card's 62 MB figure stays checked on a hosted runner. `tools/legacy/inventory.json` is regenerated without the corpus legacy folder, and `packages/3mf/test/validate.test.ts` marks its missing-copy probe row as repo. |
 | Rationale | Counting repo rows only would leave the card's 62 MB figure unmatched by a factor of four, and reading the private copies would skip the check wherever the archive is absent. The bytes field is part of each copy's identity record, beside sha256, and `test_corpus.py` checks it against every copy present. |
 | Evidence | sha256 equal on all 111 copied files (computed). run.py with the private copies: 126 rows, 0 outside, `--json` outcomes byte equal to the run before the move; with HBF_CORPUS empty: 13 rows, 113 private rows not run (measured). Tracked 3MF under tools/corpus/3mf 122 to 12; tracked 3MF total 56,352 KB to 8,356 KB by du (computed). Dropping the private bytes from the size check fails it, card 62 MB against disk 15.7 MiB (measured). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-610 counts.json moves to tools/reports as generated test data
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `tools/counts.mjs` writes `tools/reports/counts.json` (public, generated) in place of `docs/plan/counts.json`; `npm run derived:counts` diffs the new path. The readers that name the path move with it: `tools/test/counts.test.mjs`, `plan-drift.test.mjs`, `plan-drift-audit3.test.mjs`, the M-1 acceptance command and the plan prose in PLAN.md, MILESTONES.md, DOCS.md, CANONS.md and the milestone cards that name the path. `counts.test.mjs` gains a test that the committed file equals a fresh run. Decision records that name the old path stay as written. The four package tests the brief listed read no counts.json and were left unchanged. |
+| Rationale | counts.json is generated test data (check, canon and archetype counts) that tests and plan text read, not a plan process file, so it leaves docs/plan; it stays public because tests read it. The card commands are executed by plan-drift, so the cards move with the path. |
+| Evidence | `test ! -e docs/plan/counts.json` holds; `npm run derived` and `npm run derived:counts` exit 0; `counts.test.mjs` 10 of 10 pass; editing `archetypes` 29 to 30 in the committed file fails the new test (measured). |
 | Supersedes | new |
 | Milestone | none |
 
