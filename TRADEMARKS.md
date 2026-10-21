@@ -19,4 +19,16 @@ licence in this repository (D-171, owner, default in force).
 - Marks held by others (client marks, HeatSync Labs) keep their owners'
   terms (D-147). The project never relicenses them.
 
+## Marks on inlays
+
+An inlay, relief or sticker art layer carries only marks you own or hold a
+licence for. Counterfeit branded goods are out of scope (USE.md).
+
+- The skill refuses art that is a mark you do not own, and the canon holds
+  no design that carries one.
+- A design in this repository that carries a mark held by others names the
+  holder and its terms beside the art file.
+- Every export's provenance is to record the art source of each inlay layer
+  (USE.md, Provenance).
+
 Questions about the marks go to Moheeb Zara <hackbuildvideo@gmail.com>.
