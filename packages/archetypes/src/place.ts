@@ -9,6 +9,7 @@ import {
   type ApplyOut, type FaceFrame, type Feature, type MaterialSlot, type PartDraft, type ProfileLookup,
 } from "@hackbuild/spec";
 import type { ArchetypeRegistry } from "./registry.js";
+import { candidateBuildApply } from "./def.js";
 
 export interface PlaceArgs {
   readonly id: string;
@@ -59,7 +60,9 @@ export function placeArchetype(reg: ArchetypeRegistry, a: PlaceArgs): ApplyOut {
     const at = (issue?.path ?? []).map((k) => String(typeof k === "object" && k !== null ? (k as { key: PropertyKey }).key : k)).join("/");
     throw commandError({ code: "E_SCHEMA", path: `/params${at === "" ? "" : `/${at}`}`, got: a.id, expected: issue?.message ?? "params the archetype declares", hint: `fix the params for ${e.id}: ${issue?.message ?? "invalid"}` });
   }
-  const out = def.apply({ draft: a.draft, face: a.face, params: r.value as Readonly<Record<string, unknown>>, profile: a.profile });
+  // a candidate with a build apply builds here; its def.apply refuses every other caller
+  const apply = def.status === "candidate" ? candidateBuildApply(e.id) ?? def.apply : def.apply;
+  const out = apply({ draft: a.draft, face: a.face, params: r.value as Readonly<Record<string, unknown>>, profile: a.profile });
   const slotOf = new Map<number, number>();
   for (const s of out.slots) {
     const hit = a.materials.find((m) => m.material === s.material && m.role === s.role);

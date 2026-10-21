@@ -1,0 +1,5 @@
+{
+  "queries": [
+    { "golden": "expected/query-solve.json", "command": "circuit.solve", "input": { "build": "designs/toggle" } }
+  ]
+}

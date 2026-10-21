@@ -6,6 +6,8 @@ import { describe, expect, it } from "vitest";
 import * as author from "@hackbuild/kernel/author";
 import * as spec from "@hackbuild/spec";
 import * as mesh from "@hackbuild/mesh";
+import * as archetypes from "@hackbuild/archetypes";
+import * as copper from "@hackbuild/copper";
 
 const chase = author.defineChase({
   meta: { id: "author-entry", kind: "single", name: "AUTHOR", version: 1, chase: 2, kernels: [], machines: [], license: "CC-BY-SA-4.0" },
@@ -24,6 +26,13 @@ describe("@hackbuild/kernel/author", () => {
   });
   it("re-exports the mesh edge stack generator (R1-engine-06)", () => {
     expect(author.prismWithEdges).toBe(mesh.prismWithEdges);
+  });
+  it("re-exports the TOGGLE host plan and the copper route search, one implementation each (R1-designs-reach-11)", () => {
+    expect(author.toggleHost).toBe(archetypes.toggleHost);
+    expect(author.toggleParams).toBe(archetypes.toggleParams);
+    expect(author.TOGGLE_NAMES).toBe(archetypes.TOGGLE_NAMES);
+    expect(author.TOGGLE_BLOCKS).toBe(archetypes.TOGGLE_BLOCKS);
+    expect(author.routeSearch).toBe(copper.routeSearch);
   });
   it("types build params from the chase", () => {
     const p: author.ParamsOf<typeof chase> = { d: 4 };

@@ -5,7 +5,8 @@
     "source": "fab-knowledge:originals/toggle/files/src/src/part2b.js",
     "sha256": "c8acaba6c3ff3acffb63b7496c8398076b1ae4fa4ebbbcecfdd0da57289d6c02",
     "fixes": [
-      "ported to packages/archetypes/src/toggle/solver.ts, as its header cites part2b.js (packages/archetypes/src/toggle/solver.ts line 5: \"(lines 146 to 167); part2b.js occ, samples, profileSegs, hits,\"); recorded by the M06 and M08 integration"
+      "ported to packages/archetypes/src/toggle/solver.ts, as its header cites part2b.js (packages/archetypes/src/toggle/solver.ts line 5: \"(lines 146 to 167); part2b.js occ, samples, profileSegs, hits,\"); recorded by the M06 and M08 integration",
+      "contact (part2b.js) evaluated per sector at the contact tilt and the stop into drive metrics by packages/archetypes/src/toggle/toggle.ts, which designs/toggle/build.ts contact reads for the drive pad (R1-designs-reach-11)"
     ],
     "dest": null
   }

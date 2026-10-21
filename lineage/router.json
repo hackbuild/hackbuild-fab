@@ -59,7 +59,8 @@
     "source": "fab-knowledge:originals/toggle/files/src/src/part2c.js",
     "sha256": "af62a4f9ddbb90b9bcf1a85e941194aed0d929ea05471abef85fb0888b2aa0ef",
     "fixes": [
-      "T.route (part2c.js lines 31 to 205) ported to packages/copper/src/route/manhattan.ts as the router's Manhattan mode (D-092): 4-connected moves, turn 2.5, via 30, history 1.5, 22 iterations, pop cap 400000, square mask R = max(1, ceil((w + clr)/g) - 1); TOGGLE's Float32 g and history only behind the test-only legacyFloat32 switch, Float64 by default; occupancy Uint16 where TOGGLE had Uint8; the binary heap (lines 6 to 27) is packages/copper/src/route/heap.ts, the same sift; parity with every recorded try of packages/copper/test/fixtures/toggle-presets/*.json (M05-T09)"
+      "T.route (part2c.js lines 31 to 205) ported to packages/copper/src/route/manhattan.ts as the router's Manhattan mode (D-092): 4-connected moves, turn 2.5, via 30, history 1.5, 22 iterations, pop cap 400000, square mask R = max(1, ceil((w + clr)/g) - 1); TOGGLE's Float32 g and history only behind the test-only legacyFloat32 switch, Float64 by default; occupancy Uint16 where TOGGLE had Uint8; the binary heap (lines 6 to 27) is packages/copper/src/route/heap.ts, the same sift; parity with every recorded try of packages/copper/test/fixtures/toggle-presets/*.json (M05-T09)",
+      "traceRects (part2c.js lines 207 to 220) ported to designs/toggle/build.ts traceOutline: each run's segment rectangles joined into one ring, where TOGGLE painted them into one raster (R1-designs-reach-11)"
     ],
     "dest": "packages/copper/src/route/manhattan.ts"
   },

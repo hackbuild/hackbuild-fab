@@ -182,10 +182,26 @@ export function provenArchetype<P extends Readonly<Record<string, unknown>>>(a: 
 export interface CandidateArchetype<P extends Readonly<Record<string, unknown>>> extends Omit<RefusedArchetype, "status"> {
   readonly status: "candidate";
   readonly params: SchemaLike<unknown, P>;
+  /**
+   * A port that runs with parity while the status waits on its reason
+   * (tilt-stick: an owner question on the slicer's bridge). Author.arch
+   * builds through it (spec Author.arch, M10-T09: a candidate builds and
+   * its build reads candidate); the def's own derive and apply still
+   * refuse, so arch.apply and every other caller refuse the candidate.
+   */
+  readonly buildApply?: ArchetypeDef<P>["apply"];
+}
+
+const BUILD_APPLY = new Map<string, ArchetypeDef["apply"]>();
+
+/** The apply Author.arch runs for a candidate that carries one; undefined otherwise. */
+export function candidateBuildApply(id: string): ArchetypeDef["apply"] | undefined {
+  return BUILD_APPLY.get(id);
 }
 
 /** A candidate with typed params: registered and refused like refusedArchetype, its params schema kept for promotion. */
 export function candidateArchetype<P extends Readonly<Record<string, unknown>>>(a: CandidateArchetype<P>): ArchetypeDef<P> {
-  const { params, ...rest } = a;
+  const { params, buildApply, ...rest } = a;
+  if (buildApply !== undefined) BUILD_APPLY.set(a.id, buildApply as unknown as ArchetypeDef["apply"]);
   return { ...(refusedArchetype(rest) as unknown as ArchetypeDef<P>), params };
 }

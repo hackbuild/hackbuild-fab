@@ -4874,7 +4874,8 @@
     "source": "fab-knowledge:originals/toggle/files/src/src/part2c.js",
     "sha256": "af62a4f9ddbb90b9bcf1a85e941194aed0d929ea05471abef85fb0888b2aa0ef",
     "fixes": [
-      "T.route (part2c.js lines 31 to 205) ported to packages/copper/src/route/manhattan.ts as the router's Manhattan mode (D-092): 4-connected moves, turn 2.5, via 30, history 1.5, 22 iterations, pop cap 400000, square mask R = max(1, ceil((w + clr)/g) - 1); TOGGLE's Float32 g and history only behind the test-only legacyFloat32 switch, Float64 by default; occupancy Uint16 where TOGGLE had Uint8; the binary heap (lines 6 to 27) is packages/copper/src/route/heap.ts, the same sift; parity with every recorded try of packages/copper/test/fixtures/toggle-presets/*.json (M05-T09)"
+      "T.route (part2c.js lines 31 to 205) ported to packages/copper/src/route/manhattan.ts as the router's Manhattan mode (D-092): 4-connected moves, turn 2.5, via 30, history 1.5, 22 iterations, pop cap 400000, square mask R = max(1, ceil((w + clr)/g) - 1); TOGGLE's Float32 g and history only behind the test-only legacyFloat32 switch, Float64 by default; occupancy Uint16 where TOGGLE had Uint8; the binary heap (lines 6 to 27) is packages/copper/src/route/heap.ts, the same sift; parity with every recorded try of packages/copper/test/fixtures/toggle-presets/*.json (M05-T09)",
+      "traceRects (part2c.js lines 207 to 220) ported to designs/toggle/build.ts traceOutline: each run's segment rectangles joined into one ring, where TOGGLE painted them into one raster (R1-designs-reach-11)"
     ],
     "dest": "packages/copper/src/route/manhattan.ts"
   },
@@ -6344,7 +6345,8 @@
     "fixes": [
       "assignments (part2d.js lines 118 to 143) ported to packages/copper/src/route/assign.ts, with a guard returning no map when nets outnumber terminals (TOGGLE indexed past the ring); tryRoute and routeSearch (lines 169 to 205, 218 to 260) ported to packages/copper/src/route/search.ts with the plan view as data; the 0.2, 0.6, 0.65, 0.71 and 0.5 mm lengths of lines 171, 176, 197, 229 and 237 are profile constants route.stick.*; parity with packages/copper/test/fixtures/toggle-presets/*.json written by tools/legacy/toggle/dump-route.cjs (M05-T09)",
       "routeAll cache (lines 207 to 217) ported to packages/copper/src/route/cache.ts: 6 results, newest first, keyed by the RFC 8785 canonical JSON of the whole plan view and the route.stick.* constants (TOGGLE keyed a hand-picked field list) (M05-T09)",
-      "ported to packages/archetypes/src/toggle/solver.ts, as its header cites part2d.js (packages/archetypes/src/toggle/solver.ts line 2: \"presets), ported from originals/toggle/files/src/src: part2d.js\"); recorded by the M06 and M08 integration"
+      "ported to packages/archetypes/src/toggle/solver.ts, as its header cites part2d.js (packages/archetypes/src/toggle/solver.ts line 2: \"presets), ported from originals/toggle/files/src/src: part2d.js\"); recorded by the M06 and M08 integration",
+      "layoutXY terminals, round tab and BLOCKS grid (part2d.js lines 60 to 114), the BLOCKS ledge top of T.stack (line 165) and the pin cup heights of T.build (lines 429 to 433) ported to packages/archetypes/src/toggle/host.ts, the plan view equal to packages/copper/test/fixtures/toggle-presets/*.json at all four presets (designs/toggle/test/build.test.ts); T.build order and the slab plan bodies of T.features (lines 263 to 326) ported to designs/toggle/build.ts, a pin bore or socket bore as a host pocket and a hole in its conductor, since a conductor region is one ring (R1-designs-reach-11)"
     ],
     "dest": "packages/copper/src/route/search.ts"
   },
@@ -6355,7 +6357,8 @@
     "sha256": "ceb482f4d9393c24699815453825c5f68f40afc8991da317732c54775f6fa889",
     "fixes": [
       "angNorm and angDist (part2a.js lines 45 to 46) ported to packages/copper/src/route/assign.ts for the assignment DP and the COM gap order (M05-T09)",
-      "ported to packages/archetypes/src/toggle/solver.ts, as its header cites part2a.js (packages/archetypes/src/toggle/solver.ts line 7: \"295); part2a.js capTop (lines 85 to 102). The arithmetic keeps the\"); recorded by the M06 and M08 integration"
+      "ported to packages/archetypes/src/toggle/solver.ts, as its header cites part2a.js (packages/archetypes/src/toggle/solver.ts line 7: \"295); part2a.js capTop (lines 85 to 102). The arithmetic keeps the\"); recorded by the M06 and M08 integration",
+      "T.SLOTS, blankState and PRESETS (part2a.js lines 9 to 34) are designs/toggle/chase.ts materials, defaults and presets solo4, solo8, blocks8; pinDepth and plain join packages/archetypes/src/toggle/toggle.ts toggleParams (R1-designs-reach-11)"
     ],
     "dest": null
   },
@@ -6364,7 +6367,9 @@
     "kind": "canonical",
     "source": "fab-knowledge:originals/toggle/files/src/src/part4.js",
     "sha256": "37d194fff6702f85510e846d3ebda6b82fa136b420b8e4e55c88e6cb692ce71a",
-    "fixes": [],
+    "fixes": [
+      "PANES (part4.js lines 111 to 159) ported to designs/toggle/chase.ts params: every range and step, show rules as showWhen, PHYSICS as a fold; texture pitch, cPLA rho and the print rows other than trace layers are left out, as the chase header says (R1-designs-reach-11)"
+    ],
     "dest": null
   },
   {
@@ -6391,7 +6396,8 @@
     "source": "fab-knowledge:originals/toggle/files/src/src/part2b.js",
     "sha256": "c8acaba6c3ff3acffb63b7496c8398076b1ae4fa4ebbbcecfdd0da57289d6c02",
     "fixes": [
-      "ported to packages/archetypes/src/toggle/solver.ts, as its header cites part2b.js (packages/archetypes/src/toggle/solver.ts line 5: \"(lines 146 to 167); part2b.js occ, samples, profileSegs, hits,\"); recorded by the M06 and M08 integration"
+      "ported to packages/archetypes/src/toggle/solver.ts, as its header cites part2b.js (packages/archetypes/src/toggle/solver.ts line 5: \"(lines 146 to 167); part2b.js occ, samples, profileSegs, hits,\"); recorded by the M06 and M08 integration",
+      "contact (part2b.js) evaluated per sector at the contact tilt and the stop into drive metrics by packages/archetypes/src/toggle/toggle.ts, which designs/toggle/build.ts contact reads for the drive pad (R1-designs-reach-11)"
     ],
     "dest": null
   },

@@ -6,7 +6,8 @@
     "sha256": "ceb482f4d9393c24699815453825c5f68f40afc8991da317732c54775f6fa889",
     "fixes": [
       "angNorm and angDist (part2a.js lines 45 to 46) ported to packages/copper/src/route/assign.ts for the assignment DP and the COM gap order (M05-T09)",
-      "ported to packages/archetypes/src/toggle/solver.ts, as its header cites part2a.js (packages/archetypes/src/toggle/solver.ts line 7: \"295); part2a.js capTop (lines 85 to 102). The arithmetic keeps the\"); recorded by the M06 and M08 integration"
+      "ported to packages/archetypes/src/toggle/solver.ts, as its header cites part2a.js (packages/archetypes/src/toggle/solver.ts line 7: \"295); part2a.js capTop (lines 85 to 102). The arithmetic keeps the\"); recorded by the M06 and M08 integration",
+      "T.SLOTS, blankState and PRESETS (part2a.js lines 9 to 34) are designs/toggle/chase.ts materials, defaults and presets solo4, solo8, blocks8; pinDepth and plain join packages/archetypes/src/toggle/toggle.ts toggleParams (R1-designs-reach-11)"
     ],
     "dest": null
   }

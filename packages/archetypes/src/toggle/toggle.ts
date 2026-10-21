@@ -16,7 +16,7 @@ import { z } from "zod";
 import { commandError, type ApplyIn, type ApplyOut, type DerivedValue, type ProfileLookup, type SchemaLike, type Tier, type Vec2 } from "@hackbuild/spec";
 import { circle, dv, frameOf, locateFit, pipStack, place, rect, type Frame } from "../pip/common.js";
 import { Emit } from "../pip/emit.js";
-import { physics, solveToggle, stemStress, type ToggleG, type ToggleNet, type ToggleState } from "./solver.js";
+import { contact, physics, solveToggle, stemStress, type ToggleG, type ToggleNet, type ToggleState } from "./solver.js";
 
 export { solveToggle, TOGGLE_INTERNALS, type ToggleG, type ToggleNet, type ToggleState } from "./solver.js";
 export { contact as toggleContact, stemStress as toggleStemStress, bandPen as toggleBandPen, capTop as toggleCapTop } from "./solver.js";
@@ -70,9 +70,11 @@ export const toggleParams = z.object({
   /** body size when auto is off, mm */ size: z.number().positive().default(18),
   auto: z.boolean().default(true),
   term: z.enum(["header", "wire", "pads"]).default("header"),
+  /** pin depth into a header or wire cup, mm (part2a.js line 20) */ pinDepth: z.number().positive().default(3.0),
   /** wire bore, mm */ bore: z.number().positive().default(1.2),
   /** BLOCKS body studs, 0 is auto, count */ studs: z.number().int().nonnegative().default(0),
   pegs: z.enum(["both", "top", "bottom"]).default("both"),
+  /** BLOCKS positions with no net: a TPU socket ring or a PETG bore (part2a.js line 21) */ plain: z.enum(["tpu", "petg"]).default("tpu"),
   /** wall pad depth, mm */ padD: z.number().positive().default(0.8),
   /** layers between pads and ring, count */ split: z.number().positive().default(2),
   /** gap between sectors, mm */ gap: z.number().positive().default(0.8),
@@ -86,6 +88,8 @@ export const toggleParams = z.object({
   /** trace layers the router used, count */ layers: z.union([z.literal(1), z.literal(2)]).default(1),
   /** sector gap index holding the COM column (gap k sits at (k + 0.5) 360 / dirs deg) */ comGap: z.number().int().nonnegative().default(2),
   common: z.string().min(1).default("COM"),
+  /** lead angle per direction, rad, as the host's route settled them; absent leads sit at the sector centres (part2d.js lines 284 to 286) */
+  leadAng: z.array(z.number()).optional(),
 }).strict();
 export type ToggleParams = z.infer<typeof toggleParams>;
 export const TOGGLE_PARAMS = toggleParams as unknown as SchemaLike<unknown, ToggleParams>;
@@ -106,7 +110,7 @@ export type TogglePreset = keyof typeof TOGGLE_PRESETS;
 export const togglePreset = (key: TogglePreset, over: Partial<ToggleParams> = {}): ToggleParams => toggleParams.parse({ ...TOGGLE_PRESETS[key], ...over });
 
 /** The machine layer the TOGGLE stack is built on (the preset's layer height). */
-function layerOf(profile: ProfileLookup, machine: string): number {
+export function toggleLayer(profile: ProfileLookup, machine: string): number {
   return pipStack(profile, machine, { body: "petg", trace: "cpla" }).layer;
 }
 
@@ -127,7 +131,7 @@ export function togglePhysics(P: ToggleParams, G: ToggleG, profile: ProfileLooku
 }
 
 export function toggleDerive(P: ToggleParams, profile: ProfileLookup, machine = "ffc5p"): Record<string, DerivedValue> {
-  const L = layerOf(profile, machine);
+  const L = toggleLayer(profile, machine);
   const G = toggleSolve(P, L);
   const rp = toggleRhoP(profile);
   const ph = physics(G, P as ToggleState, rp.ohmCm, []);
@@ -253,8 +257,8 @@ export function toggleApply(input: ApplyIn<ToggleParams>, id: string): ApplyOut 
 
   // Wall contacts (part2d.js lines 283 to 292): a lead sector from the top trace layer to the pad zone, then the pad.
   G.sectors.forEach((sec, k) => {
-    const net = names[k] as string, hw = 0.5 / G.Re;
-    e.conductor(`conductor.lead${k}`, net, wallSector(G.Rw, G.Rw + G.pd, sec.c - hw, sec.c + hw), tt.z0, G.zB0, 1.0);
+    const net = names[k] as string, hw = 0.5 / G.Re, lead = P.leadAng?.[k] ?? sec.c;
+    e.conductor(`conductor.lead${k}`, net, wallSector(G.Rw, G.Rw + G.pd, lead - hw, lead + hw), tt.z0, G.zB0, 1.0);
     e.conductor(`conductor.pad${k}`, net, wallSector(G.Rw, G.Rw + G.pd, sec.a0, sec.a1), G.zB0, G.zB1, G.pd);
     e.feature({ kind: "port", id: `port.dir${k}`, net, type: "signal", interface: "digital" });
   });
@@ -303,6 +307,16 @@ export function toggleApply(input: ApplyIn<ToggleParams>, id: string): ApplyOut 
   e.metric("stick.strain", ph.strain, "ratio", "neck strain at the stop", []);
   e.metric("stick.rCollar", ph.rCollar, "ohm", "collar path, TOGGLE's declared cTPU resistivity", NO_ROW);
   e.metric("stick.ring", ph.ring, "ohm", "common ring, Protopasta printed along from profile", [rp.tier]);
+  // The pads a held direction closes (part2b.js contact, the drive pad's hold): at the contact
+  // tilt and at the stop, toward the sector centre; a host's ContactFn reads these, since a
+  // build module cannot run the solver.
+  const stop = Number.isFinite(G.thStop) ? G.thStop : G.thS;
+  G.sectors.forEach((sec, k) => {
+    for (const [at, tilt] of [["contact", G.thContact], ["stop", stop]] as const) {
+      const c = contact(G, tilt, sec.c * 180 / Math.PI);
+      e.metric(`drive.${k}.${at}`, c.sectors.join(","), undefined, `pads closed tilting toward ${names[k] as string} to ${tilt.toFixed(2)} deg`, []);
+    }
+  });
   e.metric("stick.stemStress", st.sigmaMPa, "MPa", `20 N side push at the cap top on the ${2 * G.rn} mm neck core, lever ${st.leverMm.toFixed(2)} mm; limit ${TOGGLE_STEM_LIMIT_MPA} as PIP prices its stem`, [], "informational", "fits");
   if (st.sigmaMPa >= TOGGLE_STEM_LIMIT_MPA) e.warnings.push({ code: "FIT", text: `stick: stem stress at a 20 N side push is ${st.sigmaMPa.toFixed(1)} MPa, limit ${TOGGLE_STEM_LIMIT_MPA}; thicken the neck or move to a full stem with a collar as PIP does` });
   for (const w of G.warn) e.warnings.push({ code: "TOGGLE", text: w });

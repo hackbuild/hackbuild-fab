@@ -4,10 +4,11 @@
 // emits and provenance mirror the seed, limits carry the D-096 corrections
 // (src/corrections.ts). Its references sticks/pip-stick (PIP preset) and
 // sticks/tilt-stick-4 (TOGGLE solo4) pass parity and check.run; it stays a
-// candidate on the virtual print of the TOGGLE preset (statusReason).
+// candidate on the virtual print of the TOGGLE preset (statusReason). Its
+// apply runs for Author.arch (designs/toggle) while arch.apply refuses it.
 
 import { candidateArchetype } from "../def.js";
-import { TILT_STICK_PARAMS } from "../toggle/tilt.js";
+import { TILT_STICK_PARAMS, tiltStickApply } from "../toggle/tilt.js";
 import { shippedProfile } from "../resistance.js";
 import { stickSections } from "../pip/sections.js";
 
@@ -42,4 +43,5 @@ export const tiltStick = candidateArchetype({
   ],
   sections: stickSections(shippedProfile()),
   params: TILT_STICK_PARAMS,
+  buildApply: (input) => tiltStickApply(input, "tilt-stick"),
 });

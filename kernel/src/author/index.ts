@@ -4,7 +4,13 @@
 // source reader admits this module and @hackbuild/spec as chase imports
 // (CHASE_IMPORT_MODULES, D-178). prismWithEdges is the edge spec on the stack
 // route (PLAN.md 3.3, R1-engine-06); a build.ts awaits it for a body base.
+// toggleHost and routeSearch let a tilt stick host route its own leads in
+// the sandbox (R1-designs-reach-11): the host plan of the TOGGLE presets
+// (packages/archetypes toggle/host.ts) and the copper route search over it,
+// both pure functions of params and profile.
 
 export { defineBuild, defineChase, type BuildFn, type CheckedChase, type ParamIdOf, type ParamsOf } from "@hackbuild/chase";
 export { prismWithEdges, type EdgePrism } from "@hackbuild/mesh";
 export type { EdgeKind, EdgeProfile, EdgeSpec } from "@hackbuild/geom";
+export { TOGGLE_BLOCKS, TOGGLE_NAMES, toggleHost, toggleParams, type ToggleHost, type ToggleParams } from "@hackbuild/archetypes";
+export { routeSearch, type StickRoute } from "@hackbuild/copper";

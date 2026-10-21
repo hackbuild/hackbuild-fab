@@ -20,7 +20,9 @@
     "test": "vitest run --passWithNoTests"
   },
   "dependencies": {
+    "@hackbuild/archetypes": "0.0.0",
     "@hackbuild/chase": "0.0.0",
+    "@hackbuild/copper": "0.0.0",
     "@hackbuild/geom": "0.0.0",
     "@hackbuild/mesh": "0.0.0"
   }

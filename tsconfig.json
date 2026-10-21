@@ -122,6 +122,9 @@
       "path": "designs/knurl"
     },
     {
+      "path": "designs/toggle"
+    },
+    {
       "path": "reference/exports/orca-3mf-roundtrip"
     },
     {

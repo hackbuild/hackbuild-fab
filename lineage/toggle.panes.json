@@ -4,7 +4,9 @@
     "kind": "canonical",
     "source": "fab-knowledge:originals/toggle/files/src/src/part4.js",
     "sha256": "37d194fff6702f85510e846d3ebda6b82fa136b420b8e4e55c88e6cb692ce71a",
-    "fixes": [],
+    "fixes": [
+      "PANES (part4.js lines 111 to 159) ported to designs/toggle/chase.ts params: every range and step, show rules as showWhen, PHYSICS as a fold; texture pitch, cPLA rho and the print rows other than trace layers are left out, as the chase header says (R1-designs-reach-11)"
+    ],
     "dest": null
   },
   {
