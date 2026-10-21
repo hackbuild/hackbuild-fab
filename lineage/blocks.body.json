@@ -40,5 +40,15 @@
       "ported to packages/archetypes/src/defs/blocks-stud.ts, as its header cites boss.js (packages/archetypes/src/defs/blocks-stud.ts line 3: \"column (boss.js lines 93 to 110); the port lives in src/blocks/stud.ts.\"); recorded by the M06 and M08 integration"
     ],
     "dest": null
+  },
+  {
+    "id": "blocks.body/blocks-1-chase",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/blocks/files/src-extracted/blocks.js",
+    "sha256": "36feb99134fd23227ec4db6fbf8668de4f9c8527febba8034401f50cb77d7b9b",
+    "fixes": [
+      "the slots (lines 54 to 59), the pitch (line 19) and the layer (line 14) read by designs/blocks/chase.ts and build.ts; the standard is a chase question with no default (D-087), and a standard whose layer differs from the machine preset warns LAYER (R1-designs-reach-13)"
+    ],
+    "dest": "designs/blocks/build.ts"
   }
 ]

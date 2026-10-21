@@ -2,6 +2,32 @@
   "note": "recorded by core/test/metric-record.test.ts from part metrics at default params; read by metric-gates.test.ts",
   "builds": [
     {
+      "build": "designs/blocks",
+      "part": "wire",
+      "metrics": [
+        {
+          "id": "blocks-wire.0.wire.len",
+          "gate": "informational"
+        },
+        {
+          "id": "blocks-wire.0.wire.chord",
+          "gate": "informational"
+        },
+        {
+          "id": "blocks-wire.0.wire.R",
+          "gate": "informational"
+        },
+        {
+          "id": "blocks-wire.0.wire.fits.sheath-wall-each-side",
+          "gate": "informational"
+        },
+        {
+          "id": "blocks.standard",
+          "gate": "informational"
+        }
+      ]
+    },
+    {
       "build": "designs/collar",
       "part": "coin",
       "metrics": []
@@ -1652,6 +1678,22 @@
         },
         {
           "id": "layout.top",
+          "gate": "informational"
+        },
+        {
+          "id": "keys.1.travel",
+          "gate": "informational"
+        },
+        {
+          "id": "keys.2.travel",
+          "gate": "informational"
+        },
+        {
+          "id": "keys.3.travel",
+          "gate": "informational"
+        },
+        {
+          "id": "keys.4.travel",
           "gate": "informational"
         }
       ]

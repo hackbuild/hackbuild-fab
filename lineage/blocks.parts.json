@@ -48,5 +48,15 @@
       "TOUCH works with control key touched (boss parts.js:479 to 498); BLOCKS renamed it to touch0..N and broke it"
     ],
     "dest": null
+  },
+  {
+    "id": "blocks.parts/blocks-1-chase",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/blocks/files/src-extracted/parts.js",
+    "sha256": "8822104bf031a6c803218f98791346e7015448f00af774f21a0cc13a42686b1f",
+    "fixes": [
+      "WIRE_PARAMS (lines 565 to 577) declared as the WIRE group of designs/blocks/chase.ts, labels lowercase, the core select slot numbers 4 and 2 written as the archetype material ids ctpu and cpla; brickBody corner 0.6 (line 56) read by designs/blocks/build.ts (R1-designs-reach-13)"
+    ],
+    "dest": "designs/blocks/chase.ts"
   }
 ]

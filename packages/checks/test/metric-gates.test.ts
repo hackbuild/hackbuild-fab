@@ -103,15 +103,23 @@ const INFORMATIONAL: readonly { readonly pattern: RegExp; readonly why: string }
   { pattern: /^paddle\.(massG|guideClr|travel|boss)$/, why: "keys/access-switch paddle readouts: solid mass (a spring preload, never subtracted), guide clearance from profile access.paddleGuideClr, stop travel and boss length; no CHK-FIT row covers the guide and no failure on record sets a bound (R1-flagship-access-switch-02)" },
   { pattern: /^claim\.press\.(targetN|lo|hi)$/, why: "keys/access-switch press claim band from profile access.pressTargetN and access.pressBandPct; the claim stays unproven until a person enters a coupon reading, so no check gates it (R1-flagship-access-switch-04)" },
   { pattern: /^jack\.(legDepth|axisZ|wall)$/, why: "keys/access-switch jack seat readouts: leg depth against seat.socketPinMin (build.ts warns FIT under it), axis height and the wall the nut clamps; no failure on record sets a bound (R1-flagship-access-switch-06)" },
+  { pattern: /^blocks\.standard$/, why: "the brick standard a designs/blocks part is built on (D-087), a word with no bound; the stud archetype's <id>.<n>.stud.standard row states the same fact (R1-designs-reach-13)" },
+  { pattern: /^keys\.\d+\.travel$/, why: "keys/midi-pad drive pad targets, each a copy of its key's flex-cone-key.<n>.key.travel, which CHK-KEY-01 gates (R1-designs-reach-07)" },
   { pattern: /^R\.(leads|closed)$/, why: "keys/access-switch closed path resistance on the cPLA tier, PIP's readout (model.js lines 453 to 460 and 481); the threshold of a switch interface is unknown, so no failure on record sets a bound (R1-flagship-access-switch-06)" },
 ];
 
-/** The builds a recording must hold: reference/<area>/<id> and designs/<id> with a chase.ts. */
+/**
+ * The builds a recording must hold: reference/<area>/<id> and designs/<id>
+ * with a chase.ts and a build.ts. A design whose chase landed before its
+ * build (designs/pip until R1-designs-reach-09) has nothing to record;
+ * core/test/metric-record.test.ts names it in BUILD_PENDING and fails once
+ * its build lands.
+ */
 function chases(): string[] {
   const dirs = (p: string): string[] => readdirSync(p, { withFileTypes: true }).filter((e) => e.isDirectory()).map((e) => e.name).sort();
   const refs = dirs(path.join(ROOT, "reference")).flatMap((a) => dirs(path.join(ROOT, "reference", a)).map((id) => `reference/${a}/${id}`));
   return [...dirs(path.join(ROOT, "designs")).map((id) => `designs/${id}`), ...refs]
-    .filter((rel) => existsSync(path.join(ROOT, rel, "chase.ts"))).sort();
+    .filter((rel) => existsSync(path.join(ROOT, rel, "chase.ts")) && (rel.startsWith("reference/") || existsSync(path.join(ROOT, rel, "build.ts")))).sort();
 }
 
 describe(`metric gates over ${path.relative(ROOT, RECORD_FILE)}`, () => {
