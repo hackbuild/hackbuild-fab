@@ -630,6 +630,7 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-573 | project-graph records one reference per test, the links describe reads that store | decided | Testing |
 | D-574 | SLC-FOREIGN fails a foreign region at or over 1.0 mm2 | decided | Rails, virtual print |
 | D-575 | SLC-BED and SLC-SLOTS read the completed project config | decided | Rails, virtual print |
+| D-576 | repaired skill copies stay in the ignored archive folder | decided | Knowledge |
 
 ## House rules and process
 
@@ -7010,6 +7011,17 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. SLC-BED reads curr_bed_type, support_multi_bed_types, default_bed_type and the per-slot plate temperatures from the config slice.mjs hands the slicer (completeProject: flattened presets with every embedded key over them), so a temperature the 3MF embeds is graded as sliced. The bed passes only when support_multi_bed_types is "1" or default_bed_type equals it, and both `<plate>_temp` and `<plate>_temp_initial_layer` are over 0 in every slot. The plate name to key pairing (Cool, Engineering, High Temp, Textured PEI, Textured Cool, Supertack) follows the OrcaSlicer enum, inferred, the key names read from the Flash Studio 1.7.14 bundle. SLC-SLOTS counts the chase material slots for a --design run and the 3MF's own filament list for a bare 3MF; a --filament-map stand-in warns, so keys flex-pair preset two grades SLC-SLOTS warn (slots 3 and 4, Generic TPU-95A for Generic TPU, D-238), never pass, until the owner question of D-238 closes. An unbundled preset without a map still stops the run in completeProject before any row is written. |
 | Rationale | The completed config is what the slicer slices; grading the raw presets would miss an embedded override. The brief's done line expected SLC-SLOTS pass on flex-pair, which only holds once the writer names a bundled TPU preset. |
 | Evidence | tools/slice/profile-checks.mjs PLATE_TEMP_KEYS comment; tools/test/profile-checks.test.mjs (bed unset, bed not allowed, plate temperature zero, substitution, unresolved slot); slice-run.json of keys flex-pair preset two, 2026-10-20: SLC-BED pass Textured PEI Plate, SLC-SLOTS warn (computed). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-576 Repaired skill copies stay in the ignored archive folder
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The board-forge reference repairs (sensor-surfaces.md copied from fab-knowledge:originals/keyway/files/lessons with a provenance header, datasheet-intake.md written from the datasheet-forge SKILL.md step 1 and its ten rules with line citations, datasheets.md pointing at what exists, doc-figures.md given the hardware-diagrams trigger scope) are written to the ignored knowledge/references/board-forge/ of the main checkout, where the copies already live (.gitignore: assistant skill files kept in the owner archive). They are not committed. The tracked knowledge/test/references-links.test.mjs scans whatever copies are on disk: every references/ name resolves inside its skill folder, every scripts/ name to its repo home, or an external entry with a reason; a fresh checkout checks the tracked folders only and says so. Lineage rows knowledge.sensor-surfaces, knowledge.datasheet-forge and knowledge.hardware-diagrams name the sources with dest null, since an ignored dest fails the lineage dest test. |
+| Rationale | Committing the copies would reverse the public-tree exclusion in .gitignore; leaving them unrepaired leaves PLAN v9.1 section 3.4 open. The three conduyt references the installed conduyt skill names exist nowhere and stay listed external. |
+| Evidence | .gitignore lines 12 to 14; knowledge/test/references-links.test.mjs (96 names in 15 files with the copies present, 9 names in 4 files without; deleting sensor-surfaces.md fails naming board-forge-SKILL.md lines 21 and 29); sha256 f6ddd778... of the sensor-surfaces source; fab-knowledge:sources/downloads/skills-2026-10-06.md 3.3 and 3.4. |
 | Supersedes | new |
 | Milestone | none |
 
