@@ -694,6 +694,8 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-637 | CHK-KEY-05 2.0.0 reads a contact that declares coneH as a flex key | decided | Constraints and checks |
 | D-638 | Scene and kernel inputs are stored copies with a manifest, never legacy reads | decided | tooling |
 | D-639 | Small original records are stored inputs; pages are read through the originals | decided | tooling |
+| D-640 | OGEE16 print STLs and SLUG page lines are public stored inputs of their scenes | decided | tooling |
+| D-641 | Extraction tools read the originals; records check inputs by sha256 | decided | tooling |
 
 ## House rules and process
 
@@ -7757,6 +7759,28 @@ Status: decided (delegated). The lead closed four reds from the wave 4 health ru
 | Decision | Taken by the agent under owner delegation on 2026-10-20. An original record of a few KB that a test takes as its expected values (stipple_latch.json, the WASHER plan-square drive record, both DERRICK arm_ref files, the DAVIT R4 sweep and verify_sim run records) is a stored input with a lineage copy row, so the test stays in the hosted runs. A test that reads an original page or source (gusset-v16.html, shunt board.json and gen_board.py, cotter kit.js, hook_fit.py line 62, stipple-r17b.html lines 154, 461 and 542, detent-plot.html and laser-rig.html profile lines, pawl run1, det1 and core.mjs, the R3 STL zip) reads it through localOriginal or localSource; those tests moved to their own files (expect-shunt, export-names-kit, planners-originals, stipple-originals, pawl-originals, cotter-insert-originals, imported-davit) so the rest of each file stays hosted. A golden that pinned a legacy copy's sha256 now pins its lineage row's (davit-chain, derrick-fk, davit-r4-parity-verify). The derrick capture fixture, written by export_bodies.py, moved to packages/checks/test/derrick-capture, and the CHK-ASM-10 origin evidence names the original hook_fit.py. The recorded project graph drops the cotter-hook and pawl scene lines, since those scenes no longer name a legacy tree; stored inputs are not graph sources yet. R1-rails-public-09. |
 | Rationale | The brief routes original comparisons to the owner runner (D-278); splitting keeps hosted coverage of everything that does not need the archive. A sha256 pinned to lineage is checked against the original by tools/test/lineage.test.mjs where the archive is present. The owner can reverse the stored records by deleting their rows. |
 | Evidence | owner-files.mjs list names the seven new owner files and gusset-orders; the hosted-like run with HBF_ORIGINALS unset and the ten legacy folders removed passes for nest, sim, motion, mesh and checks minus those files. Oracle reruns (cotter_insert_oracle.py, imported_oracle.py, davit_chain_golden.py, davit_r4_poses_golden.py) changed only source labels, every number equal (computed). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-640 OGEE16 print STLs and SLUG page lines are public stored inputs of their scenes
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The shipped OGEE R16-P print STLs a scene reads are stored as members of fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip under lineage subject ogee16.print-stl: 20 under packages/sim/scenes/inputs/ogee16/print for ogee16-printed and ogee16-cranks, 25 under packages/nest/scenes/inputs/ogee16-r16p-plates/print for the plates scene, so each package carries its own inputs (8 overlap). params.scad and slug.scad are stored whole in packages/motion/inputs for motion.run and core kinematics. The plates and slug-sheets scenes read only the source lines they parse (params.scad 36, plate_template.html 178 and 263, slug.html 174 to 177, 272 and 1042 to 1051), and the nest and 3mf tests read cutfiles.py 18 to 32, build_plate.py 5 to 12 and plate_template.html 409 to 419 the same way. The STLs carry no profile names. The audit poses export_poses.py writes moved to packages/sim/scenes/ogee16-poses; their origin field keeps the label they were written with, since the pose file enters the ogee16-printed declaration hash. R1-rails-public-08. |
+| Rationale | The brief makes the call that STLs a shipped scene needs stay public as fixtures; storing line takes instead of whole pages keeps the public copy to the data a scene reads. Keeping the pose origin label keeps every build and record hash where it was. The owner can reverse it by deleting the stored rows and pointing the scenes at an archive. |
+| Evidence | 11.5 MB of STL (measured); every stored file equals its take from the originals (stored-inputs-originals.test.ts, 81 rows); export_poses.py rerun from the originals wrote both pose files byte equal (computed); the sheet goldens moved in sources text only, layoutHash and 3MF hashes equal. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-641 Extraction tools read the originals; records check inputs by sha256
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. designs/slug/extract/extract-nest.mjs and extract.mjs and designs/ogee16/extract/extract-plate.mjs and extract-steps.mjs read their pages and sources from fab-knowledge:originals through tools/test-support/originals-root.ts. tools/legacy/record.mjs finish() now holds each pinned input to the set of sha256 values the committed record lists, and writes archive ids in publish form as keys, so records written from the legacy copies still check without being rewritten. Tests that import these tools (shelf-parity, maxrects-parity and the new assembly-order, ogee16-plates and slug-sheets originals files) route to the owner runner; the rest of each nest test reads stored lines, the scene's slugPage() or the committed records. The project graph keys OGEE16 items on the legacy path, so packages/project stale.test.ts keeps that id and its SHA256SUMS read. R1-rails-public-08. |
+| Rationale | One reader per original; the record keys name where an input was read, the sha256 is its identity. Moving the parity tests to the owner runner is the brief's route (D-278), and splitting keeps the hosted runs for everything else. |
+| Evidence | extract-nest --check, extract-plate and extract-steps pass against the committed records from the originals; hosted-like run (HBF_ORIGINALS unset, ogee16, slug and ogee16-r16p legacy folders removed) of packages/nest, sim and motion: 36 files, 371 tests passed; owner-files list names the moved tests. |
 | Supersedes | new |
 | Milestone | none |
 
