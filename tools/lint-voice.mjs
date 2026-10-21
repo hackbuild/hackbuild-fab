@@ -1,5 +1,5 @@
 // lint-voice: RULES.md Language and the wrong brand hexes as code (D-004).
-// Rule table: docs/plan/milestones/M-1-housekeeping.md, card M-1-T03.
+// Rule table: card M-1-T03 in fab-knowledge:plan-archive/milestones/M-1-housekeeping.md.
 // Banned characters are built from code points, so this file passes its own dash, emoji and sparkle rules.
 // Text inside a .zip or .3mf is read through the packages/3mf reader (D-166
 // limits) and held to the same rules; a finding in an archive an allow row

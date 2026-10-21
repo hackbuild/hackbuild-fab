@@ -1,7 +1,7 @@
 [
   { "path": "RULES.md", "rules": ["marketing", "filler", "opener", "frame", "brand-hex"], "reason": "states the bans in RULES.md Language, quotes the frame it bans and names the wrong hexes" },
   { "path": "CLAUDE.md", "rules": ["marketing", "filler", "opener", "brand-hex"], "reason": "imports RULES.md and repeats its bans" },
-  { "path": "docs/plan/**", "rules": ["marketing", "filler", "opener", "brand-hex"], "reason": "quote the bans and lint targets: the M-1-T03 rule table and T13 voice-fix table in docs/plan/milestones/M-1-housekeeping.md, docs/plan/RISKS.md R-15, the hook text in docs/plan/REPOS.md" },
+  { "path": "docs/plan/**", "rules": ["marketing", "filler", "opener", "brand-hex"], "reason": "quote the bans and lint targets: the hook text in docs/plan/REPOS.md" },
   { "path": "knowledge/05-taste.md", "rules": ["brand-hex"], "reason": "lists the wrong hexes as wrong" },
   { "path": "tools/lint-voice.mjs", "rules": ["marketing", "filler", "opener", "frame", "brand-hex"], "reason": "the patterns themselves" },
   { "path": "tools/lint-voice.allow.json", "rules": ["marketing", "filler", "opener", "frame", "brand-hex"], "reason": "the patterns themselves" },

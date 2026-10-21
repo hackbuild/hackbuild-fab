@@ -3,7 +3,7 @@
 All notable changes to hackbuild-fab are recorded here, in the form of
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). There is no
 release yet and no version number, so each entry below Unreleased is one
-milestone of `docs/plan/MILESTONES.md`, dated by the commit that first
+milestone of the plan's MILESTONES.md (in the owner's archive), dated by the commit that first
 carried it. None of these milestones is complete, and no part this code
 exported has been printed. The milestone table and the Status section of
 `README.md` say what each one still lacks.

@@ -2,7 +2,7 @@
 // not-run skip a node test takes when the plan archive is not on the runner.
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { PLAN_NOT_RUN, planCard, planCards, planDoc, planHere, planRoot, planSkip } from "../test-support/plan-root.mjs";
@@ -24,9 +24,10 @@ test("HBF_PLAN names the plan folder, with a trailing slash", () => {
   assert.equal(planRoot({ HBF_PLAN: `${plan}/` }), `${plan}/`);
 });
 
-test("unset, the plan is docs/plan while the cards are there", () => {
-  assert.equal(planRoot({}), join(root, "docs/plan/"));
-  assert.equal(planRoot({ HBF_PLAN: "" }), join(root, "docs/plan/"));
+test("unset, the plan is the sibling archive once the cards left docs/plan", () => {
+  assert.equal(existsSync(join(root, "docs/plan/milestones")), false, "docs/plan holds no milestone cards");
+  assert.equal(planRoot({}), join(root, "..", "fab-knowledge/plan-archive/"));
+  assert.equal(planRoot({ HBF_PLAN: "" }), join(root, "..", "fab-knowledge/plan-archive/"));
 });
 
 test("a folder without MILESTONES.md holds no plan: the skip is the not-run reason and a read throws", () => {

@@ -37,12 +37,13 @@ Always, about 15K tokens:
 - `RULES.md`. Absolute; it wins over every other file here.
 - This file.
 - `docs/plan/PLAN.md` sections 0 to 2: house rules, what this is, scope, claim and kernel.
-- `docs/plan/MILESTONES.md` Part 1 and Part 3.
+- `fab-knowledge:plan-archive/MILESTONES.md` Part 1 and Part 3.
 - The Index table in `docs/plan/DECISIONS.md`. Cite decisions by id; never contradict one.
 
 Per task, about 25K tokens:
 
-- That task's section of the current card in `docs/plan/milestones/`, the card header and Exit.
+- That task's section of the current card in `fab-knowledge:plan-archive/milestones/`, the card header
+  and Exit.
 - `spec/index.ts` and the spec files named on the task's Inputs line. If a check you write reads
   triangles, ask which feature kind should carry the declaration.
 - Each D-id the task cites, in `docs/plan/decisions/D-NNN.md` (one file per entry; DECISIONS.md
@@ -107,7 +108,7 @@ Empty dirs hold a README naming their milestone (D-026); see PACKAGES.md.
 - Then M00: profile, geom, mesh, 3mf at parity, the hbf CLI with the error contract and the TTY
   gate, the D-178 chase source reader and build.ts sandbox, then the hackbuild-3mf extraction.
 - Then M01 constraints, which turns generate-and-test into generate-from-legal, then the order in
-  `docs/plan/MILESTONES.md`.
+  `fab-knowledge:plan-archive/MILESTONES.md`.
 - Every milestone starts by wiring its adopted dependency at the pin in `docs/plan/PLAN.md`
   section 16 and proving parity against it before any of our own code is written.
 - Parity is a triple: geometry matches, params round-trip, and an edit to one param produces the

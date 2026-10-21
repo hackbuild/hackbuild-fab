@@ -1,11 +1,11 @@
 // lint-plan-types: plan documents link to spec types and never copy their bodies
-// (MILESTONES.md 1.5 and 3.7, card M-S-T01 in docs/plan/milestones/M-S-walking-skeleton.md).
+// (MILESTONES.md 1.5 and 3.7, card M-S-T01 in the plan archive's milestones/M-S-walking-skeleton.md).
 // Collects every exported type and interface name from spec/*.ts, scans fenced code
 // blocks in the plan docs, and reports a `type <Name> =`, `interface <Name>` or
 // `<Name> {` declaration whose name is a spec export.
 // Usage:
 //   node tools/lint-plan-types.mjs [--warn] [--spec <dir>] [--report <file>] [<path>...]
-// Paths default to docs/plan and docs/plan/milestones (Markdown files, not recursive).
+// Paths default to docs/plan, and docs/plan/milestones when present (Markdown files, not recursive).
 // The hit list goes to tools/reports/plan-types.txt unless --report names another file.
 // Exit 0 with no hit or under --warn, 1 on a hit, 2 on a usage error.
 // Warn mode holds until the M00 exit; then CI drops --warn and the lint blocks.
@@ -117,7 +117,7 @@ function main(argv) {
       return 2;
     } else paths.push(resolve(a));
   }
-  if (paths.length === 0) paths.push(join(REPO, "docs/plan"), join(REPO, "docs/plan/milestones"));
+  if (paths.length === 0) paths.push(...[join(REPO, "docs/plan"), join(REPO, "docs/plan/milestones")].filter((p) => existsSync(p)));
   let result;
   try {
     result = lint({ specDir, paths });
