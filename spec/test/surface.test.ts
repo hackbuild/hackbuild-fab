@@ -17,12 +17,13 @@ import { EXPORT_ALIASES } from "../hook";
 import { FEATURE_KINDS, FEATURE_KIND_ADMISSION, FEATURE_KIND_ALIASES, KIND_MILESTONES, MOVED_FEATURE_KINDS } from "../features";
 
 describe("command surface", () => {
-  test("CommandName has 30 members in six groups", () => {
-    expect(COMMAND_NAMES).toHaveLength(30);
-    expect(new Set(COMMAND_NAMES).size).toBe(30);
+  test("CommandName has 31 members in six groups; draft (R1-engine-24) is the 31st, in make, CLI only", () => {
+    expect(COMMAND_NAMES).toHaveLength(31);
+    expect(new Set(COMMAND_NAMES).size).toBe(31);
     for (const n of COMMAND_NAMES) expect(GROUPS).toContain(COMMAND_GROUP[n]);
     const perGroup = Object.fromEntries(GROUPS.map((g) => [g, COMMAND_NAMES.filter((n) => COMMAND_GROUP[n] === g).length]));
-    expect(perGroup).toEqual({ query: 8, author: 5, build: 4, prove: 7, look: 3, make: 3 });
+    expect(perGroup).toEqual({ query: 8, author: 5, build: 4, prove: 7, look: 3, make: 4 });
+    expect(CLI_ONLY).toContain("draft");
   });
 
   test("McpToolName has 19 members, legal for the Claude API, in fixed order", () => {
@@ -88,8 +89,8 @@ describe("command surface", () => {
 });
 
 describe("errors and exits", () => {
-  test("eleven error codes, each mapped to a transport", () => {
-    expect(ERROR_CODES).toHaveLength(11);
+  test("twelve error codes, each mapped to a transport", () => {
+    expect(ERROR_CODES).toHaveLength(12);
     for (const c of ERROR_CODES) expect(ERROR_TRANSPORT[c]).toBeDefined();
   });
 
@@ -103,6 +104,7 @@ describe("errors and exits", () => {
     expect(ERROR_TRANSPORT.E_KERNEL.exit).toBe(1);
     expect(ERROR_TRANSPORT.E_KERNEL.http).toBe(200);
     expect(ERROR_TRANSPORT.E_PARAM_MISSING.exit).toBe(2);
+    expect(ERROR_TRANSPORT.E_DRAFT).toEqual({ exit: 2, http: 409, isError: true });
   });
 
   test("an empty interval is an answer, not a tool error", () => {

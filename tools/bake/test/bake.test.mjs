@@ -298,3 +298,24 @@ test('off-file requests: src, srcset, poster and css url outside scripts; anchor
     '<script>const ns="http://www.w3.org/2000/svg"; el.src="https://never.example/x.js";</script>\n';
   assert.deepEqual(offFileRequests(page), ['//cdn.example/i.png', 'http://cdn.example/p.jpg', 'https://cdn.example/s.png', 'https://cdn.example/b.png']);
 });
+
+test('a data block is one line of JSON under its +json type with every </ escaped; another type fails (R1-engine-24)', async () => {
+  const dir = fixture({
+    'shell.html': SHELL,
+    'draft.json': { chase: 'const a = "</script><img src=x>";', n: 1 },
+    'bake.json': { id: 'fx', shell: 'shell.html', data: [{ from: 'draft.json', type: 'application/hbf-draft+json', label: 'fx draft sources' }] },
+  });
+  try {
+    const r = await bake(join(dir, 'bake.json'), { outRoot: join(dir, 'dist') });
+    const text = readFileSync(r.out, 'utf8');
+    const m = /<script type="application\/hbf-draft\+json">(.*)<\/script>\n/.exec(text);
+    assert.ok(m, 'data block present');
+    assert.ok(!m[1].includes('</'), 'no closing tag inside the block');
+    assert.deepEqual(JSON.parse(m[1]), { chase: 'const a = "</script><img src=x>";', n: 1 });
+    assert.deepEqual(offFileRequests(text), [], 'a src inside the block is no request');
+    writeFileSync(join(dir, 'bake.json'), JSON.stringify({ id: 'fx', shell: 'shell.html', data: [{ from: 'draft.json', type: 'text/javascript', label: 'x' }] }));
+    await rejects(dir, /is not an application\/<name>\+json type/);
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});

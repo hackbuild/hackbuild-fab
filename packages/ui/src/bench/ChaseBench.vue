@@ -10,14 +10,19 @@ import { createWelcome, type ChaseBinding } from "@hackbuild/ui-core";
 import BenchShell from "./BenchShell.vue";
 import { useShell, type BenchReport } from "../stores/shell.js";
 import { widgetComponent } from "../widgets/registry.js";
+import type { DraftWidget } from "./entry.js";
 
 interface Props {
   binding: ChaseBinding<BenchReport>;
   /** Mount the WebGL stage; false for a DOM without WebGL (unit tests). */
   stage?: boolean;
+  /** An hbf draft page (mountBench draft): BenchShell shows the draft banner. */
+  draft?: boolean;
+  /** A draft's inline widget. */
+  widget?: DraftWidget | null;
 }
 
-const props = withDefaults(defineProps<Props>(), { stage: true });
+const props = withDefaults(defineProps<Props>(), { stage: true, draft: false, widget: null });
 const shell = useShell();
 const b = props.binding;
 
@@ -64,6 +69,8 @@ function exportKind(kind: string): void {
     :writable="b.writable"
     :fabrication="b.fabrication"
     :stage="props.stage"
+    :draft="props.draft"
+    :widget="props.widget"
     @open="b.open"
     @start="b.start"
     @export="exportKind"

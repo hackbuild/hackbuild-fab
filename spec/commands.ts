@@ -46,9 +46,11 @@ export const GROUPS = ["query", "author", "build", "prove", "look", "make"] as c
 export type Group = (typeof GROUPS)[number];
 
 /**
- * The 30 CLI commands, grouped (D-106). asm.declare folds into part.build,
+ * The 31 CLI commands, grouped (D-106). asm.declare folds into part.build,
  * and so does import for audit (D-146, D-160): part.build with `import`
- * set builds one Part from an STL, GLB, STEP, WRL or OpenSCAD file.
+ * set builds one Part from an STL, GLB, STEP, WRL or OpenSCAD file. draft
+ * (plan v9 3.1, R1-engine-24) is the 31st and CLI only until the MCP
+ * projection of draft and adopt is decided (engine brief finding F4).
  */
 export const COMMAND_NAMES = [
   // query (8)
@@ -61,8 +63,8 @@ export const COMMAND_NAMES = [
   "check.run", "fits.table", "sim.run", "sim.sweep", "circuit.solve", "motion.run", "rules.audit",
   // look (3)
   "view.render", "chase.render", "project.graph",
-  // make (3)
-  "chase.bake", "nest.pack", "export.run",
+  // make (4)
+  "chase.bake", "nest.pack", "export.run", "draft",
 ] as const;
 export type CommandName = (typeof COMMAND_NAMES)[number];
 
@@ -74,7 +76,7 @@ export const COMMAND_GROUP = {
   "check.run": "prove", "fits.table": "prove", "sim.run": "prove", "sim.sweep": "prove",
   "circuit.solve": "prove", "motion.run": "prove", "rules.audit": "prove",
   "view.render": "look", "chase.render": "look", "project.graph": "look",
-  "chase.bake": "make", "nest.pack": "make", "export.run": "make",
+  "chase.bake": "make", "nest.pack": "make", "export.run": "make", "draft": "make",
 } as const satisfies Record<CommandName, Group>;
 
 /** Utility verbs: no CommandResult, no verdict. */
@@ -93,8 +95,8 @@ export type McpToolName = (typeof MCP_TOOL_NAMES)[number];
 /** Claude API tool name pattern. */
 export const TOOL_NAME_PATTERN = /^[a-zA-Z0-9_-]{1,128}$/;
 
-/** CLI-only commands; also served as a resource (project.graph as hbf://project/graph). */
-export const CLI_ONLY = ["project.graph"] as const satisfies readonly CommandName[];
+/** CLI-only commands; project.graph is also served as a resource (hbf://project/graph); draft waits on the F4 decision. */
+export const CLI_ONLY = ["project.graph", "draft"] as const satisfies readonly CommandName[];
 
 // Result contract (D-064).
 
@@ -784,8 +786,10 @@ export interface CommandIO {
     input: {
       chase: string;
       /**
-       * page (default) bakes the release page. draft is reserved for the
-       * DRAFT page of hbf draft (R1-engine-24) and is refused until then.
+       * page (default) bakes the release page. draft bakes the DRAFT page of
+       * a draft directory (one holding draft.json, R1-engine-24): checks show
+       * as warnings, exports carry DRAFT, the sources ride in the page. A
+       * draft directory bakes only as draft (E_DRAFT); page on it refuses.
        */
       mode?: "page" | "draft";
     };
@@ -794,6 +798,24 @@ export interface CommandIO {
       /** Baked file size, bytes; at most 16 MB (D-129). */
       bytes: number;
       hash: Hash;
+    };
+  };
+  "draft": {
+    input: {
+      /** What the draft is for, in words; it names the draft when name is absent. */
+      goal: string;
+      /** The bench or design to start from: a reference or design id, or the reference:, design: and draft: forms chase.scaffold takes. */
+      from?: string;
+      /** Lowercase slug; becomes meta.id and .hbf/drafts/<name>. Absent, the goal as a slug. */
+      name?: string;
+    };
+    output: {
+      /** The draft directory, relative to the git top: .hbf/drafts/<name>. */
+      dir: string;
+      /** The files written into it, sorted. */
+      files: readonly string[];
+      /** The baked DRAFT page, its size in bytes (measured, at most 16 MB, D-129) and sha256. */
+      page: { file: string; bytes: number; hash: Hash };
     };
   };
   "nest.pack": {

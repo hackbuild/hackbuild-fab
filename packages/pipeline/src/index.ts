@@ -21,7 +21,8 @@ export {
   packageCheckIds, readRow, registryDefs, runAllChecks, runBuildRegistry, runChecks, sheetMachineView, threeMfConfig, threeMfInput,
   type AllChecked, type AssembleOptions, type Built, type Checked, type Design, type DraftRun, type Meshed, type Rebuild, type Workspace,
 } from "./build.js";
+export { MODEL_ENTRY, draftCard, draftEntries, draftModel, draftResults } from "./draft-mark.js";
 export {
-  PAGE_EXPORTS, createPageBuild, pageDesign, runDraft,
+  PAGE_EXPORTS, createPageBuild, draft3mf, pageDesign, runDraft,
   type DraftKinds, type PageBuild, type PageExportKind, type PageFacts, type PageFile, type PageInput, type PageMesh, type PageResult,
 } from "./page.js";

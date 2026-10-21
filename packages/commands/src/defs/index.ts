@@ -15,6 +15,7 @@ import { spec as chaseValidate } from "./chase-validate.js";
 import { spec as checkRun } from "./check-run.js";
 import { spec as circuitSolve } from "./circuit-solve.js";
 import { spec as constraintsQuery } from "./constraints-query.js";
+import { spec as draft } from "./draft.js";
 import { spec as exportRun } from "./export-run.js";
 import { spec as fitsTable } from "./fits-table.js";
 import { spec as mechDerive } from "./mech-derive.js";
@@ -45,6 +46,7 @@ export const SPECS: readonly AnySpec[] = [
   checkRun,
   circuitSolve,
   constraintsQuery,
+  draft,
   exportRun,
   fitsTable,
   mechDerive,

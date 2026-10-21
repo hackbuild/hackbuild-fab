@@ -152,3 +152,8 @@
 @media(prefers-reduced-motion:reduce){
   .hbf-bench *{ transition:none; animation:none }
 }
+
+/* The draft banner (R1-engine-24): an ink chip with paper text, first in
+   the status strip, so a draft never reads as an adopted design. */
+.hbf-draft{ font-family:var(--hb-utility); font-size:var(--hbf-fs-label); text-transform:uppercase; letter-spacing:.1em; background:var(--hb-ink); color:var(--hb-paper); padding:0 var(--hb-s2); border:var(--hbf-hair) solid var(--hb-paper) }
+.hbf-draft-widget{ font-family:var(--hb-readout); font-size:var(--hbf-fs-read); color:var(--hb-paper) }

@@ -26,6 +26,7 @@ export const ERROR_CODES = [
   "E_REPEAT",
   "E_KERNEL",
   "E_PARAM_MISSING",
+  "E_DRAFT",
 ] as const;
 
 /**
@@ -42,7 +43,8 @@ export const ERROR_CODES = [
  * forged. E_GATE_UNAVAILABLE the client cannot be asked; a person runs the
  * CLI. E_REPEAT the same RepeatKey a third time, or the same failing
  * report a fourth. E_KERNEL a kernel refused; carries a knowledge record id. E_PARAM_MISSING a check's measured
- * value is NaN or missing.
+ * value is NaN or missing. E_DRAFT the design is an hbf draft (plan v9 3.1):
+ * export.run refuses it before the gate and the hint names hbf adopt.
  */
 export type ErrorCode = (typeof ERROR_CODES)[number];
 
@@ -208,6 +210,7 @@ export const ERROR_TRANSPORT = {
   E_GATE: { exit: EXIT_CODES.gateUnavailable, http: 403, isError: true },
   E_KERNEL: { exit: EXIT_CODES.fail, http: 200, isError: true },
   E_PARAM_MISSING: { exit: EXIT_CODES.input, http: 422, isError: true },
+  E_DRAFT: { exit: EXIT_CODES.input, http: 409, isError: true },
 } as const satisfies Record<ErrorCode, TransportMapping>;
 
 /**
