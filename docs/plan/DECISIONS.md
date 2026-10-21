@@ -698,6 +698,7 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-641 | Extraction tools read the originals; records check inputs by sha256 | decided | tooling |
 | D-642 | Package, core and reference tests read plan cards through plan-root | decided | tooling |
 | D-643 | A refused build keeps the last good model; range-end kernel faults go to the owner | decided | UI |
+| D-644 | A refusal names the fields changed from the last good build and closes every export | decided | UI |
 
 ## House rules and process
 
@@ -7805,6 +7806,17 @@ Status: decided (delegated). The lead closed four reds from the wave 4 health ru
 | Decision | Taken by the agent under owner delegation on 2026-10-21. R1-fix-21 is re-scoped as R1-fix-26: when a commit's build refuses, the bench shell keeps the last good model drawn, marks it stale with the refusal code and message, logs the refused write and keeps the export gate closed. The range ends that refuse in the kernel (TOGGLE minGap 0.7 and 0.8, PIP W 100 to 120 and 17 more PIP ends) stay unfixed in release 1 and are listed for the owner, because each fix found moves default meshes (D-152) or changes packages/mesh partition. No chase range is narrowed for them. |
 | Rationale | The original TOGGLE builds at minGap 0.8, so narrowing its range departs from the original (D-222); the T-junction fix moved default meshHashes and volumes and added a 0.00 mm3 CHK-PRT-03 overlap at blocks8 (computed). The original PIP fails the same narrow widths with its own warnings. A bench that blanks on a refusal fails G-11 and G-15 for a reason the person cannot see; keeping the last good model with a named refusal is honest and leaves geometry alone. |
 | Evidence | R1-fix-21 branch r1/R1-fix-21-r1 (19f3773) and its sweep logs in wt/R1-fix-21-r1/.hbf/r1-fix-21/ (computed, 2026-10-21). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-644 A refusal names the fields changed from the last good build and closes every export
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. R1-fix-26 lands D-643 in packages/ui-core: the bench core keeps a refusal record (rev, code, hint, refused state, last good state) beside the kept result, and the fields a refusal names are those whose value differs from the last good build, read against the chase params, since a BENCH.state write passes loadDesign and names no field. While the current rev is refused every export, the free json included, is closed with one reason line, in BENCH.exportBytes and in the exports panel. spec/hook.ts settled() is left as written: it still rejects on a refused build, so gold G-10 and G-15 on a bench whose range end refuses stop there. |
+| Rationale | A diff against the drawn model names what the person changed even when the write came through the hook or a loaded file. Closing json keeps one gate rule and matches the core, whose ensureMesh already throws for a refused rev. Changing settled() would change the BenchHook contract and the gold rules, which the brief forbids. |
+| Evidence | packages/ui-core/test/bench/refusal.test.ts (a clear-the-scene mutant fails it); tools/smoke/refused.spec.ts on a TOGGLE bake at minGap 0.8 (computed, 2026-10-21); gold G-10 and G-15 on TOGGLE fail at tools/smoke/gold/gold.ts hookSettled with the E_KERNEL union refusal, and pass on flex-pair and blocks. |
 | Supersedes | new |
 | Milestone | none |
 
