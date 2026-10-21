@@ -639,6 +639,8 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-582 | the plugin hook matches the plugin-scoped export_run name | decided | Agent surface |
 | D-583 | changelog entries are dated by the first commit of each milestone | decided | Public repo |
 | D-584 | hbf://capabilities is canonical json and the served tool count is computed | decided | Agent surface |
+| D-585 | The quick start runs the collar coin and the CI history leaves the README | decided | Docs |
+| D-586 | CLAUDE.md links USE.md under What not to do | decided | Docs |
 
 ## House rules and process
 
@@ -7118,6 +7120,28 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. hbf mcp registers one resource, hbf://capabilities (application/json), from MCP_RESOURCES in core/src/mcp/discover.ts. A read builds the body at call time as the RFC 8785 canonical json of capabilities(workspace), the rows hbf capabilities --json prints. mcpFacts carries resources, each with uri, mime type and the sha256 of that body, so server/discover and hbf doctor --json report it. The brief's "tool count stays 19" is tested as: spec MCP_TOOL_NAMES declares 19, the listed tools equal servedTools("all"), and their count is 19 less the unserved tools; the resource adds no tool. |
 | Rationale | Canonical json makes the discover hash reproducible from the body a host reads, so a host can tell a cached copy is current without a second request. The server lists 18 tools today because knowledge_search has no CommandDef yet; asserting a typed 19 would fail on main, and a typed 18 would go stale when knowledge_search lands. |
 | Evidence | node tools/mcp/client.mjs list: 18 tools, knowledge_search absent (measured); core/test/mcp-capabilities.test.ts passes 3 of 3, and a mutant that skips the registration fails the list and read tests while the tool test passes (measured). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-585 The quick start runs the collar coin and the CI history leaves the README
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. docs/how-to/quick-start.md walks designs/collar (build, check, hbf init stick --from collar, virtual slice, stop at the export gate) instead of flex-pair or toggle, and says which steps do not work yet: init from toggle and from reference:keys/flex-pair, part.build and check.run on a folder outside the workspace, and evidence add on a design with no claim. The README Status keeps the latest CI run and the no-print line; the CI run history and the verified block move to docs/explanation/ci-history.md, since CHANGELOG.md belongs to R1-rails-public-17 and records milestones. |
+| Rationale | The brief asks that every quick-start command run in a scratch clone and that nothing unbuilt is presented as working. The collar path is the one that runs end to end today; the refused paths are named so a maker is not surprised. |
+| Evidence | In a local git clone on 2026-10-21 (measured): npm ci 63 s, tsc -b 131 s, hbf doctor all ok but board blocked, check.run designs/collar 0 fail 1 warn 13 pass 44 skip, init stick --from collar PASS, slice.mjs exit 0 with Flash Studio CLI 2.3.2 (SLC-BED and SLC-SLOTS pass, computed). init --from toggle and --from reference:keys/flex-pair exit 2 with E_REF; evidence add designs/collar exits 2 with E_REF (no claims). Latest CI run 38667622976 on 13856c3: 26 passed, 1 skipped (measured, gh run view). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-586 CLAUDE.md links USE.md under What not to do
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. CLAUDE.md gains one bullet under What not to do naming USE.md and its refusal categories and stating that the standing authorization covers building, never exporting. The README and CLAUDE.md rows in tools/test/policy-files.test.mjs are no longer pending. |
+| Rationale | PLAN.md 5 asks that the use policy be linked from the README and the skill, and policy-files.test.mjs marked both rows pending on R1-rails-public-16. CLAUDE.md is outside the brief's Writes line; the owner may move or reword the bullet. |
+| Evidence | node --test tools/test/policy-files.test.mjs: 8 pass, 0 fail, 1 todo (the print card row), measured. |
 | Supersedes | new |
 | Milestone | none |
 
