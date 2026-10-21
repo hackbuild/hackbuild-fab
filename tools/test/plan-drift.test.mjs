@@ -354,7 +354,8 @@ test("the retired OGEE 577 and the unverified SLUG 126 of 128 carry their decisi
   for (const p of files) {
     for (const para of read(p).split(/\n\s*\n|\n(?=\|)/)) {
       const flat = para.replace(/\s+/g, " ");
-      if (/(?<![\d.])577(?![\d.])/.test(flat)) {
+      // The Appendix B decision entries row is written by tools/counts.mjs; its count passed 577 at D-578.
+      if (/(?<![\d.])577(?![\d.])/.test(flat) && !flat.startsWith("| decision entries |")) {
         seen577++;
         assert.match(flat, /D-233/, `${p}: 577 without D-233: ${flat.slice(0, 200)}`);
       }
