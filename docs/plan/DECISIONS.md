@@ -686,6 +686,7 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-629 | TOGGLE keeps the original's walls under a chase waiver | decided | Constraints and checks |
 | D-630 | Drive pads over four targets dock below the stage at 390 px | decided | UI |
 | D-631 | rules.audit skips extracted legacy fixtures | decided | tooling |
+| D-632 | Chase waivers apply in runAllChecks, matched by target id, lapsed by build day | decided | Constraints and checks |
 
 ## House rules and process
 
@@ -7661,6 +7662,17 @@ Status: decided (delegated). The lead closed four reds from the wave 4 health ru
 | Decision | Taken by the agent under owner delegation on 2026-10-21. SOURCE_SKIPS in core/src/commands/rules-audit.ts gains designs/*/extract/fixtures/, the files R1-rails-public-07 moved out of legacy/ and pins by SHA256SUMS. The extract scripts themselves stay audited. R1-fix-18. |
 | Rationale | CHK-FIT-04 failed the ogee16 proud-head fixture after the move; the fixture is evidence kept as shipped, the same class as the legacy skip (D-142). |
 | Evidence | rules-audit 9 of 9; removing the row fails 2 tests after tsc -b (measured, 39e5758). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-632 Chase waivers apply in runAllChecks, matched by target id, lapsed by build day
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. packages/pipeline runAllChecks, the runner part.build, check.run, export.run and a baked bench share, applies chase.waive (D-173) in waive.ts. A waiver matches a fail by check id (aliases followed) and the result target's own id (part, body, feature, net, assembly, sheet, artifact; a pair as its two ids joined by "\|"). A waiver lapses when the build day, SOURCE_DATE_EPOCH as a UTC date, is past `until`, so a report stays reproducible; a lapsed waiver leaves the fail and warns WAIVER_LAPSED. An unused waiver warns WAIVER_UNUSED on a full run only, never under `only`. designs/toggle's CHK-PRT-04 waiver on part toggle also covers the blocks8 1.60 mm socket to footprint edge wall, the original's number, and its reason says so. R1-fix-20. |
+| Rationale | One runner keeps the CLI and the bench gate in step (D-264). Lapsing on wall-clock time would make the same inputs give two reports. A waiver target is an exact id (WaiverDecl), and a part-level check names the part, so one waiver covers every preset's wall on that part. |
+| Evidence | part.build designs/toggle --preset solo4: 0 fail, one waived CHK-PRT-04 row at 0.6396 mm (computed); solo8 and blocks8 keep their CHK-NET-02 fails. Mutant (runner passes no waivers) fails 2 of 6 in packages/pipeline/test/waive.test.ts after tsc -b (measured). |
 | Supersedes | new |
 | Milestone | none |
 
