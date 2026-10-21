@@ -1,6 +1,6 @@
 {
  "version": 1,
- "about": "3MF conformance corpus (M00-T10, TESTING.md 6). One row per file; copies sit beside this file with their sha256. run.py runs every row through tools/py/validate_3mf.py and the TypeScript mirror. A changed expectation carries a reason. A row's where is repo (the copy is tracked here) or private (the copy sits under HBF_CORPUS, default the sibling fab-knowledge/originals/_corpus/, and the row is counted not run where that copy is absent). source names the original in publish form (tools/publish-paths.mjs).",
+ "about": "3MF conformance corpus (M00-T10, TESTING.md 6). One row per file; copies sit beside this file with their sha256. run.py runs every row through tools/py/validate_3mf.py and the TypeScript mirror. A changed expectation carries a reason. A row's where is repo (the copy is tracked here) or private (the copy sits under HBF_CORPUS, default originals/_corpus/ in the fab-knowledge archive, and the row is counted not run where that copy is absent). source names the original in publish form (tools/publish-paths.mjs).",
  "sets": {
   "gold": {
    "label": "gold"

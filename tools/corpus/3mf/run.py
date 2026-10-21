@@ -13,8 +13,8 @@ whose sha256 drifted, a sameAs row whose source differs from its target,
 two sources that slugify to one destination, or a corpus file no row names.
 
 A row's `where` says where its copy sits: repo (beside this file, tracked)
-or private (under HBF_CORPUS, default the sibling
-fab-knowledge/originals/_corpus/). A repo row whose copy is missing is a
+or private (under HBF_CORPUS, default originals/_corpus/ in the
+fab-knowledge archive). A repo row whose copy is missing is a
 manifest problem. A private row runs where its copy is present and is
 otherwise counted in "N private rows not run", never passed; reports and
 set asserts then do not run either.
@@ -54,8 +54,11 @@ SEED_TEMPLATE = HERE / "seed-97.json"
 GOLD_ID = "gold"
 SLICE_INFO = "Metadata/slice_info.config"
 PLATE_JSON = "Metadata/plate_1.json"
-# The folder holding this repo and its siblings; a publish-form source (tools/publish-paths.mjs) resolves against it.
-SIBLINGS = REPO.parent
+# A publish-form source (tools/publish-paths.mjs) names the owner's archives by prefix and sibling
+# repositories by bare name; each archive is read from its variable when set, else from the owner's
+# folder of that name under Projects/hackbuild, as packages/checks/test/origin.test.ts reads them (D-592).
+OWNER_PROJECTS = Path.home() / "Projects/hackbuild"
+ARCHIVES = {"fab-knowledge": "HBF_FAB_KNOWLEDGE", "fab-work-directory": "HBF_FAB_WORK_DIRECTORY"}
 CORPUS_VAR = "HBF_CORPUS"
 WHERE = ("repo", "private")
 # Sets whose copies keep the source file name under the slug rule (step 1); known-bad and gold are renamed on purpose.
@@ -74,8 +77,12 @@ def slug(name):
     return re.sub(r"[^a-z0-9._-]+", "-", stem.lower()).strip("-") + ext
 
 
+def archive(name):
+    return Path(os.environ.get(ARCHIVES[name]) or OWNER_PROJECTS / name)
+
+
 def private_root():
-    return Path(os.environ.get(CORPUS_VAR) or SIBLINGS / "fab-knowledge/originals/_corpus")
+    return Path(os.environ.get(CORPUS_VAR) or archive("fab-knowledge") / "originals/_corpus")
 
 
 def root_of(row):
@@ -93,10 +100,10 @@ def present(row):
 
 def source_file(src):
     """The local file a publish-form source names, e.g. fab-knowledge:evidence/x/a.3mf or 3d/coin/b.3mf."""
-    for root in ("fab-knowledge", "fab-work-directory"):
-        if src.startswith(root + ":"):
-            return SIBLINGS / root / src[len(root) + 1:]
-    return Path.home() / src[2:] if src.startswith("~/") else SIBLINGS / src
+    for name in ARCHIVES:
+        if src.startswith(name + ":"):
+            return archive(name) / src[len(name) + 1:]
+    return Path.home() / src[2:] if src.startswith("~/") else OWNER_PROJECTS / src
 
 
 def parse_mode(mode):

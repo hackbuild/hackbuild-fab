@@ -5,7 +5,7 @@
 
 import { spawnSync } from "node:child_process";
 import { existsSync, mkdtempSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
-import { tmpdir } from "node:os";
+import { homedir, tmpdir } from "node:os";
 import { dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { afterAll, describe, expect, it } from "vitest";
@@ -197,8 +197,8 @@ afterAll(() => {
 });
 
 const MANIFEST = join(CORPUS, "manifest.json");
-// A private row's copy sits outside this repo (tools/corpus/3mf/run.py, same default and variable).
-const PRIVATE = process.env["HBF_CORPUS"] || join(REPO, "../fab-knowledge/originals/_corpus");
+// A private row's copy sits outside this repo, read as tools/corpus/3mf/run.py reads it.
+const PRIVATE = process.env["HBF_CORPUS"] || join(process.env["HBF_FAB_KNOWLEDGE"] || join(homedir(), "Projects", "hackbuild", "fab-knowledge"), "originals", "_corpus");
 
 interface Corpus { readonly rows: Row[]; readonly notRun: string[] }
 
