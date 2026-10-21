@@ -23,8 +23,8 @@ function surfaceRows(milestones: readonly string[]): [string, string][] {
 const mentioned = (cell: string, names: readonly string[]): string[] =>
   names.filter((n) => new RegExp(`(^|[\\s,(])${n.replace(".", "\\.")}([\\s,)]|$)`).test(cell));
 
-/** Release 1 utility verbs (plan v9 section 3.1): hbf evidence add and list landed with R1-engine-26. */
-const R1_VERBS: readonly string[] = ["evidence"];
+/** Release 1 utility verbs (plan v9 sections 2, 3.1 and 3.4): hbf evidence add and list landed with R1-engine-26, hbf capabilities with R1-designs-reach-15. */
+const R1_VERBS: readonly string[] = ["evidence", "capabilities"];
 
 /** M01 commands not registered yet; fits.table landed with M01-T09. */
 const M01_PENDING: readonly string[] = [];

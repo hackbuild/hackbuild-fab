@@ -27,6 +27,7 @@ import { runParity, type ParityOut } from "./commands/parity.js";
 import { runMcp } from "./commands/mcp.js";
 import { mcpFacts } from "./mcp/discover.js";
 import { evidenceAdd, evidenceList, renderEvidenceRow } from "./commands/evidence.js";
+import { capabilities, renderCapabilities } from "./commands/capabilities.js";
 
 export interface Io {
   readonly out: (s: string) => void;
@@ -53,6 +54,7 @@ export function usage(): string {
     "  parity            <reference> [--accept] [--json]",
     "  evidence add      <design> --claim <id> (--value <v> --unit <u> | --note <text> [--direction high|low] | --file <path>) [--kind <kind>] [--json]",
     "  evidence list     <design> [--claim <id>] [--json]",
+    "  capabilities      [--function <name>] [--json]",
   ].join("\n");
 }
 
@@ -245,6 +247,12 @@ async function runVerb(verb: string, rest: readonly string[], cwd: string, io: I
   if (verb === "mcp") {
     const p = parseFlags(verb, rest, ["workspace", "tools", "http"], []);
     return runMcp({ ...p.values }, cwd);
+  }
+  if (verb === "capabilities") {
+    const p = parseFlags(verb, rest, ["function"], ["json"]);
+    const out = capabilities(root, p.values["function"]);
+    io.out(p.switches.has("json") ? JSON.stringify(out, null, 2) : renderCapabilities(out).split("\n").map(oneLine).join("\n"));
+    return 0;
   }
   if (verb === "evidence") {
     const [sub, ...args] = rest;
