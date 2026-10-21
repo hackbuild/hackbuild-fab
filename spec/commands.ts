@@ -40,22 +40,58 @@ import type { MotionRunResult, PlanResult } from "./motion";
 import type { SchemaLike } from "./schema";
 import type { SweepResult, TrialResult } from "./sim";
 
+// gen:command-io imports (npm run registries; never edit by hand)
+import type { AdoptIO } from "./command-io/adopt";
+import type { ArchApplyIO } from "./command-io/arch.apply";
+import type { ArchFindIO } from "./command-io/arch.find";
+import type { AsmSolveIO } from "./command-io/asm.solve";
+import type { CatalogFindIO } from "./command-io/catalog.find";
+import type { CatalogPinsIO } from "./command-io/catalog.pins";
+import type { ChaseBakeIO } from "./command-io/chase.bake";
+import type { ChaseDiffIO } from "./command-io/chase.diff";
+import type { ChasePatchIO } from "./command-io/chase.patch";
+import type { ChaseRenderIO } from "./command-io/chase.render";
+import type { ChaseScaffoldIO } from "./command-io/chase.scaffold";
+import type { ChaseValidateIO } from "./command-io/chase.validate";
+import type { CheckRunIO } from "./command-io/check.run";
+import type { CircuitSolveIO } from "./command-io/circuit.solve";
+import type { ConstraintsQueryIO } from "./command-io/constraints.query";
+import type { DraftIO } from "./command-io/draft";
+import type { ExportRunIO } from "./command-io/export.run";
+import type { FitsTableIO } from "./command-io/fits.table";
+import type { InitIO } from "./command-io/init";
+import type { KnowledgeSearchIO } from "./command-io/knowledge.search";
+import type { MechDeriveIO } from "./command-io/mech.derive";
+import type { MechFindIO } from "./command-io/mech.find";
+import type { MotionRunIO } from "./command-io/motion.run";
+import type { NestPackIO } from "./command-io/nest.pack";
+import type { PartBuildIO } from "./command-io/part.build";
+import type { PartInspectIO } from "./command-io/part.inspect";
+import type { PartProbeIO } from "./command-io/part.probe";
+import type { ProjectGraphIO } from "./command-io/project.graph";
+import type { ReferenceListIO } from "./command-io/reference.list";
+import type { RulesAuditIO } from "./command-io/rules.audit";
+import type { SimRunIO } from "./command-io/sim.run";
+import type { SimSweepIO } from "./command-io/sim.sweep";
+import type { ViewRenderIO } from "./command-io/view.render";
+// end gen:command-io imports
+
 // Names.
 
 export const GROUPS = ["query", "author", "build", "prove", "look", "make"] as const;
 export type Group = (typeof GROUPS)[number];
 
+// gen:command-io names (npm run registries; never edit by hand)
 /**
- * The 33 CLI commands, grouped (D-106). asm.declare folds into part.build,
- * and so does import for audit (D-146, D-160): part.build with `import`
- * set builds one Part from an STL, GLB, STEP, WRL or OpenSCAD file. draft
- * (plan v9 3.1, R1-engine-24) is the 31st, adopt (R1-engine-25) the
- * 32nd and init (R1-engine-23) the 33rd, all CLI only until the MCP
- * projection of init, draft and adopt is decided (engine brief finding F4).
+ * The CLI commands by group (D-106), one file each in spec/command-io/.
+ * asm.declare folds into part.build, and so does import for audit (D-146,
+ * D-160): part.build with `import` set builds one Part from an STL, GLB,
+ * STEP, WRL or OpenSCAD file.
  */
 export const COMMAND_NAMES = [
   // query (8)
-  "constraints.query", "catalog.find", "catalog.pins", "mech.find", "mech.derive", "arch.find", "knowledge.search", "reference.list",
+  "constraints.query", "catalog.find", "catalog.pins", "mech.find", "mech.derive", "arch.find",
+  "knowledge.search", "reference.list",
   // author (6)
   "chase.scaffold", "chase.validate", "chase.diff", "chase.patch", "arch.apply", "init",
   // build (4)
@@ -70,15 +106,21 @@ export const COMMAND_NAMES = [
 export type CommandName = (typeof COMMAND_NAMES)[number];
 
 export const COMMAND_GROUP = {
-  "constraints.query": "query", "catalog.find": "query", "catalog.pins": "query", "mech.find": "query",
-  "mech.derive": "query", "arch.find": "query", "knowledge.search": "query", "reference.list": "query",
-  "chase.scaffold": "author", "chase.validate": "author", "chase.diff": "author", "chase.patch": "author", "arch.apply": "author", "init": "author",
+  "constraints.query": "query", "catalog.find": "query", "catalog.pins": "query",
+  "mech.find": "query", "mech.derive": "query", "arch.find": "query", "knowledge.search": "query",
+  "reference.list": "query",
+  "chase.scaffold": "author", "chase.validate": "author", "chase.diff": "author",
+  "chase.patch": "author", "arch.apply": "author", "init": "author",
   "part.build": "build", "part.inspect": "build", "part.probe": "build", "asm.solve": "build",
   "check.run": "prove", "fits.table": "prove", "sim.run": "prove", "sim.sweep": "prove",
   "circuit.solve": "prove", "motion.run": "prove", "rules.audit": "prove",
   "view.render": "look", "chase.render": "look", "project.graph": "look",
   "chase.bake": "make", "nest.pack": "make", "export.run": "make", "draft": "make", "adopt": "make",
 } as const satisfies Record<CommandName, Group>;
+
+/** CLI-only commands, marked cli only in their spec/command-io file; project.graph is also served as a resource (hbf://project/graph), the rest wait on the MCP projection decision (engine brief finding F4). */
+export const CLI_ONLY = ["init", "project.graph", "draft", "adopt"] as const satisfies readonly CommandName[];
+// end gen:command-io names
 
 /** Utility verbs: no CommandResult, no verdict. */
 export const UTILITY_VERBS = ["mcp", "doctor", "explain", "gc", "parity", "counts", "evidence"] as const;
@@ -96,8 +138,6 @@ export type McpToolName = (typeof MCP_TOOL_NAMES)[number];
 /** Claude API tool name pattern. */
 export const TOOL_NAME_PATTERN = /^[a-zA-Z0-9_-]{1,128}$/;
 
-/** CLI-only commands; project.graph is also served as a resource (hbf://project/graph); draft, adopt and init wait on the F4 decision. */
-export const CLI_ONLY = ["project.graph", "draft", "adopt", "init"] as const satisfies readonly CommandName[];
 
 // Result contract (D-064).
 
@@ -387,9 +427,6 @@ export interface PartSummary {
 // projection is derived from these types (StrictArgs, McpToolIO below):
 // one source, two projections. Outputs keep null for absent values.
 
-type Facts = Readonly<Record<string, number | string | boolean>>;
-type Params = Readonly<Record<string, unknown>>;
-
 /**
  * A file to build as a body of one Part for audit (D-146, D-160). The Part carries
  * source `{ kind: "imported" }`, is placeable and checkable, never
@@ -424,531 +461,41 @@ export interface ImportSpec {
 }
 
 export interface CommandIO {
-  "constraints.query": {
-    /**
-     * Two forms, one flat object (strict tool modes refuse a top-level
-     * oneOf).
-     *
-     * Param form, `dim` absent: `chase` is required (E_PARAM_MISSING at
-     * /chase otherwise). The command builds the chase with `params` and
-     * `preset` exactly as part.build with the same params and preset would,
-     * or reuses the store entry for that build hash, resolves each pointer
-     * in `pointers` to a dim through ParamField.constraintDim, reads facts
-     * from that built part and its declarations, and returns a
-     * ParamEnvelope whose buildHash equals that part.build's. So where one
-     * param moves another's band (cone height moves the contact.gap band),
-     * the envelope answers for the values the caller is trying. `pointers`
-     * absent answers every param that has a constraintDim. This is the call
-     * a model makes before editing params and the call the rail makes to
-     * grey out illegal ranges.
-     *
-     * Dim form, `dim` set: the raw query for canon and reference work,
-     * returning one Interval; `pointers`, `params` and `preset` must be
-     * absent (E_SCHEMA otherwise).
-     *
-     * In both forms `facts` overrides derived facts key by key, and
-     * material and machine are profile ids; absent takes them from the chase
-     * (the feature's material, the part's machine), and E_PARAM_MISSING
-     * when nothing names one. There is no process argument: the material
-     * row and machine imply it. Narrow the output on `"dim" in result`.
-     */
-    input: {
-      dim?: ConstraintDim;
-      /** JSON pointers into the chase's params; absent with `dim` absent means every param with a constraintDim. */
-      pointers?: readonly ParamPointer[];
-      /** Param form only: param values with part.build's meaning and merge rule; E_SCHEMA in dim form. */
-      params?: Params;
-      /** Param form only: preset id with part.build's meaning; E_SCHEMA in dim form. */
-      preset?: string;
-      chase?: string;
-      feature?: string;
-      material?: string;
-      machine?: string;
-      facts?: Facts;
-    };
-    output: Interval | ParamEnvelope;
-  };
-  "catalog.find": {
-    /**
-     * fetch "kicad" (the KiCad library on gitlab) or "seeed" (Seeed OPL KiCad) lists that
-     * footprint library through tools/py/board/kicad_fetch.py and writes cache rows first
-     * (M08-T14, D-103, R1-designs-reach-04); the one network path. CLI only
-     * (`--fetch kicad|seeed`): CLI_ONLY_FIELDS keeps it off catalog_search, so the MCP server
-     * makes no network call (standard rule 10).
-     */
-    input: { query: string; process?: Process; tier?: Tier; fetch?: "kicad" | "seeed" };
-    output: { hits: readonly CatalogHit[] };
-  };
-  "catalog.pins": {
-    input: { part: string };
-    /** provenance: every field the answer read, by field name (M08-T04 step 4). */
-    output: { pins: readonly PinDef[]; mcu: McuPinSpec | null; tier: Tier; provenance: Readonly<Record<string, Provenance>> };
-  };
-  "mech.find": {
-    /** family and process narrow the hits (M06-T11 step 1); added at M06-T11. */
-    input: { behaviour: string; family?: string; process?: Process };
-    output: { hits: readonly CanonHit[] };
-  };
-  "mech.derive": {
-    /** params: values in the units the mechanism's schema states; absent fills every default. */
-    input: { id: string; params?: Readonly<Record<string, number>> };
-    /** inputs: the default-filled params derive() ran on; origin hbf://mechanism/<id> (M06-T11 step 2). */
-    output: { derived: Readonly<Record<string, DerivedValue>>; inputs: Readonly<Record<string, number>>; origin: HbfUri };
-  };
-  "arch.find": {
-    input: {
-      behaviour: string;
-      process?: Process;
-      /** Read channels available, count. */
-      channels?: number;
-    };
-    output: { hits: readonly CanonHit[] };
-  };
-  "knowledge.search": {
-    input: { query: string; kinds?: readonly KnowledgeKind[] };
-    output: { hits: readonly KnowledgeHit[] };
-  };
-  "reference.list": {
-    input: { covers?: string; area?: string };
-    output: { references: readonly ReferenceEntry[] };
-  };
-
-  "chase.scaffold": {
-    /** M12-T01's zod schema carries the kind and from docs as `.describe()` text. */
-    input: {
-      /**
-       * single: one part, or several printed together; composer: an
-       * assembly of parts with poses, such as a laser tab-slot box; surface:
-       * a sheet circuit on a backer; board: a PCB; machine: a motion
-       * program; catalog: a list of items (D-126).
-       */
-      kind: ChaseKind;
-      name: string;
-      /**
-       * reference:<area>/<id> (for example reference:keys/flex-pair),
-       * reference:<meta.id> (keys-flex-pair), design:<id>, or draft:<dir>
-       * (a draft directory, for adopt); any other form is E_REF with
-       * didYouMean.
-       */
-      from?: string;
-    };
-    /**
-     * benchTs is a default bench.ts generated from the params (one rail step
-     * per param group, then the kind's export step); a model never needs to
-     * edit it, and editing it moves no build hash (D-174).
-     */
-    output: { chaseTs: string; buildTs: string; benchTs: string; files: readonly string[] };
-  };
-  "chase.validate": {
-    /** Also validates the bench.ts beside the chase when one exists. */
-    input: { chase: string };
-    /** Errors travel in CommandResult.errors as CommandError[] (D-133). */
-    output: { questions: readonly ValidateQuestion[]; resolvedChecks: readonly string[] };
-  };
-  "chase.diff": {
-    /**
-     * against is a path to a chase.ts (or the directory holding one) or a
-     * git ref; absent means HEAD. build true builds both sides and lists
-     * verdict changes; absent or false skips the build.
-     */
-    input: { chase: string; against?: string; build?: boolean };
-    output: {
-      /** From against to chase, both migrated. */
-      changes: readonly ChaseChange[];
-      migrations: { readonly against: ChaseMigrations; readonly chase: ChaseMigrations };
-      /** defHash of the against side. */
-      defHashBefore: Hash;
-      /** defHash of the chase side. */
-      defHashAfter: Hash;
-      /** verdictChanges is null when build was not requested. */
-      verdictChanges: readonly ChaseVerdictChange[] | null;
-    };
-  };
-  "chase.patch": {
-    input: { file: string; edits: readonly PatchEdit[] };
-    output: {
-      /** Edits applied, count. */
-      edits: number;
-      branch: string;
-      /** defHash of the design before the patch (M10-T05 step 3). */
-      defHashBefore: Hash;
-      /** defHash of the design after the patch. */
-      defHash: Hash;
-    };
-  };
-  "arch.apply": {
-    /**
-     * chase names the design directory the part comes from (M06-T12; the
-     * card's acceptance line names none). face may also be a FaceFrame, as
-     * the card's acceptance passes it; arch.apply turns it into a FaceRef on
-     * the declared face whose plane and u it lies on, E_REF otherwise.
-     */
-    input: { chase?: string; part: string; face: FaceRef | FaceFrame; id: string; params?: Params };
-    /**
-     * face.ref must be a face id the part declares (Author.face), E_REF with
-     * didYouMean over the declared ids otherwise (exit 2). When the part
-     * declares no faces (an imported part, D-146), E_REF carries hint "this
-     * part declares no faces; declare one with Author.face in build.ts" and
-     * next [{command: "part.probe", args: {part, ray: {origin: [cx, cy,
-     * zmax + 10], dir: [0, 0, -1]}}, why: "find the face point and normal
-     * to declare"}, {command: "chase.patch", args: {file:
-     * "<chase>/build.ts"}, why: "add k.face(...) with that frame"}], where
-     * cx, cy and zmax come from the body's mesh bbox.
-     * Writes the applied entry, plus any material slot the archetype needs
-     * and chase.materials lacks, as one patch on hbf/<chase> (D-115, D-165).
-     * emitted and ports are the ids the next part.build merge will produce.
-     */
-    output: {
-      emitted: readonly string[];
-      ports: readonly string[];
-      applied: AppliedArchetype;
-      slotsAdded: readonly MaterialSlot[];
-      /**
-       * Kernels the emitted feature kinds need that chase.meta.kernels lacks
-       * (a conductor needs circuit); part of the same patch. Added at M06-T12.
-       */
-      kernelsAdded: readonly string[];
-      /** hbf/<chase>, the branch the patch belongs on (D-115). Added at M06-T12. */
-      branch: string;
-      /**
-       * True when chase.patch wrote the entry, slots and kernels to chase.ts
-       * on hbf/<chase> (M10-T05 step 4, D-115). False for a chase outside
-       * designs/<name> in a git work tree, or a patch the writer refused;
-       * notWritten says why.
-       */
-      written: boolean;
-      notWritten?: string;
-    };
-  };
-
-  "part.build": {
-    /**
-     * Exactly one of chase and import is present, E_SCHEMA otherwise.
-     * import lists one or more files, each a body of one Part (a mesh
-     * pair is two entries). params and preset apply to a chase only.
-     * params deep-merge over the preset, or over the defaults when preset
-     * is absent; an object merges key by key; a list replaces whole. A key
-     * starting with "/" is a JSON pointer into the merged params and sets
-     * one value, for example {"/keys/0/gap": 1.6}; pointer keys apply after
-     * the merge, and a pointer that resolves to no param is E_REF.
-     * The build runs every registered check whose target it produced and
-     * returns them in CommandResult.findings and counts, fail first; the
-     * verdict is the worst of them. One call is the build and the proof,
-     * with no handle passed between calls. cursor continues a truncated
-     * findings page (D-110).
-     */
-    input: {
-      chase?: string;
-      import?: readonly ImportSpec[];
-      params?: Params;
-      preset?: string;
-      detail?: Detail;
-      cursor?: string;
-    };
-    /** ir is null under --detail summary; fetch hbf://build/<hash> for the full record. */
-    output: {
-      build: BuildUri;
-      parts: readonly PartSummary[];
-      metrics: readonly Metric[];
-      warnings: readonly BuildWarning[];
-      /**
-       * Profile rows at tier inferred whose value reached a check's measured
-       * or legal value, attributed by ProfileLookup read tracking during each
-       * check's run. Empty when no inferred row moves a verdict. The card and
-       * the PRINT step show each entry as "this verdict rests on an inferred
-       * row". Never refuses an export; E_PROVENANCE is for catalog part rows
-       * only (D-102).
-       */
-      readsInferred: readonly InferredRead[];
-      ir: Part | Assembly | null;
-    };
-  };
-  "part.inspect": {
-    input: { part: string };
-    output: { features: readonly FeatureView[]; frame: FrameDecl; bodies: readonly Body[] };
-  };
-  "part.probe": {
-    input: {
-      part: string;
-      /** World point to probe, mm. */
-      at?: Vec3;
-      /** Section plane height in the print pose, mm. */
-      section?: number;
-      /** Ray origin in mm and direction, unitless. */
-      ray?: { origin: Vec3; dir: Vec3 };
-    };
-    output: ProbeResult;
-  };
-  "asm.solve": {
-    input: { build: string };
-    output: { placements: Readonly<Record<string, Pose>>; unsatisfied: readonly Assertion[] };
-  };
-
-  "check.run": {
-    /**
-     * Not the core loop: part.build already returns every applicable
-     * finding. check.run serves three cases: `only` reruns a subset on an
-     * existing build, the CLI `--artifact <file>` checks exported bytes
-     * (export.run calls it on what it wrote), and `cursor` pages a long
-     * report.
-     */
-    input: { build: string; only?: readonly string[]; cursor?: string };
-    output: { results: readonly CheckResult[]; report: ReportUri };
-  };
-  "fits.table": {
-    input: { build: string };
-    output: { rows: readonly FitRow[] };
-  };
-  "sim.run": {
-    input: {
-      build: string;
-      program?: string;
-      /** Trials, count; the sim model default when absent. */
-      trials?: number;
-      /** First trial seed, integer. */
-      seed?: number;
-    };
-    output: {
-      trials: TrialResult;
-      closest: readonly {
-        a: string;
-        b: string;
-        /** Closest approach, mm. */
-        mm: Mm;
-      }[];
-    };
-  };
-  "sim.sweep": {
-    input: {
-      build: string;
-      joint: string;
-      /** Sweep steps, count. */
-      steps?: number;
-    };
-    /** Pose and prismatic modes measure no volume; their clashes carry mm3 null. */
-    output: SweepResult<number | null>;
-  };
-  "circuit.solve": {
-    input: {
-      /** A chase path, a reference path (reference/<area>/<id>) or an hbf://build URI. */
-      build: string;
-      /** Stimulus per target: true for a held key, a number in the target's unit otherwise. */
-      stimulus?: Readonly<Record<string, number | boolean>>;
-      /** McuPinSpec id; the chase hookup entry's mcu for each port when absent. */
-      mcu?: string;
-      /** Solver; "analytic" when absent. "spice" loads eecircuit-engine lazily (D-086). */
-      engine?: "analytic" | "spice";
-      /** Which pullup range ends to classify at; "range" (both ends) when absent. */
-      pullup?: "range" | "min" | "max";
-    };
-    /** Findings (CHK-NET-05, CHK-NET-06) travel in CommandResult.findings. */
-    output: { nets: readonly Net[]; points: readonly OperatingPoint[]; reads: readonly ReadOutputs[] };
-  };
-  "motion.run": {
-    /** Reconciled with spec/motion.ts by M07-T14. */
-    input: {
-      /** Program id, for example "ogee.checker" or "slug.vend". */
-      program: string;
-      /** Program arguments by name, each in the unit the program names (k vends, i row index). */
-      args?: Readonly<Record<string, number>>;
-      /** Declared latched set: all, none, a pattern the program names, or cells "i,j" joined by spaces (D-074). */
-      expect?: string;
-      /** Also run the motion checks of the program's machine (CHK-MOT-04 to 06). */
-      audit?: boolean;
-    };
-    /** PlanResult for a planner program; findings travel in CommandResult.findings. */
-    output: MotionRunResult | PlanResult;
-  };
-  "rules.audit": {
-    /** chase absent audits the whole workspace. */
-    input: { chase?: string; cursor?: string };
-    output: { simHash: Hash; firmwareHash: Hash; equal: boolean };
-  };
-
-  "view.render": {
-    input: {
-      target: string;
-      mode: ViewMode;
-      /** Image width and height, px. */
-      size?: readonly [number, number];
-    };
-    output: { artifact: ArtifactUri };
-  };
-  "chase.render": {
-    /** screenshots false measures every view and stores no png; default true. */
-    input: { chase: string; screenshots?: boolean };
-    output: {
-      /** The baked page in the store, hbf://artifact/<hash> (D-050). */
-      url: string;
-      /** One png per rail step and width, in views order; empty when screenshots is false. */
-      shots: readonly ArtifactUri[];
-      /** Per rail step, at 1280 then 390 px; one view "page" when the bench has no steps strip. */
-      views: readonly {
-        step: string;
-        /** Viewport width, px. */
-        width: number;
-        /** Document scroll width, px (measured); over width is horizontal overflow. */
-        scrollWidth: number;
-        /** Focal pink elements after the structural set (measured); the budget is 1. */
-        pinkFocal: number;
-      }[];
-      /** Console and page errors over the whole run. */
-      consoleErrors: readonly string[];
-      /** Requests whose url is not file: or data:. */
-      network: readonly string[];
-    };
-  };
-  "project.graph": {
-    input: { project?: string };
-    output: ProjectGraph;
-  };
-
-  "chase.bake": {
-    input: {
-      chase: string;
-      /**
-       * page (default) bakes the release page. draft bakes the DRAFT page of
-       * a draft directory (one holding draft.json, R1-engine-24): checks show
-       * as warnings, exports carry DRAFT, the sources ride in the page. A
-       * draft directory bakes only as draft (E_DRAFT); page on it refuses.
-       */
-      mode?: "page" | "draft";
-    };
-    output: {
-      file: string;
-      /** Baked file size, bytes; at most 16 MB (D-129). */
-      bytes: number;
-      hash: Hash;
-    };
-  };
-  "draft": {
-    input: {
-      /** What the draft is for, in words; it names the draft when name is absent. */
-      goal: string;
-      /** The bench or design to start from: a reference or design id, or the reference:, design: and draft: forms chase.scaffold takes. */
-      from?: string;
-      /** Lowercase slug; becomes meta.id and .hbf/drafts/<name>. Absent, the goal as a slug. */
-      name?: string;
-    };
-    output: {
-      /** The draft directory, relative to the git top: .hbf/drafts/<name>. */
-      dir: string;
-      /** The files written into it, sorted. */
-      files: readonly string[];
-      /** The baked DRAFT page, its size in bytes (measured, at most 16 MB, D-129) and sha256. */
-      page: { file: string; bytes: number; hash: Hash };
-    };
-  };
-  "adopt": {
-    input: {
-      /** A DRAFT page (.html carrying the application/hbf-draft+json block) or a draft directory holding draft.json. */
-      draft: string;
-      /** Lowercase slug; becomes meta.id, designs/<name> and branch hbf/<name>. Absent, the draft's meta.id. */
-      name?: string;
-      /** A DRAFT_ 3MF the page wrote, stored as the golden; absent, the page's export is computed from the draft's sources at the state the page opens with. */
-      export?: string;
-      /** Slice the adopted 3MF through tools/slice/slice.mjs; absent or false, the slice is reported not run. */
-      slice?: boolean;
-    };
-    output: {
-      /** The design directory, relative to the git top: designs/<name>. */
-      design: string;
-      /** hbf/<name>; the files are staged on it, never committed. */
-      branch: string;
-      /** The files staged, relative to the git top, sorted. */
-      files: readonly string[];
-      defHash: Hash;
-      buildHash: Hash;
-      /** check.run on the adopted design: fails block its export as any design's do. */
-      checks: { pass: number; warn: number; fail: number; skip: number };
-      /** The release page chase.bake wrote: no draft block, no banner. */
-      page: { file: string; bytes: number; hash: Hash };
-      /**
-       * expected/draft-export.3mf: the draft's export stored as the golden,
-       * its sha256, where its bytes came from, and the 3MF part geometry
-       * hash of it and of the adopted build. diff is empty when they match;
-       * otherwise each line names a mesh that moved, for a person to accept.
-       */
-      golden: {
-        file: string; sha256: string; source: "page export" | "computed";
-        geometryHash: string; adoptedGeometryHash: string; diff: readonly string[];
-      };
-      /** The virtual slice: computed, never a print; not run carries the reason and is never a pass. */
-      slice: { status: "sliced" | "failed" | "not run"; reason: string };
-      /** designs/<name>/widgets/<file> holding the draft's inline widget as a candidate, or null. */
-      widget: string | null;
-    };
-  };
-  "init": {
-    input: {
-      /** Lowercase slug; becomes meta.id, the folder name and the page <name>.html. */
-      name: string;
-      /** The design or reference to start from: an id, or the reference: and design: forms chase.scaffold takes. Absent, the minimal single chase. */
-      from?: string;
-      /** The folder to write, relative to the cwd. Absent, <cwd>/<name>. It must be absent or empty (E_EXISTS). */
-      dir?: string;
-    };
-    output: {
-      /** The maker folder, absolute. */
-      dir: string;
-      /** The files written into it, sorted. */
-      files: readonly string[];
-      /** The baked page <name>.html in the folder, its size in bytes (measured, at most 16 MB, D-129) and sha256 of the bytes on disk. */
-      page: { file: string; bytes: number; hash: Hash };
-    };
-  };
-  "nest.pack": {
-    /** Reconciled with spec/nest.ts by M07-T14. */
-    input: {
-      /** A build whose chase declares sheet items; none does before M10. */
-      build?: string;
-      /** Part ids to nest, one copy each; absent nests every item the build declares. */
-      parts?: readonly string[];
-      /** Sheet width and height, mm; absent takes the machine's sheet envelope. */
-      sheet?: readonly [Mm, Mm];
-      machine?: string;
-      mode?: NestMode;
-      /** Gap between parts, mm, or "auto" (2 to 16 mm). */
-      gap?: Mm | "auto";
-      /** Edge margin, mm. */
-      margin?: Mm;
-      partInPart?: boolean;
-      /** Seed of the packer's draws, unitless integer. */
-      seed?: number;
-      /** outline applies +kerf/2 from the machine row; none draws at nominal and needs no kerf. Default outline. */
-      kerfMode?: KerfMode;
-    };
-    /** Writes nothing; CHK-SHT-01, 02 and 07 travel in CommandResult.findings. */
-    output: {
-      /** The layout, fill in percent (D-075); null when a kernel refused a part before anything was placed. */
-      layout: NestResult | null;
-      /** Part ids whose cut profile a kernel refused. */
-      refused: readonly string[];
-    };
-  };
-  "export.run": {
-    /**
-     * params and preset have part.build's meaning; the export builds exactly
-     * those values, and they enter argsDigest (D-109). dryRun runs build,
-     * checks and the gate preflight and writes nothing.
-     */
-    input: {
-      chase: string; kind: string; machine?: string; params?: Params; preset?: string;
-      /** outline applies +kerf/2 from the machine row; none draws at nominal and needs no kerf. Default outline. */
-      kerfMode?: "outline" | "none";
-      /** CPL dialect for kind cpl (M08-T12 step 5): body-centre (default) or mm-suffix; the assembler mapping is unconfirmed. */
-      dialect?: "body-centre" | "mm-suffix";
-      dryRun?: boolean; cursor?: string;
-    };
-    /**
-     * warnings: the build's warnings and the package writer's, deduplicated
-     * by code and text, on every return (dry run, gate, done). A TPU slot
-     * raises PRESET_INFERRED: its preset row is inferred and its written
-     * values may not reach the slice (PROFILE.md 8.1, D-187). A warning is
-     * not a check verdict and never enters counts.
-     */
-    output: { artifacts: readonly ArtifactUri[]; warnings: readonly BuildWarning[] };
-  };
+// gen:command-io io (npm run registries; never edit by hand)
+  "constraints.query": ConstraintsQueryIO;
+  "catalog.find": CatalogFindIO;
+  "catalog.pins": CatalogPinsIO;
+  "mech.find": MechFindIO;
+  "mech.derive": MechDeriveIO;
+  "arch.find": ArchFindIO;
+  "knowledge.search": KnowledgeSearchIO;
+  "reference.list": ReferenceListIO;
+  "chase.scaffold": ChaseScaffoldIO;
+  "chase.validate": ChaseValidateIO;
+  "chase.diff": ChaseDiffIO;
+  "chase.patch": ChasePatchIO;
+  "arch.apply": ArchApplyIO;
+  "init": InitIO;
+  "part.build": PartBuildIO;
+  "part.inspect": PartInspectIO;
+  "part.probe": PartProbeIO;
+  "asm.solve": AsmSolveIO;
+  "check.run": CheckRunIO;
+  "fits.table": FitsTableIO;
+  "sim.run": SimRunIO;
+  "sim.sweep": SimSweepIO;
+  "circuit.solve": CircuitSolveIO;
+  "motion.run": MotionRunIO;
+  "rules.audit": RulesAuditIO;
+  "view.render": ViewRenderIO;
+  "chase.render": ChaseRenderIO;
+  "project.graph": ProjectGraphIO;
+  "chase.bake": ChaseBakeIO;
+  "nest.pack": NestPackIO;
+  "export.run": ExportRunIO;
+  "draft": DraftIO;
+  "adopt": AdoptIO;
+// end gen:command-io io
 }
 
 export type CommandInput<N extends CommandName> = CommandIO[N]["input"];

@@ -625,6 +625,7 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-568 | hbf init writes a maker folder outside the repo, E_EXISTS joins the error codes | decided | Engine, author |
 | D-569 | One file per decision, DECISIONS.md generated | decided | Plan, process |
 | D-570 | R1-fix-08 closes without a code change: a stale dist, the rule holds | decided | Testing |
+| D-571 | One IO file per command, the spec name lists generated | decided | Spec, process |
 
 ## House rules and process
 
@@ -6950,6 +6951,17 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under the owner delegation of 2026-10-20 for release 1 of plan v9.1 (R1-fix-08). packages/profile/test/specifiers.test.ts passes on main 5217827 (4 of 4, computed). It reads packages/ui/dist/index.js, and the failure of 2026-10-20 ran while tsc -b was red on E_DRAFT, so dist was stale. A mutant that adds a DraftBanner.vue export to that dist entry fails the test and the restore passes it. The brief's clause "a node import of the ui node entry loads with plain node" holds for no package today: @hackbuild/spec exports its .ts source with extensionless imports, so plain node stops at spec/ids for mesh, ui-core and ui alike. That is the open M00 follow-up "spec extensionless imports and the resolve hook" (HANDOFF 4.4), not a .vue leak, and stays open there. |
 | Rationale | Changing the ui entry for a failure that was a stale build would move code with no defect behind it. |
 | Evidence | vitest packages/profile/test/specifiers.test.ts on main 5217827: 4 of 4; with the mutant 1 failed naming packages/ui/dist/bench/DraftBanner.vue (computed, 2026-10-20). |
+| Supersedes | none |
+| Milestone | none |
+
+### D-571 One IO file per command, the spec name lists generated
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under the owner delegation of 2026-10-20 for release 1 of plan v9.1 (R1-split-01 step 1). Each command's input and output live in spec/command-io/<name>.ts as an exported interface <Pascal name>IO, whose first line reads "// command <name>, group <group>." with ", cli only" for a command with no MCP tool. tools/gen/registries/commands.mjs fills three marked regions of spec/commands.ts: the imports of those interfaces, the name lists (COMMAND_NAMES, CommandName, COMMAND_GROUP, CLI_ONLY) and the CommandIO map; the rest of spec/commands.ts stays hand-written. Within a group the order is the one COMMAND_NAMES held at the split, then new names sorted. The fragments sit in spec, not beside packages/commands/src/defs as the brief suggested, since spec is tier S and cannot read a tier 2 file. Params and Facts moved to spec/command-io/_shared.ts, outside the spec index as before. The comment that counted the commands by hand went with the lists; the group comments carry generated counts. |
+| Rationale | Every new command edited the same lines of a 1,291-line file (counted 2026-10-20); engine-23 conflicted on five of them with adopt. A file per command plus generated lists leaves a merge only the generated regions, which npm run registries resolves. |
+| Evidence | tools/test/commands-fragments.test.mjs (4 of 4); tsc -b, tests and tools configs exit 0; spec and packages/commands 43 of 43; core surface and sim-commands 33 of 33 (all computed, 2026-10-20). counts.json unchanged by the split. |
 | Supersedes | none |
 | Milestone | none |
 

@@ -16,6 +16,6 @@
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": false
   },
-  "include": ["*.ts", "fixtures/*.ts"],
+  "include": ["*.ts", "command-io/*.ts", "fixtures/*.ts"],
   "exclude": ["test"]
 }
