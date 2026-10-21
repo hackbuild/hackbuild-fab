@@ -696,6 +696,7 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-639 | Small original records are stored inputs; pages are read through the originals | decided | tooling |
 | D-640 | OGEE16 print STLs and SLUG page lines are public stored inputs of their scenes | decided | tooling |
 | D-641 | Extraction tools read the originals; records check inputs by sha256 | decided | tooling |
+| D-642 | Package, core and reference tests read plan cards through plan-root | decided | tooling |
 
 ## House rules and process
 
@@ -7781,6 +7782,17 @@ Status: decided (delegated). The lead closed four reds from the wave 4 health ru
 | Decision | Taken by the agent under owner delegation on 2026-10-20. designs/slug/extract/extract-nest.mjs and extract.mjs and designs/ogee16/extract/extract-plate.mjs and extract-steps.mjs read their pages and sources from fab-knowledge:originals through tools/test-support/originals-root.ts. tools/legacy/record.mjs finish() now holds each pinned input to the set of sha256 values the committed record lists, and writes archive ids in publish form as keys, so records written from the legacy copies still check without being rewritten. Tests that import these tools (shelf-parity, maxrects-parity and the new assembly-order, ogee16-plates and slug-sheets originals files) route to the owner runner; the rest of each nest test reads stored lines, the scene's slugPage() or the committed records. The project graph keys OGEE16 items on the legacy path, so packages/project stale.test.ts keeps that id and its SHA256SUMS read. R1-rails-public-08. |
 | Rationale | One reader per original; the record keys name where an input was read, the sha256 is its identity. Moving the parity tests to the owner runner is the brief's route (D-278), and splitting keeps the hosted runs for everything else. |
 | Evidence | extract-nest --check, extract-plate and extract-steps pass against the committed records from the originals; hosted-like run (HBF_ORIGINALS unset, ogee16, slug and ogee16-r16p legacy folders removed) of packages/nest, sim and motion: 36 files, 371 tests passed; owner-files list names the moved tests. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-642 Package, core and reference tests read plan cards through plan-root
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The vitest files under core, packages and reference that read a milestone card or MILESTONES.md read it through `planCard` or `planDoc` from `tools/test-support/plan-root` (D-621), including two files the brief did not list (`core/test/circuit-solve.test.ts`, `packages/checks/test/source-rules.test.ts`). A file that reads a card anywhere imports plan-root, so the whole file is an owner file and hosted runners leave it out, including its tests that read no card; this covers the six `reference/copper/*/test/parity.test.ts` through `_harness/family.ts`. Provenance strings that cite a card path in data (profile constants, sim scenes, a circuit goldens note, two reference READMEs) are citations, not reads, and stay. |
+| Rationale | One reader of the plan, per D-621. A guarded per-test skip would keep the card-free tests in hosted runs, but owner-files.mjs classifies a plan-root import as unguarded and changing it was outside this item. |
+| Evidence | `git grep -n "docs/plan/milestones" -- core packages reference` prints only comments and data citations. Every converted file passes with cards present (measured 2026-10-21, originals files with HBF_ORIGINALS set); lanes.test fails when its planCard names M04 instead of M05. `node .github/scripts/owner-files.mjs list` prints 84 files, 64 on main before (computed). |
 | Supersedes | new |
 | Milestone | none |
 
