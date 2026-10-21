@@ -592,6 +592,7 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-536 | recorded kicad fetch tests name the gitlab origin | decided | Canons, reference, profile, catalog |
 | D-537 | catalog.find fetch copy split between the description and the field describe | decided | Canons, reference, profile, catalog |
 | D-538 | the seeed fetch example queries XIAO-RP2040-SMD | decided | Canons, reference, profile, catalog |
+| D-539 | chase.bake page hash goes through spec sha256Hex | decided | Testing, docs, milestones, registry |
 
 ## House rules and process
 
@@ -6565,6 +6566,17 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. The seeed example in the `catalog.find` def queries `XIAO-RP2040-SMD` instead of `XIAO`. |
 | Rationale | The query `XIAO` is refused for a custom pad shape and writes nothing (D-535); `XIAO-RP2040-SMD` writes one vendor row. |
 | Evidence | Builder network run 2026-10-20 (measured): `seeed-xiao-rp2040-smd/row.json` written with tier vendor, source OPL_Kicad_Library at commit b0035c51. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-539 chase.bake page hash goes through spec sha256Hex
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `core/src/commands/chase-bake.ts` hashes the baked bytes with `sha256Hex` from `@hackbuild/spec` instead of `node:crypto`. The jcs test allowlist stays as it is, with only `core/src/gate.ts` allowed. |
+| Rationale | One implementation of each thing (D-206). The brief says to use the jcs helper rather than widen the allowlist. |
+| Evidence | `spec/test/jcs.test.ts` lines 153 to 184 pass, 13 of 13 (measured); `core/test/chase-bake.test.ts` still checks the hash against `shasum -a 256` and passes, 7 of 7 (measured). |
 | Supersedes | new |
 | Milestone | none |
 
