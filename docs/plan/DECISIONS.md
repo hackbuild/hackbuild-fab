@@ -672,6 +672,7 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-615 | TOGGLE keeps the original's terminal row; CHK-PRT-04 fails on it | decided | Constraints and checks |
 | D-616 | TOGGLE port choices: bores, leads, pin row step, hookup pins and the drive contact | decided | reach |
 | D-617 | Wave 4 health reds closed directly | decided | tooling |
+| D-618 | Owner path ratchet allows two placeholder fixtures and keeps the public Markdown check | decided | tooling |
 
 ## House rules and process
 
@@ -7495,6 +7496,17 @@ Status: decided (delegated, R1-spike-01). The WASM run changes one value of the 
 ### D-617 Wave 4 health reds closed directly (R1-fix-14 to 17)
 
 Status: decided (delegated). The lead closed four reds from the wave 4 health run on main without a builder: R1-fix-14 rerecords packages/checks/test/metric-gates/builds.json, which only gains the designs/toggle entry (43 metrics, all informational, nothing removed, computed from the diff); R1-fix-15 compares the cae984a constants oracle in publish form through tools/publish-paths.mjs instead of moving the frozen commit; R1-fix-16 builds the counts test copy from git ls-files, matching counts.mjs index semantics; R1-fix-17 rewrites tools/legacy/inventory.json, where only the blocks build test reader was added. Each test passes alone; mutants for 15 and 16 fail; the 14 mutant was not run. Evidence: .hbf-notes/r1/health-w4/.
+
+### D-618 Owner path ratchet allows two placeholder fixtures and keeps the public Markdown check
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `tools/test/owner-paths.test.mjs` fails on any tracked text file naming a home directory under the macOS users root (zip, 3mf and NUL-holding files skipped). Its allow list holds two entries, each a file and the exact placeholder literal it keeps with a reason: `.github/scripts/owner-files.test.mjs` and `tools/test-support/originals-root.test.ts`, whose fixtures use a `someone` placeholder home that their scanners must flag or refuse. A stale allow entry fails the test. `tools/test/publish-paths.test.mjs` keeps its narrower public Markdown check unedited. The D-592 and D-594 evidence cells quoted a grep naming the owner home; they now say the same grep in words. |
+| Rationale | The brief expected an empty allow list; rewriting two foreign fixtures to build the path at runtime would touch files outside the item, while a literal-level allow entry still fails any other home path in those files. Rewording two evidence cells keeps the measured claim and meets the brief's `git grep` count of 0. |
+| Evidence | node --test tools/test/owner-paths.test.mjs 2 pass (measured); a staged scratch file holding a home path fails it, and narrowing the matcher fails both tests (measured mutants); `git grep -l` of the owner home prints 0 (measured). |
+| Supersedes | new |
+| Milestone | none |
 
 ## Owner queue
 
