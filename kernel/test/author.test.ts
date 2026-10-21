@@ -8,6 +8,7 @@ import * as spec from "@hackbuild/spec";
 import * as mesh from "@hackbuild/mesh";
 import * as archetypes from "@hackbuild/archetypes";
 import * as copper from "@hackbuild/copper";
+import * as geom from "@hackbuild/geom";
 
 const chase = author.defineChase({
   meta: { id: "author-entry", kind: "single", name: "AUTHOR", version: 1, chase: 2, kernels: [], machines: [], license: "CC-BY-SA-4.0" },
@@ -33,6 +34,15 @@ describe("@hackbuild/kernel/author", () => {
     expect(author.TOGGLE_NAMES).toBe(archetypes.TOGGLE_NAMES);
     expect(author.TOGGLE_BLOCKS).toBe(archetypes.TOGGLE_BLOCKS);
     expect(author.routeSearch).toBe(copper.routeSearch);
+  });
+  it("re-exports the PIP z plans, the copper router and its stack emit, one implementation each (R1-designs-reach-09)", () => {
+    for (const k of ["clickDerive", "clickParams", "flexDims", "flexParams", "flexZ", "pipStack", "seatParams", "seatZ", "sep", "snapUp", "stickParams", "stickZ", "touchParams", "touchZ"] as const) {
+      expect(author[k], k).toBe(archetypes[k]);
+    }
+    expect(author.pipCircle).toBe(archetypes.circle);
+    for (const k of ["emitTraceLayers", "route", "routeMetrics", "routeRecord", "traceStack"] as const) expect(author[k], k).toBe(copper[k]);
+    expect(author.loadGeom).toBe(geom.loadGeom);
+    expect(author.snapRing).toBe(geom.snapRing);
   });
   it("types build params from the chase", () => {
     const p: author.ParamsOf<typeof chase> = { d: 4 };

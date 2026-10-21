@@ -4300,6 +4300,17 @@
     "dest": "reference/keys/click-spring-window/chase.ts"
   },
   {
+    "id": "pip.layout/haft-9-designs-pip-build",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/pip/files/haft-src/src/layout.js",
+    "sha256": "2d1c6c10554b5c7d8dc333496529abee82e937d2d3fe85c41a8d7ee22bb2468c",
+    "fixes": [
+      "the outline (layout.js lines 61 to 78), the button groups (186 to 216), one host top from each archetype's own need (220 to 230), the cavities and the click slot direction search (247 to 345), the edge and pairwise warnings (346 to 360) and the net order of the routed terminals (364 to 371) ported to designs/pip/build.ts; the terminals are the posts the archetypes emit, and the board side is the rp2040-zero-seat archetype",
+      "wire cups (layout.js lines 256 to 280) and bezel pegs (422 to 449) are not ported in release 1; the grips outline routes inside its stadium (R1-designs-reach-09)"
+    ],
+    "dest": "designs/pip/build.ts"
+  },
+  {
     "id": "pip.layout/haft-9-midi-pad",
     "kind": "copy",
     "source": "fab-knowledge:originals/pip/files/haft-src/src/layout.js",
@@ -4446,6 +4457,17 @@
       "clickElement2D arch helper (model.js lines 683 to 694) ported to reference/keys/click-spring-window/build.ts (M01-T07): two arches on vb 0 and t + g, 64 segments, without the 0.4 mm run-out into the end blocks, which the reference does not build"
     ],
     "dest": "reference/keys/click-spring-window/build.ts"
+  },
+  {
+    "id": "pip.model/haft-9-designs-pip-build",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/pip/files/haft-src/src/model.js",
+    "sha256": "95a996433e54d586cdaa970a844ee8f8f02196f80b23ba36983c95ed456d1f34",
+    "fixes": [
+      "the buried trace layers and posts (model.js lines 29 to 50) through packages/copper emitTraceLayers, and the bezel plate with its button holes, USB notch and press ribs (lines 301 to 319) ported to designs/pip/build.ts; the bezel prints flipped beside the body",
+      "not ported in release 1: the stepped bezel chamfer, labels, mark, lip and groove, pry notches and pegs (lines 249 to 265 and 320 to 363) and the plate packer (lines 419 to 446); the click springs and caps sit at fixed plate spots (R1-designs-reach-09)"
+    ],
+    "dest": "designs/pip/build.ts"
   },
   {
     "id": "pip.model/haft-9-edge",

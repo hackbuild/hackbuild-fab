@@ -7,10 +7,21 @@
 // toggleHost and routeSearch let a tilt stick host route its own leads in
 // the sandbox (R1-designs-reach-11): the host plan of the TOGGLE presets
 // (packages/archetypes toggle/host.ts) and the copper route search over it,
-// both pure functions of params and profile.
+// both pure functions of params and profile. The PIP stack, the z plan of
+// each PIP button and seat, the copper router and its route record let
+// designs/pip find its one host top, route its own terminals and emit the
+// buried trace layers through the one port of model.js lines 30 to 51,
+// emitTraceLayers, on the geom it loads (R1-designs-reach-09).
 
 export { defineBuild, defineChase, type BuildFn, type CheckedChase, type ParamIdOf, type ParamsOf } from "@hackbuild/chase";
 export { prismWithEdges, type EdgePrism } from "@hackbuild/mesh";
 export type { EdgeKind, EdgeProfile, EdgeSpec } from "@hackbuild/geom";
 export { TOGGLE_BLOCKS, TOGGLE_NAMES, toggleHost, toggleParams, type ToggleHost, type ToggleParams } from "@hackbuild/archetypes";
-export { routeSearch, type StickRoute } from "@hackbuild/copper";
+export {
+  circle as pipCircle, clickDerive, clickParams, flexDims, flexParams, flexZ, pipStack, seatParams, seatZ, sep, snapUp, stickParams, stickZ, touchParams, touchZ,
+  type ClickParams, type FlexParams, type PipStack, type SeatParams, type StickParams, type TouchParams,
+} from "@hackbuild/archetypes";
+export {
+  emitTraceLayers, route, routeMetrics, routeRecord, routeSearch, traceStack, type RouteNet, type RouteResult, type StickRoute,
+} from "@hackbuild/copper";
+export { loadGeom, snapRing } from "@hackbuild/geom";

@@ -22,12 +22,11 @@ const dirs = (p: string): string[] =>
   readdirSync(p, { withFileTypes: true }).filter((e) => e.isDirectory()).map((e) => e.name).sort();
 
 /**
- * Designs whose chase landed before their build.ts: designs/pip/chase.ts
- * (R1-designs-reach-08) ahead of its build (R1-designs-reach-09). Each must
- * still lack build.ts, so the entry fails once the build lands and is then
- * removed; nothing else is skipped.
+ * Designs whose chase landed before their build.ts. Each must still lack
+ * build.ts, so an entry fails once the build lands and is then removed;
+ * nothing else is skipped. designs/pip left it with R1-designs-reach-09.
  */
-const BUILD_PENDING: readonly string[] = ["designs/pip"];
+const BUILD_PENDING: readonly string[] = [];
 
 /** reference/<area>/<id> and designs/<id> holding a chase.ts, read from the tree. */
 function chases(): string[] {

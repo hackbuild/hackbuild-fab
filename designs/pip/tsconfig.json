@@ -8,6 +8,11 @@
   },
   "include": ["*.ts", "test/*.ts", "migrate/*.ts"],
   "references": [
-    { "path": "../../packages/chase" }
+    { "path": "../../packages/chase" },
+    { "path": "../../kernel" },
+    { "path": "../../packages/archetypes" },
+    { "path": "../../packages/copper" },
+    { "path": "../../packages/pipeline" },
+    { "path": "../../packages/profile" }
   ]
 }

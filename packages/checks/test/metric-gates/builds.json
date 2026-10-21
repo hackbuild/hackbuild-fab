@@ -33,6 +33,852 @@
       "metrics": []
     },
     {
+      "build": "designs/pip",
+      "part": "pip",
+      "metrics": [
+        {
+          "id": "flex-cone-key.0.host.top",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.0.key.travel",
+          "gate": "CHK-KEY-01"
+        },
+        {
+          "id": "flex-cone-key.0.key.height",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.0.key.rsb",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.0.key.wallH",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.0.key.feel",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.0.key.R.switch",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.0.key.fits.contact-gap",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.0.key.fits.cap-bridge",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.0.key.fits.split-between-halves",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.0.key.fits.column-to-cone-wall",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.0.key.fits.face-through-bezel-hole",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.0.key.fits.stands-proud-of-the-bezel",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.1.host.top",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.1.key.travel",
+          "gate": "CHK-KEY-01"
+        },
+        {
+          "id": "flex-cone-key.1.key.height",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.1.key.rsb",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.1.key.wallH",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.1.key.feel",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.1.key.R.switch",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.1.key.fits.contact-gap",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.1.key.fits.cap-bridge",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.1.key.fits.split-between-halves",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.1.key.fits.column-to-cone-wall",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.1.key.fits.face-through-bezel-hole",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.1.key.fits.stands-proud-of-the-bezel",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.2.host.top",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.2.key.travel",
+          "gate": "CHK-KEY-01"
+        },
+        {
+          "id": "flex-cone-key.2.key.height",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.2.key.rsb",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.2.key.wallH",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.2.key.feel",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.2.key.R.switch",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.2.key.fits.contact-gap",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.2.key.fits.cap-bridge",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.2.key.fits.split-between-halves",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.2.key.fits.column-to-cone-wall",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.2.key.fits.face-through-bezel-hole",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.2.key.fits.stands-proud-of-the-bezel",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.3.host.top",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.3.key.travel",
+          "gate": "CHK-KEY-01"
+        },
+        {
+          "id": "flex-cone-key.3.key.height",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.3.key.rsb",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.3.key.wallH",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.3.key.feel",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.3.key.R.switch",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.3.key.fits.contact-gap",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.3.key.fits.cap-bridge",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.3.key.fits.split-between-halves",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.3.key.fits.column-to-cone-wall",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.3.key.fits.face-through-bezel-hole",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.3.key.fits.stands-proud-of-the-bezel",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.0.host.top",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.0.spring.peakN",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.spring.drop",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.spring.cg",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.spring.eStop",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.spring.bistable",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.0.key.R.switch",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.0.key.R.pads",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.0.key.fits.slot-at-the-end-blocks",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.0.key.fits.slot-over-the-arch",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.0.key.fits.slot-length-over-spring",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.0.key.fits.rib-in-the-block-groove",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.0.key.fits.under-the-bezel",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.0.key.fits.cap-through-bezel-hole",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.0.key.fits.cap-flange-in-its-well",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.0.key.fits.travel-to-contact",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.0.key.fits.tip-over-each-pad",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.0.key.fits.beam-thickness",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.0.key.fits.strain-at-the-stop",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.1.host.top",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.1.spring.peakN",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.1.spring.drop",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.1.spring.cg",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.1.spring.eStop",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.1.spring.bistable",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.1.key.R.switch",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.1.key.R.pads",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.1.key.fits.slot-at-the-end-blocks",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.1.key.fits.slot-over-the-arch",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.1.key.fits.slot-length-over-spring",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.1.key.fits.rib-in-the-block-groove",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.1.key.fits.under-the-bezel",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.1.key.fits.cap-through-bezel-hole",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.1.key.fits.cap-flange-in-its-well",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.1.key.fits.travel-to-contact",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.1.key.fits.tip-over-each-pad",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.1.key.fits.beam-thickness",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.1.key.fits.strain-at-the-stop",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.2.host.top",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.2.spring.peakN",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.2.spring.drop",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.2.spring.cg",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.2.spring.eStop",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.2.spring.bistable",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.2.key.R.switch",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.2.key.R.pads",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.2.key.fits.slot-at-the-end-blocks",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.2.key.fits.slot-over-the-arch",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.2.key.fits.slot-length-over-spring",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.2.key.fits.rib-in-the-block-groove",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.2.key.fits.under-the-bezel",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.2.key.fits.cap-through-bezel-hole",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.2.key.fits.cap-flange-in-its-well",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.2.key.fits.travel-to-contact",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.2.key.fits.tip-over-each-pad",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.2.key.fits.beam-thickness",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.2.key.fits.strain-at-the-stop",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.3.host.top",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.3.spring.peakN",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.3.spring.drop",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.3.spring.cg",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.3.spring.eStop",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.3.spring.bistable",
+          "gate": "CHK-KEY-04"
+        },
+        {
+          "id": "click-spring-key.3.key.R.switch",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.3.key.R.pads",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.3.key.fits.slot-at-the-end-blocks",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.3.key.fits.slot-over-the-arch",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.3.key.fits.slot-length-over-spring",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.3.key.fits.rib-in-the-block-groove",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.3.key.fits.under-the-bezel",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.3.key.fits.cap-through-bezel-hole",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.3.key.fits.cap-flange-in-its-well",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.3.key.fits.travel-to-contact",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.3.key.fits.tip-over-each-pad",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.3.key.fits.beam-thickness",
+          "gate": "informational"
+        },
+        {
+          "id": "click-spring-key.3.key.fits.strain-at-the-stop",
+          "gate": "informational"
+        },
+        {
+          "id": "touch-comb-key.0.host.top",
+          "gate": "informational"
+        },
+        {
+          "id": "touch-comb-key.0.key.fingers",
+          "gate": "informational"
+        },
+        {
+          "id": "touch-comb-key.0.key.R.post",
+          "gate": "informational"
+        },
+        {
+          "id": "touch-comb-key.0.key.fits.comb-gap",
+          "gate": "informational"
+        },
+        {
+          "id": "touch-comb-key.0.key.fits.finger-width",
+          "gate": "informational"
+        },
+        {
+          "id": "touch-comb-key.0.key.fits.boss-through-the-bezel",
+          "gate": "informational"
+        },
+        {
+          "id": "touch-comb-key.1.host.top",
+          "gate": "informational"
+        },
+        {
+          "id": "touch-comb-key.1.key.fingers",
+          "gate": "informational"
+        },
+        {
+          "id": "touch-comb-key.1.key.R.post",
+          "gate": "informational"
+        },
+        {
+          "id": "touch-comb-key.1.key.fits.comb-gap",
+          "gate": "informational"
+        },
+        {
+          "id": "touch-comb-key.1.key.fits.finger-width",
+          "gate": "informational"
+        },
+        {
+          "id": "touch-comb-key.1.key.fits.boss-through-the-bezel",
+          "gate": "informational"
+        },
+        {
+          "id": "rp2040-zero-seat.0.host.top",
+          "gate": "informational"
+        },
+        {
+          "id": "rp2040-zero-seat.0.seat.boardZ",
+          "gate": "informational"
+        },
+        {
+          "id": "rp2040-zero-seat.0.seat.boardTop",
+          "gate": "informational"
+        },
+        {
+          "id": "rp2040-zero-seat.0.seat.cableEdge",
+          "gate": "informational"
+        },
+        {
+          "id": "rp2040-zero-seat.0.seat.fits.pocket-around-the-board",
+          "gate": "informational"
+        },
+        {
+          "id": "rp2040-zero-seat.0.seat.fits.bump-height",
+          "gate": "informational"
+        },
+        {
+          "id": "rp2040-zero-seat.0.seat.fits.bezel-squeeze-on-the-board",
+          "gate": "informational"
+        },
+        {
+          "id": "rp2040-zero-seat.0.seat.fits.bump-to-bump",
+          "gate": "informational"
+        },
+        {
+          "id": "rp2040-zero-seat.0.seat.fits.clearance-under-the-board",
+          "gate": "informational"
+        },
+        {
+          "id": "rp2040-zero-seat.0.seat.fits.opening",
+          "gate": "informational"
+        },
+        {
+          "id": "rp2040-zero-seat.0.seat.fits.opening-height",
+          "gate": "informational"
+        },
+        {
+          "id": "rp2040-zero-seat.0.seat.fits.datum-corner",
+          "gate": "informational"
+        },
+        {
+          "id": "route.conflicts",
+          "gate": "CHK-NET-12"
+        },
+        {
+          "id": "route.unrouted",
+          "gate": "CHK-NET-12"
+        },
+        {
+          "id": "route.iters",
+          "gate": "informational"
+        },
+        {
+          "id": "route.net.GND.fails",
+          "gate": "CHK-NET-12"
+        },
+        {
+          "id": "route.net.GND.hot",
+          "gate": "CHK-NET-12"
+        },
+        {
+          "id": "route.net.GND.length",
+          "gate": "informational"
+        },
+        {
+          "id": "route.net.3V3.fails",
+          "gate": "CHK-NET-12"
+        },
+        {
+          "id": "route.net.3V3.hot",
+          "gate": "CHK-NET-12"
+        },
+        {
+          "id": "route.net.3V3.length",
+          "gate": "informational"
+        },
+        {
+          "id": "route.net.UP.fails",
+          "gate": "CHK-NET-12"
+        },
+        {
+          "id": "route.net.UP.hot",
+          "gate": "CHK-NET-12"
+        },
+        {
+          "id": "route.net.UP.length",
+          "gate": "informational"
+        },
+        {
+          "id": "route.net.DOWN.fails",
+          "gate": "CHK-NET-12"
+        },
+        {
+          "id": "route.net.DOWN.hot",
+          "gate": "CHK-NET-12"
+        },
+        {
+          "id": "route.net.DOWN.length",
+          "gate": "informational"
+        },
+        {
+          "id": "route.net.LEFT.fails",
+          "gate": "CHK-NET-12"
+        },
+        {
+          "id": "route.net.LEFT.hot",
+          "gate": "CHK-NET-12"
+        },
+        {
+          "id": "route.net.LEFT.length",
+          "gate": "informational"
+        },
+        {
+          "id": "route.net.RIGHT.fails",
+          "gate": "CHK-NET-12"
+        },
+        {
+          "id": "route.net.RIGHT.hot",
+          "gate": "CHK-NET-12"
+        },
+        {
+          "id": "route.net.RIGHT.length",
+          "gate": "informational"
+        },
+        {
+          "id": "route.net.X.fails",
+          "gate": "CHK-NET-12"
+        },
+        {
+          "id": "route.net.X.hot",
+          "gate": "CHK-NET-12"
+        },
+        {
+          "id": "route.net.X.length",
+          "gate": "informational"
+        },
+        {
+          "id": "route.net.B.fails",
+          "gate": "CHK-NET-12"
+        },
+        {
+          "id": "route.net.B.hot",
+          "gate": "CHK-NET-12"
+        },
+        {
+          "id": "route.net.B.length",
+          "gate": "informational"
+        },
+        {
+          "id": "route.net.Y.fails",
+          "gate": "CHK-NET-12"
+        },
+        {
+          "id": "route.net.Y.hot",
+          "gate": "CHK-NET-12"
+        },
+        {
+          "id": "route.net.Y.length",
+          "gate": "informational"
+        },
+        {
+          "id": "route.net.A.fails",
+          "gate": "CHK-NET-12"
+        },
+        {
+          "id": "route.net.A.hot",
+          "gate": "CHK-NET-12"
+        },
+        {
+          "id": "route.net.A.length",
+          "gate": "informational"
+        },
+        {
+          "id": "route.net.SELECT.fails",
+          "gate": "CHK-NET-12"
+        },
+        {
+          "id": "route.net.SELECT.hot",
+          "gate": "CHK-NET-12"
+        },
+        {
+          "id": "route.net.SELECT.length",
+          "gate": "informational"
+        },
+        {
+          "id": "route.net.START.fails",
+          "gate": "CHK-NET-12"
+        },
+        {
+          "id": "route.net.START.hot",
+          "gate": "CHK-NET-12"
+        },
+        {
+          "id": "route.net.START.length",
+          "gate": "informational"
+        },
+        {
+          "id": "layout.top",
+          "gate": "informational"
+        },
+        {
+          "id": "layout.bezelTop",
+          "gate": "informational"
+        },
+        {
+          "id": "layout.floor",
+          "gate": "informational"
+        },
+        {
+          "id": "layout.buttons",
+          "gate": "informational"
+        },
+        {
+          "id": "layout.slot.X",
+          "gate": "informational"
+        },
+        {
+          "id": "layout.slot.B",
+          "gate": "informational"
+        },
+        {
+          "id": "layout.slot.Y",
+          "gate": "informational"
+        },
+        {
+          "id": "layout.slot.A",
+          "gate": "informational"
+        },
+        {
+          "id": "drive.UP",
+          "gate": "informational"
+        },
+        {
+          "id": "drive.DOWN",
+          "gate": "informational"
+        },
+        {
+          "id": "drive.LEFT",
+          "gate": "informational"
+        },
+        {
+          "id": "drive.RIGHT",
+          "gate": "informational"
+        },
+        {
+          "id": "drive.X",
+          "gate": "informational"
+        },
+        {
+          "id": "drive.B",
+          "gate": "informational"
+        },
+        {
+          "id": "drive.Y",
+          "gate": "informational"
+        },
+        {
+          "id": "drive.A",
+          "gate": "informational"
+        },
+        {
+          "id": "drive.SELECT",
+          "gate": "informational"
+        },
+        {
+          "id": "drive.START",
+          "gate": "informational"
+        },
+        {
+          "id": "derived.T",
+          "gate": "informational"
+        }
+      ]
+    },
+    {
       "build": "designs/sprue",
       "part": "pick",
       "metrics": [

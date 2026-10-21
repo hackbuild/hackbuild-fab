@@ -184,5 +184,16 @@
       "chamferTop (model.js lines 624 to 635), a stepped top chamfer one layer per step, ported to packages/geom/src/edge.ts as the chamfer profile d(z); the per layer bands it cut are the R1-engine-06 stack generator's (R1-engine-05)"
     ],
     "dest": "packages/geom/src/edge.ts"
+  },
+  {
+    "id": "pip.model/haft-9-designs-pip-build",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/pip/files/haft-src/src/model.js",
+    "sha256": "95a996433e54d586cdaa970a844ee8f8f02196f80b23ba36983c95ed456d1f34",
+    "fixes": [
+      "the buried trace layers and posts (model.js lines 29 to 50) through packages/copper emitTraceLayers, and the bezel plate with its button holes, USB notch and press ribs (lines 301 to 319) ported to designs/pip/build.ts; the bezel prints flipped beside the body",
+      "not ported in release 1: the stepped bezel chamfer, labels, mark, lip and groove, pry notches and pegs (lines 249 to 265 and 320 to 363) and the plate packer (lines 419 to 446); the click springs and caps sit at fixed plate spots (R1-designs-reach-09)"
+    ],
+    "dest": "designs/pip/build.ts"
   }
 ]
