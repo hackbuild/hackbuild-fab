@@ -667,6 +667,10 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-610 | counts.json moves to tools/reports as generated test data | decided | Tooling |
 | D-611 | BLOCKS release 1 chase leaves the board seat out | decided | reach |
 | D-612 | BLOCKS chase asks the standard with unset first and builds the wire by default | decided | reach |
+| D-613 | tilt-stick builds through Author.arch while arch.apply refuses it | decided | Mechanisms, archetypes, tooling |
+| D-614 | kernel/author re-exports the TOGGLE host plan and the copper route search | decided | Engine, author |
+| D-615 | TOGGLE keeps the original's terminal row; CHK-PRT-04 fails on it | decided | Constraints and checks |
+| D-616 | TOGGLE port choices: bores, leads, pin row step, hookup pins and the drive contact | decided | reach |
 
 ## House rules and process
 
@@ -7440,6 +7444,50 @@ Status: decided (delegated, R1-spike-01). The WASM run changes one value of the 
 | Decision | Taken by the agent under owner delegation on 2026-10-20. The `designs/blocks` chase field `standard` is an enum `unset`, `boss-v1`, `blocks-html` with default `unset`, since an enum needs a default and D-087 gives none. build.ts refuses a stud with `unset` (E_SCHEMA at /standard) and a wire with `boss-v1` (the wire is ported on blocks-html only); the default part is the wire, so the defaults build and the parity goldens are the wire. The presets `boss-v1` and `blocks-html` are the two standard starts, each a stud brick. A standard whose layer differs from the machine preset warns LAYER. No queries.json: circuit.solve on a lone wire returns ok false with two TAP_NO_LEAD warnings, which pins nothing useful. |
 | Rationale | D-087 says no default until a print; a refusal keeps that while the defaults still build for parity and the bench welcome. The wire's caps are blocks-html dimensions whatever the field says, so the wire is the one part that needs no choice. |
 | Evidence | `designs/blocks/test/build.test.ts`: the wire meshes equal `reference/conductors/blocks-wire/expected/build.json`, the blocks-html stud meshes equal `reference/conductors/blocks-stud/expected/build.json`, the boss-v1 taps 9.1 and 1.2 and post top 9.6 equal BOSS in place (computed); dropping the standard field fails 2 chase tests (measured). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-613 tilt-stick builds through Author.arch while arch.apply refuses it
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. A candidate archetype may carry a `buildApply` (packages/archetypes `def.ts`); `placeArchetype`, which Author.arch calls, runs it, while the def's own derive and apply keep refusing, so `arch.apply` and every other caller still refuse the candidate. tilt-stick carries its ported PIP and TOGGLE apply this way; its status stays candidate on the open owner question in its statusReason. |
+| Rationale | spec Author.arch states that a candidate builds from build.ts and its chip reads candidate (M10-T09) while arch.apply refuses it, but candidateArchetype refused both, so designs/toggle could not place its stick. Keeping def.apply refusing holds the registry test that every non-proven entry refuses (packages/archetypes test/load.test.ts). |
+| Evidence | `packages/archetypes/src/def.ts`, `src/place.ts`, `src/defs/tilt-stick.ts`; vitest packages/archetypes 198 pass, core arch-apply and canon-commands pass (computed, 2026-10-21). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-614 kernel/author re-exports the TOGGLE host plan and the copper route search
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `@hackbuild/kernel/author` re-exports `toggleHost`, `toggleParams`, `TOGGLE_NAMES`, `TOGGLE_BLOCKS` (packages/archetypes) and `routeSearch` (packages/copper), and the kernel package depends on both. designs/toggle/build.ts routes its own leads in the sandbox with them on every build, so any edit that moves the plan view reroutes. |
+| Rationale | A build module imports only kernel/author and spec (BUILD_IMPORTS, D-178). The pip-buried-route pattern (route data generated outside the sandbox, E_STALE on a profile change) cannot follow a param edit. The kernel tier may import tiers 1 and 2, and prismWithEdges set the precedent of a pure generator on this entry (R1-engine-06). One implementation each: the identities are tested in kernel/test/author.test.ts. |
+| Evidence | `kernel/src/author/index.ts`, `kernel/package.json`; `node tools/tiers.mjs` 0 failures (computed, 2026-10-21). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-615 TOGGLE keeps the original's terminal row; CHK-PRT-04 fails on it
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. designs/toggle keeps the original's header pitch 2.54 mm, cup radius 0.95 mm and body edge 0.8 mm (part2d.js lines 62 to 87). The host pocket under each cup is drawn at the cup radius, so CHK-PRT-04 measures the real PETG walls: 0.64 mm between cups and 0.8 mm to the edge, neither a 0.42 mm line multiple, and `hbf part.build designs/toggle --preset solo4` reads 1 fail (computed). solo8 adds two CHK-NET-02 pairs at 0.50 mm and blocks8 seven at 0.48 to 0.50 mm against the 0.6 mm buried stack floor (D-085), the original's lead spacing and 0.48 mm separation layer. The geometry is not changed to pass. Owner question, default keep the original: accept these walls and spacings, or widen the cups and the edge so the walls land on the line grid. |
+| Rationale | The brief's done line asked for 0 fail; every modelling of the cup that keeps the original's numbers fails CHK-PRT-04 (a bore-radius pocket reads 1.64 mm, a cup-radius pocket 0.64 mm), and waivers are not applied by part.build yet. Changing the original's dimensions is a design call, not a port. |
+| Evidence | `designs/toggle/README.md` (findings per preset), `designs/toggle/expected/report.json` (computed, 2026-10-21). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-616 TOGGLE port choices: bores, leads, pin row step, hookup pins and the drive contact
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. In designs/toggle: a pin cup is a conductive body with its bore cut out plus a host pocket (LOCATE, 0 mm per side) under the cup, since a conductor region is one ring; a lead into a bored cup stops 0.05 mm short of the bore; each routed run is the original's traceRects joined into one ring; the pin depth row steps 0.1 mm, since the original's 0.24 mm step from 1.5 misses its own 3.0 default; the hookup reads GP2 to GP9 in sector order from east with the TOGGLE E12 pull up rule; the drive contact reads the pads the archetype's solver closes per sector at the contact tilt and at the stop, and an off-centre stimulus takes the nearest sector. |
+| Rationale | Each keeps the original's built geometry where the kernel can express it (meshes equal on every re-accept, computed), and states the gaps: circuit.solve does not solve the reads (no contact feature, no tap), and the full solver drive between sectors waits for the bench item. |
+| Evidence | `designs/toggle/build.ts`, `designs/toggle/chase.ts`, `designs/toggle/test/build.test.ts` (9 pass, a gate stop mutant and a pinout mutant each fail it, computed, 2026-10-21). |
 | Supersedes | new |
 | Milestone | none |
 
