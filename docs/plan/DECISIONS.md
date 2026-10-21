@@ -628,6 +628,8 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-571 | One IO file per command, the spec name lists generated | decided | Spec, process |
 | D-572 | The mesh stage runner splits one file per stage, stages.ts the barrel | decided | Mesh, process |
 | D-573 | project-graph records one reference per test, the links describe reads that store | decided | Testing |
+| D-574 | SLC-FOREIGN fails a foreign region at or over 1.0 mm2 | decided | Rails, virtual print |
+| D-575 | SLC-BED and SLC-SLOTS read the completed project config | decided | Rails, virtual print |
 
 ## House rules and process
 
@@ -6987,6 +6989,28 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Rationale | The red was a time limit on the sum, not a slow build; a limit per build fails only a build that is itself stuck. |
 | Evidence | Alone: 59 of 59 (computed). Mutant: two lines of packages/project/test/fixtures/graph.jsonl swapped fails "graph.jsonl holds the made lines" with all 56 records passing; restored. Three full core runs in a row: see .hbf-notes/r1/LOG.md for 2026-10-20. |
 | Supersedes | none |
+| Milestone | none |
+
+### D-574 SLC-FOREIGN fails a foreign region at or over 1.0 mm2
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. tools/slice/profile-checks.mjs (R1-designs-reach-02) grades analyze.py `a_missing.foreign` rows: a region of 1.0 mm2 or more fails SLC-FOREIGN, a smaller one warns, and a slice run without `--analysis` reports the row as not run. The 1.0 mm2 bound (FOREIGN_FAIL_MM2) is inferred, a grading choice with no coupon behind it. TOGGLE's tilt-stick slice fails this row on its 1.248 mm2 layer 40 bridge (computed) until the owner accepts that bridge. |
+| Rationale | PLAN.md 3.5 row 1 asks for no foreign tool regions; the brief names the bound and the band, and a warn band keeps sub-millimetre slivers visible without blocking. |
+| Evidence | tools/test/profile-checks.test.mjs (1.0 mm2 fails, 0.5 mm2 warns); mutant `>=` to `>` fails the 1.0 mm2 case; keys flex-pair preset two with analyze.py: 0 foreign regions, SLC-FOREIGN pass (computed, Flash Studio CLI 2.3.2, 2026-10-20); packages/archetypes/src/defs/tilt-stick.ts statusReason (1.248 mm2). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-575 SLC-BED and SLC-SLOTS read the completed project config
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. SLC-BED reads curr_bed_type, support_multi_bed_types, default_bed_type and the per-slot plate temperatures from the config slice.mjs hands the slicer (completeProject: flattened presets with every embedded key over them), so a temperature the 3MF embeds is graded as sliced. The bed passes only when support_multi_bed_types is "1" or default_bed_type equals it, and both `<plate>_temp` and `<plate>_temp_initial_layer` are over 0 in every slot. The plate name to key pairing (Cool, Engineering, High Temp, Textured PEI, Textured Cool, Supertack) follows the OrcaSlicer enum, inferred, the key names read from the Flash Studio 1.7.14 bundle. SLC-SLOTS counts the chase material slots for a --design run and the 3MF's own filament list for a bare 3MF; a --filament-map stand-in warns, so keys flex-pair preset two grades SLC-SLOTS warn (slots 3 and 4, Generic TPU-95A for Generic TPU, D-238), never pass, until the owner question of D-238 closes. An unbundled preset without a map still stops the run in completeProject before any row is written. |
+| Rationale | The completed config is what the slicer slices; grading the raw presets would miss an embedded override. The brief's done line expected SLC-SLOTS pass on flex-pair, which only holds once the writer names a bundled TPU preset. |
+| Evidence | tools/slice/profile-checks.mjs PLATE_TEMP_KEYS comment; tools/test/profile-checks.test.mjs (bed unset, bed not allowed, plate temperature zero, substitution, unresolved slot); slice-run.json of keys flex-pair preset two, 2026-10-20: SLC-BED pass Textured PEI Plate, SLC-SLOTS warn (computed). |
+| Supersedes | new |
 | Milestone | none |
 
 ## Owner queue
