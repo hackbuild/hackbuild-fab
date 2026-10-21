@@ -626,6 +626,7 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-569 | One file per decision, DECISIONS.md generated | decided | Plan, process |
 | D-570 | R1-fix-08 closes without a code change: a stale dist, the rule holds | decided | Testing |
 | D-571 | One IO file per command, the spec name lists generated | decided | Spec, process |
+| D-572 | The mesh stage runner splits one file per stage, stages.ts the barrel | decided | Mesh, process |
 
 ## House rules and process
 
@@ -6962,6 +6963,17 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under the owner delegation of 2026-10-20 for release 1 of plan v9.1 (R1-split-01 step 1). Each command's input and output live in spec/command-io/<name>.ts as an exported interface <Pascal name>IO, whose first line reads "// command <name>, group <group>." with ", cli only" for a command with no MCP tool. tools/gen/registries/commands.mjs fills three marked regions of spec/commands.ts: the imports of those interfaces, the name lists (COMMAND_NAMES, CommandName, COMMAND_GROUP, CLI_ONLY) and the CommandIO map; the rest of spec/commands.ts stays hand-written. Within a group the order is the one COMMAND_NAMES held at the split, then new names sorted. The fragments sit in spec, not beside packages/commands/src/defs as the brief suggested, since spec is tier S and cannot read a tier 2 file. Params and Facts moved to spec/command-io/_shared.ts, outside the spec index as before. The comment that counted the commands by hand went with the lists; the group comments carry generated counts. |
 | Rationale | Every new command edited the same lines of a 1,291-line file (counted 2026-10-20); engine-23 conflicted on five of them with adopt. A file per command plus generated lists leaves a merge only the generated regions, which npm run registries resolves. |
 | Evidence | tools/test/commands-fragments.test.mjs (4 of 4); tsc -b, tests and tools configs exit 0; spec and packages/commands 43 of 43; core surface and sim-commands 33 of 33 (all computed, 2026-10-20). counts.json unchanged by the split. |
+| Supersedes | none |
+| Milestone | none |
+
+### D-572 The mesh stage runner splits one file per stage, stages.ts the barrel
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under the owner delegation of 2026-10-20 for release 1 of plan v9.1 (R1-split-01 step 3). packages/mesh/src/stages.ts (789 lines, counted) moves by a codemod, text unchanged, into packages/mesh/src/stages/: types.ts (the runner contracts), base.ts (stage 1, the route table and MESH_ROUTE_DEFS), cut.ts (stages 2 to 4 and toManifold), partition.ts (stage 5), inset.ts (stage 6), emit.ts (stage 7), adjacency.ts (stage 8), run.ts (runStages) and imported.ts (stageImported). Helpers one stage file reads from another gain an export inside the package; stages.ts re-exports exactly the names it exported before, so the package index and its importers are unchanged. |
+| Rationale | One 789-line file held the whole pipeline, so any two mesh items collided on it; a file per stage keeps a stage change to its own file. |
+| Evidence | tsc -b exit 0; packages/mesh 197 of 197; hbf parity on every reference with a chase.ts, one at a time, 56 of 56 PASS with no golden written, 343 s (all computed, 2026-10-20). reference/sheet/ogee16-r16p-plates and slug-sheets hold no chase.ts and are out of parity's reach. |
 | Supersedes | none |
 | Milestone | none |
 
