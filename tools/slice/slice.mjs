@@ -38,6 +38,11 @@
 //
 // The owner's own slicer profile folder is never read or written:
 // every run gets a new, empty --datadir under --datadir-root.
+//
+// Every run writes the profile check rows (tools/slice/profile-checks.mjs:
+// SLC-BED, SLC-SLOTS, SLC-FOREIGN) into slice-run.json as profileChecks and
+// exits 1 when any row fails. --analysis <slice.json> grades SLC-FOREIGN
+// from a tools/py/gcode/analyze.py result; without it that row is "not run".
 
 import { spawn } from "node:child_process";
 import { createHash } from "node:crypto";
@@ -49,6 +54,7 @@ import {
   CARD_EPOCH, DEFAULT_DATADIR_ROOT, DEFAULT_SLICER, EVIDENCE_ROOT, PROJECT, SLICERS,
   appPresent, appVersionOf, cliVersionOf, completeProject, completed3mf, freshDatadir, inside, presetIndex, realOf, resourcesOf, sliceArgs, slicerEntry,
 } from "./orca-family.mjs";
+import { anyFail, profileChecks } from "./profile-checks.mjs";
 
 export {
   CARD_EPOCH, DEFAULT_DATADIR_ROOT, DEFAULT_SLICER, EVIDENCE, EVIDENCE_ROOT, SLICERS,
@@ -140,7 +146,8 @@ export async function design3mf(designDir, preset, { allowFailing = false } = {}
     const pkg = await m.export3mf(built);
     const pkgChecks = await runAllChecks(built, [{ exporter: "3mf", name: pkg.name, bytes: pkg.bytes, part: built.part }], packageCheckIds(built));
     const checks = checkGate([...partChecks.results, ...pkgChecks.results], worst, { allowFailing, what: `${designDir} preset ${preset}` });
-    return { bytes: pkg.bytes, artifactHash: pkg.artifactHash, warnings: pkg.warnings.map((w) => w.text ?? String(w)), model: declaredModel(built), checks };
+    const slots = built.design.chase.materials.map((x) => x.slot);
+    return { bytes: pkg.bytes, artifactHash: pkg.artifactHash, warnings: pkg.warnings.map((w) => w.text ?? String(w)), model: declaredModel(built), checks, slots };
   } finally {
     if (saved === undefined) delete process.env["SOURCE_DATE_EPOCH"];
     else process.env["SOURCE_DATE_EPOCH"] = saved;
@@ -193,7 +200,7 @@ function runCapped(cmd, args, logFile, limitS) {
  * Slices plate 1. Returns the run record also written to <outDir>/slice-run.json.
  * input: { file } or { design, preset }.
  */
-export async function slice({ input, outDir: outArg, slicer = DEFAULT_SLICER, app, datadirRoot = DEFAULT_DATADIR_ROOT, filamentMap = {}, timeLimitS = 600, allowFailing = false }) {
+export async function slice({ input, outDir: outArg, slicer = DEFAULT_SLICER, app, datadirRoot = DEFAULT_DATADIR_ROOT, filamentMap = {}, timeLimitS = 600, allowFailing = false, analysis }) {
   // absolute from here on, so no path the slicer receives can read as an option
   const outDir = path.resolve(outArg);
   assertOutDir(outDir);
@@ -205,12 +212,14 @@ export async function slice({ input, outDir: outArg, slicer = DEFAULT_SLICER, ap
   const resources = resourcesOf(slicer, app);
   let bytes;
   let source;
+  let slots;
   if (input.file !== undefined) {
     bytes = readFileSync(input.file);
     source = { file: path.resolve(input.file) };
   } else {
     const d = await design3mf(input.design, input.preset, { allowFailing });
     bytes = d.bytes;
+    slots = d.slots;
     source = { design: input.design, preset: input.preset, sourceDateEpoch: CARD_EPOCH, artifactHash: d.artifactHash, warnings: d.warnings, model: d.model, checks: d.checks, writer: "core export3mf, packages/3mf write3mf (no export gate, not a fabrication export)" };
   }
   const stem = input.file !== undefined ? path.basename(input.file, ".3mf") : `${path.basename(input.design)}-${input.preset}`;
@@ -223,6 +232,8 @@ export async function slice({ input, outDir: outArg, slicer = DEFAULT_SLICER, ap
   const embedded = JSON.parse(project);
   const index = presetIndex(resources, embedded.printer_settings_id);
   const done = completeProject(embedded, index, filamentMap);
+  const analysisJson = analysis === undefined ? undefined : JSON.parse(readFileSync(analysis, "utf8"));
+  const checks = profileChecks({ completed: done.config, presets: done.presets, substitutions: done.substitutions, analysis: analysisJson, slots });
   const completedBytes = await completed3mf(bytes, done.config);
   const completedPath = path.join(outDir, `${stem}.completed.3mf`);
   writeFileSync(completedPath, completedBytes);
@@ -253,6 +264,8 @@ export async function slice({ input, outDir: outArg, slicer = DEFAULT_SLICER, ap
     wallQualifier: "measured",
     gcode: gcode === undefined ? null : { path: gcodeFile, bytes: gcode.length, sha256: sha256(gcode) },
     status: gcode !== undefined && run.code === 0 ? "sliced" : "failed",
+    profileChecks: checks,
+    analysis: analysis === undefined ? null : path.resolve(analysis),
   };
   writeFileSync(path.join(outDir, "slice-run.json"), `${JSON.stringify(record, null, 2)}\n`);
   return record;
@@ -274,6 +287,7 @@ function parseArgs(argv) {
     else if (a === "--app") o.app = next();
     else if (a === "--slicer") o.slicer = next();
     else if (a === "--allow-failing") o.allowFailing = true;
+    else if (a === "--analysis") o.analysis = next();
     else if (a === "--filament-map") {
       const [k, v] = next().split("=");
       if (!k || !v) throw new Error("--filament-map takes \"<name in 3mf>=<bundled name>\"");
@@ -297,10 +311,11 @@ async function main() {
     process.stdout.write(`not run: no ${entry.label} executable at ${o.app ?? entry.app}\n`);
     process.exit(3);
   }
-  const r = await slice({ input, outDir, slicer, app: o.app, datadirRoot: o.datadirRoot, filamentMap: o.filamentMap, timeLimitS: o.timeLimitS, allowFailing: o.allowFailing });
+  const r = await slice({ input, outDir, slicer, app: o.app, datadirRoot: o.datadirRoot, filamentMap: o.filamentMap, timeLimitS: o.timeLimitS, allowFailing: o.allowFailing, analysis: o.analysis });
   process.stdout.write(`${r.status}: exit ${r.exitCode}${r.signal ? ` signal ${r.signal}` : ""}, ${r.wallMs} ms wall (measured), ${entry.label} CLI ${r.slicer.cliVersion}\n`);
   if (r.gcode) process.stdout.write(`gcode ${r.gcode.path}, ${r.gcode.bytes} bytes, sha256 ${r.gcode.sha256}\n`);
-  process.exit(r.status === "sliced" ? 0 : 1);
+  for (const c of r.profileChecks) process.stdout.write(`${c.id} ${c.verdict} (${c.qualifier}): ${c.reason}\n`);
+  process.exit(r.status === "sliced" && !anyFail(r.profileChecks) ? 0 : 1);
 }
 
 if (process.argv[1] !== undefined && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
