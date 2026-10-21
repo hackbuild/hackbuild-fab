@@ -13,9 +13,10 @@ import { describe, expect, it } from "vitest";
 
 const css = readFileSync(new URL("../src/bench/bench.css", import.meta.url), "utf8").replace(/\/\*[\s\S]*?\*\//g, "");
 
-/** The body of the first @media block whose query equals `query`, whitespace ignored. */
+/** The bodies of every @media block whose query equals `query`, whitespace ignored, joined. */
 function media(query: string): string {
   const flat = query.replace(/\s+/g, "");
+  const out: string[] = [];
   for (const m of css.matchAll(/@media([^{]+)\{/g)) {
     if (m[1]!.replace(/\s+/g, "") !== flat) continue;
     let depth = 1;
@@ -26,9 +27,10 @@ function media(query: string): string {
       else if (css[i] === "}") depth -= 1;
       i += 1;
     }
-    return css.slice(start, i - 1);
+    out.push(css.slice(start, i - 1));
   }
-  throw new Error(`no @media ${query} in bench.css`);
+  if (out.length === 0) throw new Error(`no @media ${query} in bench.css`);
+  return out.join("\n");
 }
 
 /** Declarations of the rule whose selector list names `selector`. */
@@ -55,5 +57,20 @@ describe("bench touch rules at 390", () => {
     expect(rule(body, ".hbf-pad")).toMatch(/display:\s*grid/);
     expect(rule(body, ".hbf-pad")).toMatch(/grid-template-columns:\s*auto/);
     expect(rule(body, ".hbf-pad-read")).toMatch(/grid-column:\s*1\s*\/\s*-1/);
+  });
+
+  it("selects and bool switches take the 44 px floor under 640, the switch knob centred by token (G-54)", () => {
+    const body = media("(pointer:coarse),(max-width:640px)");
+    for (const sel of [".hbf-bench .hb-select", ".hbf-bench .hb-switch"]) {
+      const d = rule(body, sel);
+      expect(d, sel).toMatch(/min-height:\s*var\(--hbf-touch\)/);
+      expect(d, sel).toMatch(/min-width:\s*var\(--hbf-touch\)/);
+    }
+    expect(rule(body, ".hbf-bench .hb-switch::after")).toMatch(/top:\s*calc\(50%\s*-\s*var\(--hbf-knob-half\)\)/);
+  });
+
+  it("a docked pad takes a row below the stage at full width (D-630)", () => {
+    expect(rule(css, ".hbf-composer.is-pad-docked")).toMatch(/grid-template-rows:\s*minmax\(0,\s*1fr\)\s+auto/);
+    expect(rule(css, ".hbf-pad-dock")).toMatch(/grid-column:\s*1\s*\/\s*-1/);
   });
 });

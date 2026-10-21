@@ -8,14 +8,18 @@
 // page through the entry bundle. A design that has no bench.entry.ts or
 // page-build.ts gets the plain ones below: the chase and bench mounted by
 // the bench shell, and the chase and build.ts run by the shared page build
-// (D-264). An existing file is never touched.
+// (D-264). The plain entry imports the shell by the @hackbuild/ui source
+// export, as designs/blocks/bench.entry.ts does, so tools/tiers.mjs checks
+// the edge; when it writes the entry it also gives the design's
+// package.json that devDependency, writing the package.json when there is
+// none. Any other existing file is never touched.
 //
 //   node tools/bake/from-chase.ts <design dir>   prints {"manifest": <path>, "wrote": [...]}
 //
 // Node strips the types (22.18). chase.bake (core/src/commands/chase-bake.ts)
 // runs it, then tools/bake/bake.mjs on the manifest it names.
 
-import { existsSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { basename, dirname, join, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { BakeManifest } from "./manifest.ts";
@@ -64,16 +68,42 @@ export function manifestFor(dir: string): BakeManifest {
   };
 }
 
+/** The workspace the plain entry imports the bench shell from. */
+export const UI_PACKAGE = "@hackbuild/ui";
+/** The shell's source export (packages/ui/package.json `./bench/entry`). */
+export const UI_ENTRY = `${UI_PACKAGE}/bench/entry`;
+
+type PackageJson = Record<string, unknown> & { devDependencies?: Record<string, string>; dependencies?: Record<string, string> };
+
+const readJson = (p: string): PackageJson => JSON.parse(readFileSync(p, "utf8")) as PackageJson;
+
+/**
+ * The design's package.json text with UI_PACKAGE in devDependencies at the
+ * ui workspace's version, or null when it already declares it. With no
+ * package.json (`existing` null) it is the designs/blocks form: private, an
+ * ES module, the root package's licence and author.
+ */
+export function packageWithUi(dir: string, existing: string | null): string | null {
+  const root = readJson(join(REPO, "package.json"));
+  const pj: PackageJson = existing === null
+    ? { name: `@hackbuild/design-${basename(resolve(dir))}`, version: "0.0.0", private: true, type: "module", license: root["license"], author: root["author"] }
+    : (JSON.parse(existing) as PackageJson);
+  if (pj.dependencies?.[UI_PACKAGE] !== undefined || pj.devDependencies?.[UI_PACKAGE] !== undefined) return null;
+  const version = readJson(join(REPO, "packages/ui/package.json"))["version"] as string;
+  const dev = { ...pj.devDependencies, [UI_PACKAGE]: version };
+  pj.devDependencies = Object.fromEntries(Object.entries(dev).sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0)));
+  return `${JSON.stringify(pj, null, 2)}\n`;
+}
+
 /** The plain bench entry: the chase and bench beside it, mounted with the page build's library build and writers. */
-export function entrySource(dir: string): string {
-  const ui = posix(relative(resolve(dir), join(REPO, "packages/ui/src/bench/entry")));
+export function entrySource(): string {
   return [
     "/// <reference lib=\"dom\" />",
     "// The bench entry chase.bake wrote (tools/bake/from-chase.ts): the chase",
     "// and bench beside it, mounted by the ui bench shell. It sits outside",
     "// defHash with bench.ts (D-174); edit it freely.",
     "",
-    `import { mountBench, pageBench, pageOf } from ${JSON.stringify(ui)};`,
+    `import { mountBench, pageBench, pageOf } from ${JSON.stringify(UI_ENTRY)};`,
     'import { bench } from "./bench";',
     'import { chase } from "./chase";',
     "",
@@ -100,7 +130,7 @@ export const PAGE_BUILD = [
   "",
 ].join("\n");
 
-/** Write bake.json, bench.entry.ts and page-build.ts into `dir` where absent; returns the manifest path and the files written. */
+/** Write bake.json, bench.entry.ts (with its package.json devDependency) and page-build.ts into `dir` where absent; returns the manifest path and the files written. */
 export function ensureManifest(dir: string): { manifest: string; wrote: string[] } {
   const abs = resolve(dir);
   if (!existsSync(join(abs, "chase.ts"))) throw new Error(`no chase.ts in ${abs}`);
@@ -112,7 +142,15 @@ export function ensureManifest(dir: string): { manifest: string; wrote: string[]
     wrote.push(name);
   };
   put("bake.json", () => `${JSON.stringify(manifestFor(abs), null, 2)}\n`);
-  put("bench.entry.ts", () => entrySource(abs));
+  put("bench.entry.ts", () => entrySource());
+  if (wrote.includes("bench.entry.ts")) {
+    const pjPath = join(abs, "package.json");
+    const pj = packageWithUi(abs, existsSync(pjPath) ? readFileSync(pjPath, "utf8") : null);
+    if (pj !== null) {
+      writeFileSync(pjPath, pj);
+      wrote.push("package.json");
+    }
+  }
   put("page-build.ts", () => PAGE_BUILD);
   return { manifest: join(abs, "bake.json"), wrote };
 }

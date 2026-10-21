@@ -209,6 +209,18 @@ export function targetOfBody(model: PadModel, body: string): string | null {
   return model.targets.find((t) => t.bodies.includes(body))?.target ?? null;
 }
 
+/** The most drive keys a pad holds over the stage at the narrow width (D-630). */
+export const PAD_OVER_STAGE_MAX = 4;
+
+/**
+ * True when the pad docks below the stage instead of over it: at the
+ * narrow width with more than PAD_OVER_STAGE_MAX targets, 44 px keys
+ * cannot keep the pad within a quarter of the stage (G-52, D-630).
+ */
+export function padDocks(model: PadModel | null, narrow: boolean): boolean {
+  return narrow && model !== null && model.targets.length > PAD_OVER_STAGE_MAX;
+}
+
 // ---- the held set
 
 export interface Pad {

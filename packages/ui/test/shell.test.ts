@@ -209,3 +209,36 @@ describe("shell behaviour", () => {
     expect(errors).toEqual([]);
   });
 });
+
+describe("drive pad dock at 390 (D-630)", () => {
+  /** A build whose metrics name n flex-pair keys, and a contact that closes nothing. */
+  const keysBuild = (n: number): BenchBuild => (async () => ({
+    part: { part: { id: "p", bodies: [], features: [] }, meshes: {} },
+    report: { results: [], metrics: Array.from({ length: n }, (_, i) => ({ id: `keys.k${i}.travel`, value: 1, unit: "mm", qualifier: "computed" })), fitsBed: true },
+    buildHash: "h",
+  })) as unknown as BenchBuild;
+  const place = async (n: number, width: number): Promise<{ inStage: boolean; inDock: boolean; keys: number }> => {
+    Object.defineProperty(window, "innerWidth", { configurable: true, value: width });
+    mounted = mountBench({ chase: flexChase, bench: flexBench, el, kernel: false, hook: false, stage: false, build: keysBuild(n), contact: () => ({ closed: [] }) });
+    await settle(20);
+    const pad = el.querySelector('[data-hb="drive-pad"]');
+    return {
+      inStage: pad?.closest('[data-hb="stage"]') != null,
+      inDock: pad?.closest('[data-hb="drive-dock"]') != null,
+      keys: el.querySelectorAll('[data-hb="drive-key"]').length,
+    };
+  };
+
+  it("a pad of six keys docks below the stage at 390", async () => {
+    expect(await place(6, 390)).toEqual({ inStage: false, inDock: true, keys: 6 });
+    expect(el.querySelector(".hbf-composer")?.classList.contains("is-pad-docked")).toBe(true);
+  });
+
+  it("a pad of four keys stays over the stage at 390", async () => {
+    expect(await place(4, 390)).toEqual({ inStage: true, inDock: false, keys: 4 });
+  });
+
+  it("a pad of six keys stays over the stage at 1280", async () => {
+    expect(await place(6, 1280)).toEqual({ inStage: true, inDock: false, keys: 6 });
+  });
+});

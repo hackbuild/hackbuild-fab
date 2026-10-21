@@ -16,7 +16,7 @@ import { mcuPinRow } from "@hackbuild/catalog";
 import { chase } from "../../../../reference/keys/flex-pair/chase.js";
 import { bench } from "../../../../reference/keys/flex-pair/bench.js";
 import { contact } from "../../../../reference/keys/flex-pair/build.js";
-import { chargeReleaseLevels, createPad, padModel, pinRow, READ_CHECK, targetOfBody, type PadInput } from "../../src/drive/drive.js";
+import { chargeReleaseLevels, createPad, padDocks, padModel, pinRow, READ_CHECK, targetOfBody, type PadInput, type PadModel } from "../../src/drive/drive.js";
 import { idleLine, padLines, readoutLine } from "../../src/drive/format.js";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../../../..");
@@ -162,5 +162,17 @@ describe("drive: the held set and what the pad says without a read", () => {
     expect(t?.read).toBeNull();
     expect(t?.missing).toContain(READ_CHECK);
     expect(padLines(model, [t?.target ?? ""])[0]).toContain("not read");
+  });
+});
+
+describe("drive: where the pad sits at 390 (D-630)", () => {
+  // D-630 typed: at the narrow width a pad over four targets docks below the stage.
+  const pad = (n: number): PadModel => ({ targets: Array.from({ length: n }, (_, i) => ({ target: `k${i}`, contacts: [], bodies: [], read: null, idle: null, missing: "m" })), problem: null });
+  it("four targets stay over the stage, five dock below it, and only at the narrow width", () => {
+    expect(padDocks(pad(4), true)).toBe(false);
+    expect(padDocks(pad(5), true)).toBe(true);
+    expect(padDocks(pad(10), true)).toBe(true);
+    expect(padDocks(pad(10), false)).toBe(false);
+    expect(padDocks(null, true)).toBe(false);
   });
 });

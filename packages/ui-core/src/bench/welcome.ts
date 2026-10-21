@@ -45,7 +45,23 @@ export function createWelcome(designId: string, onChange?: (open: boolean) => vo
   };
 }
 
+/** The blank start's id. */
+export const BLANK_START = "blank";
+// A preset start's id carries this prefix, so no preset id (PIP and COLLAR
+// both declare a preset named blank) can equal the blank start's.
+const PRESET_START = "preset:";
+
+/** The start id of a chase preset. */
+export function presetStart(presetId: string): string {
+  return `${PRESET_START}${presetId}`;
+}
+
+/** The preset a start id names, or null for the blank start and any id that names no preset. */
+export function startPreset(startId: string): string | null {
+  return startId.startsWith(PRESET_START) ? startId.slice(PRESET_START.length) : null;
+}
+
 /** Blank first and primary, then each preset in declared order. */
 export function welcomeStarts(presets: readonly { readonly id: string; readonly label: string }[]): WelcomeStart[] {
-  return [{ id: "blank", label: "start blank", primary: true }, ...presets.map((p) => ({ id: p.id, label: p.label, primary: false }))];
+  return [{ id: BLANK_START, label: "start blank", primary: true }, ...presets.map((p) => ({ id: presetStart(p.id), label: p.label, primary: false }))];
 }

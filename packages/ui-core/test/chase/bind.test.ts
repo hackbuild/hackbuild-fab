@@ -62,9 +62,9 @@ describe("bindChase on flex-pair", () => {
 
   it("feeds start blank first, then the welcome's presets in its order", () => {
     const b = bind();
-    expect(b.starts.map((s) => s.id)).toEqual(["blank", "two", "one"]);
+    expect(b.starts.map((s) => s.id)).toEqual(["blank", "preset:two", "preset:one"]);
     expect(b.starts.filter((s) => s.primary).map((s) => s.id)).toEqual(["blank"]);
-    expect(b.starts.find((s) => s.id === "two")?.label).toBe("two keys");
+    expect(b.starts.find((s) => s.id === "preset:two")?.label).toBe("two keys");
   });
 
   it("answers every required BenchHook member and widgets()", () => {
@@ -128,7 +128,19 @@ describe("bindChase normalises, checks NaN and admits designs", () => {
   it("a preset start loads the preset's keys", async () => {
     const b = bind();
     await b.whenReady;
-    b.start("two");
+    b.start("preset:two");
+    expect((b.hook.state as { keys: unknown[] }).keys).toHaveLength(2);
+    b.start("blank");
+    expect((b.hook.state as { keys: unknown[] }).keys).toHaveLength(1);
+  });
+
+  it("a preset named blank loads from its own start; start blank still resets (PIP and COLLAR declare one)", async () => {
+    const two = chase.presets!.find((p) => p.id === "two")!;
+    const named = { ...chase, presets: [{ ...two, id: "blank", label: "blank" }, ...chase.presets!] } as Chase;
+    const b = bind({ chase: named, bench: { ...bench, welcome: { ...bench.welcome, presets: ["blank", "one"] } } as Bench });
+    await b.whenReady;
+    expect(b.starts.map((s) => s.id)).toEqual(["blank", "preset:blank", "preset:one"]);
+    b.start("preset:blank");
     expect((b.hook.state as { keys: unknown[] }).keys).toHaveLength(2);
     b.start("blank");
     expect((b.hook.state as { keys: unknown[] }).keys).toHaveLength(1);

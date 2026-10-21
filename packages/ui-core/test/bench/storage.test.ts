@@ -107,7 +107,13 @@ describe("welcome memory", () => {
 
   test("starts are blank first and primary, then presets in order", () => {
     const s = welcomeStarts([{ id: "one", label: "one key" }, { id: "two", label: "two keys" }]);
-    expect(s.map((x) => x.id)).toEqual(["blank", "one", "two"]);
+    expect(s.map((x) => x.id)).toEqual(["blank", "preset:one", "preset:two"]);
     expect(s.filter((x) => x.primary).map((x) => x.id)).toEqual(["blank"]);
+  });
+
+  test("a preset named blank keeps its own start, apart from start blank", () => {
+    const s = welcomeStarts([{ id: "blank", label: "blank coin" }]);
+    expect(s.map((x) => x.id)).toEqual(["blank", "preset:blank"]);
+    expect(new Set(s.map((x) => x.id)).size).toBe(s.length);
   });
 });

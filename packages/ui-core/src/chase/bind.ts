@@ -18,7 +18,7 @@ import { isChaseDocument, nonFiniteError, normaliseParams, normalisedWarnings, s
 import { createBenchCore, type BenchCore, type BuildOutput, type BuildResult, type CoreEvent } from "../bench/core.js";
 import { createHook, installHook, FREE_EXPORTS, type Hook, type HookExport, type HookOptions } from "../bench/hook.js";
 import { admitDesign, type AdmitOptions } from "../bench/share.js";
-import { welcomeStarts, type WelcomeStart } from "../bench/welcome.js";
+import { startPreset, welcomeStarts, type WelcomeStart } from "../bench/welcome.js";
 import { createPad, padModel, type Pad, type PadModel } from "../drive/drive.js";
 import { widgetRecords, type WidgetBuild } from "../widgets/registry.js";
 import type { WidgetClaimFn } from "../widgets/press.js";
@@ -210,7 +210,7 @@ export interface ChaseBinding<R extends ChaseReport = ChaseReport> {
   widgets(): WidgetRecord[];
   /** Admits a dropped or picked file and loads it; a refusal goes to the log. */
   open(text: string): void;
-  /** A welcome start: `blank` or a preset id. */
+  /** A welcome start: BLANK_START, or a preset's presetStart id. */
   start(id: string): void;
 }
 
@@ -342,7 +342,8 @@ export function bindChase<R extends ChaseReport = ChaseReport>(opts: BindOptions
       else core.loadDesign(JSON.stringify(got.design));
     },
     start(id) {
-      const preset = chase.presets?.find((p) => p.id === id);
+      const name = startPreset(id);
+      const preset = name === null ? undefined : chase.presets?.find((p) => p.id === name);
       if (preset === undefined) core.reset();
       else core.loadPreset((fresh) => normaliseParams(chase, { ...fresh, ...structuredClone(preset.params) }).params);
     },

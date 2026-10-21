@@ -11,7 +11,7 @@ import {
 } from "@virgilvox/hackbuild-ui";
 import type { Bench, Chase, CheckResult, ContactFn, ViewMode } from "@hackbuild/spec";
 import {
-  applyFix, CAM_NAMES, chaseStarts, mountBakeStage, targetOfBody,
+  applyFix, CAM_NAMES, chaseStarts, mountBakeStage, padDocks, targetOfBody,
   type BakeStage, type BenchCore, type CamChangeDetail, type CamName, type Located, type Pad, type PickDetail, type ViewPart, type Welcome,
 } from "@hackbuild/ui-core";
 import Rail from "./Rail.vue";
@@ -148,6 +148,9 @@ const modeNotes = computed(() => shell.modes.filter((m) => m === "section").map(
 const padModel = computed(() =>
   padOf(props.chase, props.bench, props.contact, { part: (shell.result?.part as ViewPart | undefined) ?? null, report: shell.report }));
 const pickInView = computed(() => props.bench.views.drive?.pickInView === true);
+const showPad = computed(() => overlays.value.has("drive") && padModel.value !== null);
+// D-630: under 640 px a pad of more than four keys docks below the stage.
+const padDocked = computed(() => padDocks(padModel.value, narrow.value));
 
 function drive(target: string, value: boolean): void {
   props.pad?.drive(target, value);
@@ -357,7 +360,7 @@ const dims = computed(() => {
       <input ref="picker" class="hb-sr" type="file" accept=".json,application/json" tabindex="-1" aria-hidden="true" @change="(e) => openFile((e.target as HTMLInputElement).files?.[0])" />
     </template>
 
-    <div :class="layout === 'composer' ? 'hbf-composer' : ['hbf-single', { 'is-stage-only': layout === 'single3' && !stepHasDesign }]">
+    <div :class="[layout === 'composer' ? 'hbf-composer' : ['hbf-single', { 'is-stage-only': layout === 'single3' && !stepHasDesign }], { 'is-pad-docked': showPad && padDocked }]">
       <aside v-if="layout === 'single2' || (layout === 'single3' && stepHasDesign)" class="hbf-rail-left" data-hb="rail-left" aria-label="design">
         <Rail
           :steps="steps"
@@ -420,7 +423,7 @@ const dims = computed(() => {
         <template v-if="overlays.has('legend')" #tr>
           <Legend :materials="chase.materials" :notes="modeNotes" />
         </template>
-        <template v-if="overlays.has('drive') && padModel !== null" #bl>
+        <template v-if="showPad && !padDocked && padModel !== null" #bl>
           <DrivePad :model="padModel" :held="shell.held" :pick-in-view="pickInView" @drive="drive" />
         </template>
         <template v-if="overlays.has('busy') && shell.busy" #br>
@@ -441,6 +444,9 @@ const dims = computed(() => {
           />
         </template>
       </HbStageOverlay>
+      <div v-if="showPad && padDocked && padModel !== null" class="hbf-pad-dock" data-hb="drive-dock">
+        <DrivePad :model="padModel" :held="shell.held" :pick-in-view="pickInView" @drive="drive" />
+      </div>
     </div>
 
     <template v-if="rightRail" #rail>

@@ -16,7 +16,7 @@
   --hbf-prow-label:96px; --hbf-prow-num:64px; --hbf-prow-reset:22px;
   --hbf-prow-label-narrow:72px; --hbf-prow-num-narrow:56px;
   --hbf-pad-max:340px; --hbf-pad-keys:300px; --hbf-pad-keys-narrow:220px; --hbf-pad-read-min:18px;
-  --hbf-touch:44px; --hbf-hair:1px;
+  --hbf-touch:44px; --hbf-hair:1px; --hbf-knob-half:7px;
   --hbf-fs-label:10px; --hbf-fs-note:13px; --hbf-fs-read:15px; --hbf-fs-busy:16px; --hbf-fs-head:17px; --hbf-fs-derived:18px;
 }
 
@@ -86,6 +86,13 @@
 @media(pointer:coarse),(max-width:640px){
   .hbf-pad-key,.hbf-log-toggle{ min-height:var(--hbf-touch); min-width:var(--hbf-touch) }
 }
+/* D-630: at 390 a pad with more than four keys cannot hold a quarter of
+   the 382 x 285 px stage with 44 px keys (computed, PIP's ten), so the
+   shell docks it in a row below the stage at full width. */
+.hbf-composer.is-pad-docked,.hbf-single.is-pad-docked{ grid-template-rows:minmax(0,1fr) auto }
+.hbf-pad-dock{ grid-column:1 / -1; min-width:0; background:var(--hb-void) }
+.hbf-pad-dock .hbf-pad{ max-width:none; border-top:0 }
+.hbf-pad-dock .hbf-pad-keys{ max-width:none }
 
 /* Status strip: readouts left, worded chips right; good chips slime. */
 .hbf-bench .hb-statusbar{ flex-wrap:wrap }
@@ -151,6 +158,11 @@
      sizes steps, row numbers, small buttons, chips and selects to 27 to
      39 px (measured). */
   .hbf-bench .hb-steps .hb-tab,.hbf-bench .hb-prow-num,.hbf-bench .hb-btn,.hbf-bench .hb-chip,.hbf-bench .hb-select{ min-height:var(--hbf-touch); min-width:var(--hbf-touch) }
+  /* The bool switch is 42 x 22 px (measured, the PIP group on rows); it
+     grows to the touch floor and its 14 px knob (hackbuild-ui 0.3.0)
+     rides the middle. */
+  .hbf-bench .hb-switch{ min-height:var(--hbf-touch); min-width:var(--hbf-touch) }
+  .hbf-bench .hb-switch::after{ top:calc(50% - var(--hbf-knob-half)) }
 }
 @media(prefers-reduced-motion:reduce){
   .hbf-bench *{ transition:none; animation:none }

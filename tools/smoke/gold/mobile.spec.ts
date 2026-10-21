@@ -8,6 +8,9 @@ import { hookSettled, notRun, openGold, rule } from "./gold.ts";
 
 type Box = { x: number; y: number; width: number; height: number };
 const meets = (a: Box, b: Box): boolean => a.x < b.x + b.width && b.x < a.x + a.width && a.y < b.y + b.height && b.y < a.y + a.height;
+/** The area of a that lies over b, px squared. */
+const over = (a: Box, b: Box): number =>
+  Math.max(0, Math.min(a.x + a.width, b.x + b.width) - Math.max(a.x, b.x)) * Math.max(0, Math.min(a.y + a.height, b.y + b.height) - Math.max(a.y, b.y));
 
 async function boxes(page: Page, sel: string): Promise<Box[]> {
   return (await page.locator(sel).evaluateAll((els) => els.filter((e) => (e as HTMLElement).offsetParent !== null).map((e) => {
@@ -16,6 +19,8 @@ async function boxes(page: Page, sel: string): Promise<Box[]> {
   }))).filter((b) => b.width > 0 && b.height > 0);
 }
 
+// The share counts the stage only: the part of the pad over the stage. A
+// pad docked below the stage (D-630, more than four keys) covers none of it.
 rule("G-52", "touch-only: at 390 the pad is at most a quarter of the stage and every key is 44 x 44", async ({ page, bench }) => {
   await page.setViewportSize({ width: 390, height: HEIGHT });
   await openGold(page, bench);
@@ -23,8 +28,8 @@ rule("G-52", "touch-only: at 390 the pad is at most a quarter of the stage and e
   const stage = (await boxes(page, bench.dom.stage))[0];
   if (pad === undefined) notRun(`${bench.id}: no drive pad on screen at 390`);
   if (stage === undefined) throw new Error("no stage box");
-  const share = (pad.width * pad.height) / (stage.width * stage.height);
-  expect(share, `pad ${Math.round(pad.width)} x ${Math.round(pad.height)} px on a ${Math.round(stage.width)} x ${Math.round(stage.height)} px stage (measured)`).toBeLessThanOrEqual(0.25);
+  const share = over(pad, stage) / (stage.width * stage.height);
+  expect(share, `pad ${Math.round(pad.width)} x ${Math.round(pad.height)} px, ${Math.round(over(pad, stage))} px2 of it over a ${Math.round(stage.width)} x ${Math.round(stage.height)} px stage (measured)`).toBeLessThanOrEqual(0.25);
   const keys = await boxes(page, bench.dom.padKey);
   const small = keys.filter((k) => k.width + 0.5 < 44 || k.height + 0.5 < 44).map((k) => `${Math.round(k.width)} x ${Math.round(k.height)}`);
   expect(small, "drive keys under 44 x 44 px").toEqual([]);
