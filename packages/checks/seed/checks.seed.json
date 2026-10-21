@@ -1923,7 +1923,7 @@
     },
     {
       "id": "CHK-KEY-05",
-      "version": "1.0.1",
+      "version": "2.0.0",
       "title": "click spring tip lands over each floor pad by at least 0.5 past the snap",
       "appliesTo": {
         "level": "feature",

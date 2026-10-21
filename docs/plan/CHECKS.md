@@ -561,7 +561,7 @@ the published form from M-1 onward.
 | CHK-KEY-02 | 2 | flex cap bridge at most 4.5 unsupported | feature | mesh | block | interval, mm (at most 4.5) | PIP 2026-09 |
 | CHK-KEY-03 | 1 | split between contact halves at least 0.6 | feature | geom | block | interval, mm (at least 0.6) | PIP 2026-09 |
 | CHK-KEY-04 | 2 | click spring rise Q inside the FE-backed window: snaps, drop at least click.dropMin, strain at the stop within the bend-direction limit, not bistable | feature | sim, profile | block | interval, x t (FE window) | PIP 2026-09 |
-| CHK-KEY-05 | 1 | click spring tip lands over each floor pad by at least 0.5 past the snap | feature | sim | block | interval, mm (at least 0.5) | PIP 2026-09 |
+| CHK-KEY-05 | 2 | click spring tip lands over each floor pad by at least 0.5 past the snap | feature | sim | block | interval, mm (at least 0.5) | PIP 2026-09 |
 | CHK-KEY-06 | 1 | no mesh vertex sits exactly on a cavity face | part | mesh | block | boolean | PIP 2026-09 |
 | CHK-NET-11 | 1 | trace layer built per net from one outline offset; post and via radii clear of half the trace width | net | geom | block | boolean | PIP 2026-09 |
 | CHK-NET-12 | 1 | unrouted connections and tight spots surface as warnings, never silently | project | circuit | block | interval, count (0 to 0) | PIP 2026-09 |

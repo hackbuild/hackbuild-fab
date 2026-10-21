@@ -508,6 +508,19 @@ const tipPad = (dx) => ({
 });
 put("CHK-KEY-05", "pass", tipPad(0));
 put("CHK-KEY-05", "fail", tipPad(-0.9));
+// PIP holds flex and click keys in one part (D-624): the flex contact joins a
+// column and its common side by side, no overlap in plan, and declares coneH.
+const flexBeside = (() => {
+  const fx = tipPad(-0.9);
+  fx.note = "a flex contact (coneH 1.2) beside a click contact whose tip lands 0.3 mm across its pad, in one part with a click spring (PIP)";
+  fx.parts[0].features.push(
+    { kind: "conductor", id: "conductor.col", body: "b", material: "ctpu", net: "K2", region: { path: sq(-5, 2, -3, 4), face: UP(1) }, width: 2, t: 0.5 },
+    { kind: "conductor", id: "conductor.colCommon", body: "b", material: "ctpu", net: "K2", region: { path: sq(-2.4, 2, -0.4, 4), face: UP(1) }, width: 2, t: 0.5 },
+    { kind: "contact", id: "contact.flex1", a: "conductor.col", b: "conductor.colCommon", forceMinN: 0.5, maxOhm: 2e6, gap: 0.6, coneH: 1.2, actuator: "b", axis: [0, 0, -1] },
+  );
+  return fx;
+})();
+put("CHK-KEY-05", "flex-beside-click", flexBeside);
 put("CHK-KEY-06", "pass", { note: "a closed block, no vertex on another face", meshes: { b: { solids: [box(0, 0, 0, 10, 10, 10)] } }, parts: [one("keys")] });
 put("CHK-KEY-06", "fail", {
   note: "a block with a second block resting on its top: the upper block's corners sit on the lower top face (PIP: a cone kink on a cavity face)",

@@ -87,7 +87,7 @@ The run state is the one check.run registers, read at M05. Kernels that land lat
 | [CHK-KEY-02](CHK-KEY-02.md) | 2.0.0 | block | flex cap bridge at most 4.5 unsupported | PIP 2026-09 | runs |
 | [CHK-KEY-03](CHK-KEY-03.md) | 1.0.1 | block | split between contact halves at least 0.6 | PIP 2026-09 | runs |
 | [CHK-KEY-04](CHK-KEY-04.md) | 2.0.1 | block | click spring rise Q inside the FE-backed window: snaps, drop at least click.dropMin, strain at the stop within the bend-direction limit, not bistable | PIP 2026-09 | runs |
-| [CHK-KEY-05](CHK-KEY-05.md) | 1.0.1 | block | click spring tip lands over each floor pad by at least 0.5 past the snap | PIP 2026-09 | runs |
+| [CHK-KEY-05](CHK-KEY-05.md) | 2.0.0 | block | click spring tip lands over each floor pad by at least 0.5 past the snap | PIP 2026-09 | runs |
 | [CHK-KEY-06](CHK-KEY-06.md) | 1.0.1 | block | no mesh vertex sits exactly on a cavity face | PIP 2026-09 | runs |
 | [CHK-NET-11](CHK-NET-11.md) | 1.0.1 | block | trace layer built per net from one outline offset; post and via radii clear of half the trace width | PIP 2026-09 | runs |
 | [CHK-NET-12](CHK-NET-12.md) | 1.0.2 | block | unrouted connections and tight spots surface as warnings, never silently | PIP 2026-09 | runs |

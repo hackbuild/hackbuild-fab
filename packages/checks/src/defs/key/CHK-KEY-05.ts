@@ -5,8 +5,10 @@
 // the shuttle drops straight down past the snap, so in plan the tip lands
 // where it sits. The overlap of the two footprints, measured as islands.py
 // measures a width (twice the largest inset that leaves it), must be 0.5
-// mm or more. A contact on a part with no click spring is a flex key, which
-// CHK-KEY-01 and -03 cover.
+// mm or more. A contact that declares coneH is a flex key (spec/features.ts),
+// which CHK-KEY-01 and -03 cover; the contact says so, since PIP holds flex
+// and click keys in one part (D-624). A contact on a part with no click
+// spring is a flex key too.
 
 import type { ConductorFeature, ContactFeature, FaceFrame, Finding, Ring, Vec2 } from "@hackbuild/spec";
 import { horizontalFrame } from "@hackbuild/geom";
@@ -36,6 +38,7 @@ export const check = defineCheck<"feature", "contact">({
   run: (t): readonly Finding[] => {
     const f: ContactFeature = t.feature;
     const at = featureTarget(t.part, f);
+    if (f.coneH !== undefined) return [skip(at, "not run", `contact ${f.id} declares coneH, so it is a flex key, which CHK-KEY-01 and CHK-KEY-03 cover`, { coneMm: f.coneH })];
     if (!t.part.features.some((x) => x.kind === "spring")) return [skip(at, "not run", `part ${t.part.id} has no click spring; contact ${f.id} is a flex key`)];
     const get = (id: string, side: "a" | "b"): ConductorFeature => {
       const c = t.part.features.find((x): x is ConductorFeature => x.kind === "conductor" && x.id === id);

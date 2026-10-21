@@ -1,0 +1,270 @@
+{
+ "note": "a flex contact (coneH 1.2) beside a click contact whose tip lands 0.3 mm across its pad, in one part with a click spring (PIP)",
+ "meshes": {
+  "b": {
+   "solids": [
+    {
+     "box": [
+      -6,
+      -6,
+      0,
+      6,
+      6,
+      3
+     ]
+    }
+   ]
+  }
+ },
+ "parts": [
+  {
+   "id": "clicky",
+   "bodies": [
+    {
+     "id": "b",
+     "mesh": "@b",
+     "outline": [
+      [
+       [
+        -6,
+        -6
+       ],
+       [
+        6,
+        -6
+       ],
+       [
+        6,
+        6
+       ],
+       [
+        -6,
+        6
+       ]
+      ]
+     ]
+    }
+   ],
+   "features": [
+    {
+     "kind": "spring",
+     "id": "spring.click1",
+     "l": 24,
+     "t": 0.55,
+     "w": 1.6,
+     "riseQ": 2,
+     "ends": "clamped",
+     "bend": "inPlane"
+    },
+    {
+     "kind": "conductor",
+     "id": "conductor.tip",
+     "body": "b",
+     "material": "ctpu",
+     "net": "K1",
+     "region": {
+      "path": [
+       [
+        -2.5,
+        -1
+       ],
+       [
+        0.7000000000000001,
+        -1
+       ],
+       [
+        0.7000000000000001,
+        1
+       ],
+       [
+        -2.5,
+        1
+       ]
+      ],
+      "face": {
+       "origin": [
+        0,
+        0,
+        2
+       ],
+       "normal": [
+        0,
+        0,
+        -1
+       ],
+       "u": [
+        1,
+        0,
+        0
+       ]
+      }
+     },
+     "width": 2,
+     "t": 0.5
+    },
+    {
+     "kind": "conductor",
+     "id": "conductor.pad",
+     "body": "b",
+     "material": "cpla",
+     "net": "K1",
+     "region": {
+      "path": [
+       [
+        0.4,
+        -1
+       ],
+       [
+        2.3,
+        -1
+       ],
+       [
+        2.3,
+        1
+       ],
+       [
+        0.4,
+        1
+       ]
+      ],
+      "face": {
+       "origin": [
+        0,
+        0,
+        0.5
+       ],
+       "normal": [
+        0,
+        0,
+        1
+       ],
+       "u": [
+        1,
+        0,
+        0
+       ]
+      }
+     },
+     "width": 1.9,
+     "t": 0.5
+    },
+    {
+     "kind": "contact",
+     "id": "contact.click1",
+     "a": "conductor.tip",
+     "b": "conductor.pad",
+     "forceMinN": 0.5,
+     "maxOhm": 2000000
+    },
+    {
+     "kind": "conductor",
+     "id": "conductor.col",
+     "body": "b",
+     "material": "ctpu",
+     "net": "K2",
+     "region": {
+      "path": [
+       [
+        -5,
+        2
+       ],
+       [
+        -3,
+        2
+       ],
+       [
+        -3,
+        4
+       ],
+       [
+        -5,
+        4
+       ]
+      ],
+      "face": {
+       "origin": [
+        0,
+        0,
+        1
+       ],
+       "normal": [
+        0,
+        0,
+        1
+       ],
+       "u": [
+        1,
+        0,
+        0
+       ]
+      }
+     },
+     "width": 2,
+     "t": 0.5
+    },
+    {
+     "kind": "conductor",
+     "id": "conductor.colCommon",
+     "body": "b",
+     "material": "ctpu",
+     "net": "K2",
+     "region": {
+      "path": [
+       [
+        -2.4,
+        2
+       ],
+       [
+        -0.4,
+        2
+       ],
+       [
+        -0.4,
+        4
+       ],
+       [
+        -2.4,
+        4
+       ]
+      ],
+      "face": {
+       "origin": [
+        0,
+        0,
+        1
+       ],
+       "normal": [
+        0,
+        0,
+        1
+       ],
+       "u": [
+        1,
+        0,
+        0
+       ]
+      }
+     },
+     "width": 2,
+     "t": 0.5
+    },
+    {
+     "kind": "contact",
+     "id": "contact.flex1",
+     "a": "conductor.col",
+     "b": "conductor.colCommon",
+     "forceMinN": 0.5,
+     "maxOhm": 2000000,
+     "gap": 0.6,
+     "coneH": 1.2,
+     "actuator": "b",
+     "axis": [
+      0,
+      0,
+      -1
+     ]
+    }
+   ]
+  }
+ ]
+}

@@ -107,17 +107,15 @@ pip.model/haft-9-designs-pip-build):
 ## Checks
 
 `npx --no-install hbf part.build designs/pip --json` at the defaults reads
-250 pass, 1 warn, 4 fail, 188 skip (computed). The stick example reads 2
-fail and 1 warn, blank 0 fail and 1 warn.
+247 pass, 1 warn, 0 fail, 192 skip (computed); the report golden, which
+adds the artifact checks, reads 250 pass, 1 warn, 192 skip. The stick
+example (`--preset stick`) reads 206 pass, 1 warn, 0 fail, 169 skip
+(computed), blank 0 fail and 1 warn.
 
-- The 4 fails are CHK-KEY-05 1.0.1 on the four flex keys' contacts. The
-  check takes any contact on a part that holds a click spring for a click
-  key contact, so in a part with both kinds it measures the flex column
-  halves as a click tip over a pad (0 mm, legal 0.5). The flex keys are
-  covered by CHK-KEY-01 and -03, which pass. Classifying by the contact
-  (a contact that declares coneH is a flex key) flips a verdict on the
-  same input, a major bump by CHECKS.md 1.3 that stales every report
-  holding the check; that is left as a follow up.
+- CHK-KEY-05 2.0.0 skips the four flex keys' contacts: each declares
+  coneH, so the check reads it as a flex key, which CHK-KEY-01 and -03
+  cover and pass. CHK-KEY-05 1.0.1 took any contact on a part holding a
+  click spring for a click key and failed all four (D-624).
 - The warn is CHK-PRT-05: 34 faces sit between layer tops, the farthest
   0.110 mm off (computed), since PIP's stack is on a 0.24 mm grid from the
   bed and ffc5p's first layer is 0.25 mm.
