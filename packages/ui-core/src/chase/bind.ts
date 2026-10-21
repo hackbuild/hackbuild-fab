@@ -10,6 +10,9 @@
 // D-131 runs after every build and a non-finite value fails the build with
 // E_PARAM_MISSING, so the previous model stays on screen; and the drop,
 // picker and share paths admit through packages/chase shareOptions (D-167).
+// A build that throws keeps the last good model drawn and names the refusal
+// (D-643): refused() gives the stale line and the closed export's reason, and
+// a refusal at a range end writes one log line naming field, value and range.
 
 import {
   type Bench, type Chase, type CheckResult, type ContactFn, type Metric, type ParamGroup, type RailStep, type StatusChip, type WidgetRecord,
@@ -17,6 +20,7 @@ import {
 import { isChaseDocument, nonFiniteError, normaliseParams, normalisedWarnings, shareOptions, storedParams } from "@hackbuild/chase";
 import { createBenchCore, type BenchCore, type BuildOutput, type BuildResult, type CoreEvent } from "../bench/core.js";
 import { createHook, installHook, FREE_EXPORTS, type Hook, type HookExport, type HookOptions } from "../bench/hook.js";
+import { exportClosedLine, rangeEndLine, refusalLine } from "../bench/refusal.js";
 import { admitDesign, type AdmitOptions } from "../bench/share.js";
 import { startPreset, welcomeStarts, type WelcomeStart } from "../bench/welcome.js";
 import { createPad, padModel, type Pad, type PadModel } from "../drive/drive.js";
@@ -182,6 +186,14 @@ export interface BindOptions<R extends ChaseReport = ChaseReport> {
   readonly boot?: (binding: ChaseBinding<R>) => Promise<unknown>;
 }
 
+/** A refused current build as the shell shows it (D-643). */
+export interface RefusedView {
+  /** The stale line: what refused, why, and that the model drawn is the last good one. */
+  readonly line: string;
+  /** Why every export stays disabled. */
+  readonly exportWhy: string;
+}
+
 export interface ChaseBinding<R extends ChaseReport = ChaseReport> {
   readonly chase: Chase;
   readonly bench: Bench;
@@ -206,6 +218,8 @@ export interface ChaseBinding<R extends ChaseReport = ChaseReport> {
   readonly whenReady: Promise<void>;
   /** The build on screen. */
   view(): BuildView<R>;
+  /** The refusal of the build the stage is not showing; null after a good build. */
+  refused(): RefusedView | null;
   drive(): PadModel | null;
   widgets(): WidgetRecord[];
   /** Admits a dropped or picked file and loads it; a refusal goes to the log. */
@@ -241,6 +255,18 @@ export function bindChase<R extends ChaseReport = ChaseReport>(opts: BindOptions
     return carried.length === 0 ? out : { ...out, warnings: [...(out.warnings ?? []), ...carried] };
   };
 
+  /** rev whose refusal has been logged, so each refused build writes its range-end line once. */
+  let loggedRev = -1;
+  const onCore = (e: CoreEvent): void => {
+    const r = e === "error" ? core.refusal : null;
+    if (r !== null && r.rev !== loggedRev) {
+      loggedRev = r.rev;
+      const line = rangeEndLine(chase.params, r);
+      if (line !== null) core.appendLog(line);
+    }
+    notify(e);
+  };
+
   const blank = normaliseParams(chase, undefined).params;
   const core: BenchCore<Values, ViewPart, R> = createBenchCore<Values, ViewPart, R>({
     app: chase.meta.id,
@@ -254,7 +280,7 @@ export function bindChase<R extends ChaseReport = ChaseReport>(opts: BindOptions
       return { ...(isPlain(doc) && typeof doc["app"] === "string" ? { app: doc["app"] } : {}), state: params };
     },
     ...(bench.build === undefined ? {} : { slowMs: bench.build.slowMs }),
-    onChange: notify,
+    onChange: onCore,
   });
   const pad = createPad(() => notify("held"));
 
@@ -335,6 +361,10 @@ export function bindChase<R extends ChaseReport = ChaseReport>(opts: BindOptions
     hook: hooked.hook,
     whenReady: hooked.whenReady,
     view, drive,
+    refused() {
+      const r = core.refusal;
+      return r === null ? null : { line: refusalLine(chase.params, r), exportWhy: exportClosedLine(chase.params, r) };
+    },
     widgets,
     open(text) {
       const got = admitDesign(text, admit);

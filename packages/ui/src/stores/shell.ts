@@ -6,7 +6,7 @@
 
 import { defineStore } from "pinia";
 import { computed, ref, shallowRef } from "vue";
-import type { BenchCore, BuildResult } from "@hackbuild/ui-core";
+import type { BenchCore, BuildRefusal, BuildResult } from "@hackbuild/ui-core";
 import type { CheckResult, Metric, ParamEnvelope } from "@hackbuild/spec";
 
 export type Values = Record<string, unknown>;
@@ -47,6 +47,8 @@ export const useShell = defineStore("hbf-shell", () => {
   const error = ref<string | null>(null);
   const log = shallowRef<readonly string[]>([]);
   const result = shallowRef<BenchResult | null>(null);
+  /** The refused build the stage is not showing (D-643); null after a good build. */
+  const refusal = shallowRef<BuildRefusal<Values> | null>(null);
 
   /** Copy every field the shell reads from the core. Called on each core event. */
   function mirror(core: BenchCore<Values, unknown, BenchReport>): void {
@@ -59,6 +61,7 @@ export const useShell = defineStore("hbf-shell", () => {
     error.value = core.error;
     log.value = [...core.log];
     result.value = core.result as BenchResult | null;
+    refusal.value = core.refusal;
   }
 
   function goto(i: number): void {
@@ -73,5 +76,5 @@ export const useShell = defineStore("hbf-shell", () => {
   // The chip counts the findings the checks panel lists (G-36); build warnings (Part.warnings) are not rail findings.
   const findings = computed(() => (report.value.results ?? []).filter((r) => r.verdict === "fail" || r.verdict === "warn").length);
 
-  return { step, visited, cam, modes, welcomeOpen, held, values, rev, built, busy, building, stale, error, log, result, mirror, goto, current, report, metrics, findings };
+  return { step, visited, cam, modes, welcomeOpen, held, values, rev, built, busy, building, stale, error, log, result, refusal, mirror, goto, current, report, metrics, findings };
 });

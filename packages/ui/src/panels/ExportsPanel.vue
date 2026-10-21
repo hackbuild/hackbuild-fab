@@ -5,7 +5,8 @@
 // export kind this bake cannot write says so on its row instead of failing
 // on click. A fabrication export with a blocking failed check stays
 // disabled and names the checks (D-109, M09-T11 step 3); the press of an
-// enabled button is the person's approval.
+// enabled button is the person's approval. While the current build is
+// refused every button stays disabled and the row says why (D-643).
 import { computed } from "vue";
 import { HbButton, HbPanel } from "@virgilvox/hackbuild-ui";
 import type { CheckResult, ExportDecl } from "@hackbuild/spec";
@@ -21,9 +22,11 @@ interface Props {
   fabrication?: readonly string[];
   /** Check results of the last build. */
   results?: readonly CheckResult[];
+  /** Why the gate is closed while the last build refused; null when it built. */
+  closed?: string | null;
 }
 
-const props = withDefaults(defineProps<Props>(), { writable: () => [], fabrication: () => [], results: () => [] });
+const props = withDefaults(defineProps<Props>(), { writable: () => [], fabrication: () => [], results: () => [], closed: null });
 const emit = defineEmits<{ export: [kind: string] }>();
 
 const STALE = "mesh stale, building";
@@ -40,10 +43,11 @@ const refusal = (kind: string): string | null =>
         variant="secondary"
         data-hb="export"
         :data-kind="x.kind"
-        :disabled="!current || !writable.includes(x.kind) || refusal(x.kind) !== null"
+        :disabled="closed !== null || !current || !writable.includes(x.kind) || refusal(x.kind) !== null"
         @click="emit('export', x.kind)"
       >{{ x.kind }}</HbButton>
-      <span v-if="!current" class="hb-prow-why" data-hb="export-why">{{ STALE }}</span>
+      <span v-if="closed !== null" class="hb-prow-why" data-hb="export-why">{{ closed }}</span>
+      <span v-else-if="!current" class="hb-prow-why" data-hb="export-why">{{ STALE }}</span>
       <span v-else-if="!writable.includes(x.kind)" class="hb-prow-why" data-hb="export-why">{{ x.kind }} export is not in this bake yet.</span>
       <span v-else-if="refusal(x.kind) !== null" class="hb-prow-why" data-hb="export-why">{{ refusal(x.kind) }}</span>
     </div>

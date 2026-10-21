@@ -11,6 +11,7 @@ import type { BuildWarning } from "@hackbuild/spec";
 import { firstNonFinite, mergeOntoBlank } from "./merge.js";
 import { cancel, later, nowMs, type TimerId } from "./timers.js";
 import { createHistory } from "./undo.js";
+import { refusalOf, type BuildRefusal } from "./refusal.js";
 
 /** Commit to rebuild delay, ms (PIP part2.js `schedule`, line 59). */
 export const REBUILD_DEBOUNCE_MS = 320;
@@ -77,6 +78,8 @@ export interface BenchCore<S, P = unknown, R = unknown> {
   readonly stale: boolean;
   /** Message of the last refusal or thrown build; null after a good build. */
   readonly error: string | null;
+  /** The last thrown build while `result` is still the model before it (D-643); null after a good build. */
+  readonly refusal: BuildRefusal<S> | null;
   readonly log: readonly string[];
   readonly result: BuildResult<P, R> | null;
   /** Auto build after a commit; off leaves builds to ensureMesh (PIP `UIS.auto`). */
@@ -127,6 +130,9 @@ export function createBenchCore<S, P = unknown, R = unknown>(opts: BenchCoreOpti
   let auto = true;
   let error: string | null = null;
   let result: BuildResult<P, R> | null = null;
+  /** The state `result` was built from. */
+  let goodState: S | null = null;
+  let refusal: BuildRefusal<S> | null = null;
   let timer: TimerId | undefined;
   let inflight: Promise<void> | undefined;
   /** Path of the last `set`, the param a slow-build line names; null after a load or reset. */
@@ -170,6 +176,8 @@ export function createBenchCore<S, P = unknown, R = unknown>(opts: BenchCoreOpti
         built = r;
         error = null;
         stale = false;
+        goodState = copy;
+        refusal = null;
         if (geomRev <= r && rev > r) {
           // Only light commits landed during the build: their readouts rerun on the new model.
           opts.light?.(state, result);
@@ -178,6 +186,8 @@ export function createBenchCore<S, P = unknown, R = unknown>(opts: BenchCoreOpti
       } catch (e) {
         error = message(e);
         failedRev = r;
+        // The model drawn stays the last good one; a refused build never replaces it.
+        refusal = { rev: r, ...refusalOf(e), state: copy, good: goodState };
         ended = "error";
         log.push(`build failed: ${error}`);
       } finally {
@@ -277,6 +287,9 @@ export function createBenchCore<S, P = unknown, R = unknown>(opts: BenchCoreOpti
     },
     get error() {
       return error;
+    },
+    get refusal() {
+      return refusal;
     },
     get log() {
       return log;

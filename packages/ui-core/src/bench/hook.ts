@@ -14,6 +14,7 @@ import {
   type WidgetRecord,
 } from "@hackbuild/spec";
 import type { BenchCore, BuildResult } from "./core.js";
+import { exportClosedLine } from "./refusal.js";
 import { cancel, later, type TimerId } from "./timers.js";
 
 /** Slice PIP's exportBytes hands String.fromCharCode at once, bytes (part2.js line 425). */
@@ -254,6 +255,9 @@ export function createHook<S, P, R>(core: BenchCore<S, P, R>, opts: HookOptions<
       const resolved = (EXPORT_ALIASES as Readonly<Record<string, string>>)[kind] ?? kind;
       const x = byKind.get(resolved);
       if (x === undefined) throw new Error(UNKNOWN_EXPORT_KIND + kind);
+      // A refused current rev keeps the gate closed: the model on screen is not the design (D-643).
+      const refused = core.refusal;
+      if (refused !== null && refused.rev === core.rev) throw new Error(exportClosedLine(groups, refused));
       const result = await core.ensureMesh();
       if (x.fabrication) {
         const failing = blockingChecks(opts.checks?.(result) ?? []);

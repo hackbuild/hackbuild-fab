@@ -107,6 +107,8 @@
   width:min(var(--hbf-rail-readouts), calc(100vw - 2 * var(--hb-s2))); box-shadow:var(--hb-shadow-lg)
 }
 .hbf-status-err{ color:var(--hb-lit-err); overflow-wrap:anywhere }
+/* D-643: the refused build line under the guide; the model drawn is the last good one. */
+.hbf-refused{ margin:0; padding:var(--hb-s1) var(--hb-s2); font-family:var(--hb-utility); font-size:var(--hbf-fs-label); color:var(--hb-lit-err); overflow-wrap:anywhere }
 .hbf-scope{ font-family:var(--hb-utility); font-size:var(--hbf-fs-label); text-transform:uppercase; letter-spacing:.1em; color:var(--hb-lit-label) }
 
 /* Welcome step-grid numbers and fit values are ink (UI.md section 10: a

@@ -27,6 +27,8 @@ export { admitDesign, currentOnly, decodeShare, encodeShare, openShare, SHARE_MA
 export type { Admission, Admitted, AdmitOptions, Refused, ShareTarget } from "./bench/share.js";
 export { B64_CHUNK, blockedLine, blockingChecks, clampState, createHook, FREE_EXPORTS, installHook, SETTLE_POLL_MS, SETTLED_TIMEOUT_MS, toBase64 } from "./bench/hook.js";
 export type { Hook, HookExport, HookOptions, PageHook } from "./bench/hook.js";
+export { exportClosedLine, rangeEndLine, refusalLine, refusalOf, refusedChanges } from "./bench/refusal.js";
+export type { BuildRefusal, RefusedChange } from "./bench/refusal.js";
 export { bootManifold } from "./stage/manifold-boot.js";
 export type { ManifoldGlobals } from "./stage/manifold-boot.js";
 export { mountBakeStage } from "./viewer/bake-stage.js";
@@ -65,4 +67,4 @@ export type { LightAim, LightModel } from "./widgets/light.js";
 export { bodyNets, netlensLine, viewNetlens } from "./widgets/netlens.js";
 export type { NetlensModel } from "./widgets/netlens.js";
 export { bindChase, chaseStarts, driveModel, EXPORT_STEPS, NO_BUILD, NOT_A_DESIGN, NOT_IN_BAKE, panelRow, railEndError, railRows, widgetsModel } from "./chase/bind.js";
-export type { BindOptions, BuildView, ChaseBinding, ChaseReport, ChaseWriter, PanelRow, RailRow, WidgetView } from "./chase/bind.js";
+export type { BindOptions, BuildView, ChaseBinding, ChaseReport, ChaseWriter, PanelRow, RailRow, RefusedView, WidgetView } from "./chase/bind.js";

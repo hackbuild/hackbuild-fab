@@ -11,7 +11,7 @@ import {
 } from "@virgilvox/hackbuild-ui";
 import type { Bench, Chase, CheckResult, ContactFn, ViewMode } from "@hackbuild/spec";
 import {
-  applyFix, CAM_NAMES, chaseStarts, mountBakeStage, padDocks, targetOfBody,
+  applyFix, CAM_NAMES, chaseStarts, exportClosedLine, mountBakeStage, padDocks, refusalLine, targetOfBody,
   type BakeStage, type BenchCore, type CamChangeDetail, type CamName, type Located, type Pad, type PickDetail, type ViewPart, type Welcome,
 } from "@hackbuild/ui-core";
 import Rail from "./Rail.vue";
@@ -307,6 +307,11 @@ function enterStep(i: number): void {
 }
 
 // ---- rail and status
+// A refused build leaves the last good model drawn (core.result is never
+// cleared); the guide strip and the status strip name the refusal and every
+// export stays closed until a commit builds (D-643).
+const refusedText = computed(() => (shell.refusal === null ? null : refusalLine(props.chase.params, shell.refusal)));
+const closed = computed(() => (shell.refusal === null ? null : exportClosedLine(props.chase.params, shell.refusal)));
 const ctx = computed<PanelCtx>(() => ({
   values: shell.values,
   results: shell.report.results ?? [],
@@ -317,6 +322,7 @@ const ctx = computed<PanelCtx>(() => ({
   writable: props.writable,
   fabrication: props.fabrication,
   current: shell.current,
+  closed: closed.value,
   valueAt: (p: string) => props.core.get(p.slice(1).split("/").join(".")),
   log: shell.log,
   notes: shell.report.notes ?? {},
@@ -357,6 +363,7 @@ const dims = computed(() => {
     </template>
     <template #toolbar>
       <HbGuide :step="shell.step + 1" :name="stepNow?.step ?? ''" :goal="stepNow?.goal ?? ''" data-hb="guide-strip" @verb="verb" />
+      <p v-if="refusedText !== null" class="hbf-refused" role="status" data-hb="refused">{{ refusedText }}</p>
       <input ref="picker" class="hb-sr" type="file" accept=".json,application/json" tabindex="-1" aria-hidden="true" @change="(e) => openFile((e.target as HTMLInputElement).files?.[0])" />
     </template>
 

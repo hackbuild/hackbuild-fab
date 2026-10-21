@@ -30,6 +30,8 @@ export interface PanelCtx {
   /** Export kinds gated as fabrication (ui-core FREE_EXPORTS). */
   readonly fabrication: readonly string[];
   readonly current: boolean;
+  /** Why every export is disabled while the last build refused (D-643); null when it built. */
+  readonly closed?: string | null;
   readonly valueAt: (pointer: string) => unknown;
   readonly log: readonly string[];
   /** Notes the last build filled, by notes panel id (PIP HOOKUP, part3.js line 442). */
@@ -50,7 +52,7 @@ export interface PanelEntry {
 export const PANELS: Readonly<Record<string, PanelEntry>> = {
   checks: { component: ChecksPanel, props: (c) => ({ results: c.results, part: c.part, valueAt: c.valueAt }) },
   fits: { component: FitsPanel, props: (c) => ({ metrics: c.metrics, results: c.results, part: c.part }) },
-  exports: { component: ExportsPanel, props: (c) => ({ exports: c.exports, current: c.current, writable: c.writable, fabrication: c.fabrication, results: c.results }) },
+  exports: { component: ExportsPanel, props: (c) => ({ exports: c.exports, current: c.current, writable: c.writable, fabrication: c.fabrication, results: c.results, closed: c.closed ?? null }) },
   log: { component: LogPanel, props: (c) => ({ log: c.log }) },
 };
 
