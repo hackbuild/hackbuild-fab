@@ -47,10 +47,10 @@ describe("oracle golden", () => {
   test("names the legacy oracle, params and STLs byte for byte", () => {
     expect(sha(read("designs/ogee16/legacy/source/check_sweep.py"))).toBe(golden.checkSweepSha256);
     expect(sha(read("designs/ogee16/legacy/source/params.scad"))).toBe(golden.paramsSha256);
-    const sums = read("designs/ogee16/legacy/fixtures/proud-head/SHA256SUMS").toString("utf8");
+    const sums = read("designs/ogee16/extract/fixtures/proud-head/SHA256SUMS").toString("utf8");
     for (const c of CRANK_FILES) {
       expect(sha(read(`designs/ogee16/legacy/out/print/${c}.stl`))).toBe(golden.shippedSha256[c]);
-      const fx = sha(read(`designs/ogee16/legacy/fixtures/proud-head/${c}.stl`));
+      const fx = sha(read(`designs/ogee16/extract/fixtures/proud-head/${c}.stl`));
       expect(fx).toBe(golden.fixtureSha256[c]);
       expect(sums).toContain(`${fx}  ${c}.stl`);
     }
@@ -260,7 +260,7 @@ describe("port against the oracle", () => {
       params: { steps: STEPS, clashMm3: CLASH_MM3 },
       oracle: { versions: golden.versions, exit: { shipped: golden.runs.shipped.exit, proud: golden.runs.proud.exit } },
       fixture: {
-        dir: "designs/ogee16/legacy/fixtures/proud-head",
+        dir: "designs/ogee16/extract/fixtures/proud-head",
         openscad: "OpenSCAD 2021.01, files.openscad.org/OpenSCAD-2021.01.dmg sha256 4e4568e19992636ba497c04bc2238399c92314fcb7bf75dc3632aa623ca3635e (vendor), x86_64 under Rosetta",
         command: "openscad -o <part>.stl -D part=\"<part>\" -D shape=\"circle\" printed_proud.scad",
         ignoringUnknownLines: 0,

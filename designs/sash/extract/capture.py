@@ -2,7 +2,7 @@
 
 Run from the repo root:
 
-    uv run --project tools/py --extra bench python designs/sash/legacy/tools/capture.py [--out DIR] [--only SLUG]
+    uv run --project tools/py --extra bench python designs/sash/extract/capture.py [--out DIR] [--only SLUG]
 
 The legacy bench `designs/sash/legacy/sash.html` is never edited. A copy is
 written to a temporary directory with one line added before the call
@@ -42,7 +42,8 @@ import time
 import zipfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-LEGACY = os.path.dirname(HERE)
+ROOT = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
+LEGACY = os.path.join(ROOT, "designs", "sash", "legacy")
 ANCHOR = "  MODEL.check = runCheck(G, front, wall, slideGrids);\n"
 PATCH = "  MODEL.capture = { G, front, wall, slideGrids };\n"
 SETTLED = "BENCH.model().parts && !BENCH.model().dirty && !BENCH.model().building"
@@ -118,7 +119,7 @@ def patched_bench(tmp):
 
 def main(argv):
     ap = argparse.ArgumentParser()
-    ap.add_argument("--out", default=os.path.join(LEGACY, "fixtures"))
+    ap.add_argument("--out", default=os.path.join(HERE, "fixtures"))
     ap.add_argument("--only", default=None)
     a = ap.parse_args(argv)
     check_sums()

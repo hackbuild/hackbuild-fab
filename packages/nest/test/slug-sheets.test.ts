@@ -20,7 +20,7 @@ import { cutScene, type CutScene, type CutSheet, type SheetScene } from "../src/
 import { slugPage, slugSheetControls, slugSheetsScene, SLUG_STOCKS } from "../scenes/slug-sheets.js";
 import { SLUG_OMITTED, slugSheetsCompleteScene } from "../scenes/slug-sheets-complete.js";
 // @ts-expect-error the legacy tool is plain JavaScript with no declarations
-import { extract } from "../../../designs/slug/legacy/tools/extract-nest.mjs";
+import { extract } from "../../../designs/slug/extract/extract-nest.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "..", "..");
 const OUT = path.join(ROOT, "packages/nest/test/out");

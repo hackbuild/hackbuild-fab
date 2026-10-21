@@ -1,6 +1,6 @@
 // M02-T10: prismatic raster sweep, SASH slide. Expected overlap values are
 // the bench's own `BENCH.check().lanes` and its own runCheck on shifted wall
-// rasters, captured by designs/sash/legacy/tools/capture.py from the legacy
+// rasters, captured by designs/sash/extract/capture.py from the legacy
 // sash.html with one line added; never from the port. Closest approach is
 // new, so it is checked against a plain all-pairs distance written here and
 // against the bench's side and end clearances (ST.fit, in each fixture).

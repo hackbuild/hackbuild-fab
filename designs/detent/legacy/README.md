@@ -13,7 +13,7 @@ the inputs of M07-T01 and M07-T12 (D-142, D-156). Nothing here is edited;
 
 ## Tools
 
-`tools/extract-plan.mjs` copies `planSpeeds` (lines 1104 to 1151), the
+`../extract/extract-plan.mjs` copies `planSpeeds` (lines 1104 to 1151), the
 kinematics and homography block (lines 474 to 570) and the SOLVE handler
 body (lines 1883 to 1900) out of `detent-plot.html` by line number, checks
 each marker, and runs them in node on the M07 fixtures. It writes

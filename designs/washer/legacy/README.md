@@ -32,7 +32,7 @@ canonical defaults stay a profile question for M07-T12.
 
 ## Tools
 
-`tools/extract-plan.mjs` copies `CFG` and `ik` (lines 1924 to 1957),
+`../extract/extract-plan.mjs` copies `CFG` and `ik` (lines 1924 to 1957),
 `wallToAngles` (lines 3248 to 3271), `PLAN`, `SERVOS`, `densify`,
 `degPerMm`, `resolutionSlew`, `resolutionMM` and `planChainPen` (lines
 3394 to 3927, block by block) out of the zipped `laser-rig.html`, checks each marker,
@@ -40,7 +40,7 @@ and runs `planChainPen` in node on the 60 mm square with calibration off.
 It writes `packages/motion/records/washer-plan.json` with `--write`, and
 otherwise exits 1 when a number moves.
 
-`tools/extract-cal.mjs` (M07-T12) copies `CFG` and `ik` (lines 1924 to
+`../extract/extract-cal.mjs` (M07-T12) copies `CFG` and `ik` (lines 1924 to
 1957), `fkCalib` and `fk` (lines 1987 to 2031) and `calibMap` and
 `wallToAngles` (lines 3248 to 3271), captures the four corner aims the
 ideal map gives at the target corners (rounded to 0.01 deg, the form the

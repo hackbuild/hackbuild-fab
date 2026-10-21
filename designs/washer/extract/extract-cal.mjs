@@ -1,5 +1,5 @@
 // WASHER four-corner bilinear calibration run headless from the legacy
-// laser rig page (M07-T12 step 5). ../laser-rig.zip holds, as its one
+// laser rig page (M07-T12 step 5). ../legacy/laser-rig.zip holds, as its one
 // stored member laser-rig.html, the harvested 2026-07-30 copy (sha256
 // 1b4f11d8...); its kinematics equal the canonical laserriggg page byte for
 // byte (usToDeg, degToUs, vOff, ik, fkCalib, fk, calibMap, wallToAngles).
@@ -27,18 +27,17 @@
 //               captured corners placed by the ideal fk: mean horizontal
 //               span over mean vertical
 //
-//   node designs/washer/legacy/tools/extract-cal.mjs [--write]
+//   node designs/washer/extract/extract-cal.mjs [--write]
 //
 // Writes packages/motion/records/washer-cal.json. Exit 1 when the page is
 // not the pinned copy, a marker moved, or a result differs from its record.
 
-import { dirname, join } from "node:path";
+import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import JSZip from "jszip";
-import { Asserts, finish, marker, readPinned, sha256 } from "../../../../tools/legacy/record.mjs";
+import { Asserts, finish, legacyDir, marker, readPinned, sha256 } from "../../../tools/legacy/record.mjs";
 
-const here = dirname(fileURLToPath(import.meta.url));
-const ZIP = join(here, "..", "laser-rig.zip");
+const ZIP = join(legacyDir("washer"), "laser-rig.zip");
 const ZIP_SHA256 = "6cb396e30a16260f44b8c86dbb35a80f2367141fbbd92e290a5beb1bbf81f72f";
 const PAGE_SHA256 = "1b4f11d80a37b4882dccd9f1ae6a70705c270a962bd066f8cabca06ff7fd8ace";
 
@@ -119,7 +118,7 @@ if (argv[1] === fileURLToPath(import.meta.url)) {
       record: "washer-cal",
       card: "M07-T12",
       out: "packages/motion/records/washer-cal.json",
-      command: "node designs/washer/legacy/tools/extract-cal.mjs",
+      command: "node designs/washer/extract/extract-cal.mjs",
       qualifier: "computed: laser-rig.html (2026-07-30 harvest) calibMap, fkCalib, fk and wallToAngles run in node on the ideal-map corners rounded to 0.01 deg, square and rolled 5 deg",
       inputs: { [ZIP]: ZIP_SHA256, [`${ZIP}!laser-rig.html`]: PAGE_SHA256 },
     }, r, a);

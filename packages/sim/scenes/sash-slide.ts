@@ -1,5 +1,5 @@
 // SASH slide scene (M02-T10). Reads the runCheck inputs captured from the
-// legacy bench by designs/sash/legacy/tools/capture.py (one fixture per
+// legacy bench by designs/sash/extract/capture.py (one fixture per
 // case: the battery preset plus the 21 cases of the bench's sweep.py) and
 // hands them to the prismatic raster sweep. Nothing physical is typed here:
 // the rasters, pitch, lane frame and every xLeft(k) are the bench's own
@@ -10,7 +10,7 @@ import { readdirSync, readFileSync } from "node:fs";
 import { commandError } from "@hackbuild/spec";
 import { prismaticSweep, type PrismaticInput, type PrismaticLaneResult, type RasterFrame } from "../src/sweep/prismatic.js";
 
-export const FIXTURES = new URL("../../../designs/sash/legacy/fixtures/", import.meta.url);
+export const FIXTURES = new URL("../../../designs/sash/extract/fixtures/", import.meta.url);
 
 /** runCheck samples the travel at half a detent pitch (part2.js:829). */
 export const HALF_STEP = 0.5;

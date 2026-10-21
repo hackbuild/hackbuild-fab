@@ -14,17 +14,17 @@
 // to 976). Math.random is read at call time, so a caller that replaces it
 // before reset() seeds the spawn velocities.
 //
-//   node designs/slug/legacy/tools/extract.mjs --out <file.mjs>
+//   node designs/slug/extract/extract.mjs --out <file.mjs>
 //
 // Exit 1 when the page bytes are not the legacy copy or a marker moved.
 
 import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
-import { dirname, join } from "node:path";
+import { join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { legacyDir } from "../../../tools/legacy/record.mjs";
 
-const here = dirname(fileURLToPath(import.meta.url));
-const PAGE = join(here, "..", "slug.html");
+const PAGE = join(legacyDir("slug"), "slug.html");
 const PAGE_SHA256 = "2d09238c27d5ca4bf023eeee44939b1500470ad2058822b8d0add48ec9bf3241";
 
 /** 1-based line numbers the card and the slug record cite; a moved marker fails the extraction. */

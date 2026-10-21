@@ -1,8 +1,8 @@
 """OGEE R16 lasercut connectivity record (M07-T04, the oracle of
 packages/nest/test/connect.test.ts).
 
-Runs ../source/cutfiles.py's own functions on the shipped per-part DXFs in
-../out/dxf/: rings_from_dxf gives each part's raw rings, polygon_from_rings
+Runs ../legacy/source/cutfiles.py's own functions on the shipped per-part DXFs in
+../legacy/out/dxf/: rings_from_dxf gives each part's raw rings, polygon_from_rings
 builds the profile, compensate buffers it at KERF 0.18 (inferred: the
 script's default, "Set this from the test coupon", never measured), and
 check_connected runs over the whole BOM as main() runs it. For every part
@@ -10,7 +10,7 @@ the record keeps the raw rings (the input nest's port classifies), the
 hole count of the uncompensated profile, and the piece count, hole count
 and bounds of the compensated one.
 
-    uv run --project tools/py designs/ogee16/legacy/tools/connect-record.py [--write]
+    uv run --project tools/py designs/ogee16/extract/connect-record.py [--write]
 
 Writes packages/nest/records/ogee16-connect.json. Exit 1 when an input is
 not the pinned copy, a count moved, or the result differs from the
@@ -19,9 +19,9 @@ committed record.
 import io, os, re, sys, contextlib
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-LEGACY = os.path.abspath(os.path.join(HERE, ".."))
+ROOT = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
+LEGACY = os.path.join(ROOT, "designs", "ogee16", "legacy")
 SRC = os.path.join(LEGACY, "source")
-ROOT = os.path.abspath(os.path.join(LEGACY, "..", "..", ".."))
 sys.path.insert(0, os.path.join(ROOT, "tools", "py"))
 sys.path.insert(0, SRC)
 
@@ -35,7 +35,7 @@ PINS = {
 
 
 def dxf_pins():
-    """Pins of the unzipped out/dxf files, from ../SHA256SUMS."""
+    """Pins of the unzipped out/dxf files, from ../legacy/SHA256SUMS."""
     pins = {}
     for line in open(os.path.join(LEGACY, "SHA256SUMS")):
         m = re.match(r"^([0-9a-f]{64})  (out/dxf/.+)$", line.rstrip("\n"))
@@ -91,7 +91,7 @@ def main():
         "record": "ogee16-connect",
         "card": "M07-T04",
         "out": "packages/nest/records/ogee16-connect.json",
-        "command": "uv run --project tools/py designs/ogee16/legacy/tools/connect-record.py",
+        "command": "uv run --project tools/py designs/ogee16/extract/connect-record.py",
         "qualifier": "computed: cutfiles.py rings_from_dxf, polygon_from_rings, compensate at KERF 0.18 and check_connected on the shipped per-part DXFs; counts and bounds by shapely",
         "inputs": pins,
         "versions": {"ezdxf": ezdxf.__version__, "shapely": shapely.__version__},

@@ -1,5 +1,5 @@
 // WASHER mm-space planner run headless from the legacy laser rig page
-// (M07-T01 step 6). ../laser-rig.zip holds, as its one stored member
+// (M07-T01 step 6). ../legacy/laser-rig.zip holds, as its one stored member
 // laser-rig.html, the harvested 2026-07-30 18:25 copy
 // the M07 golden pins (sha256 1b4f11d8...; the canonical laserriggg bundle
 // plans the same square in 1.1703 s at peak 260 with its new defaults,
@@ -23,19 +23,18 @@
 // 60 mm square centred on the wall, densified at 0.25 mm by the page's
 // densify(), beam on for every segment, no forced stops.
 //
-//   node designs/washer/legacy/tools/extract-plan.mjs [--write]
+//   node designs/washer/extract/extract-plan.mjs [--write]
 //
 // Writes packages/motion/records/washer-plan.json. Exit 1 when the page is
 // not the pinned copy, a marker moved, a number of the M07 Records table
 // moved, or the result differs from the committed record.
 
-import { dirname, join } from "node:path";
+import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import JSZip from "jszip";
-import { Asserts, finish, marker, readPinned, sha256 } from "../../../../tools/legacy/record.mjs";
+import { Asserts, finish, legacyDir, marker, readPinned, sha256 } from "../../../tools/legacy/record.mjs";
 
-const here = dirname(fileURLToPath(import.meta.url));
-const ZIP = join(here, "..", "laser-rig.zip");
+const ZIP = join(legacyDir("washer"), "laser-rig.zip");
 const ZIP_SHA256 = "6cb396e30a16260f44b8c86dbb35a80f2367141fbbd92e290a5beb1bbf81f72f";
 const PAGE_SHA256 = "1b4f11d80a37b4882dccd9f1ae6a70705c270a962bd066f8cabca06ff7fd8ace";
 
@@ -111,7 +110,7 @@ if (argv[1] === fileURLToPath(import.meta.url)) {
     finish({
       record: "washer-plan",
       out: "packages/motion/records/washer-plan.json",
-      command: "node designs/washer/legacy/tools/extract-plan.mjs",
+      command: "node designs/washer/extract/extract-plan.mjs",
       qualifier: "computed: laser-rig.html (2026-07-30 harvest) planChainPen run in node on the 60 mm square, micro9g preset, calibration off",
       inputs: { [ZIP]: ZIP_SHA256, [`${ZIP}!laser-rig.html`]: PAGE_SHA256 },
     }, r, a);

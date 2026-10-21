@@ -391,7 +391,7 @@ const M07_PORTS = {
   packOne: ['ogee16.packone', 'packages/nest/src/maxrects.ts', 'packOne'],
   autoGap: ['ogee16.autogap', 'packages/nest/src/autogap.ts', 'autoGap'],
   'cutfiles.py': ['ogee16.cutfiles', 'packages/nest/src/profile.ts', 'compensate()'],
-  'cutfiles.py stitching': ['ogee16.cutfiles', 'designs/ogee16/legacy/tools/connect-record.py', 'rings_from_dxf'],
+  'cutfiles.py stitching': ['ogee16.cutfiles', 'designs/ogee16/extract/connect-record.py', 'rings_from_dxf'],
   'cutfiles.py connectivity': ['ogee16.cutfiles', 'packages/nest/src/connect.ts', 'check_connected()'],
   nestOnce: ['gusset.bench', 'packages/nest/src/maxrects.ts', 'nestOnce'],
   laserDXF: ['cotter.kit', 'packages/nest/src/dxf.ts', 'laserDXF'],

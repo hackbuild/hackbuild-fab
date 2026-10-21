@@ -1,5 +1,5 @@
 // DETENT speed planner and four-corner calibration run headless from the
-// legacy control app (M07-T01 step 5). Blocks of ../detent-plot.html are
+// legacy control app (M07-T01 step 5). Blocks of ../legacy/detent-plot.html are
 // copied byte for byte:
 //   lines 474 to 475   STEPS_PER_REV, DEG_PER_STEP (28BYJ-48 half steps)
 //   lines 478 to 495   the state object S (rate 400, travel 500, throw 150,
@@ -19,18 +19,17 @@
 // trip over a 10 mm grid from -60 to 60 (detent-latest.zip
 // tests/caltest.py).
 //
-//   node designs/detent/legacy/tools/extract-plan.mjs [--write]
+//   node designs/detent/extract/extract-plan.mjs [--write]
 //
 // Writes packages/motion/records/detent-plan.json and detent-cal.json.
 // Exit 1 when the page is not the pinned copy, a marker moved, a number of
 // the M07 Records table moved, or a result differs from its record.
 
-import { dirname, join } from "node:path";
+import { join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { Asserts, finish, marker, readPinned } from "../../../../tools/legacy/record.mjs";
+import { Asserts, finish, legacyDir, marker, readPinned } from "../../../tools/legacy/record.mjs";
 
-const here = dirname(fileURLToPath(import.meta.url));
-const PAGE = join(here, "..", "detent-plot.html");
+const PAGE = join(legacyDir("detent"), "detent-plot.html");
 const PAGE_SHA256 = "81cdd5d8100dee9d77fce80599adf3244011df1b27e5709a7917ce8d45428bbd";
 
 function load() {
@@ -119,13 +118,13 @@ if (argv[1] === fileURLToPath(import.meta.url)) {
     const inputs = { [PAGE]: PAGE_SHA256 };
     finish({
       record: "detent-plan", out: "packages/motion/records/detent-plan.json",
-      command: "node designs/detent/legacy/tools/extract-plan.mjs",
+      command: "node designs/detent/extract/extract-plan.mjs",
       qualifier: "computed: detent-plot.html planSpeeds run in node on the 400 step square; iv in 20 kHz ticks",
       inputs,
     }, p, ap);
     finish({
       record: "detent-cal", out: "packages/motion/records/detent-cal.json",
-      command: "node designs/detent/legacy/tools/extract-plan.mjs",
+      command: "node designs/detent/extract/extract-plan.mjs",
       qualifier: "computed: detent-plot.html solveH and invertH through the SOLVE handler body, caltest.py corners and grid",
       inputs,
     }, c, ac);

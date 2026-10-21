@@ -36,7 +36,7 @@ the whole sim at lines 673 to 954), and the shelf packer.
 `sheets/` holds the 20 shipped cut files, 9 ply and 1 acrylic sheet as
 DXF and SVG, copied byte identical from
 `fab-work-directory:benches/slug/outputs/slug/sheets/`
-and pinned in `SHA256SUMS`. `tools/extract-nest.mjs` copies line 272
+and pinned in `SHA256SUMS`. `../extract/extract-nest.mjs` copies line 272
 (`OUTLINES`) and lines 1042 to 1137 (`PART_QTY` to `sheetDXF`) of
 `slug.html`, runs the page's own `nest()` at 600 x 400, gap 4, margin 6,
 and regenerates every sheet: all 10 DXF and all 10 SVG files come out byte

@@ -3215,7 +3215,7 @@
     "source": "fab-knowledge:originals/ogee16/files/src/source/viewer_template.html",
     "sha256": "9d101e0c28bd7ae75e81dce60483ac62b085460fc945d43d074077ecf5706dd9",
     "fixes": [
-      "the asm argument of every reg(o, group, kind, ex, asm) call (lines 275 to 370) and the 14 ASM labels (lines 608 to 611) read by running the registry block in node on stub THREE objects (designs/ogee16/legacy/tools/extract-steps.mjs, M07-T09), never typed; a v_ module extruding TB counts LAM plies, an m_ module counts as the p_ profile it draws; the counts are held to cutfiles.py BOM, and the coupon, which no reg call places, is listed unassigned and refused by assembly-order mode"
+      "the asm argument of every reg(o, group, kind, ex, asm) call (lines 275 to 370) and the 14 ASM labels (lines 608 to 611) read by running the registry block in node on stub THREE objects (designs/ogee16/extract/extract-steps.mjs, M07-T09), never typed; a v_ module extruding TB counts LAM plies, an m_ module counts as the p_ profile it draws; the counts are held to cutfiles.py BOM, and the coupon, which no reg call places, is listed unassigned and refused by assembly-order mode"
     ],
     "dest": "packages/nest/records/ogee16-steps.json"
   },
@@ -3225,7 +3225,7 @@
     "source": "fab-knowledge:originals/ogee16/files/src/source/printed_viewer_template.html",
     "sha256": "70f859f6524e0abc2fc1f3a7a22abe5a25b560848bf615868191607092dc61b8",
     "fixes": [
-      "the asm argument of every reg(o, group, ex, asm) call (lines 189 to 276) and the 12 ASM labels (lines 520 to 524) read the same way (designs/ogee16/legacy/tools/extract-steps.mjs, M07-T09); counts held to build_plate.py QTY, and the drive pin, which no reg call places, is listed unassigned",
+      "the asm argument of every reg(o, group, ex, asm) call (lines 189 to 276) and the 12 ASM labels (lines 520 to 524) read the same way (designs/ogee16/extract/extract-steps.mjs, M07-T09); counts held to build_plate.py QTY, and the drive pin, which no reg call places, is listed unassigned",
       "the instance counts of the same reg calls are the printed bill's rules in packages/nest/scenes/ogee16-r16p-plates.ts (M07-T08, cited per row there)",
       "drive_ and pull (lines 349 to 367) are cited in packages/motion/src/programs/ogee.ts (M07-T11) as the viewer_template.html drive and doClear commands at 760 ms; the port is of viewer_template.html (row ogee16.viewer-commit/r16p)"
     ],
@@ -3342,7 +3342,7 @@
     "fixes": [
       "rings_from_dxf() of lines 34 to 67 (LINE and LWPOLYLINE segments stitched into rings at 1e-5 mm) stays Python and runs in place as the oracle: nest reads rings from the part and never from a DXF, so nothing ports it; this script runs it with polygon_from_rings, compensate and check_connected on the shipped per-part DXFs and writes the stitched rings to packages/nest/records/ogee16-connect.json, the input of the M07-T04 and T06 ports"
     ],
-    "dest": "designs/ogee16/legacy/tools/connect-record.py"
+    "dest": "designs/ogee16/extract/connect-record.py"
   },
   {
     "id": "ogee16.cutfiles/r16p",
@@ -3362,7 +3362,7 @@
     "source": "fab-work-directory:benches/ogee16/outputs/ogee16-source.zip",
     "sha256": "47d6077e0596eb4e9722a0a9f687cb82ec472c7bc031d8d2f61a98266aa94dd5",
     "fixes": [],
-    "dest": "reference/fit/ogee16-r16p/legacy/fits.stdout.txt"
+    "dest": "reference/fit/ogee16-r16p/extract/fits.stdout.txt"
   },
   {
     "id": "ogee16.fits/r16p",
@@ -3395,7 +3395,7 @@
     "source": "fab-work-directory:benches/ogee16/outputs/ogee16-source.zip",
     "sha256": "47d6077e0596eb4e9722a0a9f687cb82ec472c7bc031d8d2f61a98266aa94dd5",
     "fixes": [],
-    "dest": "reference/fit/ogee16-r16p/legacy/fits.stdout.txt"
+    "dest": "reference/fit/ogee16-r16p/extract/fits.stdout.txt"
   },
   {
     "id": "ogee16.kin/m02-port",
@@ -3517,7 +3517,7 @@
     "fixes": [
       "proud-head fixture: in a_crank_row, a_crank_col and a_crank_latch drive_pin_flush() is replaced by the legacy drive_pin() and the pin_seat() counterbore is not subtracted; include and use paths point at ../../source; rendered by OpenSCAD 2021.01 (M02-T07 step 4)"
     ],
-    "dest": "designs/ogee16/legacy/fixtures/proud-head/printed_proud.scad"
+    "dest": "designs/ogee16/extract/fixtures/proud-head/printed_proud.scad"
   },
   {
     "id": "ogee16.printed/mesh-junction",
@@ -4943,7 +4943,7 @@
     "source": "fab-knowledge:originals/sash/files/sash.html",
     "sha256": "1af452be6cccc94aced78f7d7cb292ba34742740410bd7560b2edf07b5d33cf5",
     "fixes": [
-      "designs/sash/legacy/tools/capture.py adds one line before the runCheck call (line 1813) to a temporary copy, keeping G, front, wall and slideGrids on MODEL.capture; it writes designs/sash/legacy/fixtures/*.json and never edits this copy (M02-T10)"
+      "designs/sash/extract/capture.py adds one line before the runCheck call (line 1813) to a temporary copy, keeping G, front, wall and slideGrids on MODEL.capture; it writes designs/sash/extract/fixtures/*.json and never edits this copy (M02-T10)"
     ],
     "dest": "designs/sash/legacy/sash.html"
   },
@@ -5017,7 +5017,7 @@
     "source": "fab-knowledge:originals/sash/files/src/sweep.py",
     "sha256": "8ac63cba60637350c709e0cd9aa524e15195b91d9dd9840480c6bf116a6c80fc",
     "fixes": [
-      "its cases list (21 entries) is read from the zip member by designs/sash/legacy/tools/capture.py, never retyped (M02-T10)"
+      "its cases list (21 entries) is read from the zip member by designs/sash/extract/capture.py, never retyped (M02-T10)"
     ],
     "dest": "designs/sash/legacy/sash-src.zip"
   },
@@ -6618,7 +6618,7 @@
     "fixes": [
       "hermite segments, tangent clamp, EMA loss stretch, starvation gate, TX ring, credit flow over the harvest copy (washer record section 1)",
       "densify, degPerMm, resolutionSlew, resolutionMM and planChainPen (lines 4096 to 4308) ported to packages/motion/src/planners/washer-mm.ts with CFG, PLAN and SERVO from profile rows washer.* and servo.<preset>.*; the canonical resolutionSlew floors PLAN.steps at 0.25 where the harvested copy (row washer.app/m07-legacy) floors it at 1, and every other planner function is the same text; on the harvested numbers the 60 mm square equals packages/motion/records/washer-plan.json within 1e-9 relative, on the canonical defaults it gives the drive record's 1.1703 s and peak 260 (packages/motion/test/planners.test.ts, M07-T12); each speed names its ceiling, the per point form of smoothReadout (line 4532)",
-      "usToDeg, degToUs, degToUsF, vOff, ik, fkCalib, fk, calibMap and wallToAngles (lines 2190 to 2279, 3623 to 3644, 5241) ported to packages/motion/src/kinematics/washer.ts; the bilinear calibration readout in packages/motion/src/calibrate.ts equals the harvested page's own functions run by designs/washer/legacy/tools/extract-cal.mjs (packages/motion/records/washer-cal.json)",
+      "usToDeg, degToUs, degToUsF, vOff, ik, fkCalib, fk, calibMap and wallToAngles (lines 2190 to 2279, 3623 to 3644, 5241) ported to packages/motion/src/kinematics/washer.ts; the bilinear calibration readout in packages/motion/src/calibrate.ts equals the harvested page's own functions run by designs/washer/extract/extract-cal.mjs (packages/motion/records/washer-cal.json)",
       "emitSegments on linear playback with withGates, nextGate, sampleAt, uOfWall and playbackError (lines 4415 to 4470, 5243 to 5409) ported to packages/motion/src/serialise.ts washerSegments, run to the end of one planned chain with no transport, credit window or packet framing (M13); the duration rounding residual is carried"
     ],
     "dest": null

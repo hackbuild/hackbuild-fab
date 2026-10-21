@@ -2,7 +2,7 @@
 // request. Data only, read from the pinned legacy page and never typed:
 // the items are the PART_QTY names with their baked OUTLINES (slug.html
 // line 272 and lines 1042 to 1050, the lines
-// designs/slug/legacy/tools/extract-nest.mjs copies, read here as data;
+// designs/slug/extract/extract-nest.mjs copies, read here as data;
 // lineage slug.nest/slug-12),
 // the stock of each from the ACRYLIC set (line 1051), and the sheet, gap
 // and margin from the page's sheet controls (lines 174 to 177, the values

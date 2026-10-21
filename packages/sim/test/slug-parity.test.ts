@@ -1,5 +1,5 @@
 // M02-T08 parity: the legacy SLUG physics, extracted from the page bytes by
-// designs/slug/legacy/tools/extract.mjs and run in node, against the port in
+// designs/slug/extract/extract.mjs and run in node, against the port in
 // src/capsule. Both draw spawn velocities from the same seeded generator
 // (the legacy module's Math.random is replaced for its reset) and are
 // driven by the page's loop body at frame dt = DT. Expected values come
@@ -26,7 +26,7 @@ import { SLUG_SCENE } from "../scenes/slug.js";
 const SIM = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const ROOT = path.resolve(SIM, "..", "..");
 const LEGACY = path.join(ROOT, "designs", "slug", "legacy");
-const EXTRACT = path.join(LEGACY, "tools", "extract.mjs");
+const EXTRACT = path.join(ROOT, "designs", "slug", "extract", "extract.mjs");
 const lineage = JSON.parse(readFileSync(path.join(ROOT, "lineage.json"), "utf8")) as { id: string; sha256: string; dest: string | null }[];
 
 interface V { x: number; y: number; z: number }

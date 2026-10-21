@@ -3,10 +3,13 @@
 // originals path of a byte copy, and the files outside legacy folders that
 // read each folder. Classes, in the order they apply:
 //   lineage   README.md, SHA256SUMS, sha256.txt
-//   harness   legacy/tools/, legacy/records/*.mjs, legacy/fixtures/,
-//             reference/fit/*/legacy/*.stdout.txt
 //   original  HBF_ORIGINALS holds a file with the same sha256
 //   unmatched everything else
+// Fab's own harness (record and extraction scripts, captured fixtures)
+// lives under designs/<id>/extract/ and reference/fit/<id>/extract/
+// (R1-rails-public-07), outside the globs, so no row is harness. A file
+// left under legacy/tools/ is a copy of an upstream tool and classes by
+// the originals lookup like any other copy.
 // Readers are found by text and are approximate: a dynamic path such as
 // new URL(`legacy/${f}`, DESIGN) counts through the folder-name match, so a
 // false reader is kept over a missed one.
@@ -47,13 +50,9 @@ export function legacyFolder(rel) {
   return null;
 }
 
-/** lineage, harness, or null when the originals lookup decides. */
-export function fixedClass(rel, folder) {
-  const inner = rel.slice(folder.length + 1);
-  if (LINEAGE.has(path.posix.basename(rel))) return 'lineage';
-  if (/^(tools|fixtures)\//.test(inner) || /^records\/[^/]+\.mjs$/.test(inner)) return 'harness';
-  if (/^reference\/fit\/[^/]+\/legacy\/[^/]+\.stdout\.txt$/.test(rel)) return 'harness';
-  return null;
+/** lineage, or null when the originals lookup decides. */
+export function fixedClass(rel) {
+  return LINEAGE.has(path.posix.basename(rel)) ? 'lineage' : null;
 }
 
 /** sha256 to the sorted relative paths of every file under dir. */
@@ -139,7 +138,7 @@ export function inventory(root, { originals = null, prior = null } = {}) {
     const folder = legacyFolder(rel);
     if (!folder) continue;
     const buf = readFileSync(path.join(root, rel));
-    const row = { path: rel, sha256: sha256(buf), bytes: buf.length, class: fixedClass(rel, folder) };
+    const row = { path: rel, sha256: sha256(buf), bytes: buf.length, class: fixedClass(rel) };
     if (!row.class && originals) {
       const hit = originals.get(row.sha256);
       row.class = hit ? 'original' : 'unmatched';

@@ -1,6 +1,6 @@
 // M07-T09 assembly-order mode. The steps are the viewers' own: the
 // committed record packages/nest/records/ogee16-steps.json, written by
-// designs/ogee16/legacy/tools/extract-steps.mjs from the reg(...) calls of
+// designs/ogee16/extract/extract-steps.mjs from the reg(...) calls of
 // viewer_template.html (14 steps) and printed_viewer_template.html (12),
 // is run again here and held to the bills neither viewer reads (cutfiles.py
 // BOM, build_plate.py QTY) and to the scene's instance rules. The step
@@ -22,7 +22,7 @@ import { packPlates } from "../src/plates.js";
 import { nest } from "../src/sheet-loop.js";
 import { billOf, countOf, DRIVES, INSTANCE_RULES, ogee16PlatesScene, type Drive } from "../scenes/ogee16-r16p-plates.js";
 // @ts-expect-error the legacy tool is plain JavaScript with no declarations
-import { lasercut, printed } from "../../../designs/ogee16/legacy/tools/extract-steps.mjs";
+import { lasercut, printed } from "../../../designs/ogee16/extract/extract-steps.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "..", "..");
 const json = <T>(rel: string): T => JSON.parse(readFileSync(path.join(ROOT, rel), "utf8")) as T;

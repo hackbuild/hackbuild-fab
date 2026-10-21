@@ -1,7 +1,7 @@
 // OGEE R16-P build plates run headless from the legacy files (M07-T01 step 3).
 // The data is the PARTS, GROUPS and DRIVE JSON that build_plate.py baked
-// into ../ogee16-plate.html (lines 182, 266, 267; the base64 `stl` field is
-// dropped). The packer is the block of ../source/plate_template.html from
+// into ../legacy/ogee16-plate.html (lines 182, 266, 267; the base64 `stl` field is
+// dropped). The packer is the block of ../legacy/source/plate_template.html from
 // `const MARGIN = 10;` (line 263) to the line before `function show(n)`
 // (line 341), byte identical to the same block of the shipped page, with
 // the template's state lines 177 to 179 (`PLATE = 256`, `gap = 4`, `on`) and
@@ -13,21 +13,21 @@
 // turned): pairwise disjoint, inside the 10 mm margin of the 256 mm bed,
 // and the smallest gap between two rectangles.
 //
-//   node designs/ogee16/legacy/tools/extract-plate.mjs --drive knobs|servos
-//   node designs/ogee16/legacy/tools/extract-plate.mjs --write    both drives, write the record
+//   node designs/ogee16/extract/extract-plate.mjs --drive knobs|servos
+//   node designs/ogee16/extract/extract-plate.mjs --write    both drives, write the record
 //
 // Writes packages/nest/records/ogee16-plates-legacy.json. Exit 1 when an
 // input is not the pinned copy, a marker moved, a number of the M07 Records
 // table moved, or the result differs from the committed record.
 
-import { dirname, join } from "node:path";
+import { join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { Asserts, finish, marker, readPinned } from "../../../../tools/legacy/record.mjs";
+import { Asserts, finish, legacyDir, marker, readPinned } from "../../../tools/legacy/record.mjs";
 
-const here = dirname(fileURLToPath(import.meta.url));
-const PAGE = join(here, "..", "ogee16-plate.html");
+const LEGACY = legacyDir("ogee16");
+const PAGE = join(LEGACY, "ogee16-plate.html");
 const PAGE_SHA256 = "86a000eb98eeb108fedfedc1d7c4ac9a08cfdeef8e8b2661b71069eb207c8837";
-const TEMPLATE = join(here, "..", "source", "plate_template.html");
+const TEMPLATE = join(LEGACY, "source", "plate_template.html");
 const TEMPLATE_SHA256 = "59507bfae682869fb87d9ff5d6aa59fe2746f51ece249359ab69b223290f04bf";
 
 export function data() {
@@ -121,7 +121,7 @@ if (argv[1] === fileURLToPath(import.meta.url)) {
     finish({
       record: "ogee16-plates-legacy",
       out: "packages/nest/records/ogee16-plates-legacy.json",
-      command: "node designs/ogee16/legacy/tools/extract-plate.mjs --drive knobs; --drive servos",
+      command: "node designs/ogee16/extract/extract-plate.mjs --drive knobs; --drive servos",
       qualifier: "computed: plate_template.html packOne, pack and autoGap run in node on the PARTS, GROUPS and DRIVE baked into ogee16-plate.html; audit on footprint rectangles",
       inputs: { [PAGE]: PAGE_SHA256, [TEMPLATE]: TEMPLATE_SHA256 },
     }, result, a);

@@ -94,7 +94,7 @@ describe("sim.sweep, mode insert (COTTER)", () => {
 describe("sim.sweep, mode prismatic (SASH)", () => {
   it("sash-slide: overlap per lane equals the bench's captured runCheck", async () => {
     const { code, r } = await json("sim.sweep", "--scene", "sash-slide");
-    const fx = golden<{ check: { name: string; overlapCells: number }[] }>("designs/sash/legacy/fixtures/battery-default.json");
+    const fx = golden<{ check: { name: string; overlapCells: number }[] }>("designs/sash/extract/fixtures/battery-default.json");
     expect(code).toBe(fx.check.every((l) => l.overlapCells === 0) ? 0 : 1);
     const res = r.result as { clashes: { body: string; cells: number }[]; closest: { body: string; mm: number }[]; mode: string };
     expect(res.mode).toBe("prismatic");

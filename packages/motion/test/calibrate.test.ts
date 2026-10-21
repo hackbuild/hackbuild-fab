@@ -3,7 +3,7 @@
 // (detent-plot.html solveH and invertH through the SOLVE handler body, the
 // caltest.py corners and grid), packages/motion/records/washer-cal.json
 // (laser-rig.html calibMap, fkCalib, fk and wallToAngles on the ideal-map
-// corners, designs/washer/legacy/tools/extract-cal.mjs), and the M07
+// corners, designs/washer/extract/extract-cal.mjs), and the M07
 // Records table figures typed below.
 
 import { readFileSync } from "node:fs";

@@ -11,7 +11,7 @@ import { describe, expect, test } from "vitest";
 import type { NestItem, NestRequest } from "@hackbuild/spec";
 import { nest } from "../src/sheet-loop.js";
 // @ts-expect-error the legacy tool is plain JavaScript with no declarations
-import { data, packer } from "../../../designs/ogee16/legacy/tools/extract-plate.mjs";
+import { data, packer } from "../../../designs/ogee16/extract/extract-plate.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "..", "..");
 const record = JSON.parse(readFileSync(path.join(ROOT, "packages/nest/records/ogee16-plates-legacy.json"), "utf8")) as {

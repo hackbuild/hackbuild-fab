@@ -1,7 +1,7 @@
 // M07-T11: OGEE setPixel and clear as Motion IR. Expected values come from
 // the M07-T01 record packages/motion/records/ogee16-kin.json, whose
 // `programs` block replays the viewer's apply() rule over kin.py in Python
-// (designs/ogee16/legacy/tools/kin-record.py), and from its 128
+// (designs/ogee16/extract/kin-record.py), and from its 128
 // check_viewer rows for the crank angles; none is computed by this package.
 
 import { readFileSync } from "node:fs";

@@ -19,7 +19,7 @@ import { audit as meshAudit } from "@hackbuild/mesh";
 import { packPlates, plateLayouts, printableParts, type PlateScene } from "../src/plates.js";
 import { arraySize, billOf, DRIVES, INSTANCE_RULES, ogee16PlatesScene, type Drive } from "../scenes/ogee16-r16p-plates.js";
 // @ts-expect-error the legacy tool is plain JavaScript with no declarations
-import { data, packer } from "../../../designs/ogee16/legacy/tools/extract-plate.mjs";
+import { data, packer } from "../../../designs/ogee16/extract/extract-plate.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "..", "..");
 const BUILD_PLATE = path.join(ROOT, "designs/ogee16/legacy/source/build_plate.py");

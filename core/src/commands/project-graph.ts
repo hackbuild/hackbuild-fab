@@ -43,11 +43,14 @@ const posix = (p: string): string => p.split(path.sep).join("/");
 const sha256File = (file: string): string => sha256Hex(new Uint8Array(readFileSync(file)));
 const listDir = (dir: string): string[] => (existsSync(dir) && statSync(dir).isDirectory() ? readdirSync(dir).sort() : []);
 
-/** Every SHA256SUMS row under designs/<id>/legacy, by legacy tree, workspace relative. */
+/**
+ * Every SHA256SUMS row under designs/<id>/legacy and designs/<id>/extract (the
+ * harness fixtures moved out of legacy, R1-rails-public-07), by tree,
+ * workspace relative.
+ */
 function legacyTrees(root: string): Map<string, LegacySum[]> {
   const trees = new Map<string, LegacySum[]>();
-  for (const design of listDir(path.join(root, "designs"))) {
-    const tree = `designs/${design}/legacy`;
+  for (const design of listDir(path.join(root, "designs"))) for (const tree of [`designs/${design}/legacy`, `designs/${design}/extract`]) {
     const sums: LegacySum[] = [];
     const walk = (rel: string): void => {
       for (const e of listDir(path.join(root, rel))) {

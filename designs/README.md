@@ -1,9 +1,10 @@
 # designs
 
 One folder per design: `chase.ts` and `build.ts` at the top, the harvested
-original under `legacy/`. A `legacy/` tree is kept byte identical to the
-file it was copied from; its `SHA256SUMS` checks it, and its `README.md`
-says where it came from. A `legacy/` tree takes the licence its folder's
+original under `legacy/`, and the fab harness that reads it (record and
+extraction scripts, captured fixtures) under `extract/`. A `legacy/` tree
+is kept byte identical to the file it was copied from; its `SHA256SUMS`
+checks it, and its `README.md` says where it came from. A `legacy/` tree takes the licence its folder's
 `chase.ts` declares (D-185, `tools/licences.json` path map).
 
 A legacy file whose bytes carry a character RULES.md bans in every repo
@@ -37,7 +38,7 @@ that carry such a path, as of 2026-10-13 (grep, computed):
 | `derrick/legacy/smoke_arm.js` | `/home/claude/out` |
 | `slug/legacy/tri2.mjs`, `slug/legacy/placecheck.mjs` | `/home/claude/slug/node_modules/three` |
 | `reference/copper/*/legacy/gen_*.py` | `/mnt/skills/user/board-forge/assets/hackbuild-logo.svg` (the mark sits at `reference/copper/_inputs/hackbuild-logo.svg`) |
-| `reference/fit/ogee16-r16p/legacy/fits.stdout.txt`, `fits-slide055.stdout.txt` | a `# source:` header naming the OGEE16 source zip in the owner's working tree, as recorded output only |
+| `reference/fit/ogee16-r16p/extract/fits.stdout.txt`, `fits-slide055.stdout.txt` | a `# source:` header naming the OGEE16 source zip in the owner's working tree, as recorded output only |
 | `reference/boards/spindle-r1/gen.py` and its `expected/report.json`, `expected/cpl.json` | the absolute path of the SPINDLE R1 `pcb.py` and `spindle-CPL.csv` in the owner's working tree, as a provenance string only; nothing reads it, and changing it would move the committed goldens |
 
 The provenance tables in each `legacy/README.md` name sources in the

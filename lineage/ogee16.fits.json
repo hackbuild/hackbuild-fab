@@ -5,7 +5,7 @@
     "source": "fab-work-directory:benches/ogee16/outputs/ogee16-source.zip",
     "sha256": "47d6077e0596eb4e9722a0a9f687cb82ec472c7bc031d8d2f61a98266aa94dd5",
     "fixes": [],
-    "dest": "reference/fit/ogee16-r16p/legacy/fits.stdout.txt"
+    "dest": "reference/fit/ogee16-r16p/extract/fits.stdout.txt"
   },
   {
     "id": "ogee16.fits/r16p",

@@ -4,7 +4,7 @@ check_sweep.py, lineage ogee16.check-sweep/r16p), run unedited twice:
 
   shipped  in designs/ogee16/legacy/source, on the shipped out/print STLs
   proud    in a temporary copy of source/ and out/print/ whose three crank
-           assemblies are replaced by designs/ogee16/legacy/fixtures/proud-head
+           assemblies are replaced by designs/ogee16/extract/fixtures/proud-head
 
 Run from the repo root (about 130 s wall in all, measured on an Apple M1):
   uv run --project tools/py python packages/sim/scripts/ogee_sweep_oracle.py"""
@@ -14,7 +14,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
 LEGACY = ROOT / "designs/ogee16/legacy"
-FIXTURE = LEGACY / "fixtures/proud-head"
+FIXTURE = ROOT / "designs/ogee16/extract/fixtures/proud-head"
 CRANKS = ("crank_row_asm", "crank_col_asm", "crank_latch_asm")
 
 

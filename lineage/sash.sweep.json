@@ -5,7 +5,7 @@
     "source": "fab-knowledge:originals/sash/files/src/sweep.py",
     "sha256": "8ac63cba60637350c709e0cd9aa524e15195b91d9dd9840480c6bf116a6c80fc",
     "fixes": [
-      "its cases list (21 entries) is read from the zip member by designs/sash/legacy/tools/capture.py, never retyped (M02-T10)"
+      "its cases list (21 entries) is read from the zip member by designs/sash/extract/capture.py, never retyped (M02-T10)"
     ],
     "dest": "designs/sash/legacy/sash-src.zip"
   }

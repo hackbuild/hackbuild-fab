@@ -29,7 +29,7 @@ against it, the `fits.py` table, the swept crank check
   (`knowledge/designs/ogee16.md` 4.4).
 - The proud-head geometry that swept 577 mm3 per pin head (bench chat
   record) is not in the harvest. M02-T07 rebuilt it from `drive_pin()` in
-  `fixtures/proud-head/` (its own SHA256SUMS); the 577 mm3 figure is not
+  `../extract/fixtures/proud-head/` (its own SHA256SUMS); the 577 mm3 figure is not
   reproduced there (`packages/sim/records/ogee-sweep.json`).
 - `fits.py` mirrors `printed.scad` values by hand (`PR`), so the two can
   drift (`syn/patterns-and-lineage.md` 4.1).
@@ -42,18 +42,18 @@ against it, the `fits.py` table, the swept crank check
 | `ogee16-buildit-app-20260818.html` | the OGEE build-it page of 2026-08-18 (M07-T08), copied byte for byte from `originals/ogee16/files/companions/` (the same bytes as `evidence/x/downloads/dl-ogee-stipple-mech/ogee/ogee16 (6).html`); its `PARTS_TBL` (line 404) prints 99 printed pieces for the knob build while its blurb (line 405) and the bill the scene derives say 124, the golden failing fixture of CHK-LNT-03 |
 | `ogee16-cut.zip` | the shipped lasercut set, unzipped beside `out/print/` as `out/cut/` (three sheets as DXF and SVG) and `out/dxf/` (33 OpenSCAD part exports), the layout `cutfiles.py` reads |
 
-`tools/extract-plate.mjs` runs `packOne`, `pack` and `autoGap` of
+`../extract/extract-plate.mjs` runs `packOne`, `pack` and `autoGap` of
 `source/plate_template.html` (lines 263 to 340) on the embedded data for
-both drives and audits each plate. `tools/kin-record.py` imports
+both drives and audits each plate. `../extract/kin-record.py` imports
 `source/kin.py`, runs `check_viewer.py`'s harness on the viewer's JS
 block from `source/viewer_template.html`, and replays setPixel and clear
-with the viewer's `apply()` rule. `tools/cut-record.py` reruns
+with the viewer's `apply()` rule. `../extract/cut-record.py` reruns
 `source/cutfiles.py` on `out/dxf/` into a temporary folder and compares
 the result with `out/cut/`. Each writes its record under
 `packages/nest/records/` or `packages/motion/records/` with `--write`,
 and otherwise exits 1 when a number moves.
 
-`tools/extract-steps.mjs` (M07-T09) runs the `reg(...)` registry blocks of
+`../extract/extract-steps.mjs` (M07-T09) runs the `reg(...)` registry blocks of
 `source/viewer_template.html` and `source/printed_viewer_template.html` in
 node on stub THREE objects and records the assembly step of every part
 (`packages/nest/records/ogee16-steps.json`), with counts held to

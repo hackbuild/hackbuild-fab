@@ -13,7 +13,7 @@ import type { NestItem, NestRequest, Ring } from "@hackbuild/spec";
 import { placeRings } from "../src/box.js";
 import { nest } from "../src/sheet-loop.js";
 // @ts-expect-error the legacy tool is plain JavaScript with no declarations
-import { extract } from "../../../designs/slug/legacy/tools/extract-nest.mjs";
+import { extract } from "../../../designs/slug/extract/extract-nest.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "..", "..");
 const record = JSON.parse(readFileSync(path.join(ROOT, "packages/nest/records/slug-legacy.json"), "utf8")) as {

@@ -5,7 +5,7 @@
     "source": "fab-knowledge:originals/ogee16/files/src/source/printed_viewer_template.html",
     "sha256": "70f859f6524e0abc2fc1f3a7a22abe5a25b560848bf615868191607092dc61b8",
     "fixes": [
-      "the asm argument of every reg(o, group, ex, asm) call (lines 189 to 276) and the 12 ASM labels (lines 520 to 524) read the same way (designs/ogee16/legacy/tools/extract-steps.mjs, M07-T09); counts held to build_plate.py QTY, and the drive pin, which no reg call places, is listed unassigned",
+      "the asm argument of every reg(o, group, ex, asm) call (lines 189 to 276) and the 12 ASM labels (lines 520 to 524) read the same way (designs/ogee16/extract/extract-steps.mjs, M07-T09); counts held to build_plate.py QTY, and the drive pin, which no reg call places, is listed unassigned",
       "the instance counts of the same reg calls are the printed bill's rules in packages/nest/scenes/ogee16-r16p-plates.ts (M07-T08, cited per row there)",
       "drive_ and pull (lines 349 to 367) are cited in packages/motion/src/programs/ogee.ts (M07-T11) as the viewer_template.html drive and doClear commands at 760 ms; the port is of viewer_template.html (row ogee16.viewer-commit/r16p)"
     ],

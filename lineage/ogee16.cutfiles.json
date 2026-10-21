@@ -25,7 +25,7 @@
     "fixes": [
       "rings_from_dxf() of lines 34 to 67 (LINE and LWPOLYLINE segments stitched into rings at 1e-5 mm) stays Python and runs in place as the oracle: nest reads rings from the part and never from a DXF, so nothing ports it; this script runs it with polygon_from_rings, compensate and check_connected on the shipped per-part DXFs and writes the stitched rings to packages/nest/records/ogee16-connect.json, the input of the M07-T04 and T06 ports"
     ],
-    "dest": "designs/ogee16/legacy/tools/connect-record.py"
+    "dest": "designs/ogee16/extract/connect-record.py"
   },
   {
     "id": "ogee16.cutfiles/r16p",

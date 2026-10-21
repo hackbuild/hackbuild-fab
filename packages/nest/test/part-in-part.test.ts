@@ -22,7 +22,7 @@ import { nest, nestTrials, type Trial } from "../src/sheet-loop.js";
 import { composePlacement, cutOrder, innerTurns, keyOf, nestHoles, ringsById } from "../src/part-in-part.js";
 import { extentOf } from "../src/box.js";
 // @ts-expect-error the legacy tool is plain JavaScript with no declarations
-import { extract } from "../../../designs/slug/legacy/tools/extract-nest.mjs";
+import { extract } from "../../../designs/slug/extract/extract-nest.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "..", "..");
 const RECORD = "packages/nest/records/slug-fill.json";

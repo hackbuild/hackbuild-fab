@@ -1,6 +1,6 @@
 // OGEE16 swept cranks scene (M02-T07): check_sweep.py main (lineage
 // ogee16.check-sweep/r16p) over the shipped print STLs or the proud-head
-// fixture (designs/ogee16/legacy/fixtures/proud-head). The crank placements
+// fixture (designs/ogee16/extract/fixtures/proud-head). The crank placements
 // and the rest pose of audit_print.build come from the OGEE16 kinematics in
 // packages/motion (D-139) through the binding core hands the loader
 // (src/place.ts), with every dimension read from params.scad there; this
@@ -15,6 +15,7 @@ import type { BindKinematics, Mat4, SceneKinematics } from "../src/place.js";
 import { rotateSweep, type Obstacle, type RotateSweepResult, type RotatingPart } from "../src/sweep/rotate.js";
 
 const LEGACY = new URL("../../../designs/ogee16/legacy/", import.meta.url);
+const FIXTURE = new URL("../../../designs/ogee16/extract/fixtures/proud-head/", import.meta.url);
 
 export type Variant = "shipped" | "proud";
 export const CRANK_FILES = ["crank_row_asm", "crank_col_asm", "crank_latch_asm"] as const;
@@ -50,11 +51,11 @@ const cache = new Map<string, MeshData>();
 
 /** One OGEE16 STL as a welded mesh (the imported route, D-053); cranks come from the fixture when variant is proud. */
 export function ogeeMesh(name: string, variant: Variant = "shipped"): MeshData {
-  const dir = variant === "proud" && (CRANK_FILES as readonly string[]).includes(name) ? "fixtures/proud-head/" : "out/print/";
-  const key = dir + name;
+  const proud = variant === "proud" && (CRANK_FILES as readonly string[]).includes(name);
+  const key = (proud ? "fixtures/proud-head/" : "out/print/") + name;
   let m = cache.get(key);
   if (m === undefined) {
-    m = importStl(readFileSync(new URL(`${dir}${name}.stl`, LEGACY)), `${name}.stl`).mesh;
+    m = importStl(readFileSync(proud ? new URL(`${name}.stl`, FIXTURE) : new URL(`out/print/${name}.stl`, LEGACY)), `${name}.stl`).mesh;
     cache.set(key, m);
   }
   return m;

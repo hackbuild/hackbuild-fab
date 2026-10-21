@@ -6,7 +6,7 @@
 // plan-square-2026-10-05.json, copied with its sha256 to
 // designs/washer/legacy/), and the M07 Records table figures typed
 // below. Fixtures are the records' own: the 400 step square sampled every
-// 10 steps, beam on, closed (designs/detent/legacy/tools/extract-plan.mjs
+// 10 steps, beam on, closed (designs/detent/extract/extract-plan.mjs
 // squareFixture), and the 60 mm square centred on the target densified at
 // 0.25 mm.
 

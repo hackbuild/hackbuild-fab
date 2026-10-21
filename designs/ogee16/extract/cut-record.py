@@ -1,16 +1,16 @@
 """OGEE R16 lasercut rerun record (M07-T01, the cutfiles.py row of the M07
 Records table).
 
-Runs ../source/cutfiles.py main() unchanged on the shipped per-part DXFs in
-../out/dxf/ (from ogee16-cut.zip) with its own KERF 0.18 (inferred: the
+Runs ../legacy/source/cutfiles.py main() unchanged on the shipped per-part DXFs in
+../legacy/out/dxf/ (from ogee16-cut.zip) with its own KERF 0.18 (inferred: the
 script's default, "Set this from the test coupon", never measured), sheet
 600 x 400 and gap 4. cutfiles.OUT is pointed at a temporary folder that
-links ../out/dxf, so the shipped ../out/cut/ is never overwritten. The
-rerun sheets are compared with the shipped ../out/cut/sheet1.dxf to
+links ../legacy/out/dxf, so the shipped ../legacy/out/cut/ is never overwritten. The
+rerun sheets are compared with the shipped ../legacy/out/cut/sheet1.dxf to
 sheet3.dxf ring by ring: LWPOLYLINE vertex lists read with ezdxf, in file
 order and as a multiset.
 
-    uv run --project tools/py designs/ogee16/legacy/tools/cut-record.py [--write]
+    uv run --project tools/py designs/ogee16/extract/cut-record.py [--write]
 
 Writes packages/nest/records/ogee16-cut-legacy.json. Exit 1 when an input
 is not the pinned copy, a number of the M07 Records table moved, or the
@@ -19,9 +19,9 @@ result differs from the committed record.
 import contextlib, glob, hashlib, io, os, re, sys, tempfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-LEGACY = os.path.abspath(os.path.join(HERE, ".."))
+ROOT = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
+LEGACY = os.path.join(ROOT, "designs", "ogee16", "legacy")
 SRC = os.path.join(LEGACY, "source")
-ROOT = os.path.abspath(os.path.join(LEGACY, "..", "..", ".."))
 sys.path.insert(0, os.path.join(ROOT, "tools", "py"))
 sys.path.insert(0, SRC)
 
@@ -36,7 +36,7 @@ PINS = {
 
 
 def sums():
-    """Pins of the unzipped out/cut and out/dxf files, from ../SHA256SUMS."""
+    """Pins of the unzipped out/cut and out/dxf files, from ../legacy/SHA256SUMS."""
     pins = {}
     for line in open(os.path.join(LEGACY, "SHA256SUMS")):
         m = re.match(r"^([0-9a-f]{64})  (out/(?:cut|dxf)/.+)$", line.rstrip("\n"))
@@ -113,7 +113,7 @@ def main():
     finish({
         "record": "ogee16-cut-legacy",
         "out": "packages/nest/records/ogee16-cut-legacy.json",
-        "command": "uv run --project tools/py designs/ogee16/legacy/tools/cut-record.py",
+        "command": "uv run --project tools/py designs/ogee16/extract/cut-record.py",
         "qualifier": "computed: cutfiles.py main() rerun on the shipped per-part DXFs; compared with the shipped sheets through ezdxf",
         "inputs": pins,
         "versions": {"ezdxf": ezdxf.__version__},

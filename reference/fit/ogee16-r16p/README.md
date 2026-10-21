@@ -37,9 +37,9 @@ checks unifiedReal against the PROFILE.md 7.1 rows, typed as its golden.
 
 ## Files
 
-- `legacy/fits.stdout.txt`: fits.py's stdout at the shipped params, exit 0,
+- `extract/fits.stdout.txt`: fits.py's stdout at the shipped params, exit 0,
   with the zip and member sha256 in its header.
-- `legacy/fits-slide055.stdout.txt`: the same with fits.py line 46 set to
+- `extract/fits-slide055.stdout.txt`: the same with fits.py line 46 set to
   `FIT_SLIDE_ = 0.55`, exit 1, five rows out of band.
 - `legacy/fits_golden.py`: the one writer of `expected/fits.json`. It imports
   fits.py from an unzipped `ogee16-source.zip` and records every row as

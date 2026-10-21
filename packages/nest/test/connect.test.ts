@@ -1,7 +1,7 @@
 // M07-T04 connectivity refusal. The numbers come from three places, none of
 // them the port: the SLUG page's own baked outlines and the connectivity
 // its record holds (packages/nest/records/slug-legacy.json), cutfiles.py's
-// own functions run by designs/ogee16/legacy/tools/connect-record.py
+// own functions run by designs/ogee16/extract/connect-record.py
 // (packages/nest/records/ogee16-connect.json), and the card's arithmetic
 // cases on the fixtures in test/fixtures/. The kerf of the OGEE run is read
 // from cutfiles.py itself; no kerf is typed here (CHK-SHT-04).
@@ -16,7 +16,7 @@ import { createProfileLookup, loadProfile } from "@hackbuild/profile";
 import { beamOf, connect, kerfNext, packSheets, type SheetFinding } from "../src/connect.js";
 import { compensate, partProfile } from "../src/profile.js";
 // @ts-expect-error the legacy tool is plain JavaScript with no declarations
-import { extract } from "../../../designs/slug/legacy/tools/extract-nest.mjs";
+import { extract } from "../../../designs/slug/extract/extract-nest.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "..", "..");
 const json = <T>(rel: string): T => JSON.parse(readFileSync(path.join(ROOT, rel), "utf8")) as T;

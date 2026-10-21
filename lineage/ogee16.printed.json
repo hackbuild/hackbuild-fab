@@ -25,7 +25,7 @@
     "fixes": [
       "proud-head fixture: in a_crank_row, a_crank_col and a_crank_latch drive_pin_flush() is replaced by the legacy drive_pin() and the pin_seat() counterbore is not subtracted; include and use paths point at ../../source; rendered by OpenSCAD 2021.01 (M02-T07 step 4)"
     ],
-    "dest": "designs/ogee16/legacy/fixtures/proud-head/printed_proud.scad"
+    "dest": "designs/ogee16/extract/fixtures/proud-head/printed_proud.scad"
   },
   {
     "id": "ogee16.printed/mesh-junction",

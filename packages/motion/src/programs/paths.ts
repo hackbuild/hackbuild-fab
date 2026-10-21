@@ -3,7 +3,7 @@
 // extract-plan.mjs squareFixture (designs/detent/legacy/tools/
 // extract-plan.mjs lines 59 to 68): side half steps, a point every
 // `sample` half steps, beam on, closed back at the origin. WASHER's is the
-// square of designs/washer/legacy/tools/extract-plan.mjs lines 75 and 76:
+// square of designs/washer/extract/extract-plan.mjs lines 75 and 76:
 // corners at plus and minus half the side, centred on the wall, densified
 // by the page's densify(), beam on for every segment.
 

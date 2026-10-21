@@ -96,11 +96,11 @@ written DXF files reload closed through `tools/py/audit_dxf.py` with ezdxf.
 
 | record | written by |
 |---|---|
-| `slug-legacy.json` | `node designs/slug/legacy/tools/extract-nest.mjs --write` (M07-T01) |
-| `ogee16-plates-legacy.json` | `node designs/ogee16/legacy/tools/extract-plate.mjs --write` (M07-T01) |
-| `ogee16-cut-legacy.json` | `uv run --project tools/py designs/ogee16/legacy/tools/cut-record.py --write` (M07-T01) |
-| `ogee16-cut-footprints.json` | `uv run --project tools/py designs/ogee16/legacy/tools/footprint-record.py --write` (M07-T03) |
-| `ogee16-connect.json` | `uv run --project tools/py designs/ogee16/legacy/tools/connect-record.py --write` (M07-T04) |
+| `slug-legacy.json` | `node designs/slug/extract/extract-nest.mjs --write` (M07-T01) |
+| `ogee16-plates-legacy.json` | `node designs/ogee16/extract/extract-plate.mjs --write` (M07-T01) |
+| `ogee16-cut-legacy.json` | `uv run --project tools/py designs/ogee16/extract/cut-record.py --write` (M07-T01) |
+| `ogee16-cut-footprints.json` | `uv run --project tools/py designs/ogee16/extract/footprint-record.py --write` (M07-T03) |
+| `ogee16-connect.json` | `uv run --project tools/py designs/ogee16/extract/connect-record.py --write` (M07-T04) |
 | `slug-fill.json` | `HBF_SLUG_FILL_RECORD=1 npm test -w packages/nest -- part-in-part` (M07-T05) |
 | `dxf-inventory.json` | `uv run --project tools/py tools/py/dxf_inventory.py tools/corpus/dxf --write` (M07-T01) |
 | `../data/dxf-template.json` (not a record: the writer's skeleton) | `uv run --project tools/py tools/py/make_dxf_template.py --write` (M07-T06); without `--write` it compares |

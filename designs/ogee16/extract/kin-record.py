@@ -1,6 +1,6 @@
 """OGEE R16 kinematics record (M07-T01 step 4).
 
-Imports ../source/kin.py (which reads ../source/params.scad) and records:
+Imports ../legacy/source/kin.py (which reads ../legacy/source/params.scad) and records:
 
 - the values kin.py prints from its __main__ block (lines 168 to 190),
   as numbers instead of text;
@@ -9,7 +9,7 @@ Imports ../source/kin.py (which reads ../source/params.scad) and records:
   kin.py computes them, the golden M07-T10 ports against;
 - the same 128 rows from the viewer's JS kinematics block (from
   `const DEG=Math.PI/180;` to the state banner of
-  ../source/viewer_template.html, the block check_viewer.py lines 11 to 12
+  ../legacy/source/viewer_template.html, the block check_viewer.py lines 11 to 12
   cut from the baked out/ogee16.html, which the source zip does not hold;
   build_viewer.py only substitutes placeholders, so the block is the same
   text), run in node through check_viewer.py's own harness (lines 16 to
@@ -21,7 +21,7 @@ Imports ../source/kin.py (which reads ../source/params.scad) and records:
   lp >= CAM + 0.05), driven as sweep() commits at full stroke (line 578);
 - the CHK-MOT-05 latch identity on R16 numbers.
 
-    uv run --project tools/py designs/ogee16/legacy/tools/kin-record.py [--write]
+    uv run --project tools/py designs/ogee16/extract/kin-record.py [--write]
 
 Writes packages/motion/records/ogee16-kin.json. Exit 1 when an input is
 not the pinned copy, a printed value moved, the JS and Python disagree,
@@ -30,8 +30,8 @@ or the result differs from the committed record.
 import json, math, os, subprocess, sys, tempfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-SRC = os.path.join(HERE, "..", "source")
-ROOT = os.path.abspath(os.path.join(HERE, "..", "..", "..", ".."))
+ROOT = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
+SRC = os.path.join(ROOT, "designs", "ogee16", "legacy", "source")
 sys.path.insert(0, os.path.join(ROOT, "tools", "py"))
 sys.path.insert(0, SRC)
 
@@ -218,7 +218,7 @@ def main():
     finish({
         "record": "ogee16-kin",
         "out": "packages/motion/records/ogee16-kin.json",
-        "command": "uv run --project tools/py designs/ogee16/legacy/tools/kin-record.py",
+        "command": "uv run --project tools/py designs/ogee16/extract/kin-record.py",
         "qualifier": "computed: kin.py on params.scad; the viewer JS block run in node through check_viewer.py's harness; programs replayed with the viewer apply() rule",
         "inputs": PINS,
     }, result, a)

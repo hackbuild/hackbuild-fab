@@ -5,7 +5,7 @@
     "source": "fab-knowledge:originals/ogee16/files/src/source/viewer_template.html",
     "sha256": "9d101e0c28bd7ae75e81dce60483ac62b085460fc945d43d074077ecf5706dd9",
     "fixes": [
-      "the asm argument of every reg(o, group, kind, ex, asm) call (lines 275 to 370) and the 14 ASM labels (lines 608 to 611) read by running the registry block in node on stub THREE objects (designs/ogee16/legacy/tools/extract-steps.mjs, M07-T09), never typed; a v_ module extruding TB counts LAM plies, an m_ module counts as the p_ profile it draws; the counts are held to cutfiles.py BOM, and the coupon, which no reg call places, is listed unassigned and refused by assembly-order mode"
+      "the asm argument of every reg(o, group, kind, ex, asm) call (lines 275 to 370) and the 14 ASM labels (lines 608 to 611) read by running the registry block in node on stub THREE objects (designs/ogee16/extract/extract-steps.mjs, M07-T09), never typed; a v_ module extruding TB counts LAM plies, an m_ module counts as the p_ profile it draws; the counts are held to cutfiles.py BOM, and the coupon, which no reg call places, is listed unassigned and refused by assembly-order mode"
     ],
     "dest": "packages/nest/records/ogee16-steps.json"
   }

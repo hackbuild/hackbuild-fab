@@ -3,7 +3,7 @@
 // 1264 to 1313, with the five comparators of lines 1265 to 1271), on the
 // OGEE16 R16 lasercut footprints (183 pieces; committed record
 // packages/nest/records/ogee16-cut-footprints.json, written by
-// designs/ogee16/legacy/tools/footprint-record.py from cutfiles.py), against
+// designs/ogee16/extract/footprint-record.py from cutfiles.py), against
 // nest's MaxRects in fill mode. The sheet and gap are the record's
 // (cutfiles.py SHEET_W, SHEET_H, GAP); margin 0.
 //

@@ -17,6 +17,13 @@ import { fileURLToPath } from "node:url";
 
 export const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..");
 
+/**
+ * The legacy folder of a design, named from a root rather than from the
+ * harness file's own place, so a harness under designs/<id>/extract/ keeps
+ * reading the folder when either one moves.
+ */
+export const legacyDir = (id, root = ROOT) => resolve(root, "designs", id, "legacy");
+
 export const sha256 = (bytes) => createHash("sha256").update(bytes).digest("hex");
 
 /** Reads a legacy file and refuses it when its sha256 is not the pinned one. */

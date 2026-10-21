@@ -1,16 +1,16 @@
 """OGEE R16 lasercut footprints record (M07-T03, the input of the GUSSET
 sort-order test, packages/nest/test/gusset-orders.test.ts).
 
-Builds every BOM part of ../source/cutfiles.py with its own functions
+Builds every BOM part of ../legacy/source/cutfiles.py with its own functions
 (rings_from_dxf, polygon_from_rings, compensate at its KERF 0.18; inferred:
 the script's default, "Set this from the test coupon", never measured) on
-the shipped per-part DXFs in ../out/dxf/, and records each compensated
+the shipped per-part DXFs in ../legacy/out/dxf/, and records each compensated
 profile's bounds (x0, y0, w, h in mm, shapely bounds) with its BOM
 quantity. These are the 183 pieces that cutfiles.py shelf-nests onto three
 600 x 400 sheets (packages/nest/records/ogee16-cut-legacy.json); the nest
 test packs the same footprints with GUSSET's nest() and with nest's port.
 
-    uv run --project tools/py designs/ogee16/legacy/tools/footprint-record.py [--write]
+    uv run --project tools/py designs/ogee16/extract/footprint-record.py [--write]
 
 Writes packages/nest/records/ogee16-cut-footprints.json. Exit 1 when an
 input is not the pinned copy, a count moved, or the result differs from
@@ -19,9 +19,9 @@ the committed record.
 import os, re, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-LEGACY = os.path.abspath(os.path.join(HERE, ".."))
+ROOT = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
+LEGACY = os.path.join(ROOT, "designs", "ogee16", "legacy")
 SRC = os.path.join(LEGACY, "source")
-ROOT = os.path.abspath(os.path.join(LEGACY, "..", "..", ".."))
 sys.path.insert(0, os.path.join(ROOT, "tools", "py"))
 sys.path.insert(0, SRC)
 
@@ -35,7 +35,7 @@ PINS = {
 
 
 def dxf_pins():
-    """Pins of the unzipped out/dxf files, from ../SHA256SUMS."""
+    """Pins of the unzipped out/dxf files, from ../legacy/SHA256SUMS."""
     pins = {}
     for line in open(os.path.join(LEGACY, "SHA256SUMS")):
         m = re.match(r"^([0-9a-f]{64})  (out/dxf/.+)$", line.rstrip("\n"))
@@ -76,7 +76,7 @@ def main():
         "record": "ogee16-cut-footprints",
         "card": "M07-T03",
         "out": "packages/nest/records/ogee16-cut-footprints.json",
-        "command": "uv run --project tools/py designs/ogee16/legacy/tools/footprint-record.py",
+        "command": "uv run --project tools/py designs/ogee16/extract/footprint-record.py",
         "qualifier": "computed: cutfiles.py rings_from_dxf, polygon_from_rings and compensate at KERF 0.18 on the shipped per-part DXFs; bounds by shapely",
         "inputs": pins,
         "versions": {"ezdxf": ezdxf.__version__, "shapely": shapely.__version__},

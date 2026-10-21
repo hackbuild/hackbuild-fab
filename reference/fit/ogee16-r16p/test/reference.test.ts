@@ -1,6 +1,6 @@
 // M01-T09 reference: fits.table against the bench. Every expected value
-// comes from an independent source: legacy/fits.stdout.txt and
-// legacy/fits-slide055.stdout.txt are fits.py's own stdout, and
+// comes from an independent source: extract/fits.stdout.txt and
+// extract/fits-slide055.stdout.txt are fits.py's own stdout, and
 // expected/fits.json is written by legacy/fits_golden.py from fits.py, never
 // by the port. The JSON goldens of hbf parity are compared without accept
 // under a SOURCE_DATE_EPOCH other than the pinned 315532800.
@@ -22,7 +22,7 @@ interface LegacyLine { readonly name: string; readonly drawn: string; readonly a
 
 /** The stdout of a fits.py run: header comments and the blank line after them dropped, then the 18 row lines and the summary. */
 function legacy(file: string): { rows: LegacyLine[]; summary: string } {
-  const text = readFileSync(path.join(DIR, "legacy", file), "utf8");
+  const text = readFileSync(path.join(DIR, "extract", file), "utf8");
   const out = text.slice(text.indexOf("\n\n") + 2).split("\n");
   const rows = out.slice(1, 19).map((l) => {
     const [drawn, after, cls, verdict] = l.slice(38).trim().split(/\s+/);
@@ -53,7 +53,7 @@ describe("fits.table at the shipped params", () => {
     expect(r.findings).toEqual([]);
   });
 
-  test("each row's name, drawn, after loss, class and verdict equal legacy/fits.stdout.txt", () => {
+  test("each row's name, drawn, after loss, class and verdict equal extract/fits.stdout.txt", () => {
     const { rows, summary } = legacy("fits.stdout.txt");
     expect(summary).toBe("ALL FITS IN BAND");
     expect(r.result!.rows.map((x) => [x.label, x.drawn!.toFixed(2), x.real!.toFixed(2), x.legacyClass, x.verdict === "pass"]))

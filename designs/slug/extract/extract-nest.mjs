@@ -6,28 +6,27 @@
 // placedLoops, sheetSVG and sheetDXF. The page's own nest() packs ply and
 // acrylic at 600 x 400, gap 4, margin 6 (the page's call), and sheetDXF and
 // sheetSVG(forCut) regenerate every sheet for a byte compare against the 20
-// shipped files in ../sheets/.
+// shipped files in ../legacy/sheets/.
 //
-//   node designs/slug/legacy/tools/extract-nest.mjs --check   compare with the record
-//   node designs/slug/legacy/tools/extract-nest.mjs --write   write the record
-//   node designs/slug/legacy/tools/extract-nest.mjs --out f   write the extracted module
+//   node designs/slug/extract/extract-nest.mjs --check   compare with the record
+//   node designs/slug/extract/extract-nest.mjs --write   write the record
+//   node designs/slug/extract/extract-nest.mjs --out f   write the extracted module
 //
 // Writes packages/nest/records/slug-legacy.json. Exit 1 when the page or a
 // shipped sheet is not the pinned copy, a marker moved, a number of the M07
 // Records table moved, or the result differs from the committed record.
 
 import { readFileSync, writeFileSync } from "node:fs";
-import { dirname, join } from "node:path";
+import { join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { Asserts, finish, marker, readPinned, sha256 } from "../../../../tools/legacy/record.mjs";
+import { Asserts, finish, legacyDir, marker, readPinned, sha256 } from "../../../tools/legacy/record.mjs";
 
-const here = dirname(fileURLToPath(import.meta.url));
-const LEGACY = join(here, "..");
+const LEGACY = legacyDir("slug");
 const PAGE = join(LEGACY, "slug.html");
 const PAGE_SHA256 = "2d09238c27d5ca4bf023eeee44939b1500470ad2058822b8d0add48ec9bf3241";
 const SHEETS = join(LEGACY, "sheets");
 
-/** The shipped sheets, pinned by the sheets/ lines of ../SHA256SUMS. */
+/** The shipped sheets, pinned by the sheets/ lines of ../legacy/SHA256SUMS. */
 function shippedPins() {
   const pins = {};
   for (const line of readFileSync(join(LEGACY, "SHA256SUMS"), "utf8").split("\n")) {
@@ -172,7 +171,7 @@ if (argv[1] === fileURLToPath(import.meta.url)) {
     finish({
       record: "slug-legacy",
       out: "packages/nest/records/slug-legacy.json",
-      command: "node designs/slug/legacy/tools/extract-nest.mjs --check",
+      command: "node designs/slug/extract/extract-nest.mjs --check",
       qualifier: "computed: the page's own nest(), sheetDXF() and sheetSVG() run in node on the pinned slug.html; connectivity by an even-odd ray test from each loop's first vertex",
       inputs,
     }, r, a);

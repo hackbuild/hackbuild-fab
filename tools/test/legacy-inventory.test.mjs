@@ -33,24 +33,32 @@ test('rows are sorted, classed, and an original names its archive path', () => {
   const paths = inv.files.map((r) => r.path);
   assert.deepEqual(paths, [...paths].sort());
   for (const r of inv.files) {
-    assert.ok(['lineage', 'harness', 'original', 'unmatched'].includes(r.class), `${r.path}: ${r.class}`);
+    assert.ok(['lineage', 'original', 'unmatched'].includes(r.class), `${r.path}: ${r.class}`);
     assert.match(r.sha256, /^[0-9a-f]{64}$/);
     assert.equal(r.class === 'original', typeof r.originals === 'string', r.path);
     if (r.originals) assert.match(r.originals, /^fab-knowledge:originals\/./);
   }
   const row = (p) => inv.files.find((r) => r.path === p);
   assert.equal(row('designs/slug/legacy/SHA256SUMS').class, 'lineage');
-  assert.equal(row('designs/slug/legacy/tools/extract-nest.mjs').class, 'harness');
+  // Fab's harness moved to designs/<id>/extract/ (R1-rails-public-07); what is
+  // left under a legacy tools/ folder is an upstream copy with an originals path.
+  const tools = inv.files.filter((r) => /^designs\/[^/]+\/legacy\/tools\//.test(r.path));
+  assert.deepEqual(tools.map((r) => [r.path, r.class]), [
+    ['designs/cotter/legacy/tools/hook_fit.py', 'original'],
+    ['designs/pip/legacy/tools/build_bench.py', 'original'],
+    ['designs/pip/legacy/tools/orca3mf.js', 'original'],
+    ['designs/pip/legacy/tools/rastermesh.js', 'original'],
+  ]);
+  assert.equal(inv.files.filter((r) => /^designs\/[^/]+\/legacy\/fixtures\//.test(r.path)).length, 0);
   // davit.ts builds its legacy paths in a template literal (line 263); the folder-name match finds it.
   assert.ok(inv.folders['designs/davit/legacy'].readers.includes('packages/sim/scenes/davit.ts'));
   assert.ok(inv.folders['designs/collar/legacy'].readers.includes('tools/py/harness/collar_parity.py'));
 });
 
 test('class and reader rules', () => {
-  assert.equal(fixedClass('designs/pawl/legacy/records/a.mjs', 'designs/pawl/legacy'), 'harness');
-  assert.equal(fixedClass('designs/pawl/legacy/records/a.json', 'designs/pawl/legacy'), null);
-  assert.equal(fixedClass('reference/fit/f/legacy/run.stdout.txt', 'reference/fit/f/legacy'), 'harness');
-  assert.equal(fixedClass('designs/x/legacy/sub/README.md', 'designs/x/legacy'), 'lineage');
+  assert.equal(fixedClass('designs/pawl/legacy/records/a.mjs'), null);
+  assert.equal(fixedClass('designs/x/legacy/tools/a.py'), null);
+  assert.equal(fixedClass('designs/x/legacy/sub/README.md'), 'lineage');
   assert.equal(readsFolder('a.ts', codeText('a.ts', '// designs/x/legacy/a.stl\n'), 'designs/x/legacy'), false);
   assert.equal(readsFolder('a.py', codeText('a.py', 'p = os.path.join(R, "designs", "x", "legacy")\n'), 'designs/x/legacy'), true);
   assert.equal(readsFolder('designs/x/t/a.ts', codeText('a.ts', 'read("../legacy/a.stl")\n'), 'designs/x/legacy'), true);
@@ -79,14 +87,14 @@ test('fixture repo: --check fails on a file without a row and on a sha256 one he
 
   const w = run(args('--write'), originals);
   assert.equal(w.status, 0, w.stderr);
-  assert.match(w.stdout, /classes: \{"lineage":1,"original":1,"unmatched":1,"harness":1\}/);
+  assert.match(w.stdout, /classes: \{"lineage":1,"original":1,"unmatched":2\}/);
   const out = path.join(repo, 'tools/legacy/inventory.json');
   const inv = JSON.parse(readFileSync(out, 'utf8'));
   assert.deepEqual(inv.files.map((r) => [r.path, r.class, r.originals ?? null]), [
     ['designs/x/legacy/README.md', 'lineage', null],
     ['designs/x/legacy/a.stl', 'original', 'fab-knowledge:originals/x/a.stl'],
     ['designs/x/legacy/c.stl', 'unmatched', null],
-    ['designs/x/legacy/tools/dump.mjs', 'harness', null],
+    ['designs/x/legacy/tools/dump.mjs', 'unmatched', null],
   ]);
   assert.deepEqual(inv.folders['designs/x/legacy'].readers, ['src/reader.ts']);
   assert.equal(run(args('--check')).status, 0);

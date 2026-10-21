@@ -2,7 +2,7 @@
 // steps, so cutting or printing starts before the whole set is laid out.
 // The steps come from the design's own assembly sequence, never typed: for
 // OGEE16 the `asm` argument of each reg(...) call of its viewers
-// (designs/ogee16/legacy/tools/extract-steps.mjs). The objective is
+// (designs/ogee16/extract/extract-steps.mjs). The objective is
 // Roadkill's (Abdullah et al., UIST 2021; fab-knowledge research
 // hci-fabrication-prior-art.md line 174): the cutting plan follows the
 // assembly, at a cost in sheets this file reports beside fill mode.
