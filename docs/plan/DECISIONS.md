@@ -655,6 +655,8 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-598 | R1-rails-registries-08 generates the canon def indexes in repo | decided | Mechanisms, archetypes, tooling |
 | D-599 | Orca WASM spike uses the deployed upstream engine | decided | reach |
 | D-600 | WASM spike slices with wipe tower type2 | decided | reach |
+| D-601 | Side-by-side grade shots, system Chrome, welcome starts | decided | reach |
+| D-602 | Legacy adapter bundle shared in tools/hook/adapter-page.ts | decided | reach |
 
 ## House rules and process
 
@@ -7298,6 +7300,28 @@ Status: decided (delegated, R1-spike-01). R1-spike-01 slices the access switch w
 ### D-600 The WASM spike slices with wipe_tower_type type2, recorded as a substitution
 
 Status: decided (delegated, R1-spike-01). The WASM run changes one value of the flattened Flash Studio ffc5p config: wipe_tower_type from type1 to type2. type1 fails cs_slice with the Clipper error "Coordinate outside allowed range" on every tower variant tried; type2 is the upstream default for non-Bambu machines. Part geometry matches native run 08 (55,845 of 55,860 non-tower extruding moves share XY endpoints, computed); tower, tool order, time and grams differ, so an orca-wasm driver labels them upstream preview and records the shim as a substitution. Open: the type1 cause on native upstream 2.4.2. Evidence: fab-knowledge:evidence/orca-wasm/compare.md.
+
+### D-601 Side-by-side grade shots: 18 images per pair, system Chrome, welcome starts for b-work
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `tools/gold/side-by-side.mjs` writes 18 images per fab and legacy pair: 12 page shots (`<id>-<w>-<state>-{fab,legacy}.png`) and 6 joined (`<id>-<w>-<state>.png`), as the brief's step 1 names them; its Done line counted the 12 page shots. It drives Playwright with the system Chrome channel and swiftshader GL, as `tools/smoke/playwright.config.ts` does, with `HBF_CHROMIUM` naming another binary. b-work is the adapter's example when it has one, else the welcome's first start: the fab HbWelcome tile, the legacy `#welcome [data-preset]` (TOGGLE, BOSS) or `#wExample` (PIP). A welcome still open before c-last is closed the page's own way (HbWelcome dismiss, a click on the legacy `#welcome` backdrop). A page with no start or no step strip is shot as it stands and its row carries a not provided note. |
+| Rationale | The bundled Chromium of the pinned Playwright is not installed on this machine and installing browsers changes a shared machine; the smoke suite already grades on system Chrome. TOGGLE's adapter has no example and its welcome card covers the step strip at 390 px, so the c-last click failed until the welcome was closed. |
+| Evidence | `node --test tools/gold/side-by-side.test.mjs` 3 pass, scrollWidth 390 at 390 for keys flex-pair (measured); a trial against `designs/toggle/legacy/toggle.html` ran the adapter path, 18 images, exit 0 (measured, 2026-10-21). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-602 The legacy adapter bundle and offline routes live in tools/hook/adapter-page.ts
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `bundleAdapters` and `routeDeclared` move from `tools/hook/conformance.spec.ts` to `tools/hook/adapter-page.ts`; the conformance spec and `tools/gold/side-by-side.mjs` import that one copy. |
+| Rationale | The side-by-side tool opens legacy pages the way the conformance suite does; one implementation of each thing. |
+| Evidence | `npx tsc -p tools/hook/tsconfig.json` exit 0; `npx playwright test -c tools/hook/playwright.config.ts --grep "hook (toggle|flex-pair)"` 2 pass (measured, 2026-10-21). |
+| Supersedes | new |
+| Milestone | none |
 
 ## Owner queue
 
