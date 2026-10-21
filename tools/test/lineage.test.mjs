@@ -6,8 +6,12 @@ import assert from 'node:assert/strict';
 import { readFileSync, existsSync, readdirSync, realpathSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
+import { planCard, planSkip } from '../test-support/plan-root.mjs';
 
 const root = fileURLToPath(new URL('../../', import.meta.url));
+// The milestone cards come from the plan archive (tools/test-support/plan-root.mjs); a test that
+// reads one skips as not run on a runner without it.
+const PLAN_SKIP = planSkip();
 const rows = JSON.parse(readFileSync(root + 'lineage.json', 'utf8'));
 const schema = JSON.parse(readFileSync(root + 'tools/lineage.schema.json', 'utf8'));
 const FIELDS = ['id', 'kind', 'source', 'sha256', 'fixes', 'dest'];
@@ -75,8 +79,8 @@ test('one canonical row per subject', () => {
 // fixes they carry (D-156). Each named file has a router row, and each named
 // fix is carried by a router row, so a seeded subject cannot drop the copy
 // that holds a fix (the BAFFLE Float64 best[] fix stayed local until this row).
-test('router subject lists every copy and fix M05-T08 step 1 names', () => {
-  const card = readFileSync(root + 'docs/plan/milestones/M05-circuit-copper.md', 'utf8');
+test('router subject lists every copy and fix M05-T08 step 1 names', { skip: PLAN_SKIP }, () => {
+  const card = planCard('M05-circuit-copper.md');
   const section = card.split(/^## /m).find((s) => s.startsWith('M05-T08 '));
   assert.ok(section, 'M05-circuit-copper.md has no M05-T08 section');
   const step = section.match(/^1\. Record in lineage\.json:([\s\S]*?)(?=^\d+\. )/m);
@@ -402,8 +406,8 @@ const M07_PORTS = {
   planChainPen: ['washer.app', 'packages/motion/src/planners/washer-mm.ts', 'planChainPen'],
 };
 
-test('every kernel M07-T15 step 4 names has a row whose dest is its port', () => {
-  const card = readFileSync(root + 'docs/plan/milestones/M07-motion-nest.md', 'utf8');
+test('every kernel M07-T15 step 4 names has a row whose dest is its port', { skip: PLAN_SKIP }, () => {
+  const card = planCard('M07-motion-nest.md');
   const section = card.split(/^## /m).find((s) => s.startsWith('M07-T15 '));
   assert.ok(section, 'M07-motion-nest.md has no M07-T15 section');
   const step = section.match(/^4\. lineage\.json rows for every kernel ported:([\s\S]*?)(?=^\d+\. )/m);
@@ -471,8 +475,8 @@ export function m05StepGroups(card) {
     .map((m) => [m[1].trim(), m[2].split(/, | and (?=gen_)/).map((s) => s.trim())]));
 }
 
-test('every port M05-T17 step 2 names has a row naming the file it landed in', () => {
-  const groups = m05StepGroups(readFileSync(root + 'docs/plan/milestones/M05-circuit-copper.md', 'utf8'));
+test('every port M05-T17 step 2 names has a row naming the file it landed in', { skip: PLAN_SKIP }, () => {
+  const groups = m05StepGroups(planCard('M05-circuit-copper.md'));
   assert.ok(groups, 'M05-T17 step 2 not found');
   assert.deepEqual(Object.keys(groups).sort(), Object.keys(M05_PORTS).sort(), 'step 2 groups differ from M05_PORTS');
   for (const [group, originals] of Object.entries(groups)) {
@@ -545,8 +549,8 @@ export function indexCanonical(index, slug) {
   return file && hash ? { file: file[1], sha256: hash[1] } : null;
 }
 
-test('each M10 design has a canonical row at its INDEX.md original, copied into the repo (M10-T01)', () => {
-  const slugs = uxOfRecordSlugs(readFileSync(root + 'docs/plan/milestones/M10-chase.md', 'utf8'));
+test('each M10 design has a canonical row at its INDEX.md original, copied into the repo (M10-T01)', { skip: PLAN_SKIP }, () => {
+  const slugs = uxOfRecordSlugs(planCard('M10-chase.md'));
   assert.ok(slugs, 'M10-chase.md has no "Original UX of record" section');
   assert.equal(slugs.length, 8, `the UX of record table names ${slugs.length} designs: ${slugs.join(', ')}`);
   const index = readFileSync(root + 'knowledge/designs/INDEX.md', 'utf8');

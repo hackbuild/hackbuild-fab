@@ -11,6 +11,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
+import { planCard, planSkip } from "../test-support/plan-root.mjs";
 
 const root = join(import.meta.dirname, "..", "..");
 const read = (p) => readFileSync(join(root, p), "utf8");
@@ -68,15 +69,19 @@ function outcomes(rel, id) {
   return found;
 }
 
-test("step 3 names the M05 net checks and CHK-3MF-08", () => {
-  const ids = stepIds(read("docs/plan/milestones/M05-circuit-copper.md"));
+// The plan cards come from the plan archive (tools/test-support/plan-root.mjs); a test that
+// reads them skips as not run on a runner without it.
+const SKIP = planSkip();
+
+test("step 3 names the M05 net checks and CHK-3MF-08", { skip: SKIP }, () => {
+  const ids = stepIds(planCard("M05-circuit-copper.md"));
   assert.ok(ids, "M05-T17 step 3 not found");
   for (const id of ["CHK-NET-01", "CHK-NET-13", "CHK-NET-28", "CHK-NET-29", "CHK-3MF-08"]) assert.ok(ids.includes(id), `step 3 lost ${id}`);
   assert.ok(ids.length >= 15, `step 3 names ${ids.length} ids`);
 });
 
-test("every check M05 landed names a reference whose goldens run it", () => {
-  const ids = [...new Set([...stepIds(read("docs/plan/milestones/M05-circuit-copper.md")), ...copperIds()])].sort();
+test("every check M05 landed names a reference whose goldens run it", { skip: SKIP }, () => {
+  const ids = [...new Set([...stepIds(planCard("M05-circuit-copper.md")), ...copperIds()])].sort();
   const refs = covers();
   const gaps = [];
   for (const id of ids) {

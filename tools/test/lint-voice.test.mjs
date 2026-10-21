@@ -1,5 +1,5 @@
 // lint-voice fixtures are written at run time from code points and split words, so no banned byte
-// or word is ever committed. Rule table: docs/plan/milestones/M-1-housekeeping.md, card M-1-T03.
+// or word is ever committed. Rule table: card M-1-T03 of the M-1 housekeeping milestone.
 import { after, test } from "node:test";
 import assert from "node:assert/strict";
 import { spawnSync, execFileSync } from "node:child_process";

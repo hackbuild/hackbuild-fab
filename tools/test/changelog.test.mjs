@@ -1,7 +1,7 @@
 // R1-rails-public-17: CHANGELOG.md keeps the Keep a Changelog form. The top
 // section is Unreleased; below it one entry per milestone, newest first,
-// whose id and name come from the docs/plan/MILESTONES.md 1.1 table (M-1 to
-// M10) and whose date is the date git records for the commit the entry
+// whose id and name come from the MILESTONES.md 1.1 table of the plan
+// archive (tools/test-support/plan-root.mjs; M-1 to M10) and whose date is the date git records for the commit the entry
 // cites. Without that commit in the clone (a shallow checkout) the date
 // test skips with its reason, which counts as not run.
 import { test } from 'node:test';
@@ -10,6 +10,7 @@ import { spawnSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { planDoc, planSkip } from '../test-support/plan-root.mjs';
 
 const root = fileURLToPath(new URL('../../', import.meta.url));
 const text = readFileSync(join(root, 'CHANGELOG.md'), 'utf8');
@@ -28,7 +29,7 @@ function sections() {
 }
 
 function milestoneRows() {
-  const md = readFileSync(join(root, 'docs/plan/MILESTONES.md'), 'utf8');
+  const md = planDoc('MILESTONES.md');
   const start = md.indexOf('### 1.1 The table');
   const end = md.indexOf('### 1.2', start);
   assert.ok(start >= 0 && end > start, 'MILESTONES.md has no 1.1 table');
@@ -58,7 +59,8 @@ test('every heading below Unreleased names a milestone and a date', () => {
   }
 });
 
-test('entries are the MILESTONES.md rows M-1 to M10, newest first, dates not rising', () => {
+// Without the plan archive the row test skips as not run.
+test('entries are the MILESTONES.md rows M-1 to M10, newest first, dates not rising', { skip: planSkip() }, () => {
   const entries = sections().slice(1).map((s) => ENTRY.exec(s.heading)).filter(Boolean);
   const want = milestoneRows().reverse();
   assert.deepEqual(entries.map((m) => m[1]), want.map((r) => r.id));

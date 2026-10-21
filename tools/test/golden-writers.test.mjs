@@ -8,6 +8,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync, readdirSync, statSync, existsSync } from "node:fs";
 import { join, relative } from "node:path";
+import { planCard, planSkip } from "../test-support/plan-root.mjs";
 
 const root = join(import.meta.dirname, "..", "..");
 const read = (p) => readFileSync(join(root, p), "utf8");
@@ -149,8 +150,10 @@ test("every plan sentence that makes parity the only updater limits it to the JS
   assert.ok(seen >= 5, `parity-updater claims found: ${seen}`);
 });
 
-test("M-S-T09 step 2 names HBF_ACCEPT as the writer of the section renders and the print card", () => {
-  const ms = read("docs/plan/milestones/M-S-walking-skeleton.md");
+// The plan cards come from the plan archive (tools/test-support/plan-root.mjs); a test that
+// reads them skips as not run on a runner without it.
+test("M-S-T09 step 2 names HBF_ACCEPT as the writer of the section renders and the print card", { skip: planSkip() }, () => {
+  const ms = planCard("M-S-walking-skeleton.md");
   const t09 = ms.slice(ms.indexOf("\n## M-S-T09"), ms.indexOf("\n## M-S-T10"));
   const step2 = flat(t09.slice(t09.indexOf("\n2. "), t09.indexOf("\n3. ")));
   assert.match(step2, /HBF_ACCEPT=1 npx vitest run reference\/keys\/flex-pair/);

@@ -6,6 +6,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
+import { planCard, planSkip } from "../test-support/plan-root.mjs";
 
 const root = join(import.meta.dirname, "..", "..");
 const read = (p) => readFileSync(join(root, p), "utf8");
@@ -56,8 +57,10 @@ test("CHECKS.md CHK-3MF-03 note lists exactly the writer scalar keys and the per
   assert.match(read("docs/plan/DECISIONS.md"), new RegExp(`^### D-${n[1]} Build plate in the machine preset$`, "m"));
 });
 
-test("M00-T07 step 2, its acceptance and the validator row name every scalar key and the right count", () => {
-  const m00 = read("docs/plan/milestones/M00-foundation.md");
+// The plan cards come from the plan archive (tools/test-support/plan-root.mjs); a test that
+// reads them skips as not run on a runner without it.
+test("M00-T07 step 2, its acceptance and the validator row name every scalar key and the right count", { skip: planSkip() }, () => {
+  const m00 = planCard("M00-foundation.md");
   const t07 = flat(section(m00, "M00-T07"));
   const step2 = t07.slice(t07.indexOf("Outside the 127 template keys"), t07.indexOf("The 97-key seed"));
   assert.ok(step2.length > 0, "step 2 scalar key sentence");

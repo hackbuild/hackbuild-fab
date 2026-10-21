@@ -7,7 +7,7 @@ import { existsSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { execFileSync } from "node:child_process";
-import { fileSignal, isGuarded, ownerFiles, ownerReads, ownerSignal, TEST_FILE } from "./owner-files.mjs";
+import { fileSignal, isGuarded, ownerFiles, ownerReads, ownerSignal, planLine, planNodeTests, TEST_FILE } from "./owner-files.mjs";
 
 const root = join(import.meta.dirname, "..", "..");
 
@@ -16,6 +16,23 @@ test("a reader imported from originals-root marks the file", () => {
   assert.match(ownerSignal('import { ORIGINALS_OF_RECORD, localOriginal } from "../../tools/test-support/originals-root.js";'), /localOriginal/);
   assert.match(ownerSignal('import { localSource } from "../../../tools/test-support/originals-root.js";'), /localSource/);
   assert.match(ownerSignal('import { benchPath } from "../../../tools/test-support/benches-root.js";'), /benches-root/);
+});
+
+test("a vitest file importing plan-root is an owner file, left out of the hosted runs", () => {
+  for (const spec of ["../../../tools/test-support/plan-root.js", "../../tools/test-support/plan-root", "../test-support/plan-root.mjs"]) {
+    const why = ownerSignal(`import { planCard } from "${spec}";`);
+    assert.equal(why, "imports plan-root", spec);
+    assert.equal(isGuarded(why), false, spec);
+  }
+  assert.equal(ownerSignal("// cards come through tools/test-support/plan-root (HBF_PLAN)"), null);
+});
+
+test("the report names the plan-drift node tests and says not run when the plan archive is absent", () => {
+  const files = planNodeTests(root);
+  for (const f of ["tools/test/plan-drift.test.mjs", "tools/test/plan-drift-audit3.test.mjs", "tools/test/ci-exit-rows.test.mjs"]) assert.ok(files.includes(f), f);
+  assert.ok(!files.includes("tools/test/plan-root.test.mjs"), "the module's own test reads a temp plan");
+  assert.equal(planLine(files, false), `not run in ci: the plan card tests of ${files.length} node test files in tools/test skip (plan archive not on this runner: not run; set HBF_PLAN)`);
+  assert.match(planLine(files, true), /^plan archive here: /);
 });
 
 test("the identity constant alone, or a path in a comment, does not mark the file", () => {

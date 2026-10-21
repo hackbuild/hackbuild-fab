@@ -17,17 +17,21 @@ import assert from "node:assert/strict";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { parse } from "yaml";
+import { planCard, planSkip } from "../test-support/plan-root.mjs";
 
 const root = join(import.meta.dirname, "..", "..");
 const read = (p) => readFileSync(join(root, p), "utf8");
 const CI = read(".github/workflows/ci.yml");
 const JOBS = Object.keys(parse(CI).jobs);
+// The cards come from the plan archive (tools/test-support/plan-root.mjs); a test that
+// reads them skips as not run on a runner without it.
+const SKIP = planSkip();
 const CARDS = [
-  "docs/plan/milestones/M03-inlay.md",
-  "docs/plan/milestones/M05-circuit-copper.md",
-  "docs/plan/milestones/M06-canons.md",
-  "docs/plan/milestones/M07-motion-nest.md",
-  "docs/plan/milestones/M08-board-catalog.md",
+  "M03-inlay.md",
+  "M05-circuit-copper.md",
+  "M06-canons.md",
+  "M07-motion-nest.md",
+  "M08-board-catalog.md",
 ];
 
 /** The script or hbf command a CI step must name for each exit command form. */
@@ -88,22 +92,22 @@ export function exitCommands(md) {
 const LEGACY_ZIP = "the shipped SPINDLE R1 gerber zip it compares against lives in fab-work-directory outside the repo (lineage spindle.pcb/r1)";
 const D250 = "T10 and T11 wait on D-250 (Node 24); the Exit row says not run at the M08 close";
 const NOT_IN_CI = {
-  "docs/plan/milestones/M03-inlay.md": {
+  "M03-inlay.md": {
     "tools/py/harness/collar_parity.py":
       "reads the COLLAR fonts, the seed mark and both COLLAR 3MFs from lineage sources outside the repo (fab-work-directory, fab-knowledge); M03-T14 card defect",
   },
-  "docs/plan/milestones/M08-board-catalog.md": {
+  "M08-board-catalog.md": {
     "tools/py/board/reparse.py": `--legacy <zip>: ${LEGACY_ZIP}`,
     "hbf check.run --artifact <kicad_pcb>": "<kicad_pcb> is the new or the legacy SPINDLE R1 file; the legacy one lives outside the repo and needs record.json beside it (M08-T08)",
     "hbf part.build reference/boards/lug-hat": D250,
     "hbf check.run --artifact tools/corpus/board/known-bad/auger.circuit.json": D250,
     "npm test -w packages/board -- circuit-json": `${D250}; packages/board has no circuit-json test yet`,
   },
-  "docs/plan/milestones/M06-canons.md": {
+  "M06-canons.md": {
     "reference/mechanisms/geneva-3": "the folder does not exist; M06-T04 defers the KNURL Geneva and detent references to M10-T08 (raster-traced bodies), m06-report Exit row",
     "reference/mechanisms/detent-strip": "the folder does not exist; M06-T04 defers it to M10-T08 with geneva-3",
   },
-  "docs/plan/milestones/M07-motion-nest.md": {
+  "M07-motion-nest.md": {
     "tools/sparrow/build.sh":
       "clones sparrow at its pinned commit over the network and builds it with cargo and the wasm32 target, then runs 60 s strips; an evaluation, never a dependency (D-137). tools/test/sparrow-eval.test.mjs, which the unit job runs, holds packages/nest/records/sparrow-eval.json and the verdict to each other; M07-T15 card defect",
   },
@@ -139,8 +143,8 @@ for (const card of CARDS) {
   const id = card.match(/(M\d+)-/)[1];
   const exempt = NOT_IN_CI[card] ?? {};
 
-  test(`every ${id} Exit row command is run by a CI job or carries a reason`, () => {
-    const cmds = exitCommands(read(card));
+  test(`every ${id} Exit row command is run by a CI job or carries a reason`, { skip: SKIP }, () => {
+    const cmds = exitCommands(planCard(card));
     assert.ok(cmds.length >= 5, "Exit commands read");
     const missing = [];
     for (const cmd of cmds) {
@@ -153,8 +157,8 @@ for (const card of CARDS) {
     assert.deepEqual(missing, []);
   });
 
-  test(`each ${id} CI exemption names a current Exit row and is absent from ci.yml`, () => {
-    const cmds = exitCommands(read(card));
+  test(`each ${id} CI exemption names a current Exit row and is absent from ci.yml`, { skip: SKIP }, () => {
+    const cmds = exitCommands(planCard(card));
     const keys = [...cmds, ...cmds.map((c) => anchor(c)?.key)];
     for (const key of Object.keys(exempt)) {
       assert.ok(keys.includes(key), `${key} is an Exit row command`);
@@ -185,8 +189,8 @@ test("anchor reads each command form", () => {
   assert.equal(anchor("CI and the PR checkbox"), null);
 });
 
-test("the M05 copper parity rows expand to every reference/copper board and CI runs their surface chases", () => {
-  const cmds = exitCommands(read("docs/plan/milestones/M05-circuit-copper.md")).filter((c) => c.includes("reference/copper/"));
+test("the M05 copper parity rows expand to every reference/copper board and CI runs their surface chases", { skip: SKIP }, () => {
+  const cmds = exitCommands(planCard("M05-circuit-copper.md")).filter((c) => c.includes("reference/copper/"));
   const boards = readdirSync(join(root, "reference/copper"), { withFileTypes: true }).filter((e) => e.isDirectory() && !e.name.startsWith("_")).map((e) => e.name);
   assert.ok(boards.length >= 8, `copper boards: ${boards.length}`);
   for (const b of boards) assert.ok(cmds.includes(`npx --no-install hbf parity reference/copper/${b}`), `Exit row runs ${b}`);

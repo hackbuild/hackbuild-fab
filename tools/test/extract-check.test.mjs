@@ -6,6 +6,7 @@ import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { TRIGGERS, closure, main, partOne, partTwo } from '../extract-check.mjs';
+import { planCard, planDoc, planSkip } from '../test-support/plan-root.mjs';
 
 
 // every temp folder this file makes is removed when the file's tests end
@@ -147,7 +148,10 @@ test('the cli on the repo, parity skipped, prints three lines with the closure d
 
 // M05-T16: the copper trigger (D-029).
 
-const m05 = fs.readFileSync(path.join(repo, 'docs/plan/milestones/M05-circuit-copper.md'), 'utf8');
+// The card and extractions.md come from the plan archive (tools/test-support/plan-root.mjs);
+// a test that reads them skips as not run on a runner without it.
+const SKIP = planSkip();
+const m05 = SKIP === false ? planCard('M05-circuit-copper.md') : '';
 const exitTable = m05.slice(m05.indexOf('\n## Exit\n'));
 // The six boards behind `reference/copper/<name>` in the Exit table, from M05-T15's Files line.
 const familyNames = () => {
@@ -156,7 +160,7 @@ const familyNames = () => {
   return m[1].split(',');
 };
 
-test('the copper trigger runs the BLOCKS seat test and every reference the M05 Exit table runs through hbf parity', () => {
+test('the copper trigger runs the BLOCKS seat test and every reference the M05 Exit table runs through hbf parity', { skip: SKIP }, () => {
   const wanted = [];
   for (const m of exitTable.matchAll(/`npx --no-install hbf parity (reference\/[^`]+)`/g)) {
     if (m[1] === 'reference/copper/<name>') wanted.push(...familyNames().map((n) => `reference/copper/${n}`));
@@ -192,9 +196,9 @@ test('copper closure fails on exactly the private workspace packages copper decl
   assert.deepEqual(c.escapes, []);
 });
 
-// docs/plan/extractions.md holds the recorded result; it may not claim more than the tree shows.
+// extractions.md in the plan holds the recorded result; it may not claim more than the tree shows.
 const extractionRows = () => {
-  const text = fs.readFileSync(path.join(repo, 'docs/plan/extractions.md'), 'utf8');
+  const text = planDoc('extractions.md');
   const rows = {};
   for (const line of text.split('\n')) {
     const cells = line.split('|').slice(1, -1).map((c) => c.trim());
@@ -206,7 +210,7 @@ const extractionRows = () => {
   return rows;
 };
 
-test('the extraction rows agree with part one, the closure and the parity references that have no chase', () => {
+test('the extraction rows agree with part one, the closure and the parity references that have no chase', { skip: SKIP }, () => {
   const rows = extractionRows();
   for (const [pkg, name] of [['inlay', 'hackbuild-inlay'], ['copper', 'hackbuild-copper']]) {
     const row = rows[name];

@@ -1,4 +1,4 @@
-// The vitest files that read the owner's originals or benches, derived from
+// The vitest files that read the owner's originals, benches or plan archive, derived from
 // their source, never typed (AUDIT-2026-10-11 section 5 item 3, option 2).
 // A hosted runner has neither, so ci.yml excludes these files and prints
 // them as not run; the owner-files job runs exactly this list on the
@@ -10,6 +10,8 @@
 //     from tools/test-support/originals-root (the never-skip readers;
 //     ORIGINALS_OF_RECORD alone is an identity string and reads nothing)
 //   - imports tools/test-support/benches-root (the HBF_BENCHES reader)
+//   - imports tools/test-support/plan-root (the HBF_PLAN reader of the
+//     milestone cards, MILESTONES.md, RISKS.md and extractions.md)
 //   - names a path under fab-work-directory/ (a bench read by absolute
 //     path that has not moved behind HBF_BENCHES yet)
 //   - passes an owner path to a file read: a lineage.json row source, a
@@ -30,6 +32,7 @@ import { existsSync, readFileSync, appendFileSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 import { dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { PLAN_NOT_RUN, PLAN_VAR, planHere } from "../../tools/test-support/plan-root.mjs";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..");
 
@@ -39,6 +42,7 @@ export const TEST_FILE = /^(spec\/test|tools\/test|tools\/test-support|tools\/pa
 const ORIGINALS_IMPORT = /import\s*\{([^}]*)\}\s*from\s*["'][./]*tools\/test-support\/originals-root(?:\.js|\.ts)?["']/g;
 const READERS = new Set(["originalPath", "originalsRoot", "localOriginal", "localSource"]);
 const BENCHES_IMPORT = /from\s*["'][./]*tools\/test-support\/benches-root(?:\.js|\.ts)?["']/;
+const PLAN_IMPORT = /from\s*["'][./]*(?:tools\/)?test-support\/plan-root(?:\.js|\.ts|\.mjs)?["']/;
 const BENCH_PATH = /fab-work-directory\//;
 const RELATIVE_IMPORT = /from\s*["'](\.{1,2}\/[^"']+)["']/g;
 
@@ -146,6 +150,7 @@ export function ownerSignal(text, seed = []) {
     if (hit) return `imports ${hit} from originals-root`;
   }
   if (BENCHES_IMPORT.test(text)) return "imports benches-root";
+  if (PLAN_IMPORT.test(text)) return "imports plan-root";
   if (BENCH_PATH.test(stripComments(text))) return "names a fab-work-directory path";
   const reads = ownerReads(text, seed);
   const open = reads.find((r) => !r.guarded);
@@ -199,6 +204,21 @@ export function ownerFiles(root = ROOT) {
   return out.sort((a, b) => (a.file < b.file ? -1 : 1));
 }
 
+/** The node test files under tools/test that read the plan through plan-root, sorted. */
+export function planNodeTests(root = ROOT) {
+  return execFileSync("git", ["ls-files", "--cached", "--", "tools/test/*.test.mjs"], { cwd: root, encoding: "utf8" })
+    .split("\n")
+    // plan-root.test.mjs is the module's own test; it reads a temp plan, never the archive
+    .filter((f) => f !== "" && f !== "tools/test/plan-root.test.mjs" && existsSync(join(root, f)) && PLAN_IMPORT.test(readFileSync(join(root, f), "utf8")))
+    .sort();
+}
+
+/** The report line for the plan-drift guards the unit job runs: they skip as not run without the plan archive. */
+export function planLine(files, here) {
+  if (here) return `plan archive here: ${files.length} node test files in tools/test read the plan cards`;
+  return `not run in ci: the plan card tests of ${files.length} node test files in tools/test skip (${PLAN_NOT_RUN}; set ${PLAN_VAR})`;
+}
+
 function main(cmd) {
   const files = ownerFiles();
   if (cmd === "list") {
@@ -213,10 +233,13 @@ function main(cmd) {
   if (cmd === "report") {
     const open = files.filter((f) => !isGuarded(f.why));
     const guarded = files.filter((f) => isGuarded(f.why));
-    const lines = [`not run in ci: ${open.length} test files read the owner's originals or benches; the owner-files job runs them on the owner's runner`];
+    const lines = [`not run in ci: ${open.length} test files read the owner's originals, benches or plan archive; the owner-files job runs them on the owner's runner`];
     for (const { file, why } of open) lines.push(`  ${file}: ${why}`);
     lines.push(`skipped in part in ci: ${guarded.length} test files guard their owner reads with existsSync; the owner-files job runs them in full`);
     for (const { file, why } of guarded) lines.push(`  ${file}: ${why}`);
+    const plan = planNodeTests();
+    lines.push(planLine(plan, planHere()));
+    for (const file of plan) lines.push(`  ${file}`);
     console.log(lines.join("\n"));
     if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, `${lines.join("\n")}\n`);
     return;

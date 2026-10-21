@@ -1,0 +1,11 @@
+type Env = Readonly<Record<string, string | undefined>>;
+export declare const PLAN_VAR: "HBF_PLAN";
+export declare const PLAN_NOT_RUN: string;
+export declare const PLAN_ARCHIVED: readonly string[];
+export declare function planRoot(env?: Env): string;
+export declare function planHere(env?: Env): boolean;
+export declare function planSkip(env?: Env): false | string;
+export declare function planPath(rel: string, env?: Env): string;
+export declare function planDoc(rel: string, env?: Env): string;
+export declare function planCard(name: string, env?: Env): string;
+export declare function planCards(env?: Env): string[];

@@ -7,6 +7,7 @@ import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
+import { PLAN_ARCHIVED, planCard, planCards, planDoc, planPath, planSkip } from "../test-support/plan-root.mjs";
 
 const root = join(import.meta.dirname, "..", "..");
 const read = (p) => readFileSync(join(root, p), "utf8");
@@ -16,9 +17,18 @@ const counts = json("tools/reports/counts.json");
 // The seeded rows; rows entered later carry enteredBy (M04-T12) and CHECKS.md counts them in section 9.
 const seed = json("packages/checks/seed/checks.seed.json").checks.filter((r) => r.enteredBy === undefined);
 const CHECKS = read("docs/plan/CHECKS.md");
-const M1 = read("docs/plan/milestones/M-1-housekeeping.md");
-const MS = read("docs/plan/milestones/M-S-walking-skeleton.md");
-const M00 = read("docs/plan/milestones/M00-foundation.md");
+// The cards and MILESTONES.md come from the plan archive (tools/test-support/plan-root.mjs);
+// a test that reads them skips as not run on a runner without it.
+const SKIP = planSkip();
+const card = (name) => (SKIP === false ? planCard(name) : "");
+const M1 = card("M-1-housekeeping.md");
+const MS = card("M-S-walking-skeleton.md");
+const M00 = card("M00-foundation.md");
+/** The repo plan docs that stay, with the archived ones read from the plan folder: [label, text]. */
+const planDocs = () => [
+  ...readdirSync(join(root, "docs/plan")).filter((n) => n.endsWith(".md") && n !== "DECISIONS.md" && !PLAN_ARCHIVED.includes(n)).map((n) => [`docs/plan/${n}`, read(`docs/plan/${n}`)]),
+  ...PLAN_ARCHIVED.filter((n) => existsSync(planPath(n))).map((n) => [n, planDoc(n)]),
+];
 const TESTING = read("docs/plan/TESTING.md");
 const REPOS = read("docs/plan/REPOS.md");
 const CI = read(".github/workflows/ci.yml");
@@ -88,7 +98,7 @@ test("CHECKS.md section 15 lists no seeded id as entered by this file", () => {
   }
 });
 
-test("M-1 counts acceptance command exits 0", () => {
+test("M-1 counts acceptance command exits 0", { skip: SKIP }, () => {
   const card = section(M1, "M-1-T");
   const m = M1.match(/`(node -e 'const c=require\("\.\/tools\/reports\/counts\.json"\);[^`]*')`/);
   assert.ok(m && card, "counts node -e line present");
@@ -96,13 +106,13 @@ test("M-1 counts acceptance command exits 0", () => {
   execFileSync(process.execPath, ["-e", script], { cwd: root });
 });
 
-test("M-1 seed-conformance acceptance counts equal counts.json", () => {
+test("M-1 seed-conformance acceptance counts equal counts.json", { skip: SKIP }, () => {
   const [m] = all(M1, /asserts (\d+) checks \((\d+) block, (\d+) warn\), 0 empty `origin\.what`, (\d+) with origin\.date, (\d+) with legalKind/g, "T07 acceptance");
   const { total, block, warn } = counts.checks;
   assert.deepEqual([+m[1], +m[2], +m[3], +m[4], +m[5]], [total, block, warn, total, total], m[0]);
 });
 
-test("setup-uv pin in the M-1 card and TESTING.md equals ci.yml", () => {
+test("setup-uv pin in the M-1 card and TESTING.md equals ci.yml", { skip: SKIP }, () => {
   const ci = new Set([...CI.matchAll(/astral-sh\/setup-uv@(\S+)/g)].map((m) => m[1]));
   assert.equal(ci.size, 1, "one setup-uv pin in ci.yml");
   const [pin] = ci;
@@ -111,13 +121,13 @@ test("setup-uv pin in the M-1 card and TESTING.md equals ci.yml", () => {
   }
 });
 
-test("M-1 node-version-file acceptance holds against ci.yml", () => {
+test("M-1 node-version-file acceptance holds against ci.yml", { skip: SKIP }, () => {
   assert.ok(!/\| grep -c 'node-version-file: \.nvmrc' [^\n]*-> \d+;/.test(M1), "no fixed job count for node-version-file");
   assert.ok((CI.match(/node-version-file: \.nvmrc/g) ?? []).length >= 1);
   assert.equal((CI.match(/node-version:/g) ?? []).length, 0);
 });
 
-test("M-S T10 prints the file the flex-pair print card writes", () => {
+test("M-S T10 prints the file the flex-pair print card writes", { skip: SKIP }, () => {
   const readme = read("reference/keys/flex-pair/README.md");
   const file = readme.match(/^- file: (out\/\S+\.3mf),/m)?.[1];
   assert.ok(file, "print card file line");
@@ -126,7 +136,7 @@ test("M-S T10 prints the file the flex-pair print card writes", () => {
   assert.match(inputs, new RegExp(`reference/keys/flex-pair/${file.replace(/[.]/g, "\\.")}\\b`));
 });
 
-test("M-S T06 result count equals the expected report", () => {
+test("M-S T06 result count equals the expected report", { skip: SKIP }, () => {
   const n = json("reference/keys/flex-pair/expected/report.json").findings.length;
   const words = { six: 6, seven: 7, eight: 8, nine: 9, ten: 10 };
   const t06 = section(MS, "M-S-T06");
@@ -135,7 +145,7 @@ test("M-S T06 result count equals the expected report", () => {
   assert.equal(words[m[1]] ?? +m[1], n, m[0]);
 });
 
-test("M-S Exit T06 row names every skip and warn in the expected report", () => {
+test("M-S Exit T06 row names every skip and warn in the expected report", { skip: SKIP }, () => {
   const findings = json("reference/keys/flex-pair/expected/report.json").findings;
   const row = section(MS, "Exit").split("\n").find((l) => /\| T06 \|/.test(l));
   assert.ok(row, "Exit T06 row present");
@@ -146,7 +156,7 @@ test("M-S Exit T06 row names every skip and warn in the expected report", () => 
   }
 });
 
-test("M-S T07 acceptance writes the 3MF before validating it", () => {
+test("M-S T07 acceptance writes the 3MF before validating it", { skip: SKIP }, () => {
   const t07 = section(MS, "M-S-T07");
   const acc = t07.slice(t07.indexOf("Acceptance:"));
   const write = acc.search(/hbf\s+export\.run reference\/keys\/flex-pair/);
@@ -154,7 +164,7 @@ test("M-S T07 acceptance writes the 3MF before validating it", () => {
   assert.ok(write >= 0 && write < validate, "an export.run line precedes the validator line");
 });
 
-test("determinism legs in M00-T14, TESTING.md 7 and REPOS.md equal the ci.yml node matrix", () => {
+test("determinism legs in M00-T14, TESTING.md 7 and REPOS.md equal the ci.yml node matrix", { skip: SKIP }, () => {
   const legs = [...CI.matchAll(/os: (\S+), kind: node/g)].map((m) => m[1]).sort();
   assert.ok(legs.length >= 2, "ci.yml node legs");
   const t14 = section(M00, "M00-T14");
@@ -180,7 +190,7 @@ test("TESTING.md 6.1 corpus modes equal the corpus manifest", () => {
   }
 });
 
-test("M00-T06 replay line matches the sweep's own replay comment", () => {
+test("M00-T06 replay line matches the sweep's own replay comment", { skip: SKIP }, () => {
   const src = read("packages/mesh/test/sweep.property.ts");
   const replay = src.match(/Replay: (FC_SEED=<s> FC_PATH=<p> FC_FAMILY=<f>)/)?.[1];
   assert.ok(replay, "sweep replay comment");
@@ -189,7 +199,7 @@ test("M00-T06 replay line matches the sweep's own replay comment", () => {
   assert.ok(!t06.includes("--seed <s>"), "no CLI seed flag");
 });
 
-test("M00-T02 preset ids are the ids the profile loads", () => {
+test("M00-T02 preset ids are the ids the profile loads", { skip: SKIP }, () => {
   const t02 = section(M00, "M00-T02");
   for (const id of ["ffc5p_20260819", "ffc5p-n025_20260819"]) {
     assert.ok(t02.includes(id), `card names ${id}`);
@@ -197,7 +207,7 @@ test("M00-T02 preset ids are the ids the profile loads", () => {
   }
 });
 
-test("M00-T10 fixture size is within 15 percent of the repo and private corpus copies", () => {
+test("M00-T10 fixture size is within 15 percent of the repo and private corpus copies", { skip: SKIP }, () => {
   let bytes = 0;
   const walk = (d) => {
     for (const n of readdirSync(d)) {
@@ -221,9 +231,9 @@ test("M00-T10 fixture size is within 15 percent of the repo and private corpus c
   assert.ok(Math.abs(+m[1] - mb) / mb <= 0.15, `card ${m[1]} MB, disk ${mb.toFixed(1)} MiB`);
 });
 
-test("every M00 deliverable MILESTONES.md assigns has an M00 card and Exit row", () => {
+test("every M00 deliverable MILESTONES.md assigns has an M00 card and Exit row", { skip: SKIP }, () => {
   // MILESTONES.md 1.3: "M00 adds the gate, the D-178 reader and sandbox".
-  assert.match(read("docs/plan/MILESTONES.md"), /M00 adds the gate, the D-178 reader and sandbox/);
+  assert.match(planDoc("MILESTONES.md"), /M00 adds the gate, the D-178 reader and sandbox/);
   const card = M00.match(/\n## (M00-T\d+) [^\n]*\n[\s\S]*?(?=\n## )/g)?.find((c) => /D-178/.test(c.split("Steps:")[0]) && /source\.ts/.test(c));
   assert.ok(card, "an M00 card carries the D-178 reader and sandbox");
   const id = card.match(/## (M00-T\d+)/)[1];
@@ -260,10 +270,10 @@ test("flex-pair slot count in PLAN.md section 3 and CLAUDE.md equals the referen
   }
 });
 
-test("MILESTONES.md M-S pins and build.ts freeze name every route the flex-pair reference runs", () => {
+test("MILESTONES.md M-S pins and build.ts freeze name every route the flex-pair reference runs", { skip: SKIP }, () => {
   const routes = new Set([...flexBuild.matchAll(/route: "(\w+)"/g)].map((m) => m[1]));
   assert.ok(routes.has("revolve"), "reference runs the revolve route (D-223)");
-  const ms = read("docs/plan/MILESTONES.md").split("\n");
+  const ms = planDoc("MILESTONES.md").split("\n");
   const pins = ms.find((l) => l.startsWith("| M-S | manifold-3d")) ?? "";
   const freeze = ms.find((l) => l.startsWith("| build.ts | M-S |")) ?? "";
   const specRow = read("spec/README.md").split("\n").find((l) => l.startsWith("| `build.ts` | draft | M-S |")) ?? "";
@@ -273,15 +283,12 @@ test("MILESTONES.md M-S pins and build.ts freeze name every route the flex-pair 
   }
 });
 
-test("skeleton CHK-KEY-01 band appears only beside the spec fixture it holds for", () => {
-  const docs = [
-    "CLAUDE.md",
-    ...readdirSync(join(root, "docs/plan")).filter((n) => n.endsWith(".md")).map((n) => `docs/plan/${n}`),
-    ...readdirSync(join(root, "docs/plan/milestones")).filter((n) => n.endsWith(".md")).map((n) => `docs/plan/milestones/${n}`),
-  ].filter((p) => p !== "docs/plan/DECISIONS.md"); // the D-223 Supersedes row records old to new
+test("skeleton CHK-KEY-01 band appears only beside the spec fixture it holds for", { skip: SKIP }, () => {
+  // DECISIONS.md is left out: the D-223 Supersedes row records old to new
+  const docs = [["CLAUDE.md", read("CLAUDE.md")], ...planDocs(), ...planCards().map((n) => [`milestones/${n}`, planCard(n)])];
   let seen = 0;
-  for (const p of docs) {
-    for (const para of read(p).split(/\n\s*\n|\n(?=\|)/)) {
+  for (const [p, text] of docs) {
+    for (const para of text.split(/\n\s*\n|\n(?=\|)/)) {
       const flat = para.replace(/\s+/g, " ");
       if (!/1\.344 to 1\.680|built at 3\.36|builds it at 3\.36|snaps to 3\.36/.test(flat)) continue;
       seen++;
@@ -331,8 +338,8 @@ test("the latest flex-pair reportHash a decision records equals the golden", () 
   assert.equal(last[2], golden.slice(0, 8), `${last[0]}; golden ${golden.slice(0, 8)}`);
 });
 
-test("M04's exit B dependency reads provisional (D-234) in MILESTONES.md and PLAN.md", () => {
-  const ms = read("docs/plan/MILESTONES.md");
+test("M04's exit B dependency reads provisional (D-234) in MILESTONES.md and PLAN.md", { skip: SKIP }, () => {
+  const ms = planDoc("MILESTONES.md");
   const plan = read("docs/plan/PLAN.md");
   for (const [name, text] of [["MILESTONES.md", ms], ["PLAN.md", plan]]) {
     assert.doesNotMatch(text.replace(/\s+/g, " "), /M04 waits/, `${name} says M04 waits`);
@@ -349,15 +356,12 @@ test("M04's exit B dependency reads provisional (D-234) in MILESTONES.md and PLA
   }
 });
 
-test("the retired OGEE 577 and the unverified SLUG 126 of 128 carry their decisions", () => {
-  const files = [
-    ...readdirSync(join(root, "docs/plan")).filter((n) => n.endsWith(".md") && n !== "DECISIONS.md").map((n) => `docs/plan/${n}`),
-    "docs/plan/milestones/M04-checks-project.md",
-  ];
+test("the retired OGEE 577 and the unverified SLUG 126 of 128 carry their decisions", { skip: SKIP }, () => {
+  const files = [...planDocs(), ["milestones/M04-checks-project.md", planCard("M04-checks-project.md")]];
   let seen577 = 0;
   let seen126 = 0;
-  for (const p of files) {
-    for (const para of read(p).split(/\n\s*\n|\n(?=\|)/)) {
+  for (const [p, text] of files) {
+    for (const para of text.split(/\n\s*\n|\n(?=\|)/)) {
       const flat = para.replace(/\s+/g, " ");
       // The Appendix B decision entries row is written by tools/counts.mjs; its count passed 577 at D-578.
       if (/(?<![\d.])577(?![\d.])/.test(flat) && !flat.startsWith("| decision entries |")) {
@@ -373,14 +377,14 @@ test("the retired OGEE 577 and the unverified SLUG 126 of 128 carry their decisi
   assert.ok(seen577 >= 1 && seen126 >= 1, "the figures are still cited somewhere");
 });
 
-test("every verified-block heading in a README maps to a DOCS.md 9.3 lead line", () => {
+test("every verified-block heading in a README maps to a DOCS.md 9.3 lead line", { skip: SKIP }, () => {
   const docs = section(read("docs/plan/DOCS.md"), "9. READMEs");
   const s93 = docs.slice(docs.indexOf("### 9.3"));
   const leads = [...s93.matchAll(/^\| `([^`,:]+)[^`]*` \| `(\w+)` \|/gm)].map((m) => [m[1], m[2]]);
   assert.ok(leads.length >= 4, "9.3 lead lines parsed");
   const required = leads.filter(([, f]) => f !== "simulated").map(([l]) => l);
   // A README the M11-T03 card records as out of step is excused until its owner converts it.
-  const m11 = read("docs/plan/milestones/M11-reference.md");
+  const m11 = planCard("M11-reference.md");
   const t03 = m11.slice(m11.indexOf("\n## M11-T03"), m11.indexOf("\n## M11-T04"));
   const excused = new Set([...t03.matchAll(/out of step with DOCS\.md 9\.3: `([^`]+README\.md)`/g)].map((m) => m[1]));
   const readmes = execFileSync("git", ["-C", root, "ls-files", "*README.md"], { encoding: "utf8" }).split("\n").filter(Boolean);
@@ -419,8 +423,8 @@ test("every profile constant a check reads is listed in PROFILE.md 10.1", () => 
 // The evidence folder lives outside the repo, so a fresh checkout skips this test.
 const { sourcePath } = await import(new URL('../test-support/originals-root.ts', import.meta.url).href);
 const VP = sourcePath("fab-knowledge:evidence/virtual-print");
-test("every M04 virtual-print run folder is named in a docs card", { skip: !existsSync(VP) && "evidence absent" }, () => {
-  const cards = readdirSync(join(root, "docs/plan/milestones")).map((n) => read(`docs/plan/milestones/${n}`)).join("\n");
+test("every M04 virtual-print run folder is named in a docs card", { skip: SKIP || (!existsSync(VP) && "evidence absent") }, () => {
+  const cards = planCards().map((n) => planCard(n)).join("\n");
   const runs = readdirSync(VP).filter((n) => /^m0\d-t\d+$/.test(n));
   assert.ok(runs.length >= 1, "run folders");
   for (const r of runs) assert.ok(cards.includes(`virtual-print/${r}/`), `${r} is named in no card`);

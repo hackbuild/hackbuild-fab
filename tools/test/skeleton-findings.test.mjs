@@ -9,13 +9,17 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
+import { planDoc, planSkip } from "../test-support/plan-root.mjs";
 
 const root = join(import.meta.dirname, "..", "..");
 const read = (p) => readFileSync(join(root, p), "utf8");
 
 const FINDINGS = read("tools/reports/skeleton-findings.md");
 const DECISIONS = read("docs/plan/DECISIONS.md");
-const MILESTONES = read("docs/plan/MILESTONES.md");
+// MILESTONES.md comes from the plan archive (tools/test-support/plan-root.mjs); the test that
+// reads it skips as not run on a runner without it.
+const SKIP = planSkip();
+const MILESTONES = SKIP === false ? planDoc("MILESTONES.md") : "";
 const REPORT = JSON.parse(read("reference/keys/flex-pair/expected/report.json"));
 
 /** Findings by id: { id, title, body }. */
@@ -75,7 +79,7 @@ test("a finding a decision resolved no longer proposes work for a later mileston
   assert.match(f07.body, /reference\/keys\/flex-pair\/build\.ts/);
 });
 
-test("every route the reference emits is in the M-S freeze row or a finding", () => {
+test("every route the reference emits is in the M-S freeze row or a finding", { skip: SKIP }, () => {
   const src = read("reference/keys/flex-pair/build.ts") + read("reference/keys/flex-pair/skeleton-kinds.ts");
   const routes = new Set([...src.matchAll(/route: "(\w+)"/g)].map((m) => m[1]));
   assert.ok(routes.has("revolve"), "D-223 reference runs revolve");

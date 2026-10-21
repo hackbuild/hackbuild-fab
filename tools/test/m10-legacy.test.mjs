@@ -8,11 +8,15 @@ import { createHash } from 'node:crypto';
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { planCard, planSkip } from '../test-support/plan-root.mjs';
 
 const root = fileURLToPath(new URL('../../', import.meta.url));
 const { heldList } = await import(new URL('../legacy/held.mjs', import.meta.url).href);
 const { isStored, readStored, storedEntries, writeStored } = await import(new URL('../legacy/stored-zip.mjs', import.meta.url).href);
-const card = readFileSync(path.join(root, 'docs/plan/milestones/M10-chase.md'), 'utf8');
+// The plan cards come from the plan archive (tools/test-support/plan-root.mjs); a test that
+// reads them skips as not run on a runner without it.
+const SKIP = planSkip();
+const card = SKIP === false ? planCard('M10-chase.md') : '';
 const sha = (file) => createHash('sha256').update(readFileSync(file)).digest('hex');
 
 /** The design folders of the M10-T01 "Files to create" brace list. */
@@ -39,7 +43,7 @@ const folders = legacyFolders(card);
 const absent = (folders ?? []).flatMap((d) => sums(path.join(root, 'designs', d, 'legacy')).map(([, rel]) => `designs/${d}/legacy/${rel}`)).filter((f) => !existsSync(path.join(root, f)));
 const heldNote = `not run: ${absent.length} legacy copies held out of git (D-286) are absent`;
 
-test('the card names ten legacy folders, each with a lineage README and a SHA256SUMS that verifies', (t) => {
+test('the card names ten legacy folders, each with a lineage README and a SHA256SUMS that verifies', { skip: SKIP }, (t) => {
   assert.ok(folders, 'M10-T01 "Files to create" names no designs/{...}/legacy/ list');
   assert.equal(folders.length, 10, folders.join(', '));
   for (const d of folders) {
@@ -55,7 +59,7 @@ test('the card names ten legacy folders, each with a lineage README and a SHA256
   if (absent.length > 0) t.diagnostic(heldNote);
 });
 
-test('every input of the hashes table is in a legacy folder with its sha256 and size', (t) => {
+test('every input of the hashes table is in a legacy folder with its sha256 and size', { skip: SKIP }, (t) => {
   if (absent.length > 0) { t.skip(heldNote); return; }
   const rows = legacyInputs(card);
   assert.ok(rows && rows.length >= 40, `hashes table rows: ${rows?.length}`);
@@ -100,7 +104,7 @@ test('no file under designs/ names the quarantined mockups (D-222)', () => {
   assert.deepEqual(hits, []);
 });
 
-test('every stored zip in the legacy folders rebuilds byte for byte from its members', (t) => {
+test('every stored zip in the legacy folders rebuilds byte for byte from its members', { skip: SKIP }, (t) => {
   if (absent.length > 0) { t.skip(heldNote); return; }
   let n = 0;
   for (const d of folders) {

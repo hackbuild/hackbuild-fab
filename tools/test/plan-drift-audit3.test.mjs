@@ -8,6 +8,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
+import { planCard, planDoc, planSkip } from "../test-support/plan-root.mjs";
 
 const root = join(import.meta.dirname, "..", "..");
 const kb = join(root, "..", "fab-knowledge");
@@ -15,11 +16,15 @@ const read = (p) => readFileSync(join(root, p), "utf8");
 const json = (p) => JSON.parse(read(p));
 
 const DECISIONS = read("docs/plan/DECISIONS.md");
-const MILESTONES = read("docs/plan/MILESTONES.md");
 const CANONS = read("docs/plan/CANONS.md");
-const M06 = read("docs/plan/milestones/M06-canons.md");
-const M08 = read("docs/plan/milestones/M08-board-catalog.md");
-const M10 = read("docs/plan/milestones/M10-chase.md");
+// MILESTONES.md and the cards come from the plan archive (tools/test-support/plan-root.mjs);
+// every test that reads them skips as not run on a runner without it.
+const SKIP = planSkip();
+const MILESTONES = SKIP === false ? planDoc("MILESTONES.md") : "";
+const card = (name) => (SKIP === false ? planCard(name) : "");
+const M06 = card("M06-canons.md");
+const M08 = card("M08-board-catalog.md");
+const M10 = card("M10-chase.md");
 const counts = json("tools/reports/counts.json");
 
 const HANDOFF_PATH = join(kb, "HANDOFF.md");
@@ -43,7 +48,7 @@ function cardSection(md, id) {
   return md.slice(start, next < 0 ? undefined : next);
 }
 
-test("the M06 exit split reads counts.json under a decision that refines D-203", () => {
+test("the M06 exit split reads counts.json under a decision that refines D-203", { skip: SKIP }, () => {
   const { mechanisms, archetypes } = counts.canon;
   const row = milestoneRow("M06");
   assert.ok(row, "MILESTONES.md 1.1 has an M06 row");
@@ -65,7 +70,7 @@ test("the M06 exit split reads counts.json under a decision that refines D-203",
   for (const r of exitRows) assert.match(r, new RegExp(`counts\\.json[^|]*${id}|${id}[^|]*counts\\.json`), `M06 Exit row cites counts.json and ${id}: ${r.slice(0, 60)}`);
 });
 
-test("M10 Inputs name only reference folders an earlier milestone made, or say they do not exist yet", () => {
+test("M10 Inputs name only reference folders an earlier milestone made, or say they do not exist yet", { skip: SKIP }, () => {
   const lines = M10.split("\n");
   let inInputs = false;
   const missing = [];
@@ -87,7 +92,7 @@ test("M10 Inputs name only reference folders an earlier milestone made, or say t
   assert.deepEqual(missing, [], "M10 Inputs name reference folders that do not exist; say so on the line and give a step that makes them");
 });
 
-test("M10-T08 makes geneva-3 and detent-strip and promotes the two KNURL mechanisms", () => {
+test("M10-T08 makes geneva-3 and detent-strip and promotes the two KNURL mechanisms", { skip: SKIP }, () => {
   const t08 = cardSection(M10, "M10-T08");
   const files = t08.slice(t08.indexOf("Files to create:"), t08.indexOf("Acceptance:"));
   for (const leaf of ["geneva-3", "detent-strip"]) {
@@ -99,7 +104,7 @@ test("M10-T08 makes geneva-3 and detent-strip and promotes the two KNURL mechani
     assert.match(t08.slice(t08.indexOf("Steps:")), new RegExp(`${id}[^.]*typed|typed[^.]*${id}`), `an M10-T08 step promotes ${id} to typed`);
 });
 
-test("the wiring parity target M08 built is a recorded decision, not an open owner pick", () => {
+test("the wiring parity target M08 built is a recorded decision, not an open owner pick", { skip: SKIP }, () => {
   const built = ["wiring-tang-r5", "wiring-supermini"].filter((d) => existsSync(join(root, "reference/boards", d)));
   if (!built.includes("wiring-tang-r5")) return;
   const ids = [...DECISIONS.matchAll(/^### (D-\d{3}) .*[Ww]iring parity.*$/gm)].map((m) => m[1]);
@@ -118,7 +123,7 @@ test("the wiring parity target M08 built is a recorded decision, not an open own
   assert.match(step4, new RegExp(id), `M08-T13 step 4 cites ${id}`);
 });
 
-test("the M08 report and card give the Playwright reason HANDOFF section 5 records", { skip: !existsSync(HANDOFF_PATH) && "HANDOFF absent" }, () => {
+test("the M08 report and card give the Playwright reason HANDOFF section 5 records", { skip: SKIP || (!existsSync(HANDOFF_PATH) && "HANDOFF absent") }, () => {
   const env = readFileSync(HANDOFF_PATH, "utf8").split("\n").find((l) => l.startsWith("| Playwright |")) ?? "";
   if (!/executablePath/.test(env)) return;
   const texts = [["M08 card", M08]];
@@ -127,17 +132,17 @@ test("the M08 report and card give the Playwright reason HANDOFF section 5 recor
     assert.doesNotMatch(t.replace(/\s+/g, " "), /Playwright( 1\.63)? refuses macOS 12/, `${where} says Playwright refuses macOS 12, against HANDOFF 5 (executablePath on the system Chrome)`);
 });
 
-test("every owner question in the M05 to M08 Blockers tables carries a decision id", () => {
-  for (const card of ["M05-circuit-copper.md", "M06-canons.md", "M07-motion-nest.md", "M08-board-catalog.md"]) {
-    const md = read(`docs/plan/milestones/${card}`);
+test("every owner question in the M05 to M08 Blockers tables carries a decision id", { skip: SKIP }, () => {
+  for (const name of ["M05-circuit-copper.md", "M06-canons.md", "M07-motion-nest.md", "M08-board-catalog.md"]) {
+    const md = planCard(name);
     for (const l of md.split("\n").filter((x) => x.startsWith("| "))) {
       const cells = l.split("|").map((c) => c.trim());
-      assert.doesNotMatch(cells[2] ?? "", /^card question/, `${card}: "${cells[1]}" is an owner question with no D-id`);
+      assert.doesNotMatch(cells[2] ?? "", /^card question/, `${name}: "${cells[1]}" is an owner question with no D-id`);
     }
   }
 });
 
-test("the M08 report summary names the rows that fail as recorded", { skip: !existsSync(M08_REPORT) && ".hbf-notes absent" }, () => {
+test("the M08 report summary names the rows that fail as recorded", { skip: SKIP || (!existsSync(M08_REPORT) && ".hbf-notes absent") }, () => {
   const r = readFileSync(M08_REPORT, "utf8");
   const summary = r.slice(0, r.indexOf("Evidence roots"));
   assert.doesNotMatch(summary.replace(/\s+/g, " "), /Every locally runnable M08 Exit row passes as amended/, "summary calls failing rows passing");
