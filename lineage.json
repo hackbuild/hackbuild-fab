@@ -4373,9 +4373,10 @@
       "click spring fit note 'one line, needs thin wall handling on' at C.t < 0.6 (model.js line 540; pip-controller model.js line 474; pip RECORD.md line 350) ported to packages/3mf/src/overrides.ts as the detect_thin_wall 1 object row; the bound is 1.5 preset line widths (0.63 mm at ffc5p line width 0.42, computed) where PIP read a fixed 0.6 mm, so it follows the 0.25 nozzle preset (R1-flagship-access-switch-07)",
       "moved with the writer to hackbuild-3mf js/src/overrides.ts (commit aa3a173) and vendored as tools/vendor/hackbuild-3mf-0.1.0-aa3a173.tgz, which packages/3mf re-exports (R1-engine-03)",
       "repacked unchanged in overrides.ts from hackbuild-3mf commit fee8d2d, which adds the CLAIM check area to the contracts copy, as tools/vendor/hackbuild-3mf-0.1.0-fee8d2d.tgz (R1-engine-11)",
-      "repacked unchanged in overrides.ts from hackbuild-3mf commit 1efeda7, which adds the E_DRAFT code to the contracts copy, as tools/vendor/hackbuild-3mf-0.1.0-1efeda7.tgz (R1-fix-07)"
+      "repacked unchanged in overrides.ts from hackbuild-3mf commit 1efeda7, which adds the E_DRAFT code to the contracts copy, as tools/vendor/hackbuild-3mf-0.1.0-1efeda7.tgz (R1-fix-07)",
+      "repacked unchanged in overrides.ts from hackbuild-3mf commit 0dc2130, which adds the E_EXISTS code to the contracts copy, as tools/vendor/hackbuild-3mf-0.1.0-0dc2130.tgz (R1-engine-23)"
     ],
-    "dest": "tools/vendor/hackbuild-3mf-0.1.0-1efeda7.tgz"
+    "dest": "tools/vendor/hackbuild-3mf-0.1.0-0dc2130.tgz"
   },
   {
     "id": "pip.model/pip-controller-b137deb",

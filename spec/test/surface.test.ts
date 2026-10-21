@@ -17,14 +17,16 @@ import { EXPORT_ALIASES } from "../hook";
 import { FEATURE_KINDS, FEATURE_KIND_ADMISSION, FEATURE_KIND_ALIASES, KIND_MILESTONES, MOVED_FEATURE_KINDS } from "../features";
 
 describe("command surface", () => {
-  test("CommandName has 32 members in six groups; draft (R1-engine-24) and adopt (R1-engine-25) are the 31st and 32nd, in make, CLI only", () => {
-    expect(COMMAND_NAMES).toHaveLength(32);
-    expect(new Set(COMMAND_NAMES).size).toBe(32);
+  test("CommandName has 33 members in six groups; draft (R1-engine-24) and adopt (R1-engine-25) are in make, init (R1-engine-23) in author, all CLI only", () => {
+    expect(COMMAND_NAMES).toHaveLength(33);
+    expect(new Set(COMMAND_NAMES).size).toBe(33);
     for (const n of COMMAND_NAMES) expect(GROUPS).toContain(COMMAND_GROUP[n]);
     const perGroup = Object.fromEntries(GROUPS.map((g) => [g, COMMAND_NAMES.filter((n) => COMMAND_GROUP[n] === g).length]));
-    expect(perGroup).toEqual({ query: 8, author: 5, build: 4, prove: 7, look: 3, make: 5 });
+    expect(perGroup).toEqual({ query: 8, author: 6, build: 4, prove: 7, look: 3, make: 5 });
     expect(CLI_ONLY).toContain("draft");
     expect(CLI_ONLY).toContain("adopt");
+    expect(CLI_ONLY).toContain("init");
+    expect(COMMAND_GROUP.init).toBe("author");
   });
 
   test("McpToolName has 19 members, legal for the Claude API, in fixed order", () => {
@@ -90,8 +92,8 @@ describe("command surface", () => {
 });
 
 describe("errors and exits", () => {
-  test("twelve error codes, each mapped to a transport", () => {
-    expect(ERROR_CODES).toHaveLength(12);
+  test("thirteen error codes, each mapped to a transport", () => {
+    expect(ERROR_CODES).toHaveLength(13);
     for (const c of ERROR_CODES) expect(ERROR_TRANSPORT[c]).toBeDefined();
   });
 
@@ -106,6 +108,7 @@ describe("errors and exits", () => {
     expect(ERROR_TRANSPORT.E_KERNEL.http).toBe(200);
     expect(ERROR_TRANSPORT.E_PARAM_MISSING.exit).toBe(2);
     expect(ERROR_TRANSPORT.E_DRAFT).toEqual({ exit: 2, http: 409, isError: true });
+    expect(ERROR_TRANSPORT.E_EXISTS).toEqual({ exit: 2, http: 409, isError: true });
   });
 
   test("an empty interval is an answer, not a tool error", () => {

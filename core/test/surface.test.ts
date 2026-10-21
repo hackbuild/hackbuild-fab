@@ -44,7 +44,7 @@ describe("registered surface (M00-T13 step 1, M01-T05 step 7, M02-T11 step 9, M0
   const m08 = surfaceRows(["M08"]).flatMap(([, cell]) => mentioned(cell, COMMAND_NAMES));
   const m06 = surfaceRows(["M06"]).flatMap(([, cell]) => mentioned(cell, COMMAND_NAMES));
   const m10 = surfaceRows(["M10"]).flatMap(([, cell]) => mentioned(cell, COMMAND_NAMES));
-  /** draft and adopt landed with R1-engine-24 and R1-engine-25 (plan v9 3.1); the R1 row lists them. draft also reads in the M-S cell ("draft contracts"). */
+  /** draft, adopt and init landed with R1-engine-24, R1-engine-25 and R1-engine-23 (plan v9 3.1 and 2); the R1 rows list them. draft also reads in the M-S cell ("draft contracts"). */
   const r1 = surfaceRows(["R1"]).flatMap(([, cell]) => mentioned(cell, COMMAND_NAMES));
 
   it("registers exactly the commands of the M-S, M00, M01, M02, M04, M05, M06, M07, M08, M10 and R1 rows, less the pending M01, M04, M06 and M10 ones", () => {
@@ -115,6 +115,16 @@ describe("registered surface (M00-T13 step 1, M01-T05 step 7, M02-T11 step 9, M0
       expect(COMMANDS.some((c) => c.name === n), `${n} is registered; delete it from M10_PENDING`).toBe(false);
     }
     for (const n of ["chase.validate", "chase.diff", "chase.patch", "chase.scaffold"] as const) expect(COMMANDS.find((c) => c.name === n)?.group, n).toBe(COMMAND_GROUP[n]);
+  });
+
+  it("the R1 rows add draft and adopt in group make and init in group author, all CLI only (R1-engine-24, R1-engine-25, R1-engine-23)", () => {
+    expect([...r1].sort()).toEqual(["adopt", "draft", "init"]);
+    for (const n of r1) {
+      expect(COMMANDS.find((c) => c.name === n)?.group, n).toBe(COMMAND_GROUP[n as keyof typeof COMMAND_GROUP]);
+      expect(CLI_ONLY, n).toContain(n);
+    }
+    expect(COMMAND_GROUP.init).toBe("author");
+    expect(CLI_FORM.init?.target).toBe("name");
   });
 
   it("the M07 row adds nest.pack in group make and motion.run in group prove (M07-T14)", () => {

@@ -35,6 +35,7 @@ const MEANING = {
   E_KERNEL: "a kernel refused; record names the knowledge record to read",
   E_PARAM_MISSING: "a check's measured value is NaN or missing; path is the pointer to fill",
   E_DRAFT: "the design is an hbf draft; fabrication exports refuse it until hbf adopt lifts it into a design",
+  E_EXISTS: "the folder the command would write already holds files; pick another name or folder, nothing was written",
 } as const satisfies Record<ErrorCode, string>;
 
 export type Explained =

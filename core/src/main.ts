@@ -7,6 +7,8 @@
 // command prints CommandResult (--json) or its text mirror and exits by the
 // spec/errors.ts transport tables. Utility verbs print their own record.
 
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { COMMAND_NAMES, isThrownCommandError, type CommandResult, type Hash } from "@hackbuild/spec";
 import { EXIT_INTERNAL, cmdError, didYouMean, exitOf } from "./errors.js";
 import { execute } from "./execute.js";
@@ -301,6 +303,20 @@ async function runVerb(verb: string, rest: readonly string[], cwd: string, io: I
   return out.ok ? 0 : 1;
 }
 
+/**
+ * The workspace a command runs in: the one holding cwd, else the one this
+ * hbf runs from, so a maker folder outside the repository (hbf init,
+ * R1-engine-23) reads the registries and profile of the hbf that made it.
+ */
+export function commandWorkspace(cwd: string): string {
+  try {
+    return workspaceRoot(cwd);
+  } catch (e) {
+    if (isThrownCommandError(e) && e.hbf.code === "E_REF") return workspaceRoot(path.dirname(fileURLToPath(import.meta.url)));
+    throw e;
+  }
+}
+
 /** Run one CLI call and return its exit code. */
 export async function main(argv: readonly string[], cwd: string, io: Io = STDIO): Promise<number> {
   if (argv.length === 0 || argv[0] === "--help" || argv[0] === "help") {
@@ -327,7 +343,7 @@ export async function main(argv: readonly string[], cwd: string, io: Io = STDIO)
     target = String(input[form.target] ?? input["chase"] ?? "");
     inputsHash = hashOf({ ...input, ...cli }) as Hash;
     const r: CommandResult<unknown> = await execute(def, input, (): CoreCtx => {
-      const workspace = workspaceRoot(cwd);
+      const workspace = commandWorkspace(cwd);
       return {
         workspace, cwd, branch: "", store: new Store(workspace), transport: "cli",
         clientCaps: { elicitation: false, tasks: false },

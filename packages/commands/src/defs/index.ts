@@ -20,6 +20,7 @@ import { spec as constraintsQuery } from "./constraints-query.js";
 import { spec as draft } from "./draft.js";
 import { spec as exportRun } from "./export-run.js";
 import { spec as fitsTable } from "./fits-table.js";
+import { spec as init } from "./init.js";
 import { spec as mechDerive } from "./mech-derive.js";
 import { spec as mechFind } from "./mech-find.js";
 import { spec as motionRun } from "./motion-run.js";
@@ -53,6 +54,7 @@ export const SPECS: readonly AnySpec[] = [
   draft,
   exportRun,
   fitsTable,
+  init,
   mechDerive,
   mechFind,
   motionRun,

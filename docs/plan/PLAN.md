@@ -1930,14 +1930,14 @@ fails on drift. Until then each row names the method that produced it.
 | seeded checks | 86 (77 block, 9 warn); by level feature 24, part 18, assembly 12, artifact 7, net 7, source 7, sheet 6, project 3, page 2 | `packages/checks/seed/checks.seed.json` `checks[]` by `severity` and `appliesTo.level` |
 | registered checks | 161 (148 block, 13 warn): the seeded rows and the rows entered with enteredBy | `packages/checks/seed/checks.seed.json` `checks[]` by `severity` |
 | entered checks | 87 in CHECKS.md section 9 (excluding the reserved rows of 9.10), 172 distinct with the seeded rows (CHK-NET-29 is in both) | `CHK-` table rows under the section 9 headings of `docs/plan/CHECKS.md`; distinct ids in their union with `checks[].id` of the seed |
-| decision entries | 566, D-001 to D-567 with D-176 never issued: 509 decided, 49 owner, 8 superseded; owner queue 49 | `### D-` headings, the Index status column and the Owner queue rows of `docs/plan/DECISIONS.md` |
+| decision entries | 567, D-001 to D-568 with D-176 never issued: 510 decided, 49 owner, 8 superseded; owner queue 49 | `### D-` headings, the Index status column and the Owner queue rows of `docs/plan/DECISIONS.md` |
 | registry tools | 59 (29 mechanical or cosmetic, 23 electrical, 6 device, 1 meta) | `registry/tools.json` `tools[]` by `group` |
 | seed files | 64 (41 imported, 23 skipped) | `tools/seed-manifest.json` |
 | seeded mechanisms | 24 (11 with no inputs, governs or derived; 5 with only id, family and provenance) | `packages/mechanisms/seed/mechanisms.seed.yaml` |
 | seeded archetypes | 29 | `packages/archetypes/seed/archetypes.seed.yaml` |
 | registered mechanisms | 107 (candidate 88, typed 19) | def files under `packages/mechanisms/src/defs/` by their `status` |
 | registered archetypes | 109 (candidate 97, proven 11, unproven 1), plus 2 seed ids resolved by alias | def files under `packages/archetypes/src/defs/` by their `status`; alias rows of `packages/archetypes/src/aliases.ts` |
-| spec commands, MCP tools | 32, 19 | string-literal members of `CommandName` and `McpToolName` in `spec/commands.ts` |
+| spec commands, MCP tools | 33, 19 | string-literal members of `CommandName` and `McpToolName` in `spec/commands.ts` |
 | knowledge files | 110, with 419,715 words | tracked files under `knowledge/` outside `knowledge/references/`; words as `wc -w` splits them |
 | reference words | 17,277 | tracked files under `knowledge/references/`; words as `wc -w` splits them |
 | hackbuild-ui `.hb-` classes | 203 in the stylesheet packages/ui installs (file:../../tools/vendor/hackbuild-ui-0.3.0-b3962ab.tgz) | distinct `.hb-` names in `dist/styles/hackbuild.css` of the `@virgilvox/hackbuild-ui` dependency of `packages/ui/package.json` |

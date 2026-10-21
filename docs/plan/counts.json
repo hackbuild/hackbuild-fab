@@ -45,16 +45,16 @@
     "warn": 9
   },
   "decisions": {
-    "decided": 509,
+    "decided": 510,
     "first": 1,
-    "last": 567,
+    "last": 568,
     "neverIssued": [
       176
     ],
     "owner": 49,
     "ownerQueue": 49,
     "superseded": 8,
-    "total": 566
+    "total": 567
   },
   "external": {
     "bench.catalogue": "157 tools, 16 groups, 153 placeable",
@@ -92,7 +92,7 @@
     "skipped": 23
   },
   "spec": {
-    "commands": 32,
+    "commands": 33,
     "mcpTools": 19
   },
   "tools": {

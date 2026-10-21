@@ -46,18 +46,18 @@ export const GROUPS = ["query", "author", "build", "prove", "look", "make"] as c
 export type Group = (typeof GROUPS)[number];
 
 /**
- * The 32 CLI commands, grouped (D-106). asm.declare folds into part.build,
+ * The 33 CLI commands, grouped (D-106). asm.declare folds into part.build,
  * and so does import for audit (D-146, D-160): part.build with `import`
  * set builds one Part from an STL, GLB, STEP, WRL or OpenSCAD file. draft
- * (plan v9 3.1, R1-engine-24) is the 31st and adopt (R1-engine-25) the
- * 32nd, both CLI only until the MCP projection of draft and adopt is
- * decided (engine brief finding F4).
+ * (plan v9 3.1, R1-engine-24) is the 31st, adopt (R1-engine-25) the
+ * 32nd and init (R1-engine-23) the 33rd, all CLI only until the MCP
+ * projection of init, draft and adopt is decided (engine brief finding F4).
  */
 export const COMMAND_NAMES = [
   // query (8)
   "constraints.query", "catalog.find", "catalog.pins", "mech.find", "mech.derive", "arch.find", "knowledge.search", "reference.list",
-  // author (5)
-  "chase.scaffold", "chase.validate", "chase.diff", "chase.patch", "arch.apply",
+  // author (6)
+  "chase.scaffold", "chase.validate", "chase.diff", "chase.patch", "arch.apply", "init",
   // build (4)
   "part.build", "part.inspect", "part.probe", "asm.solve",
   // prove (7)
@@ -72,7 +72,7 @@ export type CommandName = (typeof COMMAND_NAMES)[number];
 export const COMMAND_GROUP = {
   "constraints.query": "query", "catalog.find": "query", "catalog.pins": "query", "mech.find": "query",
   "mech.derive": "query", "arch.find": "query", "knowledge.search": "query", "reference.list": "query",
-  "chase.scaffold": "author", "chase.validate": "author", "chase.diff": "author", "chase.patch": "author", "arch.apply": "author",
+  "chase.scaffold": "author", "chase.validate": "author", "chase.diff": "author", "chase.patch": "author", "arch.apply": "author", "init": "author",
   "part.build": "build", "part.inspect": "build", "part.probe": "build", "asm.solve": "build",
   "check.run": "prove", "fits.table": "prove", "sim.run": "prove", "sim.sweep": "prove",
   "circuit.solve": "prove", "motion.run": "prove", "rules.audit": "prove",
@@ -96,8 +96,8 @@ export type McpToolName = (typeof MCP_TOOL_NAMES)[number];
 /** Claude API tool name pattern. */
 export const TOOL_NAME_PATTERN = /^[a-zA-Z0-9_-]{1,128}$/;
 
-/** CLI-only commands; project.graph is also served as a resource (hbf://project/graph); draft and adopt wait on the F4 decision. */
-export const CLI_ONLY = ["project.graph", "draft", "adopt"] as const satisfies readonly CommandName[];
+/** CLI-only commands; project.graph is also served as a resource (hbf://project/graph); draft, adopt and init wait on the F4 decision. */
+export const CLI_ONLY = ["project.graph", "draft", "adopt", "init"] as const satisfies readonly CommandName[];
 
 // Result contract (D-064).
 
@@ -877,6 +877,24 @@ export interface CommandIO {
       slice: { status: "sliced" | "failed" | "not run"; reason: string };
       /** designs/<name>/widgets/<file> holding the draft's inline widget as a candidate, or null. */
       widget: string | null;
+    };
+  };
+  "init": {
+    input: {
+      /** Lowercase slug; becomes meta.id, the folder name and the page <name>.html. */
+      name: string;
+      /** The design or reference to start from: an id, or the reference: and design: forms chase.scaffold takes. Absent, the minimal single chase. */
+      from?: string;
+      /** The folder to write, relative to the cwd. Absent, <cwd>/<name>. It must be absent or empty (E_EXISTS). */
+      dir?: string;
+    };
+    output: {
+      /** The maker folder, absolute. */
+      dir: string;
+      /** The files written into it, sorted. */
+      files: readonly string[];
+      /** The baked page <name>.html in the folder, its size in bytes (measured, at most 16 MB, D-129) and sha256 of the bytes on disk. */
+      page: { file: string; bytes: number; hash: Hash };
     };
   };
   "nest.pack": {

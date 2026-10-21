@@ -40,7 +40,7 @@ export function nameOfGoal(goal: string): string {
 }
 
 /** chase.scaffold's from form for a bare id: a reference by meta.id, else a design; a form with a scheme stands. */
-function fromForm(from: string, root: string, top: string, cwd: string): string {
+export function fromForm(from: string, root: string, top: string, cwd: string): string {
   if (from.includes(":")) return from;
   for (const scheme of ["reference", "design"]) {
     try {

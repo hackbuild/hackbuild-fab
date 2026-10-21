@@ -621,6 +621,7 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-565 | Builders land their own work; no integrator agent | decided | Process, engine, plan |
 | D-566 | Nothing is cut: plan version 9.1 schedules every cut item | decided | Plan, partners |
 | D-567 | chase.render bakes from bake.json into a temp root and fails on smoke breaches | decided | Engine, look |
+| D-568 | hbf init writes a maker folder outside the repo, E_EXISTS joins the error codes | decided | Engine, author |
 
 ## House rules and process
 
@@ -6913,6 +6914,17 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under the owner delegation of 2026-10-20 for release 1 of plan v9.1 (R1-engine-22, M10-T07 step 1). chase.render bakes the design's bake.json with tools/bake/bake.mjs into a temporary root, opens the page headless offline through tools/smoke/render.ts, stores the page and one png per rail step at 1280 and 390 px as hbf://artifact/ uris, and writes nothing to the repo. A design with no bake.json is refused with E_REF (chase.bake writes one). Each breach of the smoke laws fails with E_KERNEL and its own record: render/overflow (scroll width over the viewport), render/pink (focal pink over a budget of 1 per view, D-125), render/console and render/network (D-129). It feeds the D-154 review and never ticks it. The WIP branch r1/R1-engine-22-r2 landed after a rebase on 4f42633 that kept main's runNode name and dropped its packages/checks/src/3mf/contracts.ts hunk (R1-fix-07 vendored the E_DRAFT code). |
 | Rationale | One baker and one smoke runner serve bake, render and CI; a look command that writes into the repo would dirty the tree it inspects. |
 | Evidence | core/test/chase-render.test.ts: flex-pair renders 8 pngs over 4 steps at 2 widths with no overflow, pink at most 1, 0 console errors and 0 requests (computed, run 2026-10-20); breach cases per record. |
+| Supersedes | none |
+| Milestone | none |
+
+### D-568 hbf init writes a maker folder outside the repo, E_EXISTS joins the error codes
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under the owner delegation of 2026-10-20 for release 1 of plan v9.1 (R1-engine-23). `hbf init <name> [--from <design>] [--dir <folder>]` is the 33rd command, group author, CLI only until the F4 decision with draft and adopt. It writes <cwd>/<name> (or --dir): the chase.scaffold copy of the source with meta.id set to the name and meta.derivedFrom from its golden, a package.json pinning @hackbuild/kernel and every @hackbuild package the copied files import to this workspace as file: dependencies, and <name>.html baked by chase.bake on a staging copy under .hbf/init/ (gitignored), so nothing reaches the maker folder until the bake passes. A folder that holds files is refused with the new code E_EXISTS (exit input, http 409); a source with open chase.validate errors is refused with those errors. The CLI reads the workspace holding cwd, else the one the running hbf lives in, so commands run inside a maker folder. hackbuild-3mf 0dc2130 adds E_EXISTS to its contracts copy (D-562) and tools/vendor carries hackbuild-3mf-0.1.0-0dc2130.tgz; the lock changes only its resolved path and integrity. |
+| Rationale | PLAN.md 2 starts a session with hbf init --from toggle; a maker folder outside the repo needs the kernel without a checkout of its own, and a refusal that writes nothing leaves no half folder to clean. |
+| Evidence | core/test/init.test.ts (computed, run 2026-10-20); npm install --package-lock-only left the lock unchanged; split-fresh repacks 0dc2130 to the vendored bytes. |
 | Supersedes | none |
 | Milestone | none |
 

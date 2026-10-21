@@ -2392,7 +2392,7 @@
       "version": "0.1.0",
       "published": "MIT",
       "audited": "MIT",
-      "evidence": "package-lock.json packages[\"node_modules/hackbuild-3mf\"].license and the LICENSE file of the packed tarball tools/vendor/hackbuild-3mf-0.1.0-1efeda7.tgz, read 2026-10-20",
+      "evidence": "package-lock.json packages[\"node_modules/hackbuild-3mf\"].license and the LICENSE file of the packed tarball tools/vendor/hackbuild-3mf-0.1.0-0dc2130.tgz, read 2026-10-20",
       "use": "3mf: writer, validator mirror and mesh audit, packed from the hackbuild-3mf repo until it is on npm (R1-engine-03)",
       "load": "bundled",
       "status": "adopted",
