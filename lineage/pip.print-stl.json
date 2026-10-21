@@ -2,7 +2,7 @@
   {
     "id": "pip.print-stl/pip-controller-b137deb",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/print/pip-stl.zip",
+    "source": "fab-knowledge:evidence/x/pip-controller/print/pip-stl.zip",
     "sha256": "0c4b3ea7476291eb7749fa8af33d7afe4aad995d8331abd544881cb0ca77254c",
     "fixes": [],
     "dest": "designs/pip/legacy/print/pip-stl.zip"

@@ -2,7 +2,7 @@
   {
     "id": "pip.license/pip-controller-b137deb",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/LICENSE",
+    "source": "fab-knowledge:evidence/x/pip-controller/LICENSE",
     "sha256": "23d0dbb979a14bf6224315a5ad18e04b1f8e6079d14c8c2e5d7902f353ec8ecb",
     "fixes": [],
     "dest": "designs/pip/legacy/LICENSE"

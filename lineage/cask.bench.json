@@ -2,7 +2,7 @@
   {
     "id": "cask.bench/v0-4",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/cask/files/cask_bench.html",
+    "source": "fab-knowledge:originals/cask/files/cask_bench.html",
     "sha256": "5e5b6f743e09197bb68ca0bd42608df77e32ef5082374a26cc40d642cd5e4b0d",
     "fixes": [],
     "dest": null

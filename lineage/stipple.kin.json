@@ -2,7 +2,7 @@
   {
     "id": "stipple.kin/r17b",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/stipple/files/stipple-r17b.html",
+    "source": "fab-knowledge:originals/stipple/files/stipple-r17b.html",
     "sha256": "f4afad81c417627e84349c5f6cf6b1016e520083ce8ac631b7d71fc6c02f1767",
     "fixes": [
       "ceil_v, E_REST, CAM, link, rodState, canLatch and crankPhi (lines 138 to 170) ported line for line to packages/motion/src/kinematics/stipple.ts (M07-T11, D-139); the cell placement of apply() (lines 346 to 353) and buildCheck() (lines 680 to 714) ported on row-major matrices in place of three.js; CAMLIFT, absent from the page, is kin.py line 90 on this beam",

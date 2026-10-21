@@ -2,7 +2,7 @@
   {
     "id": "pip.src-zip/haft-9",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft-src.zip",
+    "source": "fab-knowledge:originals/pip/files/haft-src.zip",
     "sha256": "b7b9ca40f5e029da404e9c46e958898c379deabe85c15f2ba2aff6d4ce379b00",
     "fixes": [],
     "dest": "designs/pip/legacy/original/haft-src.zip"

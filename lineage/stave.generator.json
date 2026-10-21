@@ -2,7 +2,7 @@
   {
     "id": "stave.generator/bench",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/cricut-midi-seven/outputs/stave/gen_stave.py",
+    "source": "fab-work-directory:benches/cricut-midi-seven/outputs/stave/gen_stave.py",
     "sha256": "0d7a79321b8069a518ce57e362665b2a719368525838a729eb27db1fcda12100",
     "fixes": [],
     "dest": "reference/copper/stave/legacy/gen_stave.py"
@@ -10,7 +10,7 @@
   {
     "id": "stave.generator/rev-a",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/stave/files/gen_stave.py",
+    "source": "fab-knowledge:originals/stave/files/gen_stave.py",
     "sha256": "0d7a79321b8069a518ce57e362665b2a719368525838a729eb27db1fcda12100",
     "fixes": [
       "tools/py/copper/run_legacy_gen.py runs it byte identical from a temp dir with the shipped inputs and the logo literal replaced in memory; tools/py/copper/test_oracle.py holds the run to the M05-T13 table (M05-T13)",

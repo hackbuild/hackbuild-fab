@@ -2,7 +2,7 @@
   {
     "id": "tang-r5.core/sim-13",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/tang-r5/files/src/tang_r5_13_core.js",
+    "source": "fab-knowledge:originals/tang-r5/files/src/tang_r5_13_core.js",
     "sha256": "f9f9175822238448164e7a173266c0a9c82f6c5a6faef70f29a3783212f2b39c",
     "fixes": [],
     "dest": null

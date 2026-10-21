@@ -2,7 +2,7 @@
   {
     "id": "eurorack-skiff.bench/r7",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/eurorack-skiff/files/eurorack-skiff-r7.html",
+    "source": "fab-knowledge:originals/eurorack-skiff/files/eurorack-skiff-r7.html",
     "sha256": "ae30bd558c13e57990013cb3d34aa8bcc03d05df5aee928390b576fe63970dde",
     "fixes": [],
     "dest": null

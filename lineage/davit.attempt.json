@@ -2,7 +2,7 @@
   {
     "id": "davit.attempt/r3-page",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/davit/files/r3/davit.html",
+    "source": "fab-knowledge:originals/davit/files/r3/davit.html",
     "sha256": "ba332702646f2a9b072b1c8ab6da46b3d3e4f268179af1f37fcfd7a61280260a",
     "fixes": [
       "attempt() slider clamp (lines 617 to 635) ported to packages/sim/src/scenes.ts clampJoint for asm.solve --clamp: 8 bisection steps between the old and requested value on a contact, both arms set as `linked` (line 201, true by default); the explode and slider sync branches are UI and not ported"
@@ -12,7 +12,7 @@
   {
     "id": "davit.attempt/r4-page",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/davit/files/sim_r4.html",
+    "source": "fab-knowledge:originals/davit/files/sim_r4.html",
     "sha256": "1511d9082a6b72dd32c91ac4c2c602743c84f908bd39e3db6debaa3aab885da8",
     "fixes": [
       "attempt() slider clamp (lines 628 to 646) ported to packages/sim/src/scenes.ts clampJoint for asm.solve --clamp: 8 bisection steps between the old and requested value on a contact, both arms set as `linked` (line 204, true by default); equal to the R3 page attempt() byte for byte (computed 2026-10-08); the explode and slider sync branches are UI and not ported"

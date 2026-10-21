@@ -2,7 +2,7 @@
   {
     "id": "pip.baker/m09-bake",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/tools/build_bench.py",
+    "source": "fab-knowledge:evidence/x/pip-controller/tools/build_bench.py",
     "sha256": "01d0ddc6ad8f82cd12e157f554842568d27335f8c9b0ee31bb246ec32f8ea9cd",
     "fixes": [],
     "dest": "tools/bake/bake.mjs"
@@ -10,7 +10,7 @@
   {
     "id": "pip.baker/pip-controller-b137deb",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/tools/build_bench.py",
+    "source": "fab-knowledge:evidence/x/pip-controller/tools/build_bench.py",
     "sha256": "01d0ddc6ad8f82cd12e157f554842568d27335f8c9b0ee31bb246ec32f8ea9cd",
     "fixes": [],
     "dest": "designs/pip/legacy/tools/build_bench.py"

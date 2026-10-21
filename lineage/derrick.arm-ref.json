@@ -2,7 +2,7 @@
   {
     "id": "derrick.arm-ref/r3",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/derrick/files/src/arm_ref.json",
+    "source": "fab-knowledge:originals/derrick/files/src/arm_ref.json",
     "sha256": "54c9754a3412e88792e4139056fe4772f7f99ca4fd1fe68959a492062d771220",
     "fixes": [],
     "dest": "designs/derrick/legacy/arm_ref.json"
@@ -10,7 +10,7 @@
   {
     "id": "derrick.arm-ref/regenerated",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/derrick/files/records/arm_ref_regenerated_2026-10-05.json",
+    "source": "fab-knowledge:originals/derrick/files/records/arm_ref_regenerated_2026-10-05.json",
     "sha256": "0f9715a166950ef26a95d1ccd16985d71d971e757a46985452a6bf0713c73f32",
     "fixes": [
       "regenerated from the canonical arm_build.py on 2026-10-05; the shipped arm_ref.json puts the home tool 6.8 mm off in x (knowledge/designs/derrick.md section 1.2)"

@@ -2,7 +2,7 @@
   {
     "id": "import-corpus.locket-r2/harvest",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/coaming/outputs/locket-r2/locket-r2.glb",
+    "source": "fab-work-directory:benches/coaming/outputs/locket-r2/locket-r2.glb",
     "sha256": "c25fbaf4c6639e3a1396fa003824a468edb92362054104def4d78a31b3d7a401",
     "fixes": [],
     "dest": "tools/corpus/import/locket-r2.glb"

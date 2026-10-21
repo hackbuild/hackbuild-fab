@@ -2,7 +2,7 @@
   {
     "id": "washer.firmware/harvest",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/washer/files/history/PanTiltLaser-2026-07-30-harvest.ino",
+    "source": "fab-knowledge:originals/washer/files/history/PanTiltLaser-2026-07-30-harvest.ino",
     "sha256": "4c4b0d4a2a941f5ebe7e5908cf401b5b8f611c3fd41a834892a02ba7c0df7d1b",
     "fixes": [],
     "dest": null
@@ -10,7 +10,7 @@
   {
     "id": "washer.firmware/laserriggg",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/washer/files/rig/PanTiltLaser.ino",
+    "source": "fab-knowledge:originals/washer/files/rig/PanTiltLaser.ino",
     "sha256": "9833e0176ca81ff7dbb70256c000bb0830879cf4657b016fc996b2138dbe3a94",
     "fixes": [],
     "dest": null

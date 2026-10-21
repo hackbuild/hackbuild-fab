@@ -2,7 +2,7 @@
   {
     "id": "sprue.bench/design-build",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/sprue/files/sprue.html",
+    "source": "fab-knowledge:originals/sprue/files/sprue.html",
     "sha256": "a1acb293ad96c7dd5062a9e65741a7f27959584dfb10e64decb41468c59e4fe7",
     "fixes": [],
     "dest": "designs/sprue/build.ts"
@@ -10,7 +10,7 @@
   {
     "id": "sprue.bench/design-legacy",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/sprue/files/sprue.html",
+    "source": "fab-knowledge:originals/sprue/files/sprue.html",
     "sha256": "a1acb293ad96c7dd5062a9e65741a7f27959584dfb10e64decb41468c59e4fe7",
     "fixes": [],
     "dest": "designs/sprue/legacy/sprue.html"
@@ -18,7 +18,7 @@
   {
     "id": "sprue.bench/geom-fill-fixture",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/sprue/files/sprue.html",
+    "source": "fab-knowledge:originals/sprue/files/sprue.html",
     "sha256": "a1acb293ad96c7dd5062a9e65741a7f27959584dfb10e64decb41468c59e4fe7",
     "fixes": [],
     "dest": "packages/geom/test/fixtures/sprue-from-polygon.ts"
@@ -26,7 +26,7 @@
   {
     "id": "sprue.bench/geom-raster-fill",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/sprue/files/sprue.html",
+    "source": "fab-knowledge:originals/sprue/files/sprue.html",
     "sha256": "a1acb293ad96c7dd5062a9e65741a7f27959584dfb10e64decb41468c59e4fe7",
     "fixes": [],
     "dest": "packages/geom/src/raster/fill.ts"
@@ -34,7 +34,7 @@
   {
     "id": "sprue.bench/geom-trace",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/sprue/files/sprue.html",
+    "source": "fab-knowledge:originals/sprue/files/sprue.html",
     "sha256": "a1acb293ad96c7dd5062a9e65741a7f27959584dfb10e64decb41468c59e4fe7",
     "fixes": [],
     "dest": "packages/geom/src/raster/trace.ts"
@@ -42,7 +42,7 @@
   {
     "id": "sprue.bench/harvest",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/sprue/outputs/sprue/sprue.html",
+    "source": "fab-work-directory:benches/sprue/outputs/sprue/sprue.html",
     "sha256": "a1acb293ad96c7dd5062a9e65741a7f27959584dfb10e64decb41468c59e4fe7",
     "fixes": [],
     "dest": null
@@ -50,7 +50,7 @@
   {
     "id": "sprue.bench/inlay-hygiene",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/sprue/files/sprue.html",
+    "source": "fab-knowledge:originals/sprue/files/sprue.html",
     "sha256": "a1acb293ad96c7dd5062a9e65741a7f27959584dfb10e64decb41468c59e4fe7",
     "fixes": [],
     "dest": "packages/inlay/src/hygiene/recipes.ts"
@@ -58,7 +58,7 @@
   {
     "id": "sprue.bench/inlay-hygiene-disc",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/sprue/files/sprue.html",
+    "source": "fab-knowledge:originals/sprue/files/sprue.html",
     "sha256": "a1acb293ad96c7dd5062a9e65741a7f27959584dfb10e64decb41468c59e4fe7",
     "fixes": [],
     "dest": "packages/inlay/src/hygiene/disc.ts"
@@ -66,7 +66,7 @@
   {
     "id": "sprue.bench/inlay-hygiene-fixture",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/sprue/files/sprue.html",
+    "source": "fab-knowledge:originals/sprue/files/sprue.html",
     "sha256": "a1acb293ad96c7dd5062a9e65741a7f27959584dfb10e64decb41468c59e4fe7",
     "fixes": [],
     "dest": "packages/inlay/test/fixtures/sprue-phx.legacy.json.gz"
@@ -74,7 +74,7 @@
   {
     "id": "sprue.bench/inlay-otsu",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/sprue/files/sprue.html",
+    "source": "fab-knowledge:originals/sprue/files/sprue.html",
     "sha256": "a1acb293ad96c7dd5062a9e65741a7f27959584dfb10e64decb41468c59e4fe7",
     "fixes": [],
     "dest": "packages/inlay/src/otsu.ts"
@@ -82,7 +82,7 @@
   {
     "id": "sprue.bench/inlay-sprue-face",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/sprue/files/sprue.html",
+    "source": "fab-knowledge:originals/sprue/files/sprue.html",
     "sha256": "a1acb293ad96c7dd5062a9e65741a7f27959584dfb10e64decb41468c59e4fe7",
     "fixes": [],
     "dest": "packages/inlay/src/layers/sprue.ts"
@@ -90,7 +90,7 @@
   {
     "id": "sprue.bench/inlay-thin",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/sprue/files/sprue.html",
+    "source": "fab-knowledge:originals/sprue/files/sprue.html",
     "sha256": "a1acb293ad96c7dd5062a9e65741a7f27959584dfb10e64decb41468c59e4fe7",
     "fixes": [],
     "dest": "packages/inlay/src/hygiene/thin.ts"
@@ -98,7 +98,7 @@
   {
     "id": "sprue.bench/sprue-html",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/sprue/files/sprue.html",
+    "source": "fab-knowledge:originals/sprue/files/sprue.html",
     "sha256": "a1acb293ad96c7dd5062a9e65741a7f27959584dfb10e64decb41468c59e4fe7",
     "fixes": [],
     "dest": null
@@ -106,7 +106,7 @@
   {
     "id": "sprue.bench/ui-core-text-px",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/sprue/files/sprue.html",
+    "source": "fab-knowledge:originals/sprue/files/sprue.html",
     "sha256": "a1acb293ad96c7dd5062a9e65741a7f27959584dfb10e64decb41468c59e4fe7",
     "fixes": [],
     "dest": "packages/ui-core/src/surface/canvas-surface.ts"

@@ -2,7 +2,7 @@
   {
     "id": "coffer.hexcore/harvest",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/coffer/files/hexcore.py",
+    "source": "fab-knowledge:originals/coffer/files/hexcore.py",
     "sha256": "b1bc9905fb4c5bb8bbf25ef4ff25cf20b3f201b22299c65f6572ce053e00de23",
     "fixes": [
       "ported to packages/archetypes/src/coffer/fillet.ts, as its header cites hexcore.py (packages/archetypes/src/coffer/fillet.ts line 5: \"Source of record: originals/coffer/files/hexcore.py lines 65 to 75\"); recorded by the M06 and M08 integration",

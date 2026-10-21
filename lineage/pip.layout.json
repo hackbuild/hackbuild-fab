@@ -2,7 +2,7 @@
   {
     "id": "pip.layout/evidence-pip-controller",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/src/layout.js",
+    "source": "fab-knowledge:evidence/x/pip-controller/src/layout.js",
     "sha256": "6052af46de1330436bb160d7369902932e09b2a1ea3ed0e209363eba2ff38836",
     "fixes": [],
     "dest": "packages/profile/data/materials.json"
@@ -10,7 +10,7 @@
   {
     "id": "pip.layout/haft-9",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft-src/src/layout.js",
+    "source": "fab-knowledge:originals/pip/files/haft-src/src/layout.js",
     "sha256": "2d1c6c10554b5c7d8dc333496529abee82e937d2d3fe85c41a8d7ee22bb2468c",
     "fixes": [
       "route.bleed 0.15 mm default feeding the model.js print bleed (layout.js:28); carried by the profile bleed field at emit, default 0 (D-084)",
@@ -25,7 +25,7 @@
   {
     "id": "pip.layout/haft-9-access-switch",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft-src/src/layout.js",
+    "source": "fab-knowledge:originals/pip/files/haft-src/src/layout.js",
     "sha256": "2d1c6c10554b5c7d8dc333496529abee82e937d2d3fe85c41a8d7ee22bb2468c",
     "fixes": [
       "PIP's four material slots (layout.js lines 47 to 52) and the clicky rise and width Q 2.0, w 1.6 (layout.js line 36) declared by reference/keys/access-switch/chase.ts; span 28 and beam 0.55 are the access switch point (scout sweep, R1-flagship-access-switch-02), and E is the petg modulus row in profile, not a chase param"
@@ -35,7 +35,7 @@
   {
     "id": "pip.layout/haft-9-access-switch-stack",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft-src/src/layout.js",
+    "source": "fab-knowledge:originals/pip/files/haft-src/src/layout.js",
     "sha256": "2d1c6c10554b5c7d8dc333496529abee82e937d2d3fe85c41a8d7ee22bb2468c",
     "fixes": [
       "the buried stack (layout.js line 27: skin 0.72, trace 0.72, iso 0.96) read through the profile stack rows for the floor face and the lead layer of reference/keys/access-switch/build.ts, as reference/buttons/click-spring/build.ts reads them"
@@ -45,7 +45,7 @@
   {
     "id": "pip.layout/haft-9-click-spring-window",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft-src/src/layout.js",
+    "source": "fab-knowledge:originals/pip/files/haft-src/src/layout.js",
     "sha256": "2d1c6c10554b5c7d8dc333496529abee82e937d2d3fe85c41a8d7ee22bb2468c",
     "fixes": [
       "clicky defaults l, t, Q, w, g and sw (layout.js line 36) declared by reference/keys/click-spring-window/chase.ts (M01-T07); E is the petg modulus row in profile, not a chase param"
@@ -55,7 +55,7 @@
   {
     "id": "pip.layout/haft-9-midi-pad",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft-src/src/layout.js",
+    "source": "fab-knowledge:originals/pip/files/haft-src/src/layout.js",
     "sha256": "2d1c6c10554b5c7d8dc333496529abee82e937d2d3fe85c41a8d7ee22bb2468c",
     "fixes": [
       "PIP's four material slots (layout.js lines 47 to 52) declared by reference/keys/midi-pad/chase.ts, the slots its three PIP and THINPOT archetypes share (K-04 promotion of flagship 1)"
@@ -65,7 +65,7 @@
   {
     "id": "pip.layout/haft-9-midi-pad-stack",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft-src/src/layout.js",
+    "source": "fab-knowledge:originals/pip/files/haft-src/src/layout.js",
     "sha256": "2d1c6c10554b5c7d8dc333496529abee82e937d2d3fe85c41a8d7ee22bb2468c",
     "fixes": [
       "the buried stack (layout.js line 27: skin 0.72, trace 0.72, iso 0.96; z bands lines 168 to 171) read through the profile stack rows for the two lead layers and the seat floor of reference/keys/midi-pad/build.ts"
@@ -75,7 +75,7 @@
   {
     "id": "pip.layout/haft-9-port-click",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft-src/src/layout.js",
+    "source": "fab-knowledge:originals/pip/files/haft-src/src/layout.js",
     "sha256": "2d1c6c10554b5c7d8dc333496529abee82e937d2d3fe85c41a8d7ee22bb2468c",
     "fixes": [],
     "dest": "packages/archetypes/src/pip/click.ts"
@@ -83,7 +83,7 @@
   {
     "id": "pip.layout/haft-9-port-seat",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft-src/src/layout.js",
+    "source": "fab-knowledge:originals/pip/files/haft-src/src/layout.js",
     "sha256": "2d1c6c10554b5c7d8dc333496529abee82e937d2d3fe85c41a8d7ee22bb2468c",
     "fixes": [],
     "dest": "packages/archetypes/src/pip/seat.ts"
@@ -91,7 +91,7 @@
   {
     "id": "pip.layout/pip-controller-b137deb",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/pip-controller/src/layout.js",
+    "source": "fab-knowledge:originals/pip/files/pip-controller/src/layout.js",
     "sha256": "6052af46de1330436bb160d7369902932e09b2a1ea3ed0e209363eba2ff38836",
     "fixes": [
       "flex key source values (layout.js line 35), slots (lines 47 to 52), flexDims (lines 149 to 160) and the flex need and key floor with the bezel term (lines 27, 219, 223 and 231) ported to reference/keys/flex-pair/build.ts (D-223, D-236); stack inputs and slots also read by reference/keys/flex-pair/chase.ts",
@@ -102,7 +102,7 @@
   {
     "id": "pip.layout/pip-controller-b137deb-release",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/pip-controller/src/layout.js",
+    "source": "fab-knowledge:originals/pip/files/pip-controller/src/layout.js",
     "sha256": "6052af46de1330436bb160d7369902932e09b2a1ea3ed0e209363eba2ff38836",
     "fixes": [
       "phys cpin 7 pF (layout.js line 46) cited by packages/circuit/src/release.ts as the inferred node capacitance it reads from McuPinSpec.inputCap (M-S-T05); haft (9) layout.js line 46 is the same row"
@@ -112,7 +112,7 @@
   {
     "id": "pip.layout/pip-controller-b137deb-stack",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/pip-controller/src/layout.js",
+    "source": "fab-knowledge:originals/pip/files/pip-controller/src/layout.js",
     "sha256": "6052af46de1330436bb160d7369902932e09b2a1ea3ed0e209363eba2ff38836",
     "fixes": [
       "the buried stack z.l1, z.i1, z.l2, z.i2, z.pl and z.floor (layout.js lines 166 to 171) ported to packages/copper/src/emit/trace-layer.ts traceStack over profile stack.skin, stack.trace, stack.iso and stack.overL2 (M05-T10); the pad floor is overL2 less iso"
@@ -122,7 +122,7 @@
   {
     "id": "pip.layout/pip-controller-legacy",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/src/layout.js",
+    "source": "fab-knowledge:evidence/x/pip-controller/src/layout.js",
     "sha256": "6052af46de1330436bb160d7369902932e09b2a1ea3ed0e209363eba2ff38836",
     "fixes": [],
     "dest": "designs/pip/legacy/src/layout.js"
@@ -130,7 +130,7 @@
   {
     "id": "pip.layout/x-pip-controller",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/src/layout.js",
+    "source": "fab-knowledge:evidence/x/pip-controller/src/layout.js",
     "sha256": "6052af46de1330436bb160d7369902932e09b2a1ea3ed0e209363eba2ff38836",
     "fixes": [],
     "dest": "packages/sim/src/fe/click.ts"
@@ -138,7 +138,7 @@
   {
     "id": "pip.layout/haft-9-access-jack-socket",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft-src/src/layout.js",
+    "source": "fab-knowledge:originals/pip/files/haft-src/src/layout.js",
     "sha256": "2d1c6c10554b5c7d8dc333496529abee82e937d2d3fe85c41a8d7ee22bb2468c",
     "fixes": [
       "the board seat socket defaults (layout.js line 39: clr 0.3, sockOD 1.8, sockBore 0.75, pinLen 3.0) as profile constants jack.clr, jack.socketWall and jack.socketLen, read by the PJ398SM leg sockets and the jack pocket of reference/keys/access-switch/jack.ts (R1-flagship-access-switch-06)"

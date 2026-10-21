@@ -15,7 +15,7 @@ import {
   ADDED_ARCHETYPES, ARCHETYPE_ALIASES, ARCHETYPE_DEFS, COMMAND_ALIASES, PACKAGE_ALIASES, PACKAGE_VERSION, SEED_FAMILY,
   archetypes, correctedLimits, loadArchetypes, refusedArchetype,
 } from "@hackbuild/archetypes";
-import { originalPath } from "../../../tools/test-support/originals-root.js";
+import { ORIGINALS_OF_RECORD, originalPath } from "../../../tools/test-support/originals-root.js";
 
 const root = new URL("../../../", import.meta.url);
 const read = (p: string): string => readFileSync(new URL(p, root), "utf8");
@@ -188,7 +188,7 @@ describe("archetype registry load", () => {
         const path = `${ORIG}${o.slug}/${o.file}`;
         expect(existsSync(path), `${e.id} original ${path} is missing`).toBe(true);
         expect(sha(path), `${e.id} ${o.file} bytes`).toBe(o.sha256);
-        const rows = lineage.filter((r) => r.source === path);
+        const rows = lineage.filter((r) => r.source === `${ORIGINALS_OF_RECORD}${o.slug}/${o.file}`);
         expect(rows.length, `${e.id} ${path} has no lineage.json row`).toBeGreaterThan(0);
         for (const r of rows) expect(r.sha256, `lineage ${r.id}`).toBe(o.sha256);
         if (i === 0 && !copyPrimary.has(e.id)) expect(rows.some((r) => r.kind === "canonical"), `${e.id} ports from ${path}, which has no canonical row`).toBe(true);

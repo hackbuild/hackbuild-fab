@@ -2,7 +2,7 @@
   {
     "id": "stave.geometry/bench",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/cricut-midi-seven/outputs/stave/stave_geometry.json",
+    "source": "fab-work-directory:benches/cricut-midi-seven/outputs/stave/stave_geometry.json",
     "sha256": "a3743c6dd3536524eaf07b28a9a1312b31fb43fb5f71d6c91e536a8a7711818d",
     "fixes": [],
     "dest": "reference/copper/stave/legacy/stave_geometry.json"
@@ -10,7 +10,7 @@
   {
     "id": "stave.geometry/rev-a",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/stave/files/stave_geometry.json",
+    "source": "fab-knowledge:originals/stave/files/stave_geometry.json",
     "sha256": "a3743c6dd3536524eaf07b28a9a1312b31fb43fb5f71d6c91e536a8a7711818d",
     "fixes": [
       "tools/py/copper/test_oracle.py: params and stats are the oracle golden, compared exactly; path strings are not compared (M05-T13 step 5)",

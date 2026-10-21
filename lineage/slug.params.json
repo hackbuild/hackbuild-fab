@@ -2,7 +2,7 @@
   {
     "id": "slug.params/slug-12",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/slug/files/params.json",
+    "source": "fab-knowledge:originals/slug/files/params.json",
     "sha256": "ff7402d24d1dad0152725c0d9bfe3c671fdf0e49c02eefe6cd9362c251c8bd59",
     "fixes": [],
     "dest": "packages/sim/scenes/granular-funnel.world.json"

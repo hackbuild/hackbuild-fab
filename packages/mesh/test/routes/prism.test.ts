@@ -5,6 +5,7 @@
 // report 0 bad edges.
 
 import { existsSync, readFileSync } from "node:fs";
+import { sourcePath } from "../../../../tools/test-support/originals-root.js";
 import { beforeAll, describe, expect, it } from "vitest";
 import type { Ring } from "@hackbuild/spec";
 import { ATTEMPTS, loadGeom, type Geom } from "@hackbuild/geom";
@@ -77,16 +78,17 @@ describe("prism route follows its canonical lineage row (D-156)", () => {
       return m ? Number(m[1]) : -1;
     };
     const files = lineage
-      .filter((r) => (r.id.startsWith("mesh.prism/") || r.id.startsWith("blocks.kernel/")) && r.source.endsWith(".js") && existsSync(r.source))
-      .map((r) => r.source);
-    if (!existsSync(canonical[0]!.source)) return;
+      .filter((r) => (r.id.startsWith("mesh.prism/") || r.id.startsWith("blocks.kernel/")) && r.source.endsWith(".js") && existsSync(sourcePath(r.source)))
+      .map((r) => sourcePath(r.source));
+    const canon = sourcePath(canonical[0]!.source);
+    if (!existsSync(canon)) return;
     const best = Math.max(...files.map(tries));
-    expect(tries(canonical[0]!.source)).toBe(best);
+    expect(tries(canon)).toBe(best);
   });
 
   it("ATTEMPTS and PRISM_RETRIES equal the canonical _prismPoly try count", () => {
     expect(PRISM_RETRIES).toBe(ATTEMPTS - 1);
-    const src = canonical[0]!.source;
+    const src = sourcePath(canonical[0]!.source);
     if (!existsSync(src)) return;
     const text = readFileSync(src, "utf8");
     const loop = /for \(tries = 0; tries < (\d+) && !ok; tries\+\+\)/.exec(text);

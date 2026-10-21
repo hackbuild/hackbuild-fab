@@ -2,7 +2,7 @@
   {
     "id": "collar.bench/collar-7",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/collar/files/collar.html",
+    "source": "fab-knowledge:originals/collar/files/collar.html",
     "sha256": "ef0864ab66ca40e2930d12aba4cab3159aa470f743eee533d052fc99f844fd46",
     "fixes": [
       "127-key filament set: a 99-key FILAMENT_TEMPLATE lifted from a Flash Studio save (collar.html line 1745) plus the other 28 keys set per slot in projectSettings (collar.html line 1759 onward); the repo template packages/3mf/data/filament_template.json was harvested independently from the gold save, holds the same 127 keys and equals the 99 static values in slot 0 (D-156)",
@@ -16,7 +16,7 @@
   {
     "id": "collar.bench/geom-raster-shapes",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/collar/files/collar.html",
+    "source": "fab-knowledge:originals/collar/files/collar.html",
     "sha256": "ef0864ab66ca40e2930d12aba4cab3159aa470f743eee533d052fc99f844fd46",
     "fixes": [],
     "dest": "packages/geom/src/raster/shapes.ts"
@@ -24,7 +24,7 @@
   {
     "id": "collar.bench/harvest",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/collar-coin/outputs/collar/collar.html",
+    "source": "fab-work-directory:benches/collar-coin/outputs/collar/collar.html",
     "sha256": "ef0864ab66ca40e2930d12aba4cab3159aa470f743eee533d052fc99f844fd46",
     "fixes": [],
     "dest": "designs/collar/legacy/collar.html"
@@ -32,7 +32,7 @@
   {
     "id": "collar.bench/inlay-face",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/collar/files/collar.html",
+    "source": "fab-knowledge:originals/collar/files/collar.html",
     "sha256": "ef0864ab66ca40e2930d12aba4cab3159aa470f743eee533d052fc99f844fd46",
     "fixes": [],
     "dest": "packages/inlay/src/face.ts"
@@ -40,7 +40,7 @@
   {
     "id": "collar.bench/inlay-hygiene",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/collar/files/collar.html",
+    "source": "fab-knowledge:originals/collar/files/collar.html",
     "sha256": "ef0864ab66ca40e2930d12aba4cab3159aa470f743eee533d052fc99f844fd46",
     "fixes": [],
     "dest": "packages/inlay/src/hygiene/recipes.ts"
@@ -48,7 +48,7 @@
   {
     "id": "collar.bench/inlay-hygiene-box",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/collar/files/collar.html",
+    "source": "fab-knowledge:originals/collar/files/collar.html",
     "sha256": "ef0864ab66ca40e2930d12aba4cab3159aa470f743eee533d052fc99f844fd46",
     "fixes": [],
     "dest": "packages/inlay/src/hygiene/box.ts"
@@ -56,7 +56,7 @@
   {
     "id": "collar.bench/inlay-hygiene-despeckle",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/collar/files/collar.html",
+    "source": "fab-knowledge:originals/collar/files/collar.html",
     "sha256": "ef0864ab66ca40e2930d12aba4cab3159aa470f743eee533d052fc99f844fd46",
     "fixes": [],
     "dest": "packages/inlay/src/hygiene/despeckle.ts"
@@ -64,7 +64,7 @@
   {
     "id": "collar.bench/inlay-hygiene-fixture",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/collar/files/collar.html",
+    "source": "fab-knowledge:originals/collar/files/collar.html",
     "sha256": "ef0864ab66ca40e2930d12aba4cab3159aa470f743eee533d052fc99f844fd46",
     "fixes": [],
     "dest": "packages/inlay/test/fixtures/collar-back-512.labels.bin"
@@ -72,7 +72,7 @@
   {
     "id": "collar.bench/inlay-image",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/collar/files/collar.html",
+    "source": "fab-knowledge:originals/collar/files/collar.html",
     "sha256": "ef0864ab66ca40e2930d12aba4cab3159aa470f743eee533d052fc99f844fd46",
     "fixes": [],
     "dest": "packages/inlay/src/layers/image.ts"
@@ -80,7 +80,7 @@
   {
     "id": "collar.bench/inlay-kind",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/collar/files/collar.html",
+    "source": "fab-knowledge:originals/collar/files/collar.html",
     "sha256": "ef0864ab66ca40e2930d12aba4cab3159aa470f743eee533d052fc99f844fd46",
     "fixes": [],
     "dest": "packages/inlay/src/kind.ts"
@@ -88,7 +88,7 @@
   {
     "id": "collar.bench/inlay-mirror",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/collar/files/collar.html",
+    "source": "fab-knowledge:originals/collar/files/collar.html",
     "sha256": "ef0864ab66ca40e2930d12aba4cab3159aa470f743eee533d052fc99f844fd46",
     "fixes": [],
     "dest": "packages/inlay/src/mirror.ts"
@@ -96,7 +96,7 @@
   {
     "id": "collar.bench/inlay-path",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/collar/files/collar.html",
+    "source": "fab-knowledge:originals/collar/files/collar.html",
     "sha256": "ef0864ab66ca40e2930d12aba4cab3159aa470f743eee533d052fc99f844fd46",
     "fixes": [],
     "dest": "packages/inlay/src/layers/path.ts"
@@ -104,7 +104,7 @@
   {
     "id": "collar.bench/inlay-quantize",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/collar/files/collar.html",
+    "source": "fab-knowledge:originals/collar/files/collar.html",
     "sha256": "ef0864ab66ca40e2930d12aba4cab3159aa470f743eee533d052fc99f844fd46",
     "fixes": [],
     "dest": "packages/inlay/src/quantize.ts"
@@ -112,7 +112,7 @@
   {
     "id": "collar.bench/inlay-ring",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/collar/files/collar.html",
+    "source": "fab-knowledge:originals/collar/files/collar.html",
     "sha256": "ef0864ab66ca40e2930d12aba4cab3159aa470f743eee533d052fc99f844fd46",
     "fixes": [],
     "dest": "packages/inlay/src/layers/ring.ts"
@@ -120,7 +120,7 @@
   {
     "id": "collar.bench/inlay-shape",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/collar/files/collar.html",
+    "source": "fab-knowledge:originals/collar/files/collar.html",
     "sha256": "ef0864ab66ca40e2930d12aba4cab3159aa470f743eee533d052fc99f844fd46",
     "fixes": [],
     "dest": "packages/inlay/src/layers/shape.ts"
@@ -128,7 +128,7 @@
   {
     "id": "collar.bench/inlay-split",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/collar/files/collar.html",
+    "source": "fab-knowledge:originals/collar/files/collar.html",
     "sha256": "ef0864ab66ca40e2930d12aba4cab3159aa470f743eee533d052fc99f844fd46",
     "fixes": [],
     "dest": "packages/inlay/src/split.ts"
@@ -136,7 +136,7 @@
   {
     "id": "collar.bench/inlay-text",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/collar/files/collar.html",
+    "source": "fab-knowledge:originals/collar/files/collar.html",
     "sha256": "ef0864ab66ca40e2930d12aba4cab3159aa470f743eee533d052fc99f844fd46",
     "fixes": [],
     "dest": "packages/inlay/src/layers/text.ts"
@@ -144,7 +144,7 @@
   {
     "id": "collar.bench/parity-preset",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/collar/files/collar.html",
+    "source": "fab-knowledge:originals/collar/files/collar.html",
     "sha256": "ef0864ab66ca40e2930d12aba4cab3159aa470f743eee533d052fc99f844fd46",
     "fixes": [],
     "dest": "designs/collar/test/parity.entry.ts"
@@ -152,7 +152,7 @@
   {
     "id": "collar.bench/ui-core-artboard",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/collar/files/collar.html",
+    "source": "fab-knowledge:originals/collar/files/collar.html",
     "sha256": "ef0864ab66ca40e2930d12aba4cab3159aa470f743eee533d052fc99f844fd46",
     "fixes": [
       "arc text drag sets arcR and arcDeg, ring drag moves the centre radius keeping the width, ring corner scales both radii (collar.html:2659 to 2679); KNUCKLE has neither kind",
@@ -163,7 +163,7 @@
   {
     "id": "collar.bench/ui-core-canvas-surface",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/collar/files/collar.html",
+    "source": "fab-knowledge:originals/collar/files/collar.html",
     "sha256": "ef0864ab66ca40e2930d12aba4cab3159aa470f743eee533d052fc99f844fd46",
     "fixes": [],
     "dest": "packages/ui-core/src/surface/canvas-surface.ts"
@@ -171,7 +171,7 @@
   {
     "id": "collar.bench/geom-edge",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/collar/files/collar.html",
+    "source": "fab-knowledge:originals/collar/files/collar.html",
     "sha256": "ef0864ab66ca40e2930d12aba4cab3159aa470f743eee533d052fc99f844fd46",
     "fixes": [
       "insetAt (collar.html lines 1215 to 1218), max(0, cham - z, cham - (thk - z)), ported to packages/geom/src/edge.ts edgeInset as a 45 deg chamfer on both faces taken by max; packages/geom/test/edge.test.ts holds the port to the formula at 9 heights (R1-engine-05)"
@@ -181,7 +181,7 @@
   {
     "id": "collar.bench/mesh-edge-stack",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/collar/files/collar.html",
+    "source": "fab-knowledge:originals/collar/files/collar.html",
     "sha256": "ef0864ab66ca40e2930d12aba4cab3159aa470f743eee533d052fc99f844fd46",
     "fixes": [
       "planSlabs (collar.html lines 1201 to 1213) and labelSlab (1221 to 1224), one slab per layer in the edge zones with the inset taken at the slab middle, ported to packages/mesh/src/edge-stack.ts prismWithEdges as stack bands on q(layerTop(i)) with the narrower band reaching into the wider by the middle of stack.bandOverlap; holes open by the inset as the outer ring closes (R1-engine-06)"

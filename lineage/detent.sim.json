@@ -2,7 +2,7 @@
   {
     "id": "detent.sim/rev-d",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/detent/files/revD/detent.html",
+    "source": "fab-knowledge:originals/detent/files/revD/detent.html",
     "sha256": "5879d03fb38afaf1bbf6f0f325a91caa5e75a68d814e71dbd13c2bdad4672ccb",
     "fixes": [],
     "dest": null

@@ -2,7 +2,7 @@
   {
     "id": "catalog-src.kicad-footprints.terminalblock-phoenix-mkds-1-5-2-5.08-1x02-p5.08mm-horizontal/m08",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/m08-catalog/kicad/TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal.kicad_mod",
+    "source": "fab-knowledge:evidence/m08-catalog/kicad/TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal.kicad_mod",
     "sha256": "43274479460f20ae82c604b02e1775b712a225ad94ef79896a8abd6a4535e237",
     "fixes": [],
     "dest": null

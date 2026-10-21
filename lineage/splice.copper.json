@@ -2,7 +2,7 @@
   {
     "id": "splice.copper/bench",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/trunnion/outputs/trunnion/splice-copper.svg",
+    "source": "fab-work-directory:benches/trunnion/outputs/trunnion/splice-copper.svg",
     "sha256": "31cd7c5297bebfb3a777c7fb3161b50dbe2e791467ad313ae45d3904d7b4ff24",
     "fixes": [],
     "dest": "reference/copper/splice-ladder/legacy/splice-copper.svg"
@@ -10,7 +10,7 @@
   {
     "id": "splice.copper/rev-c",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/splice/files/splice-rev-c/splice-copper.svg",
+    "source": "fab-knowledge:originals/splice/files/splice-rev-c/splice-copper.svg",
     "sha256": "31cd7c5297bebfb3a777c7fb3161b50dbe2e791467ad313ae45d3904d7b4ff24",
     "fixes": [
       "read through the D-166 sanitiser and audited as a ladder board: packages/copper/src/vinyl/ladder.ts (least gap 0.94 mm, pitch less width) and packages/copper/src/vinyl/weed.ts (every net one piece after the 0.75 mm erosion), held to shapely by reference/copper/splice-ladder/test/parity.test.ts through tools/py/copper/dump_splice.py (M05-T14)"

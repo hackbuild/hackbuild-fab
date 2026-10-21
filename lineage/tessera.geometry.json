@@ -2,7 +2,7 @@
   {
     "id": "tessera.geometry/bench",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/cricut-midi-seven/outputs/tessera/tessera_geometry.json",
+    "source": "fab-work-directory:benches/cricut-midi-seven/outputs/tessera/tessera_geometry.json",
     "sha256": "2d30108d2af19c4faf8816d57f02d4e379ec50106ace3284af82421328d0ffa5",
     "fixes": [],
     "dest": "reference/copper/tessera/legacy/tessera_geometry.json"
@@ -10,7 +10,7 @@
   {
     "id": "tessera.geometry/rev-a",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/tessera/files/tessera_geometry.json",
+    "source": "fab-knowledge:originals/tessera/files/tessera_geometry.json",
     "sha256": "2d30108d2af19c4faf8816d57f02d4e379ec50106ace3284af82421328d0ffa5",
     "fixes": [
       "tools/py/copper/test_oracle.py: params and stats are the oracle golden, compared exactly; path strings are not compared (M05-T13 step 5)",

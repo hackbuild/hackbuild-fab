@@ -2,7 +2,7 @@
   {
     "id": "gib.shell/gib-4",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/gib/files/src/src/part3.js",
+    "source": "fab-knowledge:originals/gib/files/src/src/part3.js",
     "sha256": "d6becff07668e4490ab8da611d409337da345e00cdf30e5cf2175289c03e91a8",
     "fixes": [
       "ported to packages/archetypes/src/gib/gib.ts, as its header cites part3.js (packages/archetypes/src/gib/gib.ts line 11: \"Objects are placed as the export places them (part3.js lines 268 to 279):\"); recorded by the M06 and M08 integration"
@@ -12,7 +12,7 @@
   {
     "id": "gib.shell/gib-4-pulldown",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/gib/files/src/src/part3.js",
+    "source": "fab-knowledge:originals/gib/files/src/src/part3.js",
     "sha256": "d6becff07668e4490ab8da611d409337da345e00cdf30e5cf2175289c03e91a8",
     "fixes": [
       "no-touch pull-down at least max(1 Mohm, 20 Rsrc) (part3.js line 247; part2.js line 544 states the 20 times rule), ported to packages/circuit/src/read/ratiometric.ts pulldownFloorOhm over profile constants read.ratiometric.pulldownRatio and read.ratiometric.pulldownMinOhm (M05-T05)"

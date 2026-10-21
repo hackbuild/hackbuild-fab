@@ -8,7 +8,7 @@
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
-import { localOriginal } from "../../../../tools/test-support/originals-root.js";
+import { localSource } from "../../../../tools/test-support/originals-root.js";
 import { legacyHtml } from "./collar-legacy.js";
 import type { CollarArt, SprueMask } from "./hygiene-captures.js";
 
@@ -20,8 +20,7 @@ const rows = JSON.parse(readFileSync(root + "lineage.json", "utf8")) as Row[];
 function original(id: string): string[] {
   const row = rows.find((r) => r.id === id);
   if (row === undefined) throw new Error(`lineage.json has no row ${id}`);
-  // an absolute source is an originals-of-record path; HBF_ORIGINALS relocates it
-  const path = row.source.startsWith("/") ? localOriginal(row.source) : root + row.source;
+  const path = localSource(row.source);
   const bytes = readFileSync(path);
   const got = createHash("sha256").update(bytes).digest("hex");
   if (got !== row.sha256) throw new Error(`${path} sha256 ${got}, lineage ${id} records ${row.sha256}`);

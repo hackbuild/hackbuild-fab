@@ -2,7 +2,7 @@
   {
     "id": "quadrant.generator/bench",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/cricut-midi-seven/outputs/quadrant/gen_quadrant.py",
+    "source": "fab-work-directory:benches/cricut-midi-seven/outputs/quadrant/gen_quadrant.py",
     "sha256": "a6783b385d6c2e44732a072c9e9f31dd9e8aa65a2d6721ac75ddabff2efd5fcd",
     "fixes": [],
     "dest": "reference/copper/quadrant/legacy/gen_quadrant.py"
@@ -10,7 +10,7 @@
   {
     "id": "quadrant.generator/rev-a",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/quadrant/files/gen_quadrant.py",
+    "source": "fab-knowledge:originals/quadrant/files/gen_quadrant.py",
     "sha256": "a6783b385d6c2e44732a072c9e9f31dd9e8aa65a2d6721ac75ddabff2efd5fcd",
     "fixes": [
       "tools/py/copper/run_legacy_gen.py runs it byte identical from a temp dir with the shipped inputs and the logo literal replaced in memory; tools/py/copper/test_oracle.py holds the run to the M05-T13 table (M05-T13)",

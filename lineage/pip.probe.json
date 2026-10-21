@@ -2,7 +2,7 @@
   {
     "id": "pip.probe/pip-controller-b137deb",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/pip-controller/firmware/pip_probe/pip_probe.ino",
+    "source": "fab-knowledge:originals/pip/files/pip-controller/firmware/pip_probe/pip_probe.ino",
     "sha256": "1716b325cbbf1d32cbe8f9be131acbe54d3e8c7c2f72de213cc0d9655893dbe3",
     "fixes": [],
     "dest": null

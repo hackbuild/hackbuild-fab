@@ -2,10 +2,10 @@
   {
     "id": "brand.mark/seed-svg",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/plan-to-refine/handoff/hbf/seed/brand/hackbuild-mark.svg",
+    "source": "fab-knowledge:evidence/x/plan-to-refine/handoff/hbf/seed/brand/hackbuild-mark.svg",
     "sha256": "c0b0c1f6d2f065f4630788e34488c5949eb205fc31505db46681bf851c9c8c02",
     "fixes": [
-      "reference/copper/_inputs/hackbuild-logo.svg: the same bytes, taken from the member board-forge/assets/hackbuild-logo.svg of /Users/obsidian/Projects/hackbuild/fab-work-directory/benches/cricut-midi-seven/outputs/board-forge-updated.zip (dated 2026-08-10), which the KEYWAY family generators read as /mnt/skills/user/board-forge/assets/hackbuild-logo.svg (M05-T13)"
+      "reference/copper/_inputs/hackbuild-logo.svg: the same bytes, taken from the member board-forge/assets/hackbuild-logo.svg of fab-work-directory:benches/cricut-midi-seven/outputs/board-forge-updated.zip (dated 2026-08-10), which the KEYWAY family generators read as /mnt/skills/user/board-forge/assets/hackbuild-logo.svg (M05-T13)"
     ],
     "dest": "reference/cosmetic/coin-inlay/build.ts"
   }

@@ -2,7 +2,7 @@
   {
     "id": "gudgeon.kernel/03-part2b",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/gudgeon/files/extracted/03_part2b_kernel.js",
+    "source": "fab-knowledge:originals/gudgeon/files/extracted/03_part2b_kernel.js",
     "sha256": "f8b55433db56cf8d3f607e42bcee8935232d4bdfc6158984cda178a1d797bb3d",
     "fixes": [],
     "dest": null

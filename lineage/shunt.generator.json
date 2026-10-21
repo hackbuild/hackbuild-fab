@@ -2,7 +2,7 @@
   {
     "id": "shunt.generator/r1",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/shunt/files/gen_board.py",
+    "source": "fab-knowledge:originals/shunt/files/gen_board.py",
     "sha256": "dfab6bdf0cb365e4e88f5e583e7e76fb734d3f8a55fb143d7730fca7375691bf",
     "fixes": [
       "G7 inverted gate (lines 699 to 718) is the origin of the D-074 expect set; packages/checks/src/expect.ts compares the declared set with board.json defects (M04-T06)",

@@ -2,7 +2,7 @@
   {
     "id": "davit.chain/r4-page",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/davit/files/sim_r4.html",
+    "source": "fab-knowledge:originals/davit/files/sim_r4.html",
     "sha256": "1511d9082a6b72dd32c91ac4c2c602743c84f908bd39e3db6debaa3aab885da8",
     "fixes": [
       "chain() of line 210 (the same function as the R3 page, row davit.collide/r3-page) in the kinematics module packages/motion/src/kinematics/davit.ts: M02-T06 wrote it in packages/sim and M07-T10 moved it unchanged (D-139); sim reads it through the place(pose) binding in core/src/kinematics.ts"

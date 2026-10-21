@@ -2,7 +2,7 @@
   {
     "id": "quadrant.geometry/bench",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/cricut-midi-seven/outputs/quadrant/quadrant_geometry.json",
+    "source": "fab-work-directory:benches/cricut-midi-seven/outputs/quadrant/quadrant_geometry.json",
     "sha256": "a2a62e056688b1c29deed7c462016f4311e2fecb3ba60d82b71ee21c919093af",
     "fixes": [],
     "dest": "reference/copper/quadrant/legacy/quadrant_geometry.json"
@@ -10,7 +10,7 @@
   {
     "id": "quadrant.geometry/rev-a",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/quadrant/files/quadrant_geometry.json",
+    "source": "fab-knowledge:originals/quadrant/files/quadrant_geometry.json",
     "sha256": "a2a62e056688b1c29deed7c462016f4311e2fecb3ba60d82b71ee21c919093af",
     "fixes": [
       "tools/py/copper/test_oracle.py: params and stats are the oracle golden, compared exactly; path strings are not compared (M05-T13 step 5)",

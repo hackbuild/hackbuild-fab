@@ -2,7 +2,7 @@
   {
     "id": "catalog-src.kicad-footprints.jack-3.5mm-qingpu-wqp-pj398sm-vertical-circularholes/r1",
     "kind": "canonical",
-    "source": "/Users/obsidian/.cache/board-forge/kicad-footprints/Connector_Audio.pretty/Jack_3.5mm_QingPu_WQP-PJ398SM_Vertical_CircularHoles.kicad_mod",
+    "source": "~/.cache/board-forge/kicad-footprints/Connector_Audio.pretty/Jack_3.5mm_QingPu_WQP-PJ398SM_Vertical_CircularHoles.kicad_mod",
     "sha256": "8ae08dd1e353c7fdbea2827c890ecd150e6f5f528598770bec85a8f2422b98cc",
     "fixes": [
       "byte copy of the blob at github.com/KiCad/kicad-footprints commit 7ebfa6b23cc292a56f751b7b5f4a0e12eeef69dd (2020-10-02, frozen v5 mirror; read with git show HEAD:<path> in the mirror, the file is not checked out there), committed as the PJ398SM catalog row footprint; pads parse at load through packages/catalog/src/kicad-mod.ts (R1-flagship-access-switch-05)"
@@ -12,7 +12,7 @@
   {
     "id": "catalog-src.kicad-footprints.jack-3.5mm-qingpu-wqp-pj398sm-vertical-circularholes/r1-access-jack",
     "kind": "copy",
-    "source": "/Users/obsidian/.cache/board-forge/kicad-footprints/Connector_Audio.pretty/Jack_3.5mm_QingPu_WQP-PJ398SM_Vertical_CircularHoles.kicad_mod",
+    "source": "~/.cache/board-forge/kicad-footprints/Connector_Audio.pretty/Jack_3.5mm_QingPu_WQP-PJ398SM_Vertical_CircularHoles.kicad_mod",
     "sha256": "8ae08dd1e353c7fdbea2827c890ecd150e6f5f528598770bec85a8f2422b98cc",
     "fixes": [
       "the pad table (S, TN, T) and the F.Fab body outline and plug circle centre copied into reference/keys/access-switch/jack.ts, held equal to the catalog row by reference/keys/access-switch/test/reference.test.ts (R1-flagship-access-switch-06)"

@@ -2,7 +2,7 @@
   {
     "id": "blocks.body/blocks-1",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/blocks/files/src-extracted/blocks.js",
+    "source": "fab-knowledge:originals/blocks/files/src-extracted/blocks.js",
     "sha256": "36feb99134fd23227ec4db6fbf8668de4f9c8527febba8034401f50cb77d7b9b",
     "fixes": [
       "prismY draws hinge profiles in (x, z) so seat knuckles land on the body (blocks.js:251 to 258); BOSS parts.js:210 and 235 put them under the body",
@@ -15,7 +15,7 @@
   {
     "id": "blocks.body/blocks-1-port-stud",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/blocks/files/src-extracted/blocks.js",
+    "source": "fab-knowledge:originals/blocks/files/src-extracted/blocks.js",
     "sha256": "36feb99134fd23227ec4db6fbf8668de4f9c8527febba8034401f50cb77d7b9b",
     "fixes": [],
     "dest": "packages/archetypes/src/blocks/stud.ts"
@@ -33,7 +33,7 @@
   {
     "id": "blocks.body/boss-src",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/boss/files/boss-src/src/boss.js",
+    "source": "fab-knowledge:originals/boss/files/boss-src/src/boss.js",
     "sha256": "fad77485920bb29d996610adf577d4d10c60f813ce4abc036a10f5a4aa8bfcf7",
     "fixes": [
       "ported to packages/archetypes/src/blocks/stud.ts, as its header cites boss.js (packages/archetypes/src/blocks/stud.ts line 4: \"and from originals/boss/files/boss-src/src/boss.js column (lines 93 to\"); recorded by the M06 and M08 integration",

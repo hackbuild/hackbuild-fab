@@ -2,7 +2,7 @@
   {
     "id": "font.plex-mono-600/board-fonts",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/shunt/files/fonts/ibm-plex-mono-latin-600-normal.woff2",
+    "source": "fab-knowledge:originals/shunt/files/fonts/ibm-plex-mono-latin-600-normal.woff2",
     "sha256": "0d1f0b8d0722224e32e9f28261bdc86c79115be73444ae5eceb73976a1bcdf83",
     "fixes": [
       "SHUNT R1 fonts/, byte equal to the fontsource 5.3.0 file; read by the direct textpoly (M08-T06 step 3)"
@@ -12,7 +12,7 @@
   {
     "id": "font.plex-mono-600/fontsource-5.3.0",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/keyway/files/inputs/ibm-plex-mono-latin-600-normal.woff2",
+    "source": "fab-knowledge:originals/keyway/files/inputs/ibm-plex-mono-latin-600-normal.woff2",
     "sha256": "0d1f0b8d0722224e32e9f28261bdc86c79115be73444ae5eceb73976a1bcdf83",
     "fixes": [
       "equal to files/ibm-plex-mono-latin-600-normal.woff2 of the npm tarball @fontsource/ibm-plex-mono 5.3.0 (OFL-1.1), checked 2026-10-08"

@@ -2,7 +2,7 @@
   {
     "id": "catalog-src.kicad-footprints.r-0805-2012metric/m08",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/m08-catalog/kicad/R_0805_2012Metric.kicad_mod",
+    "source": "fab-knowledge:evidence/m08-catalog/kicad/R_0805_2012Metric.kicad_mod",
     "sha256": "34ef5a7238e8aa2622071b1ded0ce1aaaf9fd5fd2fa2d5e9914f8ee250ac3f7c",
     "fixes": [],
     "dest": null

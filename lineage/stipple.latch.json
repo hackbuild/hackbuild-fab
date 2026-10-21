@@ -2,7 +2,7 @@
   {
     "id": "stipple.latch/downloads-derived",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/stipple/files/derived/stipple_latch.json",
+    "source": "fab-knowledge:originals/stipple/files/derived/stipple_latch.json",
     "sha256": "8580b4405da5897f506605fa37b0c7f1e9b0bc4a37b6992168bb336006bfbd2c",
     "fixes": [],
     "dest": "designs/stipple/legacy/derived/stipple_latch.json"
@@ -10,7 +10,7 @@
   {
     "id": "stipple.latch/downloads-derived-script",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/stipple/files/derived/stipple_latch.py",
+    "source": "fab-knowledge:originals/stipple/files/derived/stipple_latch.py",
     "sha256": "9a18e298cd3f27b030a02ccc3649ca2c1543b16dd40a0cf2c4a3fd14be949b02",
     "fixes": [],
     "dest": "designs/stipple/legacy/derived/stipple_latch.py"

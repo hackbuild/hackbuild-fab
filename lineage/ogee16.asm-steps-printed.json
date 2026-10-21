@@ -2,7 +2,7 @@
   {
     "id": "ogee16.asm-steps-printed/r16p",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/ogee16/files/src/source/printed_viewer_template.html",
+    "source": "fab-knowledge:originals/ogee16/files/src/source/printed_viewer_template.html",
     "sha256": "70f859f6524e0abc2fc1f3a7a22abe5a25b560848bf615868191607092dc61b8",
     "fixes": [
       "the asm argument of every reg(o, group, ex, asm) call (lines 189 to 276) and the 12 ASM labels (lines 520 to 524) read the same way (designs/ogee16/legacy/tools/extract-steps.mjs, M07-T09); counts held to build_plate.py QTY, and the drive pin, which no reg call places, is listed unassigned",

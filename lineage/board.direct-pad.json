@@ -2,7 +2,7 @@
   {
     "id": "board.direct-pad/spindle-r1",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/spindle/files/pcb.py",
+    "source": "fab-knowledge:originals/spindle/files/pcb.py",
     "sha256": "650351218717462917332d02c7cfb70883ad3a66ffad24b0e2756b90ce8a3176",
     "fixes": [
       "Board.pad with hole_dx, via, trace, btrace and the drill list (pcb.py lines 34 to 54 and 156 to 160) as a library class; the hole centre hx, hy feeds every consumer (M08-T06)"

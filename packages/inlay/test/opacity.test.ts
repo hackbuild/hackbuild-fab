@@ -6,6 +6,7 @@
 
 import { createHash } from "node:crypto";
 import { existsSync, readFileSync } from "node:fs";
+import { sourcePath } from "../../../tools/test-support/originals-root.js";
 import { fileURLToPath } from "node:url";
 import { PROFILE_DATA, createProfileLookup, loadProfile, tablesFromData } from "@hackbuild/profile";
 import { isThrownCommandError, type Constant, type ProfileLookup } from "@hackbuild/spec";
@@ -142,8 +143,10 @@ describe("independent sources", () => {
   const canon = lineage.find((r) => r.id.startsWith("knowledge.print-reality/") && r.kind === "canonical");
 
   test("print-reality.md, at the canonical sha256, states 1.2 mm light over dark and two layers (0.48 at 0.24) dark over light", (ctx) => {
-    if (canon === undefined || !existsSync(canon.source)) return ctx.skip();
-    const buf = readFileSync(canon.source);
+    if (canon === undefined) return ctx.skip();
+    const src = sourcePath(canon.source);
+    if (!existsSync(src)) return ctx.skip();
+    const buf = readFileSync(src);
     expect(createHash("sha256").update(buf).digest("hex")).toBe(canon.sha256);
     const lines = buf.toString("utf8").split("\n");
     // Card cites lines 22 and 23 to 26 (1-based).

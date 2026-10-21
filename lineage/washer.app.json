@@ -2,7 +2,7 @@
   {
     "id": "washer.app/harvest",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/washer/files/history/laser-rig-2026-07-30-harvest.html",
+    "source": "fab-knowledge:originals/washer/files/history/laser-rig-2026-07-30-harvest.html",
     "sha256": "1b4f11d80a37b4882dccd9f1ae6a70705c270a962bd066f8cabca06ff7fd8ace",
     "fixes": [],
     "dest": null
@@ -10,7 +10,7 @@
   {
     "id": "washer.app/laserriggg",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/washer/files/rig/laser-rig.html",
+    "source": "fab-knowledge:originals/washer/files/rig/laser-rig.html",
     "sha256": "38a2c04770ba85a9afea7aa8ff4b988174d2246bb7ce8657851c5aefce411f9c",
     "fixes": [
       "hermite segments, tangent clamp, EMA loss stretch, starvation gate, TX ring, credit flow over the harvest copy (washer record section 1)",
@@ -23,7 +23,7 @@
   {
     "id": "washer.app/m07-canonical-copy",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/washer/files/rig/laser-rig.html",
+    "source": "fab-knowledge:originals/washer/files/rig/laser-rig.html",
     "sha256": "38a2c04770ba85a9afea7aa8ff4b988174d2246bb7ce8657851c5aefce411f9c",
     "fixes": [
       "byte identical to the canonical row washer.app/laserriggg, stored as the one member laser-rig.html of designs/washer/legacy/laser-rig-canonical.zip (dated 1980-01-01, zip sha256 35726c4d01c2a94bf36a8a229a1e72045dc46f3eb5efd506cc61bff7f62e0648) since its line 1852 writes an em dash as an HTML entity",
@@ -34,7 +34,7 @@
   {
     "id": "washer.app/m07-drive-record",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/washer/drive/plan-square-2026-10-05.json",
+    "source": "fab-knowledge:originals/washer/drive/plan-square-2026-10-05.json",
     "sha256": "08404263f86d3d5f52e73327febc9e2a78d3c6400f0c7d5e9e2ea2bb9765a3b1",
     "fixes": [
       "the canonical and harvest pages' own planChainPen on the 60 mm square, written by originals/washer/drive/plan-square.cjs in Chrome on 2026-10-05; copied byte identical so the canonical defaults check in packages/motion/test/planners.test.ts runs in CI (M07 audit)"
@@ -44,7 +44,7 @@
   {
     "id": "washer.app/m07-kin",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/washer/files/rig/laser-rig.html",
+    "source": "fab-knowledge:originals/washer/files/rig/laser-rig.html",
     "sha256": "38a2c04770ba85a9afea7aa8ff4b988174d2246bb7ce8657851c5aefce411f9c",
     "fixes": [
       "the M07-T10 port of usToDeg to wallToAngles (lines 2190 to 2279, 3623 to 3644, 5241); listed on row washer.app/laserriggg"
@@ -54,7 +54,7 @@
   {
     "id": "washer.app/m07-legacy",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/washer/outputs/laser-rig.html",
+    "source": "fab-work-directory:benches/washer/outputs/laser-rig.html",
     "sha256": "1b4f11d80a37b4882dccd9f1ae6a70705c270a962bd066f8cabca06ff7fd8ace",
     "fixes": [
       "kept over the canonical laserriggg page because the M07 WASHER golden was taken from it; the canonical page plans the same square with new defaults (designs/washer/legacy/README.md)",
@@ -65,7 +65,7 @@
   {
     "id": "washer.app/m07-planner",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/washer/files/rig/laser-rig.html",
+    "source": "fab-knowledge:originals/washer/files/rig/laser-rig.html",
     "sha256": "38a2c04770ba85a9afea7aa8ff4b988174d2246bb7ce8657851c5aefce411f9c",
     "fixes": [
       "the M07-T12 port of densify, degPerMm, resolutionSlew, resolutionMM and planChainPen (lines 4096 to 4308); listed on row washer.app/laserriggg"

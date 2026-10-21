@@ -2,7 +2,7 @@
   {
     "id": "fret.rerun/2026-10-04",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/fret/files/rerun/run-2026-10-04.txt",
+    "source": "fab-knowledge:originals/fret/files/rerun/run-2026-10-04.txt",
     "sha256": "7a17ad05d03be62cd962fb7c1d431bfdf85725ae8f2dd715c844c16f7d0d6387",
     "fixes": [
       "tools/py/copper/test_oracle.py: the gate list, verdicts and order the oracle run must equal, numbers masked (M05-T13)",

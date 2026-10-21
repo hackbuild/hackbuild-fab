@@ -2,7 +2,7 @@
   {
     "id": "catalog-src.spindle.supermini/m08",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/spindle/outputs/spindle/parts/supermini.kicad_mod",
+    "source": "fab-work-directory:benches/spindle/outputs/spindle/parts/supermini.kicad_mod",
     "sha256": "0c4242f4e13c5653cdf0081d1d13e0bff5021fa6b7d7bd1b3867efed5bb0b25c",
     "fixes": [],
     "dest": null

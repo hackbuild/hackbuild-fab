@@ -2,7 +2,7 @@
   {
     "id": "slug.audit/slug-12",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/slug/files/audit.py",
+    "source": "fab-knowledge:originals/slug/files/audit.py",
     "sha256": "88620d6e96cf4d9af1b97dccc6952f3b81d10431d4ff7f5d1d8397617b323aac",
     "fixes": [],
     "dest": null

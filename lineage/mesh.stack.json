@@ -2,7 +2,7 @@
   {
     "id": "mesh.stack/blocks-src",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/blocks/files/src-extracted/kernel.js",
+    "source": "fab-knowledge:originals/blocks/files/src-extracted/kernel.js",
     "sha256": "e514477f4a8a9f2996b8f4880fc774c07801467db9899cebcd21d03724b57188",
     "fixes": [
       "several closed shells in one slot, each kept whole (kernel.js Mesh._addShell line 216, merge line 306)"

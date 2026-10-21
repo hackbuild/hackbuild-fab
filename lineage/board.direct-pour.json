@@ -2,7 +2,7 @@
   {
     "id": "board.direct-pour/spindle-r1",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/spindle/files/pcb.py",
+    "source": "fab-knowledge:originals/spindle/files/pcb.py",
     "sha256": "650351218717462917332d02c7cfb70883ad3a66ffad24b0e2756b90ce8a3176",
     "fixes": [
       "outline_poly, net_top and the bottom pour synthesis (pcb.py lines 211 to 244) with the pour net and the keepout as arguments; the antenna box stays the only keepout (M08-T06)"

@@ -2,7 +2,7 @@
   {
     "id": "pip.smoke/pip-controller-b137deb",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/test/smoke.py",
+    "source": "fab-knowledge:evidence/x/pip-controller/test/smoke.py",
     "sha256": "8405886e70f5e1ee3f2ca77ef63505eb62d876e450f0f44a3fdd91fca7125f27",
     "fixes": [],
     "dest": "designs/pip/legacy/test/smoke.py"

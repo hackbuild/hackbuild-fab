@@ -2,7 +2,7 @@
   {
     "id": "sash.bench/r2",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/sash/files/sash.html",
+    "source": "fab-knowledge:originals/sash/files/sash.html",
     "sha256": "1af452be6cccc94aced78f7d7cb292ba34742740410bd7560b2edf07b5d33cf5",
     "fixes": [
       "designs/sash/legacy/tools/capture.py adds one line before the runCheck call (line 1813) to a temporary copy, keeping G, front, wall and slideGrids on MODEL.capture; it writes designs/sash/legacy/fixtures/*.json and never edits this copy (M02-T10)"

@@ -2,7 +2,7 @@
   {
     "id": "pip.geom/haft-9",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft-src/src/geom.js",
+    "source": "fab-knowledge:originals/pip/files/haft-src/src/geom.js",
     "sha256": "43992b7d0617b6006729547db6909dba3b28ec3fea8d16ac23052e459d625305",
     "fixes": [
       "the wasm.ts port of the patched prototypes and live count came from the pip.geom/pip-controller copy"
@@ -12,7 +12,7 @@
   {
     "id": "pip.geom/pip-controller",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/pip-controller/src/geom.js",
+    "source": "fab-knowledge:originals/pip/files/pip-controller/src/geom.js",
     "sha256": "c9b9f2692a99d3214f5d991023109c3806d8b456562bedce803da5ef7c61925b",
     "fixes": [
       "patched prototypes and live count (geom.js lines 8 to 64) ported to packages/mesh/src/wasm.ts (D-055)",
@@ -23,7 +23,7 @@
   {
     "id": "pip.geom/pip-controller-legacy",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/src/geom.js",
+    "source": "fab-knowledge:evidence/x/pip-controller/src/geom.js",
     "sha256": "c9b9f2692a99d3214f5d991023109c3806d8b456562bedce803da5ef7c61925b",
     "fixes": [],
     "dest": "designs/pip/legacy/src/geom.js"
@@ -31,7 +31,7 @@
   {
     "id": "pip.geom/pip-controller-stroke",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/pip-controller/src/geom.js",
+    "source": "fab-knowledge:originals/pip/files/pip-controller/src/geom.js",
     "sha256": "c9b9f2692a99d3214f5d991023109c3806d8b456562bedce803da5ef7c61925b",
     "fixes": [
       "segsFor, the half-step circle and the spine stroke offset once with Round joins (geom.js lines 72, 77 to 82 and 100 to 114) ported to packages/copper/src/emit/trace-layer.ts (M05-T10); circle points come from the D-175 unit-circle table at twice the count, odd indices, and every entry snaps to 1/1024 mm (D-054)"

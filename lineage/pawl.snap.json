@@ -2,7 +2,7 @@
   {
     "id": "pawl.snap/m02-record",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pawlrun/snap.mjs",
+    "source": "fab-knowledge:evidence/x/pawlrun/snap.mjs",
     "sha256": "5c575728781bff5972d8f1407470ebe3fd695b7cd4f389130f6aef8763e76ed3",
     "fixes": [],
     "dest": "packages/sim/src/rapier/snapshot.ts"

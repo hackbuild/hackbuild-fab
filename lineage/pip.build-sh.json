@@ -2,7 +2,7 @@
   {
     "id": "pip.build-sh/m09-manifest",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/build.sh",
+    "source": "fab-knowledge:evidence/x/pip-controller/build.sh",
     "sha256": "df79e11bfb13bcb2c0f1a997aa2c6f28473a73998db4982f4ffd54546ab062cd",
     "fixes": [],
     "dest": "designs/pip/legacy/bake.json"
@@ -10,7 +10,7 @@
   {
     "id": "pip.build-sh/pip-controller-b137deb",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/build.sh",
+    "source": "fab-knowledge:evidence/x/pip-controller/build.sh",
     "sha256": "df79e11bfb13bcb2c0f1a997aa2c6f28473a73998db4982f4ffd54546ab062cd",
     "fixes": [],
     "dest": "designs/pip/legacy/build.sh"

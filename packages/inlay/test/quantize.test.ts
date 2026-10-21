@@ -4,6 +4,7 @@
 // running the cases through the original COLLAR and SPRUE code.
 
 import { existsSync, readFileSync } from "node:fs";
+import { sourcePath } from "../../../tools/test-support/originals-root.js";
 import { fileURLToPath } from "node:url";
 import { sha256Hex } from "@hackbuild/spec";
 import { describe, expect, test } from "vitest";
@@ -136,8 +137,9 @@ describe("port against the originals (quantize-golden.json)", () => {
     let n = 0;
     for (const s of Object.values(golden.sources)) {
       const row = rows.find((r) => r.id === s.id);
-      if (!row || !existsSync(row.source)) continue;
-      expect(sha256Hex(new Uint8Array(readFileSync(row.source))), s.id).toBe(s.sha256);
+      const src = row === undefined ? "" : sourcePath(row.source);
+      if (src === "" || !existsSync(src)) continue;
+      expect(sha256Hex(new Uint8Array(readFileSync(src))), s.id).toBe(s.sha256);
       n++;
     }
     if (n === 0) ctx.skip();

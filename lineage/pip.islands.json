@@ -2,7 +2,7 @@
   {
     "id": "pip.islands/pip-controller",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/pip-controller/test/islands.py",
+    "source": "fab-knowledge:originals/pip/files/pip-controller/test/islands.py",
     "sha256": "94bec281685f1a18c552a6c80e8a0b5f15b16f0a62f0d0ba2f5ffba7e52034d4",
     "fixes": [
       "port: packages/checks/src/solid/slice.ts slices the union of an object's parts, as islands.py batch_boolean does before it slices",

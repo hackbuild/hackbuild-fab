@@ -2,7 +2,7 @@
   {
     "id": "sparger-w.helpers/rev2",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/sparger-w/files/source/sparger.py",
+    "source": "fab-knowledge:originals/sparger-w/files/source/sparger.py",
     "sha256": "9582eaaff26a65067aa88f3da25845a21e8ff4946e717991e81c37b1297727ff",
     "fixes": [],
     "dest": null

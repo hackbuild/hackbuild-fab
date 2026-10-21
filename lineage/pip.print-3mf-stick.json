@@ -2,7 +2,7 @@
   {
     "id": "pip.print-3mf-stick/pip-controller-b137deb",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/print/pip-stick.3mf",
+    "source": "fab-knowledge:evidence/x/pip-controller/print/pip-stick.3mf",
     "sha256": "507d7c8c738b35986455002e2b3a43f1eeae0eb6549eadd2f2363f4471165270",
     "fixes": [],
     "dest": "designs/pip/legacy/print/pip-stick.3mf"

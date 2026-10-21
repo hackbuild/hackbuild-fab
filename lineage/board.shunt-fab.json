@@ -2,7 +2,7 @@
   {
     "id": "board.shunt-fab/r1",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/shunt/files/gen_fab.py",
+    "source": "fab-knowledge:originals/shunt/files/gen_fab.py",
     "sha256": "eeffed1bc78e44dfc06acc09e04b4f6dd1cb3a62834a6fd6da09e0b979374013",
     "fixes": [
       "the fab set of gen_fab.py lines 158 to 276 and the zip README (379 to 400) on FlashGerber; the UV art and preview SVGs are not written"

@@ -2,7 +2,7 @@
   {
     "id": "pip.model/haft-9",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft-src/src/model.js",
+    "source": "fab-knowledge:originals/pip/files/haft-src/src/model.js",
     "sha256": "95a996433e54d586cdaa970a844ee8f8f02196f80b23ba36983c95ed456d1f34",
     "fixes": [
       "print bleed: conductive edges pulled back by bleed/2, cg2 = (colGap + bleed)/2, wDraw = max(0.6, w - bleed) (model.js:27 to 29, 64); carried by the profile bleed field at emit, default 0 (D-084), never in a build",
@@ -17,7 +17,7 @@
   {
     "id": "pip.model/haft-9-chk-net-46",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft-src/src/model.js",
+    "source": "fab-knowledge:originals/pip/files/haft-src/src/model.js",
     "sha256": "95a996433e54d586cdaa970a844ee8f8f02196f80b23ba36983c95ed456d1f34",
     "fixes": [
       "the board fits 'bezel squeeze on the board' (line 576: press > 0 and at most 0.5) and 'pin length into the socket' (line 595: at least 2.0) as the press depth legal of CHK-NET-46, read through profile rows seat.bumpPress.lo, seat.bumpPress.hi and seat.socketPinMin (K-04)"
@@ -27,7 +27,7 @@
   {
     "id": "pip.model/haft-9-click-spring-window",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft-src/src/model.js",
+    "source": "fab-knowledge:originals/pip/files/haft-src/src/model.js",
     "sha256": "95a996433e54d586cdaa970a844ee8f8f02196f80b23ba36983c95ed456d1f34",
     "fixes": [
       "clickElement2D arch helper (model.js lines 683 to 694) ported to reference/keys/click-spring-window/build.ts (M01-T07): two arches on vb 0 and t + g, 64 segments, without the 0.4 mm run-out into the end blocks, which the reference does not build"
@@ -37,7 +37,7 @@
   {
     "id": "pip.model/haft-9-port-flex",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft-src/src/model.js",
+    "source": "fab-knowledge:originals/pip/files/haft-src/src/model.js",
     "sha256": "95a996433e54d586cdaa970a844ee8f8f02196f80b23ba36983c95ed456d1f34",
     "fixes": [],
     "dest": "packages/archetypes/src/pip/flex.ts"
@@ -45,7 +45,7 @@
   {
     "id": "pip.model/haft-9-port-seat-tap",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft-src/src/model.js",
+    "source": "fab-knowledge:originals/pip/files/haft-src/src/model.js",
     "sha256": "95a996433e54d586cdaa970a844ee8f8f02196f80b23ba36983c95ed456d1f34",
     "fixes": [
       "the bump under each used castellation (model.js line 209: a cylinder (bumpW + 0.2 - bleed) / 2 from floor - EZ to floor + bumpH) and the bezel ribs reaching boardTop - press (lines 313 to 319) carried into each seat port as its net tap by packages/archetypes/src/pip/seat.ts: the tapped bump, the catalog pin centre on the bump top, and press as the clamp depth (K-04)"
@@ -55,7 +55,7 @@
   {
     "id": "pip.model/haft-9-port-touch",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft-src/src/model.js",
+    "source": "fab-knowledge:originals/pip/files/haft-src/src/model.js",
     "sha256": "95a996433e54d586cdaa970a844ee8f8f02196f80b23ba36983c95ed456d1f34",
     "fixes": [],
     "dest": "packages/archetypes/src/pip/touch.ts"
@@ -63,7 +63,7 @@
   {
     "id": "pip.model/haft-9-thin-wall",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft-src/src/model.js",
+    "source": "fab-knowledge:originals/pip/files/haft-src/src/model.js",
     "sha256": "95a996433e54d586cdaa970a844ee8f8f02196f80b23ba36983c95ed456d1f34",
     "fixes": [
       "click spring fit note 'one line, needs thin wall handling on' at C.t < 0.6 (model.js line 540; pip-controller model.js line 474; pip RECORD.md line 350) ported to packages/3mf/src/overrides.ts as the detect_thin_wall 1 object row; the bound is 1.5 preset line widths (0.63 mm at ffc5p line width 0.42, computed) where PIP read a fixed 0.6 mm, so it follows the 0.25 nozzle preset (R1-flagship-access-switch-07)",
@@ -77,7 +77,7 @@
   {
     "id": "pip.model/pip-controller-b137deb",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/pip-controller/src/model.js",
+    "source": "fab-knowledge:originals/pip/files/pip-controller/src/model.js",
     "sha256": "d2a9d47d98ff0a8e5b3a755cf5d6d1ee06528874d2e393597c8472e52ccf47be",
     "fixes": [
       "flex key lathe, cap disc, key top, split column and well (model.js lines 61 to 88), EZ (line 8), feel readout (line 441) and the flex fits and rules rows (lines 455 to 462, 527 to 530) ported to reference/keys/flex-pair/build.ts (D-223); this copy draws the split at cg2 = colGap / 2 (line 62), haft (9) at (colGap + bleed) / 2, equal at bleed 0 (D-084)"
@@ -87,7 +87,7 @@
   {
     "id": "pip.model/pip-controller-b137deb-drive",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/pip-controller/src/model.js",
+    "source": "fab-knowledge:originals/pip/files/pip-controller/src/model.js",
     "sha256": "d2a9d47d98ff0a8e5b3a755cf5d6d1ee06528874d2e393597c8472e52ccf47be",
     "fixes": [
       "the key path over declared lengths, Rn = Rtrace(len with stubs) + 2 Rpost(hPost, post r) + vias x Rpost(viaH, via r), extra = the switch posts, common = Rtrace(return) + 2 Rpost, total = Rn + extra + Rsw + common (model.js lines 387 to 416), ported to packages/circuit/src/solve/drive-scene.ts driveKeys (M05-T11): Rtrace through path1d legOf, Rpost through packages/circuit/src/path1d.ts postLeg over a pi r^2 disc (line 393), both over profile cpla along and through rows; Rsw is the declared contact, computed by PIP and dumped by tools/legacy/pip/dump-elec.mjs; the read goes through chargePort in packages/circuit/src/solve/ports.ts, the one charge-release reader"
@@ -97,7 +97,7 @@
   {
     "id": "pip.model/pip-controller-b137deb-flex-switch",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/pip-controller/src/model.js",
+    "source": "fab-knowledge:originals/pip/files/pip-controller/src/model.js",
     "sha256": "d2a9d47d98ff0a8e5b3a755cf5d6d1ee06528874d2e393597c8472e52ccf47be",
     "fixes": [
       "flex switch Rsw (model.js line 404, haft (9) line 469) ported to packages/circuit/src/flex-switch.ts flexCapBridgeOhm in SI with the same operand order; the trace capacitance rule Cpf = cpin + 0.02 pF per mm + 1 (line 418) is profile rows probe.tracePfPerMm and probe.tracePfFixed, summed by the caller into rcCrossingUs"
@@ -107,7 +107,7 @@
   {
     "id": "pip.model/pip-controller-b137deb-nets",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/pip-controller/src/model.js",
+    "source": "fab-knowledge:originals/pip/files/pip-controller/src/model.js",
     "sha256": "d2a9d47d98ff0a8e5b3a755cf5d6d1ee06528874d2e393597c8472e52ccf47be",
     "fixes": [
       "per net union, decompose into pieces and minGap between nets (model.js lines 207 to 224) ported to packages/circuit/src/extract/nets.ts extractNets (M05-T04); the touch distance is 2 x 3mf.coincidenceInset plus one grid step because stage 6 insets both sides",
@@ -118,7 +118,7 @@
   {
     "id": "pip.model/pip-controller-b137deb-pressed-path",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/pip-controller/src/model.js",
+    "source": "fab-knowledge:originals/pip/files/pip-controller/src/model.js",
     "sha256": "d2a9d47d98ff0a8e5b3a755cf5d6d1ee06528874d2e393597c8472e52ccf47be",
     "fixes": [
       "the pressed key total = Rn + extra + Rsw + common, key net plus switch plus the GND trace gndR (model.js lines 395 to 416), ported to packages/circuit/src/solve/ports.ts pressedPathOf over extracted nets (M05-T06): the read net and the return net each priced by their read path, Net.totalOhm hi ends; the switch has no ContactRow and the cap bridge needs geometry the Part IR does not carry, so the closed contact is listed unpriced and the path is a lower bound",
@@ -129,7 +129,7 @@
   {
     "id": "pip.model/pip-controller-b137deb-read",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/pip-controller/src/model.js",
+    "source": "fab-knowledge:originals/pip/files/pip-controller/src/model.js",
     "sha256": "d2a9d47d98ff0a8e5b3a755cf5d6d1ee06528874d2e393597c8472e52ccf47be",
     "fixes": [
       "node capacitance Cpf = cpin + len x 0.02 + 1 in PIP's summation order (model.js line 418), ported to packages/circuit/src/read/charge-release.ts nodeCapPf over profile constants electrical.tracePfPerMm and electrical.tracePfFixed (M05-T05)",
@@ -140,7 +140,7 @@
   {
     "id": "pip.model/pip-controller-b137deb-release",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/pip-controller/src/model.js",
+    "source": "fab-knowledge:originals/pip/files/pip-controller/src/model.js",
     "sha256": "d2a9d47d98ff0a8e5b3a755cf5d6d1ee06528874d2e393597c8472e52ccf47be",
     "fixes": [
       "settle criterion, 5 time constants for a key and 3 for touch (model.js lines 420 to 428), ported to packages/circuit/src/read/charge-release.ts SETTLE_TAUS (M05-T05; release.ts from M-S-T05 re-exports it), which CHK-NET-29 in packages/checks/src/skeleton/net29.ts reads; haft (9) model.js carries the same tests at lines 483 to 493"
@@ -150,7 +150,7 @@
   {
     "id": "pip.model/pip-controller-b137deb-trace-layer",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/pip-controller/src/model.js",
+    "source": "fab-knowledge:originals/pip/files/pip-controller/src/model.js",
     "sha256": "d2a9d47d98ff0a8e5b3a755cf5d6d1ee06528874d2e393597c8472e52ccf47be",
     "fixes": [
       "each trace layer per net as one 2D region of strokes, stubs, post and via discs, unioned and closed by +0.01 then -0.01 Miter, and the sep rule moving a post radius within 0.12 of w/2 to w/2 + 0.12 (model.js lines 27 and 33 to 48) ported to packages/copper/src/emit/trace-layer.ts emitTraceLayers (M05-T10); the pads 0.12, 0.05, 0.01 and EZ 0.02 are profile constants route.postSep, route.discPad, route.regionClose and route.postOverlap; bleed is applied there once, default 0 (D-084)"
@@ -160,7 +160,7 @@
   {
     "id": "pip.model/pip-controller-legacy",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/src/model.js",
+    "source": "fab-knowledge:evidence/x/pip-controller/src/model.js",
     "sha256": "d2a9d47d98ff0a8e5b3a755cf5d6d1ee06528874d2e393597c8472e52ccf47be",
     "fixes": [],
     "dest": "designs/pip/legacy/src/model.js"
@@ -168,7 +168,7 @@
   {
     "id": "pip.model/haft-9-access-jack",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft-src/src/model.js",
+    "source": "fab-knowledge:originals/pip/files/haft-src/src/model.js",
     "sha256": "95a996433e54d586cdaa970a844ee8f8f02196f80b23ba36983c95ed456d1f34",
     "fixes": [
       "the printed socket (model.js lines 204 to 205, a cup per pin on its net; lines 593 to 595, wall at least 0.45 and pin length at least 2.0) as the S and T leg sockets of reference/keys/access-switch/jack.ts, a slot between two cPLA walls on a column to trace layer 1, and the closed path readout (lines 453 to 460 and 481: lead length over rho along times the trace section plus a post at each end at rho through) as R.leads and R.closed (R1-flagship-access-switch-06)"
@@ -178,7 +178,7 @@
   {
     "id": "pip.model/haft-9-edge",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft-src/src/model.js",
+    "source": "fab-knowledge:originals/pip/files/haft-src/src/model.js",
     "sha256": "95a996433e54d586cdaa970a844ee8f8f02196f80b23ba36983c95ed456d1f34",
     "fixes": [
       "chamferTop (model.js lines 624 to 635), a stepped top chamfer one layer per step, ported to packages/geom/src/edge.ts as the chamfer profile d(z); the per layer bands it cut are the R1-engine-06 stack generator's (R1-engine-05)"

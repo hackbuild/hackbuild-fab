@@ -2,7 +2,7 @@
   {
     "id": "feeler.ladder-json/dl",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-gudgeon-tang-keyway/feeler/feeler-ladder.json",
+    "source": "fab-knowledge:evidence/x/downloads/dl-gudgeon-tang-keyway/feeler/feeler-ladder.json",
     "sha256": "a01cc14d16a0d8885b13286663e4526ea4113f29ce9e586a68d664bed2458912",
     "fixes": [],
     "dest": "designs/stylus/legacy/feeler-ladder.json"
@@ -10,7 +10,7 @@
   {
     "id": "feeler.ladder-json/thinpot-16",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/thinpot/files/feeler-ladder.json",
+    "source": "fab-knowledge:originals/thinpot/files/feeler-ladder.json",
     "sha256": "a01cc14d16a0d8885b13286663e4526ea4113f29ce9e586a68d664bed2458912",
     "fixes": [],
     "dest": "designs/stylus/legacy/feeler-ladder.json"

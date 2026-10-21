@@ -2,7 +2,7 @@
   {
     "id": "vernier.geometry/bench",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/cricut-midi-seven/outputs/vernier/vernier_geometry.json",
+    "source": "fab-work-directory:benches/cricut-midi-seven/outputs/vernier/vernier_geometry.json",
     "sha256": "10f5fe1ee99c5979fd4f881eec5c165379b91821e1547c72182f3f0b037fba0b",
     "fixes": [],
     "dest": "reference/copper/vernier/legacy/vernier_geometry.json"
@@ -10,7 +10,7 @@
   {
     "id": "vernier.geometry/rev-a",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/vernier/files/vernier_geometry.json",
+    "source": "fab-knowledge:originals/vernier/files/vernier_geometry.json",
     "sha256": "10f5fe1ee99c5979fd4f881eec5c165379b91821e1547c72182f3f0b037fba0b",
     "fixes": [
       "tools/py/copper/test_oracle.py: params and stats are the oracle golden, compared exactly; path strings are not compared (M05-T13 step 5)",

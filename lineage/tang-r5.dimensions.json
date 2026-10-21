@@ -2,7 +2,7 @@
   {
     "id": "tang-r5.dimensions/dl",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-gudgeon-tang-keyway/unzipped/tang_r5_circuit_files/DIMENSIONS.txt",
+    "source": "fab-knowledge:evidence/x/downloads/dl-gudgeon-tang-keyway/unzipped/tang_r5_circuit_files/DIMENSIONS.txt",
     "sha256": "889657c1afcb8c883fbe1e34e60fc53b795f8a3626964f9e75b3f8e1cd64e293",
     "fixes": [],
     "dest": null

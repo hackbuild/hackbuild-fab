@@ -2,7 +2,7 @@
   {
     "id": "fret.generator/bench",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/cricut-midi-seven/outputs/fret/gen_fret.py",
+    "source": "fab-work-directory:benches/cricut-midi-seven/outputs/fret/gen_fret.py",
     "sha256": "301f6ffc2529d7193cc57fd7406e5c6da01340d1064288253dad7fa5a5507481",
     "fixes": [],
     "dest": "reference/copper/fret/legacy/gen_fret.py"
@@ -10,7 +10,7 @@
   {
     "id": "fret.generator/rev-a",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/fret/files/gen_fret.py",
+    "source": "fab-knowledge:originals/fret/files/gen_fret.py",
     "sha256": "301f6ffc2529d7193cc57fd7406e5c6da01340d1064288253dad7fa5a5507481",
     "fixes": [
       "tools/py/copper/run_legacy_gen.py runs it byte identical from a temp dir with the shipped inputs and the logo literal replaced in memory; tools/py/copper/test_oracle.py holds the run to the M05-T13 table (M05-T13)",

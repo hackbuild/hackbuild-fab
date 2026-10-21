@@ -2,7 +2,7 @@
   {
     "id": "board.reparse/shunt-r1",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/shunt/files/check_fab.py",
+    "source": "fab-knowledge:originals/shunt/files/check_fab.py",
     "sha256": "cb9902bfc157afd390b89405369f271c79e81030192f39447c5b341214942f14",
     "fixes": [
       "check_fab.py sections 1 to 6 generalised over a record: parse with warnings as errors, drill registration at 1 um, pads on both sides, slot contour and NPTH, silk vertex sets in integer nanometres against textpoly with the mirror flag and the 98 percent rule, back ink box; joined by the M08-T07 vector compare, pour isolation, bottom pieces joining two nets and the pygerber raster (D-180: the SPINDLE reparse scripts were never harvested)"

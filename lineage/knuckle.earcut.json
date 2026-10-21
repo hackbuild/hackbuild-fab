@@ -2,7 +2,7 @@
   {
     "id": "knuckle.earcut/part0",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/knuckle/files/src/part0_earcut.js",
+    "source": "fab-knowledge:originals/knuckle/files/src/part0_earcut.js",
     "sha256": "1444195270d4358ef8dd1a448074f555d7ac3c83c850f5648b611ea1d2090ff3",
     "fixes": [],
     "dest": "packages/geom/src/earcut.ts"

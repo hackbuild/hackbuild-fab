@@ -2,7 +2,7 @@
   {
     "id": "keyway.generator/bench",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/cricut-midi-seven/outputs/keyway/gen_keyway.py",
+    "source": "fab-work-directory:benches/cricut-midi-seven/outputs/keyway/gen_keyway.py",
     "sha256": "d712ce489ad04cc33f670715e204ad8ac21ee3429a1123e48cfa3dfdcf715e3c",
     "fixes": [],
     "dest": "reference/copper/keyway/legacy/gen_keyway.py"
@@ -10,7 +10,7 @@
   {
     "id": "keyway.generator/rev-a",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/keyway/files/gen_keyway.py",
+    "source": "fab-knowledge:originals/keyway/files/gen_keyway.py",
     "sha256": "d712ce489ad04cc33f670715e204ad8ac21ee3429a1123e48cfa3dfdcf715e3c",
     "fixes": [
       "tools/py/copper/run_legacy_gen.py runs it byte identical from a temp dir with the shipped inputs and the logo literal replaced in memory; tools/py/copper/test_oracle.py holds the run to the M05-T13 table (M05-T13)",

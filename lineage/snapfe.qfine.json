@@ -2,7 +2,7 @@
   {
     "id": "snapfe.qfine/scratch",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/scratch/qfine.cjs",
+    "source": "fab-knowledge:evidence/scratch/qfine.cjs",
     "sha256": "ba221f7180e6ef29ad268c683eaac5ac995ee7e1144611ac57392ad40ba29f57",
     "fixes": [],
     "dest": "packages/sim/test/legacy/qfine.stdout.txt"

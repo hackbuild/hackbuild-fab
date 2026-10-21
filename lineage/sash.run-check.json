@@ -2,7 +2,7 @@
   {
     "id": "sash.run-check/bench-src-zip",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/sash/outputs/sash/sash-src.zip",
+    "source": "fab-work-directory:benches/sash/outputs/sash/sash-src.zip",
     "sha256": "57d810decb4b107a3b2ffaadf5dea57855f01b6bbeaad250414210c2a0570f14",
     "fixes": [],
     "dest": "designs/sash/legacy/sash-src.zip"
@@ -10,7 +10,7 @@
   {
     "id": "sash.run-check/part2",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/sash/files/src/src/part2.js",
+    "source": "fab-knowledge:originals/sash/files/src/src/part2.js",
     "sha256": "536cfa371fabda52fe6fb31ff3a3c1f60969c8a9ce59f4d9f89c64e4c77f3567",
     "fixes": [
       "packages/sim/src/sweep/prismatic.ts: runCheck (src/part2.js lines 825 to 840) ported; closest approach is new and exact over the two cell sets at one pitch"

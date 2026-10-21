@@ -2,7 +2,7 @@
   {
     "id": "checks.seed/hbf-handoff",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/plan-to-refine/handoff/hbf/seed/checks.seed.json",
+    "source": "fab-knowledge:evidence/x/plan-to-refine/handoff/hbf/seed/checks.seed.json",
     "sha256": "23cd8c372a2586c824f545c3f067528c14fb570b3a03a86e9868917c4cf1133d",
     "fixes": [
       "CHK-NET-05 to 2.0.0 (M01-T08 step 7, CHECKS.md 7.5): the per-MCU pullup interval title, target kind port (was conductor), needs circuit and profile, legal interval, constraint circuit/pullup-low-read, status entered pending M05, origin failure rewritten from the BOSS 50 kohm and 0.5 VIO rerun (verified-claims C5)",

@@ -2,7 +2,7 @@
   {
     "id": "gudgeon.circuit/05-part2d",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/gudgeon/files/extracted/05_part2d_circuit.js",
+    "source": "fab-knowledge:originals/gudgeon/files/extracted/05_part2d_circuit.js",
     "sha256": "796b2f58884e20e86b180eaa4a9647a0f90160d09c3227a1a0c13ed0232c9a3b",
     "fixes": [],
     "dest": null

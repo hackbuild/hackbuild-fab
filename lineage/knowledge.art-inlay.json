@@ -2,7 +2,7 @@
   {
     "id": "knowledge.art-inlay/hbf",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/plan-to-refine/handoff/hbf/knowledge/kernels/art-inlay.md",
+    "source": "fab-knowledge:evidence/x/plan-to-refine/handoff/hbf/knowledge/kernels/art-inlay.md",
     "sha256": "84334a01df5344cf3b5c669cf72a0542cd8c7c5c956ea4c3237c3b9a2fbcc800",
     "fixes": [],
     "dest": null

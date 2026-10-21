@@ -2,7 +2,7 @@
   {
     "id": "spindle.fab-set/files-33",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-boards-tools/spindle/files (33)/spindle-r1-gerbers.zip",
+    "source": "fab-knowledge:evidence/x/downloads/dl-boards-tools/spindle/files (33)/spindle-r1-gerbers.zip",
     "sha256": "fa630c889c104813e99d56dd6c79fc3ebe8d9c42ccc66c0f73650b9bb0b4eb6e",
     "fixes": [
       "negative fixture for M08-T07 and CHK-BRD-02: written by the pre-offset pcb.py, module holes at pad centre; 8 of 9 members differ from the shipped zip (M08 card Records)"
@@ -12,7 +12,7 @@
   {
     "id": "spindle.fab-set/r1",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/spindle/files/spindle-r1-gerbers.zip",
+    "source": "fab-knowledge:originals/spindle/files/spindle-r1-gerbers.zip",
     "sha256": "10baf366e105f2b065c6ddc0922b165ed507a6a3f087c58e19afd53a42ad58e3",
     "fixes": [],
     "dest": null

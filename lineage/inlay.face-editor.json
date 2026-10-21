@@ -2,7 +2,7 @@
   {
     "id": "inlay.face-editor/knuckle-evidence",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/knuckle/src/part6.js",
+    "source": "fab-knowledge:evidence/x/knuckle/src/part6.js",
     "sha256": "7ccd08dd86fb3dbf936ac47cda01fb210168e3690198771b07a9ac3024cc7a8a",
     "fixes": [],
     "dest": null
@@ -10,7 +10,7 @@
   {
     "id": "inlay.face-editor/knuckle-part6",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/knuckle/files/src/part6.js",
+    "source": "fab-knowledge:originals/knuckle/files/src/part6.js",
     "sha256": "7ccd08dd86fb3dbf936ac47cda01fb210168e3690198771b07a9ac3024cc7a8a",
     "fixes": [
       "four corner scale handles, rotate dot on a 26 px stem, 9 px hit radius (part6.js:405, 439, 444)",
@@ -24,7 +24,7 @@
   {
     "id": "inlay.face-editor/knuckle-src-zip",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/knuckle/knuckle-src.zip",
+    "source": "fab-knowledge:evidence/x/knuckle/knuckle-src.zip",
     "sha256": "76098e29ab79bb32d0aef58ab155a09727b7277c76531e779c1469d8671527e2",
     "fixes": [],
     "dest": null

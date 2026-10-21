@@ -2,7 +2,7 @@
   {
     "id": "cotter.geo/evidence-x",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/cotter-src/src/geo.js",
+    "source": "fab-knowledge:evidence/x/cotter-src/src/geo.js",
     "sha256": "55046403d5e27c2dafabdb526d36c0526237e4a667b997b30e61a7d977a7a7c4",
     "fixes": [],
     "dest": "packages/mechanisms/src/constraints/hook-rule.ts"
@@ -10,7 +10,7 @@
   {
     "id": "cotter.geo/r5",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/cotter/files/cotter-src/src/geo.js",
+    "source": "fab-knowledge:originals/cotter/files/cotter-src/src/geo.js",
     "sha256": "55046403d5e27c2dafabdb526d36c0526237e4a667b997b30e61a7d977a7a7c4",
     "fixes": [
       "dyadic snap GEO.q (geo.js line 28) ported to packages/geom/src/snap.ts (D-054)",

@@ -2,7 +2,7 @@
   {
     "id": "plenum.bench/plenum-html",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/plenum/files/plenum.html",
+    "source": "fab-knowledge:originals/plenum/files/plenum.html",
     "sha256": "c6d3a172772cae82e77eb16ffac7f48630b08eaac68e8f6435dd2b0fd6e2468d",
     "fixes": [],
     "dest": null

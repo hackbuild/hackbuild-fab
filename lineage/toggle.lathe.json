@@ -2,7 +2,7 @@
   {
     "id": "toggle.lathe/part2a",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/toggle/files/src/src/part2a.js",
+    "source": "fab-knowledge:originals/toggle/files/src/src/part2a.js",
     "sha256": "ceb482f4d9393c24699815453825c5f68f40afc8991da317732c54775f6fa889",
     "fixes": [
       "angNorm and angDist (part2a.js lines 45 to 46) ported to packages/copper/src/route/assign.ts for the assignment DP and the COM gap order (M05-T09)",

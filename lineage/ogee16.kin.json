@@ -2,7 +2,7 @@
   {
     "id": "ogee16.kin/bench-zip",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/ogee16/outputs/ogee16-source.zip",
+    "source": "fab-work-directory:benches/ogee16/outputs/ogee16-source.zip",
     "sha256": "47d6077e0596eb4e9722a0a9f687cb82ec472c7bc031d8d2f61a98266aa94dd5",
     "fixes": [],
     "dest": "reference/fit/ogee16-r16p/legacy/fits.stdout.txt"
@@ -10,7 +10,7 @@
   {
     "id": "ogee16.kin/m02-port",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/ogee16/files/src/source/kin.py",
+    "source": "fab-knowledge:originals/ogee16/files/src/source/kin.py",
     "sha256": "d2d5a3250c438666179a511d7e87f0c1da9630c1c672eb570382c22f822c1de2",
     "fixes": [
       "load_params (lines 17 to 41) ported as readScadParams with the same skip rules (M02-T07); crank_phi, rocker and pin_state with latched false ported for the sweep and the rest pose; both moved to packages/motion/src/kinematics/ogee.ts at M07-T10 (D-139), where the kin_block.js port replaces the scene's own formulas; readScadParams checked against kin.P in packages/sim/test/goldens/ogee-sweep-oracle.json (packages/motion/test/ogee-kin.test.ts)"
@@ -20,7 +20,7 @@
   {
     "id": "ogee16.kin/r16p",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/ogee16/files/src/source/kin.py",
+    "source": "fab-knowledge:originals/ogee16/files/src/source/kin.py",
     "sha256": "d2d5a3250c438666179a511d7e87f0c1da9630c1c672eb570382c22f822c1de2",
     "fixes": [
       "packages/motion/src/kinematics/ogee.ts: CAMLIFT (line 90), can_latch (lines 121 to 124) and the __main__ readout (lines 144 to 166); the rocker and pin formulas come from the JS twin kin_block.js (row ogee16.kin-block/r16p); every one checked against the 128 check_viewer.py rows and the printed values in packages/motion/records/ogee16-kin.json (packages/motion/test/ogee-kin.test.ts)",

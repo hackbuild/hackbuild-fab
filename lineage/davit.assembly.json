@@ -2,7 +2,7 @@
   {
     "id": "davit.assembly/r3",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/davit/files/src/assembly.py",
+    "source": "fab-knowledge:originals/davit/files/src/assembly.py",
     "sha256": "8b7b5ce81fbfa501061ad5a8c2702c424564912db3e1225249d2c77aab7cff89",
     "fixes": [
       "packages/motion/src/kinematics/davit.ts: the page chain() port is checked against assembly.py chain() (packages/motion/test/davit-chain.test.ts, golden written by packages/motion/scripts/davit_chain_golden.py)"

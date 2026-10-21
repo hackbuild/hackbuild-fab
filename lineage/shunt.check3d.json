@@ -2,7 +2,7 @@
   {
     "id": "shunt.check3d/r1",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/shunt/files/check3d_shunt.mjs",
+    "source": "fab-knowledge:originals/shunt/files/check3d_shunt.mjs",
     "sha256": "2753dcdcb26212400f04d7e714fd5cbb77aca54d54bb0bd22913738ad1bc1aad",
     "fixes": [],
     "dest": "reference/boards/shunt-art/allow.json"

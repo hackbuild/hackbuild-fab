@@ -2,7 +2,7 @@
   {
     "id": "catalog-src.pawl.pack/m08",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pawl/files/src/pack.py",
+    "source": "fab-knowledge:originals/pawl/files/src/pack.py",
     "sha256": "851c0e819ae43aead1730c131a5c33fad1dd7b8db2d4506fe9385a2789ae1142",
     "fixes": [],
     "dest": null

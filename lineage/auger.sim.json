@@ -2,7 +2,7 @@
   {
     "id": "auger.sim/rev-b",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/auger/files/viewer/sim.js",
+    "source": "fab-knowledge:originals/auger/files/viewer/sim.js",
     "sha256": "5958d6469ecbd99ef053987989007e7664ff9f49ca477f46e32c6fb333b61d1c",
     "fixes": [],
     "dest": null

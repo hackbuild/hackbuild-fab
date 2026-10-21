@@ -2,7 +2,7 @@
   {
     "id": "plinth.bench/plinth-html",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/plinth/files/plinth.html",
+    "source": "fab-knowledge:originals/plinth/files/plinth.html",
     "sha256": "e19f9e647763baf7d62c23bba214ea36b21234e3a9a7f6015e12c69117259785",
     "fixes": [],
     "dest": null

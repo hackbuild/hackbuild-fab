@@ -2,7 +2,7 @@
   {
     "id": "plinth.standin/plinth",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/plinth/files/board-rp2040-pizero-standin.stl",
+    "source": "fab-knowledge:originals/plinth/files/board-rp2040-pizero-standin.stl",
     "sha256": "bcb1a5f1639589d69ccbb11e7a590253aba1471ff1bd77694aef3e65d9d6e028",
     "fixes": [],
     "dest": "packages/mesh/test/fixtures/board-rp2040-pizero-standin.stl"

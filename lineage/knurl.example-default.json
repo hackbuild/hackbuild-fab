@@ -2,7 +2,7 @@
   {
     "id": "knurl.example-default/bench-outputs",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/knurl/outputs/knurl/examples/knurl_default.json",
+    "source": "fab-work-directory:benches/knurl/outputs/knurl/examples/knurl_default.json",
     "sha256": "0a1ca507e485d7290bf287c0906ced05643ed194aac5da90472486689ecfc38c",
     "fixes": [],
     "dest": "designs/knurl/legacy/examples/knurl_default.json"
@@ -10,7 +10,7 @@
   {
     "id": "knurl.example-default/knurl-8",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/knurl/files/examples/knurl_default.json",
+    "source": "fab-knowledge:originals/knurl/files/examples/knurl_default.json",
     "sha256": "0a1ca507e485d7290bf287c0906ced05643ed194aac5da90472486689ecfc38c",
     "fixes": [],
     "dest": "designs/knurl/legacy/examples/knurl_default.json"

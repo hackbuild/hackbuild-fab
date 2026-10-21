@@ -2,7 +2,7 @@
   {
     "id": "detent.verify/rev-d",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/detent/files/revD/verify.py",
+    "source": "fab-knowledge:originals/detent/files/revD/verify.py",
     "sha256": "281f3f6749b52f9d8034f3f321756aba8bc3bce5955068e71f652c2e56584283",
     "fixes": [],
     "dest": null

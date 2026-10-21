@@ -6,15 +6,16 @@
 //
 // A test file is an owner file when it, or a relative module it imports
 // one level down (a fixture), does one of these:
-//   - imports originalPath, originalsRoot or localOriginal from
-//     tools/test-support/originals-root (the never-skip originals reader;
+//   - imports originalPath, originalsRoot, localOriginal or localSource
+//     from tools/test-support/originals-root (the never-skip readers;
 //     ORIGINALS_OF_RECORD alone is an identity string and reads nothing)
 //   - imports tools/test-support/benches-root (the HBF_BENCHES reader)
 //   - names a path under fab-work-directory/ (a bench read by absolute
 //     path that has not moved behind HBF_BENCHES yet)
 //   - passes an owner path to a file read: a lineage.json row source, a
 //     literal under /Users/, or a name bound to either, read without
-//     localOriginal (a hosted runner fails such a read with ENOENT)
+//     localOriginal or localSource (a hosted runner fails such a read
+//     with ENOENT)
 //
 // A read whose path the file also tests with existsSync (a skip or skipIf
 // on it) is guarded: the hosted runner takes the skip, so the file stays
@@ -36,7 +37,7 @@ const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..");
 export const TEST_FILE = /^(spec\/test|tools\/test|tools\/test-support|tools\/parity|packages\/[^/]+\/test|reference\/.+\/test|designs\/.+\/test|core\/test|kernel\/test)\/.+\.test\.ts$/;
 
 const ORIGINALS_IMPORT = /import\s*\{([^}]*)\}\s*from\s*["'][./]*tools\/test-support\/originals-root(?:\.js|\.ts)?["']/g;
-const READERS = new Set(["originalPath", "originalsRoot", "localOriginal"]);
+const READERS = new Set(["originalPath", "originalsRoot", "localOriginal", "localSource"]);
 const BENCHES_IMPORT = /from\s*["'][./]*tools\/test-support\/benches-root(?:\.js|\.ts)?["']/;
 const BENCH_PATH = /fab-work-directory\//;
 const RELATIVE_IMPORT = /from\s*["'](\.{1,2}\/[^"']+)["']/g;
@@ -47,7 +48,7 @@ export const stripComments = (text) => text.replace(/\/\*[\s\S]*?\*\//g, "").rep
 const READ_CALL = String.raw`\b(?:readFileSync|readFile|createReadStream|openSync|statSync|readdirSync)`;
 const BINDING = /^([ \t]*)(?:export\s+)?(?:const|let|var|function)\s+([\w$]+)\s*(?::[^=\n]*)?=?\s*([^;\n]*)/gm;
 const OWNER_LITERAL = /^["'`]\/Users\//;
-const RELOCATE = /\b(?:localOriginal|originalPath)\(/;
+const RELOCATE = /\b(?:localOriginal|localSource|originalPath)\(/;
 const escapeRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
 /** Each binding with its initializer; a block body runs to the brace at the binding's indent. */
@@ -76,7 +77,7 @@ function firstArgs(code, callee) {
 /**
  * Owner paths the code passes to a file read: a lineage.json row source, a
  * literal under /Users/, or a name bound to either, read directly or through
- * a local function that reads its first parameter. localOriginal and
+ * a local function that reads its first parameter. localOriginal, localSource and
  * originalPath relocate a path, so nothing through them is an owner path.
  * Returns each read argument with whether an existsSync on it guards it.
  */

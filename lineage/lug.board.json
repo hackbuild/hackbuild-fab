@@ -2,7 +2,7 @@
   {
     "id": "lug.board/m08-catalog-outputs-lug",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/round-pi-board/outputs/lug.tsx",
+    "source": "fab-work-directory:benches/round-pi-board/outputs/lug.tsx",
     "sha256": "ff88947cb61584f220eb8d2495e882ea1c2ca785972c3de872f165fe4d7a644d",
     "fixes": [],
     "dest": null
@@ -10,7 +10,7 @@
   {
     "id": "lug.board/rev-a",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/lug/files/lug.tsx",
+    "source": "fab-knowledge:originals/lug/files/lug.tsx",
     "sha256": "ff88947cb61584f220eb8d2495e882ea1c2ca785972c3de872f165fe4d7a644d",
     "fixes": [],
     "dest": null

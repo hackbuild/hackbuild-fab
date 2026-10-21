@@ -13,6 +13,8 @@ const schema = JSON.parse(readFileSync(root + 'tools/lineage.schema.json', 'utf8
 const FIELDS = ['id', 'kind', 'source', 'sha256', 'fixes', 'dest'];
 const sha = (path) => createHash('sha256').update(readFileSync(path)).digest('hex');
 const { readStored } = await import(new URL('../legacy/stored-zip.mjs', import.meta.url).href);
+const { ORIGINALS_OF_RECORD, sourcePath } = await import(new URL('../test-support/originals-root.ts', import.meta.url).href);
+const { publishText } = await import(new URL('../publish-paths.mjs', import.meta.url).href);
 
 /**
  * Bytes at a lineage path: a file, or `<zip>!<member>` for a legacy file kept
@@ -115,10 +117,14 @@ test('a file that is a copy under one subject is canonical under no other subjec
   }
 });
 
+test('every source is written in the publish form, never as an absolute path', () => {
+  for (const r of rows) assert.ok(!r.source.startsWith('/') && publishText(r.source) === r.source, `row ${r.id} source ${r.source} is not in publish form (tools/publish-paths.mjs)`);
+});
+
 test('every sha256 matches its source when the source exists', (t) => {
   let checked = 0;
   for (const r of rows) {
-    const bytes = bytesAt(r.source.startsWith('/') ? r.source : root + r.source);
+    const bytes = bytesAt(sourcePath(r.source));
     if (bytes === null) { t.diagnostic(`source not on this machine, sha256 not checked: ${r.source}`); continue; }
     assert.equal(shaOf(bytes), r.sha256, `row ${r.id} sha256`);
     checked++;
@@ -153,19 +159,19 @@ test('every mesh route file is the dest of a canonical mesh.<route> row', () => 
 // in the sample set originals is a healer row source, so a copy found there
 // cannot sit outside the record (four did until the M00 audit).
 test('every rastermesh.js under fab-knowledge/originals is a healer row', (t) => {
-  const near = fileURLToPath(new URL('../../../fab-knowledge/originals/', import.meta.url));
+  const near = sourcePath(ORIGINALS_OF_RECORD);
   if (!existsSync(near)) { t.skip(`not on this machine: ${near}`); return; }
   const originals = realpathSync(near) + '/';
   const found = readdirSync(originals, { recursive: true })
     .filter((n) => n === 'rastermesh.js' || n.endsWith('/rastermesh.js'))
     .filter((n) => !n.split('/').includes('node_modules'))
-    .map((n) => originals + n);
+    .map((n) => ({ file: originals + n, record: ORIGINALS_OF_RECORD + n }));
   assert.ok(found.length >= 4, `only ${found.length} rastermesh.js copies under ${originals}`);
   const healer = rows.filter((r) => r.id.split('/')[0] === 'healer');
-  for (const f of found) {
-    const row = healer.find((r) => r.source === f);
-    assert.ok(row, `${f} has no healer row (D-156 every known copy)`);
-    assert.equal(row.sha256, sha(f), `${row.id} sha256`);
+  for (const { file, record } of found) {
+    const row = healer.find((r) => r.source === record);
+    assert.ok(row, `${record} has no healer row (D-156 every known copy)`);
+    assert.equal(row.sha256, sha(file), `${row.id} sha256`);
   }
 });
 
@@ -547,7 +553,7 @@ test('each M10 design has a canonical row at its INDEX.md original, copied into 
   for (const slug of slugs) {
     const want = indexCanonical(index, slug);
     assert.ok(want, `knowledge/designs/INDEX.md has no file and sha256 for ${slug}`);
-    const row = rows.find((r) => r.kind === 'canonical' && r.source.endsWith(`/originals/${slug}/files/${want.file}`));
+    const row = rows.find((r) => r.kind === 'canonical' && r.source === `${ORIGINALS_OF_RECORD}${slug}/files/${want.file}`);
     assert.ok(row, `${slug}: no canonical lineage row has source originals/${slug}/files/${want.file}`);
     assert.equal(row.sha256, want.sha256, `${row.id} sha256 differs from INDEX.md ${slug}`);
     const copy = row.dest === null ? null : bytesAt(root + row.dest);

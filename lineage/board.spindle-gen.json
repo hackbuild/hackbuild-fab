@@ -2,7 +2,7 @@
   {
     "id": "board.spindle-gen/r1",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/spindle/files/pcb.py",
+    "source": "fab-knowledge:originals/spindle/files/pcb.py",
     "sha256": "650351218717462917332d02c7cfb70883ad3a66ffad24b0e2756b90ce8a3176",
     "fixes": [
       "pcb.py on the direct library: same numbers and routing, silk through textpoly at the baseline with the fontsource Plex Mono 700 woff2, CreationDate and zip mtimes from --epoch, a BoardRecord and gates.json written beside the fab set; the KiCad and pcb_data.json outputs move to M08-T08 and the record"

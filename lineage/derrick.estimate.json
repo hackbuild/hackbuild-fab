@@ -2,7 +2,7 @@
   {
     "id": "derrick.estimate/r3",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/derrick/files/src/estimate.py",
+    "source": "fab-knowledge:originals/derrick/files/src/estimate.py",
     "sha256": "3ef6400498e846278d1c2ead4f0f9ec49a97cba5d41af85537be89589260e444",
     "fixes": [],
     "dest": null

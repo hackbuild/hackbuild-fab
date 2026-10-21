@@ -2,7 +2,7 @@
   {
     "id": "ogee16.skeleton/r16p",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/ogee16/files/src/source/skeleton.py",
+    "source": "fab-knowledge:originals/ogee16/files/src/source/skeleton.py",
     "sha256": "8b8f06bed79d77d60a9ebb997a0468a605c86ad8fb1e56663503c28ea91381b2",
     "fixes": [],
     "dest": null

@@ -2,7 +2,7 @@
   {
     "id": "pip.sweep-prng/haft-src",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft-src/test/sweep.mjs",
+    "source": "fab-knowledge:originals/pip/files/haft-src/test/sweep.mjs",
     "sha256": "9263bb498d7b75e970f2c8d9afd15cec7ae21ba1e599c9febfd8328d15bbe2ac",
     "fixes": [
       "parameter draws (sweep.mjs lines 5 to 26, the same lines in pip-controller test/sweep.mjs at b137deb) replayed by tools/legacy/pip/dump-route.mjs for the seed 1 router fixture packages/copper/test/fixtures/pip-b137deb-sweep-route.json (M05-T08)"

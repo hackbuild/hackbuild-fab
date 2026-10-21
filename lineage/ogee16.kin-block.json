@@ -2,7 +2,7 @@
   {
     "id": "ogee16.kin-block/r16p",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/ogee16/files/src/source/kin_block.js",
+    "source": "fab-knowledge:originals/ogee16/files/src/source/kin_block.js",
     "sha256": "4aa77474c1519d7b4c70f714d7e712e52c9d77950db88678b3d0a22b60b02683",
     "fixes": [
       "link3, pinState, crankPhi, lCrankPhi, CAM, E_REST and ceil_v (lines 4 to 38) ported line for line to packages/motion/src/kinematics/ogee.ts (M07-T10, D-139); the legacy check_viewer.py diffed this block against kin.py and exited 0 whatever the count, the port's test fails on any row off by 1e-9 (D-153)"

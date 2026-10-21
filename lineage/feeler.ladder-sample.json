@@ -2,7 +2,7 @@
   {
     "id": "feeler.ladder-sample/bench-outputs",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/feeler-thinpot/outputs/feeler-ladder-inplace-sample.3mf",
+    "source": "fab-work-directory:benches/feeler-thinpot/outputs/feeler-ladder-inplace-sample.3mf",
     "sha256": "02c1ac43a12ebdcddbcf19712259cc6a39003bdd4d6a443cac0247ba6295f88c",
     "fixes": [],
     "dest": "designs/stylus/legacy/feeler-ladder-inplace-sample.3mf"
@@ -10,7 +10,7 @@
   {
     "id": "feeler.ladder-sample/thinpot-16",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/thinpot/files/feeler-ladder-inplace-sample.3mf",
+    "source": "fab-knowledge:originals/thinpot/files/feeler-ladder-inplace-sample.3mf",
     "sha256": "02c1ac43a12ebdcddbcf19712259cc6a39003bdd4d6a443cac0247ba6295f88c",
     "fixes": [],
     "dest": "designs/stylus/legacy/feeler-ladder-inplace-sample.3mf"

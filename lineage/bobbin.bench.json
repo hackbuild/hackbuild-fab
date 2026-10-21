@@ -2,7 +2,7 @@
   {
     "id": "bobbin.bench/rev-b",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/bobbin/files/bobbin-rev-b.html",
+    "source": "fab-knowledge:originals/bobbin/files/bobbin-rev-b.html",
     "sha256": "de008dba21e8f88f4bdcaa19c92d3744c6fc440b838794ea2d6d3808ee178596",
     "fixes": [],
     "dest": null

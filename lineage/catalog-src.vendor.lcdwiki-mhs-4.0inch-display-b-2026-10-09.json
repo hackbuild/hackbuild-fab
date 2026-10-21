@@ -2,7 +2,7 @@
   {
     "id": "catalog-src.vendor.lcdwiki-mhs-4.0inch-display-b-2026-10-09/m08",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/m08-catalog/datasheets/lcdwiki-MHS-4.0inch_Display-B-2026-10-09.html",
+    "source": "fab-knowledge:evidence/m08-catalog/datasheets/lcdwiki-MHS-4.0inch_Display-B-2026-10-09.html",
     "sha256": "e558ccdebd26b2eb38688fc7cc7d3a7bd49ec89c4a91b959d2a7d1e06e195842",
     "fixes": [],
     "dest": null

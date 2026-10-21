@@ -2,7 +2,7 @@
   {
     "id": "font.permanent-marker/board-fonts",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/shunt/files/fonts/permanent-marker-latin-400-normal.woff2",
+    "source": "fab-knowledge:originals/shunt/files/fonts/permanent-marker-latin-400-normal.woff2",
     "sha256": "4884fec2c73aa52a2461073c1b87d1ceb80f400520391b43f97ca7d3c39eeb24",
     "fixes": [
       "SHUNT R1 fonts/, byte equal to files/permanent-marker-latin-400-normal.woff2 of @fontsource/permanent-marker 5.3.0, whose LICENSE is Apache-2.0 (checked 2026-10-09)"
@@ -12,7 +12,7 @@
   {
     "id": "font.permanent-marker/collar-coin",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/collar-coin/outputs/hackbuild-coin/src/fonts/PermanentMarker-Regular.ttf",
+    "source": "fab-work-directory:benches/collar-coin/outputs/hackbuild-coin/src/fonts/PermanentMarker-Regular.ttf",
     "sha256": "28f82c8a7943cb8e9d599f8554da1d4fc75dbcf69b9885ad6c0611d20c6946c5",
     "fixes": [],
     "dest": null

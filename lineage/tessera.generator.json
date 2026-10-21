@@ -2,7 +2,7 @@
   {
     "id": "tessera.generator/bench",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/cricut-midi-seven/outputs/tessera/gen_tessera.py",
+    "source": "fab-work-directory:benches/cricut-midi-seven/outputs/tessera/gen_tessera.py",
     "sha256": "9eba22a9b6f862cf9fca24db15ffb4a2c1adec93eb2ce7745cf0957156f68f92",
     "fixes": [],
     "dest": "reference/copper/tessera/legacy/gen_tessera.py"
@@ -10,7 +10,7 @@
   {
     "id": "tessera.generator/rev-a",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/tessera/files/gen_tessera.py",
+    "source": "fab-knowledge:originals/tessera/files/gen_tessera.py",
     "sha256": "9eba22a9b6f862cf9fca24db15ffb4a2c1adec93eb2ce7745cf0957156f68f92",
     "fixes": [
       "tools/py/copper/run_legacy_gen.py runs it byte identical from a temp dir with the shipped inputs and the logo literal replaced in memory; tools/py/copper/test_oracle.py holds the run to the M05-T13 table (M05-T13)",

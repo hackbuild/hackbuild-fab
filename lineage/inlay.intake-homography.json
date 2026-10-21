@@ -2,7 +2,7 @@
   {
     "id": "inlay.intake-homography/badge-replicator",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/badge-replicator/src/lib/homography.ts",
+    "source": "badge-replicator/src/lib/homography.ts",
     "sha256": "4ed2bde48f11bf561d5746293b9e5f9905566b5df7b8e6f5de1be95152e3aeb6",
     "fixes": [],
     "dest": "packages/inlay/src/intake/homography.ts"

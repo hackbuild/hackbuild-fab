@@ -2,7 +2,7 @@
   {
     "id": "phaselock.scad/v1",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/phaselock/files/extracted/phaselock_v1.scad",
+    "source": "fab-knowledge:originals/phaselock/files/extracted/phaselock_v1.scad",
     "sha256": "57f204556c5728ca601c915a84d8f06189b40570d7a341c65cd0df740366a1dd",
     "fixes": [],
     "dest": null

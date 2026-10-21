@@ -2,7 +2,7 @@
   {
     "id": "coin.py/coin-v2",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/coin/files/src/coin.py",
+    "source": "fab-knowledge:originals/coin/files/src/coin.py",
     "sha256": "e50c66e1a07cef81211457b3cadc1f5d9533a018fd6d745af3e977a5691ef93e",
     "fixes": [],
     "dest": null

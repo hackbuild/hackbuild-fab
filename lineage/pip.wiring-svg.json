@@ -2,7 +2,7 @@
   {
     "id": "pip.wiring-svg/haft-9",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft-wiring.svg",
+    "source": "fab-knowledge:originals/pip/files/haft-wiring.svg",
     "sha256": "eaa0fa575bddc3931ef9b1f8aa50f7efc690afa4444bfb407389f770be4c5f8b",
     "fixes": [],
     "dest": "designs/pip/legacy/original/haft-wiring.svg"
@@ -10,7 +10,7 @@
   {
     "id": "pip.wiring-svg/pip-controller-b137deb",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/print/pip-wiring.svg",
+    "source": "fab-knowledge:evidence/x/pip-controller/print/pip-wiring.svg",
     "sha256": "61f61bdfa53cfc12dfc483dbc08796c993026cf12003c98fda1f9807df1bc4ef",
     "fixes": [],
     "dest": "designs/pip/legacy/print/pip-wiring.svg"

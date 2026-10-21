@@ -2,7 +2,7 @@
   {
     "id": "mesh.prism/blocks-1",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/blocks/files/src-extracted/kernel.js",
+    "source": "fab-knowledge:originals/blocks/files/src-extracted/kernel.js",
     "sha256": "e514477f4a8a9f2996b8f4880fc774c07801467db9899cebcd21d03724b57188",
     "fixes": [
       "one closed shell per polygon with cap retries that never drop a shell (kernel.js _prismPoly lines 237 to 271)",
@@ -14,7 +14,7 @@
   {
     "id": "mesh.prism/boss-src",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/boss/files/boss-src/src/kernel.js",
+    "source": "fab-knowledge:originals/boss/files/boss-src/src/kernel.js",
     "sha256": "344d80b3df3b6b15e5861de343a03c79663669fd700578bf162f97afba499de1",
     "fixes": [],
     "dest": null
@@ -22,7 +22,7 @@
   {
     "id": "mesh.prism/boss-src-zip",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/blocks/outputs/boss/boss-src.zip",
+    "source": "fab-work-directory:benches/blocks/outputs/boss/boss-src.zip",
     "sha256": "185c1d1bb6692945a3d2b956c7512ee7fd3b9766576396f404d2501a28ffa3b2",
     "fixes": [],
     "dest": null

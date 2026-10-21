@@ -2,7 +2,7 @@
   {
     "id": "davit.parts/r4",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/davit/files/src/parts_r4.py",
+    "source": "fab-knowledge:originals/davit/files/src/parts_r4.py",
     "sha256": "ddae2111221fb45608190cedf31cc9b05cd916fce12fd8afd11ab812da885a36",
     "fixes": [],
     "dest": "designs/davit/legacy/r4/parts_r4.py"

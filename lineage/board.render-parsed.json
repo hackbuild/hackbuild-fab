@@ -2,7 +2,7 @@
   {
     "id": "board.render-parsed/shunt-r1",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/shunt/files/render_fab.py",
+    "source": "fab-knowledge:originals/shunt/files/render_fab.py",
     "sha256": "489114980a9ddf428ab5af6276a546d96ec2453132d36ff225e72fadb95677ce",
     "fixes": [
       "render_fab.py drawn from any fab folder: board extents from Edge_Cuts, every layer honouring polarity (the legacy drew copper regions dark whatever their polarity)"

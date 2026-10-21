@@ -2,7 +2,7 @@
   {
     "id": "ogee16.packone/r16p",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/ogee16/files/src/source/plate_template.html",
+    "source": "fab-knowledge:originals/ogee16/files/src/source/plate_template.html",
     "sha256": "59507bfae682869fb87d9ff5d6aa59fe2746f51ece249359ab69b223290f04bf",
     "fixes": [
       "packOne() of lines 268 to 300 ported term for term as findFit and splitFree; the bed is the request's sheet (any width and height) instead of the square PLATE, the turns are the request's rotations, and the items are spec NestItems",

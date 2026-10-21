@@ -11,7 +11,7 @@
 import { readFileSync } from "node:fs";
 import { createHash } from "node:crypto";
 import { describe, expect, test } from "vitest";
-import { ORIGINALS_OF_RECORD, localOriginal, originalPath } from "../../../tools/test-support/originals-root.js";
+import { ORIGINALS_OF_RECORD, localSource, originalPath } from "../../../tools/test-support/originals-root.js";
 import { createProfileLookup, loadProfile } from "@hackbuild/profile";
 import type { Vec2 } from "@hackbuild/spec";
 import {
@@ -86,7 +86,7 @@ describe("displacement-coincidence-latch bodies: OGEE16 R16-P exports", () => {
       const row = lineage.find((r) => r.id === s.lineage)!;
       expect(row.kind).toBe("canonical");
       expect(row.source).toBe(`${ORIGINALS_OF_RECORD}ogee16/${s.file}`);
-      expect(createHash("sha256").update(readFileSync(localOriginal(row.source))).digest("hex")).toBe(row.sha256);
+      expect(createHash("sha256").update(readFileSync(localSource(row.source))).digest("hex")).toBe(row.sha256);
     }
   });
 

@@ -2,7 +2,7 @@
   {
     "id": "sparger-w.sweep/rev2",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/sparger-w/files/source/sweep_w.py",
+    "source": "fab-knowledge:originals/sparger-w/files/source/sweep_w.py",
     "sha256": "391bd9f769183c530acccdebc5a35ae9a2fdcd3fd697dcf806da55a577d62ca4",
     "fixes": [],
     "dest": null

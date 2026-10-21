@@ -2,7 +2,7 @@
   {
     "id": "ogee16.viewer-commit/r16p",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/ogee16/files/src/source/viewer_template.html",
+    "source": "fab-knowledge:originals/ogee16/files/src/source/viewer_template.html",
     "sha256": "9d101e0c28bd7ae75e81dce60483ac62b085460fc945d43d074077ecf5706dd9",
     "fixes": [
       "apply() latch rule (lines 416 to 421) ported once as the coincidence latch commit in packages/motion/src/programs/latch.ts; drive, doClear and the checker, diagonal and all sequences (lines 587 to 598) as Motion IR in packages/motion/src/programs/ogee.ts (M07-T11); the commit is an op the runner evaluates on the state the moves reached, and frames are drawn afterwards from the timeline, where the page also called apply() from every animation frame"

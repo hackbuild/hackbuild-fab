@@ -2,7 +2,7 @@
   {
     "id": "mesh.imported/plinth-html",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/plinth/files/plinth.html",
+    "source": "fab-knowledge:originals/plinth/files/plinth.html",
     "sha256": "e19f9e647763baf7d62c23bba214ea36b21234e3a9a7f6015e12c69117259785",
     "fixes": [
       "parseSTL (plinth.html lines 1908 to 1931) ported to packages/mesh/src/routes/imported.ts with the D-054 weld, the signed volume and the E_KERNEL refusal of inverted winding (D-102) that PLINTH left to its caller (plinth record 5.7)"

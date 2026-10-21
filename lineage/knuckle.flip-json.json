@@ -2,7 +2,7 @@
   {
     "id": "knuckle.flip-json/knuckle-html",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/knuckle/files/knuckle-flip.json",
+    "source": "fab-knowledge:originals/knuckle/files/knuckle-flip.json",
     "sha256": "0b5f7fa04ee687d3de54b60379c7010dc2c105959fee2c28395b6a442a5b2026",
     "fixes": [],
     "dest": "designs/knuckle/legacy/knuckle-flip.json"
@@ -10,7 +10,7 @@
   {
     "id": "knuckle.flip-json/x",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/knuckle/knuckle-flip.json",
+    "source": "fab-knowledge:evidence/x/knuckle/knuckle-flip.json",
     "sha256": "0b5f7fa04ee687d3de54b60379c7010dc2c105959fee2c28395b6a442a5b2026",
     "fixes": [],
     "dest": "designs/knuckle/legacy/knuckle-flip.json"

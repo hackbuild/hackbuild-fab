@@ -2,7 +2,7 @@
   {
     "id": "spool.route/spool-cad",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/spool/files/src/route12.py",
+    "source": "fab-knowledge:originals/spool/files/src/route12.py",
     "sha256": "0738093e90b5d0f3c746525a48218caedf04b65f8874b4993a54c625f4d44ea2",
     "fixes": [],
     "dest": null

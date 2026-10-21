@@ -2,7 +2,7 @@
   {
     "id": "auger.pack/rev-b",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/auger/files/src/pack.ts",
+    "source": "fab-knowledge:originals/auger/files/src/pack.ts",
     "sha256": "b37e445c27d808d34304ef06c440fef6d4c71db1d8bf50806d50a6e336aef30e",
     "fixes": [],
     "dest": null

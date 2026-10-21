@@ -21,7 +21,7 @@
       "source": {
         "type": "string",
         "minLength": 1,
-        "description": "absolute path of the file as harvested, or the repo path when the copy only exists in the repo"
+        "description": "the file as harvested, in the publish form of tools/publish-paths.mjs (fab-knowledge:, fab-work-directory:, ~/ or a sibling repository name), or the repo path when the copy only exists in the repo; tools/test-support/originals-root.ts localSource reads it"
       },
       "sha256": {
         "type": "string",

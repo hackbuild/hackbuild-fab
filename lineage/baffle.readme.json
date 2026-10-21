@@ -2,7 +2,7 @@
   {
     "id": "baffle.readme/r1-raster",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/baffle-r2/files/r1-raster/README.md",
+    "source": "fab-knowledge:originals/baffle-r2/files/r1-raster/README.md",
     "sha256": "8aa76662521fec8edf7c7a27f326bf1ae05d3116250ff72c38e16abb17a3ad72",
     "fixes": [
       "key matrix read, drive one column high and read each sense line against the C3 internal pull-down (README lines 85 to 88 and 120 to 124), ported to packages/circuit/src/read/column-scan.ts columnScan (M05-T05)",

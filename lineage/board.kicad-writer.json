@@ -2,7 +2,7 @@
   {
     "id": "board.kicad-writer/spindle-r1",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/spindle/files/kicad_out.py",
+    "source": "fab-knowledge:originals/spindle/files/kicad_out.py",
     "sha256": "cb50c4b14d1250cb6ce11f9bf4a8bb8c5e506f3027697fdf836901f27823ecf5",
     "fixes": [
       "kicad_out.py lines 32 to 216 as kicadText over a BoardRecord plus the generator's gates.json (silk, zones, corner, mask expansion); footprints at body centres at angle 0, tstamps from recordHash in place of uuid4, and kicadts parses the text and writes the file (M08-T08)"

@@ -2,7 +2,7 @@
   {
     "id": "spline.rerun/2026-10-04",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/spline/files/rerun/run-2026-10-04.txt",
+    "source": "fab-knowledge:originals/spline/files/rerun/run-2026-10-04.txt",
     "sha256": "2a6dfba905a784fa81fd2eec0df9c59a6591e8ddf01c6b32c2d0b703b5e8b8a9",
     "fixes": [
       "tools/py/copper/test_oracle.py: the gate list, verdicts and order the oracle run must equal, numbers masked (M05-T13)",

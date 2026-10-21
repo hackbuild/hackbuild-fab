@@ -2,7 +2,7 @@
   {
     "id": "shim.generator/rev-a",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/shim/files/gen_board.py",
+    "source": "fab-knowledge:originals/shim/files/gen_board.py",
     "sha256": "55ae3afd3cfd86a894a3101f15e226abf5fd5063061cf819afe2c777da094588",
     "fixes": [],
     "dest": null

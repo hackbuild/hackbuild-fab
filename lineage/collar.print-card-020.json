@@ -2,7 +2,7 @@
   {
     "id": "collar.print-card-020/download",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-baffle-inlay-coin/collar/collar-print-card.txt",
+    "source": "fab-knowledge:evidence/x/downloads/dl-baffle-inlay-coin/collar/collar-print-card.txt",
     "sha256": "619d471ec14974766f9a5706ef7f506fb48227734e92103f74e230d4c4244134",
     "fixes": [],
     "dest": null
@@ -10,7 +10,7 @@
   {
     "id": "collar.print-card-020/nfc-card",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/collar/files/owner-collar-print-card-20260819-nfc-020.txt",
+    "source": "fab-knowledge:originals/collar/files/owner-collar-print-card-20260819-nfc-020.txt",
     "sha256": "619d471ec14974766f9a5706ef7f506fb48227734e92103f74e230d4c4244134",
     "fixes": [],
     "dest": "designs/collar/test/fixtures/owner-collar-print-card-20260819-nfc-020.txt"
@@ -18,7 +18,7 @@
   {
     "id": "collar.print-card-020/nfc-fixture",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/collar/files/owner-collar-print-card-20260819-nfc-020.txt",
+    "source": "fab-knowledge:originals/collar/files/owner-collar-print-card-20260819-nfc-020.txt",
     "sha256": "619d471ec14974766f9a5706ef7f506fb48227734e92103f74e230d4c4244134",
     "fixes": [],
     "dest": "designs/collar/test/nfc-pause.fixture.ts"
@@ -26,7 +26,7 @@
   {
     "id": "collar.print-card-020/owner-20260819",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/collar/files/owner-collar-print-card-20260819-nfc-020.txt",
+    "source": "fab-knowledge:originals/collar/files/owner-collar-print-card-20260819-nfc-020.txt",
     "sha256": "619d471ec14974766f9a5706ef7f506fb48227734e92103f74e230d4c4244134",
     "fixes": [],
     "dest": null

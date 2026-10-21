@@ -2,7 +2,7 @@
   {
     "id": "catalog-src.kicad-footprints.pinheader-1x02-p2.54mm-vertical/m08",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/m08-catalog/kicad/PinHeader_1x02_P2.54mm_Vertical.kicad_mod",
+    "source": "fab-knowledge:evidence/m08-catalog/kicad/PinHeader_1x02_P2.54mm_Vertical.kicad_mod",
     "sha256": "5184fc4dddb8da027c0a5d4e63eefed1993cc0c2632e1a291ce63d3b5b8026ad",
     "fixes": [],
     "dest": null

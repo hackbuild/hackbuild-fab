@@ -2,7 +2,7 @@
   {
     "id": "slug.nest/slug-12",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/slug/files/slug.html",
+    "source": "fab-knowledge:originals/slug/files/slug.html",
     "sha256": "2d09238c27d5ca4bf023eeee44939b1500470ad2058822b8d0add48ec9bf3241",
     "fixes": [
       "nest() of lines 1061 to 1106 ported in the page's order of operations as shelfPack; turns come from the request's rotations instead of the fixed 0 and 90, oversize copies come back per item instead of on nest.oversize, and fill moves to packages/nest/src/sheet-loop.ts as footprint area over the usable area (D-075) where the page divided by the whole sheet",

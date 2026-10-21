@@ -2,7 +2,7 @@
   {
     "id": "blocks.kernel/blocks-1",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/blocks/files/src-extracted/kernel.js",
+    "source": "fab-knowledge:originals/blocks/files/src-extracted/kernel.js",
     "sha256": "e514477f4a8a9f2996b8f4880fc774c07801467db9899cebcd21d03724b57188",
     "fixes": [
       "clip retry with jitter on a polygon-clipping throw (kernel.js clipRetry, lines 108 to 120)",
@@ -31,7 +31,7 @@
   {
     "id": "blocks.kernel/boss-src",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/boss/files/boss-src/src/kernel.js",
+    "source": "fab-knowledge:originals/boss/files/boss-src/src/kernel.js",
     "sha256": "344d80b3df3b6b15e5861de343a03c79663669fd700578bf162f97afba499de1",
     "fixes": [
       "auditIndexed edge pairing on raw indices (kernel.js lines 321 to 335) ported to packages/mesh/src/audit.ts and its tier 1 copy packages/3mf/src/mesh.ts (CHK-PRT-01)"

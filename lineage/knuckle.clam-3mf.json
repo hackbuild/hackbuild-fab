@@ -2,7 +2,7 @@
   {
     "id": "knuckle.clam-3mf/x",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/knuckle/knuckle-clam.3mf",
+    "source": "fab-knowledge:evidence/x/knuckle/knuckle-clam.3mf",
     "sha256": "50d50cd714704392c0dc19995996c7b1ac3263f31d434b80d4a201567924f2eb",
     "fixes": [],
     "dest": "designs/knuckle/legacy/knuckle-clam.3mf"

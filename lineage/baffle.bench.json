@@ -2,7 +2,7 @@
   {
     "id": "baffle.bench/r3-36",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/baffle-r3/files/src/bench.js",
+    "source": "fab-knowledge:originals/baffle-r3/files/src/bench.js",
     "sha256": "9610b1414e10ba4ef41547ee3d32a38bbc684d5900ff6cdeb6b61cbef274a520",
     "fixes": [],
     "dest": null

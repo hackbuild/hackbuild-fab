@@ -2,7 +2,7 @@
   {
     "id": "blocks.export/blocks-1",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/blocks/files/src-extracted/export.js",
+    "source": "fab-knowledge:originals/blocks/files/src-extracted/export.js",
     "sha256": "0a28db91236b5d2d923e2b8e74b1e81f0fe260a270677c3241bb6a1200231f2d",
     "fixes": [],
     "dest": null

@@ -2,7 +2,7 @@
   {
     "id": "vtracer-corpus.user-art/harvest",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/sprue/uploads/Screen_Shot_2026-09-06_at_3_30_13_PM.png",
+    "source": "fab-work-directory:benches/sprue/uploads/Screen_Shot_2026-09-06_at_3_30_13_PM.png",
     "sha256": "2e37962fac68d35041c57ce9f3f7bc9da541cca1edb4a3959647051752072a36",
     "fixes": [],
     "dest": null

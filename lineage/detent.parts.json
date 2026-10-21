@@ -2,7 +2,7 @@
   {
     "id": "detent.parts/rev-c",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/detent/files/revD/archive-revC/detent_parts_revC.py",
+    "source": "fab-knowledge:originals/detent/files/revD/archive-revC/detent_parts_revC.py",
     "sha256": "6933ca45740747f0f98adcbd6296d642c07ace2fe6808f150fd4c24fb8efb266",
     "fixes": [],
     "dest": null
@@ -10,7 +10,7 @@
   {
     "id": "detent.parts/rev-d",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/detent/files/revD/detent_parts.py",
+    "source": "fab-knowledge:originals/detent/files/revD/detent_parts.py",
     "sha256": "e72c2e26019f62122436ae1802fdce6c8ca08de74fd979e5327b0dbece3943d7",
     "fixes": [
       "wcut teardrop and gable with the peak toward world +Z (detent_parts.py lines 223 to 269); rev C pointed it down"

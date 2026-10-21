@@ -2,7 +2,7 @@
   {
     "id": "mesh.loft/tenon-src",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/tenon/files/src/src/part2.js",
+    "source": "fab-knowledge:originals/tenon/files/src/src/part2.js",
     "sha256": "ac5f68c3ac6454a3f500a2c941786090ac5fbb5436fc92b2e8155767432d8003",
     "fixes": [
       "revolve ring skinning (part2.js line 220): rings of N vertices, two triangles per quad, the whole surface flipped when its signed volume is negative, ported to packages/mesh/src/routes/loft.ts skinRings with the pole rows replaced by earcut caps from the geom triangulate wrapper, as the prototype loft (fab-knowledge:evidence/geom-proto-2026-10-20/proto.mjs line 40, sha256 a76cc5840857944fa394a30de7d21a5fedad91b45f2765d2dbf2bb8ed7215db1) needs for sections not star shaped about the origin; every vertex snapped and welded (D-054) (R1-engine-08)"

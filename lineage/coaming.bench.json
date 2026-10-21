@@ -2,7 +2,7 @@
   {
     "id": "coaming.bench/coaming-3",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/coaming/files/coaming.html",
+    "source": "fab-knowledge:originals/coaming/files/coaming.html",
     "sha256": "fb8a7fa6047f1107de0ea5a3b4c93eaf58ca7767f4e63ba5ca05c988f5ddac2a",
     "fixes": [],
     "dest": null

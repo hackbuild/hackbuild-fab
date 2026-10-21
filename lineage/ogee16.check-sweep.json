@@ -2,7 +2,7 @@
   {
     "id": "ogee16.check-sweep/bench-source-zip",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/ogee16/outputs/ogee16-source.zip",
+    "source": "fab-work-directory:benches/ogee16/outputs/ogee16-source.zip",
     "sha256": "47d6077e0596eb4e9722a0a9f687cb82ec472c7bc031d8d2f61a98266aa94dd5",
     "fixes": [],
     "dest": "designs/ogee16/legacy/ogee16-source.zip"
@@ -10,7 +10,7 @@
   {
     "id": "ogee16.check-sweep/m02-port",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/ogee16/files/src/source/check_sweep.py",
+    "source": "fab-knowledge:originals/ogee16/files/src/source/check_sweep.py",
     "sha256": "507cd5f5e04ae039f6356488d9d3c67af2b8a45af6f09b137de58a4aa4d87b3b",
     "fixes": [
       "swept() (lines 29 to 37) concatenates the 25 copies and the boolean counts their overlap once per copy; the port counts a point once (obstacle less every reaching copy) and reports the per-step sum beside it (packages/sim/src/sweep/rotate.ts)",
@@ -23,7 +23,7 @@
   {
     "id": "ogee16.check-sweep/r16p",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/ogee16/files/src/source/check_sweep.py",
+    "source": "fab-knowledge:originals/ogee16/files/src/source/check_sweep.py",
     "sha256": "507cd5f5e04ae039f6356488d9d3c67af2b8a45af6f09b137de58a4aa4d87b3b",
     "fixes": [
       "packages/motion/src/kinematics/ogee.ts crank(): the crank placements of main() (lines 45 to 59), the latch angle from lCrankPhi; packages/sim/scenes/ogee16-cranks.ts sweeps them through core's binding with the step count and clash volume read from profile ogee16.sweepSteps and ogee16.sweepClashMm3",

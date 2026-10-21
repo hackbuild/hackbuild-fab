@@ -2,7 +2,7 @@
   {
     "id": "pip.pkg/haft-9",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft-src/src/pkg.js",
+    "source": "fab-knowledge:originals/pip/files/haft-src/src/pkg.js",
     "sha256": "a87a8dd39e055dee94c98110993260ac7c9834ce069bb275573aea691d429477",
     "fixes": [],
     "dest": null
@@ -10,7 +10,7 @@
   {
     "id": "pip.pkg/pip-controller-legacy",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/src/pkg.js",
+    "source": "fab-knowledge:evidence/x/pip-controller/src/pkg.js",
     "sha256": "3ef215ffbfc9579d58728432346d37eb5d00b739512250a6d33f77589f7ad9fb",
     "fixes": [],
     "dest": "designs/pip/legacy/src/pkg.js"

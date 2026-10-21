@@ -2,7 +2,7 @@
   {
     "id": "orca3mf/baffle-r3-src",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/baffle-r3/files/src/orca3mf.js",
+    "source": "fab-knowledge:originals/baffle-r3/files/src/orca3mf.js",
     "sha256": "9b4f964cf3b3d92e42f646a6b493a3bdc2c98f6c781d928c2d1ec2a554066e9b",
     "fixes": [],
     "dest": null
@@ -10,7 +10,7 @@
   {
     "id": "orca3mf/blocks-extracted",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/blocks/files/src-extracted/orca3mf.js",
+    "source": "fab-knowledge:originals/blocks/files/src-extracted/orca3mf.js",
     "sha256": "69e6ffc755cd3aed5d3b7faac1802aa5ca61927ef8fefef22b708e4e6c541222",
     "fixes": [],
     "dest": null
@@ -18,7 +18,7 @@
   {
     "id": "orca3mf/inlay-skill-asset",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/inlay/files/skill/print-forge/assets/orca3mf.js",
+    "source": "fab-knowledge:originals/inlay/files/skill/print-forge/assets/orca3mf.js",
     "sha256": "d1bf7d051e47f9633f069024353bd01ebf0bc5298b36fccbbefa966f7ad8a16a",
     "fixes": [
       "ported to packages/3mf/src/writer (M00-T07) with the 127-key per-slot filament template harvested from the gold save (D-052, D-159)",
@@ -30,7 +30,7 @@
   {
     "id": "orca3mf/knuckle-extracted",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/knuckle/files/extracted/orca3mf.js",
+    "source": "fab-knowledge:originals/knuckle/files/extracted/orca3mf.js",
     "sha256": "3f2c659a0d6b298dcc3631ab19e7d4b32ea31d91f6dd08bc10f12485f4c4f76c",
     "fixes": [],
     "dest": null
@@ -38,7 +38,7 @@
   {
     "id": "orca3mf/pip-controller-legacy",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/tools/orca3mf.js",
+    "source": "fab-knowledge:evidence/x/pip-controller/tools/orca3mf.js",
     "sha256": "d1bf7d051e47f9633f069024353bd01ebf0bc5298b36fccbbefa966f7ad8a16a",
     "fixes": [],
     "dest": "designs/pip/legacy/tools/orca3mf.js"
@@ -46,7 +46,7 @@
   {
     "id": "orca3mf/pip-controller-tools",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/pip-controller/tools/orca3mf.js",
+    "source": "fab-knowledge:originals/pip/files/pip-controller/tools/orca3mf.js",
     "sha256": "d1bf7d051e47f9633f069024353bd01ebf0bc5298b36fccbbefa966f7ad8a16a",
     "fixes": [],
     "dest": null
@@ -54,7 +54,7 @@
   {
     "id": "orca3mf/tang-r6-src",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/tang-r6/files/src/01_orca3mf.js",
+    "source": "fab-knowledge:originals/tang-r6/files/src/01_orca3mf.js",
     "sha256": "9b4f964cf3b3d92e42f646a6b493a3bdc2c98f6c781d928c2d1ec2a554066e9b",
     "fixes": [],
     "dest": null
@@ -62,7 +62,7 @@
   {
     "id": "orca3mf/toggle-extracted",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/toggle/files/extracted/orca3mf.js",
+    "source": "fab-knowledge:originals/toggle/files/extracted/orca3mf.js",
     "sha256": "69e6ffc755cd3aed5d3b7faac1802aa5ca61927ef8fefef22b708e4e6c541222",
     "fixes": [],
     "dest": null

@@ -2,7 +2,7 @@
   {
     "id": "slate.src/sep04",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/slate/files/precursor-sep04/slate-src.zip",
+    "source": "fab-knowledge:originals/slate/files/precursor-sep04/slate-src.zip",
     "sha256": "4a00f919e89b0819e52d656e98183d4bbbadbf9eafa4ef0c54dcba9e7bc0cd3e",
     "fixes": [],
     "dest": null

@@ -2,7 +2,7 @@
   {
     "id": "ui-anatomy/handoff",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/plan-to-refine/handoff/hbf/knowledge/kernels/ui-anatomy.md",
+    "source": "fab-knowledge:evidence/x/plan-to-refine/handoff/hbf/knowledge/kernels/ui-anatomy.md",
     "sha256": "2c625f1ed1955d2351dc0a16e889d7ce8108b65a152c141cddc5471c9c384ac2",
     "fixes": [],
     "dest": "knowledge/kernels/ui-anatomy.md"

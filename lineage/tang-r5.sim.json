@@ -2,7 +2,7 @@
   {
     "id": "tang-r5.sim/dl",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-gudgeon-tang-keyway/tang/tang_r5_sim (13).html",
+    "source": "fab-knowledge:evidence/x/downloads/dl-gudgeon-tang-keyway/tang/tang_r5_sim (13).html",
     "sha256": "f251530457b2338c7403cae94dd0f43ab9847725062b3ba1c7ae9eddfcad2add",
     "fixes": [],
     "dest": "designs/tang/legacy/tang_r5_sim (13).html"
@@ -10,7 +10,7 @@
   {
     "id": "tang-r5.sim/sim-13",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/tang-r5/files/tang_r5_sim_13.html",
+    "source": "fab-knowledge:originals/tang-r5/files/tang_r5_sim_13.html",
     "sha256": "f251530457b2338c7403cae94dd0f43ab9847725062b3ba1c7ae9eddfcad2add",
     "fixes": [],
     "dest": "designs/tang/legacy/tang_r5_sim (13).html"

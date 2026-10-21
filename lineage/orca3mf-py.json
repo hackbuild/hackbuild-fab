@@ -2,7 +2,7 @@
   {
     "id": "orca3mf-py/inlay-skill-script",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/inlay/files/skill/print-forge/scripts/orca3mf.py",
+    "source": "fab-knowledge:originals/inlay/files/skill/print-forge/scripts/orca3mf.py",
     "sha256": "91e3595f7c90cbcc58986cca5b1bae47f8217860207176e0c80d0e7f6999ba40",
     "fixes": [
       "rewritten in place at tools/py/orca3mf.py (M00-T08) to write entry for entry what packages/3mf/src/writer writes, with the 127-key per-slot filament template (D-052, D-159)"
@@ -12,7 +12,7 @@
   {
     "id": "orca3mf-py/sparger-w-source",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/sparger-w/files/source/orca3mf.py",
+    "source": "fab-knowledge:originals/sparger-w/files/source/orca3mf.py",
     "sha256": "91e3595f7c90cbcc58986cca5b1bae47f8217860207176e0c80d0e7f6999ba40",
     "fixes": [],
     "dest": null

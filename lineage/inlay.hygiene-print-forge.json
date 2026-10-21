@@ -2,7 +2,7 @@
   {
     "id": "inlay.hygiene-print-forge/hbf-seed",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/plan-to-refine/handoff/hbf/seed/mesh/rastermesh.js",
+    "source": "fab-knowledge:evidence/x/plan-to-refine/handoff/hbf/seed/mesh/rastermesh.js",
     "sha256": "a99a159b91c9d392987b22393f04caf035762fe5301013c601c6e5f3a6697fe0",
     "fixes": [],
     "dest": null
@@ -10,7 +10,7 @@
   {
     "id": "inlay.hygiene-print-forge/inlay-despeckle",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/inlay/files/skill/print-forge/assets/rastermesh.js",
+    "source": "fab-knowledge:originals/inlay/files/skill/print-forge/assets/rastermesh.js",
     "sha256": "a99a159b91c9d392987b22393f04caf035762fe5301013c601c6e5f3a6697fe0",
     "fixes": [],
     "dest": "packages/inlay/src/hygiene/despeckle.ts"
@@ -18,7 +18,7 @@
   {
     "id": "inlay.hygiene-print-forge/inlay-disc",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/inlay/files/skill/print-forge/assets/rastermesh.js",
+    "source": "fab-knowledge:originals/inlay/files/skill/print-forge/assets/rastermesh.js",
     "sha256": "a99a159b91c9d392987b22393f04caf035762fe5301013c601c6e5f3a6697fe0",
     "fixes": [],
     "dest": "packages/inlay/src/hygiene/disc.ts"
@@ -26,7 +26,7 @@
   {
     "id": "inlay.hygiene-print-forge/inlay-gap",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/inlay/files/skill/print-forge/assets/rastermesh.js",
+    "source": "fab-knowledge:originals/inlay/files/skill/print-forge/assets/rastermesh.js",
     "sha256": "a99a159b91c9d392987b22393f04caf035762fe5301013c601c6e5f3a6697fe0",
     "fixes": [],
     "dest": "packages/inlay/src/hygiene/box.ts"
@@ -34,7 +34,7 @@
   {
     "id": "inlay.hygiene-print-forge/inlay-print-forge",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/inlay/files/skill/print-forge/assets/rastermesh.js",
+    "source": "fab-knowledge:originals/inlay/files/skill/print-forge/assets/rastermesh.js",
     "sha256": "a99a159b91c9d392987b22393f04caf035762fe5301013c601c6e5f3a6697fe0",
     "fixes": [],
     "dest": null

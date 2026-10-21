@@ -2,7 +2,7 @@
   {
     "id": "pip.coupon/haft-9",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft-src/src/coupon.js",
+    "source": "fab-knowledge:originals/pip/files/haft-src/src/coupon.js",
     "sha256": "a33e2741ba772f96ab557c8b9e087fb04796e28f118cbf7f65e9dfaec7eebb35",
     "fixes": [],
     "dest": null
@@ -10,7 +10,7 @@
   {
     "id": "pip.coupon/pip-controller-legacy",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/src/coupon.js",
+    "source": "fab-knowledge:evidence/x/pip-controller/src/coupon.js",
     "sha256": "c621103d81e35959d9262ce6cd9e7d6af9c156a9c78308c3e738ecaf3bfe82ad",
     "fixes": [],
     "dest": "designs/pip/legacy/src/coupon.js"
@@ -18,7 +18,7 @@
   {
     "id": "pip.coupon/haft-9-access-switch-coupon",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft-src/src/coupon.js",
+    "source": "fab-knowledge:originals/pip/files/haft-src/src/coupon.js",
     "sha256": "a33e2741ba772f96ab557c8b9e087fb04796e28f118cbf7f65e9dfaec7eebb35",
     "fixes": [
       "the click spring cell (coupon.js lines 131 to 150: slot, relief, cap well and ribs on the coupon floor) and the spring and cap printed apart (lines 166 to 170), placed three times through click-spring-key by reference/keys/access-switch/coupon/build.ts at span 28 and beams 0.50, 0.55, 0.60 (R1-flagship-access-switch-10); the electrical cells, pads and leads are dropped, force only",
@@ -29,7 +29,7 @@
   {
     "id": "pip.coupon/haft-9-access-switch-coupon-card",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft-src/src/coupon.js",
+    "source": "fab-knowledge:originals/pip/files/haft-src/src/coupon.js",
     "sha256": "a33e2741ba772f96ab557c8b9e087fb04796e28f118cbf7f65e9dfaec7eebb35",
     "fixes": [
       "the click spring section of the coupon card (coupon.js card(), lines 234 to 241: drop the spring into its slot tip down and the cap on top, it should click, measure a beam with calipers first since force goes with the cube of it, and out of the slot the spring feels soft because an arch only snaps when its ends cannot move) ported to the assemble and read steps of reference/keys/access-switch/COUPON.md (R1-flagship-access-switch-11); the meter readings of the electrical cells are dropped with those cells, and a kitchen scale, a coin count and a one word verdict per rung are new to this checklist"

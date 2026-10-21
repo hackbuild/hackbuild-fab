@@ -2,7 +2,7 @@
   {
     "id": "cotter.bench/m09-legacy",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/cotter (5).html",
+    "source": "fab-work-directory:cotter (5).html",
     "sha256": "9067ce3e7b0862579168b8f2e1ffdb89e44d4ddacb94b40c38c2af7614b38ffc",
     "fixes": [],
     "dest": "designs/cotter/legacy/cotter.html"
@@ -10,7 +10,7 @@
   {
     "id": "cotter.bench/r5",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/cotter/files/cotter-r5.html",
+    "source": "fab-knowledge:originals/cotter/files/cotter-r5.html",
     "sha256": "9067ce3e7b0862579168b8f2e1ffdb89e44d4ddacb94b40c38c2af7614b38ffc",
     "fixes": [],
     "dest": null

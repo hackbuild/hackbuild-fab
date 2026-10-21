@@ -2,7 +2,7 @@
   {
     "id": "slate.bench/r5",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/slate/files/r5/slate-r5.html",
+    "source": "fab-knowledge:originals/slate/files/r5/slate-r5.html",
     "sha256": "9e93bacc91cc7433230f26084dcf729bfe0f42b8437e86b257248fbee0d05735",
     "fixes": [],
     "dest": null
@@ -10,7 +10,7 @@
   {
     "id": "slate.bench/r6",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/slate/files/slate-r6.html",
+    "source": "fab-knowledge:originals/slate/files/slate-r6.html",
     "sha256": "0d34c2e15886c0b94084821847e23e3b2d3f7b6cbed101ca58fed8425932d92a",
     "fixes": [
       "r5 to r6 diff of eight lines over five hunks (slate record section 1.2)"

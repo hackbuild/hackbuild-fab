@@ -20,6 +20,7 @@
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
+import { localSource } from "../../../../tools/test-support/originals-root.ts";
 import vm from "node:vm";
 
 const repo = new URL("../../../../", import.meta.url);
@@ -29,7 +30,7 @@ const sha = (b) => createHash("sha256").update(b).digest("hex");
 function pinned(id) {
   const row = lineage.find((r) => r.id === id);
   if (row === undefined) throw new Error(`lineage.json has no row ${id}`);
-  const bytes = readFileSync(row.source);
+  const bytes = readFileSync(localSource(row.source));
   if (sha(bytes) !== row.sha256) throw new Error(`${row.source}: sha256 ${sha(bytes)}, lineage ${row.sha256}`);
   const text = bytes.toString("utf8");
   return { text, lines: text.split("\n"), source: row.source, sha256: row.sha256, lineage: id };

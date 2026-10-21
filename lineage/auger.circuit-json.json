@@ -2,7 +2,7 @@
   {
     "id": "auger.circuit-json/rev-b",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/auger/files/out/auger.circuit.json",
+    "source": "fab-knowledge:originals/auger/files/out/auger.circuit.json",
     "sha256": "4cc4f5792d800302e060008834eef651b9c91aa25e557e7644173999c95de6dd",
     "fixes": [],
     "dest": null

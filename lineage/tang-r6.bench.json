@@ -2,7 +2,7 @@
   {
     "id": "tang-r6.bench/dl",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-gudgeon-tang-keyway/tang/tang_r6 (4).html",
+    "source": "fab-knowledge:evidence/x/downloads/dl-gudgeon-tang-keyway/tang/tang_r6 (4).html",
     "sha256": "9a12993fb5ebff4a2f4d577a4bf396698564cfc538cd213113cd4ed0332482eb",
     "fixes": [],
     "dest": "designs/tang/legacy/tang_r6 (4).html"
@@ -10,7 +10,7 @@
   {
     "id": "tang-r6.bench/r6-4",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/tang-r6/files/tang_r6_4.html",
+    "source": "fab-knowledge:originals/tang-r6/files/tang_r6_4.html",
     "sha256": "9a12993fb5ebff4a2f4d577a4bf396698564cfc538cd213113cd4ed0332482eb",
     "fixes": [],
     "dest": "designs/tang/legacy/tang_r6 (4).html"

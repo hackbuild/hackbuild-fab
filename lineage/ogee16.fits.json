@@ -2,7 +2,7 @@
   {
     "id": "ogee16.fits/bench-zip",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/ogee16/outputs/ogee16-source.zip",
+    "source": "fab-work-directory:benches/ogee16/outputs/ogee16-source.zip",
     "sha256": "47d6077e0596eb4e9722a0a9f687cb82ec472c7bc031d8d2f61a98266aa94dd5",
     "fixes": [],
     "dest": "reference/fit/ogee16-r16p/legacy/fits.stdout.txt"
@@ -10,7 +10,7 @@
   {
     "id": "ogee16.fits/r16p",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/ogee16/files/src/source/fits.py",
+    "source": "fab-knowledge:originals/ogee16/files/src/source/fits.py",
     "sha256": "b127b99ecef2d5b6b9256507c206e79975b418d91e2dce5921cefbd9595f082c",
     "fixes": [
       "BAND, LOSS and the 1e-9 edge tolerance (lines 25 and 38 to 40, 85) ported as the legacy fit model ogee16-fits-v1 with provenance per band: SLIDE method felt (lines 36 to 37), the rest derived (D-099)",

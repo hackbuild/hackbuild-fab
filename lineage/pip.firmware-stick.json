@@ -2,7 +2,7 @@
   {
     "id": "pip.firmware-stick/pip-controller-b137deb",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/pip-controller/firmware/pip_stick/pip_stick.ino",
+    "source": "fab-knowledge:originals/pip/files/pip-controller/firmware/pip_stick/pip_stick.ino",
     "sha256": "388adba596c83e765c97d6302f0cc06f5b37fff9d104f9168608ee708cdb2847",
     "fixes": [
       "raw mode with a shared float window and RAW line (pip_stick.ino:118 to 162)",
@@ -14,7 +14,7 @@
   {
     "id": "pip.firmware-stick/pip-controller-b137deb-emit-wait",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/pip-controller/firmware/pip_stick/pip_stick.ino",
+    "source": "fab-knowledge:originals/pip/files/pip-controller/firmware/pip_stick/pip_stick.ino",
     "sha256": "388adba596c83e765c97d6302f0cc06f5b37fff9d104f9168608ee708cdb2847",
     "fixes": [
       "KEY_WAIT_US 3500 (pip_stick.ino line 25) and the drive, float and read sequence (lines 54 to 59) carried by packages/circuit/src/read/charge-release.ts emitWait and chargeReleaseRead as wait.emit, qualifier inferred (M05-T05, D-079)"

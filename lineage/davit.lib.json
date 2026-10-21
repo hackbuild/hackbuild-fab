@@ -2,7 +2,7 @@
   {
     "id": "davit.lib/r4",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/davit/files/src/lib.py",
+    "source": "fab-knowledge:originals/davit/files/src/lib.py",
     "sha256": "33d8ebe0f4aa6bcf36ea4ab678d1f0e0bb4a3a5233abced76fc905b931b5057a",
     "fixes": [],
     "dest": "designs/davit/legacy/lib.py"

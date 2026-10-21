@@ -5,6 +5,7 @@
 
 import { createHash } from "node:crypto";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
+import { sourcePath } from "../../../tools/test-support/originals-root.js";
 import { fileURLToPath } from "node:url";
 import { describe, expect, test } from "vitest";
 import {
@@ -176,8 +177,9 @@ describe("headless and lineage", () => {
       const hits = rows.filter((r) => r.kind === "canonical" && r.dest === `packages/inlay/src/${f}`);
       expect(hits.length, f).toBeGreaterThan(0);
       for (const r of hits) {
-        if (!existsSync(r.source)) continue;
-        expect(createHash("sha256").update(readFileSync(r.source)).digest("hex"), r.id).toBe(r.sha256);
+        const src = sourcePath(r.source);
+        if (!existsSync(src)) continue;
+        expect(createHash("sha256").update(readFileSync(src)).digest("hex"), r.id).toBe(r.sha256);
       }
     }
   });

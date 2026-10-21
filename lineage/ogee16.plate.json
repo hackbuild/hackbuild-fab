@@ -2,7 +2,7 @@
   {
     "id": "ogee16.plate/bench-page",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/ogee16/outputs/ogee16-plate.html",
+    "source": "fab-work-directory:benches/ogee16/outputs/ogee16-plate.html",
     "sha256": "86a000eb98eeb108fedfedc1d7c4ac9a08cfdeef8e8b2661b71069eb207c8837",
     "fixes": [],
     "dest": "designs/ogee16/legacy/ogee16-plate.html"
@@ -10,7 +10,7 @@
   {
     "id": "ogee16.plate/r16p",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/ogee16/files/src/source/build_plate.py",
+    "source": "fab-knowledge:originals/ogee16/files/src/source/build_plate.py",
     "sha256": "dc3f1772312360fda22e3ef5f89ebc243e714fbf88fc1498e30c6a2bfd0664ed",
     "fixes": [],
     "dest": null

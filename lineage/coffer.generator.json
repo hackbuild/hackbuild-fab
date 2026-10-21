@@ -2,7 +2,7 @@
   {
     "id": "coffer.generator/harvest",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/coffer/files/gen_coffer.py",
+    "source": "fab-knowledge:originals/coffer/files/gen_coffer.py",
     "sha256": "3c5d50fb394669e6e4d16c033cfc219493cfb37ccbdb53fe80baef23e49cae7d",
     "fixes": [
       "ported to packages/archetypes/src/coffer/port.ts, as its header cites gen_coffer.py (packages/archetypes/src/coffer/port.ts line 6: \"gen_coffer.py `gates` computes from them (lines 323 to 333: port slot,\"); recorded by the M06 and M08 integration",

@@ -2,7 +2,7 @@
   {
     "id": "feeler.bench/thinpot-16",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/thinpot/files/feeler_thinpot.html",
+    "source": "fab-knowledge:originals/thinpot/files/feeler_thinpot.html",
     "sha256": "35467f4b022178334c6aba422985854b6bc298927f5f552bc38e79465219b222",
     "fixes": [
       "ported to packages/archetypes/src/feeler.ts, as its header cites feeler_thinpot.html (packages/archetypes/src/feeler.ts line 2: \"ported from originals/thinpot/files/feeler_thinpot.html: dividerR and\"); recorded by the M06 and M08 integration",
@@ -18,7 +18,7 @@
   {
     "id": "feeler.bench/thinpot-16-apart",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/thinpot/files/feeler_thinpot.html",
+    "source": "fab-knowledge:originals/thinpot/files/feeler_thinpot.html",
     "sha256": "35467f4b022178334c6aba422985854b6bc298927f5f552bc38e79465219b222",
     "fixes": [
       "Ctx.apartExcept (line 1071) and its articulation check (lines 1180 to 1190), makesContact (line 1102) and slabsTouch (line 967) ported to packages/circuit/src/extract/actuated.ts over net extraction and its touch rule, run by packages/checks/src/net/net26.ts (CHK-NET-26) and packages/checks/src/net/net27.ts (CHK-NET-27), which moves the declared actuator by the gap as the source note's idea 2 asks (M05-T19)"
@@ -28,7 +28,7 @@
   {
     "id": "feeler.bench/thinpot-16-bench-outputs",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/feeler-thinpot/outputs/feeler.html",
+    "source": "fab-work-directory:benches/feeler-thinpot/outputs/feeler.html",
     "sha256": "35467f4b022178334c6aba422985854b6bc298927f5f552bc38e79465219b222",
     "fixes": [],
     "dest": "designs/stylus/legacy/feeler-thinpot.zip!feeler.html"
@@ -36,7 +36,7 @@
   {
     "id": "feeler.bench/thinpot-16-ladder",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/thinpot/files/feeler_thinpot.html",
+    "source": "fab-knowledge:originals/thinpot/files/feeler_thinpot.html",
     "sha256": "35467f4b022178334c6aba422985854b6bc298927f5f552bc38e79465219b222",
     "fixes": [
       "LADDER keypad levels Rpar / (Rup + Rpar) with the read leg Rc + Rpd, the no-key level 0 and the smallest step in counts (feeler_thinpot.html lines 4504 to 4518 and 4951 to 4959), ported to packages/circuit/src/read/ladder.ts with per-step resistances; Rc 4000 and the 25 count floor (line 4545) are profile constants read.ladder.leadOhm and read.ladder.minStepCounts (M05-T05)"
@@ -46,7 +46,7 @@
   {
     "id": "feeler.bench/thinpot-16-midi-pad",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/thinpot/files/feeler_thinpot.html",
+    "source": "fab-knowledge:originals/thinpot/files/feeler_thinpot.html",
     "sha256": "35467f4b022178334c6aba422985854b6bc298927f5f552bc38e79465219b222",
     "fixes": [
       "the three terminal pads at the near end of the THINPOT track (archetype thinpot, lines 4022 to 4210, ported to packages/archetypes/src/thinpot/strip.ts) located from the applied archetype's track prisms and landed on one post per pad by reference/keys/midi-pad/build.ts, since the archetype emits no terminal features (gap G5)"
@@ -56,7 +56,7 @@
   {
     "id": "feeler.bench/thinpot-16-port-strip",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/thinpot/files/feeler_thinpot.html",
+    "source": "fab-knowledge:originals/thinpot/files/feeler_thinpot.html",
     "sha256": "35467f4b022178334c6aba422985854b6bc298927f5f552bc38e79465219b222",
     "fixes": [],
     "dest": "packages/archetypes/src/thinpot/strip.ts"
@@ -64,7 +64,7 @@
   {
     "id": "feeler.bench/v1",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/feeler-v1/files/feeler_v1.html",
+    "source": "fab-knowledge:originals/feeler-v1/files/feeler_v1.html",
     "sha256": "0671193edade919aea986d5a3af3b8ce76d7a4af180b5568b3bae33887f8f8eb",
     "fixes": [],
     "dest": "designs/stylus/legacy/feeler-v1.zip!feeler.html"
@@ -72,7 +72,7 @@
   {
     "id": "feeler.bench/v1-bench-outputs",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/feeler-v1/outputs/feeler.html",
+    "source": "fab-work-directory:benches/feeler-v1/outputs/feeler.html",
     "sha256": "0671193edade919aea986d5a3af3b8ce76d7a4af180b5568b3bae33887f8f8eb",
     "fixes": [],
     "dest": "designs/stylus/legacy/feeler-v1.zip!feeler.html"

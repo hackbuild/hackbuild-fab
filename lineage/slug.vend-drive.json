@@ -2,7 +2,7 @@
   {
     "id": "slug.vend-drive/slug-12",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/slug/files/slug.html",
+    "source": "fab-knowledge:originals/slug/files/slug.html",
     "sha256": "2d09238c27d5ca4bf023eeee44939b1500470ad2058822b8d0add48ec9bf3241",
     "fixes": [
       "the motor advances by rate x DT per physics step in sim time instead of frame time (slug.html lines 1213 to 1222); the vend protocol and delivery count are new (M02-T08 step 4), since the runner behind 126 of 128 is absent"

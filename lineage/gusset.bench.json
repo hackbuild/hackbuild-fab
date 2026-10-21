@@ -2,7 +2,7 @@
   {
     "id": "gusset.bench/m07-legacy",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/gusset (10).html",
+    "source": "fab-work-directory:gusset (10).html",
     "sha256": "a29d4f27b07376941230d21638b989f8ce5698ce0ec3ac2c04f2177e24b8ed97",
     "fixes": [],
     "dest": "designs/gusset/legacy/gusset-10.html"
@@ -10,7 +10,7 @@
   {
     "id": "gusset.bench/nest-orders",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/gusset/files/gusset-v16.html",
+    "source": "fab-knowledge:originals/gusset/files/gusset-v16.html",
     "sha256": "a29d4f27b07376941230d21638b989f8ce5698ce0ec3ac2c04f2177e24b8ed97",
     "fixes": [
       "nest() and nestOnce() of lines 1264 to 1313 ported into packages/nest/src/maxrects.ts: the five comparators of lines 1265 to 1271 as SORT_ORDERS, and nestOnce's sheet choice (the open bin whose best fit has the smallest short leftover, first on a tie, else a new bin) as the multi-sheet loop of maxrectsPack",
@@ -22,7 +22,7 @@
   {
     "id": "gusset.bench/v16",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/gusset/files/gusset-v16.html",
+    "source": "fab-knowledge:originals/gusset/files/gusset-v16.html",
     "sha256": "a29d4f27b07376941230d21638b989f8ce5698ce0ec3ac2c04f2177e24b8ed97",
     "fixes": [],
     "dest": null

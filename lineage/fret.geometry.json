@@ -2,7 +2,7 @@
   {
     "id": "fret.geometry/bench",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/cricut-midi-seven/outputs/fret/fret_geometry.json",
+    "source": "fab-work-directory:benches/cricut-midi-seven/outputs/fret/fret_geometry.json",
     "sha256": "568bae8c2622e34215f64183dcc34c87f7d6e526f7eb74c4a889a3c4e42dbb84",
     "fixes": [],
     "dest": "reference/copper/fret/legacy/fret_geometry.json"
@@ -10,7 +10,7 @@
   {
     "id": "fret.geometry/rev-a",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/fret/files/fret_geometry.json",
+    "source": "fab-knowledge:originals/fret/files/fret_geometry.json",
     "sha256": "568bae8c2622e34215f64183dcc34c87f7d6e526f7eb74c4a889a3c4e42dbb84",
     "fixes": [
       "tools/py/copper/test_oracle.py: params and stats are the oracle golden, compared exactly; path strings are not compared (M05-T13 step 5)",

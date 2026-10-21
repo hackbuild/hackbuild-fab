@@ -2,7 +2,7 @@
   {
     "id": "tang-r5.circuit/circuit-data",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/tang-r5/files/src/tang_r5_circuit_data.js",
+    "source": "fab-knowledge:originals/tang-r5/files/src/tang_r5_circuit_data.js",
     "sha256": "9062dec42dedb6cc311238a71627c8da1deee8c57af481b1dd76b1eda9308e76",
     "fixes": [],
     "dest": null

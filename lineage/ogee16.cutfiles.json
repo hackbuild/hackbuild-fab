@@ -2,7 +2,7 @@
   {
     "id": "ogee16.cutfiles/bench-cut-zip",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/ogee16/outputs/ogee16-cut.zip",
+    "source": "fab-work-directory:benches/ogee16/outputs/ogee16-cut.zip",
     "sha256": "24f3af409b692f0d0aaecd8bc9f890b1b8c3834d42def2f50fa56e0e22f50b93",
     "fixes": [],
     "dest": "designs/ogee16/legacy/ogee16-cut.zip"
@@ -10,7 +10,7 @@
   {
     "id": "ogee16.cutfiles/m07-connect",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/ogee16/files/src/source/cutfiles.py",
+    "source": "fab-knowledge:originals/ogee16/files/src/source/cutfiles.py",
     "sha256": "ef535caca27def1a7b8a91e4c6273dfb1e85617c6087b93e4924debf3fb98800",
     "fixes": [
       "the M07-T04 port of check_connected() (lines 109 to 121) as the CHK-SHT-01 kernel, with CHK-SHT-02 and CHK-SHT-07 beside it; listed on row ogee16.cutfiles/r16p"
@@ -20,7 +20,7 @@
   {
     "id": "ogee16.cutfiles/m07-stitch",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/ogee16/files/src/source/cutfiles.py",
+    "source": "fab-knowledge:originals/ogee16/files/src/source/cutfiles.py",
     "sha256": "ef535caca27def1a7b8a91e4c6273dfb1e85617c6087b93e4924debf3fb98800",
     "fixes": [
       "rings_from_dxf() of lines 34 to 67 (LINE and LWPOLYLINE segments stitched into rings at 1e-5 mm) stays Python and runs in place as the oracle: nest reads rings from the part and never from a DXF, so nothing ports it; this script runs it with polygon_from_rings, compensate and check_connected on the shipped per-part DXFs and writes the stitched rings to packages/nest/records/ogee16-connect.json, the input of the M07-T04 and T06 ports"
@@ -30,7 +30,7 @@
   {
     "id": "ogee16.cutfiles/r16p",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/ogee16/files/src/source/cutfiles.py",
+    "source": "fab-knowledge:originals/ogee16/files/src/source/cutfiles.py",
     "sha256": "ef535caca27def1a7b8a91e4c6273dfb1e85617c6087b93e4924debf3fb98800",
     "fixes": [
       "polygon_from_rings() of lines 69 to 93 ported into packages/nest/src/profile.ts on geom's CrossSection: largest ring first, a ring's role from the larger rings around its representative point; the original consumes a hole before it tests the rings inside it, so an island inside a hole came back as a second hole of the outer, and the port decides by depth parity instead (even solid, odd hole)",

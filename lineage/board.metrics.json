@@ -2,7 +2,7 @@
   {
     "id": "board.metrics/spindle-r1",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/spindle/files/pcb.py",
+    "source": "fab-knowledge:originals/spindle/files/pcb.py",
     "sha256": "650351218717462917332d02c7cfb70883ad3a66ffad24b0e2756b90ce8a3176",
     "fixes": [
       "the DRC summary of lines 225 and 287 (nets, PADS including vias, DRILLS including vias) ported as boardMetrics with the NPTH mounts of line 451 counted apart; tightest clearance waits for the M08-T06 DRC"

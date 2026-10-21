@@ -2,7 +2,7 @@
   {
     "id": "catalog-src.kicad-footprints.cp-radial-d6.3mm-p2.50mm/m08",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/m08-catalog/kicad/CP_Radial_D6.3mm_P2.50mm.kicad_mod",
+    "source": "fab-knowledge:evidence/m08-catalog/kicad/CP_Radial_D6.3mm_P2.50mm.kicad_mod",
     "sha256": "e91ac6acfa06b50541b44f7cddc1aa27b8a36969c31727d79a9a221c6884ac5d",
     "fixes": [],
     "dest": null

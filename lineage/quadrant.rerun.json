@@ -2,7 +2,7 @@
   {
     "id": "quadrant.rerun/2026-10-04",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/quadrant/files/rerun/run-2026-10-04.txt",
+    "source": "fab-knowledge:originals/quadrant/files/rerun/run-2026-10-04.txt",
     "sha256": "50861e66467208781988f5bd745d93fa0a360283722e3b9d817c3f1dab84efc3",
     "fixes": [
       "tools/py/copper/test_oracle.py: the gate list, verdicts and order the oracle run must equal, numbers masked (M05-T13)",

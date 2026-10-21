@@ -2,7 +2,7 @@
   {
     "id": "davit.collide/r3-page",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/davit/files/r3/davit.html",
+    "source": "fab-knowledge:originals/davit/files/r3/davit.html",
     "sha256": "ba332702646f2a9b072b1c8ab6da46b3d3e4f268179af1f37fcfd7a61280260a",
     "fixes": [
       "chain() and collide() ported to packages/motion/src/kinematics/davit.ts (the kinematics module, D-139; M02-T06 wrote it in packages/sim, M07-T10 moved it unchanged) and packages/sim/src/proxy/collide.ts; the explicit skip of arm pairs on different sides ('arms cannot meet') is removed so left is tested against right (M02-T06 step 2)",
@@ -14,7 +14,7 @@
   {
     "id": "davit.collide/r4-page",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/davit/files/sim_r4.html",
+    "source": "fab-knowledge:originals/davit/files/sim_r4.html",
     "sha256": "1511d9082a6b72dd32c91ac4c2c602743c84f908bd39e3db6debaa3aab885da8",
     "fixes": [
       "chain() (line 210) and collide() (line 552) equal the R3 page functions byte for byte (computed 2026-10-08); the ports in packages/motion/src/kinematics/davit.ts (moved from packages/sim at M07-T10, D-139) and packages/sim/src/proxy/collide.ts start here, with the arms cannot meet skip removed so left is tested against right (M02-T06 step 2); sim reads the chain through the place(pose) binding in core/src/kinematics.ts",
@@ -25,7 +25,7 @@
   {
     "id": "davit.collide/r4-page-loose",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-robots-machines/sim_r4.html",
+    "source": "fab-knowledge:evidence/x/downloads/dl-robots-machines/sim_r4.html",
     "sha256": "1f05c5004732058b6feabf6ddc2d5565f60a89bcb4398049e873aa9c25cbd3c5",
     "fixes": [],
     "dest": "designs/davit/legacy/r4/sim_r4-loose.html"

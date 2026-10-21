@@ -2,7 +2,7 @@
   {
     "id": "tang-r6.design5/r6-4",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/tang-r6/files/src/05_design.js",
+    "source": "fab-knowledge:originals/tang-r6/files/src/05_design.js",
     "sha256": "36220ca1d95cef4012ee7e4d153a1afff7357cf0047773c8caafe787fd19e1c3",
     "fixes": [
       "ported to packages/archetypes/src/tang/neck.ts, as its header cites 05_design.js (packages/archetypes/src/tang/neck.ts line 2: \"membrane-slider-wall), ported from originals/tang-r6/files/src/05_design.js\"); recorded by the M06 and M08 integration",
@@ -13,7 +13,7 @@
   {
     "id": "tang-r6.design5/r6-4-port-neck",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/tang-r6/files/src/05_design.js",
+    "source": "fab-knowledge:originals/tang-r6/files/src/05_design.js",
     "sha256": "36220ca1d95cef4012ee7e4d153a1afff7357cf0047773c8caafe787fd19e1c3",
     "fixes": [],
     "dest": "packages/archetypes/src/tang/neck.ts"

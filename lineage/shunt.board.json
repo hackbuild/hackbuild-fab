@@ -2,7 +2,7 @@
   {
     "id": "shunt.board/m08-reference",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/shunt/files/board.json",
+    "source": "fab-knowledge:originals/shunt/files/board.json",
     "sha256": "db835634c13a8661fb0ac20132e55e11190e6f3262fa20f07f5a69fe3b08d375",
     "fixes": [
       "byte equal to the canonical board.json; the SHUNT generator reads only this copy (M08-T06 step 5)"
@@ -12,7 +12,7 @@
   {
     "id": "shunt.board/r1",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/shunt/files/board.json",
+    "source": "fab-knowledge:originals/shunt/files/board.json",
     "sha256": "db835634c13a8661fb0ac20132e55e11190e6f3262fa20f07f5a69fe3b08d375",
     "fixes": [],
     "dest": "designs/shunt/legacy/board.json"

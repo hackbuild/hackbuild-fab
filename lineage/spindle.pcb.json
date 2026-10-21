@@ -2,7 +2,7 @@
   {
     "id": "spindle.pcb/files-33",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-boards-tools/spindle/files (33)/pcb.py",
+    "source": "fab-knowledge:evidence/x/downloads/dl-boards-tools/spindle/files (33)/pcb.py",
     "sha256": "97e05388476f74e7f4408249ae82c1555cbcd9c98adb5cba5349ca815b08bfb4",
     "fixes": [
       "the R1 generator before the drill offset change: no hole_dx and no drill breakout gate, module drilled on the 17.5 mm row against 15.24 (M08 card Legacy sources); negative fixture, never a port source"
@@ -12,7 +12,7 @@
   {
     "id": "spindle.pcb/r1",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/spindle/files/pcb.py",
+    "source": "fab-knowledge:originals/spindle/files/pcb.py",
     "sha256": "650351218717462917332d02c7cfb70883ad3a66ffad24b0e2756b90ce8a3176",
     "fixes": [
       "hole_dx offset drill and drill-in-pad gate over the pre-hybrid R1 (spindle record section 1)",

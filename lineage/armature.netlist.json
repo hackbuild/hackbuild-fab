@@ -2,7 +2,7 @@
   {
     "id": "armature.netlist/r1",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/armature/files/ARMATURE-R1.net",
+    "source": "fab-knowledge:originals/armature/files/ARMATURE-R1.net",
     "sha256": "8dbc349ca7a59479f96f07f8299afa5af5f277bb652bf305fcfa09afca5a8f58",
     "fixes": [],
     "dest": null

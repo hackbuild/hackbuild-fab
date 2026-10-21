@@ -2,7 +2,7 @@
   {
     "id": "lug.circuit-json/rev-a",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/lug/files/lug.circuit.json",
+    "source": "fab-knowledge:originals/lug/files/lug.circuit.json",
     "sha256": "a032c41a8a81e2ae15f7a54cb3cae262ccdff61391d420fdeb7cb7e3ddcedf6c",
     "fixes": [],
     "dest": null

@@ -2,7 +2,7 @@
   {
     "id": "knuckle.derive/part2",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/knuckle/files/src/part2.js",
+    "source": "fab-knowledge:originals/knuckle/files/src/part2.js",
     "sha256": "04ca7d84699abd9f152e4db4bb9894c66be7cc9ba345eeec15798159b6356dd1",
     "fixes": [],
     "dest": null

@@ -2,7 +2,7 @@
   {
     "id": "mesh.imported-glb/lug-viewer",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/lug/files/lug-viewer.html",
+    "source": "fab-knowledge:originals/lug/files/lug-viewer.html",
     "sha256": "faae6607145566d1a8739bea4d360d1d43cb3f0cf5e9be76d19808a6349cbaa4",
     "fixes": [
       "the only original that reads a GLB (lug-viewer.html lines 731 to 757, lug record GLB placement) parses it with three.js GLTFLoader for display, rotates by -90 deg about X when Y is the thinnest axis, then flips by a vertex count; packages/mesh/src/routes/imported-glb.ts reads the GLB container, nodes, accessors and triangle primitives by the Khronos glTF 2.0 sections instead, maps glTF +Y up to kernel +Z up by a fixed +90 deg rotation about +X, (x, y, z) to (x, -z, y), reverses triangles under a negative determinant world transform, and hands the soup to importSoup so the weld, signed volume and winding rules equal the STL route's (D-160)"

@@ -2,7 +2,7 @@
   {
     "id": "hackbuild-bench.css/main",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/hackbuild-bench/src/styles/bench.css",
+    "source": "hackbuild-bench/src/styles/bench.css",
     "sha256": "bcac41d7b8897aed981b9d5d5842267c291f16b26cdb40b18f930fe303b3d3ea",
     "fixes": [],
     "dest": null

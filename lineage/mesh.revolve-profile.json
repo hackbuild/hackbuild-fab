@@ -2,7 +2,7 @@
   {
     "id": "mesh.revolve-profile/tenon-sweep",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/tenon/files/src/sweep.js",
+    "source": "fab-knowledge:originals/tenon/files/src/sweep.js",
     "sha256": "8eb0eff6f1e891eeea779cd4f1319e0e5c556e6d8f409a01306c5bf6111111ef",
     "fixes": [
       "profile checks: no self intersection, positive area, no negative r, no back-tracking fins (sweep.js simple() lines 15 to 33)"

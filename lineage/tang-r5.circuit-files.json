@@ -2,7 +2,7 @@
   {
     "id": "tang-r5.circuit-files/dl",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-gudgeon-tang-keyway/tang/tang_r5_circuit_files.zip",
+    "source": "fab-knowledge:evidence/x/downloads/dl-gudgeon-tang-keyway/tang/tang_r5_circuit_files.zip",
     "sha256": "a153df328416f98ebf64cc9f30412c699015a81b2f923987d733ee7af958db3c",
     "fixes": [],
     "dest": "designs/tang/legacy/tang_r5_circuit_files.zip"
@@ -10,7 +10,7 @@
   {
     "id": "tang-r5.circuit-files/r5",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/tang-r5/files/tang_r5_circuit_files.zip",
+    "source": "fab-knowledge:originals/tang-r5/files/tang_r5_circuit_files.zip",
     "sha256": "a153df328416f98ebf64cc9f30412c699015a81b2f923987d733ee7af958db3c",
     "fixes": [],
     "dest": "designs/tang/legacy/tang_r5_circuit_files.zip"

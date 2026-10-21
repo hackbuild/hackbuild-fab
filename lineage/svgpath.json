@@ -2,7 +2,7 @@
   {
     "id": "svgpath/fret-bench",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/cricut-midi-seven/outputs/fret/svgpath.py",
+    "source": "fab-work-directory:benches/cricut-midi-seven/outputs/fret/svgpath.py",
     "sha256": "5d568680fe0cd68d55269994d5cbbb04b3b38ff20a41629188795a6180857864",
     "fixes": [],
     "dest": "reference/copper/fret/legacy/svgpath.py"
@@ -10,7 +10,7 @@
   {
     "id": "svgpath/keyway-bench",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/cricut-midi-seven/outputs/keyway/svgpath.py",
+    "source": "fab-work-directory:benches/cricut-midi-seven/outputs/keyway/svgpath.py",
     "sha256": "5d568680fe0cd68d55269994d5cbbb04b3b38ff20a41629188795a6180857864",
     "fixes": [],
     "dest": "reference/copper/keyway/legacy/svgpath.py"
@@ -18,7 +18,7 @@
   {
     "id": "svgpath/keyway-rev-a",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/keyway/files/svgpath.py",
+    "source": "fab-knowledge:originals/keyway/files/svgpath.py",
     "sha256": "5d568680fe0cd68d55269994d5cbbb04b3b38ff20a41629188795a6180857864",
     "fixes": [
       "ported to packages/copper/src/vinyl/svgpath.ts (rings_to_geom, path_geom, text_geom, the mark regex) and packages/copper/src/vinyl/font.ts (the WOFF2 container, the transformed glyf stream and the _Pen, without fontTools; composite glyphs draw blank as _Pen.addComponent leaves them, line 183); path_to_rings is packages/geom/src/raster/svgpath.ts with curves at n 12 and 10; glyph paths equal fontTools byte for byte (packages/copper/test/font.test.ts, M05-T14)"
@@ -28,7 +28,7 @@
   {
     "id": "svgpath/quadrant-bench",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/cricut-midi-seven/outputs/quadrant/svgpath.py",
+    "source": "fab-work-directory:benches/cricut-midi-seven/outputs/quadrant/svgpath.py",
     "sha256": "5d568680fe0cd68d55269994d5cbbb04b3b38ff20a41629188795a6180857864",
     "fixes": [],
     "dest": "reference/copper/quadrant/legacy/svgpath.py"
@@ -36,7 +36,7 @@
   {
     "id": "svgpath/spline-bench",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/cricut-midi-seven/outputs/spline/svgpath.py",
+    "source": "fab-work-directory:benches/cricut-midi-seven/outputs/spline/svgpath.py",
     "sha256": "5d568680fe0cd68d55269994d5cbbb04b3b38ff20a41629188795a6180857864",
     "fixes": [],
     "dest": "reference/copper/spline/legacy/svgpath.py"
@@ -44,7 +44,7 @@
   {
     "id": "svgpath/stave-bench",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/cricut-midi-seven/outputs/stave/svgpath.py",
+    "source": "fab-work-directory:benches/cricut-midi-seven/outputs/stave/svgpath.py",
     "sha256": "5d568680fe0cd68d55269994d5cbbb04b3b38ff20a41629188795a6180857864",
     "fixes": [],
     "dest": "reference/copper/stave/legacy/svgpath.py"
@@ -52,7 +52,7 @@
   {
     "id": "svgpath/tessera-bench",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/cricut-midi-seven/outputs/tessera/svgpath.py",
+    "source": "fab-work-directory:benches/cricut-midi-seven/outputs/tessera/svgpath.py",
     "sha256": "5d568680fe0cd68d55269994d5cbbb04b3b38ff20a41629188795a6180857864",
     "fixes": [],
     "dest": "reference/copper/tessera/legacy/svgpath.py"
@@ -60,7 +60,7 @@
   {
     "id": "svgpath/vernier-bench",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/cricut-midi-seven/outputs/vernier/svgpath.py",
+    "source": "fab-work-directory:benches/cricut-midi-seven/outputs/vernier/svgpath.py",
     "sha256": "5d568680fe0cd68d55269994d5cbbb04b3b38ff20a41629188795a6180857864",
     "fixes": [],
     "dest": "reference/copper/vernier/legacy/svgpath.py"

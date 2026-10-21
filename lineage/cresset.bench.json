@@ -2,7 +2,7 @@
   {
     "id": "cresset.bench/cresset-html",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/cresset/files/cresset.html",
+    "source": "fab-knowledge:originals/cresset/files/cresset.html",
     "sha256": "270e6de44466b9ba7a13972c83c98d3f76bc842f72b9a4988c045e5922a6a321",
     "fixes": [],
     "dest": null

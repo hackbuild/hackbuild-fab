@@ -2,7 +2,7 @@
   {
     "id": "pip.bench-part2/haft-9",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft-src/bench/part2.js",
+    "source": "fab-knowledge:originals/pip/files/haft-src/bench/part2.js",
     "sha256": "3cfd6521d6713b7c27a80da5561405b7ec00a758acd750b06eb449a702a4a21c",
     "fixes": [],
     "dest": null

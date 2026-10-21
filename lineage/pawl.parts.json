@@ -2,7 +2,7 @@
   {
     "id": "pawl.parts/mk3",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pawl/files/src/parts.py",
+    "source": "fab-knowledge:originals/pawl/files/src/parts.py",
     "sha256": "be215f3ddffda8569b5db293917d5657ae1037de62becb8fae3868119cbc2a18",
     "fixes": [],
     "dest": null
@@ -10,7 +10,7 @@
   {
     "id": "pawl.parts/mk3-edge",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pawl/files/src/parts.py",
+    "source": "fab-knowledge:originals/pawl/files/src/parts.py",
     "sha256": "be215f3ddffda8569b5db293917d5657ae1037de62becb8fae3868119cbc2a18",
     "fixes": [
       "bed_relief (parts.py lines 82 to 88), a chamfer of size EFOOT on the bed edge, is the bottom chamfer profile of packages/geom/src/edge.ts; the size comes from the caller's profile, edge.ts carries no default (R1-engine-05)"

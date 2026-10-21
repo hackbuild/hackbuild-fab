@@ -2,7 +2,7 @@
   {
     "id": "catalog-src.kicad-footprints.solderjumper-2-p1.3mm-open-pad1.0x1.5mm/m08",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/m08-catalog/kicad/SolderJumper-2_P1.3mm_Open_Pad1.0x1.5mm.kicad_mod",
+    "source": "fab-knowledge:evidence/m08-catalog/kicad/SolderJumper-2_P1.3mm_Open_Pad1.0x1.5mm.kicad_mod",
     "sha256": "71b3a4448c88e21c19a9d5c6b9876a733efe3ccf07c00d3f7c88a54044a8b36b",
     "fixes": [],
     "dest": null

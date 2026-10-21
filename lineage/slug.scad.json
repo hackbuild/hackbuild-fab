@@ -2,7 +2,7 @@
   {
     "id": "slug.scad/slug-12",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/slug/files/slug.scad",
+    "source": "fab-knowledge:originals/slug/files/slug.scad",
     "sha256": "a5990b866b0829282ec7dc9b6f090c64c447c8f1a3432164b279ebc8dcf3fef6",
     "fixes": [
       "tangential rim spacers in two staggered tiers replace the radial posts that cracked the pocket web (slug record section 1)",
@@ -14,7 +14,7 @@
   {
     "id": "slug.scad/slug-12-port-slug-cage",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/slug/files/slug.scad",
+    "source": "fab-knowledge:originals/slug/files/slug.scad",
     "sha256": "a5990b866b0829282ec7dc9b6f090c64c447c8f1a3432164b279ebc8dcf3fef6",
     "fixes": [],
     "dest": "packages/mechanisms/src/bodies/slug-cage.ts"

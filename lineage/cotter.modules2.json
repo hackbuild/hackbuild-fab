@@ -2,7 +2,7 @@
   {
     "id": "cotter.modules2/r5",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/cotter/files/cotter-src/src/modules2.js",
+    "source": "fab-knowledge:originals/cotter/files/cotter-src/src/modules2.js",
     "sha256": "b76e852532eda6784037c6848dac87cb930e0b9b8e18aef326ab684a074cef74",
     "fixes": [],
     "dest": null

@@ -2,7 +2,7 @@
   {
     "id": "cotter.modules/r5",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/cotter/files/cotter-src/src/modules.js",
+    "source": "fab-knowledge:originals/cotter/files/cotter-src/src/modules.js",
     "sha256": "3f40c1fda78fc2aa3dc305ee1db973bdf3c36088dd1a289431263501118009ad",
     "fixes": [
       "hook stand-off HOOK_OFF 4.6 with feet and per-part hang style (modules.js lines 57 to 69, 206 to 214)"

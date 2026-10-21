@@ -2,7 +2,7 @@
   {
     "id": "mesh.revolve/tenon-src",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/tenon/files/src/src/part2.js",
+    "source": "fab-knowledge:originals/tenon/files/src/src/part2.js",
     "sha256": "ac5f68c3ac6454a3f500a2c941786090ac5fbb5436fc92b2e8155767432d8003",
     "fixes": [
       "radial feature fields per row (part2.js lines 110 to 205)",
@@ -13,7 +13,7 @@
   {
     "id": "mesh.revolve/tenon-src-zip",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/tenon/tenon-src.zip",
+    "source": "fab-knowledge:evidence/x/tenon/tenon-src.zip",
     "sha256": "c57ea22562979007b849cdb42fd076611db1cd783c6815216035f617e99820b5",
     "fixes": [],
     "dest": null

@@ -12,7 +12,7 @@ import { createHash } from "node:crypto";
 import { describe, expect, test } from "vitest";
 import { isThrownCommandError } from "@hackbuild/spec";
 import { archetypes } from "@hackbuild/archetypes";
-import { originalPath } from "../../../tools/test-support/originals-root.js";
+import { ORIGINALS_OF_RECORD, originalPath } from "../../../tools/test-support/originals-root.js";
 
 const root = new URL("../../../", import.meta.url);
 const read = (p: string): string => readFileSync(new URL(p, root), "utf8");
@@ -81,7 +81,7 @@ describe("originals canon additions, mechanisms (M06-T14)", () => {
         const path = `${ORIG}${o.slug}/${o.file}`;
         expect(existsSync(path), `${r.id} ${path}`).toBe(true);
         expect(sha(path), `${r.id} ${o.file}`).toBe(o.sha256);
-        const rs = lineage.filter((x) => x.source === path);
+        const rs = lineage.filter((x) => x.source === `${ORIGINALS_OF_RECORD}${o.slug}/${o.file}`);
         expect(rs.length, `${r.id} ${path} has no lineage row`).toBeGreaterThan(0);
         for (const x of rs) expect(x.sha256, x.id).toBe(o.sha256);
         // BOSS is the source of the touch brick, a copy of the BLOCKS parts subject (the BLOCKS rename broke it).

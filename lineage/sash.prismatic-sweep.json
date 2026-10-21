@@ -2,7 +2,7 @@
   {
     "id": "sash.prismatic-sweep/part2",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/sash/files/src/src/part2.js",
+    "source": "fab-knowledge:originals/sash/files/src/src/part2.js",
     "sha256": "536cfa371fabda52fe6fb31ff3a3c1f60969c8a9ce59f4d9f89c64e4c77f3567",
     "fixes": [
       "the raster sweep of runCheck (lines 825 to 840) is ported unchanged: body cells (meta 1) mapped by centre and floor, half steps, first worst k kept; the subject is its own because part2.js is canonical under sash.parts and sash.run-check, so a copy row under either fails tools/test/lineage.test.mjs",

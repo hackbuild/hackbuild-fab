@@ -14,6 +14,7 @@ const root = join(import.meta.dirname, "..", "..");
 test("a reader imported from originals-root marks the file", () => {
   assert.match(ownerSignal('import { originalPath } from "../../../tools/test-support/originals-root.js";'), /originalPath/);
   assert.match(ownerSignal('import { ORIGINALS_OF_RECORD, localOriginal } from "../../tools/test-support/originals-root.js";'), /localOriginal/);
+  assert.match(ownerSignal('import { localSource } from "../../../tools/test-support/originals-root.js";'), /localSource/);
   assert.match(ownerSignal('import { benchPath } from "../../../tools/test-support/benches-root.js";'), /benches-root/);
 });
 
@@ -39,6 +40,8 @@ test("an owner read behind existsSync is guarded; a relocated or identity-only s
   const sameTest = ownerSignal(head + 'test("b", (ctx) => {\n  if (!existsSync(rows[0].source)) return ctx.skip();\n  const buf = readFileSync(rows[0].source);\n});\n');
   assert.ok(isGuarded(sameTest), sameTest);
   assert.equal(ownerReads(head + "readFileSync(localOriginal(row.source));\n").length, 0);
+  assert.equal(ownerReads(head + "readFileSync(localSource(row.source));\n").length, 0);
+  assert.equal(ownerReads(head + 'const src = localSource(rows[0].source);\nreadFileSync(src, "utf8");\n').length, 0);
   assert.equal(ownerReads(head + 'expect(rows[0].source.endsWith("x")).toBe(true);\nexpect(fx.meta.source).toBe("/Users/someone/x/");\n').length, 0);
   assert.equal(ownerReads("readFileSync(row.source);\n").length, 0, "a .source without lineage.json is some other source");
   assert.equal(ownerReads('readFileSync(new URL("../src/a.ts", import.meta.url));\n').length, 0);
@@ -89,4 +92,12 @@ test("on this tree every listed file exists and the known originals readers are 
   for (const f of ["core/test/canon-commands.test.ts", "packages/archetypes/test/originals.test.ts", "packages/board/test/kicad.test.ts"]) {
     if (existsSync(join(root, f))) assert.ok(files.includes(f), `${f} is listed`);
   }
+});
+
+test("a lineage source mapped by sourcePath stays an owner read, guarded only by existsSync", () => {
+  const head = 'const rows = JSON.parse(readFileSync(ROOT + "lineage.json", "utf8"));\n';
+  const open = ownerSignal(head + 'const sourceOf = (id) => { const s = rows.find((r) => r.id === id)?.source; return s === undefined ? "" : sourcePath(s); };\nconst src = sourceOf("a");\nreadFileSync(src, "utf8");\n');
+  assert.match(open, /\(src\) unguarded/);
+  const guarded = ownerSignal(head + 'const sourceOf = (id) => { const s = rows.find((r) => r.id === id)?.source; return s === undefined ? "" : sourcePath(s); };\ntest("a", (t) => {\n  const src = sourceOf("a");\n  if (!existsSync(src)) return t.skip();\n  readFileSync(src, "utf8");\n});\n');
+  assert.ok(isGuarded(guarded), guarded);
 });

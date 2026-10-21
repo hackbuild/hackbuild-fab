@@ -2,7 +2,7 @@
   {
     "id": "slug.sheets/slug-12",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/slug/files/slug.html",
+    "source": "fab-knowledge:originals/slug/files/slug.html",
     "sha256": "2d09238c27d5ca4bf023eeee44939b1500470ad2058822b8d0add48ec9bf3241",
     "fixes": [
       "OUTLINES (line 272), PART_QTY (lines 1042 to 1050), ACRYLIC (line 1051) and the sheet controls nW, nH, nGap and nMar (lines 174 to 177) read as data into the slug-sheets scene; the parts and sheets equal the page's nest() and the 10 shipped DXF files vertex for vertex to 1e-3 mm, less 168 vertices the page repeats in place (pinion ring 4, rotor_gear_a and rotor_gear_b outer rings), which the writer drops as zero-length edges",

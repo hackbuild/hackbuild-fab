@@ -2,7 +2,7 @@
   {
     "id": "tumbler.bench/fab-work-outputs",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/tumbler/outputs/tumbler.html",
+    "source": "fab-work-directory:benches/tumbler/outputs/tumbler.html",
     "sha256": "fe14c0cd07d8b10f8852317942fb86aa6ae3e30d12b60af344890e68cbc47178",
     "fixes": [],
     "dest": "packages/mechanisms/src/constraints/cascade-slop.ts"
@@ -10,7 +10,7 @@
   {
     "id": "tumbler.bench/harvest",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/tumbler/files/tumbler.html",
+    "source": "fab-knowledge:originals/tumbler/files/tumbler.html",
     "sha256": "fe14c0cd07d8b10f8852317942fb86aa6ae3e30d12b60af344890e68cbc47178",
     "fixes": [
       "ported to packages/mechanisms/src/tumbler/kit.ts, as its header cites tumbler.html (packages/mechanisms/src/tumbler/kit.ts line 2: \"(originals/tumbler/files/tumbler.html, lineage tumbler.bench/harvest)\"); recorded by the M06 and M08 integration",
@@ -22,7 +22,7 @@
   {
     "id": "tumbler.bench/ui-core-widget-code",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/tumbler/files/tumbler.html",
+    "source": "fab-knowledge:originals/tumbler/files/tumbler.html",
     "sha256": "fe14c0cd07d8b10f8852317942fb86aa6ae3e30d12b60af344890e68cbc47178",
     "fixes": [
       "the code digit buttons of buildParams (tumbler.html lines 1900 to 1907; a click takes a digit to (v + 1) mod (max + 1) at line 1906) ported to packages/ui-core/src/widgets/code.ts nextDigit and the wheels of packages/ui/src/widgets/DriveCode.vue; the verdict is tumbSolve (line 473, packages/mechanisms tumbler/modules.ts) at its SIMS inputs KEY and WRONG (line 1714), WRONG set when the dialed code differs from the cut code (R1-engine-15)"

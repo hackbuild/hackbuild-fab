@@ -2,7 +2,7 @@
   {
     "id": "stipple.write/r17b",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/stipple/files/stipple-r17b.html",
+    "source": "fab-knowledge:originals/stipple/files/stipple-r17b.html",
     "sha256": "f4afad81c417627e84349c5f6cf6b1016e520083ce8ac631b7d71fc6c02f1767",
     "fixes": [
       "doClear, writeRow and writeFrame (lines 362 to 394) ported as Motion IR in packages/motion/src/programs/stipple.ts (M07-T11 step 6a); the commit tests every cell where writeRow line 378 tested the wanted columns only, so a half select that latched is seen (CHK-MOT-04); the clear drops the pins because the plate is past CAM + 0.05 (rodState line 154) where doClear lines 366 to 367 dropped them unconditionally"

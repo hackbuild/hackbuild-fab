@@ -2,7 +2,7 @@
   {
     "id": "hackbuild-ui.css/0.2.0",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/hackbuild-ui/dist/styles/hackbuild.css",
+    "source": "hackbuild-ui/dist/styles/hackbuild.css",
     "sha256": "d492d5cb5f3288f7a34b769c2ec5e03502ab68a94657568716da7d3c9ced18c3",
     "fixes": [],
     "dest": null

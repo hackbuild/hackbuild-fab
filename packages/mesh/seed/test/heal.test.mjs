@@ -6,6 +6,7 @@ import assert from 'node:assert/strict';
 import { readFileSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import vm from 'node:vm';
+import { sourcePath } from '../../../../tools/test-support/originals-root.ts';
 
 const here = fileURLToPath(new URL('.', import.meta.url));
 
@@ -58,7 +59,7 @@ function auditAll(V) {
 const near = (got, want, what) => assert.ok(Math.abs(got - want) <= 1e-3, `${what} volume ${got} mm3, expected ${want} mm3 within 1e-3`);
 
 // The 60-pass seed healer as harvested; present on the build machine, absent on CI.
-const SEED_HEALER = '/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/plan-to-refine/handoff/hbf/seed/mesh/rastermesh.js';
+const SEED_HEALER = sourcePath('fab-knowledge:evidence/x/plan-to-refine/handoff/hbf/seed/mesh/rastermesh.js');
 const seedSkip = existsSync(SEED_HEALER) ? false : 'seed healer source not on this machine: ' + SEED_HEALER;
 
 function withSeedHealer(fn) {

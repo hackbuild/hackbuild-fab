@@ -2,7 +2,7 @@
   {
     "id": "cotter.kit/m07-legacy",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/cotter-src/src/kit.js",
+    "source": "fab-knowledge:evidence/x/cotter-src/src/kit.js",
     "sha256": "c77e23078ce260727d0cdc628424d000fb33e7254737b3887b45c2b649b3304c",
     "fixes": [],
     "dest": "designs/cotter/legacy/kit.js"
@@ -10,7 +10,7 @@
   {
     "id": "cotter.kit/r5",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/cotter/files/cotter-src/src/kit.js",
+    "source": "fab-knowledge:originals/cotter/files/cotter-src/src/kit.js",
     "sha256": "c77e23078ce260727d0cdc628424d000fb33e7254737b3887b45c2b649b3304c",
     "fixes": [
       "KIT.laserDXF of lines 29 to 36 ported into packages/nest/src/dxf.ts: the ezdxf AC1024 skeleton with ENTITIES poured in, hex handles from 0x100, owner the model space block record, coordinates to 1e-4 mm, holes before outlines; the first vertex of every LWPOLYLINE is now repeated as well as flagged closed (OGEE16 sheet_template.html dxf()), $HANDSEED is the next free handle where the original wrote handle + 16, and layer ETCH is ENGRAVE in a table of ENGRAVE, SCORE, CUT_INNER, CUT, LIGHT",

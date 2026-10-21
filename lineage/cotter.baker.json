@@ -2,7 +2,7 @@
   {
     "id": "cotter.baker/evidence-x",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/cotter-src/tools/build.py",
+    "source": "fab-knowledge:evidence/x/cotter-src/tools/build.py",
     "sha256": "434d8b1bc493ed09fa48a1f4579fd258d907cbf0dc382e3ea1cc4d484eb764bf",
     "fixes": [],
     "dest": null
@@ -10,7 +10,7 @@
   {
     "id": "cotter.baker/m09-bake",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/cotter/files/cotter-src/tools/build.py",
+    "source": "fab-knowledge:originals/cotter/files/cotter-src/tools/build.py",
     "sha256": "434d8b1bc493ed09fa48a1f4579fd258d907cbf0dc382e3ea1cc4d484eb764bf",
     "fixes": [
       "tools/bake/bake.mjs classicScript: each import.meta.url replacement asserted once (build.py line 21 replaced every occurrence unchecked)"
@@ -20,7 +20,7 @@
   {
     "id": "cotter.baker/r5",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/cotter/files/cotter-src/tools/build.py",
+    "source": "fab-knowledge:originals/cotter/files/cotter-src/tools/build.py",
     "sha256": "434d8b1bc493ed09fa48a1f4579fd258d907cbf0dc382e3ea1cc4d484eb764bf",
     "fixes": [],
     "dest": null

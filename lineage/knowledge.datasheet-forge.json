@@ -2,7 +2,7 @@
   {
     "id": "knowledge.datasheet-forge/skills-20261006",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/skills-2026-10-06/datasheet-forge/SKILL.md",
+    "source": "fab-knowledge:evidence/x/downloads/skills-2026-10-06/datasheet-forge/SKILL.md",
     "sha256": "c08b3fcc334bd561229102a544d607651969181d982580debe2414a127140d4a",
     "fixes": [
       "knowledge/references/board-forge/datasheet-intake.md (kept out of git, owner archive): step 1 and the ten non-negotiables, each citing its SKILL.md line, in place of the intake.md the package never shipped",

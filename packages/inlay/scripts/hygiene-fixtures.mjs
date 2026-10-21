@@ -24,6 +24,7 @@
 
 import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
+import { localSource } from "../../../tools/test-support/originals-root.ts";
 import { createRequire } from "node:module";
 import { join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
@@ -40,7 +41,7 @@ const rows = JSON.parse(readFileSync(join(ROOT, "lineage.json"), "utf8"));
 const sprueRow = rows.find((r) => r.id === "sprue.bench/sprue-html");
 const collarWant = readFileSync(join(ROOT, "designs/collar/legacy/sha256.txt"), "utf8").split(/\s+/)[0];
 if (sha256(readFileSync(COLLAR)) !== collarWant) throw new Error("collar.html does not match legacy/sha256.txt");
-if (sha256(readFileSync(sprueRow.source)) !== sprueRow.sha256) throw new Error(`${sprueRow.source} does not match lineage ${sprueRow.id}`);
+if (sha256(readFileSync(localSource(sprueRow.source))) !== sprueRow.sha256) throw new Error(`${sprueRow.source} does not match lineage ${sprueRow.id}`);
 
 const require = createRequire(join(PUPPETEER_DIR, "package.json"));
 const puppeteer = require("puppeteer-core");

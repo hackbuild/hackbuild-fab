@@ -9,6 +9,7 @@
 // a cut does not start and end on the lines the card names.
 
 import { readFileSync, writeFileSync } from "node:fs";
+import { localSource } from "../../../tools/test-support/originals-root.ts";
 import { join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
@@ -23,7 +24,7 @@ const text = {};
 for (const [name, id] of Object.entries(ROWS)) {
   const row = rows.find((r) => r.id === id);
   if (!row) throw new Error(`lineage.json has no row ${id}`);
-  const bytes = readFileSync(row.source);
+  const bytes = readFileSync(localSource(row.source));
   const got = sha256Hex(new Uint8Array(bytes));
   if (got !== row.sha256) throw new Error(`${row.source} sha256 ${got}, lineage row ${id} records ${row.sha256}`);
   sources[name] = { id, sha256: got };

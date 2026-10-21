@@ -13,13 +13,14 @@
 
 import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
+import { localSource } from "../../../../tools/test-support/originals-root.ts";
 import vm from "node:vm";
 
 const ROW = "knurl.bench/knurl-8";
 const repo = new URL("../../../../", import.meta.url);
 const row = JSON.parse(readFileSync(new URL("lineage.json", repo), "utf8")).find((r) => r.id === ROW);
 if (row === undefined) throw new Error(`lineage.json has no row ${ROW}`);
-const bytes = readFileSync(row.source);
+const bytes = readFileSync(localSource(row.source));
 const sha256 = createHash("sha256").update(bytes).digest("hex");
 if (sha256 !== row.sha256) throw new Error(`${row.source}: sha256 ${sha256}, lineage ${row.sha256}`);
 const lines = bytes.toString("utf8").split("\n");

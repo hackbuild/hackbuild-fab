@@ -2,7 +2,7 @@
   {
     "id": "blocks.boss-examples/bench-outputs",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/blocks/outputs/boss-examples.zip",
+    "source": "fab-work-directory:benches/blocks/outputs/boss-examples.zip",
     "sha256": "df211c444d19c2cba0c2b2c1b2e32e8746141c17aa097fc11b7892ece583e146",
     "fixes": [],
     "dest": "designs/blocks/legacy/boss-examples.zip"

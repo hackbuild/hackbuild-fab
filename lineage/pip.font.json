@@ -2,7 +2,7 @@
   {
     "id": "pip.font/haft-9",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft-src/src/font.js",
+    "source": "fab-knowledge:originals/pip/files/haft-src/src/font.js",
     "sha256": "39675b8642eb84a73b41711dc4c761f6493202222b19f439729a3ddab2c7670b",
     "fixes": [],
     "dest": null
@@ -10,7 +10,7 @@
   {
     "id": "pip.font/pip-controller-legacy",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/pip-controller/src/font.js",
+    "source": "fab-knowledge:evidence/x/pip-controller/src/font.js",
     "sha256": "3125d13a388ef986c9da8c398f769e49b5d2ea9ebc3c9bd5758d1ddf54cb8100",
     "fixes": [],
     "dest": "designs/pip/legacy/src/font.js"
@@ -18,7 +18,7 @@
   {
     "id": "pip.font/haft-9-access-switch-coupon",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/haft-src/src/font.js",
+    "source": "fab-knowledge:originals/pip/files/haft-src/src/font.js",
     "sha256": "39675b8642eb84a73b41711dc4c761f6493202222b19f439729a3ddab2c7670b",
     "fixes": [
       "the glyph advance 5.6 s at s = h / 6 (font.js line 29) spaces the rung bars of reference/keys/access-switch/coupon/build.ts; the glyph table has no 0, 5 or 6, so the rung is marked by a bar count, not its beam in digits"

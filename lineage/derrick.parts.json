@@ -2,7 +2,7 @@
   {
     "id": "derrick.parts/r3",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/derrick/files/src/arm_parts.py",
+    "source": "fab-knowledge:originals/derrick/files/src/arm_parts.py",
     "sha256": "ab2e4acd8283f43b78d64a9bc653afe4b79fd1de5c993a5cf3ff2a7d30821fc3",
     "fixes": [
       "bodies snap_check.py intersects exported as STL by tools/py/derrick/export_bodies.py to designs/derrick/legacy/capture/ (M04-T06)"

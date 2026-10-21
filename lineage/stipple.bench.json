@@ -2,7 +2,7 @@
   {
     "id": "stipple.bench/r17",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/stipple/files/companions/stipple-r17.html",
+    "source": "fab-knowledge:originals/stipple/files/companions/stipple-r17.html",
     "sha256": "e1f4e1ddf366772e6658210b755e76ac7a34a61129c8bcbe2819eed9c1c67fb0",
     "fixes": [],
     "dest": null
@@ -10,7 +10,7 @@
   {
     "id": "stipple.bench/r17-m07-legacy",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/stipple/files/companions/stipple-r17.html",
+    "source": "fab-knowledge:originals/stipple/files/companions/stipple-r17.html",
     "sha256": "e1f4e1ddf366772e6658210b755e76ac7a34a61129c8bcbe2819eed9c1c67fb0",
     "fixes": [],
     "dest": "designs/stipple/legacy/stipple-r17.html"
@@ -18,7 +18,7 @@
   {
     "id": "stipple.bench/r17b",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/stipple/files/stipple-r17b.html",
+    "source": "fab-knowledge:originals/stipple/files/stipple-r17b.html",
     "sha256": "f4afad81c417627e84349c5f6cf6b1016e520083ce8ac631b7d71fc6c02f1767",
     "fixes": [
       "cap well of four laminations with two placement checks (record section 4.3)"

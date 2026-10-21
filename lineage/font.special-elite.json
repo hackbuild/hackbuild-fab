@@ -2,7 +2,7 @@
   {
     "id": "font.special-elite/board-fonts",
     "kind": "copy",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/shunt/files/fonts/special-elite-latin-400-normal.woff2",
+    "source": "fab-knowledge:originals/shunt/files/fonts/special-elite-latin-400-normal.woff2",
     "sha256": "770493d84cbb753cd0573d0f014550583138f40469d137e310d239593a1949d8",
     "fixes": [
       "SHUNT R1 fonts/, byte equal to files/special-elite-latin-400-normal.woff2 of @fontsource/special-elite 5.3.0, whose LICENSE is Apache-2.0 (checked 2026-10-09)"
@@ -12,7 +12,7 @@
   {
     "id": "font.special-elite/collar-coin",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/collar-coin/outputs/hackbuild-coin/src/fonts/SpecialElite-Regular.ttf",
+    "source": "fab-work-directory:benches/collar-coin/outputs/hackbuild-coin/src/fonts/SpecialElite-Regular.ttf",
     "sha256": "a776fcb4ceb8bdf03e2967688ebdad42680de5b91a7e62c17e718ae212d14bc4",
     "fixes": [],
     "dest": null

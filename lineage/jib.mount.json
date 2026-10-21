@@ -2,7 +2,7 @@
   {
     "id": "jib.mount/jib-scad",
     "kind": "canonical",
-    "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/jib/files/jib_mount.scad",
+    "source": "fab-knowledge:originals/jib/files/jib_mount.scad",
     "sha256": "8bd722f8ecc6af0db6e88da6bd4a6c79a30e60ec2ecd588508b8118c1529daf8",
     "fixes": [],
     "dest": null
