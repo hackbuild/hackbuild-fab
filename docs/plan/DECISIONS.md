@@ -641,6 +641,8 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-584 | hbf://capabilities is canonical json and the served tool count is computed | decided | Agent surface |
 | D-585 | The quick start runs the collar coin and the CI history leaves the README | decided | Docs |
 | D-586 | CLAUDE.md links USE.md under What not to do | decided | Docs |
+| D-587 | The access switch card blocks have their own named writers beside D-227 | decided | Testing |
+| D-588 | The decision fragments take DECISIONS.md's exemptions, and D-471 loses a home path | decided | Testing, plan |
 
 ## House rules and process
 
@@ -5874,7 +5876,7 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | field | value |
 |---|---|
 | Status | decided |
-| Decision | Taken by the agent under owner delegation on 2026-10-20. The builder used /Users/obsidian/Projects/hackbuild/wt/R1-engine-11-r3 and branch r1/R1-engine-11-r3 instead of the -r1 names in the task text. |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The builder used wt/R1-engine-11-r3 and branch r1/R1-engine-11-r3 instead of the -r1 names in the task text. |
 | Rationale | The failure packet and the round note ask for -r3, and r1/R1-engine-11-r1 already exists from an earlier round. |
 | Evidence | git branch list shows r1/R1-engine-11-r1, -r2 and -r3. |
 | Supersedes | new |
@@ -7143,6 +7145,28 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Rationale | PLAN.md 5 asks that the use policy be linked from the README and the skill, and policy-files.test.mjs marked both rows pending on R1-rails-public-16. CLAUDE.md is outside the brief's Writes line; the owner may move or reword the bullet. |
 | Evidence | node --test tools/test/policy-files.test.mjs: 8 pass, 0 fail, 1 todo (the print card row), measured. |
 | Supersedes | new |
+| Milestone | none |
+
+### D-587 The access switch card blocks have their own named writers beside D-227
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under the owner delegation of 2026-10-20 for release 1 of plan v9.1 (R1-fix-10). Extends D-227's list of named render writers: the print card block of reference/keys/access-switch/README.md is rewritten only by `HBF_ACCEPT=1 npx vitest run reference/keys/access-switch/test/reference.test.ts` (reference/keys/access-switch/test/reference.test.ts), and the coupon block of reference/keys/access-switch/COUPON.md only by `HBF_ACCEPT=1 npx vitest run reference/keys/access-switch/coupon` (reference/keys/access-switch/coupon/test/reference.test.ts). Each test splices one Markdown block under HBF_ACCEPT and then compares it, so a hand edit fails it. No CI job, script or tool sets the variable (D-152 unchanged); a person sets it after reading the diff. tools/test/golden-writers.test.mjs lists these two writers, checks this log names them, and checks each makes one splice write into a .md file followed by the compare. |
+| Rationale | The two tests were added by R1-flagship-access-switch-09 and -11 and follow the flex-pair print card pattern D-227 already allows; naming them keeps one writer per rendered file instead of moving the cards behind a new command. |
+| Evidence | tools/test/golden-writers.test.mjs passes alone after the change (computed, 2026-10-21); with a third reader added it fails. |
+| Supersedes | none; refines D-227 |
+| Milestone | none |
+
+### D-588 The decision fragments take DECISIONS.md's exemptions, and D-471 loses a home path
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under the owner delegation of 2026-10-20 for release 1 of plan v9.1 (R1-fix-09, R1-fix-12). Since D-569 each entry's source is docs/plan/decisions/D-NNN.md, so a test that exempted DECISIONS.md exempts the matching fragments: golden-writers skips the whole decision log (DECISIONS.md and docs/plan/decisions/), as it skipped the whole of DECISIONS.md before, and sample-set allows docs/plan/decisions/D-222.md as the D-222 entry. The brief asked golden-writers to exempt D-227.md alone; that would hold every other entry to a rule the log never was held to. D-471 named a builder worktree by its absolute home path; that path becomes wt/R1-engine-11-r3, the one edit to an entry's text this log makes outside its append-only rule, since PLAN.md section 5 removes local user paths from the public tree. add-decision.mjs now refuses an entry holding a home path. |
+| Rationale | The split moved where entries live, not what the tests guard. |
+| Evidence | golden-writers and sample-set pass alone; a retired examples path added to D-221.md fails sample-set; publish-paths passes after the D-471 edit and fails with the path restored (computed, 2026-10-21). |
+| Supersedes | none |
 | Milestone | none |
 
 ## Owner queue

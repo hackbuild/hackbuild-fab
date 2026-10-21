@@ -32,11 +32,30 @@ const codeFiles = ["core", "packages", "tools", "reference", "designs", "spec", 
   .map((p) => relative(root, p).split("\\").join("/"));
 
 const RENDER_WRITER = "reference/keys/flex-pair/test/reference.test.ts";
+// The access switch reference tests splice their generated card blocks under
+// HBF_ACCEPT, each into one Markdown file (D-587 names them beside D-227).
+const CARD_WRITERS = [
+  "reference/keys/access-switch/coupon/test/reference.test.ts",
+  "reference/keys/access-switch/test/reference.test.ts",
+];
 const JSON_GOLDENS = ["build.json", "report.json", "edit.json", "artifacts.json"];
 
-test("only the flex-pair reference test reads HBF_ACCEPT", () => {
+test("only the named render writers read HBF_ACCEPT", () => {
   const readers = codeFiles.filter((p) => /process\.env(\.HBF_ACCEPT|\[\s*["']HBF_ACCEPT["']\s*\])|os\.environ[^\n]*HBF_ACCEPT/.test(read(p)));
-  assert.deepEqual(readers, [RENDER_WRITER]);
+  assert.deepEqual([...readers].sort(), [RENDER_WRITER, ...CARD_WRITERS].sort());
+});
+
+test("each card writer is named in the decision log and writes only its one Markdown block, then compares it", () => {
+  const log = read("docs/plan/DECISIONS.md");
+  for (const w of CARD_WRITERS) {
+    assert.ok(log.includes(w), `${w} is named in DECISIONS.md`);
+    const src = read(w);
+    const writes = [...src.matchAll(/writeFileSync\(\s*(\w+)\s*,\s*splice\(/g)].map((x) => x[1]);
+    assert.equal(writes.length, 1, `${w}: one splice write`);
+    assert.equal([...src.matchAll(/writeFileSync\(/g)].length, 1, `${w}: no other write`);
+    assert.match(src, new RegExp(`const ${writes[0]} = [^\\n]*\\.md"`), `${w}: the write target is a Markdown file`);
+    assert.match(src, new RegExp(`expect\\(between\\(readFileSync\\(${writes[0]}, "utf8"\\)`), `${w}: the block is compared after the optional write`);
+  }
 });
 
 test("no CI workflow, package script or tool sets HBF_ACCEPT or passes --accept to parity", () => {
@@ -116,7 +135,8 @@ test("every plan sentence that makes parity the only updater limits it to the JS
   let seen = 0;
   for (const p of plan) {
     const rel = relative(root, p);
-    if (rel.endsWith("DECISIONS.md")) continue;
+    // The decision log: DECISIONS.md and the per-entry files it is generated from (D-569).
+    if (rel.endsWith("DECISIONS.md") || rel.startsWith("docs/plan/decisions/")) continue;
     // A paragraph or a table row is the unit a claim and its citation share.
     const units = read(rel).split(/\n\s*\n/).flatMap((u) => (u.trimStart().startsWith("|") ? u.split("\n") : [u]));
     for (const u of units.map(flat)) {

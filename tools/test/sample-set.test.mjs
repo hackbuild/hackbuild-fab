@@ -65,6 +65,8 @@ test("the retired examples directory is named only in the D-222 entry", { skip: 
     if (!existsSync(join(root, p))) continue;
     const text = readFileSync(join(root, p), "utf8");
     if (!text.includes(retired)) continue;
+    // The D-222 entry file, from which DECISIONS.md is generated (D-569).
+    if (p === "docs/plan/decisions/D-222.md") continue;
     if (p === "docs/plan/DECISIONS.md") {
       const start = text.indexOf("\n### D-222 ");
       const end = text.indexOf("\n### ", start + 5);
