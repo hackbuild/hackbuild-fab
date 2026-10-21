@@ -12,15 +12,14 @@
 //
 // Run: npx playwright test -c tools/hook/playwright.config.ts
 
-import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import path from "node:path";
-import { expect, test, type BrowserContext, type Page } from "@playwright/test";
+import { mkdirSync, writeFileSync } from "node:fs";
+import { expect, test, type Page } from "@playwright/test";
 import type { BenchHook } from "@hackbuild/spec";
 import { UNKNOWN_EXPORT_KIND } from "@hackbuild/spec";
-import { listBenches, ROOT, type BenchUnderTest } from "./benches.ts";
+import { listBenches, type BenchUnderTest } from "./benches.ts";
 import { ADAPTERS, NO_DRIVE, NOT_PROVIDED, type LegacyAdapter } from "./legacy-adapters.ts";
 import { roundtrip } from "./roundtrip.ts";
-import { readStored } from "../legacy/stored-zip.mjs";
+import { bundleAdapters, routeDeclared } from "./adapter-page.ts";
 import { partFile, PARTS_DIR, type BenchReport, type Row } from "./rows.ts";
 
 /** What a member of BenchHook must be at runtime; keyed by every key of the spec type, so a new member fails tsc here. */
@@ -52,31 +51,6 @@ const READY_MS = 120000;
 const UNKNOWN_KIND = "no-such-kind";
 
 const corpus = await listBenches();
-let adapterBundle: string | null = null;
-
-async function bundleAdapters(): Promise<string> {
-  if (adapterBundle) return adapterBundle;
-  const { build } = await import("esbuild-wasm");
-  const out = await build({
-    stdin: {
-      contents: `import { ADAPTERS } from "./legacy-adapters.ts"; globalThis.__HBF_ADAPTERS = ADAPTERS;`,
-      resolveDir: path.join(ROOT, "tools/hook"),
-      sourcefile: "hook-adapters.entry.ts",
-      loader: "ts",
-    },
-    resolveExtensions: [".ts", ".js", ".mjs", ".json"],
-    bundle: true,
-    format: "iife",
-    platform: "browser",
-    target: "es2022",
-    write: false,
-    logLevel: "warning",
-  });
-  adapterBundle = out.outputFiles[0]?.text ?? "";
-  if (!adapterBundle) throw new Error("adapter bundle is empty");
-  return adapterBundle;
-}
-
 type HookGlobal = { __hbfHook: BenchHook; __HBF_ADAPTERS: Record<string, { adapt(g: unknown): BenchHook; example?(g: unknown): void; driveTargets(g: unknown): string[]; isReady?(g: unknown): boolean }>; BENCH?: { ready?: unknown } };
 
 const adapterOf = (b: BenchUnderTest): LegacyAdapter | null => (b.adapter === null ? null : ADAPTERS[b.adapter]);
@@ -154,34 +128,6 @@ async function driveTargets(page: Page, b: BenchUnderTest): Promise<string[]> {
     }
     return out;
   }, decl.targets);
-}
-
-const MIME: Readonly<Record<string, string>> = { ".js": "text/javascript", ".mjs": "text/javascript", ".css": "text/css", ".json": "application/json" };
-
-/** Answers the requests an adapter declares (OfflineDecl): served prefixes from the repo copy, empty prefixes with no body. */
-async function routeDeclared(context: BrowserContext, a: LegacyAdapter | null): Promise<string[]> {
-  const prefixes: string[] = [];
-  for (const [prefix, where] of Object.entries(a?.offline?.serve ?? {})) {
-    prefixes.push(prefix);
-    // `<zip>!<member prefix>` serves stored zip members, anything else a repo directory.
-    const [zip, inZip] = where.includes("!") ? where.split("!") : [null, null];
-    const members = zip ? readStored(readFileSync(path.join(ROOT, zip))) : null;
-    await context.route(`${prefix}**`, (route) => {
-      const rel = route.request().url().slice(prefix.length).split(/[?#]/)[0] ?? "";
-      const body = members ? members.get(`${inZip ?? ""}${rel}`) : readFileSync(path.join(ROOT, where, rel));
-      if (!body) {
-        route.abort().catch(() => undefined);
-        return;
-      }
-      route.fulfill({ status: 200, contentType: MIME[path.extname(rel)] ?? "application/octet-stream", body: Buffer.from(body) })
-        .catch(() => route.abort());
-    });
-  }
-  for (const prefix of a?.offline?.empty ?? []) {
-    prefixes.push(prefix);
-    await context.route(`${prefix}**`, (route) => route.fulfill({ status: 200, contentType: "text/css", body: "" }));
-  }
-  return prefixes;
 }
 
 test.describe.configure({ mode: "parallel" });
