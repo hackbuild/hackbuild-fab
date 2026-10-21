@@ -675,6 +675,7 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-618 | Owner path ratchet allows two placeholder fixtures and keeps the public Markdown check | decided | tooling |
 | D-619 | The Pico seat row reads KiCad gitlab library files committed beside it | decided | Canons, reference, profile, catalog |
 | D-620 | The catalog KiCad reader takes custom pads, a pads-centre origin and stacked power pins | decided | Canons, reference, profile, catalog |
+| D-621 | Plan cards read through plan-root; a test without them skips as not run | decided | tooling |
 
 ## House rules and process
 
@@ -7529,6 +7530,17 @@ Status: decided (delegated). The lead closed four reds from the wave 4 health ru
 | Decision | Taken by the agent under owner delegation on 2026-10-20. `packages/catalog/src/kicad-mod.ts` reads a custom pad as its anchor shape (circle or rect) at the anchor size, and refuses it with E_SCHEMA when any primitive reaches outside the anchor's size box or is not gr_poly, gr_rect or gr_circle. A pads field may set `from.origin: "pads-centre"`, which moves the frame to the centre of the pad bounding box, rounded to 1e-6 mm. A passive symbol pin named like a power_in or power_out pin of the same symbol takes that pin's role (the name lowercased) instead of gpio. |
 | Rationale | The Pico GND pads are custom pads: a 1.6 mm circle anchor with a half square inside the same box, so the copper the catalog drops is bounded by that box. The library footprint puts its origin at pad 1, while the row's dims.rowX is measured from the module centre. The KiCad library types one pin of a stacked set as power and the rest passive, so six of the Pico's seven GND pins would otherwise read gpio. |
 | Evidence | `packages/catalog/test/pico.test.ts` "reader refusals the pico row relies on" (three tests) and the GND role test; the supermini and pj398sm rows load unchanged (`npx vitest run packages/catalog`, 93 pass, measured 2026-10-21). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-621 Plan cards read through plan-root; a test without them skips as not run
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `tools/test-support/plan-root.mjs` is the one reader of the milestone cards, MILESTONES.md, RISKS.md and extractions.md (`PLAN_ARCHIVED`); `plan-root.ts` re-exports it for vitest files and `plan-root.d.mts` types it. The folder is HBF_PLAN when set, else docs/plan while docs/plan/milestones exists, else the sibling fab-knowledge/plan-archive. The plan is present when the folder holds MILESTONES.md; planDoc and planCard throw otherwise. A node test that reads the plan passes `{ skip: planSkip() }`, so the whole test reports "plan archive not on this runner: not run", including a test that also checks repo files beside the cards. A vitest file importing plan-root is an unguarded owner file in `.github/scripts/owner-files.mjs`, and its report prints a line naming the node tests that skip without the plan. |
+| Rationale | PLAN.md section 5 moves the plan process files out of the public repo; a test that kept reading docs/plan by path would fail on hosted runners, and one that dropped the card half of its assertions would report a pass for a check it did not make. Skipping the whole test keeps every reported pass whole. |
+| Evidence | `tools/test/plan-root.test.mjs` (4 pass, measured 2026-10-21) kills the mutant that tests the folder instead of MILESTONES.md. With HBF_PLAN on an empty folder, plan-drift reports 11 pass and 20 skipped, ci-exit-rows 4 and 11, plan-drift-audit3 0 and 7; with the cards in place every converted file passes except the plan-drift virtual-print test, red on main before this change. `git grep -n "docs/plan/milestones\|docs/plan/MILESTONES" -- tools/test` prints nothing. |
 | Supersedes | new |
 | Milestone | none |
 
