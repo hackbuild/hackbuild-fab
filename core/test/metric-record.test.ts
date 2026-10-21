@@ -29,19 +29,23 @@ function chases(): string[] {
 }
 
 describe("metric record for the gate rule", () => {
-  it("equals a fresh build of every reference and design", async () => {
-    const builds = [];
-    for (const rel of chases()) {
+  // One test per build, each with its own time limit; one test over every
+  // build timed out at 300 s under load in full core runs (R1-fix-13, as
+  // R1-fix-06 did for project-graph). The record is compared after them.
+  const builds = new Map<string, { build: string; part: string; metrics: { id: string; gate?: unknown }[] }>();
+  const all = chases();
+  for (const rel of all) {
+    it(`builds ${rel}`, async () => {
       const design = await loadDesign(rel, ROOT);
       // A wiring board builds no part and emits no metric; a board's part comes from its generator (M08).
       if (isWiringDesign(design)) {
-        builds.push({ build: rel, part: path.basename(design.dir), metrics: [] });
-        continue;
+        builds.set(rel, { build: rel, part: path.basename(design.dir), metrics: [] });
+        return;
       }
       const board = isBoardDesign(design) ? await buildBoard(design, {}) : undefined;
       if (board !== undefined && "refused" in board) throw new Error(`${rel}: generator refused, ${board.lines[0] ?? `exit ${board.exit}`}`);
       const built = board ?? await buildPart(design, resolveParams(design.chase, undefined, undefined));
-      builds.push({
+      builds.set(rel, {
         build: rel,
         part: built.part.id,
         metrics: built.part.metrics.map((m) => {
@@ -49,12 +53,16 @@ describe("metric record for the gate rule", () => {
           return "gate" in raw ? { id: m.id, gate: raw["gate"] } : { id: m.id };
         }),
       });
-    }
+    }, 120_000);
+  }
+
+  it("equals a fresh build of every reference and design", () => {
+    expect([...builds.keys()], "every build ran").toEqual(all);
     const text = `${JSON.stringify({
       note: "recorded by core/test/metric-record.test.ts from part metrics at default params; read by metric-gates.test.ts",
-      builds,
+      builds: all.map((rel) => builds.get(rel)),
     }, null, 2)}\n`;
     if (process.env["HBF_ACCEPT_METRICS"] === "1") writeFileSync(RECORD, text);
     expect(text).toBe(readFileSync(RECORD, "utf8"));
-  }, 300_000);
+  });
 });

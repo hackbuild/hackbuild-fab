@@ -643,6 +643,7 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-586 | CLAUDE.md links USE.md under What not to do | decided | Docs |
 | D-587 | The access switch card blocks have their own named writers beside D-227 | decided | Testing |
 | D-588 | The decision fragments take DECISIONS.md's exemptions, and D-471 loses a home path | decided | Testing, plan |
+| D-589 | metric-record builds one design per test, as project-graph does | decided | Testing |
 
 ## House rules and process
 
@@ -7166,6 +7167,17 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under the owner delegation of 2026-10-20 for release 1 of plan v9.1 (R1-fix-09, R1-fix-12). Since D-569 each entry's source is docs/plan/decisions/D-NNN.md, so a test that exempted DECISIONS.md exempts the matching fragments: golden-writers skips the whole decision log (DECISIONS.md and docs/plan/decisions/), as it skipped the whole of DECISIONS.md before, and sample-set allows docs/plan/decisions/D-222.md as the D-222 entry. The brief asked golden-writers to exempt D-227.md alone; that would hold every other entry to a rule the log never was held to. D-471 named a builder worktree by its absolute home path; that path becomes wt/R1-engine-11-r3, the one edit to an entry's text this log makes outside its append-only rule, since PLAN.md section 5 removes local user paths from the public tree. add-decision.mjs now refuses an entry holding a home path. |
 | Rationale | The split moved where entries live, not what the tests guard. |
 | Evidence | golden-writers and sample-set pass alone; a retired examples path added to D-221.md fails sample-set; publish-paths passes after the D-471 edit and fails with the path restored (computed, 2026-10-21). |
+| Supersedes | none |
+| Milestone | none |
+
+### D-589 metric-record builds one design per test, as project-graph does
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under the owner delegation of 2026-10-20 for release 1 of plan v9.1 (R1-fix-13, from the wave 2 health check). core/test/metric-record.test.ts builds each reference and design in its own test with a 120 s limit and compares packages/checks/test/metric-gates/builds.json in a last test that first checks every build ran, in chases() order. The HBF_ACCEPT_METRICS rerecord path and the comparison are unchanged. Same shape as D-573. |
+| Rationale | The single test held every build under one 300 s limit and timed out under load in full core runs (R1-engine-26, R1-designs-reach-16, the wave 2 health run); alone it passes in about 104 s (measured). |
+| Evidence | Alone 51 of 51 in 111 s; dropping one metric from builds.json fails the comparison with every build passing (computed, 2026-10-21). |
 | Supersedes | none |
 | Milestone | none |
 
