@@ -673,6 +673,8 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-616 | TOGGLE port choices: bores, leads, pin row step, hookup pins and the drive contact | decided | reach |
 | D-617 | Wave 4 health reds closed directly | decided | tooling |
 | D-618 | Owner path ratchet allows two placeholder fixtures and keeps the public Markdown check | decided | tooling |
+| D-619 | The Pico seat row reads KiCad gitlab library files committed beside it | decided | Canons, reference, profile, catalog |
+| D-620 | The catalog KiCad reader takes custom pads, a pads-centre origin and stacked power pins | decided | Canons, reference, profile, catalog |
 
 ## House rules and process
 
@@ -7505,6 +7507,28 @@ Status: decided (delegated). The lead closed four reds from the wave 4 health ru
 | Decision | Taken by the agent under owner delegation on 2026-10-20. `tools/test/owner-paths.test.mjs` fails on any tracked text file naming a home directory under the macOS users root (zip, 3mf and NUL-holding files skipped). Its allow list holds two entries, each a file and the exact placeholder literal it keeps with a reason: `.github/scripts/owner-files.test.mjs` and `tools/test-support/originals-root.test.ts`, whose fixtures use a `someone` placeholder home that their scanners must flag or refuse. A stale allow entry fails the test. `tools/test/publish-paths.test.mjs` keeps its narrower public Markdown check unedited. The D-592 and D-594 evidence cells quoted a grep naming the owner home; they now say the same grep in words. |
 | Rationale | The brief expected an empty allow list; rewriting two foreign fixtures to build the path at runtime would touch files outside the item, while a literal-level allow entry still fails any other home path in those files. Rewording two evidence cells keeps the measured claim and meets the brief's `git grep` count of 0. |
 | Evidence | node --test tools/test/owner-paths.test.mjs 2 pass (measured); a staged scratch file holding a home path fails it, and narrowing the matcher fails both tests (measured mutants); `git grep -l` of the owner home prints 0 (measured). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-619 The Pico seat row reads KiCad gitlab library files committed beside it
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `packages/catalog/data/modules/pico.json` moves to `modules/pico/row.json`, with byte copies of the KiCad gitlab footprint `Module.pretty/RaspberryPi_Pico_Common_THT.kicad_mod` (kicad-footprints f8440fa6) and symbol `MCU_Module.kicad_symdir/RaspberryPi_Pico.kicad_sym` (kicad-symbols 9280a937) and KiCad's LICENSE.md beside them. pads and pins are tier community, method listing. dims.body (21 x 51 x 1 mm) and dims.pitch (2.54 mm) are tier vendor from the Raspberry Pi Pico Datasheet section 2, fetched from datasheets.raspberrypi.com and cited by sha256; the PDF is not archived. dims.rowX is community, computed from the pads. The row tier goes from inferred to community. n becomes the vendor pin number and the names are the symbol's (GPIO0, GPIO26_ADC0, AGND); `designs/blocks/src/route-seat.ts` keeps its own BLOCKS pad map. The S-02 test in `packages/catalog/test/pins.test.ts` admits a module KiCad file that sits beside the KiCad LICENSE.md. `kicad_fetch.py` gains the repo row `kicad-gitlab-symbols`. THIRD-PARTY-NOTICES.txt is not edited: it is generated and lists bake-inlined software only, as with pj398sm (D-294). |
+| Rationale | PLAN.md 3.5 row 2 asks that pins be read from files. The THT footprint matches how a BLOCKS seat takes the pins. The datasheet states the body and pitch; the footprint states neither the board thickness nor a vendor figure. |
+| Evidence | `packages/catalog/test/pico.test.ts` holds the parsed pins against the datasheet power pin numbers (PDF pages 8 and 9) and against the BOSS boardPins order in `packages/copper/test/fixtures/boss-seats/pico-press-all40.json` at the BLOCKS positions. A mutant that swaps the names of pins 35 and 36 fails 2 of 9 tests (measured). `npx vitest run packages/catalog` 93 pass and `designs/blocks` 30 pass, so the route-seat goldens did not move (measured, 2026-10-21). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-620 The catalog KiCad reader takes custom pads, a pads-centre origin and stacked power pins
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `packages/catalog/src/kicad-mod.ts` reads a custom pad as its anchor shape (circle or rect) at the anchor size, and refuses it with E_SCHEMA when any primitive reaches outside the anchor's size box or is not gr_poly, gr_rect or gr_circle. A pads field may set `from.origin: "pads-centre"`, which moves the frame to the centre of the pad bounding box, rounded to 1e-6 mm. A passive symbol pin named like a power_in or power_out pin of the same symbol takes that pin's role (the name lowercased) instead of gpio. |
+| Rationale | The Pico GND pads are custom pads: a 1.6 mm circle anchor with a half square inside the same box, so the copper the catalog drops is bounded by that box. The library footprint puts its origin at pad 1, while the row's dims.rowX is measured from the module centre. The KiCad library types one pin of a stacked set as power and the rest passive, so six of the Pico's seven GND pins would otherwise read gpio. |
+| Evidence | `packages/catalog/test/pico.test.ts` "reader refusals the pico row relies on" (three tests) and the GND role test; the supermini and pj398sm rows load unchanged (`npx vitest run packages/catalog`, 93 pass, measured 2026-10-21). |
 | Supersedes | new |
 | Milestone | none |
 
