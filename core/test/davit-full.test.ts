@@ -36,7 +36,7 @@ const brief = (r: SweepReport) => ({
 describe.skipIf(!FULL_SWEEP)("davit:sweep", () => {
   test("both models, three pipes, both arms: records/davit-sweep.json", () => {
     const t0 = performance.now();
-    const legacy = extractData(readFileSync(new URL("../../designs/davit/legacy/davit.html", import.meta.url), "utf8"));
+    const legacy = extractData(readFileSync(new URL("../../packages/sim/scenes/inputs/davit/r3/DATA.txt", import.meta.url), "utf8"));
     const contacts = loadContacts();
     const prm = { spacingMm: c("davit.sampleSpacingMm"), cellMm: c("davit.groupCellMm"), erodeMm: c("davit.penetrationMm") };
     const out: Record<string, unknown> = {};

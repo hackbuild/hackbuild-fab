@@ -3,8 +3,8 @@
 The DERRICK R3 arm build, its forward kinematics golden and the viewer
 smoke script, kept byte identical as the inputs of the M07-T10 kinematics
 port (D-142, D-156). Nothing here is edited; `shasum -a 256 -c SHA256SUMS`
-checks this folder and `cd capture && shasum -a 256 -c SHA256SUMS` checks
-`capture/` (M04-T06).
+checks this folder. The M04-T06 capture fixture, written by
+`tools/py/derrick/export_bodies.py`, is packages/checks/test/derrick-capture.
 
 | field | value |
 |---|---|

@@ -6,7 +6,8 @@
     "sha256": "f4afad81c417627e84349c5f6cf6b1016e520083ce8ac631b7d71fc6c02f1767",
     "fixes": [
       "ceil_v, E_REST, CAM, link, rodState, canLatch and crankPhi (lines 138 to 170) ported line for line to packages/motion/src/kinematics/stipple.ts (M07-T11, D-139); the cell placement of apply() (lines 346 to 353) and buildCheck() (lines 680 to 714) ported on row-major matrices in place of three.js; CAMLIFT, absent from the page, is kin.py line 90 on this beam",
-      "ported to packages/mechanisms/src/derive/balance-beam.ts, as its header cites stipple-r17b.html (packages/mechanisms/src/derive/balance-beam.ts line 2: \"stipple-r17b.html link() lines 142 to 148; lineage stipple.kin/r17b): the\"); recorded by the M06 and M08 integration"
+      "ported to packages/mechanisms/src/derive/balance-beam.ts, as its header cites stipple-r17b.html (packages/mechanisms/src/derive/balance-beam.ts line 2: \"stipple-r17b.html link() lines 142 to 148; lineage stipple.kin/r17b): the\"); recorded by the M06 and M08 integration",
+      "line 117, the const DATA line whose P block readStippleParams reads, is stored alone at packages/motion/inputs/stipple/stipple-r17b-DATA.txt for motion.run and the motion tests"
     ],
     "dest": "packages/motion/src/kinematics/stipple.ts"
   }

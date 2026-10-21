@@ -1,7 +1,8 @@
 // R1-rails-import-01: shell groups of a welded mesh. Every fixture is built
 // here from manifold cubes (getMesh through meshOf, then snapWeld), and the
 // expected volumes are cube arithmetic worked by hand, never read back from
-// shellGroups. davit_pincap is tied to the legacy copy by SHA256SUMS.
+// shellGroups. davit_pincap is the davit scene's stored input
+// (packages/sim/scenes/inputs, sha256 in its stored-inputs.json).
 
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
@@ -118,7 +119,7 @@ describe("shellGroups", () => {
   });
 
   it("reads davit_pincap.stl through importStl as one group of the body volume", () => {
-    const file = "designs/davit/legacy/stl/davit_pincap.stl";
+    const file = "packages/sim/scenes/inputs/davit/r4/davit_pincap.stl";
     const body = importStl(new Uint8Array(readFileSync(root + file)), file);
     const g = shellGroups(body.mesh);
     expect(g.length).toBe(1);

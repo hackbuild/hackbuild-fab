@@ -1,0 +1,30 @@
+{
+  "files": [
+    {
+      "path": "davit_r4_sweep_run_2026-10-04.txt",
+      "sha256": "59428364cf40a6d17c31a08740d88e4b679125823c2a10c45a05bcd5f80a45a7",
+      "bytes": 3905,
+      "source": "fab-knowledge:originals/davit/files/records/davit_r4_sweep_run_2026-10-04.txt",
+      "sourceSha256": "96d716e4baaaccb3f4f0901225cd300bbfa2d58cd2e2e0ffb43a281eca19333e",
+      "lines": [5, 293],
+      "lineage": "davit.sweep/r4-run-2026-10-04"
+    },
+    {
+      "path": "davit_r4_verify_sim_run_2026-10-04.txt",
+      "sha256": "3732faad3ab49728b5ef4c34d51efff239216880e8dde6ec473730dece72eb0a",
+      "bytes": 76,
+      "source": "fab-knowledge:originals/davit/files/records/davit_r4_verify_sim_run_2026-10-04.txt",
+      "sourceSha256": "3732faad3ab49728b5ef4c34d51efff239216880e8dde6ec473730dece72eb0a",
+      "lineage": "davit.verify/r4-run-2026-10-04"
+    },
+    {
+      "path": "r3/davit_palm.stl",
+      "sha256": "76c4d76b9619c16213976157eaf88efd305543ede0e4ecd5272663915470846c",
+      "bytes": 169684,
+      "source": "fab-work-directory:benches/davit/outputs/davit_stl.zip",
+      "sourceSha256": "3a8419694f054ce6821564212d5bc35daf0892aad01645a3bdf6b17a9f2de33f",
+      "member": "stl/davit_palm.stl",
+      "lineage": "davit.stl/r3-palm"
+    }
+  ]
+}

@@ -1414,12 +1414,30 @@
     "dest": "packages/mechanisms/test/legacy/hook-rule.py"
   },
   {
+    "id": "cotter.hook-fit/scene-verify-pairs",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/cotter/files/cotter-src/tools/hook_fit.py",
+    "sha256": "adb0f875c932e268726076e5b5bd4b857fa06fec9f0d6bcf3ad883b4f31739cd",
+    "fixes": [
+      "line 104, the verify_all loop header whose (hole, board) pairs packages/sim/scenes/cotter-hook.ts reads"
+    ],
+    "dest": "packages/sim/scenes/inputs/cotter-hook/hook_fit-verify_all.txt"
+  },
+  {
     "id": "cotter.kit-layout/2026-09-21",
     "kind": "canonical",
     "source": "fab-knowledge:evidence/x/downloads/dl-pip-latest/cotter/unzipped/cotter-kit_today_2026-09-21/layout.json",
     "sha256": "586052524bc09a8a4641e7aea0e5dc5b451c34e6a14f641a924d62051c9f65c0",
     "fixes": [],
     "dest": "designs/cotter/legacy/kit-2026-09-21/layout.json"
+  },
+  {
+    "id": "cotter.kit-layout/scene-input",
+    "kind": "copy",
+    "source": "fab-knowledge:evidence/x/downloads/dl-pip-latest/cotter/unzipped/cotter-kit_today_2026-09-21/layout.json",
+    "sha256": "586052524bc09a8a4641e7aea0e5dc5b451c34e6a14f641a924d62051c9f65c0",
+    "fixes": [],
+    "dest": "packages/sim/scenes/inputs/cotter-hook/kit-2026-09-21-layout.json"
   },
   {
     "id": "cotter.kit/m07-legacy",
@@ -1526,6 +1544,16 @@
     "dest": "packages/motion/src/kinematics/davit.ts"
   },
   {
+    "id": "davit.collide/r3-data",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/davit/files/r3/davit.html",
+    "sha256": "ba332702646f2a9b072b1c8ab6da46b3d3e4f268179af1f37fcfd7a61280260a",
+    "fixes": [
+      "line 148, the const DATA line (parts, hw, prox, pairs) packages/sim/src/proxy/decode.ts extractData reads, stored alone for the std scenes"
+    ],
+    "dest": "packages/sim/scenes/inputs/davit/r3/DATA.txt"
+  },
+  {
     "id": "davit.collide/r3-page",
     "kind": "copy",
     "source": "fab-knowledge:originals/davit/files/r3/davit.html",
@@ -1544,7 +1572,7 @@
     "sha256": "1511d9082a6b72dd32c91ac4c2c602743c84f908bd39e3db6debaa3aab885da8",
     "fixes": [
       "chain() (line 210) and collide() (line 552) equal the R3 page functions byte for byte (computed 2026-10-08); the ports in packages/motion/src/kinematics/davit.ts (moved from packages/sim at M07-T10, D-139) and packages/sim/src/proxy/collide.ts start here, with the arms cannot meet skip removed so left is tested against right (M02-T06 step 2); sim reads the chain through the place(pose) binding in core/src/kinematics.ts",
-      "packages/sim/src/proxy/decode.ts: decodes the line 151 DATA blob (parts, hw, prox, pairs) for the mini scenes and the R4 parity cases"
+      "packages/sim/src/proxy/decode.ts: decodes the line 151 DATA blob (parts, hw, prox, pairs) for the mini scenes and the R4 parity cases; the line is stored alone at packages/sim/scenes/inputs/davit/r4/DATA.txt"
     ],
     "dest": "designs/davit/legacy/r4/sim_r4.html"
   },
@@ -1573,12 +1601,162 @@
     "dest": "designs/davit/legacy/r4/parts_r4.py"
   },
   {
+    "id": "davit.stl/r3-base",
+    "kind": "copy",
+    "source": "fab-work-directory:benches/davit/outputs/davit_stl.zip",
+    "sha256": "3a8419694f054ce6821564212d5bc35daf0892aad01645a3bdf6b17a9f2de33f",
+    "fixes": [],
+    "dest": "packages/sim/scenes/inputs/davit/r3/davit_base.stl"
+  },
+  {
+    "id": "davit.stl/r3-crank",
+    "kind": "copy",
+    "source": "fab-work-directory:benches/davit/outputs/davit_stl.zip",
+    "sha256": "3a8419694f054ce6821564212d5bc35daf0892aad01645a3bdf6b17a9f2de33f",
+    "fixes": [],
+    "dest": "packages/sim/scenes/inputs/davit/r3/davit_crank.stl"
+  },
+  {
+    "id": "davit.stl/r3-fore",
+    "kind": "copy",
+    "source": "fab-work-directory:benches/davit/outputs/davit_stl.zip",
+    "sha256": "3a8419694f054ce6821564212d5bc35daf0892aad01645a3bdf6b17a9f2de33f",
+    "fixes": [],
+    "dest": "packages/sim/scenes/inputs/davit/r3/davit_fore.stl"
+  },
+  {
+    "id": "davit.stl/r3-palm",
+    "kind": "copy",
+    "source": "fab-work-directory:benches/davit/outputs/davit_stl.zip",
+    "sha256": "3a8419694f054ce6821564212d5bc35daf0892aad01645a3bdf6b17a9f2de33f",
+    "fixes": [
+      "the R3 palm whose tab channel README_R4.md item 8 records; read by core/test/davit-r4-parity.test.ts through packages/sim/fixtures/davit-r3-grip-tab/fixture.json"
+    ],
+    "dest": "packages/sim/fixtures/davit-stored/r3/davit_palm.stl"
+  },
+  {
+    "id": "davit.stl/r3-upper",
+    "kind": "copy",
+    "source": "fab-work-directory:benches/davit/outputs/davit_stl.zip",
+    "sha256": "3a8419694f054ce6821564212d5bc35daf0892aad01645a3bdf6b17a9f2de33f",
+    "fixes": [],
+    "dest": "packages/sim/scenes/inputs/davit/r3/davit_upper.stl"
+  },
+  {
+    "id": "davit.stl/r4",
+    "kind": "canonical",
+    "source": "fab-knowledge:originals/davit/files/davit_r4.zip",
+    "sha256": "ad30781885c77bade39554e4ad427746984be38e8eb3bcaef27931cd882c8749",
+    "fixes": [
+      "the R4 print STLs (davit_r4/stl/, 11 members) are the meshes of the davit scenes; packages/sim/scenes/davit.ts reads the stored copies below, never the zip"
+    ],
+    "dest": null
+  },
+  {
+    "id": "davit.stl/r4-jaw-drive",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/davit/files/davit_r4.zip",
+    "sha256": "ad30781885c77bade39554e4ad427746984be38e8eb3bcaef27931cd882c8749",
+    "fixes": [],
+    "dest": "packages/sim/scenes/inputs/davit/r4/davit_jaw_drive.stl"
+  },
+  {
+    "id": "davit.stl/r4-jaw-idle",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/davit/files/davit_r4.zip",
+    "sha256": "ad30781885c77bade39554e4ad427746984be38e8eb3bcaef27931cd882c8749",
+    "fixes": [],
+    "dest": "packages/sim/scenes/inputs/davit/r4/davit_jaw_idle.stl"
+  },
+  {
+    "id": "davit.stl/r4-mini-base",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/davit/files/davit_r4.zip",
+    "sha256": "ad30781885c77bade39554e4ad427746984be38e8eb3bcaef27931cd882c8749",
+    "fixes": [],
+    "dest": "packages/sim/scenes/inputs/davit/r4/davit_mini_base.stl"
+  },
+  {
+    "id": "davit.stl/r4-mini-crank",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/davit/files/davit_r4.zip",
+    "sha256": "ad30781885c77bade39554e4ad427746984be38e8eb3bcaef27931cd882c8749",
+    "fixes": [],
+    "dest": "packages/sim/scenes/inputs/davit/r4/davit_mini_crank.stl"
+  },
+  {
+    "id": "davit.stl/r4-mini-fore",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/davit/files/davit_r4.zip",
+    "sha256": "ad30781885c77bade39554e4ad427746984be38e8eb3bcaef27931cd882c8749",
+    "fixes": [],
+    "dest": "packages/sim/scenes/inputs/davit/r4/davit_mini_fore.stl"
+  },
+  {
+    "id": "davit.stl/r4-mini-upper",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/davit/files/davit_r4.zip",
+    "sha256": "ad30781885c77bade39554e4ad427746984be38e8eb3bcaef27931cd882c8749",
+    "fixes": [],
+    "dest": "packages/sim/scenes/inputs/davit/r4/davit_mini_upper.stl"
+  },
+  {
+    "id": "davit.stl/r4-mount-125in",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/davit/files/davit_r4.zip",
+    "sha256": "ad30781885c77bade39554e4ad427746984be38e8eb3bcaef27931cd882c8749",
+    "fixes": [],
+    "dest": "packages/sim/scenes/inputs/davit/r4/davit_mount_125in.stl"
+  },
+  {
+    "id": "davit.stl/r4-mount-15in",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/davit/files/davit_r4.zip",
+    "sha256": "ad30781885c77bade39554e4ad427746984be38e8eb3bcaef27931cd882c8749",
+    "fixes": [],
+    "dest": "packages/sim/scenes/inputs/davit/r4/davit_mount_15in.stl"
+  },
+  {
+    "id": "davit.stl/r4-mount-1in",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/davit/files/davit_r4.zip",
+    "sha256": "ad30781885c77bade39554e4ad427746984be38e8eb3bcaef27931cd882c8749",
+    "fixes": [],
+    "dest": "packages/sim/scenes/inputs/davit/r4/davit_mount_1in.stl"
+  },
+  {
+    "id": "davit.stl/r4-palm",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/davit/files/davit_r4.zip",
+    "sha256": "ad30781885c77bade39554e4ad427746984be38e8eb3bcaef27931cd882c8749",
+    "fixes": [],
+    "dest": "packages/sim/scenes/inputs/davit/r4/davit_palm.stl"
+  },
+  {
+    "id": "davit.stl/r4-pincap",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/davit/files/davit_r4.zip",
+    "sha256": "ad30781885c77bade39554e4ad427746984be38e8eb3bcaef27931cd882c8749",
+    "fixes": [],
+    "dest": "packages/sim/scenes/inputs/davit/r4/davit_pincap.stl"
+  },
+  {
     "id": "davit.sweep/r4",
     "kind": "canonical",
     "source": "fab-knowledge:originals/davit/files/src/sweep.py",
     "sha256": "d6d1162526d5619b4924521a05845bc47303f5fd394917f903bd2063511d21eb",
     "fixes": [],
     "dest": "designs/davit/legacy/r4/sweep.py"
+  },
+  {
+    "id": "davit.sweep/r4-run-2026-10-04",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/davit/files/records/davit_r4_sweep_run_2026-10-04.txt",
+    "sha256": "96d716e4baaaccb3f4f0901225cd300bbfa2d58cd2e2e0ffb43a281eca19333e",
+    "fixes": [
+      "lines 5 to 293, the run without the four trimesh RuntimeWarning lines its first four hold; read by core/test/davit-r4-parity.test.ts"
+    ],
+    "dest": "packages/sim/fixtures/davit-stored/davit_r4_sweep_run_2026-10-04.txt"
   },
   {
     "id": "davit.verify/r4",
@@ -1589,12 +1767,32 @@
     "dest": "designs/davit/legacy/r4/verify_sim.py"
   },
   {
+    "id": "davit.verify/r4-run-2026-10-04",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/davit/files/records/davit_r4_verify_sim_run_2026-10-04.txt",
+    "sha256": "3732faad3ab49728b5ef4c34d51efff239216880e8dde6ec473730dece72eb0a",
+    "fixes": [
+      "the verify_sim.py run of 2026-10-04, stored whole; read by core/test/davit-r4-parity-verify.test.ts"
+    ],
+    "dest": "packages/sim/fixtures/davit-stored/davit_r4_verify_sim_run_2026-10-04.txt"
+  },
+  {
     "id": "derrick.arm-ref/r3",
     "kind": "copy",
     "source": "fab-knowledge:originals/derrick/files/src/arm_ref.json",
     "sha256": "54c9754a3412e88792e4139056fe4772f7f99ca4fd1fe68959a492062d771220",
     "fixes": [],
     "dest": "designs/derrick/legacy/arm_ref.json"
+  },
+  {
+    "id": "derrick.arm-ref/r3-stored",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/derrick/files/src/arm_ref.json",
+    "sha256": "54c9754a3412e88792e4139056fe4772f7f99ca4fd1fe68959a492062d771220",
+    "fixes": [
+      "the stale shipped golden, stored whole; packages/motion/test/derrick-fk.test.ts reads it only to show it still differs"
+    ],
+    "dest": "packages/motion/inputs/derrick/arm_ref.json"
   },
   {
     "id": "derrick.arm-ref/regenerated",
@@ -1605,6 +1803,16 @@
       "regenerated from the canonical arm_build.py on 2026-10-05; the shipped arm_ref.json puts the home tool 6.8 mm off in x (knowledge/designs/derrick.md section 1.2)"
     ],
     "dest": "designs/derrick/legacy/arm_ref_regenerated_2026-10-05.json"
+  },
+  {
+    "id": "derrick.arm-ref/regenerated-stored",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/derrick/files/records/arm_ref_regenerated_2026-10-05.json",
+    "sha256": "0f9715a166950ef26a95d1ccd16985d71d971e757a46985452a6bf0713c73f32",
+    "fixes": [
+      "stored whole; packages/motion/test/derrick-fk.test.ts holds the port to it"
+    ],
+    "dest": "packages/motion/inputs/derrick/arm_ref_regenerated_2026-10-05.json"
   },
   {
     "id": "derrick.build/m07-legacy",
@@ -1646,7 +1854,7 @@
     "source": "fab-knowledge:originals/derrick/files/src/arm_parts.py",
     "sha256": "ab2e4acd8283f43b78d64a9bc653afe4b79fd1de5c993a5cf3ff2a7d30821fc3",
     "fixes": [
-      "bodies snap_check.py intersects exported as STL by tools/py/derrick/export_bodies.py to designs/derrick/legacy/capture/ (M04-T06)"
+      "bodies snap_check.py intersects exported as STL by tools/py/derrick/export_bodies.py to packages/checks/test/derrick-capture/ (M04-T06)"
     ],
     "dest": null
   },
@@ -3782,7 +3990,7 @@
     "source": "fab-knowledge:originals/pintle/files/src/pintle_parts.py",
     "sha256": "5280a22350a488e721d411504a562dec2007f421129e5f7462e055cb2b45a6b1",
     "fixes": [
-      "bodies snap_check.py intersects exported as STL by tools/py/derrick/export_bodies.py to designs/derrick/legacy/capture/ (M04-T06)"
+      "bodies snap_check.py intersects exported as STL by tools/py/derrick/export_bodies.py to packages/checks/test/derrick-capture/ (M04-T06)"
     ],
     "dest": null
   },
@@ -3792,7 +4000,7 @@
     "source": "fab-knowledge:originals/pintle/files/records/snap_check_run_2026-10-05.txt",
     "sha256": "9c0ccc97948dd83e8cb3f5324e6905b76ab301f64c9ce272d87db5fe5494354a",
     "fixes": [],
-    "dest": "designs/derrick/legacy/capture/snap_check_run_2026-10-05.txt"
+    "dest": "packages/checks/test/derrick-capture/snap_check_run_2026-10-05.txt"
   },
   {
     "id": "pintle.snap-check/r6",
@@ -3800,7 +4008,7 @@
     "source": "fab-knowledge:originals/pintle/files/src/snap_check.py",
     "sha256": "9b7c9c9f0de47b0da552cb924fe59e8c8175b8ed3104e9e251f3acf974f30aa3",
     "fixes": [
-      "the 37 tests exported by tools/py/derrick/export_bodies.py to designs/derrick/legacy/capture/tests.json; the strict 1.0 mm3 rule of line 25 ported to packages/checks/src/capture.ts (M04-T06)"
+      "the 37 tests exported by tools/py/derrick/export_bodies.py to packages/checks/test/derrick-capture/tests.json; the strict 1.0 mm3 rule of line 25 ported to packages/checks/src/capture.ts (M04-T06)"
     ],
     "dest": null
   },
@@ -5931,6 +6139,16 @@
     "dest": null
   },
   {
+    "id": "stipple.bench/r17-data",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/stipple/files/companions/stipple-r17.html",
+    "sha256": "e1f4e1ddf366772e6658210b755e76ac7a34a61129c8bcbe2819eed9c1c67fb0",
+    "fixes": [
+      "line 117, the const DATA line readStippleParams reads, stored alone for the R17 latch tests"
+    ],
+    "dest": "packages/motion/inputs/stipple/stipple-r17-DATA.txt"
+  },
+  {
     "id": "stipple.bench/r17-m07-legacy",
     "kind": "copy",
     "source": "fab-knowledge:originals/stipple/files/companions/stipple-r17.html",
@@ -5955,7 +6173,8 @@
     "sha256": "f4afad81c417627e84349c5f6cf6b1016e520083ce8ac631b7d71fc6c02f1767",
     "fixes": [
       "ceil_v, E_REST, CAM, link, rodState, canLatch and crankPhi (lines 138 to 170) ported line for line to packages/motion/src/kinematics/stipple.ts (M07-T11, D-139); the cell placement of apply() (lines 346 to 353) and buildCheck() (lines 680 to 714) ported on row-major matrices in place of three.js; CAMLIFT, absent from the page, is kin.py line 90 on this beam",
-      "ported to packages/mechanisms/src/derive/balance-beam.ts, as its header cites stipple-r17b.html (packages/mechanisms/src/derive/balance-beam.ts line 2: \"stipple-r17b.html link() lines 142 to 148; lineage stipple.kin/r17b): the\"); recorded by the M06 and M08 integration"
+      "ported to packages/mechanisms/src/derive/balance-beam.ts, as its header cites stipple-r17b.html (packages/mechanisms/src/derive/balance-beam.ts line 2: \"stipple-r17b.html link() lines 142 to 148; lineage stipple.kin/r17b): the\"); recorded by the M06 and M08 integration",
+      "line 117, the const DATA line whose P block readStippleParams reads, is stored alone at packages/motion/inputs/stipple/stipple-r17b-DATA.txt for motion.run and the motion tests"
     ],
     "dest": "packages/motion/src/kinematics/stipple.ts"
   },
@@ -5974,6 +6193,16 @@
     "sha256": "9a18e298cd3f27b030a02ccc3649ca2c1543b16dd40a0cf2c4a3fd14be949b02",
     "fixes": [],
     "dest": "designs/stipple/legacy/derived/stipple_latch.py"
+  },
+  {
+    "id": "stipple.latch/stored",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/stipple/files/derived/stipple_latch.json",
+    "sha256": "8580b4405da5897f506605fa37b0c7f1e9b0bc4a37b6992168bb336006bfbd2c",
+    "fixes": [
+      "the downloads reader latch figures the motion and checks tests compare R17 and R17b against, stored whole"
+    ],
+    "dest": "packages/motion/inputs/stipple/stipple_latch.json"
   },
   {
     "id": "stipple.write/r17b",
@@ -6601,6 +6830,16 @@
     "sha256": "2e37962fac68d35041c57ce9f3f7bc9da541cca1edb4a3959647051752072a36",
     "fixes": [],
     "dest": null
+  },
+  {
+    "id": "washer.app/drive-record-stored",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/washer/drive/plan-square-2026-10-05.json",
+    "sha256": "08404263f86d3d5f52e73327febc9e2a78d3c6400f0c7d5e9e2ea2bb9765a3b1",
+    "fixes": [
+      "the canonical drive record of the 60 mm square at the canonical defaults, stored whole; packages/motion/test/planners.test.ts holds the profile defaults to it"
+    ],
+    "dest": "packages/motion/inputs/washer/plan-square-2026-10-05.json"
   },
   {
     "id": "washer.app/harvest",

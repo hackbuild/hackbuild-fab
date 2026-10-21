@@ -12,7 +12,7 @@ import { isThrownCommandError, sha256Hex, type ResultTarget } from "@hackbuild/s
 import { importStl, liveCount, type MeshData } from "@hackbuild/mesh";
 import { NO_MOVE, captureFinding, interferenceMm3, movedMesh, volumeFinding, type CaptureMove, type CaptureWant } from "../src/capture";
 
-const DIR = new URL("../../../designs/derrick/legacy/capture/", import.meta.url);
+const DIR = new URL("./derrick-capture/", import.meta.url);
 const bytes = (name: string): Buffer => readFileSync(new URL(name, DIR));
 const text = (name: string): string => bytes(name).toString("utf8");
 

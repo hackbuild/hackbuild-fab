@@ -4,7 +4,7 @@ Run from the repo root:
 
     uv run --project tools/py tools/py/derrick/export_bodies.py [out_dir]
 
-out_dir defaults to designs/derrick/legacy/capture. The script imports the
+out_dir defaults to packages/checks/test/derrick-capture. The script imports the
 canonical sources by absolute path (lineage pintle.parts/r6,
 pintle.snap-check/r6, derrick.parts/r3) and builds every body snap_check.py
 intersects, in the pose snap_check.py reads it before a test moves it, then
@@ -155,7 +155,7 @@ def tests():
 
 
 def main():
-    out = sys.argv[1] if len(sys.argv) > 1 else "designs/derrick/legacy/capture"
+    out = sys.argv[1] if len(sys.argv) > 1 else "packages/checks/test/derrick-capture"
     check_sources()
     floor, floor_line = read_floor()
     os.makedirs(out, exist_ok=True)

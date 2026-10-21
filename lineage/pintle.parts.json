@@ -21,7 +21,7 @@
     "source": "fab-knowledge:originals/pintle/files/src/pintle_parts.py",
     "sha256": "5280a22350a488e721d411504a562dec2007f421129e5f7462e055cb2b45a6b1",
     "fixes": [
-      "bodies snap_check.py intersects exported as STL by tools/py/derrick/export_bodies.py to designs/derrick/legacy/capture/ (M04-T06)"
+      "bodies snap_check.py intersects exported as STL by tools/py/derrick/export_bodies.py to packages/checks/test/derrick-capture/ (M04-T06)"
     ],
     "dest": null
   }

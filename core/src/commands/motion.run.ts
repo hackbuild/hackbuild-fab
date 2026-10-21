@@ -31,10 +31,10 @@ import { countsOf, findingsOf, worst, type CommandOut } from "../result.js";
 import type { CoreCtx } from "../ctx.js";
 import { loadWorkspace } from "./build.js";
 
-/** The pinned sources each machine is read from, workspace relative. */
+/** The pinned sources each machine is read from, workspace relative; stipple is line 117 of stipple-r17b.html, stored (lineage stipple.kin/r17b). */
 const SOURCES = {
   ogee16: "designs/ogee16/legacy/source/params.scad",
-  stipple: "designs/stipple/legacy/stipple-r17b.html",
+  stipple: "packages/motion/inputs/stipple/stipple-r17b-DATA.txt",
   slug: "designs/slug/legacy/slug.scad",
 } as const;
 
@@ -109,11 +109,11 @@ const FAMILIES: readonly Family[] = [
     open: (id, args, o) => {
       if (id === "detent.square") {
         const path: PathPoint[] = detentSquare(args["side"]!, args["sample"]!);
-        return { kind: "plan", plan: detentPlanner(detentPlan(o.profile)).plan(path), source: "profile detent.* (designs/detent/legacy/detent-plot.html planSpeeds)" };
+        return { kind: "plan", plan: detentPlanner(detentPlan(o.profile)).plan(path), source: "profile detent.* (fab-knowledge:originals/detent/files/beam/detent-plot.html planSpeeds)" };
       }
       const plan = washerPlan(o.profile);
       const p = washerPlanner({ rig: washerRig(o.profile), plan, servo: servoPreset(o.profile), calib: null }).plan(washerSquare(args["side"]!, plan.dense));
-      return { kind: "plan", plan: p, source: "profile washer.* and servo.micro9g.* (designs/washer/legacy laser-rig.html planChainPen)" };
+      return { kind: "plan", plan: p, source: "profile washer.* and servo.micro9g.* (fab-knowledge:originals/washer/files/rig/laser-rig.html planChainPen)" };
     },
   },
 ];

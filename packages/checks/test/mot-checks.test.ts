@@ -25,10 +25,10 @@ const DEFS = registerChecks({ seed }, CHECK_MODULES).filter((d) => ["CHK-MOT-04"
 const KERNELS = new Set<KernelId>(["geom", "mesh", "profile", "motion"]);
 
 const OG = ogeeKinematics(readScadParams(text("designs/ogee16/legacy/source/params.scad")));
-const P17b = readStippleParams(text("designs/stipple/legacy/stipple-r17b.html"));
+const P17b = readStippleParams(text("packages/motion/inputs/stipple/stipple-r17b-DATA.txt"));
 const ST = stippleKinematics(P17b, "stipple-r17b");
-const ST17 = stippleKinematics(readStippleParams(text("designs/stipple/legacy/stipple-r17.html")), "stipple-r17");
-const stipple = JSON.parse(text("designs/stipple/legacy/derived/stipple_latch.json")) as Record<string, { margin: number; LUG_TOT: number }>;
+const ST17 = stippleKinematics(readStippleParams(text("packages/motion/inputs/stipple/stipple-r17-DATA.txt")), "stipple-r17");
+const stipple = JSON.parse(text("packages/motion/inputs/stipple/stipple_latch.json")) as Record<string, { margin: number; LUG_TOT: number }>;
 
 const HANDLES: [string, MotionHandle][] = [
   ["OGEE16 R16", latchHandle(OG.latch, ogeeProgram(OG, "ogee.checker"))],

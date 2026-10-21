@@ -36,7 +36,7 @@ describe("mask keys", () => {
   });
 
   test("changing one byte of crank.stl makes every crank mask E_STALE, naming the pair", () => {
-    const bytes = new Uint8Array(readFileSync(new URL("../../designs/davit/legacy/stl/davit_crank.stl", import.meta.url)));
+    const bytes = new Uint8Array(readFileSync(new URL("../../packages/sim/scenes/inputs/davit/r3/davit_crank.stl", import.meta.url)));
     // Third byte of the x of the first vertex: a binary stl header is 84 bytes, then 12 normal bytes.
     bytes[84 + 12 + 1] = (bytes[84 + 12 + 1]! + 0x40) & 0xff;
     const edited = meshOfStl(bytes, "davit_crank.stl");

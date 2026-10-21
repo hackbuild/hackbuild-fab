@@ -4,7 +4,6 @@
 // constants of davit.html are compared in core/test/davit-sweep.test.ts,
 // where the page decoder lives.
 
-import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { describe, expect, test } from "vitest";
 import { applyPoint, constOf, davitChain, davitPlacements, hwNames, type DavitModel, type DavitPipe, type DavitPose } from "@hackbuild/motion";
@@ -16,9 +15,9 @@ const golden = JSON.parse(readFileSync(here("./goldens/davit-chain.json"), "utf8
 const worst = (a: readonly number[], b: readonly number[]): number => Math.max(...a.map((v, i) => Math.abs(v - b[i]!)));
 
 describe("davit chain", () => {
-  test("the golden was written from the assembly.py in the repo", () => {
-    const sha = createHash("sha256").update(readFileSync(here("../../../designs/davit/legacy/assembly.py"))).digest("hex");
-    expect(golden.assemblySha256).toBe(sha);
+  test("the golden was written from the canonical assembly.py (lineage davit.assembly/r3)", () => {
+    const lineage = JSON.parse(readFileSync(here("../../../lineage.json"), "utf8")) as { id: string; sha256: string }[];
+    expect(golden.assemblySha256).toBe(lineage.find((r) => r.id === "davit.assembly/r3")!.sha256);
     expect(golden.cases).toHaveLength(48);
   });
 

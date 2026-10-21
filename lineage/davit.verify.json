@@ -6,5 +6,15 @@
     "sha256": "9164f30980815f977dcf2838835abb69f9a607ddac031153f01093517986b9af",
     "fixes": [],
     "dest": "designs/davit/legacy/r4/verify_sim.py"
+  },
+  {
+    "id": "davit.verify/r4-run-2026-10-04",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/davit/files/records/davit_r4_verify_sim_run_2026-10-04.txt",
+    "sha256": "3732faad3ab49728b5ef4c34d51efff239216880e8dde6ec473730dece72eb0a",
+    "fixes": [
+      "the verify_sim.py run of 2026-10-04, stored whole; read by core/test/davit-r4-parity-verify.test.ts"
+    ],
+    "dest": "packages/sim/fixtures/davit-stored/davit_r4_verify_sim_run_2026-10-04.txt"
   }
 ]

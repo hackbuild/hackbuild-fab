@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """The DXF reload audit (M07-T06 step 4, D-138, CHK-SHT-03).
 
-Ported from COTTER tools/audit_dxf.py (lineage cotter.audit-dxf/r5; copy
-designs/cotter/legacy/audit_dxf.py) and fixed:
+Ported from COTTER tools/audit_dxf.py (lineage cotter.audit-dxf/r5;
+originals/cotter/files/cotter-src/tools/audit_dxf.py) and fixed:
 
 - the entity type is checked before any attribute: the original read
   e.closed on every entity and crashed with AttributeError on the POLYLINE

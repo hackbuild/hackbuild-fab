@@ -260,27 +260,33 @@ export function calibrateConfig(
 }
 
 const DESIGN = new URL("../../../designs/davit/", import.meta.url);
-const stl = (dir: string, key: string): HashedMesh => meshOfStl(readFileSync(new URL(`legacy/${dir}stl/davit_${key}.stl`, DESIGN)), `davit_${key}.stl`);
-const dataOf = (file: string): DavitData => extractData(readFileSync(new URL(`legacy/${file}`, DESIGN), "utf8"));
+/** The stored meshes and DATA lines (inputs/stored-inputs.json): r3 from the R3 STL zip, r4 from originals/davit/files/davit_r4.zip. */
+export const DAVIT_INPUTS = new URL("inputs/davit/", import.meta.url);
+export type Rev = "r3" | "r4";
+export const davitStl = (rev: Rev, key: string): Uint8Array => new Uint8Array(readFileSync(new URL(`${rev}/davit_${key}.stl`, DAVIT_INPUTS)));
+const stl = (rev: Rev, key: string): HashedMesh => meshOfStl(davitStl(rev, key), `davit_${key}.stl`);
+/** DATA of the R3 page (davit.html line 148) or the R4 page (sim_r4.html line 151), stored as that one line. */
+export const davitData = (rev: Rev): DavitData => extractData(readFileSync(new URL(`${rev}/DATA.txt`, DAVIT_INPUTS), "utf8"));
 
 /**
  * Meshes by proxy key. Std takes the R3 parts only the std model has (base,
  * crank, upper, fore), the R4 palm, jaws and pincap shared with mini (the R3
  * palm channel is the 247 mm3 interference of README_R4.md item 8), the three
  * mounts, and the servo and horn meshes of davit.html DATA.hw. Mini takes the
- * R4 STLs and the sim_r4.html DATA.hw.
+ * R4 STLs and the sim_r4.html DATA.hw. The mounts are read from r4: the R3
+ * and R4 mount STLs are byte identical (sha256, computed 2026-10-21).
  */
 export function davitMeshes(model: Model): Map<string, HashedMesh> {
   const m = new Map<string, HashedMesh>();
-  for (const k of ["mount_1in", "mount_125in", "mount_15in"]) m.set(k, stl("", k));
-  for (const k of ["palm", "jaw_drive", "jaw_idle", "pincap"]) m.set(k, stl("r4/", k));
+  for (const k of ["mount_1in", "mount_125in", "mount_15in"]) m.set(k, stl("r4", k));
+  for (const k of ["palm", "jaw_drive", "jaw_idle", "pincap"]) m.set(k, stl("r4", k));
   if (model === "std") {
-    for (const k of ["base", "crank", "upper", "fore"]) m.set(k, stl("", k));
-    const hw = dataOf("davit.html").hw;
+    for (const k of ["base", "crank", "upper", "fore"]) m.set(k, stl("r3", k));
+    const hw = davitData("r3").hw;
     for (const k of ["std_servo", "std_horn", "mic_servo", "mic_horn"]) m.set(k, meshOfRecord(hw[k]!));
   } else {
-    for (const k of ["mini_base", "mini_crank", "mini_upper", "mini_fore"]) m.set(k, stl("r4/", k));
-    const hw = dataOf("r4/sim_r4.html").hw;
+    for (const k of ["mini_base", "mini_crank", "mini_upper", "mini_fore"]) m.set(k, stl("r4", k));
+    const hw = davitData("r4").hw;
     for (const k of ["mic_servo", "mic_horn"]) m.set(k, meshOfRecord(hw[k]!));
   }
   return m;

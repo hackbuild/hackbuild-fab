@@ -213,7 +213,7 @@ describe("part.probe (DAVIT)", () => {
     const res = r.result as { mm: number; a: { point: number[] }; b: { point: number[] }; declared: boolean; maskedMm: number };
     const asm = await json("asm.solve", "--scene", "davit-std-1in", "--pose", "HANG");
     const place = (asm.r.result as { placements: Record<string, Placement> }).placements;
-    const data = extractData(read("designs/davit/legacy/davit.html"));
+    const data = extractData(read("packages/sim/scenes/inputs/davit/r3/DATA.txt"));
     const world = (key: string, p: Placement): number[][] => {
       const px = decodeProxy(data.prox[key]!);
       const [x, y, z, w] = p.rot as [number, number, number, number];

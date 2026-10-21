@@ -1,28 +1,16 @@
 // M07-T14 steps 6 and 7: export file names (PACKAGES.md 8.2) and the BOM
-// quantity they state. The slug and quantity forms are held to COTTER's own
-// KIT.slug and KIT.qty, run from the pinned legacy copy
-// (designs/cotter/legacy/kit.js, sha256 c77e2307), so a drifted port fails
-// here. The SLUG sheets and OGEE plates go through export.run as a dry run
+// quantity they state. export-names-kit.test.ts holds the slug and quantity
+// forms to COTTER's own KIT.slug and KIT.qty, run from the original kit.js,
+// so a drifted port fails there. The SLUG sheets and OGEE plates go through export.run as a dry run
 // (build and checks, no gate); every emitted name is audited: its form, a
 // slug of at most 56 characters, no name twice, and the quantities it
 // states against the BOM, which reads each part's copies from the scene
 // items (Part IR instance counts once M10 gives these designs a chase).
 
-import { createHash } from "node:crypto";
-import { readFileSync } from "node:fs";
-import path from "node:path";
-import { runInNewContext } from "node:vm";
 import { describe, expect, it } from "vitest";
 import type { CommandResult } from "@hackbuild/spec";
 import { SLUG_MAX, assemblyName, laserName, nameSet, partName, plateName, qtyOf, quantityOf, slugOf } from "../src/exporters/names.js";
-import { ROOT, hbf } from "./hbf.js";
-
-const KIT_PATH = path.join(ROOT, "designs", "cotter", "legacy", "kit.js");
-const kitBytes = readFileSync(KIT_PATH);
-const sums = readFileSync(path.join(ROOT, "designs", "cotter", "legacy", "SHA256SUMS"), "utf8");
-const box: { KIT?: { slug(s: string): string; qty(n: number): string } } = {};
-runInNewContext(kitBytes.toString("utf8"), { globalThis: box, Float32Array, Map, Set, Math, String, Number, Array, Object, JSON });
-const KIT = box.KIT!;
+import { hbf } from "./hbf.js";
 
 interface Exported {
   readonly files: readonly string[];
@@ -63,19 +51,6 @@ function audit(e: Exported): string[] {
 }
 
 describe("the names are COTTER's", () => {
-  it("kit.js is the pinned copy", () => {
-    const sha = createHash("sha256").update(kitBytes).digest("hex");
-    expect(sums).toContain(`${sha}  kit.js`);
-  });
-
-  it.each(["SLUG ply sheet 1", "  rotor_gear_a  ", "OGEE16--R16P", "x", "a/b\\c", "Ünïcode part", ""])("slugOf(%j) equals KIT.slug", (s) => {
-    expect(slugOf(s)).toBe(KIT.slug(s));
-  });
-
-  it.each([1, 2, 9, 10, 16, 124, 1000])("qtyOf(%i) equals KIT.qty", (n) => {
-    expect(qtyOf(n)).toBe(KIT.qty(n));
-  });
-
   it("the four forms", () => {
     expect(partName("Flex Pair", 2, "3mf")).toBe("x02_flex-pair.3mf");
     expect(laserName("slug-ply-sheet1", 1, 3, "ply3", "dxf")).toBe("x01_slug-ply-sheet1_3.0mm-ply3.dxf");

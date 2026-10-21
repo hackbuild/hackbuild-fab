@@ -4,14 +4,15 @@ Run from the repo root:
 
     uv run --project tools/py --extra bench python designs/sash/extract/capture.py [--out DIR] [--only SLUG]
 
-The legacy bench `designs/sash/legacy/sash.html` is never edited. A copy is
+The bench `fab-knowledge:originals/sash/files/sash.html` (lineage
+sash.bench/r2, read through tools/py/hbf_archives.py) is never edited. A copy is
 written to a temporary directory with one line added before the call
 `MODEL.check = runCheck(G, front, wall, slideGrids);` that keeps the call's
 inputs on MODEL. The bench's part2 block equals `src/part2.js` of the source
 zip after trailing whitespace (knowledge/designs/sash.md section 1), so the
 patched copy is the source with that one line, already baked.
 
-The cases are read from `sweep.py` inside `designs/sash/legacy/sash-src.zip`
+The cases are read from `sweep.py` inside `originals/sash/files/sash-src.zip`
 (its `cases` list, 21 entries) plus the battery preset as it loads, so the
 list is never typed here. Each case is driven exactly as `sweep.py` drives
 it: `ST = BENCH.presets.battery.make(); ST.sim.k=[0,0]; <case js>
@@ -43,7 +44,15 @@ import zipfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
-LEGACY = os.path.join(ROOT, "designs", "sash", "legacy")
+sys.path.insert(0, os.path.join(ROOT, "tools", "py"))
+from hbf_archives import local_source  # noqa: E402
+
+# Each original and the lineage row whose sha256 it must have.
+ORIGINALS = {
+    "sash.html": "fab-knowledge:originals/sash/files/sash.html",
+    "sash-src.zip": "fab-knowledge:originals/sash/files/sash-src.zip",
+}
+ROWS = {"sash.html": "sash.bench/r2", "sash-src.zip": "sash.run-check/bench-src-zip"}
 ANCHOR = "  MODEL.check = runCheck(G, front, wall, slideGrids);\n"
 PATCH = "  MODEL.capture = { G, front, wall, slideGrids };\n"
 SETTLED = "BENCH.model().parts && !BENCH.model().dirty && !BENCH.model().building"
@@ -82,19 +91,17 @@ def sha256(path):
 
 
 def check_sums():
-    want = {}
-    with open(os.path.join(LEGACY, "SHA256SUMS")) as fh:
-        for line in fh:
-            digest, name = line.split()
-            want[name] = digest
-    for name in ("sash.html", "sash-src.zip"):
-        got = sha256(os.path.join(LEGACY, name))
-        if got != want[name]:
-            sys.exit("%s sha256 %s, SHA256SUMS says %s" % (name, got, want[name]))
+    with open(os.path.join(ROOT, "lineage.json")) as fh:
+        rows = json.load(fh)
+    for name, source in ORIGINALS.items():
+        want = next((r["sha256"] for r in rows if r["id"] == ROWS[name]), None)
+        got = sha256(local_source(source))
+        if got != want:
+            sys.exit("%s sha256 %s, lineage %s records %s" % (name, got, ROWS[name], want))
 
 
 def sweep_cases():
-    with zipfile.ZipFile(os.path.join(LEGACY, "sash-src.zip")) as z:
+    with zipfile.ZipFile(local_source(ORIGINALS["sash-src.zip"])) as z:
         src = z.read("sweep.py").decode("utf-8")
     for node in ast.parse(src).body:
         if isinstance(node, ast.Assign) and any(getattr(t, "id", None) == "cases" for t in node.targets):
@@ -107,7 +114,7 @@ def slug(name):
 
 
 def patched_bench(tmp):
-    with open(os.path.join(LEGACY, "sash.html"), encoding="utf-8") as fh:
+    with open(local_source(ORIGINALS["sash.html"]), encoding="utf-8") as fh:
         text = fh.read()
     if text.count(ANCHOR) != 1:
         sys.exit("runCheck call line found %d times in sash.html, expected 1" % text.count(ANCHOR))

@@ -1,7 +1,7 @@
 // COTTER hook insertion scene (M02-T09). Declares the cases of hook_fit.py
-// `verify_all` (designs/cotter/legacy/tools/hook_fit.py line 104, lineage
-// cotter.hook-fit/r5, read from the file), the board of COTTER's first kit read from its
-// layout.json, and the sharp-bend refusal case of the M02 records, each
+// `verify_all` (line 104, lineage cotter.hook-fit/r5, read from that line
+// stored in inputs/cotter-hook), the board of COTTER's first kit read from
+// its layout.json (stored there too, inputs/stored-inputs.json), and the sharp-bend refusal case of the M02 records, each
 // with the outcome it is expected to measure. Nothing physical is typed
 // here: clip, board and search numbers are profile rows (hook.*,
 // hookFit.*), and a case's hook dims come from the `design` function the
@@ -12,10 +12,12 @@ import { readFileSync } from "node:fs";
 import { insertSearch, type InsertPose, type InsertSettings, type InsertState } from "../src/sweep/insert.js";
 import { CLIP_CONSTANT_IDS, boardSection, clipSection, type ClipConstants, type HookDims } from "../src/programs/cotter/hook.js";
 
-const LEGACY = new URL("../../../designs/cotter/legacy/", import.meta.url);
+const INPUTS = new URL("inputs/cotter-hook/", import.meta.url);
 
-/** The kit layout the eighth case reads (lineage cotter.kit-layout/2026-09-21). */
-export const KIT_LAYOUT = "kit-2026-09-21/layout.json";
+/** The kit layout the eighth case reads (lineage cotter.kit-layout/2026-09-21, stored as cotter.kit-layout/scene-input). */
+export const KIT_LAYOUT = "kit-2026-09-21-layout.json";
+/** Line 104 of hook_fit.py, the verify_all loop header (lineage cotter.hook-fit/scene-verify-pairs). */
+export const VERIFY_LINE = "hook_fit-verify_all.txt";
 
 /** What the scene needs of a profile lookup. */
 export interface ConstantSource {
@@ -41,16 +43,15 @@ export interface HookCase {
 
 /** The (hole, board) pairs of hook_fit.py verify_all, read from its loop header (line 104) in its order. */
 export function verifyPairs(): [number, number][] {
-  const src = readFileSync(new URL("tools/hook_fit.py", LEGACY), "utf8");
-  const body = src.slice(src.indexOf("def verify_all"));
-  const loop = /for hole,tb in \(((?:\([\d.]+,[\d.]+\),?)+)\):/.exec(body);
-  if (loop === null) throw new Error("hook_fit.py verify_all has no `for hole,tb in (...)` loop");
+  const line = readFileSync(new URL(VERIFY_LINE, INPUTS), "utf8");
+  const loop = /^\s*for hole,tb in \(((?:\([\d.]+,[\d.]+\),?)+)\):\n$/.exec(line);
+  if (loop === null) throw new Error("hook_fit.py line 104 is not the verify_all `for hole,tb in (...)` loop");
   return [...loop[1]!.matchAll(/\(([\d.]+),([\d.]+)\)/g)].map((m) => [Number(m[1]), Number(m[2])]);
 }
 
 /** The kit board, state.board.hole and state.board.tb of the layout file. */
 export function kitBoard(): { readonly hole: number; readonly tb: number } {
-  const layout = JSON.parse(readFileSync(new URL(KIT_LAYOUT, LEGACY), "utf8")) as { state: { board: { hole: number; tb: number } } };
+  const layout = JSON.parse(readFileSync(new URL(KIT_LAYOUT, INPUTS), "utf8")) as { state: { board: { hole: number; tb: number } } };
   return { hole: layout.state.board.hole, tb: layout.state.board.tb };
 }
 
@@ -59,7 +60,7 @@ export function hookCases(): HookCase[] {
   const kit = kitBoard();
   return [
     ...verifyPairs().map(([hole, tb], i): HookCase => ({ id: `verify-${i + 1}`, hole, tb, from: "hook_fit.py verify_all", expect: "INSERTS" })),
-    { id: "kit-2026-09-21", hole: kit.hole, tb: kit.tb, from: `designs/cotter/legacy/${KIT_LAYOUT} state.board`, expect: "INSERTS" },
+    { id: "kit-2026-09-21", hole: kit.hole, tb: kit.tb, from: "kit-2026-09-21 layout.json state.board (lineage cotter.kit-layout/2026-09-21)", expect: "INSERTS" },
   ];
 }
 

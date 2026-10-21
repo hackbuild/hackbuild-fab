@@ -49,8 +49,10 @@ test('rows are sorted, classed, and an original names its archive path', () => {
     ['designs/pip/legacy/tools/rastermesh.js', 'original'],
   ]);
   assert.equal(inv.files.filter((r) => /^designs\/[^/]+\/legacy\/fixtures\//.test(r.path)).length, 0);
-  // davit.ts builds its legacy paths in a template literal (line 263); the folder-name match finds it.
-  assert.ok(inv.folders['designs/davit/legacy'].readers.includes('packages/sim/scenes/davit.ts'));
+  // extract-plan.mjs names its folder through legacyDir("washer"); the folder-name match finds it.
+  assert.ok(inv.folders['designs/washer/legacy'].readers.includes('designs/washer/extract/extract-plan.mjs'));
+  // The davit scene reads its stored inputs, never the legacy folder (R1-rails-public-09).
+  assert.ok(!inv.folders['designs/davit/legacy'].readers.includes('packages/sim/scenes/davit.ts'));
   assert.ok(inv.folders['designs/collar/legacy'].readers.includes('tools/py/harness/collar_parity.py'));
 });
 

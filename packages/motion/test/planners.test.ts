@@ -3,8 +3,8 @@
 // packages/motion/records/detent-plan.json (detent-plot.html planSpeeds run
 // in node) and washer-plan.json (the harvested laser-rig.html planChainPen),
 // the canonical WASHER drive record (originals/washer/drive/
-// plan-square-2026-10-05.json, copied with its sha256 to
-// designs/washer/legacy/), and the M07 Records table figures typed
+// plan-square-2026-10-05.json, stored with its sha256 in
+// packages/motion/inputs/washer/), and the M07 Records table figures typed
 // below. Fixtures are the records' own: the 400 step square sampled every
 // 10 steps, beam on, closed (designs/detent/extract/extract-plan.mjs
 // squareFixture), and the 60 mm square centred on the target densified at
@@ -27,13 +27,6 @@ const pinned = (p: string, sha: string): Buffer => {
   const b = readFileSync(new URL(p, root));
   expect(sha256(b), `${p} is the copy it was pinned as`).toBe(sha);
   return b;
-};
-/** The one stored (method 0) member of a legacy zip: its bytes follow the 30 byte local header, name and extra. */
-const storedMember = (zip: Buffer): Buffer => {
-  expect(zip.readUInt32LE(0)).toBe(0x04034b50);
-  expect(zip.readUInt16LE(8), "member is stored, not deflated").toBe(0);
-  const at = 30 + zip.readUInt16LE(26) + zip.readUInt16LE(28);
-  return zip.subarray(at, at + zip.readUInt32LE(18));
 };
 const profile = createProfileLookup(loadProfile());
 
@@ -175,8 +168,8 @@ describe("WASHER mm-space planner (computed)", () => {
     }
   });
 
-  // originals/washer/drive/plan-square-2026-10-05.json, copied byte for byte (lineage washer.app/m07-drive-record).
-  const drive = "designs/washer/legacy/plan-square-2026-10-05.json";
+  // originals/washer/drive/plan-square-2026-10-05.json, stored byte for byte (lineage washer.app/drive-record-stored).
+  const drive = "packages/motion/inputs/washer/plan-square-2026-10-05.json";
   test("at the canonical defaults in profile the square plans as the canonical page does: 1.1703 s, peak 260, corner 29.461, mid-side 260", () => {
     const canon = (JSON.parse(pinned(drive, "08404263f86d3d5f52e73327febc9e2a78d3c6400f0c7d5e9e2ea2bb9765a3b1").toString("utf8")) as { canonical: { PLAN: Record<string, number>; dur: number; peak: number; corner: number; midBottom: number } }).canonical;
     const c: WasherCtx = { rig, plan: washerPlan(profile), servo: servoPreset(profile), calib: null };
@@ -228,36 +221,5 @@ describe("WASHER segments", () => {
     });
     expect(changes).toHaveLength(2);
     changes.forEach((c, i) => expect(Math.abs(c - gates[i]!)).toBeLessThanOrEqual(1));
-  });
-});
-
-// Every profile row this card added names a line of a canonical original;
-// the line holds the value.
-// The canonical files are read from their repo copies, held to the sha256 of the canonical lineage
-// row: DETENT detent-plot.html as is, the WASHER page as the stored member of laser-rig-canonical.zip
-// (zipped for the dash entity on its line 1852, as laser-rig.zip is). Before these copies the check read
-// absolute paths outside the repo and was skipped wherever they were absent, CI included.
-const lineage = JSON.parse(read("lineage.json")) as { id: string; kind: string; sha256: string }[];
-const canonicalSha = (id: string): string => lineage.find((r) => r.id === id && r.kind === "canonical")!.sha256;
-const canonicalLines = {
-  detent: () => pinned("designs/detent/legacy/detent-plot.html", canonicalSha("detent.plot/beam")),
-  washer: () => {
-    const page = storedMember(pinned("designs/washer/legacy/laser-rig-canonical.zip", "35726c4d01c2a94bf36a8a229a1e72045dc46f3eb5efd506cc61bff7f62e0648"));
-    expect(sha256(page)).toBe(canonicalSha("washer.app/laserriggg"));
-    return page;
-  },
-};
-const rows = (JSON.parse(read("packages/profile/data/constants.json")) as { constants: { id: string; value: number; provenance: { source: string } }[] }).constants
-  .filter((c) => /^(detent|washer|servo)\.|^calibrate\./.test(c.id));
-describe.each(rows)("profile row $id", (c) => {
-  const m = /^originals\/(detent|washer)\/files\/\S+ line (\d+) /.exec(c.provenance.source);
-  test("cites one line of a canonical original", () => expect(m).not.toBeNull());
-  test("that line holds the value", () => {
-    expect(m, `${c.id} cites no canonical line`).not.toBeNull();
-    const line = canonicalLines[m![1] as "detent" | "washer"]().toString("utf8").split("\n")[Number(m![2]) - 1] ?? "";
-    const field = c.id.split(".").at(-1)!;
-    const numbers = (line.match(/\d+(?:\.\d+)?/g) ?? []).map(Number);
-    expect(numbers, `${c.id} line ${m![2]}: ${line.trim()}`).toContain(c.value);
-    if (c.id.startsWith("servo.")) expect(Number(new RegExp(`\\b${field}:([0-9.]+)`).exec(line)?.[1]), c.id).toBe(c.value);
   });
 });

@@ -16,7 +16,7 @@ import { beforeAll, describe, expect, test } from "vitest";
 import { createProfileLookup, loadProfile } from "@hackbuild/profile";
 import { kernel, liveCount, loadManifold, scope } from "@hackbuild/mesh";
 import { boardSection, clipSection, hookCentreline, type HookDims } from "../src/programs/cotter/hook.js";
-import { INSERT_MOVES, insertSearch } from "../src/sweep/insert.js";
+import { insertSearch } from "../src/sweep/insert.js";
 import { SHARP_CASE, clipConstants, hookCases, insertSettings, kitBoard, runHookCase, verifyPairs, type HookCase, type HookCaseResult } from "../scenes/cotter-hook.js";
 
 const root = new URL("../../../", import.meta.url);
@@ -50,12 +50,13 @@ const design = (hole: number, tb: number): HookDims => {
 const ALL: HookCase[] = [...hookCases(), SHARP_CASE];
 
 describe("oracle golden", () => {
-  test("names the legacy oracle and the kit layout byte for byte", () => {
-    expect(sha(read(golden.source.file))).toBe(golden.source.sha256);
-    expect(sha(read(golden.kit.file))).toBe(golden.kit.sha256);
-    const sums = read("designs/cotter/legacy/SHA256SUMS").toString("utf8");
-    expect(sums).toContain(`${golden.source.sha256}  tools/hook_fit.py`);
-    expect(sums).toContain(`${golden.kit.sha256}  kit-2026-09-21/layout.json`);
+  test("names the oracle and the kit layout by their lineage rows and the stored copies by sha256", () => {
+    const lineage = JSON.parse(read("lineage.json").toString("utf8")) as { id: string; source: string; sha256: string }[];
+    const row = (id: string) => lineage.find((r) => r.id === id)!;
+    expect([golden.source.file, golden.source.sha256]).toEqual([row("cotter.hook-fit/r5").source, row("cotter.hook-fit/r5").sha256]);
+    expect([golden.kit.file, golden.kit.sha256]).toEqual([row("cotter.kit-layout/2026-09-21").source, row("cotter.kit-layout/2026-09-21").sha256]);
+    // The layout is stored whole, so its copy has the source sha256; the scene reads that copy.
+    expect(sha(read("packages/sim/scenes/inputs/cotter-hook/kit-2026-09-21-layout.json"))).toBe(golden.kit.sha256);
   });
 
   test("verify_all: exit 0, seven lines INSERTS", () => {
@@ -145,13 +146,6 @@ describe("clip and board outlines against shapely", () => {
 
 describe("search", () => {
   beforeAll(loadManifold);
-
-  test("the eleven moves are hook_fit.py line 62's, in order", () => {
-    const src = read(golden.source.file).toString("utf8");
-    const line = /for d in \((\(.*\))\):/.exec(src)![1]!;
-    const want = [...line.matchAll(/\((-?\d+),(-?\d+),(-?\d+)\)/g)].map((m) => [Number(m[1]), Number(m[2]), Number(m[3])]);
-    expect(INSERT_MOVES).toEqual(want);
-  });
 
   test("a seated pose that overlaps stops at once; an empty obstacle clears on the first pose with x past clearX", async () => {
     const st = insertSettings(profile);

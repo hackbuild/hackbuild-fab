@@ -1,8 +1,8 @@
 """The AC1024 skeleton of nest's DXF writer (M07-T06 step 1, D-138).
 
 COTTER kept the header, tables, blocks and objects of its laser DXF as an
-ezdxf-made skeleton (designs/cotter/legacy/dxf_template.json, lineage
-cotter.dxf-template/r5) and poured closed LWPOLYLINEs into ENTITIES; the
+ezdxf-made skeleton (originals/cotter/files/cotter-src/assets/dxf_template.json,
+lineage cotter.dxf-template/r5) and poured closed LWPOLYLINEs into ENTITIES; the
 script that made it did not ship. This one writes the same kind of skeleton
 with ezdxf.new("R2010", units=4): a LAYER table of ENGRAVE, SCORE,
 CUT_INNER, CUT and LIGHT, $INSUNITS 4, $MEASUREMENT 1, an empty ENTITIES

@@ -1,12 +1,12 @@
 // M07-T11 step 6a: the STIPPLE R17b write schedule as Motion IR, the
-// second CHK-MOT-04 and CHK-MOT-06 fixture. Inputs are the legacy copies
-// in designs/stipple/legacy (sha256 checked against SHA256SUMS). Expected
-// sets are the page's own pattern lines, read from the page and evaluated
-// here, and the placement check counts are the page's boot chip as the
-// STIPPLE record measured it headless on 2026-10-05 ("22 placement checks
-// pass", knowledge/designs/stipple.md section 1.2).
+// second CHK-MOT-04 and CHK-MOT-06 fixture. Inputs are the DATA lines of
+// the two pages stored in packages/motion/inputs/stipple (sha256 checked by
+// tools/test-support/stored-inputs.test.ts). Expected sets are the page's
+// own pattern lines (stipple-originals.test.ts reads them from the page),
+// and the placement check counts are the page's boot chip as the STIPPLE
+// record measured it headless on 2026-10-05 ("22 placement checks pass",
+// knowledge/designs/stipple.md section 1.2).
 
-import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { describe, expect, test } from "vitest";
 import {
@@ -14,25 +14,16 @@ import {
 } from "@hackbuild/motion";
 
 const root = new URL("../../../", import.meta.url);
-const LEGACY = "designs/stipple/legacy/";
+const INPUTS = "packages/motion/inputs/stipple/";
 const bytes = (p: string): Buffer => readFileSync(new URL(p, root));
-const page = bytes(`${LEGACY}stipple-r17b.html`).toString("utf8");
-const lines = page.split("\n");
-const K = stippleKinematics(readStippleParams(page), "stipple-r17b");
-const K17 = stippleKinematics(readStippleParams(bytes(`${LEGACY}stipple-r17.html`).toString("utf8")), "stipple-r17");
+const K = stippleKinematics(readStippleParams(bytes(`${INPUTS}stipple-r17b-DATA.txt`).toString("utf8")), "stipple-r17b");
+const K17 = stippleKinematics(readStippleParams(bytes(`${INPUTS}stipple-r17-DATA.txt`).toString("utf8")), "stipple-r17");
 const M = latchMachine(K.latch);
 const last = (id: Parameters<typeof stippleProgram>[1], args?: Record<string, number>): string[] =>
   latchedCells(runProgram(M, stippleProgram(K, id, args)).result.states.at(-1)!);
 const cellsOf = (g: number[][]): string[] => g.flatMap((r, i) => r.flatMap((v, j) => (v ? [`${i},${j}`] : [])));
 
-describe("the legacy copies", () => {
-  test("match SHA256SUMS", () => {
-    for (const row of bytes(`${LEGACY}SHA256SUMS`).toString("utf8").trim().split("\n")) {
-      const [h, f] = row.split(/\s+/);
-      expect(createHash("sha256").update(bytes(`${LEGACY}${f}`)).digest("hex"), f).toBe(h);
-    }
-  });
-
+describe("the stored DATA lines", () => {
   test("DATA.P reads N 10, STROKE 5.0, R_LATCH 4.5 on R17b and STROKE 4.8 on R17", () => {
     expect([K.N, K.P.STROKE, K.P.R_LATCH, K.P.FACE2_TOP]).toEqual([10, 5, 4.5, 78.5]);
     expect([K17.P.STROKE, K17.P.R_LATCH, K17.P.FACE2_TOP]).toEqual([4.8, 4.2, undefined]);
@@ -40,9 +31,7 @@ describe("the legacy copies", () => {
 });
 
 describe("write schedule (computed)", () => {
-  test("the patterns are the page's lines 461 and 542", () => {
-    expect(lines[460]).toContain("g[i][j] = ((i*j + i + j) % 3 === 0) ? 1 : 0;");
-    expect(lines[541]).toContain("g[i][j] = ((i+j+k) % 2 === 0) ? 1 : 0;");
+  test("the patterns are the page's lines 461 and 542, as stipple-originals.test.ts reads them", () => {
     const want = (f: (i: number, j: number) => boolean): string[] => [...Array(100).keys()].filter((k) => f(Math.floor(k / 10), k % 10)).map((k) => `${Math.floor(k / 10)},${k % 10}`);
     expect(cellsOf(stipplePattern(K, "checker"))).toEqual(want((i, j) => (i + j + 1) % 2 === 0));
     expect(cellsOf(stipplePattern(K, "rowWrite"))).toEqual(want((i, j) => (i * j + i + j) % 3 === 0));

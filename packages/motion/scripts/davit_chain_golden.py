@@ -1,5 +1,6 @@
 """Writes packages/motion/test/goldens/davit-chain.json: assembly.py chain()
-(designs/davit/legacy, lineage row davit.assembly) for the four presets, each
+(fab-knowledge:originals/davit/files/src/assembly.py, lineage row
+davit.assembly/r3, read through tools/py/hbf_archives.py) for the four presets, each
 model, pipe and arm. Run from the repo root:
   uv run --project tools/py python packages/motion/scripts/davit_chain_golden.py
 The TypeScript chain is compared with this file in test/davit-chain.test.ts.
@@ -10,8 +11,12 @@ from pathlib import Path
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[3]
-LEGACY = ROOT / "designs" / "davit" / "legacy"
-sys.path.insert(0, str(LEGACY))
+sys.path.insert(0, str(ROOT / "tools" / "py"))
+from hbf_archives import local_source  # noqa: E402
+
+SOURCE = "fab-knowledge:originals/davit/files/src/assembly.py"
+ASSEMBLY = Path(local_source(SOURCE))
+sys.path.insert(0, str(ASSEMBLY.parent))
 from assembly import chain  # noqa: E402
 
 XF = {"std": {"1in": 59.9, "125in": 64.3, "15in": 67.35}, "mini": {"1in": 48.7, "125in": 53.1, "15in": 56.15}}
@@ -33,7 +38,7 @@ for model in ("std", "mini"):
                     links={k: v.reshape(-1).tolist() for k, v in links.items()},
                     hw=[h[1].reshape(-1).tolist() for h in hw],
                 ))
-out = dict(source="designs/davit/legacy/assembly.py chain()", assemblySha256=hashlib.sha256((LEGACY / "assembly.py").read_bytes()).hexdigest(),
+out = dict(source=f"{SOURCE} chain()", assemblySha256=hashlib.sha256(ASSEMBLY.read_bytes()).hexdigest(),
            numpy=np.__version__, cases=cases)
 path = ROOT / "packages" / "motion" / "test" / "goldens" / "davit-chain.json"
 path.write_text(json.dumps(out) + "\n")

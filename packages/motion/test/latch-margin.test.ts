@@ -1,6 +1,6 @@
 // The latch release margin, read from the pages that type it inline: OGEE
-// viewer_template.html lines 395, 417 and 421 and STIPPLE stipple-r17b.html
-// line 154. Each machine's latch must release at CAM plus that margin and
+// viewer_template.html lines 395, 417 and 421 here and STIPPLE
+// stipple-r17b.html line 154 in stipple-originals.test.ts. Each machine's latch must release at CAM plus that margin and
 // not a hair before, and OGEE must catch only inside it (M07 audit: the
 // number stood in five places across two kinematics files).
 
@@ -19,7 +19,6 @@ describe("LATCH_RELEASE_MARGIN_MM", () => {
     expect(literal(lineOf(ogee, 395), /lp>=CAM\+([0-9.]+)/)).toBe(LATCH_RELEASE_MARGIN_MM);
     expect(literal(lineOf(ogee, 417), /lp<([0-9.]+)/)).toBe(LATCH_RELEASE_MARGIN_MM);
     expect(literal(lineOf(ogee, 421), /lp>=CAM\+([0-9.]+)/)).toBe(LATCH_RELEASE_MARGIN_MM);
-    expect(literal(lineOf("designs/stipple/legacy/stipple-r17b.html", 154), /lp >= CAM \+ ([0-9.]+)/)).toBe(LATCH_RELEASE_MARGIN_MM);
   });
 
   const eps = 1e-9;
@@ -32,7 +31,7 @@ describe("LATCH_RELEASE_MARGIN_MM", () => {
   });
 
   test("STIPPLE R17b releases at CAM plus the margin", () => {
-    const l = stippleKinematics(readStippleParams(read("designs/stipple/legacy/stipple-r17b.html")), "stipple-r17b").latch;
+    const l = stippleKinematics(readStippleParams(read("packages/motion/inputs/stipple/stipple-r17b-DATA.txt")), "stipple-r17b").latch;
     expect(l.released(l.CAM + LATCH_RELEASE_MARGIN_MM - eps)).toBe(false);
     expect(l.released(l.CAM + LATCH_RELEASE_MARGIN_MM)).toBe(true);
     expect(l.catching(l.CAM + LATCH_RELEASE_MARGIN_MM - eps)).toBe(true);

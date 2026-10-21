@@ -1,0 +1,54 @@
+{
+  "files": [
+    {
+      "path": "derrick/arm_ref.json",
+      "sha256": "54c9754a3412e88792e4139056fe4772f7f99ca4fd1fe68959a492062d771220",
+      "bytes": 1398,
+      "source": "fab-knowledge:originals/derrick/files/src/arm_ref.json",
+      "sourceSha256": "54c9754a3412e88792e4139056fe4772f7f99ca4fd1fe68959a492062d771220",
+      "lineage": "derrick.arm-ref/r3-stored"
+    },
+    {
+      "path": "derrick/arm_ref_regenerated_2026-10-05.json",
+      "sha256": "0f9715a166950ef26a95d1ccd16985d71d971e757a46985452a6bf0713c73f32",
+      "bytes": 1414,
+      "source": "fab-knowledge:originals/derrick/files/records/arm_ref_regenerated_2026-10-05.json",
+      "sourceSha256": "0f9715a166950ef26a95d1ccd16985d71d971e757a46985452a6bf0713c73f32",
+      "lineage": "derrick.arm-ref/regenerated-stored"
+    },
+    {
+      "path": "stipple/stipple-r17-DATA.txt",
+      "sha256": "0ed04b4ad4501a43612f043e97fc5616d2210c476ceecd40604beaa1e3ba39af",
+      "bytes": 131613,
+      "source": "fab-knowledge:originals/stipple/files/companions/stipple-r17.html",
+      "sourceSha256": "e1f4e1ddf366772e6658210b755e76ac7a34a61129c8bcbe2819eed9c1c67fb0",
+      "lines": [117, 117],
+      "lineage": "stipple.bench/r17-data"
+    },
+    {
+      "path": "stipple/stipple-r17b-DATA.txt",
+      "sha256": "a2a94005f6e9f8bcf1d3d8aa07cabce0f9677e253ff26ee60caa6f26490e5360",
+      "bytes": 132821,
+      "source": "fab-knowledge:originals/stipple/files/stipple-r17b.html",
+      "sourceSha256": "f4afad81c417627e84349c5f6cf6b1016e520083ce8ac631b7d71fc6c02f1767",
+      "lines": [117, 117],
+      "lineage": "stipple.kin/r17b"
+    },
+    {
+      "path": "stipple/stipple_latch.json",
+      "sha256": "8580b4405da5897f506605fa37b0c7f1e9b0bc4a37b6992168bb336006bfbd2c",
+      "bytes": 763,
+      "source": "fab-knowledge:originals/stipple/files/derived/stipple_latch.json",
+      "sourceSha256": "8580b4405da5897f506605fa37b0c7f1e9b0bc4a37b6992168bb336006bfbd2c",
+      "lineage": "stipple.latch/stored"
+    },
+    {
+      "path": "washer/plan-square-2026-10-05.json",
+      "sha256": "08404263f86d3d5f52e73327febc9e2a78d3c6400f0c7d5e9e2ea2bb9765a3b1",
+      "bytes": 981,
+      "source": "fab-knowledge:originals/washer/drive/plan-square-2026-10-05.json",
+      "sourceSha256": "08404263f86d3d5f52e73327febc9e2a78d3c6400f0c7d5e9e2ea2bb9765a3b1",
+      "lineage": "washer.app/drive-record-stored"
+    }
+  ]
+}

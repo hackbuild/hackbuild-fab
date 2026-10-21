@@ -1,6 +1,6 @@
 // M02-T06 step 10 and 11: R4 parity. Expected values come from the legacy
-// run record of sweep.py (designs/davit/legacy/r4/records), from README_R4.md
-// and from the R3 palm STL; the port under test is the sampled tier 1, the
+// run record of sweep.py (stored in packages/sim/fixtures/davit-stored),
+// from README_R4.md and from the R3 palm STL; the port under test is the sampled tier 1, the
 // exact boolean tier 2 and the Stage B masks.
 // It runs in core/test because the sweep reads every placement from
 // packages/motion through core's binding; sim may not import motion (D-139).
@@ -26,7 +26,7 @@ const meshes = davitMeshes("mini");
 const contacts = loadContacts();
 
 interface LegacyRow { a: string; b: string; pipe: PipeId; mind: number; inter: number }
-const legacyText = read("designs/davit/legacy/r4/records/davit_r4_sweep_run_2026-10-04.txt").toString("utf8");
+const legacyText = read("packages/sim/fixtures/davit-stored/davit_r4_sweep_run_2026-10-04.txt").toString("utf8");
 const legacy = JSON.parse(legacyText.slice(legacyText.indexOf("\n{\n") + 1, legacyText.lastIndexOf("\n}") + 2)) as { pairs: number; tier2: number; fails: { a: string; b: string; pipe: PipeId; inter_mm3: number }[]; close: LegacyRow[] };
 
 describe("R4 sweep.py parity, 43 pair sweeps", () => {

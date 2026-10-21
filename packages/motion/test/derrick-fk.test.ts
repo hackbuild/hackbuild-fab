@@ -3,19 +3,17 @@
 // test/goldens/derrick-fk.json (scripts/derrick_fk_golden.py runs the
 // canonical arm_build.py unedited and writes its frames, instances and
 // torque_table at the seven POSES, unrounded) and
-// designs/derrick/legacy/arm_ref_regenerated_2026-10-05.json (the same
+// arm_ref_regenerated_2026-10-05.json, stored in packages/motion/inputs/derrick (the same
 // source rerun on 2026-10-05, rounded the way arm_build.py writes
 // arm_ref.json). The shipped arm_ref.json is stale (knowledge/designs/
 // derrick.md 1.2); it is read only to show it still differs.
 
-import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { describe, expect, test } from "vitest";
 import { DERRICK_KINEMATICS, derrickKinematics, type DerrickModel } from "@hackbuild/motion";
 
 const root = new URL("../../../", import.meta.url);
 const read = (p: string): Buffer => readFileSync(new URL(p, root));
-const sha = (b: Uint8Array): string => createHash("sha256").update(b).digest("hex");
 
 interface RefPose {
   q: number[];
@@ -26,8 +24,9 @@ interface RefPose {
 }
 const golden = JSON.parse(read("packages/motion/test/goldens/derrick-fk.json").toString("utf8")) as { sha256: Record<string, string>; model: DerrickModel; ref: Record<string, RefPose> };
 type ArmRef = Record<string, { q: number[]; tool: number[]; torque: number[] }>;
-const regenerated = JSON.parse(read("designs/derrick/legacy/arm_ref_regenerated_2026-10-05.json").toString("utf8")) as ArmRef;
-const shipped = JSON.parse(read("designs/derrick/legacy/arm_ref.json").toString("utf8")) as ArmRef;
+const regenerated = JSON.parse(read("packages/motion/inputs/derrick/arm_ref_regenerated_2026-10-05.json").toString("utf8")) as ArmRef;
+const shipped = JSON.parse(read("packages/motion/inputs/derrick/arm_ref.json").toString("utf8")) as ArmRef;
+const lineage = JSON.parse(read("lineage.json").toString("utf8")) as { id: string; sha256: string }[];
 const K = derrickKinematics(golden.model);
 const POSES = ["home", "stow", "reach out", "reach up", "reach down", "twist", "elbow in"];
 
@@ -35,8 +34,8 @@ const worst = (a: readonly number[], b: readonly number[]): number => Math.max(.
 const toolOf = (m: readonly number[]): number[] => [m[3]!, m[7]!, m[11]!];
 
 describe("sources", () => {
-  test("the golden was written from the arm_build.py kept in designs/derrick/legacy", () => {
-    expect(sha(read("designs/derrick/legacy/arm_build.py"))).toBe(golden.sha256["arm_build.py"]);
+  test("the golden was written from the canonical arm_build.py (lineage derrick.build/r3)", () => {
+    expect(golden.sha256["arm_build.py"]).toBe(lineage.find((r) => r.id === "derrick.build/r3")!.sha256);
     expect(Object.keys(golden.ref)).toEqual(POSES);
     expect(Object.keys(regenerated)).toEqual(POSES);
   });

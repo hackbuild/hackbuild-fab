@@ -7,8 +7,8 @@ import type { Provenance } from "@hackbuild/spec";
 import type { PawlModel } from "../src/programs/pawl/core.js";
 import type { PawlScene } from "../src/programs/pawl/suite.js";
 
-const CORE = "designs/pawl/legacy/core.mjs (lineage pawl.core/final, sha256 d1869500a5a871ff3f0bed2f55cb0a92367fc4f112d2494222aac44e03d1f9c8)";
-const FINAL = "designs/pawl/legacy/final.mjs (sha256 e4e61a3dc9cc5aa887243f803b0f65aaf7d139adcb94f5885c4d468cddc3b671)";
+const CORE = "fab-knowledge:originals/pawl/files/src/core.mjs (lineage pawl.core/final, sha256 d1869500a5a871ff3f0bed2f55cb0a92367fc4f112d2494222aac44e03d1f9c8)";
+const FINAL = "fab-knowledge:originals/pawl/files/src/final.mjs (lineage pawl.final/sim-trials, sha256 e4e61a3dc9cc5aa887243f803b0f65aaf7d139adcb94f5885c4d468cddc3b671)";
 
 const fromCore = (lines: string): Provenance => ({ tier: "inferred", method: "derived", date: "2026-10-06", source: `${CORE} lines ${lines}` });
 

@@ -1,0 +1,142 @@
+[
+  {
+    "id": "davit.stl/r3-base",
+    "kind": "copy",
+    "source": "fab-work-directory:benches/davit/outputs/davit_stl.zip",
+    "sha256": "3a8419694f054ce6821564212d5bc35daf0892aad01645a3bdf6b17a9f2de33f",
+    "fixes": [],
+    "dest": "packages/sim/scenes/inputs/davit/r3/davit_base.stl"
+  },
+  {
+    "id": "davit.stl/r3-crank",
+    "kind": "copy",
+    "source": "fab-work-directory:benches/davit/outputs/davit_stl.zip",
+    "sha256": "3a8419694f054ce6821564212d5bc35daf0892aad01645a3bdf6b17a9f2de33f",
+    "fixes": [],
+    "dest": "packages/sim/scenes/inputs/davit/r3/davit_crank.stl"
+  },
+  {
+    "id": "davit.stl/r3-fore",
+    "kind": "copy",
+    "source": "fab-work-directory:benches/davit/outputs/davit_stl.zip",
+    "sha256": "3a8419694f054ce6821564212d5bc35daf0892aad01645a3bdf6b17a9f2de33f",
+    "fixes": [],
+    "dest": "packages/sim/scenes/inputs/davit/r3/davit_fore.stl"
+  },
+  {
+    "id": "davit.stl/r3-palm",
+    "kind": "copy",
+    "source": "fab-work-directory:benches/davit/outputs/davit_stl.zip",
+    "sha256": "3a8419694f054ce6821564212d5bc35daf0892aad01645a3bdf6b17a9f2de33f",
+    "fixes": [
+      "the R3 palm whose tab channel README_R4.md item 8 records; read by core/test/davit-r4-parity.test.ts through packages/sim/fixtures/davit-r3-grip-tab/fixture.json"
+    ],
+    "dest": "packages/sim/fixtures/davit-stored/r3/davit_palm.stl"
+  },
+  {
+    "id": "davit.stl/r3-upper",
+    "kind": "copy",
+    "source": "fab-work-directory:benches/davit/outputs/davit_stl.zip",
+    "sha256": "3a8419694f054ce6821564212d5bc35daf0892aad01645a3bdf6b17a9f2de33f",
+    "fixes": [],
+    "dest": "packages/sim/scenes/inputs/davit/r3/davit_upper.stl"
+  },
+  {
+    "id": "davit.stl/r4",
+    "kind": "canonical",
+    "source": "fab-knowledge:originals/davit/files/davit_r4.zip",
+    "sha256": "ad30781885c77bade39554e4ad427746984be38e8eb3bcaef27931cd882c8749",
+    "fixes": [
+      "the R4 print STLs (davit_r4/stl/, 11 members) are the meshes of the davit scenes; packages/sim/scenes/davit.ts reads the stored copies below, never the zip"
+    ],
+    "dest": null
+  },
+  {
+    "id": "davit.stl/r4-jaw-drive",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/davit/files/davit_r4.zip",
+    "sha256": "ad30781885c77bade39554e4ad427746984be38e8eb3bcaef27931cd882c8749",
+    "fixes": [],
+    "dest": "packages/sim/scenes/inputs/davit/r4/davit_jaw_drive.stl"
+  },
+  {
+    "id": "davit.stl/r4-jaw-idle",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/davit/files/davit_r4.zip",
+    "sha256": "ad30781885c77bade39554e4ad427746984be38e8eb3bcaef27931cd882c8749",
+    "fixes": [],
+    "dest": "packages/sim/scenes/inputs/davit/r4/davit_jaw_idle.stl"
+  },
+  {
+    "id": "davit.stl/r4-mini-base",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/davit/files/davit_r4.zip",
+    "sha256": "ad30781885c77bade39554e4ad427746984be38e8eb3bcaef27931cd882c8749",
+    "fixes": [],
+    "dest": "packages/sim/scenes/inputs/davit/r4/davit_mini_base.stl"
+  },
+  {
+    "id": "davit.stl/r4-mini-crank",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/davit/files/davit_r4.zip",
+    "sha256": "ad30781885c77bade39554e4ad427746984be38e8eb3bcaef27931cd882c8749",
+    "fixes": [],
+    "dest": "packages/sim/scenes/inputs/davit/r4/davit_mini_crank.stl"
+  },
+  {
+    "id": "davit.stl/r4-mini-fore",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/davit/files/davit_r4.zip",
+    "sha256": "ad30781885c77bade39554e4ad427746984be38e8eb3bcaef27931cd882c8749",
+    "fixes": [],
+    "dest": "packages/sim/scenes/inputs/davit/r4/davit_mini_fore.stl"
+  },
+  {
+    "id": "davit.stl/r4-mini-upper",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/davit/files/davit_r4.zip",
+    "sha256": "ad30781885c77bade39554e4ad427746984be38e8eb3bcaef27931cd882c8749",
+    "fixes": [],
+    "dest": "packages/sim/scenes/inputs/davit/r4/davit_mini_upper.stl"
+  },
+  {
+    "id": "davit.stl/r4-mount-125in",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/davit/files/davit_r4.zip",
+    "sha256": "ad30781885c77bade39554e4ad427746984be38e8eb3bcaef27931cd882c8749",
+    "fixes": [],
+    "dest": "packages/sim/scenes/inputs/davit/r4/davit_mount_125in.stl"
+  },
+  {
+    "id": "davit.stl/r4-mount-15in",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/davit/files/davit_r4.zip",
+    "sha256": "ad30781885c77bade39554e4ad427746984be38e8eb3bcaef27931cd882c8749",
+    "fixes": [],
+    "dest": "packages/sim/scenes/inputs/davit/r4/davit_mount_15in.stl"
+  },
+  {
+    "id": "davit.stl/r4-mount-1in",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/davit/files/davit_r4.zip",
+    "sha256": "ad30781885c77bade39554e4ad427746984be38e8eb3bcaef27931cd882c8749",
+    "fixes": [],
+    "dest": "packages/sim/scenes/inputs/davit/r4/davit_mount_1in.stl"
+  },
+  {
+    "id": "davit.stl/r4-palm",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/davit/files/davit_r4.zip",
+    "sha256": "ad30781885c77bade39554e4ad427746984be38e8eb3bcaef27931cd882c8749",
+    "fixes": [],
+    "dest": "packages/sim/scenes/inputs/davit/r4/davit_palm.stl"
+  },
+  {
+    "id": "davit.stl/r4-pincap",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/davit/files/davit_r4.zip",
+    "sha256": "ad30781885c77bade39554e4ad427746984be38e8eb3bcaef27931cd882c8749",
+    "fixes": [],
+    "dest": "packages/sim/scenes/inputs/davit/r4/davit_pincap.stl"
+  }
+]

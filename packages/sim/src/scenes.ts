@@ -23,7 +23,7 @@
 import { canonicalize, commandError, didYouMean, sha256Hex, type Hash, type TrialResult } from "@hackbuild/spec";
 import { applyPoint, type BindKinematics, type DavitPose, type Mat4, type SceneKinematics } from "./place.js";
 import { collide, pairKey, type Contact, type MaskMap, type PosedBody } from "./proxy/collide.js";
-import { extractData, type DavitData, type Proxy } from "./proxy/decode.js";
+import type { DavitData, Proxy } from "./proxy/decode.js";
 import type { PrismaticLaneResult } from "./sweep/prismatic.js";
 import type { InsertPose } from "./sweep/insert.js";
 import type { HookDims } from "./programs/cotter/hook.js";
@@ -380,6 +380,8 @@ interface DavitModule {
   readonly SIDES: readonly Side[];
   davitBodies(model: DavitModel, pipe: string, pose: Readonly<Record<Side, DavitPose>>): PosedBody[];
   stageA(data: DavitData, model: DavitModel, pipe: string): { proxies: Map<string, Proxy>; masks: MaskMap };
+  /** DATA of the R3 page, read from the scene's stored inputs. */
+  davitData(rev: "r3"): DavitData;
   gatedPoseSet(): DavitPose[];
   poseTuple(p: DavitPose): number[];
   sweepPoses(o: {
@@ -407,7 +409,7 @@ async function davitSetup(id: string, deps: SceneDeps): Promise<DavitSetup> {
   if (!def.assembly) schema("/scene", id, "a DAVIT scene (davit-<std|mini>-<pipe>)", `${id} has no placed assembly; asm.solve and part.probe place the davit scenes`);
   const m = await load<DavitModule>(deps, "davit.ts");
   let data = davitData.get(deps);
-  if (data === undefined) davitData.set(deps, (data = extractData(deps.readText("designs/davit/legacy/davit.html"))));
+  if (data === undefined) davitData.set(deps, (data = m.davitData("r3")));
   // Scene ids are davit-<model>-<pipe>; SIM_SCENES registers no other assembly scene.
   const [, model, pipe] = id.split("-") as [string, DavitModel, string];
   const { proxies, masks } = m.stageA(data, model, pipe);

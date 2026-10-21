@@ -1,8 +1,9 @@
 """Writes packages/sim/test/goldens/cotter-insert-oracle.json: what the COTTER
-insertion proof (designs/cotter/legacy/tools/hook_fit.py, lineage
-cotter.hook-fit/r5) says about the M02-T09 cases, run unedited.
+insertion proof (fab-knowledge:originals/cotter/files/cotter-src/tools/hook_fit.py,
+lineage cotter.hook-fit/r5) says about the M02-T09 cases, run unedited.
 
-The legacy file is imported, never changed. Its own `verify_all` runs first
+The original is imported from the originals archive (tools/py/hbf_archives.py,
+HBF_ORIGINALS), never changed. Its own `verify_all` runs first
 with stdout captured; `design_full` and `search` are wrapped only to record
 the seven (hole, board) pairs it passes, so the case list comes from the
 oracle and is typed nowhere here. `heapq.heappop` inside the module is
@@ -10,7 +11,7 @@ wrapped to record each popped state (tilt step, x step, y step), which gives
 the oracle's search path and its clearing pose. Two more cases follow:
 
   kit    hole and board of COTTER's first kit,
-         designs/cotter/legacy/kit-2026-09-21/layout.json state.board
+         layout.json state.board (lineage cotter.kit-layout/2026-09-21)
   sharp  hole 6.35, board 6.35, rod 5.40, Rb 6.0, sweep 52, the clip_poly
          defaults otherwise (M02-sim.md records, "TRAPPED, max tilt 12 deg")
 
@@ -23,11 +24,16 @@ from importlib.metadata import version
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
-LEGACY = ROOT / "designs/cotter/legacy"
-KIT = LEGACY / "kit-2026-09-21/layout.json"
+sys.path.insert(0, str(ROOT / "tools/py"))
+from hbf_archives import local_source  # noqa: E402
+
+HOOK_FIT = "fab-knowledge:originals/cotter/files/cotter-src/tools/hook_fit.py"
+KIT_SOURCE = "fab-knowledge:evidence/x/downloads/dl-pip-latest/cotter/unzipped/cotter-kit_today_2026-09-21/layout.json"
+HOOK = Path(local_source(HOOK_FIT))
+KIT = Path(local_source(KIT_SOURCE))
 OUT = ROOT / "packages/sim/test/goldens/cotter-insert-oracle.json"
 
-sys.path.insert(0, str(LEGACY / "tools"))
+sys.path.insert(0, str(HOOK.parent))
 import hook_fit as hf  # noqa: E402
 from shapely import affinity  # noqa: E402
 
@@ -99,7 +105,7 @@ hf.design_full = design_full
 # 2. every case through design_full (or the sharp dims) and search, traced.
 kit = json.loads(KIT.read_text())["state"]["board"]
 cases = [{"id": f"verify-{i + 1}", "from": "hook_fit.py verify_all", "hole": h, "tb": tb} for i, (h, tb) in enumerate(pairs)]
-cases.append({"id": "kit-2026-09-21", "from": "designs/cotter/legacy/kit-2026-09-21/layout.json state.board", "hole": kit["hole"], "tb": kit["tb"]})
+cases.append({"id": "kit-2026-09-21", "from": "kit-2026-09-21 layout.json state.board (lineage cotter.kit-layout/2026-09-21)", "hole": kit["hole"], "tb": kit["tb"]})
 rows = []
 for c in cases:
     p = design_full(c["hole"], c["tb"])
@@ -129,8 +135,8 @@ for t, i, j in states:
 
 OUT.write_text(json.dumps({
     "note": "written by packages/sim/scripts/cotter_insert_oracle.py; never hand-edited",
-    "source": {"file": "designs/cotter/legacy/tools/hook_fit.py", "sha256": sha(LEGACY / "tools/hook_fit.py")},
-    "kit": {"file": "designs/cotter/legacy/kit-2026-09-21/layout.json", "sha256": sha(KIT)},
+    "source": {"file": HOOK_FIT, "sha256": sha(HOOK)},
+    "kit": {"file": KIT_SOURCE, "sha256": sha(KIT)},
     "env": {"python": platform.python_version(), "shapely": version("shapely"), "machine": platform.machine(), "system": platform.system()},
     "verify": {"exit": 0 if verify_ok else 1, "stdout": buf.getvalue()},
     "cases": rows,

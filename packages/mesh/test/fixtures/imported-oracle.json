@@ -4,7 +4,7 @@
   "qualifier": "computed",
   "rows": [
     {
-      "file": "designs/davit/legacy/stl/davit_base.stl",
+      "file": "stl/davit_base.stl",
       "sha256": "1ae16295f89f633e0dfab12b8892af05e824c2c6d6a9cc1d4b82298dfff6145b",
       "triangles": 1678,
       "trianglesAfterSnap": 1678,
@@ -15,7 +15,7 @@
       "windingConsistent": true
     },
     {
-      "file": "designs/davit/legacy/stl/davit_crank.stl",
+      "file": "stl/davit_crank.stl",
       "sha256": "511e62c05739349b725073960673543b635f80f946c3ced9f839f5eb5744d8b7",
       "triangles": 4512,
       "trianglesAfterSnap": 4512,
@@ -26,7 +26,7 @@
       "windingConsistent": true
     },
     {
-      "file": "designs/davit/legacy/stl/davit_fore.stl",
+      "file": "stl/davit_fore.stl",
       "sha256": "765a9c6fb5b94f2327af74e4516ff437b18a120cc03bc80026265a04472df743",
       "triangles": 3982,
       "trianglesAfterSnap": 3982,
@@ -37,7 +37,7 @@
       "windingConsistent": true
     },
     {
-      "file": "designs/davit/legacy/stl/davit_jaw_drive.stl",
+      "file": "stl/davit_jaw_drive.stl",
       "sha256": "9f3ae1aed62ea6f5881cb4afe6a6759a72062cc1c7673b63c5e991f8db9de01f",
       "triangles": 1298,
       "trianglesAfterSnap": 1298,
@@ -48,7 +48,7 @@
       "windingConsistent": true
     },
     {
-      "file": "designs/davit/legacy/stl/davit_jaw_idle.stl",
+      "file": "stl/davit_jaw_idle.stl",
       "sha256": "46000deb0f01f4bcafbf2b914ccf9e31c7be5d2c9baf69fd0579fa16c49b18b2",
       "triangles": 780,
       "trianglesAfterSnap": 774,
@@ -59,7 +59,7 @@
       "windingConsistent": true
     },
     {
-      "file": "designs/davit/legacy/stl/davit_mini_base.stl",
+      "file": "stl/davit_mini_base.stl",
       "sha256": "541cc1333d29bd8dbf6892f1d5934157c9ada53dba5a968dc74af4a32997584b",
       "triangles": 1150,
       "trianglesAfterSnap": 1150,
@@ -70,7 +70,7 @@
       "windingConsistent": true
     },
     {
-      "file": "designs/davit/legacy/stl/davit_mini_crank.stl",
+      "file": "stl/davit_mini_crank.stl",
       "sha256": "1bcf7c9399d7c7599f8d3d9137fe39f99bb51a1ff88062036d82d26f7356a8cc",
       "triangles": 3460,
       "trianglesAfterSnap": 3460,
@@ -81,7 +81,7 @@
       "windingConsistent": true
     },
     {
-      "file": "designs/davit/legacy/stl/davit_mini_fore.stl",
+      "file": "stl/davit_mini_fore.stl",
       "sha256": "430efa83704f5ed8301a1eebd7e40cd4a4176d972ffb3927560136f739944dcd",
       "triangles": 4424,
       "trianglesAfterSnap": 4424,
@@ -92,7 +92,7 @@
       "windingConsistent": true
     },
     {
-      "file": "designs/davit/legacy/stl/davit_mini_upper.stl",
+      "file": "stl/davit_mini_upper.stl",
       "sha256": "0921530877686faf529c36d03af1ff31f89d48e4a3ab0685d1469b3d7bd846e8",
       "triangles": 3904,
       "trianglesAfterSnap": 3904,
@@ -103,7 +103,7 @@
       "windingConsistent": true
     },
     {
-      "file": "designs/davit/legacy/stl/davit_mount_125in.stl",
+      "file": "stl/davit_mount_125in.stl",
       "sha256": "c7f186aabfc8330d11312e8594f6fa9e557308408bb75fd630424f30e152c92b",
       "triangles": 3940,
       "trianglesAfterSnap": 3940,
@@ -114,7 +114,7 @@
       "windingConsistent": true
     },
     {
-      "file": "designs/davit/legacy/stl/davit_mount_15in.stl",
+      "file": "stl/davit_mount_15in.stl",
       "sha256": "e50250848890ae84d0c89372d34c28bf3c3e526ca25e13916bd8f5c3e9ebdeae",
       "triangles": 3890,
       "trianglesAfterSnap": 3890,
@@ -125,7 +125,7 @@
       "windingConsistent": true
     },
     {
-      "file": "designs/davit/legacy/stl/davit_mount_1in.stl",
+      "file": "stl/davit_mount_1in.stl",
       "sha256": "6195157c9186b100e0c9f0aaa9dfb15fafd86a38c620066fc4f20be5ea284017",
       "triangles": 3974,
       "trianglesAfterSnap": 3974,
@@ -136,7 +136,7 @@
       "windingConsistent": true
     },
     {
-      "file": "designs/davit/legacy/stl/davit_palm.stl",
+      "file": "stl/davit_palm.stl",
       "sha256": "76c4d76b9619c16213976157eaf88efd305543ede0e4ecd5272663915470846c",
       "triangles": 3392,
       "trianglesAfterSnap": 3392,
@@ -147,7 +147,7 @@
       "windingConsistent": true
     },
     {
-      "file": "designs/davit/legacy/stl/davit_pincap.stl",
+      "file": "stl/davit_pincap.stl",
       "sha256": "68bdabf5b8dc697c374a811d261e2f8ed4573484b606ee9b148f02823bf365f9",
       "triangles": 512,
       "trianglesAfterSnap": 512,
@@ -158,7 +158,7 @@
       "windingConsistent": true
     },
     {
-      "file": "designs/davit/legacy/stl/davit_upper.stl",
+      "file": "stl/davit_upper.stl",
       "sha256": "cabd780bed5b3c3ae0371a239b8c61414472c6d5a2df3cf581eaeff58430773e",
       "triangles": 3996,
       "trianglesAfterSnap": 3996,

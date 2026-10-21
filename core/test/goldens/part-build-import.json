@@ -271,7 +271,7 @@
       }
     },
     {
-      "file": "designs/davit/legacy/stl/davit_pincap.stl",
+      "file": "packages/sim/scenes/inputs/davit/r4/davit_pincap.stl",
       "exit": 0,
       "verdict": "pass",
       "stage": "done",

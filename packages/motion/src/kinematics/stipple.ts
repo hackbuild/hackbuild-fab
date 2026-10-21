@@ -28,7 +28,7 @@ import { LATCH_RELEASE_MARGIN_MM, type CoincidenceLatch } from "../latch.js";
 export function readStippleParams(html: string): Readonly<Record<string, number>> {
   const at = html.indexOf("const DATA=");
   if (at < 0) {
-    throw commandError({ code: "E_REF", path: "/DATA", got: null, expected: "a STIPPLE page with `const DATA=` on line 117", hint: "pass designs/stipple/legacy/stipple-r17b.html or stipple-r17.html", record: "motion-latch" });
+    throw commandError({ code: "E_REF", path: "/DATA", got: null, expected: "a STIPPLE page with `const DATA=` on line 117", hint: "pass stipple-r17b.html or stipple-r17.html, or their line 117 stored in packages/motion/inputs/stipple", record: "motion-latch" });
   }
   const from = at + "const DATA=".length;
   let depth = 0, str = false, end = -1;

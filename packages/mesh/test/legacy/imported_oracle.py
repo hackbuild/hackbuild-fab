@@ -1,7 +1,8 @@
 """Independent oracle for packages/mesh/test/imported.test.ts (M02-T02).
 
-Reads the 15 DAVIT R3 STLs in designs/davit/legacy/stl/ and the rp2040
-standin fixture with trimesh 5.1.1 (tools/py pin), unwelded and unsnapped,
+Reads the 15 DAVIT R3 STLs, the stl/ members of the R3 STL zip
+(fab-work-directory:benches/davit/outputs/davit_stl.zip, lineage davit.stl,
+through tools/py/hbf_archives.py), and the rp2040 standin fixture with trimesh 5.1.1 (tools/py pin), unwelded and unsnapped,
 and writes packages/mesh/test/fixtures/imported-oracle.json: per file the
 sha256, the triangle count, the signed volume and the surface area in
 float64 over the float32 coordinates, and whether trimesh finds the mesh
@@ -14,16 +15,24 @@ Run from the repo root:
   uv run --project tools/py python packages/mesh/test/legacy/imported_oracle.py
 """
 import hashlib
+import io
 import json
 import pathlib
+import sys
+import zipfile
 
 import numpy as np
 import trimesh
 
 ROOT = pathlib.Path(__file__).resolve().parents[4]
-SOURCES = sorted((ROOT / "designs/davit/legacy/stl").glob("*.stl")) + [
-    ROOT / "packages/mesh/test/fixtures/board-rp2040-pizero-standin.stl"
-]
+sys.path.insert(0, str(ROOT / "tools/py"))
+from hbf_archives import local_source  # noqa: E402
+
+R3_ZIP = "fab-work-directory:benches/davit/outputs/davit_stl.zip"
+with zipfile.ZipFile(local_source(R3_ZIP)) as z:
+    SOURCES = [(n, z.read(n)) for n in sorted(z.namelist()) if n.startswith("stl/") and n.endswith(".stl")]
+STANDIN = "packages/mesh/test/fixtures/board-rp2040-pizero-standin.stl"
+SOURCES.append((STANDIN, (ROOT / STANDIN).read_bytes()))
 OUT = ROOT / "packages/mesh/test/fixtures/imported-oracle.json"
 
 def distinct_after_snap(mesh):
@@ -43,12 +52,11 @@ def watertight_after_snap(mesh):
 
 
 rows = []
-for path in SOURCES:
-    data = path.read_bytes()
-    soup = trimesh.load_mesh(str(path), process=False)
-    merged = trimesh.load_mesh(str(path), process=True)
+for name, data in SOURCES:
+    soup = trimesh.load_mesh(io.BytesIO(data), file_type="stl", process=False)
+    merged = trimesh.load_mesh(io.BytesIO(data), file_type="stl", process=True)
     rows.append({
-        "file": str(path.relative_to(ROOT)),
+        "file": name,
         "sha256": hashlib.sha256(data).hexdigest(),
         "triangles": int(len(soup.faces)),
         "trianglesAfterSnap": distinct_after_snap(soup),

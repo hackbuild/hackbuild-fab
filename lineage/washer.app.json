@@ -1,5 +1,15 @@
 [
   {
+    "id": "washer.app/drive-record-stored",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/washer/drive/plan-square-2026-10-05.json",
+    "sha256": "08404263f86d3d5f52e73327febc9e2a78d3c6400f0c7d5e9e2ea2bb9765a3b1",
+    "fixes": [
+      "the canonical drive record of the 60 mm square at the canonical defaults, stored whole; packages/motion/test/planners.test.ts holds the profile defaults to it"
+    ],
+    "dest": "packages/motion/inputs/washer/plan-square-2026-10-05.json"
+  },
+  {
     "id": "washer.app/harvest",
     "kind": "copy",
     "source": "fab-knowledge:originals/washer/files/history/laser-rig-2026-07-30-harvest.html",

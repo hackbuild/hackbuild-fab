@@ -92,9 +92,13 @@ async function run(record) {
 function legacy(dir) {
   const rapier = JSON.parse(readFileSync(join(dir, "node_modules", "@dimforge", "rapier3d-compat", "package.json"), "utf8"));
   if (rapier.version !== "0.14.0") throw new Error(`legacy pin is ${rapier.version}; install @dimforge/rapier3d-compat@0.14.0 with npm i --no-save`);
-  for (const f of ["final.mjs", "core.mjs"]) {
-    const a = sha256(readFileSync(join(dir, f))), b = sha256(readFileSync(join(root, "designs", "pawl", "legacy", f)));
-    if (a !== b) throw new Error(`${f} in ${dir} differs from designs/pawl/legacy/${f}`);
+  // The pinned sha256 of each file is its lineage row's (pawl.final/sim-trials, pawl.core/final), the originals of record.
+  const lineage = JSON.parse(readFileSync(join(root, "lineage.json"), "utf8"));
+  for (const [f, id] of [["final.mjs", "pawl.final/sim-trials"], ["core.mjs", "pawl.core/final"]]) {
+    const row = lineage.find((r) => r.id === id);
+    if (row === undefined) throw new Error(`lineage.json has no row ${id}`);
+    const a = sha256(readFileSync(join(dir, f)));
+    if (a !== row.sha256) throw new Error(`${f} in ${dir} differs from ${row.source} (lineage ${id})`);
   }
   const t0 = Date.now();
   const r = spawnSync(process.execPath, ["final.mjs"], { cwd: dir, encoding: "utf8" });

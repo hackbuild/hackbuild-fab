@@ -1,11 +1,11 @@
 {
  "note": "written by packages/sim/scripts/cotter_insert_oracle.py; never hand-edited",
  "source": {
-  "file": "designs/cotter/legacy/tools/hook_fit.py",
+  "file": "fab-knowledge:originals/cotter/files/cotter-src/tools/hook_fit.py",
   "sha256": "adb0f875c932e268726076e5b5bd4b857fa06fec9f0d6bcf3ad883b4f31739cd"
  },
  "kit": {
-  "file": "designs/cotter/legacy/kit-2026-09-21/layout.json",
+  "file": "fab-knowledge:evidence/x/downloads/dl-pip-latest/cotter/unzipped/cotter-kit_today_2026-09-21/layout.json",
   "sha256": "586052524bc09a8a4641e7aea0e5dc5b451c34e6a14f641a924d62051c9f65c0"
  },
  "env": {
@@ -3845,7 +3845,7 @@
   },
   {
    "id": "kit-2026-09-21",
-   "from": "designs/cotter/legacy/kit-2026-09-21/layout.json state.board",
+   "from": "kit-2026-09-21 layout.json state.board (lineage cotter.kit-layout/2026-09-21)",
    "hole": 6.35,
    "tb": 4.1,
    "dims": {

@@ -1,34 +1,34 @@
-// M02-T02: the imported mesh route (D-053, D-054, D-102). Every DAVIT R3
-// STL in designs/davit/legacy/stl imports as a welded, hashed body with
-// positive volume; an inverted body is E_KERNEL naming the file.
+// M02-T02: the imported mesh route (D-053, D-054, D-102). An inverted body
+// is E_KERNEL naming the file; the reader and the stage runner take the
+// DAVIT pincap. imported-davit.test.ts imports all 15 DAVIT R3 STLs.
 //
 // Independent sources: the triangle count, signed volume, area and
 // watertightness come from trimesh (fixtures/imported-oracle.json, written
-// by legacy/imported_oracle.py); the file bytes are tied to the legacy copy
-// by designs/davit/legacy/SHA256SUMS. The meshHash values in
-// fixtures/imported-meshhash.json are regression pins of this port
-// (computed 2026-10-06); meshHash takes no clock or git input.
+// by legacy/imported_oracle.py from the R3 STL zip, rows named by member).
+// The crank and pincap are read from the davit scene's stored inputs
+// (packages/sim/scenes/inputs), byte identical to those members: the
+// sha256 is checked against the oracle row here.
 
-import { readFileSync, readdirSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import { createHash } from "node:crypto";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 import type { BodyDraft, PartDraft } from "@hackbuild/spec";
 import { createProfileLookup, loadProfile } from "@hackbuild/profile";
 import {
-  IMPORTED_ROUTE, MESH_ROUTE_DEFS, importStl, isWatertight, liveCount, readStl, runStages, signedVolume, stlEncoding,
+  IMPORTED_ROUTE, MESH_ROUTE_DEFS, importStl, liveCount, readStl, runStages, stlEncoding,
 } from "../src/index.js";
 
 const root = fileURLToPath(new URL("../../../", import.meta.url));
-const STL_DIR = "designs/davit/legacy/stl/";
+/** A stored copy of an R3 STL zip member, held to the oracle row's sha256. */
+const stored = (rel: string, member: string): Uint8Array => {
+  const b = new Uint8Array(readFileSync(`${root}packages/sim/scenes/inputs/davit/${rel}`));
+  expect(sha(b), `${rel} is ${member}`).toBe(row(member).sha256);
+  return b;
+};
 const oracle = JSON.parse(readFileSync(new URL("./fixtures/imported-oracle.json", import.meta.url), "utf8")) as {
   rows: { file: string; sha256: string; triangles: number; trianglesAfterSnap: number; signedVolumeMm3: number; areaMm2: number; watertight: boolean; watertightAfterSnap: boolean }[];
 };
-const pins = JSON.parse(readFileSync(new URL("./fixtures/imported-meshhash.json", import.meta.url), "utf8")) as Record<string, string>;
-const sums = new Map(readFileSync(root + "designs/davit/legacy/SHA256SUMS", "utf8").trim().split("\n").map((l) => {
-  const [h, f] = l.split(/\s+/);
-  return [f!, h!] as const;
-}));
 const row = (file: string) => {
   const r = oracle.rows.find((x) => x.file === file);
   if (r === undefined) throw new Error(`no oracle row for ${file}`);
@@ -42,8 +42,6 @@ const sha = (b: Uint8Array) => createHash("sha256").update(b).digest("hex");
 // mm, so each vertex by at most sqrt(3)/2048 mm. To first order a surface
 // moved by e changes the enclosed volume by at most area x e (computed).
 const SNAP_MOVE_MM = Math.sqrt(3) / 2048;
-
-const davit = readdirSync(root + STL_DIR).filter((n) => n.endsWith(".stl")).sort();
 
 /** The same binary STL with vertices 2 and 3 of every facet swapped: the inside-out twin. */
 function flipped(bytes: Uint8Array): Uint8Array {
@@ -80,35 +78,10 @@ function kernelError(fn: () => unknown): { code: string; path?: string; got?: un
   throw new Error("expected a thrown CommandError");
 }
 
-describe("imported route: DAVIT R3 STLs (M02-T02 step 1)", () => {
-  it("finds the 15 DAVIT STLs the legacy zip holds", () => {
-    expect(davit).toHaveLength(15);
-    expect(davit.every((f) => sums.has(`stl/${f}`))).toBe(true);
-  });
-
-  it.each(davit)("%s imports welded, hashed and with positive volume", (name) => {
-    const file = STL_DIR + name;
-    const bytes = readFileSync(root + file);
-    const want = row(file);
-    expect(sha(bytes)).toBe(sums.get(`stl/${name}`));
-    expect(sha(bytes)).toBe(want.sha256);
-    const body = importStl(bytes, file);
-    expect(body.encoding).toBe("binary");
-    expect(body.trianglesRead).toBe(want.triangles);
-    expect(body.mesh.triangles.length / 3).toBe(want.trianglesAfterSnap);
-    expect(body.volumeMm3).toBeGreaterThan(0);
-    expect(body.volumeMm3).toBe(signedVolume(body.mesh));
-    expect(Math.abs(body.volumeMm3 - want.signedVolumeMm3)).toBeLessThanOrEqual(want.areaMm2 * SNAP_MOVE_MM);
-    for (const v of body.mesh.positions) expect(v * 1024).toBe(Math.round(v * 1024));
-    expect(isWatertight(body.mesh)).toBe(want.watertightAfterSnap);
-    expect(body.meshHash).toBe(pins[file]);
-  });
-});
-
 describe("imported route: winding (D-102)", () => {
   it("refuses a flipped copy of crank.stl with E_KERNEL naming the file", () => {
-    const file = `${STL_DIR}davit_crank.stl`;
-    const flip = flipped(readFileSync(root + file));
+    const file = "stl/davit_crank.stl";
+    const flip = flipped(stored("r3/davit_crank.stl", file));
     const err = kernelError(() => importStl(flip, "davit_crank.flipped.stl"));
     expect(err.code).toBe("E_KERNEL");
     expect(err.path).toBe("davit_crank.flipped.stl");
@@ -130,7 +103,7 @@ describe("imported route: winding (D-102)", () => {
 
 describe("imported route: reader (PLINTH parseSTL port)", () => {
   // A copy, never the Buffer itself: Buffer.slice is a view, and a test below edits its header.
-  const pincap = new Uint8Array(readFileSync(`${root}${STL_DIR}davit_pincap.stl`));
+  const pincap = stored("r4/davit_pincap.stl", "stl/davit_pincap.stl");
 
   it("reads ASCII to the same welded mesh as binary", () => {
     const ascii = asciiOf(pincap);
@@ -160,8 +133,9 @@ describe("imported route: reader (PLINTH parseSTL port)", () => {
 
 describe("imported route in the stage runner", () => {
   const profile = createProfileLookup(loadProfile());
-  const file = `${STL_DIR}davit_pincap.stl`;
-  const body: BodyDraft = { id: "pincap", role: "body", slot: 1, material: "petg", base: { route: "imported", uri: file, format: "stl", tier: "inferred" } };
+  const file = "stl/davit_pincap.stl";
+  const uri = "packages/sim/scenes/inputs/davit/r4/davit_pincap.stl";
+  const body: BodyDraft = { id: "pincap", role: "body", slot: 1, material: "petg", base: { route: "imported", uri, format: "stl", tier: "inferred" } };
   const draft = (b: BodyDraft): PartDraft => ({
     id: "imported", name: "imported", process: "fdm", machine: "ffc5p",
     frame: { originOnAxis: false, carriesOffset: true, pose: "print" }, bodies: [b], features: [],

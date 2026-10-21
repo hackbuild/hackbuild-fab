@@ -22,7 +22,7 @@ import { kinematics } from "./kinematics-binding.js";
 
 bindKinematics(kinematics);
 
-const data = extractData(readFileSync(new URL("../../designs/davit/legacy/davit.html", import.meta.url), "utf8"));
+const data = extractData(readFileSync(new URL("../../packages/sim/scenes/inputs/davit/r3/DATA.txt", import.meta.url), "utf8"));
 const profile = createProfileLookup(loadProfile());
 const c = (id: string): number => profile.constant(id).value;
 const touchMm = c("davit.touchMm"), lookMm = c("davit.closestReachMm"), marginMm = c("davit.calibMarginMm");

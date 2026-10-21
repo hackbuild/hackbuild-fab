@@ -8,6 +8,16 @@
     "dest": null
   },
   {
+    "id": "stipple.bench/r17-data",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/stipple/files/companions/stipple-r17.html",
+    "sha256": "e1f4e1ddf366772e6658210b755e76ac7a34a61129c8bcbe2819eed9c1c67fb0",
+    "fixes": [
+      "line 117, the const DATA line readStippleParams reads, stored alone for the R17 latch tests"
+    ],
+    "dest": "packages/motion/inputs/stipple/stipple-r17-DATA.txt"
+  },
+  {
     "id": "stipple.bench/r17-m07-legacy",
     "kind": "copy",
     "source": "fab-knowledge:originals/stipple/files/companions/stipple-r17.html",

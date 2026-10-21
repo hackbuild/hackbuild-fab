@@ -1,6 +1,6 @@
 // M07-T03 GUSSET sort orders: GUSSET's nest() and nestOnce(), evaluated
-// from the pinned legacy page (designs/gusset/legacy/gusset-10.html lines
-// 1264 to 1313, with the five comparators of lines 1265 to 1271), on the
+// from the original page (originals/gusset/files/gusset-v16.html, lineage
+// gusset.bench/nest-orders, read through localOriginal, lines 1264 to 1313, with the five comparators of lines 1265 to 1271), on the
 // OGEE16 R16 lasercut footprints (183 pieces; committed record
 // packages/nest/records/ogee16-cut-footprints.json, written by
 // designs/ogee16/extract/footprint-record.py from cutfiles.py), against
@@ -22,11 +22,12 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, test } from "vitest";
 import type { NestItem, NestRequest, SortOrder } from "@hackbuild/spec";
+import { localOriginal } from "../../../tools/test-support/originals-root.js";
 import { ORDER_LIST } from "../src/maxrects.js";
 import { nest } from "../src/sheet-loop.js";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "..", "..");
-const PAGE = path.join(ROOT, "designs/gusset/legacy/gusset-10.html");
+const PAGE = "fab-knowledge:originals/gusset/files/gusset-v16.html";
 
 interface GItem { id: string; w: number; h: number; key: string }
 interface GBin { placed: { it: GItem; x: number; y: number; rot: boolean }[] }
@@ -40,12 +41,13 @@ interface Gusset {
 
 const FIND_SLACK = "if (ww <= f.w + 1e-6 && hh <= f.h + 1e-6) {";
 
-/** GUSSET from the pinned page; `exact` drops the 1e-6 mm slack of find() (line 1285), the one line nest does not carry. */
+/** GUSSET from the original page; `exact` drops the 1e-6 mm slack of find() (line 1285), the one line nest does not carry. */
 function pinnedLegacy(exact = false): Gusset {
-  const bytes = readFileSync(PAGE);
-  const sums = readFileSync(path.join(ROOT, "designs/gusset/legacy/SHA256SUMS"), "utf8");
-  const pin = sums.match(/^([0-9a-f]{64}) {2}gusset-10\.html$/m)?.[1];
-  expect(createHash("sha256").update(bytes).digest("hex")).toBe(pin);
+  const bytes = readFileSync(localOriginal(PAGE));
+  const lineage = JSON.parse(readFileSync(path.join(ROOT, "lineage.json"), "utf8")) as { id: string; source: string; sha256: string }[];
+  const row = lineage.find((r) => r.id === "gusset.bench/nest-orders")!;
+  expect(row.source).toBe(PAGE);
+  expect(createHash("sha256").update(bytes).digest("hex")).toBe(row.sha256);
   const lines = bytes.toString("utf8").split("\n");
   const at = (text: string): number => lines.findIndex((l) => l.startsWith(text)) + 1;
   expect([at("function nest(items, W, H, gap, allowRot) {"), at("  const orders = ["), at("function nestOnce("), at("function laserItems(")]).toEqual([1264, 1265, 1276, 1315]);
