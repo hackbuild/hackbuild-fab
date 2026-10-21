@@ -1,3 +1,0 @@
-legal-pose fails: 0
-unmasked zero-pose contacts (expect >5): 25
-VERIFY PASS

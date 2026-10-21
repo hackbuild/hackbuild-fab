@@ -29,3 +29,12 @@ No check id is assigned to the shorts set or the floating set in
 CHECKS.md section 10; the fixture carries the declared sets under the
 target ids `shunt-r1/shorts` and `shunt-r1/floating` until M08 names the
 checks.
+
+## Held in the originals (R1-rails-public-11)
+
+The copies `SHA256SUMS` lists are held out of git (D-286, PLAN.md section 5).
+Each one's archive id is its `where: private` row in
+`tools/legacy/inventory.json`: the original when `fab-knowledge:originals`
+holds the same bytes, else `fab-knowledge:originals/_legacy/<repo path>`.
+`shasum -a 256 -c SHA256SUMS` checks a restored copy. A file this README
+names above is that held copy.

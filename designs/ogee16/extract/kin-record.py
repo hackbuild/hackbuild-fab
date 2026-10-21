@@ -31,17 +31,21 @@ import json, math, os, subprocess, sys, tempfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
-SRC = os.path.join(ROOT, "designs", "ogee16", "legacy", "source")
 sys.path.insert(0, os.path.join(ROOT, "tools", "py"))
+
+from legacy_record import Asserts, finish, legacy_dir, legacy_file, read_pinned  # noqa: E402
+
+# The legacy copies are held in the originals (R1-rails-public-11); legacy_file
+# finds each by its repo path, and the record keeps that path as its key.
+LEGACY = "designs/ogee16/legacy"
+SRC = legacy_dir(f"{LEGACY}/source")
 sys.path.insert(0, SRC)
 
-from legacy_record import Asserts, finish, read_pinned  # noqa: E402
-
 PINS = {
-    os.path.join(SRC, "kin.py"): "d2d5a3250c438666179a511d7e87f0c1da9630c1c672eb570382c22f822c1de2",
-    os.path.join(SRC, "params.scad"): "1c0a4b898b4977d87d435273a04857111fab5d43324bee591c2a6ad641591d6d",
-    os.path.join(SRC, "check_viewer.py"): "07c0ec7d63ba5405927f2f42dfb1accc1a16a31c942ed354200e62257c49ad5c",
-    os.path.join(SRC, "viewer_template.html"): "9d101e0c28bd7ae75e81dce60483ac62b085460fc945d43d074077ecf5706dd9",
+    legacy_file(f"{LEGACY}/source/kin.py"): "d2d5a3250c438666179a511d7e87f0c1da9630c1c672eb570382c22f822c1de2",
+    legacy_file(f"{LEGACY}/source/params.scad"): "1c0a4b898b4977d87d435273a04857111fab5d43324bee591c2a6ad641591d6d",
+    legacy_file(f"{LEGACY}/source/check_viewer.py"): "07c0ec7d63ba5405927f2f42dfb1accc1a16a31c942ed354200e62257c49ad5c",
+    legacy_file(f"{LEGACY}/source/viewer_template.html"): "9d101e0c28bd7ae75e81dce60483ac62b085460fc945d43d074077ecf5706dd9",
 }
 for _p, _s in PINS.items():
     read_pinned(_p, _s)
@@ -82,8 +86,8 @@ def printed():
 
 def check_viewer_rows():
     """check_viewer.py run from its own text, on the template's JS block."""
-    cv = os.path.join(SRC, "check_viewer.py")
-    html = open(os.path.join(SRC, "viewer_template.html")).read()
+    cv = legacy_file(f"{LEGACY}/source/check_viewer.py")
+    html = open(legacy_file(f"{LEGACY}/source/viewer_template.html")).read()
     ns = {"json": json, "kin": kin, "P": P, "N": N, "px": px, "py": py}
     exec(lines_of(cv, 11, 12), {**ns, "html": html}, ns)          # start, end markers
     ns["block"] = html[ns["start"]:ns["end"]]

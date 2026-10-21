@@ -27,3 +27,12 @@ closed form leg IK and the 17-trial suite (`core.mjs`, `final.mjs`).
 - On 0.21.0 the suite passes 9 of 17 against 15 of 17 on 0.14.0 (computed,
   one machine, M02 records); the drop follows the version change.
 - Notes that say 16 trials miscount; `final.mjs` runs 17.
+
+## Held in the originals (R1-rails-public-11)
+
+The copies `SHA256SUMS` lists are held out of git (D-286, PLAN.md section 5).
+Each one's archive id is its `where: private` row in
+`tools/legacy/inventory.json`: the original when `fab-knowledge:originals`
+holds the same bytes, else `fab-knowledge:originals/_legacy/<repo path>`.
+`shasum -a 256 -c SHA256SUMS` checks a restored copy. A file this README
+names above is that held copy.

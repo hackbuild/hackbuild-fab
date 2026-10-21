@@ -10,6 +10,12 @@
 // (R1-rails-public-07), outside the globs, so no row is harness. A file
 // left under legacy/tools/ is a copy of an upstream tool and classes by
 // the originals lookup like any other copy.
+// A copy git no longer tracks that a SHA256SUMS under designs/<id>/legacy
+// still lists is held in the owner's archive (D-286, R1-rails-public-11):
+// its row says where: private and names its archive copy, the original
+// when the originals hold its bytes, else the parking copy under
+// fab-knowledge:originals/_legacy/<repo path>. The parking folder is not an
+// original, so the lookup that classes a row skips it.
 // Readers are found by text and are approximate: a dynamic path such as
 // new URL(`legacy/${f}`, DESIGN) counts through the folder-name match, so a
 // false reader is kept over a missed one.
@@ -21,12 +27,15 @@
 // keeps each row's recorded original or unmatched class.
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
-import { mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { legacySums } from './held.mjs';
 
 export const OUT = 'tools/legacy/inventory.json';
 export const ORIGINALS_PREFIX = 'fab-knowledge:originals';
+/** The archive folder for held copies the originals do not hold, mirrored by repo path. */
+export const PARKED = '_legacy';
 /** The four legacy globs as anchored patterns; group 1 is the folder. */
 export const LEGACY_GLOBS = [
   ['designs/*/legacy', /^(designs\/[^/]+\/legacy)\//],
@@ -55,21 +64,32 @@ export function fixedClass(rel) {
   return LINEAGE.has(path.posix.basename(rel)) ? 'lineage' : null;
 }
 
-/** sha256 to the sorted relative paths of every file under dir. */
+/** sha256 to the sorted relative paths and size of every file under dir, the parking folder left out. */
 export function hashTree(dir) {
   const out = new Map();
   const walk = (rel) => {
     for (const e of readdirSync(path.join(dir, rel), { withFileTypes: true })) {
       const child = rel ? `${rel}/${e.name}` : e.name;
+      if (!rel && e.name === PARKED) continue;
       if (e.isDirectory()) walk(child);
       else if (e.isFile()) {
-        const h = sha256(readFileSync(path.join(dir, child)));
-        out.set(h, [...(out.get(h) ?? []), child].sort());
+        const buf = readFileSync(path.join(dir, child));
+        const h = sha256(buf);
+        const paths = [...(out.get(h) ?? []), child].sort();
+        out.set(h, Object.assign(paths, { bytes: buf.length }));
       }
     }
   };
   walk('');
   return out;
+}
+
+/** The parked copy of a held file: its archive id and bytes, or null when absent or not those bytes. */
+export function parked(dir, rel, want) {
+  const file = path.join(dir, PARKED, rel);
+  if (!existsSync(file)) return null;
+  const buf = readFileSync(file);
+  return sha256(buf) === want ? { originals: `${ORIGINALS_PREFIX}/${PARKED}/${rel}`, bytes: buf.length } : null;
 }
 
 /** Lines of a source file with whole-line comments removed, path joins collapsed to slashes. */
@@ -126,11 +146,39 @@ export function findReaders(root, files, folders) {
 }
 
 /**
+ * The held rows of a checkout: every SHA256SUMS row under designs/<id>/legacy
+ * git does not track. With the archive (dir and its hashTree) each takes
+ * class, archive id and bytes from it; without, from prior (same path and
+ * sha256), else class null.
+ */
+function heldRows(root, files, { dir = null, originals = null, priorRows }) {
+  const tracked = new Set(files);
+  const rows = [];
+  for (const [rel, sha] of legacySums(root)) {
+    if (tracked.has(rel)) continue;
+    const row = { path: rel, sha256: sha, bytes: null, class: null, where: 'private' };
+    if (originals) {
+      const hit = originals.get(sha);
+      const park = hit ? null : parked(dir, rel, sha);
+      row.class = hit ? 'original' : 'unmatched';
+      if (hit) Object.assign(row, { originals: `${ORIGINALS_PREFIX}/${hit[0]}`, bytes: hit.bytes });
+      else if (park) Object.assign(row, park);
+    } else {
+      const was = priorRows.get(rel);
+      if (was && was.sha256 === sha && was.where === 'private') Object.assign(row, { bytes: was.bytes, class: was.class }, was.originals ? { originals: was.originals } : {});
+    }
+    rows.push(row);
+  }
+  return rows;
+}
+
+/**
  * The inventory of a checkout. originals is a hashTree map or null; with null,
  * a row the lookup would decide takes its class from prior (same path and
- * sha256) and is marked lookup: false when prior has no such row.
+ * sha256) and is marked lookup: false when prior has no such row. dir is the
+ * originals folder, for the parked copies of held rows.
  */
-export function inventory(root, { originals = null, prior = null } = {}) {
+export function inventory(root, { originals = null, prior = null, dir = null } = {}) {
   const files = tracked(root);
   const priorRows = new Map((prior?.files ?? []).map((r) => [r.path, r]));
   const rows = [];
@@ -152,6 +200,8 @@ export function inventory(root, { originals = null, prior = null } = {}) {
     }
     rows.push(row);
   }
+  rows.push(...heldRows(root, files, { dir, originals, priorRows }));
+  rows.sort((a, b) => (a.path < b.path ? -1 : a.path > b.path ? 1 : 0));
   const folders = [...new Set(rows.map((r) => legacyFolder(r.path)))].sort();
   const readers = findReaders(root, files, folders);
   return {
@@ -175,14 +225,15 @@ export function compare(recorded, now) {
   const cur = new Map(now.files.map((r) => [r.path, r]));
   for (const [p, r] of cur) {
     const was = rec.get(p);
-    if (!was) { out.push(`${p}: tracked under a legacy glob, no row`); continue; }
-    for (const k of ['sha256', 'bytes']) if (was[k] !== r[k]) out.push(`${p}: ${k} recorded ${was[k]}, measured ${r[k]}`);
+    if (!was) { out.push(r.where ? `${p}: held (SHA256SUMS lists it, git does not track it), no row` : `${p}: tracked under a legacy glob, no row`); continue; }
+    if ((was.where ?? null) !== (r.where ?? null)) out.push(`${p}: where recorded ${was.where ?? 'tracked'}, measured ${r.where ?? 'tracked'}`);
+    for (const k of ['sha256', 'bytes']) if (was[k] !== r[k] && !(k === 'bytes' && r.class === null)) out.push(`${p}: ${k} recorded ${was[k]}, measured ${r[k]}`);
     if (r.class === null) {
       if (was.class !== 'original' && was.class !== 'unmatched') out.push(`${p}: class recorded ${was.class}, measured needs the originals lookup`);
     } else if (was.class !== r.class) out.push(`${p}: class recorded ${was.class}, measured ${r.class}`);
     else if ((was.originals ?? null) !== (r.originals ?? null)) out.push(`${p}: originals recorded ${was.originals}, measured ${r.originals}`);
   }
-  for (const p of rec.keys()) if (!cur.has(p)) out.push(`${p}: row names no tracked file`);
+  for (const p of rec.keys()) if (!cur.has(p)) out.push(`${p}: row names no tracked file and no SHA256SUMS row`);
   const sorted = recorded.files.map((r) => r.path);
   if (sorted.join('\n') !== [...sorted].sort().join('\n')) out.push('files: rows are not sorted by path');
   const fr = recorded.folders ?? {};
@@ -212,12 +263,17 @@ function main(argv, env) {
   const dir = env.HBF_ORIGINALS;
   const originals = dir ? hashTree(dir) : null;
   if (!originals) console.log('originals lookup not run: HBF_ORIGINALS is unset');
-  const inv = inventory(root, { originals, prior });
+  const inv = inventory(root, { originals, prior, dir });
   if (originals) console.log(`classes: ${JSON.stringify(classCounts(inv))} (measured, ${inv.files.length} rows)`);
   if (mode === 'write') {
     const open = inv.files.filter((r) => r.class === null);
     if (open.length) {
       console.error(`${open.length} rows need the originals lookup, first ${open[0].path}. set HBF_ORIGINALS to a copy of fab-knowledge/originals`);
+      return 1;
+    }
+    const lost = inv.files.filter((r) => r.where === 'private' && !r.originals);
+    if (lost.length) {
+      for (const r of lost) console.error(`${r.path}: held, and neither the originals nor ${PARKED}/ hold its bytes. copy it to ${ORIGINALS_PREFIX}/${PARKED}/${r.path} first`);
       return 1;
     }
     mkdirSync(path.dirname(outFile), { recursive: true });

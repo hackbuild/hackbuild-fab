@@ -20,27 +20,30 @@ import io, os, re, sys, contextlib
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
-LEGACY = os.path.join(ROOT, "designs", "ogee16", "legacy")
-SRC = os.path.join(LEGACY, "source")
 sys.path.insert(0, os.path.join(ROOT, "tools", "py"))
+
+from legacy_record import Asserts, finish, legacy_dir, legacy_file, read_pinned  # noqa: E402
+
+# The legacy copies are held in the originals (R1-rails-public-11); legacy_file
+# finds each by its repo path, and the record keeps that path as its key.
+LEGACY = "designs/ogee16/legacy"
+SRC = legacy_dir(f"{LEGACY}/source")
 sys.path.insert(0, SRC)
 
-from legacy_record import Asserts, finish, read_pinned  # noqa: E402
-
 PINS = {
-    os.path.join(SRC, "cutfiles.py"): "ef535caca27def1a7b8a91e4c6273dfb1e85617c6087b93e4924debf3fb98800",
-    os.path.join(SRC, "kin.py"): "d2d5a3250c438666179a511d7e87f0c1da9630c1c672eb570382c22f822c1de2",
-    os.path.join(SRC, "params.scad"): "1c0a4b898b4977d87d435273a04857111fab5d43324bee591c2a6ad641591d6d",
+    legacy_file(f"{LEGACY}/source/cutfiles.py"): "ef535caca27def1a7b8a91e4c6273dfb1e85617c6087b93e4924debf3fb98800",
+    legacy_file(f"{LEGACY}/source/kin.py"): "d2d5a3250c438666179a511d7e87f0c1da9630c1c672eb570382c22f822c1de2",
+    legacy_file(f"{LEGACY}/source/params.scad"): "1c0a4b898b4977d87d435273a04857111fab5d43324bee591c2a6ad641591d6d",
 }
 
 
 def dxf_pins():
     """Pins of the unzipped out/dxf files, from ../legacy/SHA256SUMS."""
     pins = {}
-    for line in open(os.path.join(LEGACY, "SHA256SUMS")):
+    for line in open(os.path.join(ROOT, LEGACY, "SHA256SUMS")):
         m = re.match(r"^([0-9a-f]{64})  (out/dxf/.+)$", line.rstrip("\n"))
         if m:
-            pins[os.path.join(LEGACY, m.group(2))] = m.group(1)
+            pins[legacy_file(f"{LEGACY}/{m.group(2)}")] = m.group(1)
     return pins
 
 
@@ -54,7 +57,7 @@ def main():
         raise SystemExit("SHA256SUMS does not pin the 33 per-part DXFs")
     for p, s in pins.items():
         read_pinned(p, s)
-    dxf_dir = os.path.join(LEGACY, "out", "dxf")
+    dxf_dir = legacy_dir(f"{LEGACY}/out/dxf")
     geoms = lambda g: list(g.geoms) if isinstance(g, MultiPolygon) else [g]
     parts, profiles = [], {}
     for name, qty in cutfiles.BOM:

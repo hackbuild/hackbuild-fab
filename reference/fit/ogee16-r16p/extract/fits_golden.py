@@ -8,7 +8,7 @@ name kept as legacyClass.
 
 Run from the repo root:
   unzip -o -q <path>/ogee16-source.zip -d <tmp>
-  uv run --project tools/py python reference/fit/ogee16-r16p/legacy/fits_golden.py <tmp>/source
+  uv run --project tools/py python reference/fit/ogee16-r16p/extract/fits_golden.py <tmp>/source
 """
 import json
 import os

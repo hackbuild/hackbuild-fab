@@ -5,7 +5,7 @@
     "source": "fab-knowledge:originals/ogee16/files/src/source/audit_print.py",
     "sha256": "92c23baae82c80c5eed4741c17c0acd5e204e4c28d91c1d25558fd5259d857ea",
     "fixes": [
-      "build() (lines 17 to 54) ported as place() in packages/motion/src/kinematics/ogee.ts (M07-T10, D-139): the same names, files and placements at any bar rises and plate slide, read from params.scad through the kin.load_params port; packages/motion/test/ogee-kin.test.ts checks it against the six audit poses of designs/ogee16/legacy/poses; packages/sim/scenes/ogee16-cranks.ts restParts() reads it at rest through core's binding",
+      "build() (lines 17 to 54) ported as place() in packages/motion/src/kinematics/ogee.ts (M07-T10, D-139): the same names, files and placements at any bar rises and plate slide, read from params.scad through the kin.load_params port; packages/motion/test/ogee-kin.test.ts checks it against the six audit poses of packages/sim/scenes/ogee16-poses; packages/sim/scenes/ogee16-cranks.ts restParts() reads it at rest through core's binding",
       "packages/checks/src/defs/asm/CHK-ASM-11.ts: audit() (lines 64 to 79): the box margin skip, the volume tolerance for a pair that is not a touch pair and the squeeze ceiling for a declared touch pair (M04-T11)"
     ],
     "dest": "packages/motion/src/kinematics/ogee.ts"

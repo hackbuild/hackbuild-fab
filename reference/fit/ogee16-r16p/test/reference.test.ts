@@ -1,7 +1,7 @@
 // M01-T09 reference: fits.table against the bench. Every expected value
 // comes from an independent source: extract/fits.stdout.txt and
 // extract/fits-slide055.stdout.txt are fits.py's own stdout, and
-// expected/fits.json is written by legacy/fits_golden.py from fits.py, never
+// expected/fits.json is written by extract/fits_golden.py from fits.py, never
 // by the port. The JSON goldens of hbf parity are compared without accept
 // under a SOURCE_DATE_EPOCH other than the pinned 315532800.
 

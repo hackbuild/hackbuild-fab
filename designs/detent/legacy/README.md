@@ -30,3 +30,12 @@ tick interval per point, 20 kHz), and the four-corner homography in
 
 - `tests/fwtest2.cpp` in the zip reads `h.txt`, which the zip does not
   hold; the firmware homography test is not run here (M13, D-180).
+
+## Held in the originals (R1-rails-public-11)
+
+The copies `SHA256SUMS` lists are held out of git (D-286, PLAN.md section 5).
+Each one's archive id is its `where: private` row in
+`tools/legacy/inventory.json`: the original when `fab-knowledge:originals`
+holds the same bytes, else `fab-knowledge:originals/_legacy/<repo path>`.
+`shasum -a 256 -c SHA256SUMS` checks a restored copy. A file this README
+names above is that held copy.

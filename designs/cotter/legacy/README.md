@@ -75,3 +75,14 @@ equal to the `evidence/x/cotter-src/tools/build.py` copy): manifold ESM
 turned into a classic script, base64 wasm, base64 woff2 fonts, the dash
 assert and the exactly-one-match replace asserts. Lineage rows
 `cotter.baker/r5` (canonical) and `cotter.baker/evidence-x`.
+
+## Held in the originals (R1-rails-public-11)
+
+The copies `SHA256SUMS` lists, except `cotter.html`, are held out of git
+(D-286, PLAN.md section 5). `cotter.html` stays: the smoke job's legacy
+report measures it (`tools/smoke/legacy-report.spec.ts`). Each held
+copy's archive id is its `where: private` row in
+`tools/legacy/inventory.json`: the original when `fab-knowledge:originals`
+holds the same bytes, else `fab-knowledge:originals/_legacy/<repo path>`.
+`shasum -a 256 -c SHA256SUMS` checks a restored copy. A file this README
+names above is that held copy.

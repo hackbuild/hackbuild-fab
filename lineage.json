@@ -3445,7 +3445,7 @@
     "source": "fab-knowledge:originals/ogee16/files/src/source/audit_print.py",
     "sha256": "92c23baae82c80c5eed4741c17c0acd5e204e4c28d91c1d25558fd5259d857ea",
     "fixes": [
-      "build() (lines 17 to 54) ported as place() in packages/motion/src/kinematics/ogee.ts (M07-T10, D-139): the same names, files and placements at any bar rises and plate slide, read from params.scad through the kin.load_params port; packages/motion/test/ogee-kin.test.ts checks it against the six audit poses of designs/ogee16/legacy/poses; packages/sim/scenes/ogee16-cranks.ts restParts() reads it at rest through core's binding",
+      "build() (lines 17 to 54) ported as place() in packages/motion/src/kinematics/ogee.ts (M07-T10, D-139): the same names, files and placements at any bar rises and plate slide, read from params.scad through the kin.load_params port; packages/motion/test/ogee-kin.test.ts checks it against the six audit poses of packages/sim/scenes/ogee16-poses; packages/sim/scenes/ogee16-cranks.ts restParts() reads it at rest through core's binding",
       "packages/checks/src/defs/asm/CHK-ASM-11.ts: audit() (lines 64 to 79): the box margin skip, the volume tolerance for a pair that is not a touch pair and the squeeze ceiling for a declared touch pair (M04-T11)"
     ],
     "dest": "packages/motion/src/kinematics/ogee.ts"
@@ -3593,7 +3593,7 @@
       "the PR mirror of printed.scad (lines 46 to 50) and the barb literals 0.15, 3.8 and 0.10 (line 62) are chase params of reference/fit/ogee16-r16p, read from one source (knowledge/designs/ogee16.md 4.8)",
       "the FITS rows (lines 51 to 77) are Part IR metrics emitted by reference/fit/ogee16-r16p/build.ts and bounded through profile/fit-band by fits.table (D-049)",
       "packages/checks/src/defs/fit/CHK-FIT-01.ts: the in-band rule of fits.py as M01-T09 ported it to fits.table; fitRowsOf is the one loop fits.table calls",
-      "reference/fit/ogee16-r16p/test/reference.test.ts: holds the port to fits.py stdout (legacy/fits.stdout.txt, legacy/fits-slide055.stdout.txt) and to expected/fits.json written by legacy/fits_golden.py, never by the port"
+      "reference/fit/ogee16-r16p/test/reference.test.ts: holds the port to fits.py stdout (extract/fits.stdout.txt, extract/fits-slide055.stdout.txt) and to expected/fits.json written by extract/fits_golden.py, never by the port"
     ],
     "dest": "packages/profile/src/fits/ogee16-fits-v1.ts"
   },

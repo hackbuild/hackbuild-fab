@@ -41,7 +41,7 @@ checks unifiedReal against the PROFILE.md 7.1 rows, typed as its golden.
   with the zip and member sha256 in its header.
 - `extract/fits-slide055.stdout.txt`: the same with fits.py line 46 set to
   `FIT_SLIDE_ = 0.55`, exit 1, five rows out of band.
-- `legacy/fits_golden.py`: the one writer of `expected/fits.json`. It imports
+- `extract/fits_golden.py`: the one writer of `expected/fits.json`. It imports
   fits.py from an unzipped `ogee16-source.zip` and records every row as
   fits.py computes it, so the golden is independent of the port.
 - `expected/build.json`, `report.json`, `edit.json`, `artifacts.json`: parity
@@ -69,7 +69,7 @@ To rewrite `expected/fits.json` from the bench:
 
 ```
 unzip -o -q fab-work-directory:benches/ogee16/outputs/ogee16-source.zip -d <tmp>
-uv run --project tools/py python reference/fit/ogee16-r16p/legacy/fits_golden.py <tmp>/source
+uv run --project tools/py python reference/fit/ogee16-r16p/extract/fits_golden.py <tmp>/source
 ```
 
 ## What is verified, and what is not

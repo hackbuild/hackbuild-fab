@@ -11,6 +11,50 @@ import hashlib, json, os, platform, subprocess, sys, datetime
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 
 
+INVENTORY = os.path.join(ROOT, "tools", "legacy", "inventory.json")
+# Local path of an input read through legacy_file, to the repo path its record keys it by.
+_KEYS = {}
+
+
+def _private_rows():
+    return {r["path"]: r for r in json.load(open(INVENTORY))["files"] if r.get("where") == "private"}
+
+
+def legacy_file(rel):
+    """A file under designs/<id>/legacy by its repo path: the checkout's copy
+    when one is on disk, else the archive copy its tools/legacy/inventory.json
+    row names (where private, R1-rails-public-11). finish() keys the input by
+    rel either way, so a record written from the repo copy still checks."""
+    here = os.path.join(ROOT, rel)
+    if os.path.exists(here):
+        path = here
+    else:
+        row = _private_rows().get(rel)
+        if row is None or "originals" not in row:
+            raise SystemExit(f"{rel}: not in this checkout and tools/legacy/inventory.json names no archive copy")
+        from hbf_archives import local_source
+        path = local_source(row["originals"])
+        # A script that imports from the archive must leave no __pycache__ there.
+        sys.dont_write_bytecode = True
+    _KEYS[path] = rel
+    return path
+
+
+def legacy_dir(rel):
+    """The folder holding the files of a legacy folder rel, found as legacy_file finds them."""
+    here = os.path.join(ROOT, rel)
+    if os.path.isdir(here):
+        return here
+    inside = sorted(p for p in _private_rows() if os.path.dirname(p) == rel)
+    if not inside:
+        raise SystemExit(f"{rel}: not in this checkout and tools/legacy/inventory.json holds no private row in it")
+    return os.path.dirname(legacy_file(inside[0]))
+
+
+def input_key(path):
+    return _KEYS.get(path) or os.path.relpath(path, ROOT)
+
+
 def sha256_bytes(b):
     return hashlib.sha256(b).hexdigest()
 
@@ -19,7 +63,7 @@ def read_pinned(path, pinned):
     b = open(path, "rb").read()
     got = sha256_bytes(b)
     if got != pinned:
-        raise SystemExit(f"{os.path.relpath(path, ROOT)} sha256 {got}, pinned {pinned}")
+        raise SystemExit(f"{input_key(path)} sha256 {got}, pinned {pinned}")
     return b
 
 
@@ -101,7 +145,7 @@ def finish(spec, result, asserts, argv=None):
             if rec.get("resultSha256") != sha256_bytes(canonical(rec["result"]).encode()):
                 problems.append(f"{spec['out']} resultSha256 does not match its result")
             for path, pin in spec["inputs"].items():
-                key = os.path.relpath(path, ROOT)
+                key = input_key(path)
                 if rec.get("inputs", {}).get(key) != pin:
                     problems.append(f"input {key}: pinned {pin}, record {rec.get('inputs', {}).get(key)}")
             for k, v in spec.get("versions", {}).items():
@@ -120,7 +164,7 @@ def finish(spec, result, asserts, argv=None):
             "command": spec["command"],
             "machine": machine(),
             "versions": spec.get("versions", {}),
-            "inputs": {os.path.relpath(p, ROOT): s for p, s in spec["inputs"].items()},
+            "inputs": {input_key(p): s for p, s in spec["inputs"].items()},
             "resultSha256": sha256_bytes(canonical(result).encode()),
             "result": result,
         }

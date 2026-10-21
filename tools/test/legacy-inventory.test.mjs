@@ -1,16 +1,20 @@
 // R1-rails-public-01: tools/legacy/inventory.json lists every tracked file
-// under the four legacy globs with sha256, bytes, class and readers. The
-// fixture repo proves --check fails on a file without a row and on a row
-// whose sha256 moved by one hex digit.
+// under the four legacy globs with sha256, bytes, class and readers, and
+// (R1-rails-public-11) every held copy a SHA256SUMS lists that git does not
+// track, as where: private with its archive id. The fixture repo proves
+// --check fails on a file without a row and on a row whose sha256 moved by
+// one hex digit, and that a held copy needs an archive copy to be written.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync, execFileSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
 import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = fileURLToPath(new URL('../../', import.meta.url));
+const { heldList } = await import(new URL('../legacy/held.mjs', import.meta.url).href);
 const script = path.join(root, 'tools/legacy/inventory.mjs');
 const { codeText, readsFolder, fixedClass } = await import(new URL('../legacy/inventory.mjs', import.meta.url).href);
 
@@ -35,16 +39,26 @@ test('rows are sorted, classed, and an original names its archive path', () => {
   for (const r of inv.files) {
     assert.ok(['lineage', 'original', 'unmatched'].includes(r.class), `${r.path}: ${r.class}`);
     assert.match(r.sha256, /^[0-9a-f]{64}$/);
-    assert.equal(r.class === 'original', typeof r.originals === 'string', r.path);
+    if (r.where === undefined) assert.equal(r.class === 'original', typeof r.originals === 'string', r.path);
+    else {
+      assert.equal(r.where, 'private', r.path);
+      // A held copy always names its archive copy: the original, else the parked one.
+      assert.ok(typeof r.originals === 'string', `${r.path}: held with no archive id`);
+      assert.equal(r.class === 'unmatched', r.originals === `fab-knowledge:originals/_legacy/${r.path}`, r.path);
+    }
     if (r.originals) assert.match(r.originals, /^fab-knowledge:originals\/./);
   }
+  // Every held row is in the .gitignore held block, so a restored copy is never staged again.
+  const held = new Set(heldList(root));
+  assert.deepEqual(inv.files.filter((r) => r.where === 'private' && !held.has(r.path)).map((r) => r.path), []);
   const row = (p) => inv.files.find((r) => r.path === p);
   assert.equal(row('designs/slug/legacy/SHA256SUMS').class, 'lineage');
   // Fab's harness moved to designs/<id>/extract/ (R1-rails-public-07); what is
-  // left under a legacy tools/ folder is an upstream copy with an originals path.
+  // left under a legacy tools/ folder, tracked or held, is an upstream copy with an originals path.
   const tools = inv.files.filter((r) => /^designs\/[^/]+\/legacy\/tools\//.test(r.path));
   assert.deepEqual(tools.map((r) => [r.path, r.class]), [
     ['designs/cotter/legacy/tools/hook_fit.py', 'original'],
+    ['designs/pip/legacy/tools/build_bench.py', 'original'],
     ['designs/pip/legacy/tools/orca3mf.js', 'original'],
     ['designs/pip/legacy/tools/rastermesh.js', 'original'],
   ]);
@@ -109,6 +123,24 @@ test('fixture repo: --check fails on a file without a row and on a sha256 one he
   assert.equal(refused.status, 1, 'a new row needs the originals lookup');
   execFileSync('git', ['-C', repo, 'rm', '-q', '--cached', 'designs/x/legacy/b.stl']);
   assert.equal(run(args('--check')).status, 0);
+
+  // A held copy: SHA256SUMS lists it, git does not track it.
+  const dSha = createHash('sha256').update('solid d\n').digest('hex');
+  put('designs/x/legacy/SHA256SUMS', `${dSha}  d.stl\n`);
+  execFileSync('git', ['-C', repo, 'add', 'designs/x/legacy/SHA256SUMS']);
+  const unparked = run(args('--write'), originals);
+  assert.equal(unparked.status, 1, 'a held copy the archive does not hold is refused');
+  assert.match(unparked.stderr, /designs\/x\/legacy\/d\.stl: held, and neither the originals nor _legacy\/ hold its bytes/);
+  put('_legacy/designs/x/legacy/d.stl', 'solid d\n', originals);
+  assert.equal(run(args('--write'), originals).status, 0);
+  const held = JSON.parse(readFileSync(out, 'utf8')).files.find((r) => r.path === 'designs/x/legacy/d.stl');
+  assert.deepEqual(held, { path: 'designs/x/legacy/d.stl', sha256: dSha, bytes: 8, class: 'unmatched', where: 'private', originals: 'fab-knowledge:originals/_legacy/designs/x/legacy/d.stl' });
+  assert.equal(run(args('--check')).status, 0);
+  writeFileSync(path.join(repo, 'designs/x/legacy/SHA256SUMS'), '');
+  const dropped = run(args('--check'));
+  assert.equal(dropped.status, 1);
+  assert.match(dropped.stderr, /designs\/x\/legacy\/d\.stl: row names no tracked file and no SHA256SUMS row/);
+  writeFileSync(path.join(repo, 'designs/x/legacy/SHA256SUMS'), `${dSha}  d.stl\n`);
 
   const text = readFileSync(out, 'utf8');
   const sha = inv.files[1].sha256;
