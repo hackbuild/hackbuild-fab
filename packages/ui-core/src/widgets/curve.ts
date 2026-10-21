@@ -5,8 +5,8 @@
 // and the cursor is the drive.press travel with the force the claim
 // function gives there. CHK-CLAIM-01 calls the same function, so the plot,
 // the press and the check agree to 0.01 (G-20). Measured points come from
-// evidence rows (R1-engine-26) and stay empty until a person enters a
-// coupon. The view shape and the contact search are the ones the
+// evidence rows (R1-engine-26, WidgetBuild.readings) and stay empty until
+// a reading is added. The view shape and the contact search are the ones the
 // `plot.<id>` rail panel (packages/ui panels/curve.ts) draws, kept here
 // once so the panel and the widget find one contact travel.
 
@@ -101,7 +101,9 @@ export const plotCurve: WidgetEntry<PlotModel> = {
     }
     if (points.length < 2) return refusal(decl, "no force curve in this build. build the design first.");
     const band = { lo: b.claim.want.lo, hi: b.claim.want.hi };
-    const measured = build.measured?.[b.claim.id] ?? [];
+    const at = b.claim.args?.[TRAVEL_ARG];
+    // A reading carries no travel: it sits at the claim's travel argument, or at the curve peak for a claim without one (spring.peak).
+    const measured = build.measured?.[b.claim.id] ?? (build.readings?.[b.claim.id] ?? []).map((F) => ({ d: typeof at === "number" ? at : curvePeak(points)!.d, F }));
     const target = build.drive === undefined ? null : claimTarget(build.drive, build.metrics, b.claim);
     let stopMm = points[points.length - 1]!.d;
     let contactMm: number | null = null;

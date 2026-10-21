@@ -15,4 +15,4 @@ export { SPECS };
 export const CLI_FORM: Readonly<Record<string, CliForm>> = Object.fromEntries(SPECS.map((s) => [s.name, s.cli]));
 
 /** The registered utility verbs (no verdict, no CommandDef). */
-export const VERBS = ["doctor", "explain", "parity", "mcp"] as const satisfies readonly UtilityVerb[];
+export const VERBS = ["doctor", "explain", "parity", "mcp", "evidence"] as const satisfies readonly UtilityVerb[];

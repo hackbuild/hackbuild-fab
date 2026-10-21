@@ -24,6 +24,7 @@ import { explain, explainUri, renderExplained } from "./commands/explain.js";
 import { runParity, type ParityOut } from "./commands/parity.js";
 import { runMcp } from "./commands/mcp.js";
 import { mcpFacts } from "./mcp/discover.js";
+import { evidenceAdd, evidenceList, renderEvidenceRow } from "./commands/evidence.js";
 
 export interface Io {
   readonly out: (s: string) => void;
@@ -48,6 +49,8 @@ export function usage(): string {
     "  mcp               [--workspace <dir>] [--tools all|query,prove|sweep]",
     "  explain           <check id, error code or hbf:// uri> [--json]",
     "  parity            <reference> [--accept] [--json]",
+    "  evidence add      <design> --claim <id> (--value <v> --unit <u> | --note <text> [--direction high|low] | --file <path>) [--kind <kind>] [--json]",
+    "  evidence list     <design> [--claim <id>] [--json]",
   ].join("\n");
 }
 
@@ -240,6 +243,42 @@ async function runVerb(verb: string, rest: readonly string[], cwd: string, io: I
   if (verb === "mcp") {
     const p = parseFlags(verb, rest, ["workspace", "tools", "http"], []);
     return runMcp({ ...p.values }, cwd);
+  }
+  if (verb === "evidence") {
+    const [sub, ...args] = rest;
+    if (sub === "list") {
+      const p = parseFlags("evidence list", args, ["claim"], ["json"]);
+      const design = p.positional[0];
+      if (design === undefined) throw cmdError({ code: "E_SCHEMA", path: "/design", expected: "a design id", hint: "name the design, for example hbf evidence list collar" });
+      const out = evidenceList(design, cwd, p.values["claim"]);
+      io.out(p.switches.has("json") ? JSON.stringify(out, null, 2)
+        : [`${out.design}  ${out.rows.length} evidence rows`, ...out.rows.map(renderEvidenceRow)].map(oneLine).join("\n"));
+      return 0;
+    }
+    if (sub !== "add") {
+      throw cmdError({ code: "E_SCHEMA", path: "/sub", got: sub ?? "", expected: "add or list", didYouMean: didYouMean(sub ?? "", ["add", "list"]), hint: "run hbf evidence add or hbf evidence list" });
+    }
+    const p = parseFlags("evidence add", args, ["claim", "value", "unit", "note", "direction", "file", "kind"], ["json"]);
+    const design = p.positional[0];
+    const claim = p.values["claim"];
+    if (design === undefined) throw cmdError({ code: "E_SCHEMA", path: "/design", expected: "a design id", hint: "name the design, for example hbf evidence add collar --claim press-force --note \"too stiff\"" });
+    if (claim === undefined) throw cmdError({ code: "E_PARAM_MISSING", path: "/claim", hint: "name the claim the evidence backs with --claim" });
+    const v = p.values;
+    if (v["value"] !== undefined && !/^-?(\d+\.?\d*|\.\d+)(e-?\d+)?$/i.test(v["value"])) {
+      throw cmdError({ code: "E_SCHEMA", path: "/value", got: v["value"], expected: "a number", hint: "give the reading as a number, its unit in --unit" });
+    }
+    const g = io.gate ?? PROCESS_STREAMS;
+    const out = evidenceAdd({
+      design, claim,
+      ...(v["value"] === undefined ? {} : { value: Number(v["value"]) }),
+      ...(v["unit"] === undefined ? {} : { unit: v["unit"] }),
+      ...(v["note"] === undefined ? {} : { note: v["note"] }),
+      ...(v["direction"] === undefined ? {} : { direction: v["direction"] }),
+      ...(v["file"] === undefined ? {} : { file: v["file"] }),
+      ...(v["kind"] === undefined ? {} : { kind: v["kind"] }),
+    }, cwd, g.input.isTTY === true && g.output.isTTY === true);
+    io.out(p.switches.has("json") ? JSON.stringify(out, null, 2) : oneLine(`added ${out.log}  ${renderEvidenceRow(out.row)}`));
+    return 0;
   }
   if (verb === "explain") {
     const p = parseFlags(verb, rest, [], ["json"]);

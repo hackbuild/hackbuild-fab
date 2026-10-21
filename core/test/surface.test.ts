@@ -23,6 +23,9 @@ function surfaceRows(milestones: readonly string[]): [string, string][] {
 const mentioned = (cell: string, names: readonly string[]): string[] =>
   names.filter((n) => new RegExp(`(^|[\\s,(])${n.replace(".", "\\.")}([\\s,)]|$)`).test(cell));
 
+/** Release 1 utility verbs (plan v9 section 3.1): hbf evidence add and list landed with R1-engine-26. */
+const R1_VERBS: readonly string[] = ["evidence"];
+
 /** M01 commands not registered yet; fits.table landed with M01-T09. */
 const M01_PENDING: readonly string[] = [];
 /** M04 commands not registered yet; project.graph landed with M04-T09 and rules.audit with M04-T13. */
@@ -119,11 +122,12 @@ describe("registered surface (M00-T13 step 1, M01-T05 step 7, M02-T11 step 9, M0
     expect(COMMAND_GROUP["motion.run"]).toBe("prove");
   });
 
-  it("registers exactly the utility verbs of the M-S, M00, M01 and M02 rows", () => {
+  it("registers exactly the utility verbs of the M-S, M00, M01 and M02 rows, mcp and the release 1 verbs", () => {
     // hbf mcp landed ahead of M12 from the M12-T01 card; the M12 row names it.
     const m12 = surfaceRows(["M12"]).flatMap(([, cell]) => mentioned(cell, UTILITY_VERBS)).filter((v) => v === "mcp");
     expect(m12).toContain("mcp");
-    const want = new Set([...rows.flatMap(([, cell]) => mentioned(cell, UTILITY_VERBS)), ...m12]);
+    for (const v of R1_VERBS) expect(UTILITY_VERBS, v).toContain(v);
+    const want = new Set([...rows.flatMap(([, cell]) => mentioned(cell, UTILITY_VERBS)), ...m12, ...R1_VERBS]);
     expect([...VERBS].sort()).toEqual([...want].sort());
   });
 
