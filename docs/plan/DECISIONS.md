@@ -650,6 +650,7 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-593 | A private corpus row runs where its copy is present | decided | Testing, corpus |
 | D-594 | Lineage sources carry the archive prefix and tests read them through localSource | decided | Testing, lineage |
 | D-595 | R1-rails-public-04 converts every lineage source reader and leaves mechanisms legacy harness paths to item 05 | decided | Testing, lineage |
+| D-596 | R1-rails-registries-05 checks a release check row against its fragment and requires its run | decided | Checks, testing |
 
 ## House rules and process
 
@@ -7250,6 +7251,17 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. Beyond its Writes line, R1-rails-public-04 changed every reader of a lineage source that would break or skip silently on the publish form: `core/test/mech-cascade-slop` and `mech-hook-rule`, `packages/constraints/test/fixtures`, `packages/archetypes/test/load` and `originals-additions`, `packages/inlay/test/{intake,opacity,quantize,lineage}` and `fixtures/hygiene-legacy.ts`, `packages/mesh/test/routes/prism`, `packages/mesh/seed/test/heal.test.mjs`, the record scripts under `packages/mechanisms/test/legacy` and `packages/inlay/scripts`, and the `source` description in `tools/lineage.schema.json`. Seven files under `packages/mechanisms/test/legacy` still hold owner paths unrelated to lineage (`hook-rule.py`, `record-ogee16-latch.mjs`, `record-slew-ring.py`, `record-stanchion-bodies.py`, `record-stanchion.cjs` and the `command` text in two recorded JSON files), so the brief's done grep over `packages/mechanisms` is not empty; they stay for item 05 (and 07 for harness code). |
 | Rationale | One reader of a source string that still assumed an absolute path would either fail or quietly skip its check. The seven remaining files are harness code and recorded commands whose change belongs with item 05's regenerate-and-record rule, which this item does not run. |
 | Evidence | Each converted reader's suite passes with the archive variables set (measured); the inlay M03 card hash test ran 0 skipped where main skips it (measured). The record and golden scripts were edited but not run (not run). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-596 R1-rails-registries-05 checks a release check row against its fragment and requires its run
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. In `packages/checks/test/entered.test.ts` a seed row whose `enteredBy` matches `^R\d+-` is checked against `packages/checks/seed/checks/<id>.json`, not CHECKS.md section 9: equal to its seed row, status entered, a title, severity and legal kind, no `pending`, a module run body and a page `docs/reference/checks/<id>.md`. The three rows already entered this way (CHK-PRT-18, CHK-PRT-19 by R1-rails-import, CHK-CLAIM-01 by R1-engine-11) left the LANDED and LATER maps. The LATER sum assertions now run after the per row loop, so an M-card row without a section 9 row fails with "has no CHECKS.md section 9 row" before the count mismatch. CHECKS.md section 15 gains one paragraph saying how a release check is entered. |
+| Rationale | With R1-rails-registries-04 the fragment is the record; a second hand list in CHECKS.md and the test would drift. A release check lands with its run, so a pending release row is refused. |
+| Evidence | `npx vitest run packages/checks` 605 pass 1 skip (measured). Mutant fragment CHK-PRT-99 with `enteredBy: "R1-x"` and a pending module fails "CHK-PRT-99 (R1-x) has no module run"; the same with `enteredBy: "M05-T99"` fails "CHK-PRT-99 has no CHECKS.md section 9 row" (measured). |
 | Supersedes | new |
 | Milestone | none |
 
