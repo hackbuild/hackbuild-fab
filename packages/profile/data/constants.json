@@ -454,7 +454,7 @@
     },
     {
       "id": "jack.socketLen",
-      "value": 3.0,
+      "value": 3,
       "unit": "mm",
       "provenance": {
         "tier": "inferred",
@@ -465,7 +465,7 @@
     },
     {
       "id": "coupon.coinMassG",
-      "value": 5.0,
+      "value": 5,
       "unit": "g",
       "provenance": {
         "tier": "vendor",
@@ -762,7 +762,7 @@
     },
     {
       "id": "ogee16.sweepClashMm3",
-      "value": 1.0,
+      "value": 1,
       "unit": "mm3",
       "provenance": {
         "tier": "inferred",
@@ -784,7 +784,7 @@
     },
     {
       "id": "hook.runFront",
-      "value": 2.0,
+      "value": 2,
       "unit": "mm",
       "provenance": {
         "tier": "inferred",
@@ -828,7 +828,7 @@
     },
     {
       "id": "hook.stubLenMax",
-      "value": 5.0,
+      "value": 5,
       "unit": "mm",
       "provenance": {
         "tier": "inferred",
@@ -839,7 +839,7 @@
     },
     {
       "id": "hook.spineDepth",
-      "value": 4.0,
+      "value": 4,
       "unit": "mm",
       "provenance": {
         "tier": "inferred",
@@ -905,7 +905,7 @@
     },
     {
       "id": "hookFit.tiltStep",
-      "value": 1.0,
+      "value": 1,
       "unit": "deg",
       "provenance": {
         "tier": "inferred",
@@ -1059,7 +1059,7 @@
     },
     {
       "id": "electrical.skinOhm.lo",
-      "value": 1000000.0,
+      "value": 1000000,
       "unit": "ohm",
       "provenance": {
         "tier": "inferred",
@@ -1070,7 +1070,7 @@
     },
     {
       "id": "electrical.skinOhm.hi",
-      "value": 20000000.0,
+      "value": 20000000,
       "unit": "ohm",
       "provenance": {
         "tier": "inferred",
@@ -1103,7 +1103,7 @@
     },
     {
       "id": "electrical.smearOhm",
-      "value": 300000.0,
+      "value": 300000,
       "unit": "ohm",
       "provenance": {
         "tier": "inferred",
@@ -1389,7 +1389,7 @@
     },
     {
       "id": "route.gapSearch",
-      "value": 1.0,
+      "value": 1,
       "unit": "mm",
       "provenance": {
         "tier": "inferred",
@@ -1433,7 +1433,7 @@
     },
     {
       "id": "seat.socketPinMin",
-      "value": 2.0,
+      "value": 2,
       "unit": "mm",
       "provenance": {
         "tier": "inferred",
@@ -1719,7 +1719,7 @@
     },
     {
       "id": "vinyl.ratioMonotoneTol",
-      "value": 1e-06,
+      "value": 0.000001,
       "unit": "ratio",
       "provenance": {
         "tier": "inferred",
@@ -1730,7 +1730,7 @@
     },
     {
       "id": "vinyl.wiringZoneGrow",
-      "value": 4.0,
+      "value": 4,
       "unit": "mm",
       "provenance": {
         "tier": "inferred",
@@ -1774,7 +1774,7 @@
     },
     {
       "id": "vinyl.accentEdgeClear",
-      "value": 1.0,
+      "value": 1,
       "unit": "mm",
       "provenance": {
         "tier": "inferred",
@@ -1796,7 +1796,7 @@
     },
     {
       "id": "vinyl.coordTol",
-      "value": 1e-09,
+      "value": 1e-9,
       "unit": "mm",
       "provenance": {
         "tier": "inferred",
@@ -1829,7 +1829,7 @@
     },
     {
       "id": "ply3.minFeature",
-      "value": 1.0,
+      "value": 1,
       "unit": "mm",
       "provenance": {
         "tier": "inferred",
@@ -2104,7 +2104,7 @@
     },
     {
       "id": "washer.steps",
-      "value": 4.0,
+      "value": 4,
       "unit": "deadband steps per frame",
       "provenance": {
         "tier": "inferred",
@@ -2181,7 +2181,7 @@
     },
     {
       "id": "washer.mergeMaxMm",
-      "value": 3.0,
+      "value": 3,
       "unit": "mm",
       "provenance": {
         "tier": "inferred",
@@ -2247,7 +2247,7 @@
     },
     {
       "id": "servo.micro9g.band",
-      "value": 6.0,
+      "value": 6,
       "unit": "deg",
       "provenance": {
         "tier": "inferred",
@@ -2313,7 +2313,7 @@
     },
     {
       "id": "servo.micro9gm.band",
-      "value": 5.0,
+      "value": 5,
       "unit": "deg",
       "provenance": {
         "tier": "inferred",

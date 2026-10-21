@@ -1,0 +1,13 @@
+[
+  {
+    "id": "slug.vendRate",
+    "value": 1000,
+    "unit": "half steps/s",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "designs/slug/legacy/BUILD.md line 132 (1000 half steps per second, about 4 s a vend) and slug.html line 958 (let rate=1000; lineage slug.bench/slug-12); the knowledge base puts a 28BYJ-48 torque cliff near 1000, so the rate is a program parameter; read by packages/motion/src/programs/slug.ts (M07-T11)"
+    }
+  }
+]

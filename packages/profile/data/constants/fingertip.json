@@ -1,0 +1,24 @@
+[
+  {
+    "id": "fingertip.mm.lo",
+    "value": 10,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-04",
+      "source": "seed constants.fingertip.mm [10, 16] (COFFER), lo end of the range"
+    }
+  },
+  {
+    "id": "fingertip.mm.hi",
+    "value": 16,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-04",
+      "source": "seed constants.fingertip.mm [10, 16] (COFFER), hi end of the range"
+    }
+  }
+]

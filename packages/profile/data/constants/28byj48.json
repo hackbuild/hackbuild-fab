@@ -1,0 +1,13 @@
+[
+  {
+    "id": "28byj48.halfStepsPerRev",
+    "value": 4075.7728,
+    "unit": "half steps",
+    "provenance": {
+      "tier": "vendor",
+      "method": "derived",
+      "date": "2026-10-04",
+      "source": "seed constants.28byj48.halfStepsPerRev (DETENT, SLUG); equals the gear train 63.68395 x 64 half steps; no coupon recorded (PROFILE.md 2.4)"
+    }
+  }
+]

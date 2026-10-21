@@ -1,0 +1,13 @@
+[
+  {
+    "id": "livingHinge.maxDegPerRow",
+    "value": 13,
+    "unit": "deg",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-04",
+      "source": "seed constants.livingHinge.maxDegPerRow (TUMBLER); TUMBLER"
+    }
+  }
+]

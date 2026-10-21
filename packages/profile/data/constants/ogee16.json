@@ -1,0 +1,68 @@
+[
+  {
+    "id": "ogee16.latchServoX.lo",
+    "value": 123.3,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-06",
+      "source": "OGEE16 R16-P, originals/ogee16/files/src/source/params.scad lines 183 to 185: LSV_X > 123.3 so the printed servo body clears column servo 3; stated in the comment, its 2.0 mm over 104.4 + SV_SHAFT_OFF 5.5 + SV_L/2 11.4 is unknown; constraints fixture mech/ogee16-latch-servo-window reads it (M01-T10)"
+    }
+  },
+  {
+    "id": "ogee16.latchServoX.hi",
+    "value": 125,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-06",
+      "source": "OGEE16 R16-P, originals/ogee16/files/src/source/params.scad lines 185 to 186: LSV_X < 125 so the laser crank plus keeper washer clears the +X rail; stated in the comment, decomposition unknown; constraints fixture mech/ogee16-latch-servo-window reads it (M01-T10)"
+    }
+  },
+  {
+    "id": "ogee16.colServo3EndX",
+    "value": 104.4,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-06",
+      "source": "OGEE16 R16-P, originals/ogee16/files/src/source/params.scad line 184 comment: column servo 3 ends at x 104.4; the fixture prints it in the floor reason (M01-T10)"
+    }
+  },
+  {
+    "id": "ogee16.railX1",
+    "value": 136,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-06",
+      "source": "OGEE16 R16-P, originals/ogee16/files/src/source/params.scad line 175 RAIL_X1; the fixture prints it in the ceiling reason (M01-T10)"
+    }
+  },
+  {
+    "id": "ogee16.sweepSteps",
+    "value": 25,
+    "unit": "count",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-07",
+      "source": "designs/ogee16/legacy/source/check_sweep.py (lineage ogee16.check-sweep/r16p) STEPS: each crank is placed at this many evenly spaced points of its stroke, ends included; read by sim/scenes/ogee16-cranks (M02-T07)"
+    }
+  },
+  {
+    "id": "ogee16.sweepClashMm3",
+    "value": 1,
+    "unit": "mm3",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-07",
+      "source": "designs/ogee16/legacy/source/check_sweep.py (lineage ogee16.check-sweep/r16p) main, `if v > 1.0`: a swept crank sharing more than this volume with a servo box or an unlisted part is a swept collision; read by sim/scenes/ogee16-cranks (M02-T07)"
+    }
+  }
+]

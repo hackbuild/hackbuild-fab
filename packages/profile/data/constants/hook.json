@@ -1,0 +1,189 @@
+[
+  {
+    "id": "hook.fit",
+    "value": 0.95,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-06",
+      "source": "COTTER r5 GEO.hookRule, originals/cotter/files/cotter-src/src/geo.js line 102, equal to tools/hook_fit.py design_full lines 93 to 100: rod diameter d = round(hole - fit, 2), default pegFit; constraints fixture mech/hook-rule reads it (M01-T10)"
+    }
+  },
+  {
+    "id": "hook.margin",
+    "value": 0.35,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-06",
+      "source": "COTTER r5 GEO.hookRule, originals/cotter/files/cotter-src/src/geo.js line 102, equal to tools/hook_fit.py design_full lines 93 to 100: bend clearance h at most hole - margin; hook_fit.py design alone defaults 0.2, both callers pass 0.35 (M01-T10)"
+    }
+  },
+  {
+    "id": "hook.rise",
+    "value": 5.5,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-06",
+      "source": "COTTER r5 GEO.hookRule, originals/cotter/files/cotter-src/src/geo.js line 102, equal to tools/hook_fit.py design_full lines 93 to 100: the hook locks at least this above the hole (M01-T10)"
+    }
+  },
+  {
+    "id": "hook.ext",
+    "value": 2,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-06",
+      "source": "COTTER r5 GEO.hookRule, originals/cotter/files/cotter-src/src/geo.js line 102, equal to tools/hook_fit.py design_full lines 93 to 100: straight tail after the arc (M01-T10)"
+    }
+  },
+  {
+    "id": "hook.bendStartOverRadius",
+    "value": 1,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-06",
+      "source": "COTTER r5 GEO.hookRule, originals/cotter/files/cotter-src/src/geo.js line 102, equal to tools/hook_fit.py design_full lines 93 to 100: the Rb search starts at d/2 + this (M01-T10)"
+    }
+  },
+  {
+    "id": "hook.bendStep",
+    "value": 0.25,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-06",
+      "source": "COTTER r5 GEO.hookRule, originals/cotter/files/cotter-src/src/geo.js line 102, equal to tools/hook_fit.py design_full lines 93 to 100: the Rb search steps by this, so Rb floors lie on d/2 + 1 + 0.25 k (M01-T10)"
+    }
+  },
+  {
+    "id": "hook.sweepMin",
+    "value": 20,
+    "unit": "deg",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-06",
+      "source": "COTTER r5 GEO.hookRule, originals/cotter/files/cotter-src/src/geo.js line 102, equal to tools/hook_fit.py design_full lines 93 to 100: the sweep search starts here (M01-T10)"
+    }
+  },
+  {
+    "id": "hook.sweepMax",
+    "value": 88,
+    "unit": "deg",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-06",
+      "source": "COTTER r5 GEO.hookRule, originals/cotter/files/cotter-src/src/geo.js line 102, equal to tools/hook_fit.py design_full lines 93 to 100: the sweep search stops below this (loop limit); the fixture reports it as the sweep ceiling (M01-T10)"
+    }
+  },
+  {
+    "id": "hook.pegPitch",
+    "value": 25.4,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-07",
+      "source": "designs/cotter/legacy/tools/hook_fit.py (lineage cotter.hook-fit/r5) line 12 PITCH: hole pitch of the peg board; the stub sits one pitch below the hook and the board rows are spaced by it; read by sim/scenes/cotter-hook (M02-T09)"
+    }
+  },
+  {
+    "id": "hook.runFront",
+    "value": 2,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-07",
+      "source": "designs/cotter/legacy/tools/hook_fit.py (lineage cotter.hook-fit/r5) lines 15 and 33: the hook run and the stub start this far in front of the board face; read by sim/scenes/cotter-hook (M02-T09)"
+    }
+  },
+  {
+    "id": "hook.arcSegments",
+    "value": 24,
+    "unit": "count",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-07",
+      "source": "designs/cotter/legacy/tools/hook_fit.py (lineage cotter.hook-fit/r5) line 13 hook_centreline n: straight segments on the bend arc of the clip centreline; read by sim/scenes/cotter-hook (M02-T09)"
+    }
+  },
+  {
+    "id": "hook.gap",
+    "value": 0.6,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-07",
+      "source": "designs/cotter/legacy/tools/hook_fit.py (lineage cotter.hook-fit/r5) lines 27 and 100: the bend starts this far behind the board back face (clip_poly default, design_full gap); read by sim/scenes/cotter-hook (M02-T09)"
+    }
+  },
+  {
+    "id": "hook.bufferSegments",
+    "value": 64,
+    "unit": "count",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-07",
+      "source": "designs/cotter/legacy/tools/hook_fit.py (lineage cotter.hook-fit/r5) lines 30 and 33 buffer resolution 16: 16 segments per quarter circle, so a rod or stub end is a polygon of this many sides; read by sim/scenes/cotter-hook (M02-T09)"
+    }
+  },
+  {
+    "id": "hook.stubLenMax",
+    "value": 5,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-07",
+      "source": "designs/cotter/legacy/tools/hook_fit.py (lineage cotter.hook-fit/r5) line 31: the stub runs min(tb, this) into the hole below; read by sim/scenes/cotter-hook (M02-T09)"
+    }
+  },
+  {
+    "id": "hook.spineDepth",
+    "value": 4,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-07",
+      "source": "designs/cotter/legacy/tools/hook_fit.py (lineage cotter.hook-fit/r5) line 27 clip_poly spine_d; knowledge/designs/cotter.md 5.3: stand-in for the JS spine, 1.0 mm conservative over 3.0 + 0.8 + 2.0 with spineHeadOver; read by sim/scenes/cotter-hook (M02-T09)"
+    }
+  },
+  {
+    "id": "hook.spineHeadOver",
+    "value": 2.8,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-07",
+      "source": "designs/cotter/legacy/tools/hook_fit.py (lineage cotter.hook-fit/r5) line 34: the spine box runs from the board face to spineDepth plus this; read by sim/scenes/cotter-hook (M02-T09)"
+    }
+  },
+  {
+    "id": "hook.spineDrop",
+    "value": 7,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-07",
+      "source": "designs/cotter/legacy/tools/hook_fit.py (lineage cotter.hook-fit/r5) line 34: the spine box runs this far below the stub line; read by sim/scenes/cotter-hook (M02-T09)"
+    }
+  }
+]

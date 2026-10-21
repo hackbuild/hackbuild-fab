@@ -1,0 +1,222 @@
+[
+  {
+    "id": "washer.dist",
+    "value": 152,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "originals/washer/files/rig/laser-rig.html line 2173 (CFG.dist, 6 in throw; lineage washer.app/laserriggg); the page default; read by packages/motion/src/planners/washer-mm.ts (M07-T12)"
+    }
+  },
+  {
+    "id": "washer.wallW",
+    "value": 305,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "originals/washer/files/rig/laser-rig.html line 2173 (CFG.wallW, 12 in target; lineage washer.app/laserriggg); read by packages/motion/src/planners/washer-mm.ts (M07-T12)"
+    }
+  },
+  {
+    "id": "washer.wallH",
+    "value": 305,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "originals/washer/files/rig/laser-rig.html line 2173 (CFG.wallH; lineage washer.app/laserriggg); read by packages/motion/src/planners/washer-mm.ts (M07-T12)"
+    }
+  },
+  {
+    "id": "washer.mountH",
+    "value": 70,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "originals/washer/files/rig/laser-rig.html line 2174 (CFG.mountH, laser height above the floor; lineage washer.app/laserriggg); read by packages/motion/src/planners/washer-mm.ts (M07-T12)"
+    }
+  },
+  {
+    "id": "washer.minUs",
+    "value": 500,
+    "unit": "us",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "originals/washer/files/rig/laser-rig.html line 2176 (CFG.minUs, pulse window matching firmware RANGE; lineage washer.app/laserriggg); read by packages/motion/src/planners/washer-mm.ts (M07-T12)"
+    }
+  },
+  {
+    "id": "washer.maxUs",
+    "value": 2500,
+    "unit": "us",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "originals/washer/files/rig/laser-rig.html line 2176 (CFG.maxUs; lineage washer.app/laserriggg); read by packages/motion/src/planners/washer-mm.ts (M07-T12)"
+    }
+  },
+  {
+    "id": "washer.homePan",
+    "value": 90,
+    "unit": "deg",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "originals/washer/files/rig/laser-rig.html line 2179 (CFG.homePan, set by ZERO; lineage washer.app/laserriggg); read by packages/motion/src/planners/washer-mm.ts (M07-T12)"
+    }
+  },
+  {
+    "id": "washer.homeTilt",
+    "value": 90,
+    "unit": "deg",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "originals/washer/files/rig/laser-rig.html line 2179 (CFG.homeTilt; lineage washer.app/laserriggg); read by packages/motion/src/planners/washer-mm.ts (M07-T12)"
+    }
+  },
+  {
+    "id": "washer.feed",
+    "value": 260,
+    "unit": "mm/s",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "originals/washer/files/rig/laser-rig.html line 3767 (PLAN.feed; lineage washer.app/laserriggg); the harvested copy designs/washer/legacy/laser-rig.zip line 3395 had 160, the M07 golden; read by packages/motion/src/planners/washer-mm.ts (M07-T12)"
+    }
+  },
+  {
+    "id": "washer.travel",
+    "value": 400,
+    "unit": "mm/s",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "originals/washer/files/rig/laser-rig.html line 3770 (PLAN.travel; lineage washer.app/laserriggg); read by packages/motion/src/planners/washer-mm.ts (M07-T12)"
+    }
+  },
+  {
+    "id": "washer.accel",
+    "value": 8000,
+    "unit": "mm/s2",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "originals/washer/files/rig/laser-rig.html line 3771 (PLAN.accel, a ceiling above the servo limit; lineage washer.app/laserriggg); read by packages/motion/src/planners/washer-mm.ts (M07-T12)"
+    }
+  },
+  {
+    "id": "washer.jd",
+    "value": 0.18,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "originals/washer/files/rig/laser-rig.html line 3782 (PLAN.jd, junction deviation; lineage washer.app/laserriggg); read by packages/motion/src/planners/washer-mm.ts (M07-T12)"
+    }
+  },
+  {
+    "id": "washer.steps",
+    "value": 4,
+    "unit": "deadband steps per frame",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "originals/washer/files/rig/laser-rig.html line 3784 (PLAN.steps; lineage washer.app/laserriggg); the harvested copy had 1.0, the M07 golden; read by packages/motion/src/planners/washer-mm.ts (M07-T12)"
+    }
+  },
+  {
+    "id": "washer.tol",
+    "value": 0.05,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "originals/washer/files/rig/laser-rig.html line 3798 (PLAN.tol, path tolerance; lineage washer.app/laserriggg); read by packages/motion/src/serialise.ts (M07-T12)"
+    }
+  },
+  {
+    "id": "washer.jerk",
+    "value": 0.045,
+    "unit": "s",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "originals/washer/files/rig/laser-rig.html line 3806 (PLAN.jerk; lineage washer.app/laserriggg); read by packages/motion/src/planners/washer-mm.ts (M07-T12)"
+    }
+  },
+  {
+    "id": "washer.dense",
+    "value": 0.25,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "originals/washer/files/rig/laser-rig.html line 3840 (DENSE, planner sample spacing; lineage washer.app/laserriggg); read by packages/motion/src/planners/washer-mm.ts (M07-T12)"
+    }
+  },
+  {
+    "id": "washer.segMinMs",
+    "value": 8,
+    "unit": "ms",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "originals/washer/files/rig/laser-rig.html line 5297 (SEG_MIN_MS; lineage washer.app/laserriggg); read by packages/motion/src/serialise.ts (M07-T12)"
+    }
+  },
+  {
+    "id": "washer.segMaxMs",
+    "value": 60,
+    "unit": "ms",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "originals/washer/files/rig/laser-rig.html line 5297 (SEG_MAX_MS, linear playback; lineage washer.app/laserriggg); read by packages/motion/src/serialise.ts (M07-T12)"
+    }
+  },
+  {
+    "id": "washer.mergeMaxMs",
+    "value": 90,
+    "unit": "ms",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "originals/washer/files/rig/laser-rig.html line 5029 (MERGE_MAX_MS; lineage washer.app/laserriggg); read by packages/motion/src/serialise.ts (M07-T12)"
+    }
+  },
+  {
+    "id": "washer.mergeMaxMm",
+    "value": 3,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "originals/washer/files/rig/laser-rig.html line 5030 (MERGE_MAX_MM; lineage washer.app/laserriggg); read by packages/motion/src/serialise.ts (M07-T12)"
+    }
+  }
+]

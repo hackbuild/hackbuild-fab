@@ -1,0 +1,13 @@
+[
+  {
+    "id": "calibrate.aspectTol",
+    "value": 0.25,
+    "unit": "ratio",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "originals/detent/files/beam/detent-plot.html line 1911 (the quad aspect warning fires past this fraction off the field W:H; lineage detent.plot/beam; the copy designs/detent/legacy/detent-plot.html is byte identical); read by packages/motion/src/calibrate.ts for both rigs (M07-T12)"
+    }
+  }
+]

@@ -1,0 +1,13 @@
+[
+  {
+    "id": "capsule.archBelowDiameters",
+    "value": 2,
+    "unit": "capsule diameters",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-04",
+      "source": "seed constants.capsule.archBelowDiameters (SLUG 6 trials); SLUG, D-136; seed tier measured has no coupon (PROFILE.md 2.4)"
+    }
+  }
+]

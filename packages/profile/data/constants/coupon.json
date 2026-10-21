@@ -1,0 +1,13 @@
+[
+  {
+    "id": "coupon.coinMassG",
+    "value": 5,
+    "unit": "g",
+    "provenance": {
+      "tier": "vendor",
+      "method": "datasheet",
+      "date": "2026-10-20",
+      "source": "US Mint coin specifications, five cent coin (nickel) 5.000 g, https://www.usmint.gov/learn/coins-and-medals/circulating-coins/coin-specifications, read 2026-10-20 through a search excerpt because a direct fetch of the page returned HTTP 403; tolerance unknown; the stacked-coin dead weight of the spring coupon (R1-flagship-access-switch-10)"
+    }
+  }
+]

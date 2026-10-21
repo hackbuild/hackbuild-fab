@@ -1,0 +1,90 @@
+[
+  {
+    "id": "read.adc.lineOhm",
+    "value": 100000,
+    "unit": "ohm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "CHK-NET-06 line, TANG R5 2026-08-17 (tang_r5_wiring.html line 436); the BLOCKS wire verdict 'signal and ADC fine' below 1e5 (originals/blocks/files/src-extracted/parts.js line 702, lineage blocks.parts/blocks-1; BOSS parts.js line 426); GIB part2.js line 544 states the same 100 kohm; no coupon recorded; read by packages/circuit/src/read/adc.ts (M05-T05)"
+    }
+  },
+  {
+    "id": "read.adc.analogCeilOhm",
+    "value": 1000000,
+    "unit": "ohm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "BLOCKS wire verdict: at or above 1e6 'digital only (slow edges), no analog' (originals/blocks/files/src-extracted/parts.js line 702, lineage blocks.parts/blocks-1; BOSS parts.js line 426); no coupon recorded; read by packages/circuit/src/read/adc.ts (M05-T05)"
+    }
+  },
+  {
+    "id": "read.adc.holdCapNf",
+    "value": 100,
+    "unit": "nF",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "BLOCKS wire verdict 'ADC needs a 100 nF at the pin' between 1e5 and 1e6 (originals/blocks/files/src-extracted/parts.js line 702; BOSS parts.js line 426); GIB part2.js line 544 asks the same 100 nF above 100 kohm; read by packages/circuit/src/read/adc.ts (M05-T05)"
+    }
+  },
+  {
+    "id": "read.ratiometric.pulldownRatio",
+    "value": 20,
+    "unit": "ratio",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "GIB part2.js line 544 and part3.js line 247 (lineage gib.parts/gib-4, gib.shell/gib-4): any no-touch pull-down at least 20 times the wiper source; read by packages/circuit/src/read/ratiometric.ts (M05-T05)"
+    }
+  },
+  {
+    "id": "read.ratiometric.pulldownMinOhm",
+    "value": 1000000,
+    "unit": "ohm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "GIB part3.js line 247 (lineage gib.shell/gib-4): pull-down max(1e6, 20 Rsrc); read by packages/circuit/src/read/ratiometric.ts (M05-T05)"
+    }
+  },
+  {
+    "id": "read.ladder.leadOhm",
+    "value": 4000,
+    "unit": "ohm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "FEELER LADDER keypad Rc = 4000 in series with the pull-down (originals/thinpot/files/feeler_thinpot.html lines 4504 and 4951, lineage feeler.bench/thinpot-16); no coupon recorded; read by packages/circuit/src/read/ladder.ts (M05-T05)"
+    }
+  },
+  {
+    "id": "read.ladder.minStepCounts",
+    "value": 25,
+    "unit": "count",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "FEELER LADDER keypad: under about 25 ADC counts between levels printed resistor drift makes keys overlap (originals/thinpot/files/feeler_thinpot.html lines 4545 and 4968, lineage feeler.bench/thinpot-16); read by packages/circuit/src/read/ladder.ts (M05-T05)"
+    }
+  },
+  {
+    "id": "read.swing.minPercent",
+    "value": 30,
+    "unit": "percent",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-09",
+      "source": "originals/baffle-r3/files/src/model.js line 1012 (lineage baffle.model/r3-36): ok(swing >= 0.3, 'slider swing is at least 30 percent'), swing = track over track plus both drive traces (line 1010); BAFFLE R3 states it in source, the GUDGEON reader proposed 25 (CHECKS.md 9.4); no coupon recorded; read by packages/checks/src/net/net30.ts (M05-T19)"
+    }
+  }
+]

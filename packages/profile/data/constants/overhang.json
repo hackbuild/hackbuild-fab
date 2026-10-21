@@ -1,0 +1,24 @@
+[
+  {
+    "id": "overhang.maxDeg",
+    "value": 45,
+    "unit": "deg",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "DETENT rev C verify_revC.py slice_scan: the region hanging past the layer below by more than one layer height is a 45 degree violation (originals/detent/files/revD/archive-revC/verify_revC.py lines 201 to 219); the 45 deg roof of CHK-SHP-03; no coupon recorded; read by CHK-PRT-12, CHK-PRT-13 and CHK-SHP-03 through packages/checks/src/defs/prt/overhang.ts (M04-T12)"
+    }
+  },
+  {
+    "id": "overhang.bedBandMm",
+    "value": 0.35,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "originals/pawl/files/src/fdm.py line 43 (on_bed = (tri_hi - lo) < 0.35, lineage pawl.fdm/mk3): a triangle whose highest vertex sits under this above the part's lowest point sits on the plate and is not an overhang; read by CHK-PRT-12 and CHK-PRT-13 through packages/checks/src/defs/prt/overhang.ts"
+    }
+  }
+]

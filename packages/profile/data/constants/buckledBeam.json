@@ -1,0 +1,13 @@
+[
+  {
+    "id": "buckledBeam.riseOverT",
+    "value": 2.31,
+    "unit": "ratio",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-04",
+      "source": "seed constants.buckledBeam.riseOverT (TUMBLER); TUMBLER; CHK-KEY-04 uses the FE, never this constant"
+    }
+  }
+]

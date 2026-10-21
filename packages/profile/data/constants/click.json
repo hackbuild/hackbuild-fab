@@ -1,0 +1,79 @@
+[
+  {
+    "id": "click.dropMin",
+    "value": 0.5,
+    "unit": "ratio",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-06",
+      "source": "D-071, the click-spring window lower bound: force drop past the peak at least this fraction; PROFILE.md 10.1; read by sim/click-spring-window (M01-T07)"
+    }
+  },
+  {
+    "id": "click.rigidSpanMin",
+    "value": 4,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-06",
+      "source": "PIP clicky SNAPFE_RIGID, originals/pip/files/haft-src/src/layout.js line 110 (pip-controller layout.js line 110 the same): the flexing span lEff = max(this, l - sw / 2); ported by packages/sim/src/fe/click.ts clickRigid (M01-T01)"
+    }
+  },
+  {
+    "id": "click.contactPastPeak",
+    "value": 0.15,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-06",
+      "source": "PIP clicky clickerDims, originals/pip/files/haft-src/src/layout.js line 86: contact travel cg = max(dPeak + this, contactValleyFraction x dValley), never before the peak; ported by packages/sim/src/fe/click.ts clickReadout (M01-T01)"
+    }
+  },
+  {
+    "id": "click.contactValleyFraction",
+    "value": 0.85,
+    "unit": "ratio",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-06",
+      "source": "PIP clicky clickerDims, originals/pip/files/haft-src/src/layout.js lines 85 to 86: contact at this fraction of the valley travel; ported by packages/sim/src/fe/click.ts clickReadout (M01-T01)"
+    }
+  },
+  {
+    "id": "click.stopOvertravel",
+    "value": 0.3,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-06",
+      "source": "PIP clicky clickerDims, originals/pip/files/haft-src/src/layout.js line 95: strain at the stop is the largest element strain for travel up to cg + this; ported by packages/sim/src/fe/click.ts clickReadout (M01-T01)"
+    }
+  },
+  {
+    "id": "click.modulusSpreadPct",
+    "value": 20,
+    "unit": "percent",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-20",
+      "source": "spread either side of the PETG working modulus 1900 MPa, which is itself a working value from PIP clicky defaults (packages/profile/data/materials.json line 83, tier inferred); vendor PETG sheets differ by brand and none has been read here (unknown); 1500 and 2200 MPa at l 28, t 0.55 move the SNAPFE peak from 158 g to 125 and 183 g (computed, .hbf-notes/r1/briefs/flagship-access-switch.md scout finding 2); read by the access switch force band (R1-flagship-access-switch-04)"
+    }
+  },
+  {
+    "id": "click.beamPrintErrorMm",
+    "value": 0.05,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-20",
+      "source": "one 0.05 mm step of the access switch thickness ladder coupon; the force goes with beam thickness cubed, so t 0.50 to 0.60 at l 28 moves the SNAPFE peak from 108 to 224 g (computed, scout finding 2); originals/pip/files/pip-controller/LESSONS.md line 114 illustrates a 0.10 mm error (drawn 0.55, printed 0.45) without a measurement (unknown); no coupon recorded; read by R1-flagship-access-switch-04 and -10"
+    }
+  }
+]

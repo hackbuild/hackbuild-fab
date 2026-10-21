@@ -1,0 +1,13 @@
+[
+  {
+    "id": "conductor.maxSlopeDeg",
+    "value": 45,
+    "unit": "deg",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-09",
+      "source": "the CHK-NET-13 line (CHECKS.md 9.4, plan-deltas R54): a printed conductor segment steeper than this against the bed plane in print pose warns; TCB, CHI 2021 measured vertical printed traces at about 7x the resistance of flat ones (measured by others), and the 45 deg line itself has no coupon; read by packages/checks/src/net/net13.ts (M05-T19)"
+    }
+  }
+]

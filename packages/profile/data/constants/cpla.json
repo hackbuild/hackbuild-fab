@@ -1,0 +1,13 @@
+[
+  {
+    "id": "cpla.flexFatigueWidthMin",
+    "value": 0.8,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-06",
+      "source": "cited as knowledge:04-heuristics in syn/api-library-ai-design.md 6.4 C (line 600, reason \"fatigue, cpla across layer lines under flex\"); no matching line in handoff/knowledge/04-heuristics.md (PROFILE.md 3.3); read by profile/flex-fatigue-floor (M01-T06)"
+    }
+  }
+]

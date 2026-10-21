@@ -1,0 +1,266 @@
+[
+  {
+    "id": "servo.micro9g.slew",
+    "value": 240,
+    "unit": "deg/s",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "originals/washer/files/rig/laser-rig.html line 3833 (SERVOS.micro9g.slew, preset '9g micro (SG90 / MG90S)', per axis; lineage washer.app/laserriggg); a preset of the page, no servo measured; read by packages/motion/src/planners/washer-mm.ts servoPreset (M07-T12)"
+    }
+  },
+  {
+    "id": "servo.micro9g.accel",
+    "value": 1800,
+    "unit": "deg/s2",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "originals/washer/files/rig/laser-rig.html line 3833 (SERVOS.micro9g.accel, preset '9g micro (SG90 / MG90S)', per axis; lineage washer.app/laserriggg); a preset of the page, no servo measured; read by packages/motion/src/planners/washer-mm.ts servoPreset (M07-T12)"
+    }
+  },
+  {
+    "id": "servo.micro9g.deadband",
+    "value": 8,
+    "unit": "us",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "originals/washer/files/rig/laser-rig.html line 3833 (SERVOS.micro9g.deadband, preset '9g micro (SG90 / MG90S)', per axis; lineage washer.app/laserriggg); a preset of the page, no servo measured; read by packages/motion/src/planners/washer-mm.ts servoPreset (M07-T12)"
+    }
+  },
+  {
+    "id": "servo.micro9g.frame",
+    "value": 50,
+    "unit": "Hz",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "originals/washer/files/rig/laser-rig.html line 3833 (SERVOS.micro9g.frame, preset '9g micro (SG90 / MG90S)', per axis; lineage washer.app/laserriggg); a preset of the page, no servo measured; read by packages/motion/src/planners/washer-mm.ts servoPreset (M07-T12)"
+    }
+  },
+  {
+    "id": "servo.micro9g.lash",
+    "value": 0.55,
+    "unit": "deg",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "originals/washer/files/rig/laser-rig.html line 3833 (SERVOS.micro9g.lash, preset '9g micro (SG90 / MG90S)', per axis; lineage washer.app/laserriggg); a preset of the page, no servo measured; read by packages/motion/src/planners/washer-mm.ts servoPreset (M07-T12)"
+    }
+  },
+  {
+    "id": "servo.micro9g.band",
+    "value": 6,
+    "unit": "deg",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "originals/washer/files/rig/laser-rig.html line 3833 (SERVOS.micro9g.band, preset '9g micro (SG90 / MG90S)', per axis; lineage washer.app/laserriggg); a preset of the page, no servo measured; read by packages/motion/src/planners/washer-mm.ts servoPreset (M07-T12)"
+    }
+  },
+  {
+    "id": "servo.micro9gm.slew",
+    "value": 300,
+    "unit": "deg/s",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "originals/washer/files/rig/laser-rig.html line 3834 (SERVOS.micro9gm.slew, preset '9g metal gear (MG90S)', per axis; lineage washer.app/laserriggg); a preset of the page, no servo measured; read by packages/motion/src/planners/washer-mm.ts servoPreset (M07-T12)"
+    }
+  },
+  {
+    "id": "servo.micro9gm.accel",
+    "value": 2600,
+    "unit": "deg/s2",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "originals/washer/files/rig/laser-rig.html line 3834 (SERVOS.micro9gm.accel, preset '9g metal gear (MG90S)', per axis; lineage washer.app/laserriggg); a preset of the page, no servo measured; read by packages/motion/src/planners/washer-mm.ts servoPreset (M07-T12)"
+    }
+  },
+  {
+    "id": "servo.micro9gm.deadband",
+    "value": 6,
+    "unit": "us",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "originals/washer/files/rig/laser-rig.html line 3834 (SERVOS.micro9gm.deadband, preset '9g metal gear (MG90S)', per axis; lineage washer.app/laserriggg); a preset of the page, no servo measured; read by packages/motion/src/planners/washer-mm.ts servoPreset (M07-T12)"
+    }
+  },
+  {
+    "id": "servo.micro9gm.frame",
+    "value": 50,
+    "unit": "Hz",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "originals/washer/files/rig/laser-rig.html line 3834 (SERVOS.micro9gm.frame, preset '9g metal gear (MG90S)', per axis; lineage washer.app/laserriggg); a preset of the page, no servo measured; read by packages/motion/src/planners/washer-mm.ts servoPreset (M07-T12)"
+    }
+  },
+  {
+    "id": "servo.micro9gm.lash",
+    "value": 0.3,
+    "unit": "deg",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "originals/washer/files/rig/laser-rig.html line 3834 (SERVOS.micro9gm.lash, preset '9g metal gear (MG90S)', per axis; lineage washer.app/laserriggg); a preset of the page, no servo measured; read by packages/motion/src/planners/washer-mm.ts servoPreset (M07-T12)"
+    }
+  },
+  {
+    "id": "servo.micro9gm.band",
+    "value": 5,
+    "unit": "deg",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "originals/washer/files/rig/laser-rig.html line 3834 (SERVOS.micro9gm.band, preset '9g metal gear (MG90S)', per axis; lineage washer.app/laserriggg); a preset of the page, no servo measured; read by packages/motion/src/planners/washer-mm.ts servoPreset (M07-T12)"
+    }
+  },
+  {
+    "id": "servo.standard.slew",
+    "value": 420,
+    "unit": "deg/s",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "originals/washer/files/rig/laser-rig.html line 3835 (SERVOS.standard.slew, preset 'Standard metal gear', per axis; lineage washer.app/laserriggg); a preset of the page, no servo measured; read by packages/motion/src/planners/washer-mm.ts servoPreset (M07-T12)"
+    }
+  },
+  {
+    "id": "servo.standard.accel",
+    "value": 5000,
+    "unit": "deg/s2",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "originals/washer/files/rig/laser-rig.html line 3835 (SERVOS.standard.accel, preset 'Standard metal gear', per axis; lineage washer.app/laserriggg); a preset of the page, no servo measured; read by packages/motion/src/planners/washer-mm.ts servoPreset (M07-T12)"
+    }
+  },
+  {
+    "id": "servo.standard.deadband",
+    "value": 4,
+    "unit": "us",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "originals/washer/files/rig/laser-rig.html line 3835 (SERVOS.standard.deadband, preset 'Standard metal gear', per axis; lineage washer.app/laserriggg); a preset of the page, no servo measured; read by packages/motion/src/planners/washer-mm.ts servoPreset (M07-T12)"
+    }
+  },
+  {
+    "id": "servo.standard.frame",
+    "value": 50,
+    "unit": "Hz",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "originals/washer/files/rig/laser-rig.html line 3835 (SERVOS.standard.frame, preset 'Standard metal gear', per axis; lineage washer.app/laserriggg); a preset of the page, no servo measured; read by packages/motion/src/planners/washer-mm.ts servoPreset (M07-T12)"
+    }
+  },
+  {
+    "id": "servo.standard.lash",
+    "value": 0.18,
+    "unit": "deg",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "originals/washer/files/rig/laser-rig.html line 3835 (SERVOS.standard.lash, preset 'Standard metal gear', per axis; lineage washer.app/laserriggg); a preset of the page, no servo measured; read by packages/motion/src/planners/washer-mm.ts servoPreset (M07-T12)"
+    }
+  },
+  {
+    "id": "servo.standard.band",
+    "value": 3.5,
+    "unit": "deg",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "originals/washer/files/rig/laser-rig.html line 3835 (SERVOS.standard.band, preset 'Standard metal gear', per axis; lineage washer.app/laserriggg); a preset of the page, no servo measured; read by packages/motion/src/planners/washer-mm.ts servoPreset (M07-T12)"
+    }
+  },
+  {
+    "id": "servo.digital.slew",
+    "value": 700,
+    "unit": "deg/s",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "originals/washer/files/rig/laser-rig.html line 3836 (SERVOS.digital.slew, preset 'Digital high speed', per axis; lineage washer.app/laserriggg); a preset of the page, no servo measured; read by packages/motion/src/planners/washer-mm.ts servoPreset (M07-T12)"
+    }
+  },
+  {
+    "id": "servo.digital.accel",
+    "value": 9000,
+    "unit": "deg/s2",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "originals/washer/files/rig/laser-rig.html line 3836 (SERVOS.digital.accel, preset 'Digital high speed', per axis; lineage washer.app/laserriggg); a preset of the page, no servo measured; read by packages/motion/src/planners/washer-mm.ts servoPreset (M07-T12)"
+    }
+  },
+  {
+    "id": "servo.digital.deadband",
+    "value": 2,
+    "unit": "us",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "originals/washer/files/rig/laser-rig.html line 3836 (SERVOS.digital.deadband, preset 'Digital high speed', per axis; lineage washer.app/laserriggg); a preset of the page, no servo measured; read by packages/motion/src/planners/washer-mm.ts servoPreset (M07-T12)"
+    }
+  },
+  {
+    "id": "servo.digital.frame",
+    "value": 200,
+    "unit": "Hz",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "originals/washer/files/rig/laser-rig.html line 3836 (SERVOS.digital.frame, preset 'Digital high speed', per axis; lineage washer.app/laserriggg); a preset of the page, no servo measured; read by packages/motion/src/planners/washer-mm.ts servoPreset (M07-T12)"
+    }
+  },
+  {
+    "id": "servo.digital.lash",
+    "value": 0.08,
+    "unit": "deg",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "originals/washer/files/rig/laser-rig.html line 3836 (SERVOS.digital.lash, preset 'Digital high speed', per axis; lineage washer.app/laserriggg); a preset of the page, no servo measured; read by packages/motion/src/planners/washer-mm.ts servoPreset (M07-T12)"
+    }
+  },
+  {
+    "id": "servo.digital.band",
+    "value": 1.6,
+    "unit": "deg",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "originals/washer/files/rig/laser-rig.html line 3836 (SERVOS.digital.band, preset 'Digital high speed', per axis; lineage washer.app/laserriggg); a preset of the page, no servo measured; read by packages/motion/src/planners/washer-mm.ts servoPreset (M07-T12)"
+    }
+  }
+]

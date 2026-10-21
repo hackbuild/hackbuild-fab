@@ -1,0 +1,13 @@
+[
+  {
+    "id": "geom.sliverMin.n04",
+    "value": 0.6,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-04",
+      "source": "handoff/seed/3mf/demo_coin.py header"
+    }
+  }
+]

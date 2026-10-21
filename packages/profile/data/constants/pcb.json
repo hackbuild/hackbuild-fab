@@ -1,0 +1,24 @@
+[
+  {
+    "id": "pcb.drillMargin",
+    "value": 0.15,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-11",
+      "source": "SPINDLE R1 pcb.py drill breakout gate pad_poly.buffer(-drill/2 - 0.15): copper a drill leaves inside its own pad (knowledge/kernels/board-pcb.md 'Drill position is not pad centre'); no coupon; read by CHK-BRD-02 (packages/checks/src/brd/board.ts)"
+    }
+  },
+  {
+    "id": "pcb.moduleLanding",
+    "value": 0.05,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-11",
+      "source": "M08-T12 step 2: a catalog module hole lands within 0.05 mm of its catalog pin, and the same tolerance matches a back-mounted pattern under the mirror (CHK-BRD-03); a card choice, no coupon; read by CHK-BRD-02 and CHK-BRD-03 (packages/checks/src/brd/board.ts)"
+    }
+  }
+]

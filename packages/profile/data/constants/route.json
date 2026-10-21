@@ -1,0 +1,134 @@
+[
+  {
+    "id": "route.keepoutPad",
+    "value": 0.15,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "PIP router, pip-controller src/router.js line 68 (const safety = 0.15) at b137deb (lineage router/pip-controller-b137deb): added to every terminal keepout radius t.r + clr + w/2 and to the via zone via + clr + w/2; no coupon recorded; read by packages/copper/src/route/negotiated.ts (M05-T08)"
+    }
+  },
+  {
+    "id": "route.zonePad",
+    "value": 0.02,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "PIP router, pip-controller src/router.js line 74 (zoneSt = stencil(R.w + R.clr + 0.02)) at b137deb (lineage router/pip-controller-b137deb): trace centrelines w + clr + this apart, with no larger margin or parallel lanes on the 2.54 mm pad pitch read as conflicts (lines 72 to 73); read by packages/copper/src/route/negotiated.ts (M05-T08)"
+    }
+  },
+  {
+    "id": "route.postSep",
+    "value": 0.12,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "PIP model, pip-controller src/model.js line 27 at b137deb (const sep = (r) => (Math.abs(r - Rt.w / 2) < 0.12 ? Rt.w / 2 + 0.12 : r)): a post or via radius within this of half the trace width moves to w/2 + this, so a round cap and a post on one centre leave no sliver triangles; no coupon recorded; read by packages/copper/src/emit/trace-layer.ts and CHK-NET-11 (M05-T10)"
+    }
+  },
+  {
+    "id": "route.discPad",
+    "value": 0.05,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "PIP model, pip-controller src/model.js lines 41 and 42 at b137deb (circle(sep(t.r) + 0.05, ...), circle(sep(Rt.via) + 0.05, ...)): the disc a post or via draws on each trace layer is this wider than the post, so the post starts and ends inside it; no coupon recorded; read by packages/copper/src/emit/trace-layer.ts (M05-T10)"
+    }
+  },
+  {
+    "id": "route.regionClose",
+    "value": 0.01,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "PIP model, pip-controller src/model.js line 43 at b137deb (union2(cs).offset(0.01, 'Miter', 2).offset(-0.01, 'Miter', 2)): each trace layer per net is one region closed by this outward then inward, so tangent pieces fuse instead of pinching; no coupon recorded; read by packages/copper/src/emit/trace-layer.ts and CHK-NET-11 (M05-T10)"
+    }
+  },
+  {
+    "id": "route.postOverlap",
+    "value": 0.02,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "PIP model, pip-controller src/model.js line 8 at b137deb (const EZ = 0.02), used at line 48: a terminal post runs this past the pad plane top; no coupon recorded; read by reference/electrical/pip-buried-route/build.ts (M05-T10)"
+    }
+  },
+  {
+    "id": "route.gapSearch",
+    "value": 1,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "PIP model, pip-controller src/model.js line 221 at b137deb (nets[i].m.minGap(nets[j].m, 1.0)): the net-to-net search distance; a pair further apart reads as this; no coupon recorded; read by packages/circuit/src/extract/nets.ts netGaps (M05-T10)"
+    }
+  },
+  {
+    "id": "route.stick.grid",
+    "value": 0.2,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "TOGGLE route search, toggle src/src/part2d.js at sha256 1da486e7 (lineage toggle.build/part2d) line 171 (const g = 0.2 in tryRoute): the floor route grid pitch of a tilt stick body; no coupon recorded; read by packages/copper/src/route/search.ts (M05-T09)"
+    }
+  },
+  {
+    "id": "route.stick.edgePad",
+    "value": 0.6,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "TOGGLE route search, toggle src/src/part2d.js at sha256 1da486e7 (lineage toggle.build/part2d) line 176 (const m = w / 2 + 0.6): keep-in distance past half a trace from the body outline; no coupon recorded; read by packages/copper/src/route/search.ts (M05-T09)"
+    }
+  },
+  {
+    "id": "route.stick.leadR",
+    "value": 0.65,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "TOGGLE route search, toggle src/src/part2d.js at sha256 1da486e7 (lineage toggle.build/part2d) line 197: a direction lead foot is an obstacle of radius 0.65 + clr + w/2 on the top trace layer; no coupon recorded; read by packages/copper/src/route/search.ts (M05-T09)"
+    }
+  },
+  {
+    "id": "route.stick.comR",
+    "value": 0.71,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "TOGGLE route search, toggle src/src/part2d.js at sha256 1da486e7 (lineage toggle.build/part2d) lines 197 and 229: the COM column foot is an obstacle of radius 0.71 + clr + w/2 on the top trace layer, and a solo COM gap keeps t.r + 0.71 + clr from every pin cup; no coupon recorded; read by packages/copper/src/route/search.ts (M05-T09)"
+    }
+  },
+  {
+    "id": "route.stick.leadHalf",
+    "value": 0.5,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "TOGGLE route search, toggle src/src/part2d.js at sha256 1da486e7 (lineage toggle.build/part2d) line 237 (leadSlack = half - 0.5 / Re - 0.08) and line 284 (wall contact lead half width 0.5 / Re): half the width of a wall contact lead; no coupon recorded; read by packages/copper/src/route/search.ts (M05-T09)"
+    }
+  }
+]

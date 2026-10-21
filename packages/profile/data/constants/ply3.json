@@ -1,0 +1,13 @@
+[
+  {
+    "id": "ply3.minFeature",
+    "value": 1,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "SKETCH v3 K.defaultMaterial, originals/sketch/files/sketch.html line 483 (lineage sketch.bench/v3): minFeature 1.0 for ply 3mm, the material default MAT.MIN_FEATURE warns under (line 859); no coupon. The web w of the CHK-SHT-07 hub rule, read by packages/nest/src/connect.ts (M07-T04 step 5)"
+    }
+  }
+]

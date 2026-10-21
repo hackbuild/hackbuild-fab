@@ -1,0 +1,13 @@
+[
+  {
+    "id": "prt.perimetersMin",
+    "value": 2,
+    "unit": "count",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-06",
+      "source": "CHK-PRT-04 origin, two perimeters for a printable wall (syn/api-library-ai-design.md 6.4 C, reason \"line width 0.40, two perimeters\"); PROFILE.md 10.1; read by profile/printability-floor (M01-T06)"
+    }
+  }
+]

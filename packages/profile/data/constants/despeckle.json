@@ -1,0 +1,13 @@
+[
+  {
+    "id": "despeckle.factor",
+    "value": 0.35,
+    "unit": "fraction of a min-feature disc",
+    "provenance": {
+      "tier": "inferred",
+      "method": "failure",
+      "date": "2026-10-04",
+      "source": "COLLAR v3: originals/collar/files/collar.html lines 1161 to 1166 (minPx = max(1, round(pi (minF k / 2)^2 x 0.35)); a dot that is the min feature has to survive, or despeckle eats every full stop); same factor in originals/inlay/files/skill/print-forge/assets/bench/part2.js line 209; seed constants.despeckle.factor; D-145; seed tier measured has no coupon (PROFILE.md 2.4)"
+    }
+  }
+]

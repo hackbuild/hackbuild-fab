@@ -1,0 +1,13 @@
+[
+  {
+    "id": "bridge.maxMm",
+    "value": 9,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "SLATE 2026-08 print audit (CHECKS.md CHK-PRT-09 legal): a layer bridging more than 9 mm between supports sags; to be read by CHK-PRT-09 and CHK-SHP-03 FLAT_MAX_MM in a later packages/checks pass"
+    }
+  }
+]

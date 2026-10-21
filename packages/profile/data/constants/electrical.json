@@ -1,0 +1,134 @@
+[
+  {
+    "id": "electrical.contactFactor.lo",
+    "value": 10,
+    "unit": "ratio",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "pip-controller docs/electrical.md:152 to 153, pip.md 5.10: printed contact resistance ten to thirty times the solved path (measured on the PIP stick, transferred to the flex cap); lo end; read by tools/skeleton/flexpair_probe/sim/run.mjs (virtual exit B, D-234); no ContactRow exists yet (packages/profile/src/lookup.ts contact()), so this row stands in until the coupon and M05 rows land; not measured on this part"
+    }
+  },
+  {
+    "id": "electrical.contactFactor.hi",
+    "value": 30,
+    "unit": "ratio",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "pip-controller docs/electrical.md:152 to 153, pip.md 5.10: printed contact resistance ten to thirty times the solved path (measured on the PIP stick, transferred to the flex cap); hi end; read by tools/skeleton/flexpair_probe/sim/run.mjs (virtual exit B, D-234); no ContactRow exists yet (packages/profile/src/lookup.ts contact()), so this row stands in until the coupon and M05 rows land; not measured on this part"
+    }
+  },
+  {
+    "id": "electrical.skinOhm.lo",
+    "value": 1000000,
+    "unit": "ohm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "pip.md 5.3 limits and 5.10 touch read: skin 1 to 20 Mohm (model.js:486); lo end; read by tools/skeleton/flexpair_probe/sim/run.mjs (virtual exit B, D-234); no ContactRow exists yet (packages/profile/src/lookup.ts contact()), so this row stands in until the coupon and M05 rows land; not measured on this part"
+    }
+  },
+  {
+    "id": "electrical.skinOhm.hi",
+    "value": 20000000,
+    "unit": "ohm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "pip.md 5.3 limits and 5.10 touch read: skin 1 to 20 Mohm (model.js:486); hi end; read by tools/skeleton/flexpair_probe/sim/run.mjs (virtual exit B, D-234); no ContactRow exists yet (packages/profile/src/lookup.ts contact()), so this row stands in until the coupon and M05 rows land; not measured on this part"
+    }
+  },
+  {
+    "id": "electrical.tracePfPerMm",
+    "value": 0.02,
+    "unit": "pF/mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "pip-controller src/model.js:418, Cpf = cpin + 0.02 pF per mm + 1; read by tools/skeleton/flexpair_probe/sim/run.mjs (virtual exit B, D-234); no ContactRow exists yet (packages/profile/src/lookup.ts contact()), so this row stands in until the coupon and M05 rows land; not measured on this part"
+    }
+  },
+  {
+    "id": "electrical.tracePfFixed",
+    "value": 1,
+    "unit": "pF",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "pip-controller src/model.js:418, the + 1 pF of Cpf = cpin + 0.02 pF per mm + 1; read by tools/skeleton/flexpair_probe/sim/run.mjs (virtual exit B, D-234); no ContactRow exists yet (packages/profile/src/lookup.ts contact()), so this row stands in until the coupon and M05 rows land; not measured on this part"
+    }
+  },
+  {
+    "id": "electrical.smearOhm",
+    "value": 300000,
+    "unit": "ohm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "pip.md 5.13 cell 4: a wire across a split reads a few hundred kohm; read by tools/skeleton/flexpair_probe/sim/run.mjs (virtual exit B, D-234); no ContactRow exists yet (packages/profile/src/lookup.ts contact()), so this row stands in until the coupon and M05 rows land; not measured on this part"
+    }
+  },
+  {
+    "id": "electrical.gndLeadPf",
+    "value": 20,
+    "unit": "pF",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "a jumper of about 20 cm left on the GND pad, 10 to 30 pF (inferred, no measurement); read by tools/skeleton/flexpair_probe/sim/run.mjs (virtual exit B, D-234); no ContactRow exists yet (packages/profile/src/lookup.ts contact()), so this row stands in until the coupon and M05 rows land; not measured on this part"
+    }
+  },
+  {
+    "id": "electrical.keyLeadPf",
+    "value": 20,
+    "unit": "pF",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "the probe jumper from GP2 or GP3 to the key's pad clip, the same kind of lead as electrical.gndLeadPf, 10 to 30 pF (inferred, no measurement); read by tools/skeleton/flexpair_probe/sim/run.mjs (virtual exit B, D-234); no ContactRow exists yet (packages/profile/src/lookup.ts contact()), so this row stands in until the coupon and M05 rows land; not measured on this part"
+    }
+  },
+  {
+    "id": "electrical.keyLeadPf.lo",
+    "value": 10,
+    "unit": "pF",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "the probe jumper from GP2 or GP3 to the key's pad clip, 10 to 30 pF (inferred, no measurement); lo end; read by tools/skeleton/flexpair_probe/sim/run.mjs (virtual exit B, D-234); no ContactRow exists yet (packages/profile/src/lookup.ts contact()), so this row stands in until the coupon and M05 rows land; not measured on this part"
+    }
+  },
+  {
+    "id": "electrical.keyLeadPf.hi",
+    "value": 30,
+    "unit": "pF",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "the probe jumper from GP2 or GP3 to the key's pad clip, 10 to 30 pF (inferred, no measurement); hi end; read by tools/skeleton/flexpair_probe/sim/run.mjs (virtual exit B, D-234); no ContactRow exists yet (packages/profile/src/lookup.ts contact()), so this row stands in until the coupon and M05 rows land; not measured on this part"
+    }
+  },
+  {
+    "id": "electrical.noiseV",
+    "value": 0.005,
+    "unit": "V",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "5 mV rms on the floated node, no measurement; read by tools/skeleton/flexpair_probe/sim/run.mjs (virtual exit B, D-234); no ContactRow exists yet (packages/profile/src/lookup.ts contact()), so this row stands in until the coupon and M05 rows land; not measured on this part"
+    }
+  }
+]

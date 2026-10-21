@@ -1,0 +1,167 @@
+[
+  {
+    "id": "hookFit.boardRows.lo",
+    "value": -3,
+    "unit": "count",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-07",
+      "source": "designs/cotter/legacy/tools/hook_fit.py (lineage cotter.hook-fit/r5) line 39 board rows: lowest hole row, in pitches from the hook hole; read by sim/scenes/cotter-hook (M02-T09)"
+    }
+  },
+  {
+    "id": "hookFit.boardRows.hi",
+    "value": 3,
+    "unit": "count",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-07",
+      "source": "designs/cotter/legacy/tools/hook_fit.py (lineage cotter.hook-fit/r5) line 39 board rows: highest hole row, in pitches from the hook hole; read by sim/scenes/cotter-hook (M02-T09)"
+    }
+  },
+  {
+    "id": "hookFit.boardInset",
+    "value": 0.01,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-07",
+      "source": "designs/cotter/legacy/tools/hook_fit.py (lineage cotter.hook-fit/r5) line 46 buffer(-0.01): the board is shrunk by this before the overlap test, so a pose touching the board counts as clear; read by sim/scenes/cotter-hook (M02-T09)"
+    }
+  },
+  {
+    "id": "hookFit.tiltStep",
+    "value": 1,
+    "unit": "deg",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-07",
+      "source": "designs/cotter/legacy/tools/hook_fit.py (lineage cotter.hook-fit/r5) line 44 search DT: tilt step of the search grid; read by sim/scenes/cotter-hook (M02-T09)"
+    }
+  },
+  {
+    "id": "hookFit.xyStep",
+    "value": 0.2,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-07",
+      "source": "designs/cotter/legacy/tools/hook_fit.py (lineage cotter.hook-fit/r5) line 44 search DX: x and y step of the search grid; read by sim/scenes/cotter-hook (M02-T09)"
+    }
+  },
+  {
+    "id": "hookFit.budget",
+    "value": 250000,
+    "unit": "count",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-07",
+      "source": "designs/cotter/legacy/tools/hook_fit.py (lineage cotter.hook-fit/r5) lines 44 and 70: the search stops after this many popped poses; read by sim/scenes/cotter-hook (M02-T09)"
+    }
+  },
+  {
+    "id": "hookFit.clearX",
+    "value": 0.5,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-07",
+      "source": "designs/cotter/legacy/tools/hook_fit.py (lineage cotter.hook-fit/r5) line 60: the clip is out when its least x passes the board face by more than this; read by sim/scenes/cotter-hook (M02-T09)"
+    }
+  },
+  {
+    "id": "hookFit.tiltWeight",
+    "value": 0.02,
+    "unit": "mm/deg",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-07",
+      "source": "designs/cotter/legacy/tools/hook_fit.py (lineage cotter.hook-fit/r5) line 69 priority -minx - 0.02 tilt: tilting is worth this much x per degree; read by sim/scenes/cotter-hook (M02-T09)"
+    }
+  },
+  {
+    "id": "hookFit.tilt.lo",
+    "value": 0,
+    "unit": "deg",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-07",
+      "source": "designs/cotter/legacy/tools/hook_fit.py (lineage cotter.hook-fit/r5) line 64 search limit; read by sim/scenes/cotter-hook (M02-T09)"
+    }
+  },
+  {
+    "id": "hookFit.tilt.hi",
+    "value": 100,
+    "unit": "deg",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-07",
+      "source": "designs/cotter/legacy/tools/hook_fit.py (lineage cotter.hook-fit/r5) line 64 search limit; read by sim/scenes/cotter-hook (M02-T09)"
+    }
+  },
+  {
+    "id": "hookFit.x.lo",
+    "value": -12,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-07",
+      "source": "designs/cotter/legacy/tools/hook_fit.py (lineage cotter.hook-fit/r5) line 64 search limit; read by sim/scenes/cotter-hook (M02-T09)"
+    }
+  },
+  {
+    "id": "hookFit.x.hi",
+    "value": 40,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-07",
+      "source": "designs/cotter/legacy/tools/hook_fit.py (lineage cotter.hook-fit/r5) line 64 search limit; read by sim/scenes/cotter-hook (M02-T09)"
+    }
+  },
+  {
+    "id": "hookFit.y.lo",
+    "value": -25,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-07",
+      "source": "designs/cotter/legacy/tools/hook_fit.py (lineage cotter.hook-fit/r5) line 64 search limit; read by sim/scenes/cotter-hook (M02-T09)"
+    }
+  },
+  {
+    "id": "hookFit.y.hi",
+    "value": 25,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-07",
+      "source": "designs/cotter/legacy/tools/hook_fit.py (lineage cotter.hook-fit/r5) line 64 search limit; read by sim/scenes/cotter-hook (M02-T09)"
+    }
+  },
+  {
+    "id": "hookFit.boardReach",
+    "value": 200,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-07",
+      "source": "designs/cotter/legacy/tools/hook_fit.py (lineage cotter.hook-fit/r5) line 41: the board strip runs from -200 to 200 mm in y, past every hole row; read by sim/scenes/cotter-hook (M02-T09)"
+    }
+  }
+]

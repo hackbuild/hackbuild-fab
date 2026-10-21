@@ -1,0 +1,24 @@
+[
+  {
+    "id": "cascade.slopWarn",
+    "value": 1.2,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-06",
+      "source": "TUMBLER bench, originals/tumbler/files/tumbler.html line 2112: stacked slop over this reads \"deep chain, add a restoring lever\"; the bench warns and never refuses; constraints fixture mech/cascade-slop reads it (M01-T10)"
+    }
+  },
+  {
+    "id": "cascade.strokePerStage",
+    "value": 10,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-06",
+      "source": "TUMBLER bench, originals/tumbler/files/tumbler.html line 2108: input stroke needed is cascade depth x this; constraints fixture mech/cascade-slop reads it (M01-T10)"
+    }
+  }
+]

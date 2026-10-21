@@ -1,0 +1,57 @@
+[
+  {
+    "id": "fit.collet.interferenceMinMm",
+    "value": 0.08,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-09",
+      "source": "originals/baffle-r3/files/src/model.js line 994 (lineage baffle.model/r3-36): tile socket at least 0.08 mm smaller than the peg it seats on, diametral; BAFFLE R3 tile 4.8 stud in a 4.68 socket, 0.12 (line 123, 125); no coupon recorded; read by packages/checks/src/fit/fit07.ts (M05-T19)"
+    }
+  },
+  {
+    "id": "fit.collet.interferenceMaxMm",
+    "value": 0.2,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-09",
+      "source": "originals/baffle-r3/files/src/model.js line 994 (lineage baffle.model/r3-36): tile socket at most 0.2 mm smaller than the peg, diametral, an interference fit and not a slip fit; no coupon recorded; read by packages/checks/src/fit/fit07.ts (M05-T19)"
+    }
+  },
+  {
+    "id": "fit.collet.fingersMin",
+    "value": 3,
+    "unit": "count",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-09",
+      "source": "originals/baffle-r3/files/src/model.js line 995 (lineage baffle.model/r3-36): the socket wall split into at least 3 fingers so it springs onto the peg instead of cracking; BAFFLE R3 ships 4 slots (line 123); the slots came after the first tile print (BAFFLE R3 2026-09-18, CHECKS.md 9.2); read by packages/checks/src/fit/fit07.ts (M05-T19)"
+    }
+  },
+  {
+    "id": "fit.collet.squeezeMinMm",
+    "value": 0.06,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-09",
+      "source": "originals/baffle-r3/files/src/model.js line 997 (lineage baffle.model/r3-36): socket bottoms on the peg tip with at least 0.06 mm of axial squeeze, stud height over socket depth; BAFFLE R3 1.8 over 1.68, 0.12 (lines 123, 125); no coupon recorded; read by packages/checks/src/fit/fit07.ts (M05-T19)"
+    }
+  },
+  {
+    "id": "fit.collet.squeezeMaxMm",
+    "value": 0.2,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-09",
+      "source": "originals/baffle-r3/files/src/model.js line 997 (lineage baffle.model/r3-36): at most 0.2 mm of axial squeeze, rather than landing on the deck; no coupon recorded; read by packages/checks/src/fit/fit07.ts (M05-T19)"
+    }
+  }
+]

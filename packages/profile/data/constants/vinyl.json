@@ -1,0 +1,288 @@
+[
+  {
+    "id": "vinyl.rim",
+    "value": 0.15,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "KEYWAY family rim, reference/copper/keyway/legacy/gen_keyway.py line 82 (RIM = OUTLINE minus OUTLINE.buffer(-0.15)), unioned into every layer so all layers share one outline and one document size; a design value, no coupon; read by packages/copper/src/vinyl/draft.ts (M05-T14)"
+    }
+  },
+  {
+    "id": "vinyl.emitTolerance",
+    "value": 0.012,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "KEYWAY family emit simplify, reference/copper/keyway/legacy/gen_keyway.py line 298 (simplify(0.012, preserve_topology=True), \"<= 12 um, far under the 1.0 mm clearance\"); read by packages/copper/src/vinyl/emit-svg.ts (M05-T14)"
+    }
+  },
+  {
+    "id": "vinyl.erodeHalfMin",
+    "value": 0.55,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "KEYWAY family erode test, reference/copper/keyway/legacy/gen_keyway.py line 227 (buffer(-0.55) proves 1.10 mm features); CHK-NET-14 title; no coupon; read by packages/checks/src/copper/erode.ts (M05-T14)"
+    }
+  },
+  {
+    "id": "vinyl.artGapMin",
+    "value": 0.7,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "KEYWAY art island gap gate, reference/copper/keyway/legacy/gen_keyway.py line 233 (gmin >= 0.70); no coupon; read by packages/checks/src/copper/art.ts (M05-T14)"
+    }
+  },
+  {
+    "id": "vinyl.counterErode",
+    "value": 0.3,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "KEYWAY art counter gate, reference/copper/keyway/legacy/gen_keyway.py line 236 (Polygon(r).buffer(-0.3).area, \"smallest survives 0.6 mm erode\"); no coupon; read by packages/checks/src/copper/art.ts (M05-T14)"
+    }
+  },
+  {
+    "id": "vinyl.wedgeCopperMin",
+    "value": 1.8,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "KEYWAY wedge slider gate, reference/copper/keyway/legacy/gen_keyway.py line 245 (min(a, b) < 1.8 fails); no coupon; read by packages/checks/src/copper/slider.ts (M05-T14)"
+    }
+  },
+  {
+    "id": "vinyl.sliderSamples",
+    "value": 41,
+    "unit": "count",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "KEYWAY family slider sampling, reference/copper/keyway/legacy/gen_keyway.py lines 241 to 242 (41 vertical cuts over the travel); CHK-NET-15 title; read by packages/checks/src/copper/slider.ts (M05-T14)"
+    }
+  },
+  {
+    "id": "vinyl.filmBridgeGrow",
+    "value": 0.6,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "KEYWAY film bridge gate, reference/copper/keyway/legacy/gen_keyway.py line 269 (NET[k].buffer(0.6).intersects(film)); no coupon; read by packages/checks/src/copper/film.ts (M05-T14)"
+    }
+  },
+  {
+    "id": "vinyl.filmCoverMin",
+    "value": 20,
+    "unit": "mm2",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "KEYWAY film cover gate, reference/copper/keyway/legacy/gen_keyway.py line 272 (min(a, b) > 20 mm2 of each comb under the film); no coupon; read by packages/checks/src/copper/film.ts (M05-T14)"
+    }
+  },
+  {
+    "id": "vinyl.windowExposeMin",
+    "value": 15,
+    "unit": "mm2",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "KEYWAY spacer window gate, reference/copper/keyway/legacy/gen_keyway.py line 274 (min(a, b) > 15 mm2 of each comb in the window); no coupon; read by packages/checks/src/copper/film.ts (M05-T14)"
+    }
+  },
+  {
+    "id": "vinyl.filmCollectorClear",
+    "value": 1.5,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "KEYWAY slider film to collector gate, reference/copper/keyway/legacy/gen_keyway.py line 277 (VELO_SL.distance(NET['SC']) >= 1.5); no coupon; read by packages/checks/src/copper/wiper.ts (M05-T14)"
+    }
+  },
+  {
+    "id": "vinyl.wiperPadGrow",
+    "value": 0.2,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "KEYWAY wiper stray gate, reference/copper/keyway/legacy/gen_keyway.py line 280 (the collector pad box grown 0.2 before the stray area is taken); no coupon; read by packages/checks/src/copper/wiper.ts (M05-T14)"
+    }
+  },
+  {
+    "id": "vinyl.wiperStrayMax",
+    "value": 0.01,
+    "unit": "mm2",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "KEYWAY wiper stray gate, reference/copper/keyway/legacy/gen_keyway.py line 281 (stray.area < 0.01); CHK-NET-19 title; no coupon; read by packages/checks/src/copper/wiper.ts (M05-T14)"
+    }
+  },
+  {
+    "id": "vinyl.wiperLandMin",
+    "value": 8,
+    "unit": "mm2",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "KEYWAY wiper landing gate, reference/copper/keyway/legacy/gen_keyway.py line 282 (reach.area > 8); no coupon; read by packages/checks/src/copper/wiper.ts (M05-T14)"
+    }
+  },
+  {
+    "id": "vinyl.slotOverFilmMin",
+    "value": 0.995,
+    "unit": "ratio",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "KEYWAY spacer slot gate, reference/copper/keyway/legacy/gen_keyway.py line 283 (slot area over the film above 0.995 of the slot); no coupon; read by packages/checks/src/copper/wiper.ts (M05-T14)"
+    }
+  },
+  {
+    "id": "vinyl.weedErode",
+    "value": 0.75,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "SPLICE rev C README: eroding every shape by 0.75 mm leaves one connected skeleton per net (knowledge/designs/splice.md; CHK-NET-23 title); no code behind it in the bench, no coupon; read by packages/copper/src/vinyl/weed.ts (M05-T14)"
+    }
+  },
+  {
+    "id": "vinyl.spanRailMin",
+    "value": 0.1,
+    "unit": "ratio",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "capacitive slider span floor, reference/copper/vernier/legacy/gen_vernier.py line 250 (0.10 < min(rat)) and the same in QUADRANT, SPLINE, TESSERA, FRET and STAVE; CHK-NET-15 title; no coupon; read by packages/checks/src/copper/ratio.ts (M05-T15)"
+    }
+  },
+  {
+    "id": "vinyl.spanRailMax",
+    "value": 0.9,
+    "unit": "ratio",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "capacitive slider span ceiling, reference/copper/vernier/legacy/gen_vernier.py line 250 (max(rat) < 0.90) and the same in QUADRANT to STAVE; CHK-NET-15 title; no coupon; read by packages/checks/src/copper/ratio.ts (M05-T15)"
+    }
+  },
+  {
+    "id": "vinyl.ratioMonotoneTol",
+    "value": 0.000001,
+    "unit": "ratio",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "slider monotone tolerance, reference/copper/vernier/legacy/gen_vernier.py line 247 (rat[i] > rat[i + 1] - 1e-6) and the same in QUADRANT to STAVE; a float guard; read by packages/checks/src/copper/ratio.ts (M05-T15)"
+    }
+  },
+  {
+    "id": "vinyl.wiringZoneGrow",
+    "value": 4,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "live copper margin around the wiring zone, reference/copper/vernier/legacy/gen_vernier.py line 271 (COPPER.difference(TERMBLK.buffer(4.0))) and the rail zone in QUADRANT to STAVE; no coupon; read by packages/checks/src/copper/mask.ts (M05-T15)"
+    }
+  },
+  {
+    "id": "vinyl.maskShrink",
+    "value": 0.001,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "dielectric cover test shrink, reference/copper/vernier/legacy/gen_vernier.py line 272 (VINYL.buffer(-0.001)) and the same in QUADRANT to STAVE; a float guard; read by packages/checks/src/copper/mask.ts (M05-T15)"
+    }
+  },
+  {
+    "id": "vinyl.bareMax",
+    "value": 0.5,
+    "unit": "mm2",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "bare live copper ceiling, reference/copper/vernier/legacy/gen_vernier.py line 273 (unc.area < 0.5) and the same in QUADRANT to STAVE; CHK-NET-20 title; no coupon; read by packages/checks/src/copper/mask.ts (M05-T15)"
+    }
+  },
+  {
+    "id": "vinyl.apartMax",
+    "value": 0.01,
+    "unit": "mm2",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "overlap under which two regions count as apart, reference/copper/vernier/legacy/gen_vernier.py lines 274 to 276 (vinyl over the clip pads < 0.01), gen_tessera.py lines 294 and 334 (channel strip and slider band against the tiles); a float guard; read by packages/checks/src/copper/mask.ts and zones.ts (M05-T15)"
+    }
+  },
+  {
+    "id": "vinyl.accentEdgeClear",
+    "value": 1,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "accent tiles inside the faceplate edge, reference/copper/vernier/legacy/gen_vernier.py line 282 (within(VINYL.buffer(-1.0))) and the same in QUADRANT to STAVE; no coupon; read by packages/checks/src/copper/mask.ts (M05-T15)"
+    }
+  },
+  {
+    "id": "vinyl.spacingTol",
+    "value": 0.001,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "channel sub-lane spacing tolerance, reference/copper/tessera/legacy/gen_tessera.py line 298 (>= tw + clr - 0.001) and gen_fret.py line 345 (>= MARG - 0.001); a float guard; read by packages/checks/src/copper/rail.ts (M05-T15)"
+    }
+  },
+  {
+    "id": "vinyl.coordTol",
+    "value": 1e-9,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "terminal on its declared coordinate, reference/copper/vernier/legacy/gen_vernier.py line 259 (abs(cx - TOPX) < 1e-9) and gen_quadrant.py line 263 (abs(cx - x0 - i * pitch) < 1e-9); a float guard; read by packages/checks/src/copper/rail.ts (M05-T15)"
+    }
+  }
+]

@@ -1,0 +1,13 @@
+[
+  {
+    "id": "coincidence.rampMinDeg",
+    "value": 40,
+    "unit": "deg",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-09",
+      "source": "packages/mechanisms/seed/mechanisms.seed.yaml line 101 (OGEE R7 to R17): ramp_a at least 40 deg against acrylic friction 0.45, a design value; OGEE16 params.scad line 88 and STIPPLE R17b DATA.P RAMP_A both build at 40; read by packages/mechanisms/src/constraints/coincidence-ramp.ts (M06-T03)"
+    }
+  }
+]

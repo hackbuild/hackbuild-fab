@@ -1,0 +1,13 @@
+[
+  {
+    "id": "latch.identityTolMm",
+    "value": 0.001,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "docs/plan/milestones/M07-motion-nest.md M07-T11 step 5: the CHK-MOT-05 sides, margin + overshoot and (full rise - half rise) - cam lift - LUG_TOT, agree within this on R16 (2.175), R17 (1.1853) and R17b (1.2853) (computed); read by packages/checks/src/defs/mot/CHK-MOT-05.ts"
+    }
+  }
+]

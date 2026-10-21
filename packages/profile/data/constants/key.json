@@ -1,0 +1,57 @@
+[
+  {
+    "id": "key.flexGapFloor",
+    "value": 1.2,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-06",
+      "source": "PIP 2026-09, pip-controller bench/part1.html line 238 (\"never under 1.2 mm\"), CHECKS.md CHK-KEY-01 legal (35 to 50 percent of cone height, floor 1.2, D-241); the floor read by the CHK-KEY-01 run body"
+    }
+  },
+  {
+    "id": "key.flexGapFracMin",
+    "value": 0.35,
+    "unit": "ratio",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "pip-controller bench/part1.html line 233 (contact gap slider flex.gapPct, min 35) and line 238 (\"the gap is held at 35 to 50 percent of the cone, never under 1.2 mm\"); lo end of the CHK-KEY-01 band, read by CHK-KEY-01 (D-241)"
+    }
+  },
+  {
+    "id": "key.flexGapFracMax",
+    "value": 0.5,
+    "unit": "ratio",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "pip-controller bench/part1.html line 233 (contact gap slider flex.gapPct, max 50) and line 238 (\"the gap is held at 35 to 50 percent of the cone, never under 1.2 mm\"); hi end of the CHK-KEY-01 band, read by CHK-KEY-01 (D-241)"
+    }
+  },
+  {
+    "id": "key.capBridgeMax",
+    "value": 4.5,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "pip-controller src/model.js lines 455 to 462 (the flex fits and rules rows: cap bridge at most 4.5 unsupported cTPU); to be read by CHK-KEY-02 and reference/keys/flex-pair/build.ts FITS in a later pass"
+    }
+  },
+  {
+    "id": "key.splitMin",
+    "value": 0.6,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "pip-controller src/model.js lines 455 to 462 (the flex fits and rules rows: split between the column halves at least 0.6, since a string across it reads as a press); to be read by CHK-KEY-03 and reference/keys/flex-pair/build.ts FITS in a later pass"
+    }
+  }
+]

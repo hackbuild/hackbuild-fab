@@ -1,0 +1,90 @@
+[
+  {
+    "id": "stack.bandOverlap.lo",
+    "value": 0.01,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-06",
+      "source": "COAMING 2026-08, CHECKS.md CHK-PRT-02 legal (0.01 to 0.02 mm z overlap of stacked prisms); lo end, read by the mesh stack route"
+    }
+  },
+  {
+    "id": "stack.bandOverlap.hi",
+    "value": 0.02,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-06",
+      "source": "COAMING 2026-08, CHECKS.md CHK-PRT-02 legal (0.01 to 0.02 mm z overlap of stacked prisms); hi end, read by the mesh stack route"
+    }
+  },
+  {
+    "id": "stack.skin",
+    "value": 0.72,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "PIP buried stack default, pip-controller src/layout.js line 27 at b137deb (stack: { layer: 0.24, skin: 0.72, trace: 0.72, iso: 0.96, pad: 0.72, bezel: 2.4 }), lineage pip.layout/pip-controller-b137deb: PETG under trace layer 1 (z.f0, layout.js line 168); PROFILE.md 6.1 (D-085); no coupon recorded; read by reference/electrical/pip-buried-route/build.ts (M05-T10)"
+    }
+  },
+  {
+    "id": "stack.trace",
+    "value": 0.72,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "PIP buried stack default, pip-controller src/layout.js line 27 at b137deb (stack: { layer: 0.24, skin: 0.72, trace: 0.72, iso: 0.96, pad: 0.72, bezel: 2.4 }), lineage pip.layout/pip-controller-b137deb: thickness of each trace layer (layout.js lines 168 to 169); PROFILE.md 6.1 (D-085); no coupon recorded; read by reference/electrical/pip-buried-route/build.ts (M05-T10)"
+    }
+  },
+  {
+    "id": "stack.iso",
+    "value": 0.96,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "PIP buried stack default, pip-controller src/layout.js line 27 at b137deb (stack: { layer: 0.24, skin: 0.72, trace: 0.72, iso: 0.96, pad: 0.72, bezel: 2.4 }), lineage pip.layout/pip-controller-b137deb: 4 layers of PETG between a trace and the one crossing it (layout.js lines 168 to 169; pip-controller print/print-card.txt 'insulation between layers 0.96 mm'); PROFILE.md 6.1 (D-085); the v3 0.48 is retired; no coupon recorded; read by reference/electrical/pip-buried-route/build.ts (M05-T10)"
+    }
+  },
+  {
+    "id": "stack.overL2",
+    "value": 1.68,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "PIP buried stack default, pip-controller src/layout.js line 27 at b137deb (stack: { layer: 0.24, skin: 0.72, trace: 0.72, iso: 0.96, pad: 0.72, bezel: 2.4 }), lineage pip.layout/pip-controller-b137deb: iso 0.96 plus the 0.72 pad floor between layer 2 and the pads (layout.js lines 169 to 171; print/print-card.txt 'PETG over layer 2 1.68 mm'); PROFILE.md 6.1 (D-085); the v3 0.48 is retired; no coupon recorded; read by reference/electrical/pip-buried-route/build.ts (M05-T10)"
+    }
+  },
+  {
+    "id": "stack.traceWidth",
+    "value": 1.4,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "PIP buried stack default, pip-controller src/layout.js line 28 at b137deb (route: { w: 1.4, ... }), drawn with no bleed (D-084); print/print-card.txt 'trace width 1.40 mm, about 3 lines at a 0.4 nozzle'; PROFILE.md 6.1 (D-085); no coupon recorded; read by packages/copper/src/emit/trace-layer.ts and reference/electrical/pip-buried-route/build.ts (M05-T10)"
+    }
+  },
+  {
+    "id": "stack.netToNetMin",
+    "value": 0.6,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "PIP buried stack net-to-net floor: the closest any two nets get on PIP's default model, 0.59999999 mm computed by PIP b137deb model.js lines 216 to 223 (print/print-card.txt and docs/electrical.md call it measured, meaning measured on the model); PIP itself warns only under 0.3 (model.js line 224) and its fits row fails under 0.4 (model.js line 451); PROFILE.md 6.1 (D-085, C-06); the v3 0.3 floor is retired; no coupon recorded; read by CHK-NET-02 and CHK-NET-12 (M05-T10)"
+    }
+  }
+]

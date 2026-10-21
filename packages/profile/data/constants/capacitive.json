@@ -1,0 +1,13 @@
+[
+  {
+    "id": "capacitive.pathCeilOhm",
+    "value": 30000,
+    "unit": "ohm",
+    "provenance": {
+      "tier": "community",
+      "method": "coupon",
+      "date": "2026-10-08",
+      "source": "Schmitz et al., Capricate, UIST 2015 (mschmitz.org PDF), Dimension of Touch Electrodes: touch electrodes 5, 10, 15 and 20 mm in Torwell conductive ABS against series resistors of 20 to 120 kohm in 10 kohm steps; above 30 kohm the SNR drops below 5:1 for every size (evidence/x/web-hci-fab-research/capricate.txt lines 407 to 416); measured by others on their own Ultimaker, 0.8 mm nozzle, 0.2 mm layer; verified-claims.md line 45; D-021; read by CHK-NET-28 through circuit/capacitive-path-ceiling (M05-T12)"
+    }
+  }
+]

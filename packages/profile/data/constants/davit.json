@@ -1,0 +1,123 @@
+[
+  {
+    "id": "davit.touchMm",
+    "value": 1.2,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-06",
+      "source": "davit.html DATA.const.touch (lineage davit.collide/r3-page): two unmasked proxy points closer than this are a contact; read by sim/proxy collide (M02-T06)"
+    }
+  },
+  {
+    "id": "davit.calibMarginMm",
+    "value": 1.45,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-06",
+      "source": "pack_sim.py MARGIN (lineage davit.calib/r4): the legacy calibration masks every point within this of the other body, runtime touch 1.2; read by sim/proxy masks (M02-T06)"
+    }
+  },
+  {
+    "id": "davit.closestReachMm",
+    "value": 5,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-06",
+      "source": "M02-T06 step 5 report: a declared pair is scanned to this reach so its closest unmasked approach is reported; chosen for the report, not a legacy number"
+    }
+  },
+  {
+    "id": "davit.sampleSpacingMm",
+    "value": 5,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-06",
+      "source": "M02-T06 step 7: surface sampling lattice spacing for Stage B proxies, chosen so one std calibration over the gated pose set runs under the 60 s test budget and the R3 grip-tab interference is still found; recorded in packages/sim/records/davit-sweep.json"
+    }
+  },
+  {
+    "id": "davit.interferenceMm3",
+    "value": 0.5,
+    "unit": "mm3",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-06",
+      "source": "sweep.py fails (lineage davit.sweep/r4): an exact intersection above this volume is a fail; read by M02-T06 R4 parity"
+    }
+  },
+  {
+    "id": "davit.groupCellMm",
+    "value": 6,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-06",
+      "source": "pack_sim.py prox_record uses cubes of 13 mm over 850 points (lineage davit.calib/r4, about 14 points per group); Stage B holds about 5000 points per body at the sampling spacing, so the cube edge is 6 mm to keep groups of the same order; read by sim/proxy build (M02-T06)"
+    }
+  },
+  {
+    "id": "davit.penetrationMm",
+    "value": 0.1,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-06",
+      "source": "M02-T06 step 7: a point is inside a body only when it and its six neighbours at this offset are inside, so flush contact is not read as interference; chosen, not a legacy number"
+    }
+  },
+  {
+    "id": "davit.tier1SpacingMm",
+    "value": 3,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-06",
+      "source": "M02-T06 step 11: point lattice spacing of the R4 parity tier 1 distance sweep; sweep.py samples 2600 to 6000 random surface points, this is the deterministic equivalent, chosen"
+    }
+  },
+  {
+    "id": "davit.tier2ReachMm",
+    "value": 3,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-06",
+      "source": "M02-T06 step 11: a pair whose sampled closest approach is under this goes to the exact boolean; sweep.py uses 1.0 mm on its denser sample, so this reach is wider because the lattice overestimates distance by up to half its spacing"
+    }
+  },
+  {
+    "id": "davit.tier2Poses",
+    "value": 3,
+    "unit": "count",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-06",
+      "source": "M02-T06 step 11: the exact boolean runs at this many poses of one pair sweep, the ones with the smallest sampled distance; sweep.py runs it at the single worst pose"
+    }
+  },
+  {
+    "id": "davit.hornHubShaveMm",
+    "value": 0.25,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-06",
+      "source": "sweep.py check_horn (lineage davit.sweep/r4): the horn hub is checked 0.25 mm short so the designed 0.2 mm clamp of the printed recess (lib.py horn_recess_cut, hub_relief minus 0.2) does not alarm"
+    }
+  }
+]

@@ -1,0 +1,123 @@
+[
+  {
+    "id": "detent.throw",
+    "value": 150,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "originals/detent/files/beam/detent-plot.html line 479 (S.throw, mirror to target; lineage detent.plot/beam; the copy designs/detent/legacy/detent-plot.html is byte identical); the page default, no rig measured; read by packages/motion/src/planners/detent-steps.ts (M07-T12)"
+    }
+  },
+  {
+    "id": "detent.sep",
+    "value": 22,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "originals/detent/files/beam/detent-plot.html line 479 (S.sep, mirror separation; lineage detent.plot/beam; the copy designs/detent/legacy/detent-plot.html is byte identical); the page default; read by packages/motion/src/planners/detent-steps.ts (M07-T12)"
+    }
+  },
+  {
+    "id": "detent.fieldW",
+    "value": 120,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "originals/detent/files/beam/detent-plot.html line 479 (S.W, the target field the four corners frame; lineage detent.plot/beam; the copy designs/detent/legacy/detent-plot.html is byte identical); the page default; read by packages/motion/src/calibrate.ts (M07-T12)"
+    }
+  },
+  {
+    "id": "detent.fieldH",
+    "value": 120,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "originals/detent/files/beam/detent-plot.html line 479 (S.H; lineage detent.plot/beam; the copy designs/detent/legacy/detent-plot.html is byte identical); the page default; read by packages/motion/src/calibrate.ts (M07-T12)"
+    }
+  },
+  {
+    "id": "detent.rate",
+    "value": 400,
+    "unit": "half steps/s",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "originals/detent/files/beam/detent-plot.html line 484 (S.rate, beam-on rate; lineage detent.plot/beam; the copy designs/detent/legacy/detent-plot.html is byte identical); the page default; read by packages/motion/src/planners/detent-steps.ts (M07-T12)"
+    }
+  },
+  {
+    "id": "detent.travel",
+    "value": 500,
+    "unit": "half steps/s",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "originals/detent/files/beam/detent-plot.html line 484 (S.travel, beam-off rate; lineage detent.plot/beam; the copy designs/detent/legacy/detent-plot.html is byte identical); the page default; read by packages/motion/src/planners/detent-steps.ts (M07-T12)"
+    }
+  },
+  {
+    "id": "detent.accel",
+    "value": 3000,
+    "unit": "half steps/s2",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "originals/detent/files/beam/detent-plot.html line 214 (mAccel input default, floored at 200 by planSpeeds line 1107; lineage detent.plot/beam; the copy designs/detent/legacy/detent-plot.html is byte identical); read by packages/motion/src/planners/detent-steps.ts (M07-T12)"
+    }
+  },
+  {
+    "id": "detent.vFloor",
+    "value": 120,
+    "unit": "half steps/s",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "originals/detent/files/beam/detent-plot.html line 1108 (vFloor, safe pull-in rate from standstill; lineage detent.plot/beam; the copy designs/detent/legacy/detent-plot.html is byte identical); read by packages/motion/src/planners/detent-steps.ts (M07-T12)"
+    }
+  },
+  {
+    "id": "detent.vMin",
+    "value": 60,
+    "unit": "half steps/s",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "originals/detent/files/beam/detent-plot.html line 1149 (the lowest rate an interval is computed from; lineage detent.plot/beam; the copy designs/detent/legacy/detent-plot.html is byte identical); read by packages/motion/src/planners/detent-steps.ts (M07-T12)"
+    }
+  },
+  {
+    "id": "detent.tickHz",
+    "value": 20000,
+    "unit": "Hz",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "originals/detent/files/beam/detent-plot.html line 1102 (TICKHZ, must match firmware TICK_HZ; lineage detent.plot/beam; the copy designs/detent/legacy/detent-plot.html is byte identical); read by packages/motion/src/planners/detent-steps.ts (M07-T12)"
+    }
+  },
+  {
+    "id": "detent.batchMax",
+    "value": 6,
+    "unit": "points",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-08",
+      "source": "originals/detent/files/beam/detent-plot.html line 1769 (streamCmds batchMax, points per S line to stay under the BLE MTU; lineage detent.plot/beam; the copy designs/detent/legacy/detent-plot.html is byte identical); read by packages/motion/src/serialise.ts (M07-T12)"
+    }
+  }
+]

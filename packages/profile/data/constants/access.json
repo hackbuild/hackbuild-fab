@@ -1,0 +1,35 @@
+[
+  {
+    "id": "access.pressTargetN",
+    "value": 1.47,
+    "unit": "N",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-20",
+      "source": "150 g times standard gravity 9.80665 m/s2 (a defined constant) is 1.471 N (computed), rounded to 1.47; 150 g is the owner's design target \"Accessibility switch, 150 g press\" (fab-knowledge/plan-v5/old-skills-scenarios.md line 17), a target and not a measured feel; read by the access switch force claim (R1-flagship-access-switch-04)"
+    }
+  },
+  {
+    "id": "access.pressBandPct",
+    "value": 20,
+    "unit": "percent",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-20",
+      "source": "design band either side of access.pressTargetN, 1.18 to 1.76 N or 120 to 180 g (computed); chosen to match click.modulusSpreadPct so the drawn point can sit inside it while the modulus is a working value; no coupon recorded; read by the access switch force claim (R1-flagship-access-switch-04)"
+    }
+  },
+  {
+    "id": "access.paddleGuideClr",
+    "value": 0.4,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-20",
+      "source": "diametral clearance of the access switch paddle in its guide: the PIP click row \"cap through bezel hole\" 0.5 diametral (packages/archetypes/src/pip/click.ts line 91) less one 0.1 mm step because the paddle guide is longer than the bezel hole; no coupon recorded; read by the access switch design (R1-flagship-access-switch-02)"
+    }
+  }
+]

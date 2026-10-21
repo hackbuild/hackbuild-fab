@@ -1,0 +1,35 @@
+[
+  {
+    "id": "knurl.pawlStrainMax",
+    "value": 0.02,
+    "unit": "ratio",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-09",
+      "source": "originals/knurl/files/knurl.html line 1202 (lineage knurl.bench/knurl-8): the detent strip warns past 2 percent strain at full lift; KNURL design band, no coupon; read by packages/mechanisms/src/constraints/detent-bands.ts (M06-T04)"
+    }
+  },
+  {
+    "id": "knurl.clickMinN",
+    "value": 0.4,
+    "unit": "N",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-09",
+      "source": "originals/knurl/files/knurl.html line 1204: a click under 0.4 N reads faint; KNURL design band, no coupon; read by packages/mechanisms/src/constraints/detent-bands.ts (M06-T04)"
+    }
+  },
+  {
+    "id": "knurl.clickMaxN",
+    "value": 3,
+    "unit": "N",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-09",
+      "source": "originals/knurl/files/knurl.html line 1203: a click over 3 N reads stiff; KNURL design band, no coupon; read by packages/mechanisms/src/constraints/detent-bands.ts (M06-T04)"
+    }
+  }
+]

@@ -1,0 +1,24 @@
+[
+  {
+    "id": "plate.minArea",
+    "value": 120,
+    "unit": "mm2",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-04",
+      "source": "seed constants.plate.minArea (COFFER finger-scale gate); COFFER finger-scale gate"
+    }
+  },
+  {
+    "id": "plate.minInscribed",
+    "value": 4.5,
+    "unit": "mm",
+    "provenance": {
+      "tier": "inferred",
+      "method": "derived",
+      "date": "2026-10-04",
+      "source": "seed constants.plate.minInscribed (COFFER); COFFER (polylabel)"
+    }
+  }
+]
