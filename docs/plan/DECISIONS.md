@@ -585,6 +585,13 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-529 | The host passes the code gate in, already bound to the build's params | decided | UI |
 | D-530 | view.light rests at PIP's key light and only aims that light | decided | UI |
 | D-531 | The netlens lens ghosts every body not on the lit net | decided | UI |
+| D-532 | seeed tier is vendor only for Seeed's own products | decided | Canons, reference, profile, catalog |
+| D-533 | a catalog fetch clone with the wrong origin is refused | decided | Canons, reference, profile, catalog |
+| D-534 | fetched catalog rows pass the catalog loader before any write | decided | Canons, reference, profile, catalog |
+| D-535 | catalog fetch stays all-or-none over refused footprints | decided | Canons, reference, profile, catalog |
+| D-536 | recorded kicad fetch tests name the gitlab origin | decided | Canons, reference, profile, catalog |
+| D-537 | catalog.find fetch copy split between the description and the field describe | decided | Canons, reference, profile, catalog |
+| D-538 | the seeed fetch example queries XIAO-RP2040-SMD | decided | Canons, reference, profile, catalog |
 
 ## House rules and process
 
@@ -6481,6 +6488,83 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. In lens mode, bodies off the lit net, including bodies with no net, draw at the existing ghost opacity, XRAY_GHOST (0.13). Lens is off in plate mode. |
 | Rationale | This reuses the existing xray ghost opacity, so no new number is introduced. |
 | Evidence | `packages/ui-core/src/viewer/scene.ts` draw() |
+| Supersedes | new |
+| Milestone | none |
+
+### D-532 seeed tier is vendor only for Seeed's own products
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. A `catalog.find --fetch seeed` row is tier vendor when its path starts with `Seeed Studio ` or it is a root `XIAO*.kicad_mod` file. Under `Seeed Fusion Component Libraries for KiCad/OPL_*` it is tier community. |
+| Rationale | `parts-sources.md` section 3 says a footprint from the part maker's own library is vendor. The OPL_* folders hold other makers' parts (switches, ICs, passives) drawn by Seeed Fusion. |
+| Evidence | `git ls-tree` of OPL_Kicad_Library at b0035c51 (measured 2026-10-20): 13 OPL_*.pretty folders plus the Seeed Studio XIAO Series Library, Wio folders and a root XIAO-STM32C5-SMD.kicad_mod. `core/test/catalog-fetch-sources.test.ts`; a mutant setting the rule to community fails 2 of 8 tests (measured by the builder). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-533 a catalog fetch clone with the wrong origin is refused
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `fetchKicadRows` throws E_KERNEL when the clone's origin differs from `FETCH_SOURCES[source].origin` in `core/src/catalog-fetch.ts`, and writes nothing. |
+| Rationale | A row's source must name the library its bytes came from. A stale or edited clone would otherwise give false provenance. |
+| Evidence | `core/test/catalog-fetch-sources.test.ts`, test "a clone whose origin is not the library's". |
+| Supersedes | new |
+| Milestone | none |
+
+### D-534 fetched catalog rows pass the catalog loader before any write
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. Each row built by a catalog fetch goes through `loadRow` with `KICAD_RESOLVERS` on an in-memory file set before anything is written. A refusal stops the fetch, keeping the existing all-or-none rule. |
+| Rationale | The first network run wrote XIAO-RP2040-DIP rows that the loader refuses (pad 1 listed twice), which breaks every later `catalog.find` in that workspace. |
+| Evidence | `.hbf-notes/fetch-rp2040.log` in the builder worktree (measured 2026-10-20), and the test "pad 1 listed twice ... nothing written" in `core/test/catalog-fetch-sources.test.ts`. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-535 catalog fetch stays all-or-none over refused footprints
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. A fetch whose hits include one footprint the catalog cannot read writes nothing, so `catalog.find XIAO --fetch seeed` is refused (E_SCHEMA, pad shape custom). The R1-designs-reach-04 done condition was met on the narrower query `XIAO-RP2040-SMD`, which writes 1 vendor row. Skipping refused footprints instead is left to the owner. |
+| Rationale | The M08-T14 test "the fetch stops and the first row is not written" fixes this behaviour, and changing it is the owner's call. |
+| Evidence | `.hbf-notes/net.log` in the builder worktree (measured 2026-10-20). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-536 recorded kicad fetch tests name the gitlab origin
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The origins in `core/test/catalog-commands.test.ts` changed from the GitHub mirror to `https://gitlab.com/kicad/libraries/kicad-footprints.git`. |
+| Rationale | `--fetch kicad` now requires the gitlab origin, and commit 7ebfa6b2 is a commit of the gitlab repository too. |
+| Evidence | The gitlab API `/projects/kicad%2Flibraries%2Fkicad-footprints/repository/commits/7ebfa6b2...` returned the commit (measured 2026-10-20 by the builder). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-537 catalog.find fetch copy split between the description and the field describe
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The `catalog.find` description keeps one sentence about fetch: both libraries and their tier rule. The note that each fetched row records its origin, commit and licence moves to the `fetch` field's describe in `packages/commands/src/defs/catalog-find.ts`. |
+| Rationale | The contract caps a command description at 120 words; the round 1 sentence took `catalog.find` to 144 (measured). |
+| Evidence | `core/test/contract.test.ts` passes on the merged tree (measured 2026-10-20); `packages/commands/src/defs/catalog-find.ts`. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-538 the seeed fetch example queries XIAO-RP2040-SMD
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The seeed example in the `catalog.find` def queries `XIAO-RP2040-SMD` instead of `XIAO`. |
+| Rationale | The query `XIAO` is refused for a custom pad shape and writes nothing (D-535); `XIAO-RP2040-SMD` writes one vendor row. |
+| Evidence | Builder network run 2026-10-20 (measured): `seeed-xiao-rp2040-smd/row.json` written with tier vendor, source OPL_Kicad_Library at commit b0035c51. |
 | Supersedes | new |
 | Milestone | none |
 
