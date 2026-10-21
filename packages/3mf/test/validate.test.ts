@@ -190,39 +190,71 @@ function modeOf(v: unknown): ValidateMode | undefined {
   return s === "export" || s === "legacy" || s === "roundtrip" ? s : undefined;
 }
 
-const MANIFEST = join(CORPUS, "manifest.json");
+// Every temp folder this file makes is removed when its tests end.
+const TEMPS: string[] = [];
+afterAll(() => {
+  for (const d of TEMPS) rmSync(d, { recursive: true, force: true });
+});
 
-/** Every row of tools/corpus/3mf/manifest.json (M00-T10). A row naming a missing file throws; no row is dropped. */
-function corpusRows(): Row[] {
-  const m = JSON.parse(readFileSync(MANIFEST, "utf8")) as { rows: Record<string, unknown>[] };
-  return m.rows.map((r) => {
+const MANIFEST = join(CORPUS, "manifest.json");
+// A private row's copy sits outside this repo (tools/corpus/3mf/run.py, same default and variable).
+const PRIVATE = process.env["HBF_CORPUS"] || join(REPO, "../fab-knowledge/originals/_corpus");
+
+interface Corpus { readonly rows: Row[]; readonly notRun: string[] }
+
+/**
+ * Every row of tools/corpus/3mf/manifest.json (M00-T10). A repo row naming a
+ * missing file throws; a private row whose copy is absent under the private
+ * root is listed in notRun, never dropped silently and never passed.
+ */
+function corpusRows(m: { rows: Record<string, unknown>[] } = JSON.parse(readFileSync(MANIFEST, "utf8")), privateRoot = PRIVATE): Corpus {
+  const rows: Row[] = [];
+  const notRun: string[] = [];
+  for (const r of m.rows) {
+    const id = String(r["id"]);
+    const where = r["where"];
+    if (where !== "repo" && where !== "private") throw new Error(`manifest row ${id} where ${String(where)} is neither repo nor private`);
+    const root = where === "repo" ? CORPUS : privateRoot;
     const p = String(r["path"] ?? "");
-    const file = p.startsWith("/") ? p : join(CORPUS, p);
-    if (p === "" || !existsSync(file) || !statSync(file).isFile()) throw new Error(`manifest row ${String(r["id"])} names a missing file: ${file}`);
+    const file = join(root, p);
+    if (p === "" || !existsSync(file) || !statSync(file).isFile()) {
+      if (where === "private" && p !== "") { notRun.push(id); continue; }
+      throw new Error(`manifest row ${id} names a missing file: ${file}`);
+    }
     const mode = String(r["mode"] ?? "").split(/\s+/).map(modeOf).find((x) => x !== undefined) ?? "export";
     const target = r["target"] === "core" ? "core" as const : "bbs" as const;
     const stl = r["stlZip"];
     let stlZip: string | undefined;
     if (typeof stl === "string") {
-      stlZip = stl.startsWith("/") ? stl : join(CORPUS, stl);
-      if (!existsSync(stlZip)) throw new Error(`manifest row ${String(r["id"])} names a missing stl zip: ${stlZip}`);
+      stlZip = join(root, stl);
+      if (!existsSync(stlZip)) throw new Error(`manifest row ${id} names a missing stl zip: ${stlZip}`);
     }
-    return { file, mode, target, ...(stlZip !== undefined ? { stlZip } : {}) };
-  });
+    rows.push({ file, mode, target, ...(stlZip !== undefined ? { stlZip } : {}) });
+  }
+  return { rows, notRun };
 }
 
 describe("corpus manifest (M00-T10)", () => {
-  it("resolves every manifest row to a file, dropping none", () => {
-    const m = JSON.parse(readFileSync(MANIFEST, "utf8")) as { rows: unknown[] };
-    expect(m.rows.length).toBeGreaterThan(0);
-    expect(corpusRows()).toHaveLength(m.rows.length);
-  });
-});
+  const m = JSON.parse(readFileSync(MANIFEST, "utf8")) as { rows: Record<string, unknown>[] };
+  const corpus = corpusRows(m);
+  if (corpus.notRun.length > 0) console.log(`${corpus.notRun.length} private rows not run: no copy under ${PRIVATE} (set HBF_CORPUS)`);
 
-// Every temp folder this file makes is removed when its tests end.
-const TEMPS: string[] = [];
-afterAll(() => {
-  for (const d of TEMPS) rmSync(d, { recursive: true, force: true });
+  it("resolves every manifest row to a file or a counted private row, dropping none", () => {
+    expect(m.rows.length).toBeGreaterThan(0);
+    expect(corpus.rows.length + corpus.notRun.length).toBe(m.rows.length);
+  });
+
+  it("throws when a repo row's copy is missing and counts an absent private row", () => {
+    const tenon = m.rows.find((r) => r["id"] === "tenon-known-good");
+    if (tenon === undefined) throw new Error("manifest lost row tenon-known-good");
+    const empty = mkdtempSync(join(tmpdir(), "hbf-corpus-"));
+    TEMPS.push(empty);
+    expect(() => corpusRows({ rows: [{ ...tenon, path: "owner/downloads/absent.3mf" }] }, empty)).toThrow(/tenon-known-good names a missing file/);
+    expect(() => corpusRows({ rows: [{ ...tenon, where: undefined }] }, empty)).toThrow(/neither repo nor private/);
+    expect(corpusRows({ rows: [{ ...tenon, where: "private" }] }, empty)).toEqual({ rows: [], notRun: ["tenon-known-good"] });
+  });
+
+  for (const id of corpus.notRun) it.skip(`${id}: private, not run`, () => undefined);
 });
 
 /** Rows the agreement covers besides the corpus: synthetic known-bad and writer exports, written to a temp dir. */
@@ -272,7 +304,7 @@ function verdicts(results: readonly Pick<CheckResult, "id" | "verdict" | "target
 // CI installs uv (setup-uv); there a missing uv fails the suite instead of skipping it.
 describe.skipIf(!UV && process.env["CI"] === undefined)("agreement with tools/py/validate_3mf.py (step 8)", async () => {
   it("finds uv", () => expect(UV, "uv is on PATH").toBe(true));
-  const rows = [...corpusRows(), ...(await syntheticRows())];
+  const rows = [...corpusRows().rows, ...(await syntheticRows())];
   it.each(rows.map((r) => [`${relative(REPO, r.file)} --${r.mode} --target ${r.target}`, r] as const))("%s", async (_, row) => {
     const args = ["run", "--project", "tools/py", "tools/py/validate_3mf.py", `--${row.mode}`, "--target", row.target, "--json", row.file];
     if (row.stlZip !== undefined) args.splice(4, 0, "--stl-zip", row.stlZip);

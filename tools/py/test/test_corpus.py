@@ -64,6 +64,44 @@ def test_owner_copies_and_gold_once():
     assert [p.relative_to(CORPUS).as_posix() for p in copies] == [gold["path"]]
 
 
+def test_every_row_says_where_its_copy_sits():
+    assert {r["where"] for r in rows()} <= set(run.WHERE)
+    rs = copy.deepcopy(rows())
+    del rs[0]["where"]
+    problems = []
+    run.check_manifest(rs, problems)
+    assert any("where None is neither repo nor private" in p for p in problems)
+
+
+def test_a_repo_row_without_its_copy_fails():
+    rs = copy.deepcopy(rows())
+    tenon = next(r for r in rs if r["id"] == "tenon-known-good")
+    target = next(r for r in rs if r["id"] == tenon["sameAs"])
+    target["path"] = tenon["path"] = "owner/downloads/absent.3mf"
+    problems = []
+    run.check_manifest(rs, problems)
+    assert "manifest: %s has no copy at owner/downloads/absent.3mf" % target["id"] in problems
+
+
+def test_a_private_row_without_its_copy_is_counted_not_run(tmp_path, monkeypatch, capsys):
+    m = json.loads((CORPUS / "manifest.json").read_text(encoding="utf-8"))
+    tenon = next(r for r in m["rows"] if r["id"] == "tenon-known-good")
+    for r in m["rows"]:
+        if r["id"] in (tenon["id"], tenon["sameAs"]):
+            r["where"] = "private"
+    manifest = tmp_path / "manifest.json"
+    manifest.write_text(json.dumps(m), encoding="utf-8")
+    empty = tmp_path / "corpus"
+    empty.mkdir()
+    monkeypatch.setattr(run, "MANIFEST", manifest)
+    monkeypatch.setenv(run.CORPUS_VAR, str(empty))
+    run.main(["--set", "tenon-known-good"])
+    out = capsys.readouterr().out
+    assert "1 private rows not run: no copy under %s" % empty in out
+    assert "0 rows," in out
+    assert " of 1 " not in out
+
+
 def test_synthetic_fixtures_match_make_known_bad():
     p = subprocess.run([sys.executable, str(CORPUS / "make_known_bad.py"), "--check"], capture_output=True, text=True, cwd=REPO)
     assert p.returncode == 0, p.stdout + p.stderr

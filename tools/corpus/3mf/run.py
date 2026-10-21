@@ -12,6 +12,13 @@ validators disagree on a row, or when the manifest itself is wrong: a copy
 whose sha256 drifted, a sameAs row whose source differs from its target,
 two sources that slugify to one destination, or a corpus file no row names.
 
+A row's `where` says where its copy sits: repo (beside this file, tracked)
+or private (under HBF_CORPUS, default the sibling
+fab-knowledge/originals/_corpus/). A repo row whose copy is missing is a
+manifest problem. A private row runs where its copy is present and is
+otherwise counted in "N private rows not run", never passed; reports and
+set asserts then do not run either.
+
 Expectations (manifest row `expect`):
   pass    the validator passes the file
   fail    the validator fails it, and the failing check ids equal failsWith
@@ -29,6 +36,7 @@ import argparse
 import hashlib
 import importlib.util
 import json
+import os
 import re
 import subprocess
 import sys
@@ -46,6 +54,10 @@ SEED_TEMPLATE = HERE / "seed-97.json"
 GOLD_ID = "gold"
 SLICE_INFO = "Metadata/slice_info.config"
 PLATE_JSON = "Metadata/plate_1.json"
+# The folder holding this repo and its siblings; a publish-form source (tools/publish-paths.mjs) resolves against it.
+SIBLINGS = REPO.parent
+CORPUS_VAR = "HBF_CORPUS"
+WHERE = ("repo", "private")
 # Sets whose copies keep the source file name under the slug rule (step 1); known-bad and gold are renamed on purpose.
 SLUGGED_SETS = ("boss", "owner", "sprue", "legacy", "cotter", "roundtrip", "downloads")
 # How a set's line reads when every row in it shares one expectation.
@@ -60,6 +72,31 @@ def slug(name):
     """Lowercase; each run of characters outside [a-z0-9._-] becomes one '-'; '-' dropped at either end of the stem."""
     stem, ext = (name[:-4], name[-4:].lower()) if name.lower().endswith(".3mf") else (name, "")
     return re.sub(r"[^a-z0-9._-]+", "-", stem.lower()).strip("-") + ext
+
+
+def private_root():
+    return Path(os.environ.get(CORPUS_VAR) or SIBLINGS / "fab-knowledge/originals/_corpus")
+
+
+def root_of(row):
+    return HERE if row.get("where") == "repo" else private_root()
+
+
+def file_of(row, key="path"):
+    """The local copy a row names: beside this file for a repo row, under the private root otherwise."""
+    return root_of(row) / row[key]
+
+
+def present(row):
+    return row.get("where") == "repo" or file_of(row).is_file()
+
+
+def source_file(src):
+    """The local file a publish-form source names, e.g. fab-knowledge:evidence/x/a.3mf or 3d/coin/b.3mf."""
+    for root in ("fab-knowledge", "fab-work-directory"):
+        if src.startswith(root + ":"):
+            return SIBLINGS / root / src[len(root) + 1:]
+    return Path.home() / src[2:] if src.startswith("~/") else SIBLINGS / src
 
 
 def parse_mode(mode):
@@ -83,6 +120,8 @@ def check_manifest(rows, problems):
         if r["id"] in by_id:
             problems.append("manifest: id %s appears twice" % r["id"])
         by_id[r["id"]] = r
+        if r.get("where") not in WHERE:
+            problems.append("manifest: %s where %s is neither repo nor private" % (r["id"], r.get("where")))
     dest = {}
     for r in rows:
         if "sameAs" in r:
@@ -93,32 +132,33 @@ def check_manifest(rows, problems):
             if r["sha256"] != t["sha256"]:
                 problems.append("manifest: %s source sha256 %s differs from %s sha256 %s"
                                 % (r["id"], r["sha256"][:12], t["id"], t["sha256"][:12]))
-            if r["path"] != t["path"]:
+            if r["path"] != t["path"] or r.get("where") != t.get("where"):
                 problems.append("manifest: %s path %s is not its target's copy %s" % (r["id"], r["path"], t["path"]))
         else:
-            if r["path"] in dest:
-                problems.append("manifest: %s and %s both land at %s" % (dest[r["path"]], r["id"], r["path"]))
-            dest[r["path"]] = r["id"]
-            p = HERE / r["path"]
+            p = file_of(r)
+            if p in dest:
+                problems.append("manifest: %s and %s both land at %s" % (dest[p], r["id"], r["path"]))
+            dest[p] = r["id"]
             if not p.is_file():
-                problems.append("manifest: %s has no copy at %s" % (r["id"], r["path"]))
+                if r.get("where") == "repo":
+                    problems.append("manifest: %s has no copy at %s" % (r["id"], r["path"]))
             elif sha256(p) != r["sha256"]:
                 problems.append("manifest: %s copy sha256 %s differs from the row %s" % (r["id"], sha256(p)[:12], r["sha256"][:12]))
             if r["set"] in SLUGGED_SETS and Path(r["path"]).name != slug(Path(r["source"]).name):
                 problems.append("manifest: %s lands at %s, the slug of %s is %s"
                                 % (r["id"], r["path"], Path(r["source"]).name, slug(Path(r["source"]).name)))
-        src = Path(r["source"])
+        src = source_file(r["source"])
         if src.is_file() and "edit" not in r and sha256(src) != r["sha256"]:
             problems.append("manifest: %s source %s changed since it was copied" % (r["id"], src))
         if "edit" in r and src.is_file() and sha256(src) != r.get("sourceSha256"):
             problems.append("manifest: %s edit source %s changed since the fixture was made" % (r["id"], src))
-    named = {HERE / p for p in dest} | {HERE / r["stlZip"] for r in rows if "stlZip" in r}
+    named = set(dest) | {file_of(r, "stlZip") for r in rows if "stlZip" in r}
     for f in sorted(HERE.rglob("*")):
         if f.suffix in (".3mf", ".zip") and f not in named:
             problems.append("manifest: %s is in the corpus but no row names it" % f.relative_to(HERE))
     gold = by_id.get(GOLD_ID)
     if gold is not None:
-        copies = [p for p in dest if (HERE / p).is_file() and sha256(HERE / p) == gold["sha256"]]
+        copies = [p for p in dest if p.is_file() and sha256(p) == gold["sha256"]]
         if len(copies) != 1:
             problems.append("manifest: the gold sha256 appears %d times among copied files" % len(copies))
     return by_id
@@ -127,8 +167,8 @@ def check_manifest(rows, problems):
 # ------------------------------------------------------------------ the two validators
 def run_python(v, row, problems):
     mode, overlap = parse_mode(row["mode"])
-    path = HERE / row["path"]
-    stl = HERE / row["stlZip"] if "stlZip" in row else None
+    path = file_of(row)
+    stl = file_of(row, "stlZip") if "stlZip" in row else None
     out = {"error": None, "verdict": None, "fails": [], "results": [], "keySet": None, "names": None}
     try:
         rep = v.validate(path, mode, row.get("target", "bbs"), overlap, None, stl, quiet=True)
@@ -156,9 +196,9 @@ def run_mirror(rows):
     batch = []
     for r in rows:
         mode, _ = parse_mode(r["mode"])
-        item = {"id": r["id"], "file": str(HERE / r["path"]), "mode": mode, "target": r.get("target", "bbs")}
+        item = {"id": r["id"], "file": str(file_of(r)), "mode": mode, "target": r.get("target", "bbs")}
         if "stlZip" in r:
-            item["stlZip"] = str(HERE / r["stlZip"])
+            item["stlZip"] = str(file_of(r, "stlZip"))
         if r.get("asserts", {}).get("names"):
             item["names"] = True
         batch.append(item)
@@ -225,7 +265,7 @@ def check_asserts(row, py):
         if ks.get("templateLengths") != {str(n): ks.get("present")}:
             bad.append("template vectors %s at N %s" % (json.dumps(ks.get("templateLengths")), n))
     for k, want in a.get("sliceInfo", {}).items():
-        got = slice_info(HERE / row["path"]).get(k)
+        got = slice_info(file_of(row)).get(k)
         if got != want:
             bad.append("slice_info %s %s, expected %s" % (k, got, want))
     if "completeness" in a:
@@ -311,9 +351,9 @@ def owner_keysets(rows, results):
         if r["set"] != "owner":
             continue
         ks = results[r["id"]]["keySet"] or {}
-        ps = project_settings(HERE / r["path"])
+        ps = project_settings(file_of(r))
         out.append(OrderedDict([
-            ("id", r["id"]), ("source", r["source"]), ("application", application(HERE / r["path"])),
+            ("id", r["id"]), ("source", r["source"]), ("application", application(file_of(r))),
             ("printerPreset", ps.get("printer_settings_id")), ("filaments", ks.get("filaments")),
             ("templatePresent", ks.get("present")), ("templateAbsent", ks.get("absent", [])),
             ("nonTemplateAtN", sorted(k for k in ks.get("nonTemplate", [])
@@ -340,13 +380,13 @@ def roundtrips(rows, results, seed_only):
         gens = [r for r in rs if r["role"] == "generator"]
         saves = [r for r in rs if r["role"] == "save"]
         g = gens[0] if gens else None
-        gps = project_settings(HERE / g["path"]) if g else {}
+        gps = project_settings(file_of(g)) if g else {}
         rec = OrderedDict([("project", name), ("generator", g["id"] if g else None)])
         if g:
             rec["generatorFilaments"] = len(gps.get("filament_colour", [])) or None
         cmp = []
         for s in saves:
-            sps = project_settings(HERE / s["path"])
+            sps = project_settings(file_of(s))
             ks = results[s["id"]]["keySet"] or {}
             c = OrderedDict([("save", s["id"]), ("filaments", ks.get("filaments")),
                              ("templateAtN", ks.get("templateLengths", {}).get(str(ks.get("filaments")), 0)),
@@ -355,15 +395,15 @@ def roundtrips(rows, results, seed_only):
                 n = min(len(gps.get("filament_type", [])), len(sps.get("filament_type", [])))
                 for k in ("filament_type", "filament_ids"):
                     c[k + "Equal"] = (gps.get(k, [])[:n] == sps.get(k, [])[:n]) if k in gps else None
-                c["partMapEqual"] = part_map(HERE / g["path"]) == part_map(HERE / s["path"])
+                c["partMapEqual"] = part_map(file_of(g)) == part_map(file_of(s))
             c["layerHeight"] = sps.get("layer_height")
-            z = zipfile.ZipFile(HERE / s["path"])
+            z = zipfile.ZipFile(file_of(s))
             if PLATE_JSON in z.namelist():
                 c["plateLayerHeights"] = sorted({o.get("layer_height") for o in json.loads(z.read(PLATE_JSON)).get("bbox_objects", [])
                                                  if o.get("layer_height") is not None})
             cmp.append(c)
         rec["saves"] = cmp
-        side = HERE / "owner/roundtrip" / name / (name + ".json")
+        side = root_of(rs[0]) / "owner/roundtrip" / name / (name + ".json")
         if side.is_file():
             rec["appLayerHeight"] = json.loads(side.read_text(encoding="utf-8")).get("print", {}).get("layer")
         out.append(rec)
@@ -413,12 +453,14 @@ def main(argv):
     rows = manifest["rows"]
     problems = []
     check_manifest(rows, problems)
-    run_rows = [r for r in rows if a.only is None or r["set"] == a.only]
+    chosen = [r for r in rows if a.only is None or r["set"] == a.only]
+    run_rows = [r for r in chosen if present(r)]
+    absent = len(chosen) - len(run_rows)
 
     v = load_validator(a.validator)
     py = {r["id"]: run_python(v, r, problems) for r in run_rows}
     try:
-        ts = run_mirror(run_rows)
+        ts = run_mirror(run_rows) if run_rows else {}
     except RuntimeError as ex:
         problems.append("mirror: %s" % ex)
         ts = {}
@@ -441,8 +483,12 @@ def main(argv):
         verb = VERB[exps.pop()] if len(exps) == 1 else "as expected"
         print("%s %d of %d %s" % (labels.get(s, {}).get("label", s), ok, len(rs), verb))
 
+    if absent:
+        print("%d private rows not run: no copy under %s (set %s)" % (absent, private_root(), CORPUS_VAR))
     full = a.only is None and Path(a.validator).resolve() == REFERENCE_VALIDATOR
-    if a.only is None:
+    if a.only is None and absent:
+        print("reports and set asserts not run: they read every row")
+    elif a.only is None:
         keysets = owner_keysets(rows, py)
         rt = roundtrips(rows, py, template_diff()["seedOnly"])
         problems += check_set_asserts(manifest, rows, keysets)

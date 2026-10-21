@@ -3,7 +3,7 @@
  "files": [
   {
    "id": "owner/coin/hackbuild-coin-nfc",
-   "source": "/Users/obsidian/Projects/hackbuild/3d/coin/hackbuild-coin-nfc.3mf",
+   "source": "3d/coin/hackbuild-coin-nfc.3mf",
    "application": "BambuStudio-01.10.01.50",
    "printerPreset": "Flashforge Creator 5 Pro 0.4 nozzle",
    "filaments": 3,
@@ -13,7 +13,7 @@
   },
   {
    "id": "owner/coin/hsl",
-   "source": "/Users/obsidian/Projects/hackbuild/3d/coin/hsl.3mf",
+   "source": "3d/coin/hsl.3mf",
    "application": "BambuStudio-01.10.01.50",
    "printerPreset": "Flashforge Creator 5 Pro 0.25 nozzle",
    "filaments": 3,
@@ -23,7 +23,7 @@
   },
   {
    "id": "owner/locket/locket-r2-1",
-   "source": "/Users/obsidian/Projects/hackbuild/3d/locket/locket-r2 (1).3mf",
+   "source": "3d/locket/locket-r2 (1).3mf",
    "application": "BambuStudio-01.10.01.50",
    "printerPreset": "Flashforge Creator 5 Pro 0.4 nozzle",
    "filaments": 3,
@@ -33,7 +33,7 @@
   },
   {
    "id": "owner/mechdisplay/all-pivots",
-   "source": "/Users/obsidian/Projects/hackbuild/3d/mechdisplay/all pivots.3mf",
+   "source": "3d/mechdisplay/all pivots.3mf",
    "application": "BambuStudio-01.10.01.50",
    "printerPreset": "Flashforge Creator 5 Pro 0.4 nozzle",
    "filaments": 1,
@@ -54,7 +54,7 @@
   },
   {
    "id": "owner/mechdisplay/buttons",
-   "source": "/Users/obsidian/Projects/hackbuild/3d/mechdisplay/buttons.3mf",
+   "source": "3d/mechdisplay/buttons.3mf",
    "application": "BambuStudio-01.10.01.50",
    "printerPreset": "Flashforge Creator 5 Pro 0.4 nozzle",
    "filaments": 1,
@@ -75,7 +75,7 @@
   },
   {
    "id": "owner/mechdisplay/colbar_asm",
-   "source": "/Users/obsidian/Projects/hackbuild/3d/mechdisplay/colbar_asm.3mf",
+   "source": "3d/mechdisplay/colbar_asm.3mf",
    "application": "BambuStudio-01.10.01.50",
    "printerPreset": "Flashforge Creator 5 Pro 0.4 nozzle",
    "filaments": 1,
@@ -96,7 +96,7 @@
   },
   {
    "id": "owner/mechdisplay/link",
-   "source": "/Users/obsidian/Projects/hackbuild/3d/mechdisplay/link.3mf",
+   "source": "3d/mechdisplay/link.3mf",
    "application": "BambuStudio-01.10.01.50",
    "printerPreset": "Flashforge Creator 5 Pro 0.4 nozzle",
    "filaments": 1,
@@ -117,7 +117,7 @@
   },
   {
    "id": "owner/mechdisplay/m_base_asm",
-   "source": "/Users/obsidian/Projects/hackbuild/3d/mechdisplay/m_base_asm.3mf",
+   "source": "3d/mechdisplay/m_base_asm.3mf",
    "application": "BambuStudio-01.10.01.50",
    "printerPreset": "Flashforge Creator 5 Pro 0.4 nozzle",
    "filaments": 1,
@@ -138,7 +138,7 @@
   },
   {
    "id": "owner/mechdisplay/m_deck_asm",
-   "source": "/Users/obsidian/Projects/hackbuild/3d/mechdisplay/m_deck_asm.3mf",
+   "source": "3d/mechdisplay/m_deck_asm.3mf",
    "application": "BambuStudio-01.10.01.50",
    "printerPreset": "Flashforge Creator 5 Pro 0.4 nozzle",
    "filaments": 1,
@@ -159,7 +159,7 @@
   },
   {
    "id": "owner/mechdisplay/m_face_asm",
-   "source": "/Users/obsidian/Projects/hackbuild/3d/mechdisplay/m_face_asm.3mf",
+   "source": "3d/mechdisplay/m_face_asm.3mf",
    "application": "BambuStudio-01.10.01.50",
    "printerPreset": "Flashforge Creator 5 Pro 0.4 nozzle",
    "filaments": 1,
@@ -180,7 +180,7 @@
   },
   {
    "id": "owner/mechdisplay/m_wall_xp_asm",
-   "source": "/Users/obsidian/Projects/hackbuild/3d/mechdisplay/m_wall_xp_asm.3mf",
+   "source": "3d/mechdisplay/m_wall_xp_asm.3mf",
    "application": "BambuStudio-01.10.01.50",
    "printerPreset": "Flashforge Creator 5 Pro 0.4 nozzle",
    "filaments": 1,
@@ -201,7 +201,7 @@
   },
   {
    "id": "owner/mechdisplay/m_wall_y_asm",
-   "source": "/Users/obsidian/Projects/hackbuild/3d/mechdisplay/m_wall_y_asm.3mf",
+   "source": "3d/mechdisplay/m_wall_y_asm.3mf",
    "application": "BambuStudio-01.10.01.50",
    "printerPreset": "Flashforge Creator 5 Pro 0.4 nozzle",
    "filaments": 1,
@@ -222,7 +222,7 @@
   },
   {
    "id": "owner/mechdisplay/ogee16-pivot-pin-1",
-   "source": "/Users/obsidian/Projects/hackbuild/3d/mechdisplay/ogee16-pivot-pin (1).3mf",
+   "source": "3d/mechdisplay/ogee16-pivot-pin (1).3mf",
    "application": "BambuStudio-01.10.01.50",
    "printerPreset": "Flashforge Creator 5 Pro 0.4 nozzle",
    "filaments": 1,
@@ -243,7 +243,7 @@
   },
   {
    "id": "owner/mechdisplay/pivot",
-   "source": "/Users/obsidian/Projects/hackbuild/3d/mechdisplay/pivot.3mf",
+   "source": "3d/mechdisplay/pivot.3mf",
    "application": "BambuStudio-01.10.01.50",
    "printerPreset": "Flashforge Creator 5 Pro 0.4 nozzle",
    "filaments": 1,
@@ -264,7 +264,7 @@
   },
   {
    "id": "owner/mechdisplay/railandlatch",
-   "source": "/Users/obsidian/Projects/hackbuild/3d/mechdisplay/railandlatch.3mf",
+   "source": "3d/mechdisplay/railandlatch.3mf",
    "application": "BambuStudio-01.10.01.50",
    "printerPreset": "Flashforge Creator 5 Pro 0.4 nozzle",
    "filaments": 1,
@@ -285,7 +285,7 @@
   },
   {
    "id": "owner/mechdisplay/rods",
-   "source": "/Users/obsidian/Projects/hackbuild/3d/mechdisplay/rods.3mf",
+   "source": "3d/mechdisplay/rods.3mf",
    "application": "BambuStudio-01.10.01.50",
    "printerPreset": "Flashforge Creator 5 Pro 0.4 nozzle",
    "filaments": 1,
@@ -306,7 +306,7 @@
   },
   {
    "id": "owner/mechdisplay/rowbar_asm",
-   "source": "/Users/obsidian/Projects/hackbuild/3d/mechdisplay/rowbar_asm.3mf",
+   "source": "3d/mechdisplay/rowbar_asm.3mf",
    "application": "BambuStudio-01.10.01.50",
    "printerPreset": "Flashforge Creator 5 Pro 0.4 nozzle",
    "filaments": 1,
@@ -327,7 +327,7 @@
   },
   {
    "id": "owner/mechdisplay/threrest",
-   "source": "/Users/obsidian/Projects/hackbuild/3d/mechdisplay/threrest.3mf",
+   "source": "3d/mechdisplay/threrest.3mf",
    "application": "BambuStudio-01.10.01.50",
    "printerPreset": "Flashforge Creator 5 Pro 0.4 nozzle",
    "filaments": 1,
@@ -348,7 +348,7 @@
   },
   {
    "id": "owner/tang-small/body",
-   "source": "/Users/obsidian/Projects/hackbuild/instruments/tang-small/body.3mf",
+   "source": "instruments/tang-small/body.3mf",
    "application": "BambuStudio-01.10.01.50",
    "printerPreset": "Flashforge Creator 5 Pro 0.4 nozzle",
    "filaments": 1,
@@ -369,7 +369,7 @@
   },
   {
    "id": "owner/tang-small/body2",
-   "source": "/Users/obsidian/Projects/hackbuild/instruments/tang-small/body2.3mf",
+   "source": "instruments/tang-small/body2.3mf",
    "application": "BambuStudio-01.10.01.50",
    "printerPreset": "Flashforge Creator 5 Pro 0.4 nozzle",
    "filaments": 1,
@@ -390,7 +390,7 @@
   },
   {
    "id": "owner/tang-small/face",
-   "source": "/Users/obsidian/Projects/hackbuild/instruments/tang-small/face.3mf",
+   "source": "instruments/tang-small/face.3mf",
    "application": "BambuStudio-01.10.01.50",
    "printerPreset": "Flashforge Creator 5 Pro 0.4 nozzle",
    "filaments": 3,
@@ -400,7 +400,7 @@
   },
   {
    "id": "owner/tang-small/facewithbuttons",
-   "source": "/Users/obsidian/Projects/hackbuild/instruments/tang-small/facewithbuttons.3mf",
+   "source": "instruments/tang-small/facewithbuttons.3mf",
    "application": "BambuStudio-01.10.01.50",
    "printerPreset": "Flashforge Creator 5 Pro 0.4 nozzle",
    "filaments": 2,
@@ -417,7 +417,7 @@
   },
   {
    "id": "owner/tang-small/neck",
-   "source": "/Users/obsidian/Projects/hackbuild/instruments/tang-small/neck.3mf",
+   "source": "instruments/tang-small/neck.3mf",
    "application": "BambuStudio-01.10.01.50",
    "printerPreset": "Flashforge Creator 5 Pro 0.4 nozzle",
    "filaments": 1,
@@ -438,7 +438,7 @@
   },
   {
    "id": "owner/tang-small/pinkparts",
-   "source": "/Users/obsidian/Projects/hackbuild/instruments/tang-small/pinkparts.3mf",
+   "source": "instruments/tang-small/pinkparts.3mf",
    "application": "BambuStudio-01.10.01.50",
    "printerPreset": "Flashforge Creator 5 Pro 0.4 nozzle",
    "filaments": 1,
@@ -459,7 +459,7 @@
   },
   {
    "id": "owner/tang-small/railcovers",
-   "source": "/Users/obsidian/Projects/hackbuild/instruments/tang-small/railcovers.3mf",
+   "source": "instruments/tang-small/railcovers.3mf",
    "application": "BambuStudio-01.10.01.50",
    "printerPreset": "Flashforge Creator 5 Pro 0.4 nozzle",
    "filaments": 1,
