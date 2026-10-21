@@ -506,7 +506,7 @@
         "tier": "inferred",
         "method": "derived",
         "date": "2026-10-08",
-        "source": "KEYWAY README layer table and cut settings (lines 64, 65 and 112 of /Users/obsidian/Projects/hackbuild/fab-knowledge/originals/keyway/files/README.md): 0.3 mm cardstock for both spacers; the design's stated stock, no sheet measured; the paper row cardstock keeps its thickness absent (PROFILE.md 3.5); read by the KEYWAY stack declaration (M05-T14)"
+        "source": "KEYWAY README layer table and cut settings (lines 64, 65 and 112 of fab-knowledge:originals/keyway/files/README.md): 0.3 mm cardstock for both spacers; the design's stated stock, no sheet measured; the paper row cardstock keeps its thickness absent (PROFILE.md 3.5); read by the KEYWAY stack declaration (M05-T14)"
       }
     },
     {
@@ -523,7 +523,7 @@
         "tier": "inferred",
         "method": "derived",
         "date": "2026-10-08",
-        "source": "KEYWAY README layer table and cut settings (lines 67 and 113 of /Users/obsidian/Projects/hackbuild/fab-knowledge/originals/keyway/files/README.md): 2 mm EVA foam caps; the design's stated stock, no sheet measured; read by the KEYWAY stack declaration (M05-T14)"
+        "source": "KEYWAY README layer table and cut settings (lines 67 and 113 of fab-knowledge:originals/keyway/files/README.md): 2 mm EVA foam caps; the design's stated stock, no sheet measured; read by the KEYWAY stack declaration (M05-T14)"
       }
     },
     {
@@ -540,7 +540,7 @@
         "tier": "inferred",
         "method": "derived",
         "date": "2026-10-08",
-        "source": "KEYWAY README layer table and cut settings (lines 68 and 114 of /Users/obsidian/Projects/hackbuild/fab-knowledge/originals/keyway/files/README.md): 2 mm chipboard or 1/16 in ply stiffener; the design's stated stock, no sheet measured; read by the KEYWAY stack declaration (M05-T14)"
+        "source": "KEYWAY README layer table and cut settings (lines 68 and 114 of fab-knowledge:originals/keyway/files/README.md): 2 mm chipboard or 1/16 in ply stiffener; the design's stated stock, no sheet measured; read by the KEYWAY stack declaration (M05-T14)"
       }
     }
   ],

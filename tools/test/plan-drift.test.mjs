@@ -412,7 +412,8 @@ test("every profile constant a check reads is listed in PROFILE.md 10.1", () => 
 });
 
 // The evidence folder lives outside the repo, so a fresh checkout skips this test.
-const VP = "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/virtual-print";
+const { sourcePath } = await import(new URL('../test-support/originals-root.ts', import.meta.url).href);
+const VP = sourcePath("fab-knowledge:evidence/virtual-print");
 test("every M04 virtual-print run folder is named in a docs card", { skip: !existsSync(VP) && "evidence absent" }, () => {
   const cards = readdirSync(join(root, "docs/plan/milestones")).map((n) => read(`docs/plan/milestones/${n}`)).join("\n");
   const runs = readdirSync(VP).filter((n) => /^m0\d-t\d+$/.test(n));

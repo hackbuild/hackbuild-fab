@@ -7,7 +7,7 @@
   "fn": "K.layout",
   "lines": "650 to 654"
  },
- "command": "node /Users/obsidian/Projects/hackbuild/fab-knowledge/originals/knurl/drive/layout.cjs (headless Chrome over the original page, K.layout(K.defaults()) at defaults), output saved as originals/knurl/drive/layout-defaults.json",
+ "command": "node fab-knowledge:originals/knurl/drive/layout.cjs (headless Chrome over the original page, K.layout(K.defaults()) at defaults), output saved as originals/knurl/drive/layout-defaults.json",
  "output": {
   "file": "drive/layout-defaults.json",
   "sha256": "b8ee8dadb4b53294945b9d560e6d9692e9d52d9aaf9592c4559cff517d8756b5"

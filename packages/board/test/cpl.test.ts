@@ -11,10 +11,11 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import { afterAll, describe, expect, test } from "vitest";
 import { isThrownCommandError, type BoardRecord } from "@hackbuild/spec";
+import { sourcePath } from "../../../tools/test-support/originals-root.js";
 import { NET_RE, PIN_RE, csvText, directArgs, parseBoardRecord, parseCsv, readBom, readCpl, readNetlist, recordHash, uncsvText, withHash, writeBom, writeCpl, writeNetlist } from "../src/index";
 
 const ROOT = path.resolve(new URL("../../..", import.meta.url).pathname);
-const BENCH = "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches";
+const BENCH = sourcePath("fab-work-directory:benches");
 const SHUNT_CPL = `${BENCH}/shunt/outputs/shunt-r1/fab/shunt-CPL.csv`;
 const SPINDLE_FAB = `${BENCH}/spindle/outputs/spindle/fab`;
 const ARMATURE_CPL = `${BENCH}/armature/outputs/ARMATURE-R1_CPL.csv`;

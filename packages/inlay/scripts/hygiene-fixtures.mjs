@@ -24,7 +24,7 @@
 
 import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
-import { localSource } from "../../../tools/test-support/originals-root.ts";
+import { localSource, sourcePath } from "../../../tools/test-support/originals-root.ts";
 import { createRequire } from "node:module";
 import { join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
@@ -33,7 +33,7 @@ import { gzipSync } from "node:zlib";
 const ROOT = fileURLToPath(new URL("../../../", import.meta.url));
 const FIX = join(ROOT, "packages/inlay/test/fixtures");
 const COLLAR = join(ROOT, "designs/collar/legacy/collar.html");
-const PUPPETEER_DIR = process.env.HBF_PUPPETEER_DIR ?? "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/_tools";
+const PUPPETEER_DIR = process.env.HBF_PUPPETEER_DIR ?? sourcePath("fab-knowledge:originals/_tools");
 const CHROME = process.env.HBF_CHROMIUM ?? "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
 
 const sha256 = (b) => createHash("sha256").update(b).digest("hex");

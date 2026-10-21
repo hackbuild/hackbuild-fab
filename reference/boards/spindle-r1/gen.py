@@ -33,7 +33,7 @@ from direct.pour import bottom_pour, net_top, outline_poly  # noqa: E402
 from direct.record import StagedOut, args, nets_of, outline_ring, provenance, ring_coords, write_json, write_sources  # noqa: E402
 from direct.textpoly import text_geometry  # noqa: E402
 
-PCB = "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/spindle/outputs/spindle/pcb.py"
+PCB = "fab-work-directory:benches/spindle/outputs/spindle/pcb.py"
 PCB_DATE = "2026-08-01"  # files (38).zip, the final R1 (spindle record section 1)
 
 # ------------------------------------------------------------------ rules (pcb.py lines 23 to 32)

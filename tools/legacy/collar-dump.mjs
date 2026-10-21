@@ -34,13 +34,14 @@ import { createRequire } from "node:module";
 import { dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { gzipSync } from "node:zlib";
+import { sourcePath } from "../test-support/originals-root.ts";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..");
 const SRC = join(ROOT, "designs", "collar", "legacy", "collar.html");
 const SEED = join(ROOT, "packages", "mesh", "seed", "rastermesh.js");
 const OUT = resolve(process.argv[2] ?? join(ROOT, "tools", "corpus", "collar", "legacy-defaults.json"));
 const MAC_CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
-const PUPPETEER_DIR = process.env.HBF_PUPPETEER_DIR ?? "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/_tools";
+const PUPPETEER_DIR = process.env.HBF_PUPPETEER_DIR ?? sourcePath("fab-knowledge:originals/_tools");
 const NEEDED = ["buildMesh", "planSlabs", "insetAt", "labelSlab", "estimateVolume", "projectSettings"];
 
 const sha256 = (buf) => createHash("sha256").update(buf).digest("hex");

@@ -16,7 +16,8 @@
 const { createHash } = require("node:crypto");
 const { readFileSync, writeFileSync } = require("node:fs");
 const path = require("node:path");
-const puppeteer = require("/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/_tools/node_modules/puppeteer-core");
+const { sourcePath } = require("../../../../tools/test-support/originals-root.ts");
+const puppeteer = require(sourcePath("fab-knowledge:originals/_tools/node_modules/puppeteer-core"));
 
 const ROW = "stanchion.viewer/v2";
 const repo = path.resolve(__dirname, "../../../..");

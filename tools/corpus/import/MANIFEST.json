@@ -4,7 +4,7 @@
   "files": [
     {
       "file": "board-rp2040-pizero-standin.stl",
-      "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/cresset-plinth/outputs/board-rp2040-pizero-standin.stl",
+      "source": "fab-work-directory:benches/cresset-plinth/outputs/board-rp2040-pizero-standin.stl",
       "sha256": "bcb1a5f1639589d69ccbb11e7a590253aba1471ff1bd77694aef3e65d9d6e028",
       "format": "stl",
       "units": "mm",
@@ -12,7 +12,7 @@
     },
     {
       "file": "locket-r2.glb",
-      "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/coaming/outputs/locket-r2/locket-r2.glb",
+      "source": "fab-work-directory:benches/coaming/outputs/locket-r2/locket-r2.glb",
       "sha256": "c25fbaf4c6639e3a1396fa003824a468edb92362054104def4d78a31b3d7a401",
       "format": "glb",
       "units": "mm",
@@ -20,7 +20,7 @@
     },
     {
       "file": "lug.glb",
-      "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/round-pi-board/outputs/lug.glb",
+      "source": "fab-work-directory:benches/round-pi-board/outputs/lug.glb",
       "sha256": "15f3ea44045856ccead71b934b56f4b49b2f5d89940950b89287311568746b9e",
       "format": "glb",
       "units": "mm",

@@ -18,8 +18,9 @@
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
+import { localSource } from "../../../../tools/test-support/originals-root.ts";
 
-const ORIG = "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/ogee16/";
+const ORIG = localSource("fab-knowledge:originals/ogee16/");
 const sha = (b) => createHash("sha256").update(b).digest("hex");
 const sums = Object.fromEntries(readFileSync(`${ORIG}SHA256SUMS`, "utf8").trim().split("\n").map((l) => { const [h, f] = l.split(/\s+/); return [f, h]; }));
 

@@ -1,4 +1,4 @@
-# source: /Users/obsidian/Projects/hackbuild/fab-work-directory/benches/ogee16/outputs/ogee16-source.zip
+# source: fab-work-directory:benches/ogee16/outputs/ogee16-source.zip
 # zip sha256: 47d6077e0596eb4e9722a0a9f687cb82ec472c7bc031d8d2f61a98266aa94dd5 (byte equal to fab-knowledge/originals/ogee16/files/ogee16-source.zip)
 # member source/fits.py sha256: b127b99ecef2d5b6b9256507c206e79975b418d91e2dce5921cefbd9595f082c
 # run: unzip -o -q ogee16-source.zip -d <tmp> && cd <tmp>/source && uv run --project tools/py python fits.py

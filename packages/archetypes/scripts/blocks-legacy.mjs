@@ -25,11 +25,12 @@ import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import { localSource } from "../../../tools/test-support/originals-root.ts";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, "..", "..", "..");
 const OUT = path.join(HERE, "..", "test", "legacy", "blocks.json");
-const ORIG = "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/";
+const ORIG = localSource("fab-knowledge:originals/");
 const MF_DIR = path.join(ROOT, "node_modules", "manifold-3d");
 const Module = (await import(pathToFileURL(path.join(MF_DIR, "manifold.js")).href)).default;
 const mfVersion = JSON.parse(readFileSync(path.join(MF_DIR, "package.json"), "utf8")).version;

@@ -19,6 +19,7 @@ import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { register } from "node:module";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import { localSource } from "../../../tools/test-support/originals-root.ts";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const PKG = path.resolve(HERE, "..");
@@ -37,7 +38,7 @@ const SAVES = [
     note: "gold round trip, Flash Studio save of 2026-08-19 (zip entry dates)",
   },
   {
-    file: "/Users/obsidian/Projects/hackbuild/instruments/tang-small/facewithbuttons.3mf",
+    file: "instruments/tang-small/facewithbuttons.3mf",
     note: "Flash Studio save carrying Generic PLA @FF C5P (M00-T07 step 2)",
   },
 ];
@@ -51,7 +52,7 @@ const keys = Object.keys(template.keys).sort();
 const rows = {};
 const sources = [];
 for (const save of SAVES) {
-  const abs = path.isAbsolute(save.file) ? save.file : path.join(REPO, save.file);
+  const abs = localSource(save.file);
   if (!existsSync(abs)) throw new Error(`slicer save missing: ${abs}`);
   const bytes = readFileSync(abs);
   const sha256 = createHash("sha256").update(bytes).digest("hex");

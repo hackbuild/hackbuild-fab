@@ -16,8 +16,12 @@ Run from the repo root:
 import json
 import math
 import os
+import sys
 
-CANONICAL = "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/cotter/files/cotter-src/tools/hook_fit.py"
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "..", "tools", "py"))
+from hbf_archives import source_path  # noqa: E402
+
+CANONICAL = source_path("fab-knowledge:originals/cotter/files/cotter-src/tools/hook_fit.py")
 
 SRC = '''def design(hole, tb, fit=0.95, margin=0.2):
     """closed form: rod diameter from the hole, smallest bend radius whose swept arc clears the bore"""

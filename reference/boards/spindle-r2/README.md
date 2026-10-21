@@ -55,6 +55,16 @@ I2C, and no I2C header was placed, which is the owner's to settle.
 
 ### Verified on this machine
 
+- 2026-10-21 (R1-rails-public-05): gen.py names pcb.py by archive prefix
+  (`fab-work-directory:benches/spindle/outputs/spindle/pcb.py`), was a
+  home path. `hbf parity --accept` re-recorded build.json (defHash,
+  buildHash, recordHash) and report.json (the path inside the CHK-BRD-06
+  messages) at build 593326..bc (was b31992..a2); artifacts.json and reparse.json
+  are byte equal, so no copper moved, and the board metrics are equal
+  (computed). report.json equals the old one with only the path rewritten
+  (computed). Accepted under owner delegation on the equal geometry rule
+  (D-273); a person has not accepted them (D-152).
+
 - 2026-10-14: `npx --no-install hbf check.run reference/boards/spindle-r2
   --only CHK-BRD-01,CHK-BRD-21 --json` exits 0. CHK-BRD-01: the zip reads
   back to its source and record, worst layer symmetric difference

@@ -36,10 +36,11 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { createRequire } from "node:module";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import { sourcePath } from "../test-support/originals-root.ts";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..");
 const MAC_CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
-const PUPPETEER_DIR = process.env.HBF_PUPPETEER_DIR ?? "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/_tools";
+const PUPPETEER_DIR = process.env.HBF_PUPPETEER_DIR ?? sourcePath("fab-knowledge:originals/_tools");
 const FLAGS = ["--allow-file-access-from-files", "--no-first-run", "--use-gl=swiftshader", "--enable-webgl", "--ignore-gpu-blocklist"];
 /** Scenarios and whether they gate (all do; see legacy-read.js for what each holds). */
 const SCENARIOS = ["phx", "phx-small", "coinyear"];

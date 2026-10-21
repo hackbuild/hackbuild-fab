@@ -27,7 +27,7 @@
   },
   {
    "emitter": "TUMBLER planSVGFile",
-   "where": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-ogee-stipple-mech/tumbler/tumbler-bench-sheet.svg",
+   "where": "fab-knowledge:evidence/x/downloads/dl-ogee-stipple-mech/tumbler/tumbler-bench-sheet.svg",
    "reason": "SVG, no DXF; header comment carries material, t 3, kerf 0.22, fit 0.15"
   }
  ],
@@ -35,7 +35,7 @@
   {
    "path": "slug/slug_acrylic_sheet1.dxf",
    "emitter": "SLUG sheetDXF",
-   "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/slug/outputs/slug/sheets/slug_acrylic_sheet1.dxf",
+   "source": "fab-work-directory:benches/slug/outputs/slug/sheets/slug_acrylic_sheet1.dxf",
    "sha256": "d22ee353c35a871312f93c46ca10ee69f54d3b1e47a69f277ede40529fd4b899",
    "chkSht03": [
     "acadver",
@@ -47,7 +47,7 @@
   {
    "path": "slug/slug_ply_sheet1.dxf",
    "emitter": "SLUG sheetDXF",
-   "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/slug/outputs/slug/sheets/slug_ply_sheet1.dxf",
+   "source": "fab-work-directory:benches/slug/outputs/slug/sheets/slug_ply_sheet1.dxf",
    "sha256": "5223680a0bc425c4997034e1965d7c5e8e0e3dc5b0e0710834bc49c752849077",
    "chkSht03": [
     "acadver",
@@ -59,7 +59,7 @@
   {
    "path": "slug/slug_ply_sheet2.dxf",
    "emitter": "SLUG sheetDXF",
-   "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/slug/outputs/slug/sheets/slug_ply_sheet2.dxf",
+   "source": "fab-work-directory:benches/slug/outputs/slug/sheets/slug_ply_sheet2.dxf",
    "sha256": "a3636008fc6527f2b2d34453122faf29e1cdb8e6a4eb602ed9a723981632771f",
    "chkSht03": [
     "acadver",
@@ -71,7 +71,7 @@
   {
    "path": "slug/slug_ply_sheet3.dxf",
    "emitter": "SLUG sheetDXF",
-   "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/slug/outputs/slug/sheets/slug_ply_sheet3.dxf",
+   "source": "fab-work-directory:benches/slug/outputs/slug/sheets/slug_ply_sheet3.dxf",
    "sha256": "b72bd967f0588a9e0f3940016b71c59a940095ce4bd62f5091882b3910b7632e",
    "chkSht03": [
     "acadver",
@@ -83,7 +83,7 @@
   {
    "path": "slug/slug_ply_sheet4.dxf",
    "emitter": "SLUG sheetDXF",
-   "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/slug/outputs/slug/sheets/slug_ply_sheet4.dxf",
+   "source": "fab-work-directory:benches/slug/outputs/slug/sheets/slug_ply_sheet4.dxf",
    "sha256": "339ac13fee618c9e3f1fdde94ae788ae16f3bb603f3f305b3e5680372400b098",
    "chkSht03": [
     "acadver",
@@ -95,7 +95,7 @@
   {
    "path": "slug/slug_ply_sheet5.dxf",
    "emitter": "SLUG sheetDXF",
-   "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/slug/outputs/slug/sheets/slug_ply_sheet5.dxf",
+   "source": "fab-work-directory:benches/slug/outputs/slug/sheets/slug_ply_sheet5.dxf",
    "sha256": "f72e9137a2b6fe10ed94e833f596169ed35af75331fc60b7fda9a14a8cadfa3a",
    "chkSht03": [
     "acadver",
@@ -107,7 +107,7 @@
   {
    "path": "slug/slug_ply_sheet6.dxf",
    "emitter": "SLUG sheetDXF",
-   "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/slug/outputs/slug/sheets/slug_ply_sheet6.dxf",
+   "source": "fab-work-directory:benches/slug/outputs/slug/sheets/slug_ply_sheet6.dxf",
    "sha256": "aedd8f8e288c73e7caaab5b6bfa8dd43c4dfcc67f820246eea71e5b542a5afb3",
    "chkSht03": [
     "acadver",
@@ -119,7 +119,7 @@
   {
    "path": "slug/slug_ply_sheet7.dxf",
    "emitter": "SLUG sheetDXF",
-   "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/slug/outputs/slug/sheets/slug_ply_sheet7.dxf",
+   "source": "fab-work-directory:benches/slug/outputs/slug/sheets/slug_ply_sheet7.dxf",
    "sha256": "655dfdf99599eac7a20633463bd74ae68fe4ac10cfc0c01ee962bb8dd02d9c92",
    "chkSht03": [
     "acadver",
@@ -131,7 +131,7 @@
   {
    "path": "slug/slug_ply_sheet8.dxf",
    "emitter": "SLUG sheetDXF",
-   "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/slug/outputs/slug/sheets/slug_ply_sheet8.dxf",
+   "source": "fab-work-directory:benches/slug/outputs/slug/sheets/slug_ply_sheet8.dxf",
    "sha256": "ed52795c20b09a0ee7a16bdb40e383574062805c3d458a219f8db5f5fcbef28e",
    "chkSht03": [
     "acadver",
@@ -143,7 +143,7 @@
   {
    "path": "slug/slug_ply_sheet9.dxf",
    "emitter": "SLUG sheetDXF",
-   "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/slug/outputs/slug/sheets/slug_ply_sheet9.dxf",
+   "source": "fab-work-directory:benches/slug/outputs/slug/sheets/slug_ply_sheet9.dxf",
    "sha256": "a50dc6ba56c199989f70b078445503e328cdf5b18d9a365a778a6a4659ccbddc",
    "chkSht03": [
     "acadver",
@@ -155,7 +155,7 @@
   {
    "path": "ogee16-cut/sheet1.dxf",
    "emitter": "OGEE16 cutfiles.py (ezdxf new())",
-   "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/ogee16/outputs/ogee16-cut.zip!cut/sheet1.dxf",
+   "source": "fab-work-directory:benches/ogee16/outputs/ogee16-cut.zip!cut/sheet1.dxf",
    "sha256": "4dd68db51e3826334165cd65a9924c3496795789e12c32b71bb89bdc0d18fa6d",
    "chkSht03": [
     "acadver",
@@ -166,7 +166,7 @@
   {
    "path": "ogee16-cut/sheet2.dxf",
    "emitter": "OGEE16 cutfiles.py (ezdxf new())",
-   "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/ogee16/outputs/ogee16-cut.zip!cut/sheet2.dxf",
+   "source": "fab-work-directory:benches/ogee16/outputs/ogee16-cut.zip!cut/sheet2.dxf",
    "sha256": "ff282798d9c86de2c20e296be941b9cd09fc8cc395536cbfb847641c981ce872",
    "chkSht03": [
     "acadver",
@@ -177,7 +177,7 @@
   {
    "path": "ogee16-cut/sheet3.dxf",
    "emitter": "OGEE16 cutfiles.py (ezdxf new())",
-   "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/ogee16/outputs/ogee16-cut.zip!cut/sheet3.dxf",
+   "source": "fab-work-directory:benches/ogee16/outputs/ogee16-cut.zip!cut/sheet3.dxf",
    "sha256": "2c8d5852cc98e2e1c583bf39e29fee290f257bb208dcdf8beac9c5f165592dfb",
    "chkSht03": [
     "acadver",
@@ -188,7 +188,7 @@
   {
    "path": "ogee16-openscad/deck.dxf",
    "emitter": "OGEE16 OpenSCAD export",
-   "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/ogee16/outputs/ogee16-cut.zip!dxf/deck.dxf",
+   "source": "fab-work-directory:benches/ogee16/outputs/ogee16-cut.zip!dxf/deck.dxf",
    "sha256": "76f6899f98e6bb3554247a55257e22a0f948d1beb8e3eab338d19b792a4871aa",
    "chkSht03": [
     "acadver",
@@ -202,7 +202,7 @@
   {
    "path": "ogee-buildit/square.dxf",
    "emitter": "OGEE build-it dxf()",
-   "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-ogee-stipple-mech/derived/ogee_buildit_run.json!dxf_square",
+   "source": "fab-knowledge:evidence/x/downloads/dl-ogee-stipple-mech/derived/ogee_buildit_run.json!dxf_square",
    "sha256": "4bcc8668534f2aa0116bfd8f1097859ab28c348f7044459867bb6456b3bce0b7",
    "chkSht03": [
     "acadver",
@@ -212,7 +212,7 @@
   {
    "path": "coffer/A3_04_backer.dxf",
    "emitter": "COFFER",
-   "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/coffer/outputs/coffer/A3_04_backer.dxf",
+   "source": "fab-work-directory:benches/coffer/outputs/coffer/A3_04_backer.dxf",
    "sha256": "cad5c23b9ce2de76a540d80b26d6c0ee7808d418e099ffc2dc6d15ca882c2094",
    "chkSht03": [
     "insunits",
@@ -222,7 +222,7 @@
   {
    "path": "coffer/D1_04_backer.dxf",
    "emitter": "COFFER",
-   "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/coffer/outputs/coffer/D1_04_backer.dxf",
+   "source": "fab-work-directory:benches/coffer/outputs/coffer/D1_04_backer.dxf",
    "sha256": "2392dbb854bddcef131b5278c78d0d7832449543cfb02e70eaf1a78f6b7ada21",
    "chkSht03": [
     "insunits",
@@ -232,7 +232,7 @@
   {
    "path": "coffer/K6_04_backer.dxf",
    "emitter": "COFFER",
-   "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/coffer/outputs/coffer/K6_04_backer.dxf",
+   "source": "fab-work-directory:benches/coffer/outputs/coffer/K6_04_backer.dxf",
    "sha256": "cf6a80129f1060fb8b8161aa95c0735e7850eab3ec1c93bcad0fd9c006d06780",
    "chkSht03": [
     "insunits",
@@ -242,7 +242,7 @@
   {
    "path": "coffer/M1_04_backer.dxf",
    "emitter": "COFFER",
-   "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/coffer/outputs/coffer/M1_04_backer.dxf",
+   "source": "fab-work-directory:benches/coffer/outputs/coffer/M1_04_backer.dxf",
    "sha256": "c0393ee753639453dfce68eaefb4c3c4f46e46036340805ae2ea7df065b4183c",
    "chkSht03": [
     "insunits",
@@ -252,7 +252,7 @@
   {
    "path": "coffer/S3_04_backer.dxf",
    "emitter": "COFFER",
-   "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/coffer/outputs/coffer/S3_04_backer.dxf",
+   "source": "fab-work-directory:benches/coffer/outputs/coffer/S3_04_backer.dxf",
    "sha256": "085d512eade4950510c0356f66a08df31671918348909c3c08cf0acf6d67c90c",
    "chkSht03": [
     "insunits",
@@ -262,7 +262,7 @@
   {
    "path": "shim/shim-backer.dxf",
    "emitter": "SHIM",
-   "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/shim/outputs/shim/shim-backer.dxf",
+   "source": "fab-work-directory:benches/shim/outputs/shim/shim-backer.dxf",
    "sha256": "4bc2b10b2385d4492573efa7e965325012431b9cb5c67c61895a3187819c934c",
    "chkSht03": [
     "entities",
@@ -272,7 +272,7 @@
   {
    "path": "spindle/board_backer.dxf",
    "emitter": "SPINDLE",
-   "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/spindle/outputs/spindle/board_backer.dxf",
+   "source": "fab-work-directory:benches/spindle/outputs/spindle/board_backer.dxf",
    "sha256": "176c49f833ea23d6a31d8192bb34f19b24fae2dba1e511298c83318123c449a5",
    "chkSht03": [
     "insunits",
@@ -283,7 +283,7 @@
   {
    "path": "trunnion/splice-backing.dxf",
    "emitter": "TRUNNION (SPLICE backings)",
-   "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/trunnion/outputs/trunnion/splice-backing.dxf",
+   "source": "fab-work-directory:benches/trunnion/outputs/trunnion/splice-backing.dxf",
    "sha256": "8bb092bc00cde82e7a1442d4c7f94700c4285fa1477ca18a0717a80d1628e62e",
    "chkSht03": [
     "acadver",
@@ -295,7 +295,7 @@
   {
    "path": "trunnion/splicec-backing.dxf",
    "emitter": "TRUNNION (SPLICE backings)",
-   "source": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/trunnion/outputs/trunnion/splicec-backing.dxf",
+   "source": "fab-work-directory:benches/trunnion/outputs/trunnion/splicec-backing.dxf",
    "sha256": "af6a6e501874be610c302c8084d8c850c17633c172f3c6d410ec10e23ff8dfc8",
    "chkSht03": [
     "acadver",
@@ -307,7 +307,7 @@
   {
    "path": "cotter/x01_laser-bin-100x26-take-a-card_3.0mm-ply.dxf",
    "emitter": "COTTER KIT.laserDXF",
-   "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-pip-latest/cotter/unzipped/cotter-kit_laser_2026-09-21/laser/dxf/x01_laser-bin-100x26-take-a-card_3.0mm-ply.dxf",
+   "source": "fab-knowledge:evidence/x/downloads/dl-pip-latest/cotter/unzipped/cotter-kit_laser_2026-09-21/laser/dxf/x01_laser-bin-100x26-take-a-card_3.0mm-ply.dxf",
    "sha256": "efad8b7f5ba27c224f0f2b6baeec4039f02e0dc3d1791e81f0047fd9ad93d976",
    "chkSht03": [
     "layers",
@@ -317,7 +317,7 @@
   {
    "path": "cotter/x01_laser-bin-96x34-stickers_3.0mm-ply.dxf",
    "emitter": "COTTER KIT.laserDXF",
-   "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-pip-latest/cotter/unzipped/cotter-kit_laser_2026-09-21/laser/dxf/x01_laser-bin-96x34-stickers_3.0mm-ply.dxf",
+   "source": "fab-knowledge:evidence/x/downloads/dl-pip-latest/cotter/unzipped/cotter-kit_laser_2026-09-21/laser/dxf/x01_laser-bin-96x34-stickers_3.0mm-ply.dxf",
    "sha256": "3a122941e1242d12561df4d72b28ef73deca157e0a452e3e4bb9824d102431f5",
    "chkSht03": [
     "layers",
@@ -327,7 +327,7 @@
   {
    "path": "cotter/x01_laser-coin-ledge-9in-4-coins_3.0mm-ply.dxf",
    "emitter": "COTTER KIT.laserDXF",
-   "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-pip-latest/cotter/unzipped/cotter-kit_laser_2026-09-21/laser/dxf/x01_laser-coin-ledge-9in-4-coins_3.0mm-ply.dxf",
+   "source": "fab-knowledge:evidence/x/downloads/dl-pip-latest/cotter/unzipped/cotter-kit_laser_2026-09-21/laser/dxf/x01_laser-coin-ledge-9in-4-coins_3.0mm-ply.dxf",
    "sha256": "27e0a56604132aade20b5410835908baf8bd381488a9c52fd047bde14300ef75",
    "chkSht03": [
     "layers",
@@ -337,7 +337,7 @@
   {
    "path": "cotter/x01_laser-qr-plate-waiver_3.0mm-ply.dxf",
    "emitter": "COTTER KIT.laserDXF",
-   "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-pip-latest/cotter/unzipped/cotter-kit_laser_2026-09-21/laser/dxf/x01_laser-qr-plate-waiver_3.0mm-ply.dxf",
+   "source": "fab-knowledge:evidence/x/downloads/dl-pip-latest/cotter/unzipped/cotter-kit_laser_2026-09-21/laser/dxf/x01_laser-qr-plate-waiver_3.0mm-ply.dxf",
    "sha256": "3211bd7406a2fe815b162bd1569f40a5cf5d73cd361b36e9614c29669646eec8",
    "chkSht03": [
     "layers",
@@ -347,7 +347,7 @@
   {
    "path": "cotter/x01_laser-qr-plate-website_3.0mm-ply.dxf",
    "emitter": "COTTER KIT.laserDXF",
-   "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-pip-latest/cotter/unzipped/cotter-kit_laser_2026-09-21/laser/dxf/x01_laser-qr-plate-website_3.0mm-ply.dxf",
+   "source": "fab-knowledge:evidence/x/downloads/dl-pip-latest/cotter/unzipped/cotter-kit_laser_2026-09-21/laser/dxf/x01_laser-qr-plate-website_3.0mm-ply.dxf",
    "sha256": "f6220c6ffa229a0d9277dd554a4483a707ec244f9181d0b56c5378fdc71a0983",
    "chkSht03": [
     "layers",
@@ -357,7 +357,7 @@
   {
    "path": "cotter/x01_laser-sheet-pocket-letter-lip-strips-about-the-lab_3.0mm-ply.dxf",
    "emitter": "COTTER KIT.laserDXF",
-   "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-pip-latest/cotter/unzipped/cotter-kit_laser_2026-09-21/laser/dxf/x01_laser-sheet-pocket-letter-lip-strips-about-the-lab_3.0mm-ply.dxf",
+   "source": "fab-knowledge:evidence/x/downloads/dl-pip-latest/cotter/unzipped/cotter-kit_laser_2026-09-21/laser/dxf/x01_laser-sheet-pocket-letter-lip-strips-about-the-lab_3.0mm-ply.dxf",
    "sha256": "2a1cb9f25c9fc844f25aa3fc99ff6bad6c5d686faf4b35e8d647d7f8cbb7c649",
    "chkSht03": [
     "layers",
@@ -367,7 +367,7 @@
   {
    "path": "cotter/x01_laser-shelf-9in-made-here_3.0mm-ply.dxf",
    "emitter": "COTTER KIT.laserDXF",
-   "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-pip-latest/cotter/unzipped/cotter-kit_laser_2026-09-21/laser/dxf/x01_laser-shelf-9in-made-here_3.0mm-ply.dxf",
+   "source": "fab-knowledge:evidence/x/downloads/dl-pip-latest/cotter/unzipped/cotter-kit_laser_2026-09-21/laser/dxf/x01_laser-shelf-9in-made-here_3.0mm-ply.dxf",
    "sha256": "e0f3136180437f633cbe4b6858ed42f16bbef5ae1df4981f33121b7c6d6f64e4",
    "chkSht03": [
     "layers",
@@ -377,7 +377,7 @@
   {
    "path": "cotter/x01_laser-sign-420mm_3.0mm-ply.dxf",
    "emitter": "COTTER KIT.laserDXF",
-   "source": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-pip-latest/cotter/unzipped/cotter-kit_laser_2026-09-21/laser/dxf/x01_laser-sign-420mm_3.0mm-ply.dxf",
+   "source": "fab-knowledge:evidence/x/downloads/dl-pip-latest/cotter/unzipped/cotter-kit_laser_2026-09-21/laser/dxf/x01_laser-sign-420mm_3.0mm-ply.dxf",
    "sha256": "4e2c366494e641d8819e979e8dfa4a3ecf224d488fcdb6778001352bf9bd1065",
    "chkSht03": [
     "layers",

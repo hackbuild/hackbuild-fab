@@ -1,7 +1,7 @@
 {
  "record": "dxf-inventory",
  "card": "M07-T01",
- "date": "2026-10-08",
+ "date": "2026-10-21",
  "qualifier": "computed: raw header text and ezdxf readfile and audit on the files of tools/corpus/dxf/MANIFEST.json",
  "command": "uv run --project tools/py tools/py/dxf_inventory.py tools/corpus/dxf",
  "machine": {
@@ -13,9 +13,9 @@
   "ezdxf": "1.4.4"
  },
  "inputs": {
-  "tools/corpus/dxf/MANIFEST.json": "ea28365f5b212d11d6859073bd34b30f6fda78e3684212f817ccc2a7e6ce1de3"
+  "tools/corpus/dxf/MANIFEST.json": "1a5e3c7a8e1d6264bda4bff20dda7dc5b0419946da540d45956baa8de70ad296"
  },
- "resultSha256": "1f0fb80d9bc041fce9afbf3f558aafdd71e72093b4dbb0c8044e440518f241bb",
+ "resultSha256": "2298a051e88360bc68f37d6a658671b86dc3a4a33bc5569ad82de5159d4fbebf",
  "result": {
   "rows": [
    {
@@ -758,7 +758,7 @@
    },
    {
     "emitter": "TUMBLER planSVGFile",
-    "where": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-ogee-stipple-mech/tumbler/tumbler-bench-sheet.svg",
+    "where": "fab-knowledge:evidence/x/downloads/dl-ogee-stipple-mech/tumbler/tumbler-bench-sheet.svg",
     "reason": "SVG, no DXF; header comment carries material, t 3, kerf 0.22, fit 0.15"
    }
   ]

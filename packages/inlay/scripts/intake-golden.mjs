@@ -13,7 +13,7 @@ import { join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 const root = fileURLToPath(new URL("../../../", import.meta.url));
-const lib = "/Users/obsidian/Projects/hackbuild/badge-replicator/src/lib/";
+const lib = localSource("badge-replicator/src/lib/");
 const ROWS = {
   homography: "inlay.intake-homography/badge-replicator",
   stack: "inlay.intake-stack/badge-replicator",

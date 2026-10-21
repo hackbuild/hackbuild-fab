@@ -16,7 +16,10 @@ import hashlib, json, math, os, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, '..', 'test', 'legacy', 'coffer.json')
-ORIG = '/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/coffer/files'
+sys.path.insert(0, os.path.join(HERE, '..', '..', '..', 'tools', 'py'))
+from hbf_archives import local_source  # noqa: E402
+
+ORIG = local_source('fab-knowledge:originals/coffer/files')
 COMMAND = 'uv run --project tools/py packages/archetypes/scripts/coffer-legacy.py'
 
 # Importing the original in place must leave its folder as SHA256SUMS lists

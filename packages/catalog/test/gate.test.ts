@@ -5,6 +5,7 @@
 import { readFileSync, readdirSync } from "node:fs";
 import { describe, expect, test } from "vitest";
 import type { Provenance, RecordRead } from "@hackbuild/spec";
+import { localSource } from "../../../tools/test-support/originals-root.js";
 import { createCatalogLookup, inferredGated, loadRow, partGaps, provenanceGate, type GatedPart } from "../src/index";
 
 const inferred: Provenance = { tier: "inferred", method: "derived", date: "2026-10-09", source: "test" };
@@ -108,7 +109,7 @@ describe("LUG fixture rows (M08-T03 step 8)", () => {
     expect(rows.map((r) => [r.id, (r.fields["pins"]?.value as unknown[]).length, r.tier])).toEqual([
       ["max17048", 8, "inferred"], ["max98357a", 16, "inferred"], ["mp2636", 25, "inferred"], ["sn74ahct1g125", 5, "inferred"], ["stm6601", 13, "inferred"],
     ]);
-    const src = readFileSync("/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/round-pi-board/outputs/lug.tsx", "utf8").split("\n");
+    const src = readFileSync(localSource("fab-work-directory:benches/round-pi-board/outputs/lug.tsx"), "utf8").split("\n");
     expect(src[9]).toContain("written");
     expect(src[10]).toContain("from knowledge, not parsed from datasheets");
     for (const r of rows) expect(r.provenance.source).toContain("lug.tsx pin maps written from knowledge");

@@ -17,23 +17,25 @@ import { dirname, join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
+import { localSource, sourcePath } from "../../test-support/originals-root.ts";
 
 const REPO = join(dirname(fileURLToPath(import.meta.url)), "..", "..", "..");
 const OUT = join(REPO, "tools/corpus/inlay/vtracer");
-const PUPPETEER = process.env.HBF_PUPPETEER ?? "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/_tools/node_modules/puppeteer-core";
+const PUPPETEER = process.env.HBF_PUPPETEER ?? sourcePath("fab-knowledge:originals/_tools/node_modules/puppeteer-core");
 const CHROME = process.env.HBF_CHROME ?? "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
 
 const SRC = {
-  mark: ["/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/plan-to-refine/handoff/hbf/seed/brand/hackbuild-mark.svg", null],
-  collar: ["/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/collar-coin/outputs/collar/collar.html", "ef0864ab66ca40e2930d12aba4cab3159aa470f743eee533d052fc99f844fd46"],
-  coinPreview: ["/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/collar-coin/outputs/hackbuild-coin/hackbuild-coin-preview.png", null],
-  spruePreview: ["/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/sprue/outputs/sprue/previews/faces.png", null],
-  sprue: ["/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/sprue/outputs/sprue/sprue.html", "a1acb293ad96c7dd5062a9e65741a7f27959584dfb10e64decb41468c59e4fe7"],
+  mark: ["fab-knowledge:evidence/x/plan-to-refine/handoff/hbf/seed/brand/hackbuild-mark.svg", null],
+  collar: ["fab-work-directory:benches/collar-coin/outputs/collar/collar.html", "ef0864ab66ca40e2930d12aba4cab3159aa470f743eee533d052fc99f844fd46"],
+  coinPreview: ["fab-work-directory:benches/collar-coin/outputs/hackbuild-coin/hackbuild-coin-preview.png", null],
+  spruePreview: ["fab-work-directory:benches/sprue/outputs/sprue/previews/faces.png", null],
+  sprue: ["fab-work-directory:benches/sprue/outputs/sprue/sprue.html", "a1acb293ad96c7dd5062a9e65741a7f27959584dfb10e64decb41468c59e4fe7"],
 };
 
 const sha = (buf) => createHash("sha256").update(buf).digest("hex");
 function source(key) {
-  const [path, want] = SRC[key];
+  const [name, want] = SRC[key];
+  const path = localSource(name);
   const buf = readFileSync(path);
   if (want && sha(buf) !== want) throw new Error(`${path}: sha256 ${sha(buf)}, card records ${want}`);
   return path;

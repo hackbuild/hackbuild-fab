@@ -17,10 +17,11 @@ import pytest
 REPO = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(REPO / "tools/py"))
 import harvest_filament_keys as hk  # noqa: E402
+from hbf_archives import source_path  # noqa: E402
 
 TOOL = REPO / "tools/py/harvest_filament_keys.py"
 GOLD = REPO / "tools/corpus/3mf/gold/hackbuild-coin-nfc.3mf"
-X = Path("/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-gudgeon-tang-keyway")
+X = Path(source_path("fab-knowledge:evidence/x/downloads/dl-gudgeon-tang-keyway"))
 TWO_SLOT = X / "gib/gib-finger-rigid-200x14.3mf"
 FOUR_SLOT = X / "feeler/feeler-ladder (2).3mf"
 TEMPLATE = hk.load_json(hk.TEMPLATE_PATH)

@@ -19,7 +19,10 @@ from pathlib import Path
 
 import numpy as np
 
-SPRUE_PY = Path("/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/sprue/outputs/sprue/sprue.py")
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from hbf_archives import local_source  # noqa: E402
+
+SPRUE_PY = Path(local_source("fab-work-directory:benches/sprue/outputs/sprue/sprue.py"))
 SPRUE_SHA256 = "1c2f22a66394abff83774c9dbcac2c0c5766959cbc22564c362530b7b8c5da4b"
 LONG_SIDE_PX = 640
 MARGIN_PX = 32

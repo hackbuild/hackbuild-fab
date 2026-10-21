@@ -8,6 +8,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, test } from "vitest";
 import type { AnatomicalAxis, PartRow, ShaftOut } from "@hackbuild/spec";
+import { localSource } from "../../../tools/test-support/originals-root.js";
 import { KICAD_RESOLVERS, actuatorRow, catalogFind, createCatalogLookup, loadCatalog, loadRow, readActuator, shaftOut } from "../src/index";
 
 const enc = new TextEncoder();
@@ -32,7 +33,8 @@ const washer = (JSON.parse(readFileSync(path.join(FIX, "washer-servos.json"), "u
 const ROWS: readonly PartRow[] = [...catalog.rows.values(), ...pawl, ...washer];
 
 // ---- the cited lines hold the numbers ----
-const ROOTS: Record<string, string> = { originals: "/Users/obsidian/Projects/hackbuild/fab-knowledge/", benches: "/Users/obsidian/Projects/hackbuild/fab-work-directory/" };
+/** The archive prefix a cited originals/ or benches/ path sits under (tools/publish-paths.mjs). */
+const ROOTS: Record<string, string> = { originals: "fab-knowledge:", benches: "fab-work-directory:" };
 const cache = new Map<string, readonly string[]>();
 const CITE = /\b((?:originals|benches)\/[^\s(,;]+?\.[a-z]+)\s+lines?\s+(\d+)(?:\s+to\s+(\d+))?/g;
 /**
@@ -47,7 +49,7 @@ function citedNumbers(source: string): number[] | null {
   const nums: number[] = [];
   for (const m of source.matchAll(CITE)) {
     const [, rel, a, b] = m as unknown as [string, string, string, string | undefined];
-    const file = ROOTS[rel.split("/")[0]!]! + rel;
+    const file = localSource(ROOTS[rel.split("/")[0]!]! + rel);
     if (!cache.has(file)) cache.set(file, readFileSync(file, "utf8").split("\n"));
     const lines = cache.get(file)!.slice(Number(a) - 1, Number(b ?? a));
     nums.push(...(lines.join(" ").match(/-?\d+(?:\.\d+)?(?:e-?\d+)?/g)?.map(Number) ?? []));

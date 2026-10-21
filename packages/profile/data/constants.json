@@ -130,7 +130,7 @@
         "tier": "vendor",
         "method": "derived",
         "date": "2026-10-09",
-        "source": "OrcaSlicer src/libslic3r/PrintConfig.cpp lines 4792 to 4870, default of interlocking_beam_width (/Users/obsidian/Projects/hackbuild/fab-knowledge/research/3dp-landscape.md lines 324 to 336); what an object inherits when neither it nor the project sets the key; read by CHK-3MF-08 for its loss quote (M05-T20)"
+        "source": "OrcaSlicer src/libslic3r/PrintConfig.cpp lines 4792 to 4870, default of interlocking_beam_width (fab-knowledge:research/3dp-landscape.md lines 324 to 336); what an object inherits when neither it nor the project sets the key; read by CHK-3MF-08 for its loss quote (M05-T20)"
       }
     },
     {
@@ -141,7 +141,7 @@
         "tier": "vendor",
         "method": "derived",
         "date": "2026-10-09",
-        "source": "OrcaSlicer src/libslic3r/PrintConfig.cpp lines 4792 to 4870, default of interlocking_depth (/Users/obsidian/Projects/hackbuild/fab-knowledge/research/3dp-landscape.md lines 324 to 336); what an object inherits when neither it nor the project sets the key; read by CHK-3MF-08 for its loss quote (M05-T20); the cell size is not in the survey, so the loss bound takes one cell as one beam width (inferred)"
+        "source": "OrcaSlicer src/libslic3r/PrintConfig.cpp lines 4792 to 4870, default of interlocking_depth (fab-knowledge:research/3dp-landscape.md lines 324 to 336); what an object inherits when neither it nor the project sets the key; read by CHK-3MF-08 for its loss quote (M05-T20); the cell size is not in the survey, so the loss bound takes one cell as one beam width (inferred)"
       }
     },
     {

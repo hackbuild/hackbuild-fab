@@ -8,7 +8,10 @@ import hashlib, json, os, sys, tempfile, types
 import numpy as np
 import trimesh as tm
 
-ORIG = "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/stanchion/files"
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "..", "tools", "py"))
+from hbf_archives import local_source  # noqa: E402
+
+ORIG = local_source("fab-knowledge:originals/stanchion/files")
 SRC = os.path.join(ORIG, "src", "cad.py")
 data = open(SRC, "rb").read()
 text = data.decode("utf8").replace('OUT = "/home/claude/out"', f'OUT = {tempfile.mkdtemp()!r}', 1)

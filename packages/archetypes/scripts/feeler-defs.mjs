@@ -17,10 +17,11 @@ import { createHash } from "node:crypto";
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { localSource } from "../../../tools/test-support/originals-root.ts";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const PKG = path.join(HERE, "..");
-const FILE = "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/thinpot/files/feeler_thinpot.html";
+const FILE = localSource("fab-knowledge:originals/thinpot/files/feeler_thinpot.html");
 const src = readFileSync(FILE, "utf8");
 const lines = src.split("\n");
 const sha = createHash("sha256").update(readFileSync(FILE)).digest("hex");

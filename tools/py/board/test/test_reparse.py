@@ -23,8 +23,11 @@ REPO = os.path.abspath(os.path.join(BOARD, "..", "..", ".."))
 SPINDLE = os.path.join(REPO, "reference", "boards", "spindle-r1", "gen.py")
 SHUNT = os.path.join(REPO, "reference", "boards", "shunt-art", "gen.py")
 REPARSE = os.path.join(BOARD, "reparse.py")
-LEGACY_ZIP = "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/spindle/outputs/spindle/spindle-r1-gerbers.zip"
-R1_DIR = "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-boards-tools/spindle/files (33)"
+sys.path.insert(0, os.path.join(REPO, "tools", "py"))
+from hbf_archives import source_path  # noqa: E402
+
+LEGACY_ZIP = source_path("fab-work-directory:benches/spindle/outputs/spindle/spindle-r1-gerbers.zip")
+R1_DIR = source_path("fab-knowledge:evidence/x/downloads/dl-boards-tools/spindle/files (33)")
 EPOCH = 315532800
 sys.path.insert(0, BOARD)
 

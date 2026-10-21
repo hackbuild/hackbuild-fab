@@ -101,3 +101,28 @@ test("a lineage source mapped by sourcePath stays an owner read, guarded only by
   const guarded = ownerSignal(head + 'const sourceOf = (id) => { const s = rows.find((r) => r.id === id)?.source; return s === undefined ? "" : sourcePath(s); };\ntest("a", (t) => {\n  const src = sourceOf("a");\n  if (!existsSync(src)) return t.skip();\n  readFileSync(src, "utf8");\n});\n');
   assert.ok(isGuarded(guarded), guarded);
 });
+
+test("an archive-prefix path through sourcePath is an owner read, as a name or a template on one", () => {
+  const imp = 'import { sourcePath } from "../../../tools/test-support/originals-root.js";\n';
+  const open = ownerSignal(imp + 'const BENCH = sourcePath("fab-work-directory:benches");\nreadFileSync(`${BENCH}/a/b.csv`, "utf8");\n');
+  assert.match(open, /unguarded/);
+  assert.equal(isGuarded(open), false);
+  const guarded = ownerSignal(imp + 'const BENCH = sourcePath("fab-work-directory:benches");\nconst CPL = `${BENCH}/a/b.csv`;\ntest.skipIf(!existsSync(CPL))("a", () => {\n  readFileSync(CPL, "utf8");\n});\n');
+  assert.ok(isGuarded(guarded), guarded);
+  assert.equal(ownerSignal(imp + 'const id = "fab-work-directory:benches/a.csv";\nexpect(row.source).toBe(id);\n'), null);
+});
+
+test("an owner path a fixture exports and the test reads is the test's own read", () => {
+  const dir = mkdtempSync(join(tmpdir(), "owner-files-"));
+  try {
+    mkdirSync(join(dir, "test", "fixtures"), { recursive: true });
+    writeFileSync(join(dir, "test", "fixtures", "src.ts"), 'import { sourcePath } from "../../../tools/test-support/originals-root.js";\nexport const SRC = sourcePath("fab-knowledge:originals/a/files/a.html");\n');
+    writeFileSync(join(dir, "test", "a.test.ts"), 'import { SRC } from "./fixtures/src.js";\ntest("a", (ctx) => {\n  if (!existsSync(SRC)) return ctx.skip();\n  readFileSync(SRC, "utf8");\n});\n');
+    writeFileSync(join(dir, "test", "b.test.ts"), 'import { SRC } from "./fixtures/src.js";\nreadFileSync(SRC, "utf8");\n');
+    const a = fileSignal(join(dir, "test", "a.test.ts"));
+    assert.match(a, /\(SRC\) behind existsSync/);
+    assert.match(fileSignal(join(dir, "test", "b.test.ts")), /\(SRC\) unguarded/);
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});

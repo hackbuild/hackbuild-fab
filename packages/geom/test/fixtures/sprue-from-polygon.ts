@@ -4,7 +4,9 @@
 // source text so the test runs the shipped code; fill.test.ts compares it with
 // the file when the file is on this machine.
 
-export const SPRUE_PATH = "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/sprue/files/sprue.html";
+import { sourcePath } from "../../../../tools/test-support/originals-root.js";
+
+export const SPRUE_PATH = sourcePath("fab-knowledge:originals/sprue/files/sprue.html");
 export const FROM_POLYGON_FIRST_LINE = 337;
 
 export const FROM_POLYGON_LINES: readonly string[] = [

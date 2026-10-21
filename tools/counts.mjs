@@ -397,14 +397,17 @@ const RECHECK = {
   },
 };
 
-function external(ext) {
+// A row names its source by archive prefix (tools/publish-paths.mjs); sourcePath reads it from the archive's variable.
+async function external(ext) {
+  const { sourcePath } = await import(new URL("./test-support/originals-root.ts", import.meta.url).href);
   let bad = 0;
   for (const r of ext) {
     const fn = RECHECK[r.key];
     if (!fn) { console.log(`${r.key}: not run, no recheck method; snapshot ${r.value}`); continue; }
-    if (!existsSync(r.path)) { console.log(`${r.key}: not run, source absent at ${r.path}`); continue; }
+    const at = sourcePath(r.path);
+    if (!existsSync(at)) { console.log(`${r.key}: not run, source absent at ${at}`); continue; }
     let got;
-    try { got = fn(r.path); }
+    try { got = fn(at); }
     catch (e) { console.log(`${r.key}: not run, recheck failed: ${String(e.message).split("\n")[0]}`); continue; }
     if (got && typeof got === "object") { console.log(`${r.key}: not run, ${got.skip}`); continue; }
     if (got === r.value) console.log(`${r.key}: ok, ${got}`);
@@ -471,9 +474,11 @@ function checkProse(c) {
 function main() {
   const ext = readJson("tools/counts.external.json");
   if (process.argv.includes("--external")) {
-    const bad = external(ext);
-    console.log(bad ? `counts: ${bad} external rows drifted` : "counts: external rows match or did not run");
-    process.exit(bad ? 1 : 0);
+    external(ext).then((bad) => {
+      console.log(bad ? `counts: ${bad} external rows drifted` : "counts: external rows match or did not run");
+      process.exit(bad ? 1 : 0);
+    });
+    return;
   }
   const c = compute();
   if (process.argv.includes("--check-prose")) { checkProse(c); return; }

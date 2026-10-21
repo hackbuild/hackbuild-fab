@@ -4,7 +4,7 @@
 // earcut index output for each fixture polygon, to
 // packages/geom/test/fixtures/boss-booleans.json.
 //
-// usage: node tools/legacy/boss-booleans.cjs [path/to/boss-src.zip]
+// usage: node tools/legacy/boss-booleans.cjs [boss-src.zip as an archive-prefix or repo path]
 // exit 0 written, 1 on a failure, 2 when polygon-clipping is not installed
 
 "use strict";
@@ -29,7 +29,9 @@ try {
 }
 
 const ROOT = path.resolve(__dirname, "..", "..");
-const DEFAULT_ZIP = "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/blocks/outputs/boss/boss-src.zip";
+// The source is named in publish form (tools/publish-paths.mjs) and recorded as given; its bytes
+// are read from the archive's local copy (tools/test-support/originals-root.ts).
+const DEFAULT_ZIP = "fab-work-directory:benches/blocks/outputs/boss/boss-src.zip";
 const OUT = path.join(ROOT, "packages", "geom", "test", "fixtures", "boss-booleans.json");
 const MEMBER = "src/kernel.js";
 
@@ -57,7 +59,8 @@ function flatten(poly) {
 
 async function main() {
   const zipPath = process.argv[2] || DEFAULT_ZIP;
-  const zipBytes = fs.readFileSync(zipPath);
+  const { localSource } = require("../test-support/originals-root.ts");
+  const zipBytes = fs.readFileSync(localSource(zipPath));
   const zip = await JSZip.loadAsync(zipBytes);
   const member = zip.file(MEMBER);
   if (!member) throw new Error(`${MEMBER} missing from ${zipPath}`);

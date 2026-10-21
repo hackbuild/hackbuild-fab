@@ -25,7 +25,10 @@ import re
 import sys
 from pathlib import Path
 
-ORIG = "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals"
+sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "tools" / "py"))
+from hbf_archives import local_source  # noqa: E402
+
+ORIG = local_source("fab-knowledge:originals/").rstrip("/")
 DERRICK_SRC = ORIG + "/derrick/files/src"
 PINTLE_SRC = ORIG + "/pintle/files/src"
 sys.dont_write_bytecode = True

@@ -12,7 +12,10 @@
 #   uv run --project tools/py packages/mechanisms/test/legacy/record-slew-ring.py
 import hashlib, json, os, sys
 sys.dont_write_bytecode = True
-SRC_DIR = "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pintle/files"
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "..", "tools", "py"))
+from hbf_archives import local_source  # noqa: E402
+
+SRC_DIR = local_source("fab-knowledge:originals/pintle/files")
 SRC = os.path.join(SRC_DIR, "src", "pintle_parts.py")
 WANT = "5280a22350a488e721d411504a562dec2007f421129e5f7462e055cb2b45a6b1"
 data = open(SRC, "rb").read()

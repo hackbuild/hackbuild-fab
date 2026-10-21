@@ -1,6 +1,6 @@
 // Verbatim port of the COLLAR blank shapes: SHAPES, rrect and ngon, with
 // type annotations added and nothing else changed.
-// Source: /Users/obsidian/Projects/hackbuild/fab-work-directory/benches/collar-coin/outputs/collar/collar.html
+// Source: fab-work-directory:benches/collar-coin/outputs/collar/collar.html
 // lines 668 to 721, sha256 ef0864ab66ca40e2930d12aba4cab3159aa470f743eee533d052fc99f844fd46
 // (identical to the lineage row collar.bench/collar-7). Defaults from ST at
 // lines 643 to 657: dia 44, aspect 0.72, corner 0.3, rim w 2.2, cham 0.5.

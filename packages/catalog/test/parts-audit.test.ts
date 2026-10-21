@@ -17,6 +17,7 @@
 import { createHash } from "node:crypto";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { describe, expect, test } from "vitest";
+import { localSource } from "../../../tools/test-support/originals-root.js";
 import { kicadModPads, type ModPad } from "../src/kicad-mod";
 
 interface HandPad { readonly pin: string; readonly x: number; readonly y: number; readonly w: number; readonly h: number; readonly drill: number | null; readonly line: number }
@@ -25,8 +26,8 @@ interface AuditRow { readonly ref: string; readonly tier: string; readonly [k: s
 
 const ROOT = new URL("../../../", import.meta.url);
 const RECORD = process.env.HBF_AUDIT_RECORD === "1";
-const CORPUS = "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches";
-const KICAD = "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/m08-catalog/kicad";
+const CORPUS = localSource("fab-work-directory:benches");
+const KICAD = localSource("fab-knowledge:evidence/m08-catalog/kicad");
 const MIRROR = "github.com/KiCad/kicad-footprints at 7ebfa6b23cc292a56f751b7b5f4a0e12eeef69dd (2020-10-02, frozen v5 mirror)";
 const TOL = 0.01;
 const sha = (b: string | Uint8Array): string => createHash("sha256").update(b).digest("hex");

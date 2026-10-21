@@ -24,6 +24,8 @@ SHUNT = os.path.join(REPO, "reference", "boards", "shunt-art")
 EPOCH = 315532800
 
 sys.path.insert(0, BOARD)
+sys.path.insert(0, os.path.join(REPO, "tools", "py"))
+from hbf_archives import source_path  # noqa: E402
 
 # The SPINDLE R1 DRC pass line, M08-T06 step 7 and the Records table (computed, scratch run).
 LEGACY_PASS = "DRC OK  19 nets | 70 pads | 57 holes | tightest 0.32mm (rule 0.25) | 46x46mm"
@@ -158,7 +160,7 @@ def test_excellon_header_parses_without_warning(spindle):
     assert len([o for o in e.objects if getattr(o, "tool", None) is not None]) == 57
 
 
-LEGACY_FAB = "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/spindle/outputs/spindle/fab"
+LEGACY_FAB = source_path("fab-work-directory:benches/spindle/outputs/spindle/fab")
 
 
 def hits(path):

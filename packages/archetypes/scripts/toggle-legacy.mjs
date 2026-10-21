@@ -18,10 +18,11 @@ import { readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import vm from "node:vm";
 import { fileURLToPath } from "node:url";
+import { localSource } from "../../../tools/test-support/originals-root.ts";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const OUT = path.join(HERE, "..", "test", "legacy", "toggle.json");
-const ORIG = "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/toggle/files/";
+const ORIG = localSource("fab-knowledge:originals/toggle/files/");
 const FILES = ["extracted/rastermesh.js", "src/src/part2a.js", "src/src/part2b.js", "src/src/part2c.js", "src/src/part2d.js", "src/src/part2e.js"];
 const sha = (p) => createHash("sha256").update(readFileSync(p)).digest("hex");
 

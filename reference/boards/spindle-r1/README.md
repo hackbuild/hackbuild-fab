@@ -55,6 +55,16 @@ covers: [CHK-BRD-01, CHK-BRD-02, CHK-BRD-05, CHK-BRD-06, CHK-BRD-07, CHK-BRD-09,
 
 ### Verified on this machine
 
+- 2026-10-21 (R1-rails-public-05): gen.py names pcb.py by archive prefix
+  (`fab-work-directory:benches/spindle/outputs/spindle/pcb.py`), was a
+  home path. `hbf parity --accept` re-recorded build.json (defHash,
+  buildHash, recordHash) and report.json (the path inside the CHK-BRD-06
+  messages) at build e2222c..57 (was 2d395a..ac); artifacts.json and reparse.json
+  are byte equal, so no copper moved, and the board metrics are equal
+  (computed). report.json equals the old one with only the path rewritten
+  (computed). Accepted under owner delegation on the equal geometry rule
+  (D-273); a person has not accepted them (D-152).
+
 - 2026-10-14 (D-249 call): chase.ts gained the CHK-BRD-21 expect set
   `5V|GND`. `hbf check.run reference/boards/spindle-r1 --only CHK-BRD-21`
   exits 0, measured `5V|GND`, missing and extra empty (computed); `--only

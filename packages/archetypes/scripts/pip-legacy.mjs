@@ -18,10 +18,11 @@ import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import { localSource } from "../../../tools/test-support/originals-root.ts";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const OUT = path.join(HERE, "..", "test", "legacy", "pip-fits.json");
-const ORIG = "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pip/files/";
+const ORIG = localSource("fab-knowledge:originals/pip/files/");
 const SOURCES = {
   haft: `${ORIG}haft-src/src/`,
   pipc: `${ORIG}pip-controller/src/`,

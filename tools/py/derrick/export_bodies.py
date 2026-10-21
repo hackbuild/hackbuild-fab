@@ -26,7 +26,10 @@ import os
 import re
 import sys
 
-ORIG = "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals"
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+from hbf_archives import local_source  # noqa: E402
+
+ORIG = local_source("fab-knowledge:originals/").rstrip("/")
 PINTLE_SRC = ORIG + "/pintle/files/src"
 DERRICK_SRC = ORIG + "/derrick/files/src"
 # The originals folder is read only: no __pycache__ lands beside the sources.

@@ -20,7 +20,7 @@
 // The run also replays the sweep with no tagging at all and fails unless
 // every call gives the same volume, so the tags are proven inert.
 //
-// usage: node tools/legacy/tenon-revolve-dump.mjs [path/to/tenon-src.zip]
+// usage: node tools/legacy/tenon-revolve-dump.mjs [tenon-src.zip as an archive-prefix or repo path]
 // exit 0 written, 1 on a failure
 
 import { createHash } from "node:crypto";
@@ -34,7 +34,9 @@ const require = createRequire(import.meta.url);
 const JSZip = require("jszip");
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..");
-const DEFAULT_ZIP = "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/tenon/tenon-src.zip";
+// The source is named in publish form (tools/publish-paths.mjs) and recorded as given; its bytes
+// are read from the archive's local copy (tools/test-support/originals-root.ts).
+const DEFAULT_ZIP = "fab-knowledge:evidence/x/tenon/tenon-src.zip";
 const OUT = join(ROOT, "tools", "corpus", "mesh", "tenon-revolve-calls.jsonl");
 const SEED = 20261005;
 
@@ -225,7 +227,8 @@ function runSweep(part2Src, sweepSrc, tag) {
 
 async function main() {
   const zipPath = process.argv[2] || DEFAULT_ZIP;
-  const zipBytes = readFileSync(zipPath);
+  const { localSource } = await import(new URL("../test-support/originals-root.ts", import.meta.url).href);
+  const zipBytes = readFileSync(localSource(zipPath));
   const zip = await JSZip.loadAsync(zipBytes);
   const part2Src = await readMember(zip, "src/part2.js");
   const sweepSrc = await readMember(zip, "sweep.js");

@@ -1,6 +1,6 @@
 {
   "dialect": "body-centre",
-  "legacy": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/spindle/outputs/spindle/fab/spindle-CPL.csv",
+  "legacy": "fab-work-directory:benches/spindle/outputs/spindle/fab/spindle-CPL.csv",
   "method": "pcb.py lines 473 to 481 placed each part at its pad centroid; the record places it at its body centre, the pad bounding box centre where pcb.py declares no body",
   "moved": {
     "Q1": { "legacy": [34.5, 3.633], "bodyCentre": [34.5, 4.0], "delta": [0, 0.367], "qualifier": "computed, M08-T12 on the gen.py record at SOURCE_DATE_EPOCH 315532800" }

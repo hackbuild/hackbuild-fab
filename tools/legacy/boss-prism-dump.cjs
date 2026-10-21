@@ -14,7 +14,7 @@
 // pass its path to replay the fixtures on it. On these fixtures neither copy
 // retries, so both write the same volumes and audits.
 //
-// usage: node tools/legacy/boss-prism-dump.cjs [path/to/boss-src.zip | path/to/kernel.js] [out.json]
+// usage: node tools/legacy/boss-prism-dump.cjs [boss-src.zip or kernel.js as an archive-prefix or repo path] [out.json]
 // exit 0 written, 1 on a failure, 2 when polygon-clipping is not installed
 
 "use strict";
@@ -37,7 +37,9 @@ try {
 }
 
 const ROOT = path.resolve(__dirname, "..", "..");
-const DEFAULT_ZIP = "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/blocks/outputs/boss/boss-src.zip";
+// The source is named in publish form (tools/publish-paths.mjs) and recorded as given; its bytes
+// are read from the archive's local copy (tools/test-support/originals-root.ts).
+const DEFAULT_ZIP = "fab-work-directory:benches/blocks/outputs/boss/boss-src.zip";
 const OUT = path.join(ROOT, "tools", "corpus", "mesh", "boss-prism.json");
 const MEMBER = "src/kernel.js";
 const GRID = 1024;
@@ -60,8 +62,9 @@ const FIXTURES = [
 
 async function main() {
   const zipPath = process.argv[2] || DEFAULT_ZIP;
+  const { localSource } = require("../test-support/originals-root.ts");
   const outPath = process.argv[3] ? path.resolve(process.argv[3]) : OUT;
-  const zipBytes = fs.readFileSync(zipPath);
+  const zipBytes = fs.readFileSync(localSource(zipPath));
   let kernelSrc;
   if (zipPath.endsWith(".js")) {
     kernelSrc = zipBytes.toString("utf8");

@@ -132,7 +132,7 @@ export function nodeVolts(result: SpiceResult, node: string): number {
 /**
  * First time a transient node crosses thresholdV, us, by linear
  * interpolation between the two samples that bracket it (the C9 RC script,
- * /Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/scratch/c9/m05rc.mjs
+ * fab-knowledge:evidence/scratch/c9/m05rc.mjs
  * line 7, which reads a falling edge; a rising edge reads the same way).
  * Null when the node never crosses.
  */

@@ -48,6 +48,8 @@ export const stripComments = (text) => text.replace(/\/\*[\s\S]*?\*\//g, "").rep
 const READ_CALL = String.raw`\b(?:readFileSync|readFile|createReadStream|openSync|statSync|readdirSync)`;
 const BINDING = /^([ \t]*)(?:export\s+)?(?:const|let|var|function)\s+([\w$]+)\s*(?::[^=\n]*)?=?\s*([^;\n]*)/gm;
 const OWNER_LITERAL = /^["'`]\/Users\//;
+/** sourcePath maps an archive-prefix path to a local one without checking the archive is here, so its result is an owner path. */
+const OWNER_CALL = /\bsourcePath\(/;
 const RELOCATE = /\b(?:localOriginal|localSource|originalPath)\(/;
 const escapeRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
@@ -74,20 +76,15 @@ function firstArgs(code, callee) {
   return out;
 }
 
-/**
- * Owner paths the code passes to a file read: a lineage.json row source, a
- * literal under /Users/, or a name bound to either, read directly or through
- * a local function that reads its first parameter. localOriginal, localSource and
- * originalPath relocate a path, so nothing through them is an owner path.
- * Returns each read argument with whether an existsSync on it guards it.
- */
-export function ownerReads(text) {
-  const code = stripComments(text);
+/** The names a code text binds to owner paths, seeded with names a fixture it imports binds. */
+function ownerBound(code, seed) {
   const lineage = /lineage\.json/.test(code);
-  const names = new Set();
+  const names = new Set(seed);
+  // a template that starts with an owner name, `${BENCH}/a.csv`, is an owner path too
+  const head = (expr) => expr.replace(/^`\$\{\s*/, "");
   const isOwner = (expr) =>
     !RELOCATE.test(expr) &&
-    (OWNER_LITERAL.test(expr) || (lineage && /^[\w$.!?[\]]*\.source\b/.test(expr)) || [...names].some((n) => new RegExp(`^${escapeRe(n)}\\b`).test(expr)));
+    (OWNER_LITERAL.test(expr) || OWNER_CALL.test(expr) || (lineage && /^[\w$.!?[\]]*\.source\b/.test(expr)) || [...names].some((n) => new RegExp(`^${escapeRe(n)}\\b`).test(head(expr))));
   const all = bindings(code);
   for (let grew = true; grew; ) {
     grew = false;
@@ -100,6 +97,26 @@ export function ownerReads(text) {
       }
     }
   }
+  return { names, isOwner, all };
+}
+
+/** The exported names a module binds to owner paths, e.g. a fixture's SPRUE_PATH = sourcePath(...). */
+export function ownerExports(text) {
+  const code = stripComments(text);
+  const { names } = ownerBound(code, []);
+  return [...names].filter((n) => new RegExp(`export\\s+(?:const|let|var|function)\\s+${escapeRe(n)}\\b`).test(code));
+}
+
+/**
+ * Owner paths the code passes to a file read: a lineage.json row source, a
+ * literal under /Users/, or a name bound to either, read directly or through
+ * a local function that reads its first parameter. localOriginal, localSource and
+ * originalPath relocate a path, so nothing through them is an owner path.
+ * Returns each read argument with whether an existsSync on it guards it.
+ */
+export function ownerReads(text, seed = []) {
+  const code = stripComments(text);
+  const { isOwner, all } = ownerBound(code, seed);
   // a local function that passes its first parameter to a file read
   const readers = all
     .filter(({ init }) => {
@@ -122,7 +139,7 @@ export function ownerReads(text) {
 }
 
 /** Why a source text reads owner files, or null. */
-export function ownerSignal(text) {
+export function ownerSignal(text, seed = []) {
   for (const m of text.matchAll(ORIGINALS_IMPORT)) {
     const names = m[1].split(",").map((s) => s.trim().split(/\s+as\s+/)[0]).filter(Boolean);
     const hit = names.find((n) => READERS.has(n));
@@ -130,7 +147,7 @@ export function ownerSignal(text) {
   }
   if (BENCHES_IMPORT.test(text)) return "imports benches-root";
   if (BENCH_PATH.test(stripComments(text))) return "names a fab-work-directory path";
-  const reads = ownerReads(text);
+  const reads = ownerReads(text, seed);
   const open = reads.find((r) => !r.guarded);
   if (open) return `reads an owner path (${open.arg}) unguarded`;
   if (reads.length > 0) return `reads an owner path (${reads[0].arg}) behind existsSync`;
@@ -152,12 +169,18 @@ function resolveImport(fromFile, spec) {
 /** Owner signal of a test file, looking one relative import down. */
 export function fileSignal(abs, read = (p) => readFileSync(p, "utf8")) {
   const text = read(abs);
-  const own = ownerSignal(text);
-  if (own) return own;
+  const deps = [];
   for (const m of text.matchAll(RELATIVE_IMPORT)) {
     const dep = resolveImport(abs, m[1]);
     if (dep === null || dep.includes("/src/") || dep.includes("/dist/")) continue;
-    const sig = ownerSignal(read(dep));
+    deps.push({ dep, text: read(dep) });
+  }
+  // an owner path a fixture exports and this file reads counts as this file's read
+  const seed = deps.flatMap((d) => ownerExports(d.text));
+  const own = ownerSignal(text, seed);
+  if (own) return own;
+  for (const { dep, text: depText } of deps) {
+    const sig = ownerSignal(depText);
     if (sig) return `${sig} (via ${relative(dirname(abs), dep)})`;
   }
   return null;

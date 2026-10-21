@@ -1,6 +1,6 @@
 {
  "source": {
-  "zip": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/blocks/outputs/boss/boss-src.zip",
+  "zip": "fab-work-directory:benches/blocks/outputs/boss/boss-src.zip",
   "zipSha256": "185c1d1bb6692945a3d2b956c7512ee7fd3b9766576396f404d2501a28ffa3b2",
   "member": "src/kernel.js",
   "memberSha256": "344d80b3df3b6b15e5861de343a03c79663669fd700578bf162f97afba499de1"

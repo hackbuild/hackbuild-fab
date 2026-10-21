@@ -86,7 +86,7 @@ describe("the TOGGLE preset fixtures", () => {
   test("come from the TOGGLE source of record named by lineage", () => {
     for (const k of PRESETS) {
       expect(fx[k].meta.preset).toBe(k);
-      expect(fx[k].meta.source).toBe("/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/toggle/files/src/src/");
+      expect(fx[k].meta.source).toBe("fab-knowledge:originals/toggle/files/src/src/");
     }
     const row = (id: string) => lineage.find((r) => r.id === id)!;
     const pins = fx.solo4.meta.sha256;

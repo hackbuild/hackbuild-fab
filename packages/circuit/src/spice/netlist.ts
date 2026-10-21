@@ -6,7 +6,7 @@
 // units and take the ngspice scale suffix, so the text carries the caller's
 // number verbatim: capacitance in pF as `9.109p`, time in us as `60u`. The
 // line shapes are the ones the C9 measurement scripts ran
-// (/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/scratch/c9/run.mjs
+// (fab-knowledge:evidence/scratch/c9/run.mjs
 // lines 6 and 12, m05rc.mjs line 4).
 //
 // Names and nodes are checked against a plain identifier pattern so no

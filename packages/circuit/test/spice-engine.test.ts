@@ -5,7 +5,7 @@
 // PIP LEFT key RC discharge, R 1722798 ohm, C 9.109 pF, initial 3.3 V,
 // .tran 0.01u 60u UIC, crossing 0.8 V. The expected crossing 22.238 us is
 // the card's computed figure (relative difference 1.36e-8 recorded there,
-// from /Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/scratch/c9/m05rc.mjs).
+// from fab-knowledge:evidence/scratch/c9/m05rc.mjs).
 // The analytic side of the RC is the package's one rcCrossingUs. The
 // divider's analytic side is the closed form until M05-T03 lands the nodal
 // solver, which then joins this comparison.

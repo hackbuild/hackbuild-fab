@@ -14,7 +14,8 @@ import { ORIGINALS_PREFIX, publishText } from "../publish-paths.mjs";
 
 const root = join(import.meta.dirname, "..", "..");
 const designs = join(root, "knowledge", "designs");
-const originals = "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals";
+const { sourcePath } = await import(new URL('../test-support/originals-root.ts', import.meta.url).href);
+const originals = sourcePath(`${ORIGINALS_PREFIX}/`);
 // Built from parts so this file does not match its own scan.
 const retired = ["fab-knowledge", "examples"].join("/");
 const shared = ["INDEX.md", "MECHANISMS.md", "IDEAS-FROM-MOCKUPS.md"];

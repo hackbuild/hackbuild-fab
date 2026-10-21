@@ -139,7 +139,8 @@ test("the 3MF dialect lists every scalar key the writer emits", () => {
 // floor that layout.js line 231 computes; the two virtual print faults of D-236 and D-237 never
 // reached the diagnostics index or the 3MF dialect).
 const decisions = readFileSync(join(root, "docs", "plan", "DECISIONS.md"), "utf8");
-const originals = "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals";
+const { sourcePath } = await import(new URL('../test-support/originals-root.ts', import.meta.url).href);
+const originals = sourcePath("fab-knowledge:originals/");
 
 function walkFiles(dir, keep, out = []) {
   for (const name of readdirSync(dir)) {

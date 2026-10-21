@@ -13,11 +13,12 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import { parseKicadPcb } from "kicadts";
 import { afterAll, describe, expect, test } from "vitest";
+import { sourcePath } from "../../../tools/test-support/originals-root.js";
 import { directArgs, kicadCounts, kicadExtrasOf, readbackKicad, withHash, writeKicad, type KicadExtras } from "../src/index";
 import type { BoardRecord } from "@hackbuild/spec";
 
 const ROOT = path.resolve(new URL("../../..", import.meta.url).pathname);
-const LEGACY = "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/spindle/outputs/spindle/kicad/spindle-r1.kicad_pcb";
+const LEGACY = sourcePath("fab-work-directory:benches/spindle/outputs/spindle/kicad/spindle-r1.kicad_pcb");
 const work = mkdtempSync(path.join(tmpdir(), "hbf-kicad-"));
 afterAll(() => rmSync(work, { recursive: true, force: true }));
 
@@ -31,7 +32,8 @@ const extras: KicadExtras = { ...kicadExtrasOf(record), silkLines: gates.silkLin
 const COUNTS = { footprints: 18, pads: 59, segments: 59, vias: 15, nets: 20, zones: 2, grArcs: 4, grLines: 8, grTexts: 54 };
 
 describe.skipIf(!existsSync(LEGACY))("legacy spindle-r1.kicad_pcb", () => {
-  const text = readFileSync(LEGACY, "utf8");
+  // a skipped describe still collects its body, so the read waits on the same guard
+  const text = existsSync(LEGACY) ? readFileSync(LEGACY, "utf8") : "";
 
   test("is the file the lineage row names", () => {
     expect(createHash("sha256").update(text).digest("hex")).toBe("55d09eba04102cd70885849c045311c4752c9afaf1d925f7543e59e598a03cd8");

@@ -19,10 +19,11 @@ import { readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import vm from "node:vm";
+import { localSource } from "../../../tools/test-support/originals-root.ts";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const OUT = path.join(HERE, "..", "test", "legacy", "tang.json");
-const ORIG = "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/tang-r6/files/";
+const ORIG = localSource("fab-knowledge:originals/tang-r6/files/");
 const HTML = `${ORIG}tang_r6_4.html`;
 const SRC = ["02_kernel.js", "03_design.js", "04_design.js", "05_design.js"].map((f) => `${ORIG}src/${f}`);
 const sha = (p) => createHash("sha256").update(readFileSync(p)).digest("hex");

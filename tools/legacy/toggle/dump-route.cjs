@@ -120,7 +120,7 @@ for (const key of ["solo4", "solo8", "blocks4", "blocks8"]) {
     meta: {
       preset: key,
       generator: "node tools/legacy/toggle/dump-route.cjs <toggle src/src dir> packages/copper/test/fixtures/toggle-presets",
-      source: "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/toggle/files/src/src/",
+      source: "fab-knowledge:originals/toggle/files/src/src/",
       sha256: PINNED,
       node: process.version,
       qualifier: "computed by TOGGLE",

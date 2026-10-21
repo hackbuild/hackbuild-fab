@@ -21,10 +21,11 @@ import { readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import Module from "manifold-3d";
+import { localSource } from "../../../tools/test-support/originals-root.ts";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const OUT = path.join(HERE, "..", "test", "legacy", "gib.json");
-const DIR = "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/gib/files/";
+const DIR = localSource("fab-knowledge:originals/gib/files/");
 const PART2 = `${DIR}src/src/part2.js`, PAGE = `${DIR}gib_4.html`;
 const sha = (p) => createHash("sha256").update(readFileSync(p)).digest("hex");
 const page = readFileSync(PAGE, "utf8");

@@ -26,10 +26,11 @@ import { readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import Module from "manifold-3d";
+import { localSource } from "../../../tools/test-support/originals-root.ts";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const OUT = path.join(HERE, "..", "test", "legacy", "thinpot.json");
-const FILE = "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/thinpot/files/feeler_thinpot.html";
+const FILE = localSource("fab-knowledge:originals/thinpot/files/feeler_thinpot.html");
 const src = readFileSync(FILE, "utf8");
 const sha = createHash("sha256").update(readFileSync(FILE)).digest("hex");
 const blocks = [...src.matchAll(/<script>([\s\S]*?)<\/script>/g)].map((m) => m[1]);

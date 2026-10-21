@@ -19,7 +19,7 @@ import { PROCESS_STREAMS } from "../src/tty-gate.js";
 import { Store } from "../src/store.js";
 import type { CoreCtx } from "../src/ctx.js";
 import { ROOT } from "./hbf.js";
-import { originalPath } from "../../tools/test-support/originals-root.js";
+import { localSource, originalPath } from "../../tools/test-support/originals-root.js";
 
 const OUT = mkdtempSync(path.join(tmpdir(), "hbf-wiring-"));
 afterAll(() => rmSync(OUT, { recursive: true, force: true }));
@@ -41,7 +41,7 @@ const texts = (svg: string): string[] => [...svg.matchAll(/<text[^>]*>([^<]*)<\/
 
 describe("wiring-supermini (SPINDLE R1 module)", async () => {
   const { design, r, file, svg } = await exportOf("reference/boards/wiring-supermini");
-  const readme = readFileSync("/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/spindle/outputs/spindle/README.md", "utf8");
+  const readme = readFileSync(localSource("fab-work-directory:benches/spindle/outputs/spindle/README.md"), "utf8");
   const table = readme.split("### Pin map")[1]!.split("\n").filter((l) => /^\| (motor|laser|calibration|spare)/.test(l));
   const gpios = table.flatMap((l) => l.split("|")[2]!.replace(/\(.*\)/, "").split(",").map((s) => `GPIO${s.trim()}`));
 
