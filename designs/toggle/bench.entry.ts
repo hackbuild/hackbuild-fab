@@ -3,9 +3,11 @@
 // and bench beside it, mounted by the ui bench shell. It sits outside
 // defHash with bench.ts (D-174). This folder's tsconfig excludes it: it
 // imports single-file components, which only the ui package's vue shim
-// declares (packages/ui/src/vue-shim.d.ts).
+// declares (packages/ui/src/vue-shim.d.ts). The shell comes in by the
+// @hackbuild/ui/bench/entry source export, so tools/tiers.mjs checks the
+// edge (D-634).
 
-import { mountBench, pageBench, pageOf } from "../../packages/ui/src/bench/entry";
+import { mountBench, pageBench, pageOf } from "@hackbuild/ui/bench/entry";
 import { bench } from "./bench";
 import { chase } from "./chase";
 import { contact } from "./build";

@@ -7,10 +7,11 @@
 // 2726) with the drag replaced by the hold the fab drive pad takes (6.2):
 // a held direction tilts the stick to its stop through build.ts contact,
 // the one function the pad, the readout and BENCH.drive call (G-20). No
-// views.widgets entry yet: chase.validate holds no widget kind list, so a
-// declared drive.tilt is refused E_REF. The stage is the graph grid
-// on void (6.1); the original boots into solo4 (6.9), so the welcome leads
-// with it as the worked example and offers the other two presets.
+// views.widgets entry yet: core chase.validate passes no widgetKinds to
+// packages/chase resolveBenchRefs, so a declared drive.tilt is refused
+// E_REF. The stage is the graph grid on void (6.1); the original boots
+// into solo4 (6.9), so the welcome leads with it as the worked example and
+// offers the other two presets.
 
 import { defineBench } from "@hackbuild/spec";
 import { chase } from "./chase";
