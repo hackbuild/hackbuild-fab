@@ -683,6 +683,9 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-626 | PIP's routed terminals take the stack's posts and discs | decided | reach |
 | D-627 | Harness moves to extract folders; upstream copies stay in legacy tools folders | decided | Testing, registry |
 | D-628 | Committed records keep their recorded paths; project.graph reads extract SHA256SUMS | decided | Testing, registry |
+| D-629 | TOGGLE keeps the original's walls under a chase waiver | decided | Constraints and checks |
+| D-630 | Drive pads over four targets dock below the stage at 390 px | decided | UI |
+| D-631 | rules.audit skips extracted legacy fixtures | decided | tooling |
 
 ## House rules and process
 
@@ -7625,6 +7628,39 @@ Status: decided (delegated). The lead closed four reds from the wave 4 health ru
 | Decision | Taken by the agent under owner delegation on 2026-10-20. After the R1-rails-public-07 move, the committed records under `packages/*/records/` and `packages/sim/test/goldens/` keep the `command` and `dir` text of the run that wrote them (for example `node designs/ogee16/legacy/tools/extract-plate.mjs`); the moved scripts write the new path on their next `--write`. Profile constant sources, check seed evidence and the generated check pages that cite `designs/cotter/legacy/tools/hook_fit.py` are unchanged, since that file did not move. `legacyTrees` in `core/src/commands/project-graph.ts` walks `designs/<id>/extract` as well as `designs/<id>/legacy`, so a scene that reads the proud-head fixture keeps its links to it; `packages/project/test/fixtures/graph.jsonl` was rerecorded with HBF_ACCEPT_GRAPH=1. |
 | Rationale | A record states how it was made; editing its text by hand would be a hand edit of a generated file and would move its oracleRecord hash without a rerun. Without the extract walk the ogee16-cranks scene would lose its staleness links to the four fixture files it reads. |
 | Evidence | Rerecorded graph.jsonl differs in 11 lines: the ogee16-cranks and sash-slide scene source hashes (both files edited), the ogee16-cranks links renamed from legacy to extract paths at the same hashAtLink, and the proud-head links dropped from eight records and the ogee16-printed scene that named only the whole ogee16 legacy tree; no hbf://build hash moved (computed). The node record scripts and the four ogee16 Python record scripts exit 0 in compare mode from their new place (measured). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-629 TOGGLE keeps the original's walls under a chase waiver
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-21. The check runner applies chase waivers (spec WaiverDecl, D-173), and designs/toggle waives CHK-PRT-04 with D-615 as its reason, keeping the original's 0.64 mm cup walls and 0.8 mm edge. A waived fail stays in the report with measured, legal, constraint and origin, and stops blocking the gate. Queued as R1-fix-20. |
+| Rationale | Port, never reinvent (D-222): the original's numbers are the bar, and widening the cups is a design change. D-173 already defines the waiver contract; nothing applied it. Reversible by the owner: drop the waiver and widen the cups. |
+| Evidence | R1-designs-reach-12 branch at b9b34a1: 6 bench-layer gold fails, 4 of them from CHK-PRT-04 at the defaults (computed). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-630 At 390 px a drive pad with more than four targets docks below the stage
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-21. At 390 px, a drive pad with more than four targets docks below the stage instead of over it, so its 44 px targets stay full size. Queued as R1-fix-22 with the 44 px floor for hb-select and hb-switch, the package import in from-chase.ts and the reserved blank start id. |
+| Rationale | The PIP 10-key pad needs 10 targets of 44 px plus a readout, which cannot fit a quarter of the 382 x 285 px stage at 390 (computed); shrinking targets breaks G-54. |
+| Evidence | R1-designs-reach-10 branch at 7cc7ae5, gold G-52 at 390 px. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-631 rules.audit skips extracted legacy fixtures
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-21. SOURCE_SKIPS in core/src/commands/rules-audit.ts gains designs/*/extract/fixtures/, the files R1-rails-public-07 moved out of legacy/ and pins by SHA256SUMS. The extract scripts themselves stay audited. R1-fix-18. |
+| Rationale | CHK-FIT-04 failed the ogee16 proud-head fixture after the move; the fixture is evidence kept as shipped, the same class as the legacy skip (D-142). |
+| Evidence | rules-audit 9 of 9; removing the row fails 2 tests after tsc -b (measured, 39e5758). |
 | Supersedes | new |
 | Milestone | none |
 
