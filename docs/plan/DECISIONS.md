@@ -671,6 +671,7 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-614 | kernel/author re-exports the TOGGLE host plan and the copper route search | decided | Engine, author |
 | D-615 | TOGGLE keeps the original's terminal row; CHK-PRT-04 fails on it | decided | Constraints and checks |
 | D-616 | TOGGLE port choices: bores, leads, pin row step, hookup pins and the drive contact | decided | reach |
+| D-617 | Wave 4 health reds closed directly | decided | tooling |
 
 ## House rules and process
 
@@ -7490,6 +7491,10 @@ Status: decided (delegated, R1-spike-01). The WASM run changes one value of the 
 | Evidence | `designs/toggle/build.ts`, `designs/toggle/chase.ts`, `designs/toggle/test/build.test.ts` (9 pass, a gate stop mutant and a pinout mutant each fail it, computed, 2026-10-21). |
 | Supersedes | new |
 | Milestone | none |
+
+### D-617 Wave 4 health reds closed directly (R1-fix-14 to 17)
+
+Status: decided (delegated). The lead closed four reds from the wave 4 health run on main without a builder: R1-fix-14 rerecords packages/checks/test/metric-gates/builds.json, which only gains the designs/toggle entry (43 metrics, all informational, nothing removed, computed from the diff); R1-fix-15 compares the cae984a constants oracle in publish form through tools/publish-paths.mjs instead of moving the frozen commit; R1-fix-16 builds the counts test copy from git ls-files, matching counts.mjs index semantics; R1-fix-17 rewrites tools/legacy/inventory.json, where only the blocks build test reader was added. Each test passes alone; mutants for 15 and 16 fail; the 14 mutant was not run. Evidence: .hbf-notes/r1/health-w4/.
 
 ## Owner queue
 
