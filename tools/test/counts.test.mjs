@@ -28,11 +28,15 @@ const INPUTS = [
   "tools/vendor",
 ];
 
+// Only the files git tracks under INPUTS: counts.mjs counts the index in a
+// git checkout, and a temp copy is none, so ignored files left on an owner
+// disk (the skill copies under knowledge/references/) must stay out (R1-fix-16).
 function tempCopy() {
   const dir = mkdtempSync(join(tmpdir(), "hbf-counts-"));
-  for (const p of INPUTS) {
+  const listed = execFileSync("git", ["-C", repo, "ls-files", "-z", "--cached", "--", ...INPUTS], { encoding: "utf8", maxBuffer: 1 << 26 });
+  for (const p of listed.split("\0").filter(Boolean)) {
     mkdirSync(dirname(join(dir, p)), { recursive: true });
-    cpSync(join(repo, p), join(dir, p), { recursive: true });
+    cpSync(join(repo, p), join(dir, p));
   }
   return dir;
 }

@@ -9,6 +9,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { gatherConstants, outputs } from "../gen/registries/constants.mjs";
+import { publishText } from "../publish-paths.mjs";
 
 const root = fileURLToPath(new URL("../../", import.meta.url));
 const DATA = "packages/profile/data";
@@ -41,7 +42,9 @@ test("gathered fragments equal the committed constants.json byte for byte", () =
 // The constants.json the split was cut from, read from git history so the
 // comparison stands on a source the generator never wrote. Its only byte
 // difference is number form (1.0 written 1), so the parsed objects match,
-// row order included. A shallow checkout without that commit skips.
+// row order included. Source paths are compared in publish form, since the
+// fragments later named the owner archive by prefix (R1-fix-15). A shallow
+// checkout without that commit skips.
 const SPLIT_FROM = "cae984a";
 
 function beforeText() {
@@ -55,7 +58,7 @@ function beforeText() {
 test("gathered constants parse equal to constants.json as it stood before the split", (t) => {
   const text = beforeText();
   if (text === null) return t.skip(`commit ${SPLIT_FROM} not in this checkout (shallow clone)`);
-  const was = JSON.parse(text);
+  const was = JSON.parse(publishText(text));
   assert.equal(was.constants.length, 234);
   assert.deepEqual(gatherConstants(root), was);
 });

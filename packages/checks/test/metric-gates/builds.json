@@ -51,6 +51,184 @@
       ]
     },
     {
+      "build": "designs/toggle",
+      "part": "toggle",
+      "metrics": [
+        {
+          "id": "tilt-stick.0.host.top",
+          "gate": "informational"
+        },
+        {
+          "id": "tilt-stick.0.host.size",
+          "gate": "informational"
+        },
+        {
+          "id": "tilt-stick.0.stick.zf",
+          "gate": "informational"
+        },
+        {
+          "id": "tilt-stick.0.stick.topTrace",
+          "gate": "informational"
+        },
+        {
+          "id": "tilt-stick.0.stick.Rw",
+          "gate": "informational"
+        },
+        {
+          "id": "tilt-stick.0.stick.gateD",
+          "gate": "informational"
+        },
+        {
+          "id": "tilt-stick.0.stick.thContact",
+          "gate": "informational"
+        },
+        {
+          "id": "tilt-stick.0.stick.thStop",
+          "gate": "informational"
+        },
+        {
+          "id": "tilt-stick.0.stick.restBand",
+          "gate": "informational"
+        },
+        {
+          "id": "tilt-stick.0.stick.squeeze",
+          "gate": "informational"
+        },
+        {
+          "id": "tilt-stick.0.stick.Fc",
+          "gate": "informational"
+        },
+        {
+          "id": "tilt-stick.0.stick.Fs",
+          "gate": "informational"
+        },
+        {
+          "id": "tilt-stick.0.stick.strain",
+          "gate": "informational"
+        },
+        {
+          "id": "tilt-stick.0.stick.rCollar",
+          "gate": "informational"
+        },
+        {
+          "id": "tilt-stick.0.stick.ring",
+          "gate": "informational"
+        },
+        {
+          "id": "tilt-stick.0.drive.0.contact",
+          "gate": "informational"
+        },
+        {
+          "id": "tilt-stick.0.drive.0.stop",
+          "gate": "informational"
+        },
+        {
+          "id": "tilt-stick.0.drive.1.contact",
+          "gate": "informational"
+        },
+        {
+          "id": "tilt-stick.0.drive.1.stop",
+          "gate": "informational"
+        },
+        {
+          "id": "tilt-stick.0.drive.2.contact",
+          "gate": "informational"
+        },
+        {
+          "id": "tilt-stick.0.drive.2.stop",
+          "gate": "informational"
+        },
+        {
+          "id": "tilt-stick.0.drive.3.contact",
+          "gate": "informational"
+        },
+        {
+          "id": "tilt-stick.0.drive.3.stop",
+          "gate": "informational"
+        },
+        {
+          "id": "tilt-stick.0.stick.stemStress",
+          "gate": "informational"
+        },
+        {
+          "id": "layout.width",
+          "gate": "informational"
+        },
+        {
+          "id": "layout.depth",
+          "gate": "informational"
+        },
+        {
+          "id": "layout.top",
+          "gate": "informational"
+        },
+        {
+          "id": "route.layers",
+          "gate": "informational"
+        },
+        {
+          "id": "route.tries",
+          "gate": "informational"
+        },
+        {
+          "id": "route.comDeg",
+          "gate": "informational"
+        },
+        {
+          "id": "pinout.P1",
+          "gate": "informational"
+        },
+        {
+          "id": "pinout.P2",
+          "gate": "informational"
+        },
+        {
+          "id": "pinout.P3",
+          "gate": "informational"
+        },
+        {
+          "id": "pinout.P4",
+          "gate": "informational"
+        },
+        {
+          "id": "pinout.P5",
+          "gate": "informational"
+        },
+        {
+          "id": "drive.E",
+          "gate": "informational"
+        },
+        {
+          "id": "drive.N",
+          "gate": "informational"
+        },
+        {
+          "id": "drive.W",
+          "gate": "informational"
+        },
+        {
+          "id": "drive.S",
+          "gate": "informational"
+        },
+        {
+          "id": "drive.E.deg",
+          "gate": "informational"
+        },
+        {
+          "id": "drive.N.deg",
+          "gate": "informational"
+        },
+        {
+          "id": "drive.W.deg",
+          "gate": "informational"
+        },
+        {
+          "id": "drive.S.deg",
+          "gate": "informational"
+        }
+      ]
+    },
+    {
       "build": "reference/boards/shunt-art",
       "part": "shunt-art",
       "metrics": [
