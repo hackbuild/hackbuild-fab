@@ -5,31 +5,49 @@
 // runs: forged, expired, replayed and args-moved states refuse, and only a
 // verified approval of the build the person saw writes. Every case asserts
 // the files on disk before and after.
+//
+// Other test files export flex-pair at its default params into the same
+// workspace store while this file runs (gate.test.ts, skeleton.test.ts),
+// so a snapshot of the whole artifact folder failed for their writes. This
+// file exports the chase at a gap no other test builds, so the build and
+// its 3mf artifact hash are this file's own. A first approved export, in
+// beforeAll, names that hash; each case then watches the export folder,
+// that artifact file and the graph lines that name it.
 
-import { existsSync, readdirSync, rmSync, statSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync, rmSync, statSync } from "node:fs";
 import path from "node:path";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, beforeAll, describe, expect, it } from "vitest";
 import { canonicalize, type CommandResult } from "@hackbuild/spec";
 // @ts-expect-error tools/mcp/client.mjs is plain javascript without declarations
 import { connect } from "../../tools/mcp/client.mjs";
 import { digestArgs, mintState, verifyState, type NonceLedger } from "../src/gate.js";
 import { handle, type McpCall, type McpEnv } from "../src/mcp/handlers.js";
 import { servedTools } from "../src/mcp/schema.js";
+import { Store } from "../src/store.js";
 import { REF, ROOT } from "./hbf.js";
 
 const OUT = path.join(ROOT, REF, "out");
-const ARTIFACTS = path.join(ROOT, ".hbf", "store", "artifacts");
-const ARGS = { chase: REF, kind: "3mf", machine: "ffc5p" };
+/** Default gap 1.84 (chase.ts); 1.86 is one step off and in no other test. */
+const PARAMS = { "/keys/0/gap": 1.86 };
+const ARGS = { chase: REF, kind: "3mf", machine: "ffc5p", params: PARAMS };
+const STORE = new Store(ROOT);
+/** The artifact hash this export writes; set in beforeAll. */
+let hash = "";
 
-/** Every file under the export folder and the artifact store, with size and mtime. */
+const stat = (p: string): string => {
+  const s = statSync(p);
+  return `${path.relative(ROOT, p)} ${s.size} ${s.mtimeMs}`;
+};
+
+/** Every file under the export folder, this export's store artifact, and the graph lines naming it. */
 function snapshot(): string[] {
   const walk = (dir: string): string[] => !existsSync(dir) ? [] : readdirSync(dir, { withFileTypes: true }).flatMap((e) => {
     const p = path.join(dir, e.name);
-    if (e.isDirectory()) return walk(p);
-    const s = statSync(p);
-    return [`${path.relative(ROOT, p)} ${s.size} ${s.mtimeMs}`];
+    return e.isDirectory() ? walk(p) : [stat(p)];
   });
-  return [...walk(OUT), ...walk(ARTIFACTS)].sort();
+  const artifact = path.join(STORE.root, "artifacts", `${hash}.3mf`);
+  const graph = existsSync(STORE.graphFile) ? readFileSync(STORE.graphFile, "utf8").split("\n").filter((l) => l.includes(`hbf://artifact/${hash}`)) : [];
+  return [...walk(OUT), existsSync(artifact) ? stat(artifact) : "artifact absent", `graph lines naming the artifact ${graph.length}`].sort();
 }
 
 interface ToolResult { structuredContent?: CommandResult<unknown>; isError?: boolean }
@@ -46,13 +64,44 @@ async function overStdio(onElicit?: (p: { message: string }) => Promise<unknown>
   }
 }
 
+class MemLedger implements NonceLedger {
+  readonly used = new Set<string>();
+  consume(nonce: string): boolean {
+    if (this.used.has(nonce)) return false;
+    this.used.add(nonce);
+    return true;
+  }
+}
+
+const tool = servedTools("all").find((t) => t.def.name === "export_run")!;
+const KEY = Buffer.alloc(32, 7);
+
+/** One approved in-process export; returns the artifact hash and removes the file it wrote under the chase. */
+async function approvedExport(): Promise<string> {
+  const e: McpEnv = { workspace: ROOT, now: () => Date.now(), key: () => KEY, ledger: new MemLedger() };
+  const call = (extra: Partial<McpCall> = {}): McpCall => ({ args: ARGS, elicitation: true, signal: new AbortController().signal, ...extra });
+  const asked = await handle(tool, call(), e);
+  if (asked.kind !== "ask") throw new Error(`expected input_required, got ${JSON.stringify(asked)}`);
+  const before = new Set(existsSync(OUT) ? readdirSync(OUT) : []);
+  const o = await handle(tool, call({ requestState: asked.requestState, inputResponses: { approve: { action: "accept", content: { approve: true } } } }), e);
+  for (const f of existsSync(OUT) ? readdirSync(OUT) : []) if (!before.has(f)) rmSync(path.join(OUT, f), { force: true });
+  if (o.kind !== "result" || o.result.artifacts[0]?.hash === undefined) throw new Error(`expected a written 3mf, got ${JSON.stringify(o)}`);
+  return o.result.artifacts[0].hash;
+}
+
+beforeAll(async () => {
+  hash = await approvedExport();
+  // Not the default-params artifact the other export tests write.
+  expect(hash).not.toBe((JSON.parse(readFileSync(path.join(ROOT, REF, "expected", "artifacts.json"), "utf8")) as { "3mf": string })["3mf"]);
+}, 300_000);
+
 describe("export_run over stdio writes nothing without an approval", () => {
   it("a client without elicitation gets E_GATE_UNAVAILABLE naming the cli line", async () => {
     const before = snapshot();
     const { r } = await overStdio();
     expect(r.isError).toBe(true);
     expect(r.structuredContent?.errors[0]).toMatchObject({ code: "E_GATE_UNAVAILABLE" });
-    expect(r.structuredContent?.errors[0]?.personRuns).toBe(`npx --no-install hbf export.run ${REF} --kind 3mf --machine ffc5p`);
+    expect(r.structuredContent?.errors[0]?.personRuns).toBe(`npx --no-install hbf export.run ${REF} --kind 3mf --machine ffc5p --params '${JSON.stringify(PARAMS)}'`);
     expect(r.structuredContent?.artifacts).toEqual([]);
     expect(snapshot()).toEqual(before);
   }, 120_000);
@@ -77,18 +126,9 @@ describe("export_run over stdio writes nothing without an approval", () => {
   }, 120_000);
 });
 
-class MemLedger implements NonceLedger {
-  readonly used = new Set<string>();
-  consume(nonce: string): boolean {
-    if (this.used.has(nonce)) return false;
-    this.used.add(nonce);
-    return true;
-  }
-}
 
 describe("export_run gate states, in process", () => {
-  const tool = servedTools("all").find((t) => t.def.name === "export_run")!;
-  const key = Buffer.alloc(32, 7);
+  const key = KEY;
   let clock = 1_791_072_000_000;
   const env = (ledger: NonceLedger = new MemLedger()): McpEnv => ({ workspace: ROOT, now: () => clock, key: () => key, ledger });
   const call = (extra: Partial<McpCall> = {}): McpCall => ({ args: ARGS, elicitation: true, signal: new AbortController().signal, ...extra });
@@ -151,6 +191,8 @@ describe("export_run gate states, in process", () => {
     expect(o.result.errors).toEqual([]);
     expect(o.result.artifacts).toHaveLength(1);
     expect(o.result.artifacts[0]?.kind).toBe("3mf");
+    // The hash the snapshot watches is the one an approved export of these args writes.
+    expect(o.result.artifacts[0]?.hash).toBe(hash);
     const again = await handle(tool, call({ requestState: state, inputResponses: accept }), e);
     expect(again.kind === "result" && again.result.errors[0]).toMatchObject({ code: "E_GATE", got: "replayed" });
   }, 180_000);
