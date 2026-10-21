@@ -638,6 +638,7 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-581 | the hbf plugin commits only the tracked forge references | decided | Knowledge |
 | D-582 | the plugin hook matches the plugin-scoped export_run name | decided | Agent surface |
 | D-583 | changelog entries are dated by the first commit of each milestone | decided | Public repo |
+| D-584 | hbf://capabilities is canonical json and the served tool count is computed | decided | Agent surface |
 
 ## House rules and process
 
@@ -7106,6 +7107,17 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. CHANGELOG.md has Unreleased on top, then one entry per MILESTONES.md 1.1 row from M10 down to M-1, M-S included. With no git tags and no per-milestone merge commits, each entry cites the commit that first carried that milestone's packages and takes that commit's git author date (M-1 to M09 on 2026-10-13, M10 on 2026-10-20 at 78fcd4b). Each entry says what the commit added; none claims a milestone is complete. Release 1 work after 78fcd4b sits under Unreleased. tools/test/changelog.test.mjs skips its date check with a reason when a cited commit is missing from a shallow clone. |
 | Rationale | The brief asks for dates from tags or merge commits; the repo has neither for M-1 to M10, because those milestones landed as bulk commits on one day. The first carrying commit is the only date git records. Entry ids and names are read from the MILESTONES.md table so the list is never hand-kept. |
 | Evidence | git tag: empty (measured); git log: 29f24b8 to 983e195 on 2026-10-13 and 78fcd4b on 2026-10-20 (measured); node --test tools/test/changelog.test.mjs passes 6 of 6, and an M10 date moved to 2026-10-13 or Unreleased renamed fails it (measured). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-584 hbf://capabilities is canonical json and the served tool count is computed
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. hbf mcp registers one resource, hbf://capabilities (application/json), from MCP_RESOURCES in core/src/mcp/discover.ts. A read builds the body at call time as the RFC 8785 canonical json of capabilities(workspace), the rows hbf capabilities --json prints. mcpFacts carries resources, each with uri, mime type and the sha256 of that body, so server/discover and hbf doctor --json report it. The brief's "tool count stays 19" is tested as: spec MCP_TOOL_NAMES declares 19, the listed tools equal servedTools("all"), and their count is 19 less the unserved tools; the resource adds no tool. |
+| Rationale | Canonical json makes the discover hash reproducible from the body a host reads, so a host can tell a cached copy is current without a second request. The server lists 18 tools today because knowledge_search has no CommandDef yet; asserting a typed 19 would fail on main, and a typed 18 would go stale when knowledge_search lands. |
+| Evidence | node tools/mcp/client.mjs list: 18 tools, knowledge_search absent (measured); core/test/mcp-capabilities.test.ts passes 3 of 3, and a mutant that skips the registration fails the list and read tests while the tool test passes (measured). |
 | Supersedes | new |
 | Milestone | none |
 
