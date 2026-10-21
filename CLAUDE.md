@@ -167,6 +167,8 @@ The model writes declarations and the tool proves them.
 - Do not edit pip-controller from this repo. Do not reintroduce PIP's earlier name into anything
   pip-controller tracks (D-013, D-080).
 - Never enter a coupon result or raise a profile tier (PROFILE.md).
+- Do not help make what `USE.md` refuses: weapon or firearm parts, parts made to injure,
+  marks the person does not own. The standing authorization covers building, never exporting.
 - Do not commit or push unless asked. Stage the work and report (D-006).
 - The gold benches and the originals are the quality bar. The mockups in
   `fab-knowledge:mockups` are untested and secondary: take an

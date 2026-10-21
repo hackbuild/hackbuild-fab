@@ -108,8 +108,8 @@ test("TRADEMARKS.md carries the inlay rule", () => {
 // PLAN.md 5: the policy is linked from the README, the skill and the print
 // card. Rows marked pending wait for the item named; that item flips them.
 const LINKS = [
-  { file: "README.md", pending: "R1-rails-public-16 maker README" },
-  { file: "CLAUDE.md", pending: "R1-rails-public-16 maker README" },
+  { file: "README.md" },
+  { file: "CLAUDE.md" },
   { file: null, what: "print card template", pending: "engine print card item; template path not yet fixed" },
 ];
 
