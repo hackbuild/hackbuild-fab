@@ -7,7 +7,7 @@
 // M10-T06's slot registry is this registry (finding F5).
 
 import type {
-  CheckResult, ClaimDecl, ContactFn, DriveDecl, Feature, HookupDecl, Metric, WidgetDecl, WidgetRecord,
+  Body, CheckResult, ClaimDecl, ContactFn, DriveDecl, Feature, HookupDecl, Metric, WidgetDecl, WidgetRecord,
 } from "@hackbuild/spec";
 import { driveTilt } from "./tilt.js";
 import { drivePress, type WidgetClaimFn } from "./press.js";
@@ -15,6 +15,9 @@ import { plotCurve, type CurvePoint } from "./curve.js";
 import { driveTouch } from "./touch.js";
 import { driveFader } from "./fader.js";
 import { readoutSignal } from "./signal.js";
+import { driveCode, type WidgetCodeGate } from "./code.js";
+import { viewLight, type LightAim } from "./light.js";
+import { viewNetlens } from "./netlens.js";
 
 export { isLive, liveOutputs } from "./live.js";
 
@@ -40,6 +43,18 @@ export interface WidgetBuild {
   readonly closed?: readonly string[];
   /** Finger positions 0 to 1 by finger-pot prefix (drive.fader, readout.signal). */
   readonly positions?: Readonly<Record<string, number>>;
+  /** Code gates by id, bound by the host to the build's params (drive.code); WidgetDecl.fn names one. */
+  readonly gates?: Readonly<Record<string, WidgetCodeGate>>;
+  /** Dialed codes by widget id (drive.code). */
+  readonly codes?: Readonly<Record<string, readonly number[]>>;
+  /** Key insertion 0 to 1 by widget id (drive.code). */
+  readonly insertion?: Readonly<Record<string, number>>;
+  /** Key light aims by widget id (view.light). */
+  readonly lights?: Readonly<Record<string, LightAim>>;
+  /** The Part IR bodies, for the kinds that read a body's net (view.netlens). */
+  readonly bodies?: readonly Pick<Body, "id">[];
+  /** The lit net by widget id (view.netlens). */
+  readonly lenses?: Readonly<Record<string, string>>;
 }
 
 /** A widget's model: every output the kind computes, and why it computes none. */
@@ -104,3 +119,6 @@ registerWidget("plot.curve", plotCurve);
 registerWidget("drive.touch", driveTouch);
 registerWidget("drive.fader", driveFader);
 registerWidget("readout.signal", readoutSignal);
+registerWidget("drive.code", driveCode);
+registerWidget("view.light", viewLight);
+registerWidget("view.netlens", viewNetlens);

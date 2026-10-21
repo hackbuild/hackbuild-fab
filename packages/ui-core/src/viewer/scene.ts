@@ -7,7 +7,9 @@
 // drops explode and xray) and TENON src/part3.js lines 191 to 197 (explode
 // as a fixed step per gap in a declared order). Two departures, both from
 // M09-T06: the section plane is horizontal at a z the caller names (a
-// located finding carries one), and focus outlines the named bodies.
+// located finding carries one), and focus outlines the named bodies. Two
+// more from R1-engine-15: a lens lights one net and ghosts every other
+// body (view.netlens), and the key light moves (view.light).
 //
 // Every geometry and material is created through one Owner and freed when
 // the part is replaced or a mode changes (D-055).
@@ -19,6 +21,7 @@ import {
 } from "three";
 import type { Body, Part } from "@hackbuild/spec";
 import type { Owner } from "./dispose.js";
+import { bodyNets } from "../widgets/netlens.js";
 
 /** A body's mesh as the build hands it over: xyz triples and triangle indices. */
 export interface ViewMesh {
@@ -42,6 +45,8 @@ export interface ViewModes {
   readonly plate: boolean;
   /** Ids to outline; ids that name no body are ignored here. */
   readonly focus: readonly string[];
+  /** The one net lit in colour, every other body ghosted (view.netlens); absent or null is off. */
+  readonly lens?: string | null;
 }
 
 /** CSS colours the element resolves from tokens and slot colours. */
@@ -107,6 +112,8 @@ export interface StageScene {
   drawnBodies(): readonly DrawnBody[];
   /** Bounds of what is drawn in normalised device coordinates for the current camera, or null (gold G-15). */
   ndcBounds(): readonly [number, number, number, number] | null;
+  /** Moves the key light to a position, mm (view.light); null puts it back at LIGHTS.key.at. Returns where it is. */
+  keyLight(at: readonly [number, number, number] | null): [number, number, number];
   /** Frees every object the scene still holds. */
   dispose(): void;
 }
@@ -117,11 +124,13 @@ export function createStageScene(owner: Owner): StageScene {
   camera.up.set(0, 0, 1);
   const s = LEGACY_LIGHT_SCALE;
   scene.add(new AmbientLight(0xffffff, LIGHTS.ambient * s));
-  for (const l of [LIGHTS.key, LIGHTS.fill, LIGHTS.rim]) {
+  const lights = [LIGHTS.key, LIGHTS.fill, LIGHTS.rim].map((l) => {
     const d = new DirectionalLight("color" in l ? l.color : 0xffffff, l.intensity * s);
     d.position.set(l.at[0], l.at[1], l.at[2]);
     scene.add(d);
-  }
+    return d;
+  });
+  const key = lights[0]!;
   const group = new Group();
   scene.add(group);
   const bedGeom = owner.track(new PlaneGeometry(1, 1));
@@ -152,16 +161,6 @@ export function createStageScene(owner: Owner): StageScene {
     return g;
   }
 
-  /** Net per body: a feature whose id is the body's and that names a net. */
-  function netsOf(view: ViewPart): Map<string, string> {
-    const out = new Map<string, string>();
-    for (const f of view.part.features ?? []) {
-      const net = (f as unknown as Record<string, unknown>)["net"];
-      if (typeof net === "string" && view.part.bodies.some((b) => b.id === f.id)) out.set(f.id, net);
-    }
-    return out;
-  }
-
   function draw(view: ViewPart | null, modes: ViewModes, palette: Palette): void {
     clear();
     bedMat.color.setStyle(palette.bed);
@@ -175,7 +174,8 @@ export function createStageScene(owner: Owner): StageScene {
     const xray = modes.xray && !modes.plate;
     // Bodies lift by slot for both: this explode moves each slot up, which is the layer stack's LIFT.
     const explode = (modes.explode || modes.layers === true) && !modes.plate;
-    const nets = netsOf(view);
+    const nets = bodyNets(view.part.bodies, view.part.features ?? []);
+    const lens = modes.plate ? null : (modes.lens ?? null);
     const netOrder = [...new Set(nets.values())].sort();
     const slots = [...new Set(view.part.bodies.map((b) => b.slot))].sort((a, b) => a - b);
     const zLo = Math.min(...view.part.bodies.map((b) => b.mesh.bbox[0][2]));
@@ -187,9 +187,9 @@ export function createStageScene(owner: Owner): StageScene {
       const m = view.meshes[b.id];
       if (m === undefined) continue;
       const geom = geometryOf(m);
-      const ghost = xray && SHELL_ROLES.has(b.role);
       const net = nets.get(b.id);
-      const colour = xray && net !== undefined ? palette.net(netOrder.indexOf(net)) : palette.slot(b.slot);
+      const ghost = lens !== null ? net !== lens : xray && SHELL_ROLES.has(b.role);
+      const colour = (xray || lens !== null) && net !== undefined ? palette.net(netOrder.indexOf(net)) : palette.slot(b.slot);
       const mat = owner.track(new MeshStandardMaterial({
         color: new Color().setStyle(colour), roughness: 0.6, metalness: 0.05, flatShading: true,
         transparent: ghost, opacity: ghost ? XRAY_GHOST : 1, depthWrite: !ghost,
@@ -257,6 +257,12 @@ export function createStageScene(owner: Owner): StageScene {
     return [lo[0] as number, lo[1] as number, hi[0] as number, hi[1] as number];
   }
 
+  function keyLight(at: readonly [number, number, number] | null): [number, number, number] {
+    const p = at ?? LIGHTS.key.at;
+    key.position.set(p[0], p[1], p[2]);
+    return [key.position.x, key.position.y, key.position.z];
+  }
+
   return {
     scene,
     camera,
@@ -265,6 +271,7 @@ export function createStageScene(owner: Owner): StageScene {
     pick,
     drawnBodies,
     ndcBounds,
+    keyLight,
     dispose() {
       clear();
       owner.release(bedGeom);

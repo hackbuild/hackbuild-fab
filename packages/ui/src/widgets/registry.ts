@@ -14,6 +14,9 @@ import PlotCurve from "./PlotCurve.vue";
 import DriveTouch from "./DriveTouch.vue";
 import DriveFader from "./DriveFader.vue";
 import ReadoutSignal from "./ReadoutSignal.vue";
+import DriveCode from "./DriveCode.vue";
+import ViewLight from "./ViewLight.vue";
+import ViewNetlens from "./ViewNetlens.vue";
 
 const components = new Map<string, Component>();
 
@@ -52,3 +55,6 @@ registerWidgetComponent("plot.curve", PlotCurve);
 registerWidgetComponent("drive.touch", DriveTouch);
 registerWidgetComponent("drive.fader", DriveFader);
 registerWidgetComponent("readout.signal", ReadoutSignal);
+registerWidgetComponent("drive.code", DriveCode);
+registerWidgetComponent("view.light", ViewLight);
+registerWidgetComponent("view.netlens", ViewNetlens);

@@ -20,7 +20,7 @@ import { createHook, installHook, FREE_EXPORTS, type Hook, type HookExport, type
 import { admitDesign, type AdmitOptions } from "../bench/share.js";
 import { welcomeStarts, type WelcomeStart } from "../bench/welcome.js";
 import { createPad, padModel, type Pad, type PadModel } from "../drive/drive.js";
-import { widgetRecords } from "../widgets/registry.js";
+import { widgetRecords, type WidgetBuild } from "../widgets/registry.js";
 import type { WidgetClaimFn } from "../widgets/press.js";
 import type { ViewPart } from "../viewer/scene.js";
 
@@ -135,6 +135,8 @@ export interface WidgetView extends BuildView {
   readonly claimFns?: Readonly<Record<string, WidgetClaimFn>>;
   /** The drive.press travel, mm, the person dragged to. */
   readonly travelMm?: number;
+  /** drive.code gates, dialed codes and insertion; view.light aims; view.netlens lit nets (WidgetBuild fields of one name). */
+  readonly widgetInputs?: Pick<WidgetBuild, "gates" | "codes" | "insertion" | "lights" | "lenses">;
 }
 
 /** The records BENCH.widgets() returns for the bench's declared widgets on a build (the R1-engine-12 registry). */
@@ -150,6 +152,8 @@ export function widgetsModel(chase: Chase, bench: Bench, contact: ContactFn | nu
     ...(chase.claims === undefined ? {} : { claims: chase.claims }),
     ...(src.claimFns === undefined ? {} : { claimFns: src.claimFns }),
     ...(src.travelMm === undefined ? {} : { travelMm: src.travelMm }),
+    ...(src.part === null ? {} : { bodies: src.part.part.bodies }),
+    ...src.widgetInputs,
   });
 }
 

@@ -58,5 +58,11 @@ export { adcCounts, adcEntry, driveFader, FADER_REST, FADER_ROWS, faderLine, fad
 export type { FaderModel, FaderRead, FaderRows } from "./widgets/fader.js";
 export { fingerPrefix, readoutSignal, signalLevel, signalLine } from "./widgets/signal.js";
 export type { SignalModel } from "./widgets/signal.js";
+export { codeLine, dialedCode, driveCode, KEY_IN, nextDigit } from "./widgets/code.js";
+export type { CodeModel, GateSolve, WidgetCodeGate } from "./widgets/code.js";
+export { EL_RANGE, KEY_AIM, KEY_DIST, lightAt, lightLine, viewLight } from "./widgets/light.js";
+export type { LightAim, LightModel } from "./widgets/light.js";
+export { bodyNets, netlensLine, viewNetlens } from "./widgets/netlens.js";
+export type { NetlensModel } from "./widgets/netlens.js";
 export { bindChase, chaseStarts, driveModel, EXPORT_STEPS, NO_BUILD, NOT_A_DESIGN, NOT_IN_BAKE, panelRow, railEndError, railRows, widgetsModel } from "./chase/bind.js";
 export type { BindOptions, BuildView, ChaseBinding, ChaseReport, ChaseWriter, PanelRow, RailRow, WidgetView } from "./chase/bind.js";

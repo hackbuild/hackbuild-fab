@@ -21,3 +21,6 @@ export { default as PlotCurve } from "./widgets/PlotCurve.vue";
 export { default as DriveTouch } from "./widgets/DriveTouch.vue";
 export { default as DriveFader } from "./widgets/DriveFader.vue";
 export { default as ReadoutSignal } from "./widgets/ReadoutSignal.vue";
+export { default as DriveCode } from "./widgets/DriveCode.vue";
+export { default as ViewLight } from "./widgets/ViewLight.vue";
+export { default as ViewNetlens } from "./widgets/ViewNetlens.vue";
