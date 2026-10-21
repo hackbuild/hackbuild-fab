@@ -32,8 +32,8 @@ const M01_PENDING: readonly string[] = [];
 const M04_PENDING: readonly string[] = [];
 /** M06 commands not registered yet; mech.find, mech.derive and arch.find landed with M06-T11, arch.apply with M06-T12. */
 const M06_PENDING: readonly string[] = [];
-/** M10 commands not registered yet; chase.validate landed with M10-T04 and each card deletes its entry. */
-const M10_PENDING: readonly string[] = ["chase.render"];
+/** M10 commands not registered yet; chase.validate landed with M10-T04, chase.render with M10-T07, and each card deletes its entry. */
+const M10_PENDING: readonly string[] = [];
 
 describe("registered surface (M00-T13 step 1, M01-T05 step 7, M02-T11 step 9, M04-T09, M10-T04)", () => {
   const rows = surfaceRows(["M-S", "M00", "M01", "M02"]);

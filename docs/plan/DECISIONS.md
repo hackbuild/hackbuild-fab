@@ -620,6 +620,7 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-564 | Bench ports and legacy-reader moves last in release 1 | decided | Process, engine, plan |
 | D-565 | Builders land their own work; no integrator agent | decided | Process, engine, plan |
 | D-566 | Nothing is cut: plan version 9.1 schedules every cut item | decided | Plan, partners |
+| D-567 | chase.render bakes from bake.json into a temp root and fails on smoke breaches | decided | Engine, look |
 
 ## House rules and process
 
@@ -6902,6 +6903,17 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Rationale | The owner wants print simulation wherever a maker works. Linking an AGPL slicer makes the linking work AGPL (plan-v5/slicers.md, licence section), so the module stays separate. |
 | Evidence | plan-v5/PLAN.md 9.1, plan-v5/slicers.md addendum 2026-10-20, plan-v5/boundaries.md section 3 row slicers. Open owner question: whether pages that inline the module may be AGPL (default) or every hbf page stays MIT with the module loaded beside it. |
 | Supersedes | the version 9.0 cut list |
+| Milestone | none |
+
+### D-567 chase.render bakes from bake.json into a temp root and fails on smoke breaches
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under the owner delegation of 2026-10-20 for release 1 of plan v9.1 (R1-engine-22, M10-T07 step 1). chase.render bakes the design's bake.json with tools/bake/bake.mjs into a temporary root, opens the page headless offline through tools/smoke/render.ts, stores the page and one png per rail step at 1280 and 390 px as hbf://artifact/ uris, and writes nothing to the repo. A design with no bake.json is refused with E_REF (chase.bake writes one). Each breach of the smoke laws fails with E_KERNEL and its own record: render/overflow (scroll width over the viewport), render/pink (focal pink over a budget of 1 per view, D-125), render/console and render/network (D-129). It feeds the D-154 review and never ticks it. The WIP branch r1/R1-engine-22-r2 landed after a rebase on 4f42633 that kept main's runNode name and dropped its packages/checks/src/3mf/contracts.ts hunk (R1-fix-07 vendored the E_DRAFT code). |
+| Rationale | One baker and one smoke runner serve bake, render and CI; a look command that writes into the repo would dirty the tree it inspects. |
+| Evidence | core/test/chase-render.test.ts: flex-pair renders 8 pngs over 4 steps at 2 widths with no overflow, pink at most 1, 0 console errors and 0 requests (computed, run 2026-10-20); breach cases per record. |
+| Supersedes | none |
 | Milestone | none |
 
 ## Owner queue

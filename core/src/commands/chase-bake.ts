@@ -68,7 +68,7 @@ const failed = (ctx: CoreCtx, errors: readonly CommandError[]): CommandOut<Outpu
   result: { file: "", bytes: 0, hash: "" as Hash },
 });
 
-const lastLine = (s: string): string => s.trim().split("\n").filter((l) => l !== "").at(-1) ?? "";
+export const lastLine = (s: string): string => s.trim().split("\n").filter((l) => l !== "").at(-1) ?? "";
 
 export async function runChaseBake(input: CommandInput<"chase.bake">, ctx: CoreCtx): Promise<CommandOut<Output>> {
   const root = workspaceRoot(ctx.cwd);

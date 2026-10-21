@@ -11,6 +11,7 @@ import { spec as catalogPins } from "./catalog-pins.js";
 import { spec as chaseBake } from "./chase-bake.js";
 import { spec as chaseDiff } from "./chase-diff.js";
 import { spec as chasePatch } from "./chase-patch.js";
+import { spec as chaseRender } from "./chase-render.js";
 import { spec as chaseScaffold } from "./chase-scaffold.js";
 import { spec as chaseValidate } from "./chase-validate.js";
 import { spec as checkRun } from "./check-run.js";
@@ -43,6 +44,7 @@ export const SPECS: readonly AnySpec[] = [
   chaseBake,
   chaseDiff,
   chasePatch,
+  chaseRender,
   chaseScaffold,
   chaseValidate,
   checkRun,

@@ -35,6 +35,7 @@ import { runChasePatch } from "./commands/chase-patch.js";
 import { runChaseDiff } from "./commands/chase-diff.js";
 import { runChaseScaffold } from "./commands/chase-scaffold.js";
 import { runChaseBake } from "./commands/chase-bake.js";
+import { runChaseRender } from "./commands/chase-render.js";
 import { runDraft } from "./commands/draft.js";
 import { runAdopt } from "./commands/adopt.js";
 
@@ -80,6 +81,7 @@ export const RUNS: Runs = {
   "chase.patch": (i, ctx) => runChasePatch(i, ctx as CoreCtx),
   "chase.scaffold": (i, ctx) => runChaseScaffold(i, ctx as CoreCtx),
   "chase.bake": (i, ctx) => runChaseBake(i, ctx as CoreCtx),
+  "chase.render": (i, ctx) => runChaseRender(i, ctx as CoreCtx),
   draft: (i, ctx) => runDraft(i, ctx as CoreCtx),
   adopt: (i, ctx) => runAdopt(i, ctx as CoreCtx),
 };
