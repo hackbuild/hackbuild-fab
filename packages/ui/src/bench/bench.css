@@ -148,8 +148,9 @@
 @media(pointer:coarse),(max-width:640px){
   .hbf-cam{ min-height:var(--hbf-touch); min-width:var(--hbf-touch) }
   /* 44 px touch targets at 390 (UI.md section 11, G-54): hackbuild-ui 0.3.0
-     sizes steps, row numbers, small buttons and chips to 27 to 37 px. */
-  .hbf-bench .hb-steps .hb-tab,.hbf-bench .hb-prow-num,.hbf-bench .hb-btn,.hbf-bench .hb-chip{ min-height:var(--hbf-touch); min-width:var(--hbf-touch) }
+     sizes steps, row numbers, small buttons, chips and selects to 27 to
+     39 px (measured). */
+  .hbf-bench .hb-steps .hb-tab,.hbf-bench .hb-prow-num,.hbf-bench .hb-btn,.hbf-bench .hb-chip,.hbf-bench .hb-select{ min-height:var(--hbf-touch); min-width:var(--hbf-touch) }
 }
 @media(prefers-reduced-motion:reduce){
   .hbf-bench *{ transition:none; animation:none }

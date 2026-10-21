@@ -1,0 +1,103 @@
+{
+  "id": "blocks",
+  "shell": "ui",
+  "title": "blocks",
+  "fonts": [
+    {
+      "family": "Permanent Marker",
+      "weight": 400,
+      "style": "normal",
+      "from": "npm:@fontsource/permanent-marker/files/permanent-marker-latin-400-normal.woff2"
+    },
+    {
+      "family": "Special Elite",
+      "weight": 400,
+      "style": "normal",
+      "from": "npm:@fontsource/special-elite/files/special-elite-latin-400-normal.woff2"
+    },
+    {
+      "family": "VT323",
+      "weight": 400,
+      "style": "normal",
+      "from": "npm:@fontsource/vt323/files/vt323-latin-400-normal.woff2"
+    },
+    {
+      "family": "IBM Plex Mono",
+      "weight": 400,
+      "style": "normal",
+      "from": "npm:@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-400-normal.woff2"
+    },
+    {
+      "family": "IBM Plex Mono",
+      "weight": 500,
+      "style": "normal",
+      "from": "npm:@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-500-normal.woff2"
+    },
+    {
+      "family": "IBM Plex Mono",
+      "weight": 600,
+      "style": "normal",
+      "from": "npm:@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-600-normal.woff2"
+    },
+    {
+      "family": "IBM Plex Mono",
+      "weight": 700,
+      "style": "normal",
+      "from": "npm:@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-700-normal.woff2"
+    },
+    {
+      "family": "Libre Baskerville",
+      "weight": 400,
+      "style": "italic",
+      "from": "npm:@fontsource/libre-baskerville/files/libre-baskerville-latin-400-italic.woff2"
+    }
+  ],
+  "css": [
+    {
+      "from": "npm:@virgilvox/hackbuild-ui/dist/styles/hackbuild.css"
+    },
+    {
+      "from": "../../packages/ui/src/bench/bench.css"
+    }
+  ],
+  "wasm": {
+    "from": "npm:manifold-3d/manifold.wasm",
+    "global": "MANIFOLD_WASM_B64",
+    "label": "manifold.wasm"
+  },
+  "classic": [
+    {
+      "from": "npm:manifold-3d/manifold.js",
+      "label": "manifold-3d (Apache 2.0), classic script form",
+      "exportDefault": "Module",
+      "global": "ManifoldModule",
+      "replace": [
+        {
+          "match": "require=createRequire(import.meta.url)",
+          "with": "require=createRequire(\"\")"
+        },
+        {
+          "match": "var _scriptName=import.meta.url;",
+          "with": "var _scriptName=\"\";"
+        },
+        {
+          "match": "new URL(\"manifold.wasm\",import.meta.url).href",
+          "with": "\"manifold.wasm\""
+        }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "from": "npm:jszip/dist/jszip.min.js",
+      "label": "inlined jszip.min.js",
+      "vendored": true
+    }
+  ],
+  "build": {
+    "from": "./page-build.ts",
+    "global": "HbfPageBuild",
+    "label": "blocks page build: chase, build.ts and the build and check pipeline"
+  },
+  "entry": "./bench.entry.ts"
+}

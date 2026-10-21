@@ -18,6 +18,9 @@ other parts, is M10-T10.
 | `test/build.test.ts` | the chase through packages/chase validate.ts, each part value built and checked, held to the reference goldens and to BOSS's own column |
 | `test/route-seat.test.ts` | the seat configs against BOSS's own, completion counts against BOSS, spacing read from the routes, and the `pins: 'all'` refusal |
 | `test/golden/route-seat.json` | per seat route lengths, vias and pin to stud estimates as computed; rewritten with `HBF_SEAT_RECORD=1` |
+| `bench.ts` | the bench: steps part, materials, print (blocks.html's strip less BUILD, the scene), cams iso, top, front, under, no drive pad; the welcome's two starts are the two standards, neither preselected (D-087) |
+| `bench.entry.ts`, `page-build.ts`, `page-facts.d.ts`, `bake.json` | the bake inputs, as `reference/keys/midi-pad` has them; `node tools/bake/bake.mjs designs/blocks/bake.json` writes `dist/bench/blocks.html` |
+| `test/bench.test.ts` | the bench against the gold benches: one sentence per goal, the part step carrying both part groups, the two standard starts, the print step on plate |
 
 `npx vitest run designs/blocks` runs the tests. `npx --no-install hbf
 part.build designs/blocks --json` builds the defaults; `--preset boss-v1`
@@ -46,12 +49,38 @@ and `--preset blocks-html` build the stud at each standard.
   M10-T10 and an owner call on D-087.
 - Release 1 BLOCKS is a smaller bench than blocks.html: no scene, no
   deck, no wiring on a grid, and only two of the original's parts. The
-  side by side (R1-designs-reach-14) will show it.
+  side by side (R1-designs-reach-14) shows it.
+
+## Bench (`bench.ts`, baked to `dist/bench/blocks.html`)
+
+- Steps part, materials, print. The part step holds the part pick, the
+  standard (its focus) and the wire and brick groups, as blocks.html's
+  PART pane holds CATALOG and PARAMETERS; BUILD, the scene composer,
+  waits for M10-T10.
+- No drive pad: blocks.html drives its circuits from SELECTED and BOARD
+  PINS in a scene, which this cut does not carry.
+- The welcome starts are `boss-v1` and `blocks-html`, the two standards;
+  the defaults behind the card build the wire, which needs no standard.
+- The chase exports json besides 3mf and stl, for the design file the
+  G-57 drive loads and exports; only defHash and the build hash moved in
+  the goldens (mesh hashes and volumes equal, computed).
 
 ## What is verified, and what is not
 
 ### Verified on this machine
 
+- 2026-10-21: the gold suite on `dist/bench/blocks.html`
+  (`npx playwright test -c tools/smoke/playwright.config.ts --grep @gold`,
+  then `node tools/gold/report.mjs --origin fab --bench blocks --only` the
+  bench-layer rules) exited 0: 23 pass, 3 n/a (G-05 no light field, G-21
+  and G-52 no drive pad), 0 fail (measured, headless Chrome).
+- 2026-10-21: `node tools/gold/side-by-side.mjs` shot the bake against
+  `fab-knowledge:originals/blocks/files/blocks.html` (the bytes the
+  `blocks` hook adapter names; no copy sits in `legacy/`) at 390 and
+  1280 px, 18 images in `fab-knowledge:evidence/r1/side-by-side/blocks/`;
+  scrollWidth equals the viewport on both pages in every state
+  (measured). The fab b-work shot is the welcome's first tile, start
+  blank, which the shell adds before the two standard starts.
 - 2026-10-21: `npx vitest run designs/blocks` passed, 2 files and 30 tests
   (measured): the chase validates with 0 errors, the wire and both studs
   build with 0 failing checks (CHK-PRT-05 warns that faces sit between

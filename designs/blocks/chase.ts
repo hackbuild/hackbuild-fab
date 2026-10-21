@@ -89,7 +89,7 @@ export const chase = defineChase({
       note: "the blocks standard: 2.2 socket, 0.6 flange and traces, 0.20 layers. one conductive column on a one stud brick." },
   ],
   build: { module: "./build.ts", fn: "build" },
-  exports: [{ kind: "3mf", machine: "ffc5p", pose: "print" }, { kind: "stl" }],
+  exports: [{ kind: "3mf", machine: "ffc5p", pose: "print" }, { kind: "stl" }, { kind: "json" }],
   assertions: [],
 });
 

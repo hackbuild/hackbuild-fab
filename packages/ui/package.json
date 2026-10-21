@@ -10,7 +10,8 @@
       "types": "./dist/types/index.d.ts",
       "import": "./dist/index.js"
     },
-    "./style.css": "./dist/style.css"
+    "./style.css": "./dist/style.css",
+    "./bench/entry": "./src/bench/entry.ts"
   },
   "scripts": {
     "build": "tsc -b && vite build && node ../../tools/vue-check.mjs tsconfig.lib.json",

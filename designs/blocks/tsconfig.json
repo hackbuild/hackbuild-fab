@@ -25,6 +25,7 @@
     }
   ],
   "exclude": [
-    "vitest.config.ts"
+    "vitest.config.ts",
+    "bench.entry.ts"
   ]
 }
