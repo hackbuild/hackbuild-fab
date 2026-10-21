@@ -702,6 +702,7 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-645 | Held legacy copies are inventory rows with an archive id; SHA256SUMS keeps two columns | decided | tooling |
 | D-646 | Legacy pages the smoke report names and the copper oracles stay tracked | decided | tooling |
 | D-647 | The ogee16 record scripts read held copies by repo path | decided | tooling |
+| D-648 | Plan process files leave the repo for the plan archive | decided | tooling |
 
 ## House rules and process
 
@@ -7853,6 +7854,17 @@ Status: decided (delegated). The lead closed four reds from the wave 4 health ru
 | Decision | Taken by the agent under owner delegation on 2026-10-20. tools/py/legacy_record.py gains legacy_file and legacy_dir: a designs/<id>/legacy path resolves to the checkout's copy when one is on disk, else to the archive copy its inventory row names, through hbf_archives.local_source; finish() keys each input by the repo path, so the committed records keep their input keys. connect-record.py, cut-record.py, footprint-record.py and kin-record.py under designs/ogee16/extract read through them, and a script that imports from the archive writes no __pycache__ there. |
 | Rationale | These four scripts were the last code readers of designs/ogee16/legacy (the item 08 done grep misses a ROOT join). Keeping the keys means no record is rewritten, the same route D-641 took for tools/legacy/record.mjs. |
 | Evidence | All four exit 0 against the committed records with the legacy folder absent and HBF_ORIGINALS set (computed 2026-10-21, same numbers as on main: 231 rings, 183 pieces on 3 sheets, 128 placements 0 mismatches); a mutant that keys inputs by local path fails kin-record.py. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-648 Plan process files leave the repo for the plan archive
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The milestone cards, MILESTONES.md, RISKS.md and extractions.md move from `docs/plan/` to `fab-knowledge:plan-archive/` and are removed from git. CLAUDE.md and the CHANGELOG.md header point at the archive (the root README named none, so the CHANGELOG line is the pointer fixed). The `docs/plan/**` lint-voice allow row stays for the REPOS.md hook text it still covers. `tools/lint-plan-types.mjs` reads `docs/plan/milestones` only when present, as its registry generator already did, and `tools/reports/plan-types.txt` is regenerated. The `docs/plan` branch of `planRoot` stays as a plan-root default; `tools/test/plan-root.test.mjs` now expects the sibling archive when HBF_PLAN is unset. Provenance strings in data that cite a card path (profile constants, sim scenes, a circuit goldens note) stay as citations, as in D-642. Earlier decision records that cite card paths stay as written. |
+| Rationale | PLAN.md section 5 bullet 1 moves the plan process files out of the public repo. A worktree outside the repo parent finds no sibling archive, so plan tests there skip as not run unless HBF_PLAN is set; the main checkout finds the archive by default. Retargeting data provenance would move fragment files and hashed scene data for no change in behaviour. |
+| Evidence | `git ls-files docs/plan` lists none of the moved files; the archive copies compare byte equal (diff -r and cmp, measured 2026-10-21). Node gate list in the worktree: 94 pass 37 skip unset, 127 pass 4 skip with HBF_PLAN on the archive (measured). A mutant that drops the existsSync filter makes `node tools/lint-plan-types.mjs --warn` exit 2 (measured). plan-types.txt moves from 14 hits over 37 docs to 9 over 15 (computed). |
 | Supersedes | new |
 | Milestone | none |
 
