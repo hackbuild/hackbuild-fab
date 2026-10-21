@@ -1758,3 +1758,13 @@ transport mapping.
 | `ParamField.checks`, `limit.check`, pair ResultTarget | named by section 2.7 and section 4 (P-02, P-23, P-25) | spec/chase.ts and spec/checks.ts owners add the fields; the contract tests of TESTING.md 4.3 start when they land |
 | P-20 slot colour in the 3MF | owner decision | gold default: write the slot preview colour as `filament_colour`; CHK-3MF-07 clause as in 9.14 |
 | P-27 against D-109 | P-27 asks for a confirm on a failing fabrication export; D-109 refuses a failing build | D-109 holds for block fails; warn and waived findings are named in the confirm (section 2.7) |
+
+From release 1 a check is entered by adding its seed fragment
+`packages/checks/seed/checks/<id>.json` (status `entered`, with
+`enteredBy: "<queue id>"`, for example `"R1-rails-import"`), its module
+`packages/checks/src/defs/<family>/<id>.ts` with its run body, and the page
+`node tools/gen-check-pages.mjs` writes; `npm run registries` regenerates the
+seed and the module index. This file is not edited for it: section 9 holds
+the rows the milestone cards entered, and
+`packages/checks/test/entered.test.ts` checks a release row against its own
+fragment.

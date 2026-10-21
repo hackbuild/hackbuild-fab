@@ -2,12 +2,15 @@
 // expected ids, titles, targets, needs, legal kinds, severities and run
 // milestones are read from the plan on disk (the card's tables in
 // docs/plan/milestones/M04-checks-project.md and docs/plan/CHECKS.md
-// sections 9 and 15), never from the seed or modules under test. The run
-// bodies that land here are driven through the registry on their origins:
+// sections 9 and 15), never from the seed or modules under test. A row a
+// release queue item entered (enteredBy R<n>-<item>) has no section 9 row;
+// its fragment is the record and is checked on its own (CHECKS.md section
+// 15). The run bodies that land here are driven through the registry on
+// their origins:
 // COTTER's hook pairs through the M02-T09 insertion scene, the COLLAR NFC
 // card's pause, the CASK export and the TENON export.
 
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { describe, expect, test } from "vitest";
 import type { Assembly, CheckLevel, CheckResult, KernelId } from "@hackbuild/spec";
@@ -86,11 +89,12 @@ const LANDED: Readonly<Record<string, string>> = {
   "CHK-BRD-07": "M08-T12", "CHK-BRD-08": "M08-T12", "CHK-BRD-09": "M08-T12", "CHK-BRD-20": "M08-T12", "CHK-BRD-21": "M08-T12",
   "CHK-BRD-19": "M08-T09", "CHK-BRD-22": "M08-T08",
   "CHK-NET-46": "K-04",
-  "CHK-PRT-18": "R1-rails-import", "CHK-PRT-19": "R1-rails-import",
-  "CHK-CLAIM-01": "R1-engine-11",
 };
 
 const enteredBy = (r: Row): string | undefined => (r as { enteredBy?: string }).enteredBy;
+/** From release 1 a queue item enters a check by its seed fragment alone (CHECKS.md section 15). */
+const RELEASE_ITEM = /^R\d+-/;
+const isRelease = (r: Row): boolean => RELEASE_ITEM.test(enteredBy(r) ?? "");
 const T12 = seed.checks.filter((r) => !SEEDED_IDS.has(r.id) && enteredBy(r) === "M04-T12");
 /**
  * Rows a later card entered, each with its CHECKS.md section 9 row: M05-T14
@@ -98,9 +102,8 @@ const T12 = seed.checks.filter((r) => !SEEDED_IDS.has(r.id) && enteredBy(r) === 
  * families that ran under candidate names, M05-T20 CHK-3MF-08 with its run
  * body, M08-T08 the KiCad readback, M08-T12 the jumper default and the
  * island and short check, K-04 (the 2026-10-13 flagship finding) the
- * seat tap landing, R1-rails-import the import piece count and floating
- * piece (hbf image eval 2026-10-20), R1-engine-11 the function claim
- * band.
+ * seat tap landing. Rows a release queue item entered are checked against
+ * their own fragment below, never here.
  */
 const LATER: Readonly<Record<string, readonly string[]>> = {
   "M05-T14": ["CHK-NET-31", "CHK-NET-32", "CHK-NET-33", "CHK-NET-34", "CHK-NET-35", "CHK-NET-36", "CHK-NET-37", "CHK-NET-38"],
@@ -110,8 +113,6 @@ const LATER: Readonly<Record<string, readonly string[]>> = {
   "M08-T08": ["CHK-BRD-22"],
   "M08-T12": ["CHK-BRD-20", "CHK-BRD-21"],
   "K-04": ["CHK-NET-46"],
-  "R1-rails-import": ["CHK-PRT-18", "CHK-PRT-19"],
-  "R1-engine-11": ["CHK-CLAIM-01"],
 };
 const KERNELS = new Set<KernelId>(["geom", "mesh", "profile", "3mf", "sim", "inlay"]);
 const TARGETS = new Set<CheckLevel>(["part", "body", "feature", "assembly", "artifact", "source", "project"]);
@@ -128,9 +129,7 @@ describe("entered rows (M04-T12)", () => {
     console.info(`card and section 15 name ${named.length} new ids; seed enters ${T12.length}`);
     expect(T12.map((r) => r.id).sort()).toEqual(named);
     for (const r of T12) expect([r.status, enteredBy(r)], r.id).toEqual(["entered", "M04-T12"]);
-    const later = seed.checks.filter((r) => !SEEDED_IDS.has(r.id) && enteredBy(r) !== "M04-T12");
-    expect(Object.fromEntries(Object.keys(LATER).map((card) => [card, later.filter((r) => enteredBy(r) === card).map((r) => r.id).sort()]))).toEqual(LATER);
-    expect(later.length).toBe(Object.values(LATER).flat().length);
+    const later = seed.checks.filter((r) => !SEEDED_IDS.has(r.id) && enteredBy(r) !== "M04-T12" && !isRelease(r));
     for (const r of later) {
       expect(r.status, r.id).toBe("entered");
       const s = S9.get(r.id);
@@ -140,9 +139,28 @@ describe("entered rows (M04-T12)", () => {
       expect([r.title, r.severity, r.legalKind, r.pending], r.id).toEqual([s!.title, s!.severity, s!.legal.split(/[\s,]/)[0], pending]);
       expect(CHECK_MODULES.find((m) => m.id === r.id)?.run !== undefined, r.id).toBe(LANDED[r.id] !== undefined);
     }
+    expect(Object.fromEntries(Object.keys(LATER).map((card) => [card, later.filter((r) => enteredBy(r) === card).map((r) => r.id).sort()]))).toEqual(LATER);
+    expect(later.length).toBe(Object.values(LATER).flat().length);
     for (const r of seed.checks.filter((x) => SEEDED_IDS.has(x.id))) expect((r as { enteredBy?: string }).enteredBy, r.id).toBeUndefined();
     for (const id of ["CHK-NET-30", "CHK-FIT-07", "CHK-FIT-06", "CHK-NET-28", "CHK-PRT-16", "CHK-SHT-10", "CHK-ART-05", "CHK-ART-06", "CHK-ART-07", "CHK-3MF-10"]) {
       expect(byId.get(id)?.status, id).toBe("entered");
+    }
+  });
+
+  test("a row a release item entered stands on its own fragment: entered, titled, a severity and legal kind, a run body and a generated page", () => {
+    const modules = new Map(CHECK_MODULES.map((m) => [m.id as string, m]));
+    const rows = seed.checks.filter(isRelease);
+    console.info(`release items entered ${rows.length} rows: ${rows.map((r) => r.id).join(", ")}`);
+    for (const r of rows) {
+      const fragment = JSON.parse(read(`packages/checks/seed/checks/${r.id}.json`)) as Row;
+      expect(fragment, `${r.id} differs from its seed fragment`).toEqual(r);
+      expect(fragment.status, `${r.id} (${enteredBy(r)}) is not entered`).toBe("entered");
+      for (const field of ["title", "severity", "legalKind"] as const) {
+        expect(typeof fragment[field] === "string" && fragment[field].trim() !== "", `${r.id} (${enteredBy(r)}) has no ${field}`).toBe(true);
+      }
+      expect(fragment.pending, `${r.id} (${enteredBy(r)}) is pending; a release check lands with its run`).toBeUndefined();
+      expect(modules.get(r.id)?.run !== undefined, `${r.id} (${enteredBy(r)}) has no module run`).toBe(true);
+      expect(existsSync(new URL(`docs/reference/checks/${r.id}.md`, ROOT)), `${r.id} (${enteredBy(r)}) has no page docs/reference/checks/${r.id}.md`).toBe(true);
     }
   });
 
