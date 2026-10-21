@@ -17,13 +17,14 @@ import { EXPORT_ALIASES } from "../hook";
 import { FEATURE_KINDS, FEATURE_KIND_ADMISSION, FEATURE_KIND_ALIASES, KIND_MILESTONES, MOVED_FEATURE_KINDS } from "../features";
 
 describe("command surface", () => {
-  test("CommandName has 31 members in six groups; draft (R1-engine-24) is the 31st, in make, CLI only", () => {
-    expect(COMMAND_NAMES).toHaveLength(31);
-    expect(new Set(COMMAND_NAMES).size).toBe(31);
+  test("CommandName has 32 members in six groups; draft (R1-engine-24) and adopt (R1-engine-25) are the 31st and 32nd, in make, CLI only", () => {
+    expect(COMMAND_NAMES).toHaveLength(32);
+    expect(new Set(COMMAND_NAMES).size).toBe(32);
     for (const n of COMMAND_NAMES) expect(GROUPS).toContain(COMMAND_GROUP[n]);
     const perGroup = Object.fromEntries(GROUPS.map((g) => [g, COMMAND_NAMES.filter((n) => COMMAND_GROUP[n] === g).length]));
-    expect(perGroup).toEqual({ query: 8, author: 5, build: 4, prove: 7, look: 3, make: 4 });
+    expect(perGroup).toEqual({ query: 8, author: 5, build: 4, prove: 7, look: 3, make: 5 });
     expect(CLI_ONLY).toContain("draft");
+    expect(CLI_ONLY).toContain("adopt");
   });
 
   test("McpToolName has 19 members, legal for the Claude API, in fixed order", () => {

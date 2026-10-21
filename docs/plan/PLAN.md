@@ -1937,7 +1937,7 @@ fails on drift. Until then each row names the method that produced it.
 | seeded archetypes | 29 | `packages/archetypes/seed/archetypes.seed.yaml` |
 | registered mechanisms | 107 (candidate 88, typed 19) | def files under `packages/mechanisms/src/defs/` by their `status` |
 | registered archetypes | 109 (candidate 97, proven 11, unproven 1), plus 2 seed ids resolved by alias | def files under `packages/archetypes/src/defs/` by their `status`; alias rows of `packages/archetypes/src/aliases.ts` |
-| spec commands, MCP tools | 31, 19 | string-literal members of `CommandName` and `McpToolName` in `spec/commands.ts` |
+| spec commands, MCP tools | 32, 19 | string-literal members of `CommandName` and `McpToolName` in `spec/commands.ts` |
 | knowledge files | 110, with 419,715 words | tracked files under `knowledge/` outside `knowledge/references/`; words as `wc -w` splits them |
 | reference words | 17,277 | tracked files under `knowledge/references/`; words as `wc -w` splits them |
 | hackbuild-ui `.hb-` classes | 203 in the stylesheet packages/ui installs (file:../../tools/vendor/hackbuild-ui-0.3.0-b3962ab.tgz) | distinct `.hb-` names in `dist/styles/hackbuild.css` of the `@virgilvox/hackbuild-ui` dependency of `packages/ui/package.json` |

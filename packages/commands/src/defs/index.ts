@@ -2,6 +2,7 @@
 // file in this directory, in file name order.
 
 import type { AnySpec } from "../spec.js";
+import { spec as adopt } from "./adopt.js";
 import { spec as archApply } from "./arch-apply.js";
 import { spec as archFind } from "./arch-find.js";
 import { spec as asmSolve } from "./asm-solve.js";
@@ -33,6 +34,7 @@ import { spec as viewRender } from "./view-render.js";
 
 /** Every command spec, one per def file. */
 export const SPECS: readonly AnySpec[] = [
+  adopt,
   archApply,
   archFind,
   asmSolve,
