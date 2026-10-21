@@ -18,7 +18,7 @@
       "resistorsKohm": "20 to 120 in steps of 10 (measured by others)",
       "electrodesMm": "5, 10, 15, 20 (measured by others)"
     },
-    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/web-hci-fab-research/capricate.txt"
+    "evidence": "fab-knowledge:evidence/x/web-hci-fab-research/capricate.txt"
   },
   "status": "entered",
   "enteredBy": "M04-T12",

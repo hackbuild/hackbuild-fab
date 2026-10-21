@@ -14,7 +14,7 @@
     "project": "KEYWAY, QUADRANT 2026-08",
     "date": "2026-08",
     "what": "adjacent clip jaws sat 14.0 mm apart; the boards stagger rows or alternate depth",
-    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-conductive-b.md"
+    "evidence": "fab-knowledge:sources/benches/benches-conductive-b.md"
   },
   "status": "entered",
   "enteredBy": "M04-T12",

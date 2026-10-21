@@ -29,7 +29,7 @@
               "fourFaceEdges": "40 + 16 + 1",
               "qualifier": "computed from the shipped 3MF (CHECKS.md 7.7)"
             },
-            "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-cases/cresset/cresset-132mm.3mf"
+            "evidence": "fab-knowledge:evidence/x/downloads/dl-cases/cresset/cresset-132mm.3mf"
           }
         ]
       },
@@ -185,7 +185,7 @@
         "date": "2026-07-30",
         "what": "two composed rotations sent the peak to -Z",
         "knowledge": "knowledge:designs/detent#53-teardrops-that-know-which-way-is-up-wcut-teardrop-gable-p-lines-223-to-269",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-robots-machines/unzipped/detentfiles/DETENT-build-notes.md"
+        "evidence": "fab-knowledge:evidence/x/downloads/dl-robots-machines/unzipped/detentfiles/DETENT-build-notes.md"
       },
       "status": "seed"
     },
@@ -433,7 +433,7 @@
         "date": "2026-08-02",
         "what": "roll and wrist horn screws undrivable behind a D2.8 waist",
         "knowledge": "knowledge:designs/davit#53-horn-capture-joint-slibpy-174-to-197-spartsr4py-67-to-78",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-robots-machines/unzipped/davit_r4/README_R4.md"
+        "evidence": "fab-knowledge:evidence/x/downloads/dl-robots-machines/unzipped/davit_r4/README_R4.md"
       },
       "status": "seed"
     },
@@ -464,7 +464,7 @@
             "numbers": {
               "qualifier": "measured 2026-10-06 on the buck and stag presets (CHECKS.md 7.7)"
             },
-            "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/buck/files/src/engine.js"
+            "evidence": "fab-knowledge:originals/buck/files/src/engine.js"
           }
         ]
       },
@@ -499,7 +499,7 @@
             "numbers": {
               "qualifier": "measured 2026-10-06 on the buck and stag presets (CHECKS.md 7.7)"
             },
-            "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/buck/files/src/engine.js"
+            "evidence": "fab-knowledge:originals/buck/files/src/engine.js"
           }
         ]
       },
@@ -671,7 +671,7 @@
             "project": "STIPPLE R17 2026-08",
             "date": "2026-08",
             "what": "STIPPLE R17 added beside OGEE R17 for the one-piece profile rule",
-            "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-ogee-stipple-mech/stipple/stipple (1).html"
+            "evidence": "fab-knowledge:evidence/x/downloads/dl-ogee-stipple-mech/stipple/stipple (1).html"
           }
         ]
       },
@@ -781,7 +781,7 @@
               "marginMm": 0.785,
               "qualifier": "sag computed by the downloads read on 2026-10-04, no record saved; margin 0.7853 in stipple_latch.json"
             },
-            "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-ogee-stipple-mech/derived/stipple_latch.json"
+            "evidence": "fab-knowledge:evidence/x/downloads/dl-ogee-stipple-mech/derived/stipple_latch.json"
           }
         ]
       },
@@ -832,7 +832,7 @@
             "project": "STIPPLE R17 2026-08",
             "date": "2026-08",
             "what": "STIPPLE R17 added beside OGEE R17 for the crank hub rule",
-            "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-ogee-stipple-mech/stipple/stipple (1).html"
+            "evidence": "fab-knowledge:evidence/x/downloads/dl-ogee-stipple-mech/stipple/stipple (1).html"
           }
         ]
       },
@@ -907,7 +907,7 @@
             "project": "BAFFLE R3 2026-09",
             "date": "2026-09",
             "what": "neither mating interface is proven by geometry here ... continuity has to be measured on the assembly",
-            "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-baffle-inlay-coin/baffle/extracted/baffle-r3-model.from-baffle-36.js"
+            "evidence": "fab-knowledge:evidence/x/downloads/dl-baffle-inlay-coin/baffle/extracted/baffle-r3-model.from-baffle-36.js"
           }
         ]
       },
@@ -980,7 +980,7 @@
         "date": "2026-08-17",
         "what": "the sim's conductive PLA panel says source impedance is what limits sample rate; the SNS pad reads through a 47k pullup with about 12k of series lead",
         "knowledge": "knowledge:04-heuristics#electrical",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-gudgeon-tang-keyway/tang/tang_r5_sim (13).html"
+        "evidence": "fab-knowledge:evidence/x/downloads/dl-gudgeon-tang-keyway/tang/tang_r5_sim (13).html"
       },
       "status": "seed"
     },
@@ -1305,7 +1305,7 @@
             "project": "TAPPET R1 2026-08-11",
             "date": "2026-08-11",
             "what": "the half-select property stated as two signed margins, half-select clearance and full-select overshoot, each checked against print tolerance",
-            "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-sweep/tappet/tappet (3).html"
+            "evidence": "fab-knowledge:evidence/x/downloads/dl-sweep/tappet/tappet (3).html"
           }
         ]
       },
@@ -1337,7 +1337,7 @@
           "qualifier": "computed from stipple_latch.json and kin.py (CHECKS.md section 7.7)"
         },
         "knowledge": "knowledge:projects/mechanisms#ogee-seventeen-revisions",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-ogee-stipple-mech/derived/stipple_latch.json"
+        "evidence": "fab-knowledge:evidence/x/downloads/dl-ogee-stipple-mech/derived/stipple_latch.json"
       },
       "status": "seed"
     },
@@ -1634,7 +1634,7 @@
               "checkRowSays": 115,
               "qualifier": "computed by the OGEE build-it run"
             },
-            "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-ogee-stipple-mech/derived/ogee_buildit_run.json"
+            "evidence": "fab-knowledge:evidence/x/downloads/dl-ogee-stipple-mech/derived/ogee_buildit_run.json"
           }
         ]
       },
@@ -1676,7 +1676,7 @@
         "date": "2026-09",
         "what": "self-referential p:path never resolved; object loaded with no volumes; empty plate, no error",
         "knowledge": "knowledge:kernels/3mf-dialect#ppath-on-a-root-component-the-empty-plate-bug",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-cases/cask/cask_cap_hackbuild.3mf"
+        "evidence": "fab-knowledge:evidence/x/downloads/dl-cases/cask/cask_cap_hackbuild.3mf"
       },
       "status": "seed"
     },
@@ -1697,7 +1697,7 @@
         "date": "2026-09",
         "what": "Flash Studio warned on the enum default",
         "knowledge": "knowledge:kernels/3mf-dialect#two-more-key-facts-from-cask",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-cases/cask/cask_cap_hackbuild.3mf"
+        "evidence": "fab-knowledge:evidence/x/downloads/dl-cases/cask/cask_cap_hackbuild.3mf"
       },
       "status": "seed"
     },
@@ -1722,7 +1722,7 @@
         "date": "2026-07-30",
         "what": "unbounded half-space cut a neighbouring sub-solid",
         "knowledge": "knowledge:01-invariants#printability",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-robots-machines/unzipped/detentfiles/CONTEXT.md"
+        "evidence": "fab-knowledge:evidence/x/downloads/dl-robots-machines/unzipped/detentfiles/CONTEXT.md"
       },
       "status": "seed"
     },
@@ -1772,7 +1772,7 @@
         "date": "2026-07-30",
         "what": "gabled web windows and 45 cone roofs need no support",
         "knowledge": "knowledge:05-taste#part-styling",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-robots-machines/unzipped/detentfiles/DETENT-build-notes.md"
+        "evidence": "fab-knowledge:evidence/x/downloads/dl-robots-machines/unzipped/detentfiles/DETENT-build-notes.md"
       },
       "status": "seed"
     },
@@ -2090,7 +2090,7 @@
         "project": "DETENT rev C 2026-07-30",
         "date": "2026-07-30",
         "what": "verify.py printed the 45 deg overhang area as information and gated only islands, so an inverted laser teardrop shipped",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/detent/files/revD/archive-revC/verify_revC.py"
+        "evidence": "fab-knowledge:originals/detent/files/revD/archive-revC/verify_revC.py"
       },
       "status": "entered",
       "enteredBy": "M04-T12"
@@ -2112,7 +2112,7 @@
         "project": "SLATE 2026-08",
         "date": "2026-08",
         "what": "the print audit named the longest unsupported first-layer run; no implementation is in the harvest or the downloads",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-cases.md"
+        "evidence": "fab-knowledge:sources/benches/benches-cases.md"
       },
       "status": "entered",
       "enteredBy": "M04-T12",
@@ -2136,7 +2136,7 @@
         "project": "COLLAR 2026-08",
         "date": "2026-08",
         "what": "layer height defaulted to 0.2 under the 0.24mm Standard @FF C5 preset, so the NFC floor at 1.8 landed mid layer",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-baffle-inlay-coin/collar/collar-print-card (1).txt"
+        "evidence": "fab-knowledge:evidence/x/downloads/dl-baffle-inlay-coin/collar/collar-print-card (1).txt"
       },
       "status": "entered",
       "enteredBy": "M04-T12"
@@ -2158,7 +2158,7 @@
         "project": "COTTER 2026-09",
         "date": "2026-09",
         "what": "platePlan() lists oversize prints apart and the BOM warns on parts too big for the bed",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/latest/cotter-sparger.md"
+        "evidence": "fab-knowledge:sources/latest/cotter-sparger.md"
       },
       "status": "entered",
       "enteredBy": "M04-T12"
@@ -2183,7 +2183,7 @@
         "project": "PIP 2026-09",
         "date": "2026-09",
         "what": "the click beam failed at 2.7 to 3.3 percent strain; the strain formula is PLINTH's",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-cases/plinth"
+        "evidence": "fab-knowledge:evidence/x/downloads/dl-cases/plinth"
       },
       "status": "entered",
       "enteredBy": "M04-T12",
@@ -2206,7 +2206,7 @@
         "project": "BAFFLE R3 2026-09-18",
         "date": "2026-09-18",
         "what": "the printed conductive tile socket got collet slots only after the first tile print",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-baffle-inlay-coin/baffle/baffle-tile-tile (1).3mf"
+        "evidence": "fab-knowledge:evidence/x/downloads/dl-baffle-inlay-coin/baffle/baffle-tile-tile (1).3mf"
       },
       "status": "entered",
       "enteredBy": "M04-T12"
@@ -2227,7 +2227,7 @@
         "project": "COTTER 2026-09",
         "date": "2026-09",
         "what": "test/laser_fit.mjs assembles the cut outlines at kerf 0 against a 4 mm3 collision budget",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/latest/cotter-sparger.md"
+        "evidence": "fab-knowledge:sources/latest/cotter-sparger.md"
       },
       "status": "entered",
       "enteredBy": "M04-T12",
@@ -2252,7 +2252,7 @@
         "project": "SKETCH 2026-09-14",
         "date": "2026-09-14",
         "what": "material ply3 declares minHingeRadius 14 and the living hinge never reads it",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-robots-b.md"
+        "evidence": "fab-knowledge:sources/benches/benches-robots-b.md"
       },
       "status": "entered",
       "enteredBy": "M04-T12",
@@ -2274,7 +2274,7 @@
         "project": "COTTER 2026-09",
         "date": "2026-09",
         "what": "test/laser_fit.mjs requires the l_bin front corner column at 100 plus or minus 0.5 percent wood",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/latest/cotter-sparger.md"
+        "evidence": "fab-knowledge:sources/latest/cotter-sparger.md"
       },
       "status": "entered",
       "enteredBy": "M04-T12",
@@ -2325,7 +2325,7 @@
         "project": "TCB, CHI 2021-05",
         "date": "2021-05",
         "what": "vertical printed traces read about 7x the resistance of flat ones (measured by the TCB authors)",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/synthesis/plan-deltas.md"
+        "evidence": "fab-knowledge:synthesis/plan-deltas.md"
       },
       "status": "entered",
       "enteredBy": "M04-T12"
@@ -2346,7 +2346,7 @@
         "project": "KEYWAY 2026-08",
         "date": "2026-08",
         "what": "all seven boards of the family gate every copper net on an erode of half the 1.10 mm minimum feature",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-conductive-b.md"
+        "evidence": "fab-knowledge:sources/benches/benches-conductive-b.md"
       },
       "status": "entered",
       "enteredBy": "M04-T12",
@@ -2368,7 +2368,7 @@
         "project": "VERNIER, TESSERA 2026-08",
         "date": "2026-08",
         "what": "the slider gate samples the ratio 41 times and requires it strictly monotone with its span inside 0.10 to 0.90",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-conductive-b.md"
+        "evidence": "fab-knowledge:sources/benches/benches-conductive-b.md"
       },
       "status": "entered",
       "enteredBy": "M04-T12",
@@ -2390,7 +2390,7 @@
         "project": "VERNIER 2026-08",
         "date": "2026-08",
         "what": "a wedge end overlap failed the opposite escape by 0.4 mm",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-conductive-b.md"
+        "evidence": "fab-knowledge:sources/benches/benches-conductive-b.md"
       },
       "status": "entered",
       "enteredBy": "M04-T12",
@@ -2412,7 +2412,7 @@
         "project": "SPLINE 2026-08",
         "date": "2026-08",
         "what": "arc electrode ends offset 2 deg: the gate caught 0.485 mm",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-conductive-b.md"
+        "evidence": "fab-knowledge:sources/benches/benches-conductive-b.md"
       },
       "status": "entered",
       "enteredBy": "M04-T12",
@@ -2434,7 +2434,7 @@
         "project": "KEYWAY 2026-08",
         "date": "2026-08",
         "what": "the sensor film gate requires it to bridge only COM and its own zone, 260 of 260 per zone in the run",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-conductive-b.md"
+        "evidence": "fab-knowledge:sources/benches/benches-conductive-b.md"
       },
       "status": "entered",
       "enteredBy": "M04-T12",
@@ -2456,7 +2456,7 @@
         "project": "KEYWAY 2026-08",
         "date": "2026-08",
         "what": "the wiper stray contact gate reads 0.000 mm2 in the run",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-conductive-b.md"
+        "evidence": "fab-knowledge:sources/benches/benches-conductive-b.md"
       },
       "status": "entered",
       "enteredBy": "M04-T12",
@@ -2478,7 +2478,7 @@
         "project": "KEYWAY 2026-08",
         "date": "2026-08",
         "what": "the capacitive boards gate bare live copper outside the wiring zone under 0.5 mm2",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-conductive-b.md"
+        "evidence": "fab-knowledge:sources/benches/benches-conductive-b.md"
       },
       "status": "entered",
       "enteredBy": "M04-T12",
@@ -2500,7 +2500,7 @@
         "project": "KEYWAY, QUADRANT 2026-08",
         "date": "2026-08",
         "what": "adjacent clip jaws sat 14.0 mm apart; the boards stagger rows or alternate depth",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-conductive-b.md"
+        "evidence": "fab-knowledge:sources/benches/benches-conductive-b.md"
       },
       "status": "entered",
       "enteredBy": "M04-T12",
@@ -2522,7 +2522,7 @@
         "project": "TESSERA 2026-08",
         "date": "2026-08",
         "what": "the lane graph gate requires it acyclic and ranked with same-lane spans disjoint",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-conductive-b.md"
+        "evidence": "fab-knowledge:sources/benches/benches-conductive-b.md"
       },
       "status": "entered",
       "enteredBy": "M04-T12",
@@ -2566,7 +2566,7 @@
         "project": "SPINDLE 2026-08",
         "date": "2026-08",
         "what": "the copper row of plan-deltas R54 splits soldermask from a dielectric faceplate; CHK-NET-09 carries the SPINDLE story",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/synthesis/plan-deltas.md"
+        "evidence": "fab-knowledge:synthesis/plan-deltas.md"
       },
       "status": "entered",
       "enteredBy": "M04-T12",
@@ -2591,7 +2591,7 @@
         "project": "FEELER 2026-08",
         "date": "2026-08",
         "what": "the quadrature marks are step/2 long with B offset step/2, 180 electrical degrees, while the SIM uses step/4",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-conductive-a.md"
+        "evidence": "fab-knowledge:sources/benches/benches-conductive-a.md"
       },
       "status": "entered",
       "enteredBy": "M04-T12",
@@ -2613,7 +2613,7 @@
         "project": "FEELER 2026-08",
         "date": "2026-08",
         "what": "the pot collector may share only its strip; apartExcept rebuilds the union find without it and the taps must land on distinct nets",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-conductive-a.md"
+        "evidence": "fab-knowledge:sources/benches/benches-conductive-a.md"
       },
       "status": "entered",
       "enteredBy": "M04-T12"
@@ -2638,7 +2638,7 @@
         "project": "FEELER 2026-08",
         "date": "2026-08",
         "what": "makesContact records a gap that closes when actuated and was never tested on geometry, so the wiper bug went through",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-conductive-a.md"
+        "evidence": "fab-knowledge:sources/benches/benches-conductive-a.md"
       },
       "status": "entered",
       "enteredBy": "M04-T12"
@@ -2663,7 +2663,7 @@
           "resistorsKohm": "20 to 120 in steps of 10 (measured by others)",
           "electrodesMm": "5, 10, 15, 20 (measured by others)"
         },
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/web-hci-fab-research/capricate.txt"
+        "evidence": "fab-knowledge:evidence/x/web-hci-fab-research/capricate.txt"
       },
       "status": "entered",
       "enteredBy": "M04-T12",
@@ -2686,7 +2686,7 @@
         "project": "BAFFLE R3 2026-09-14",
         "date": "2026-09-14",
         "what": "the model's own check wants the element at least 30 percent of the loop resistance; TANG R6 cPLA arc read 6.9 percent",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-baffle-inlay-coin/baffle/extracted/baffle-r3-model.from-baffle-36.js"
+        "evidence": "fab-knowledge:evidence/x/downloads/dl-baffle-inlay-coin/baffle/extracted/baffle-r3-model.from-baffle-36.js"
       },
       "status": "entered",
       "enteredBy": "M04-T12"
@@ -3031,7 +3031,7 @@
         "date": "2026-09",
         "what": "the seat presses each used castellation onto a conductive PLA bump under bezel ribs 0.3 mm deep (model.js lines 209 and 313 to 319) and only its fits rows claim the contact (lines 575 to 576); the flagship MIDI pad (2026-10-13, finding K-04) could not end a read path at the seat and ran four test leads to the body edge",
         "knowledge": "knowledge:designs/pip#57-rp2040-zero-seat-canon-rp2040-zero-seat",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evals/2026-10-13/flagship-midi-pad.md"
+        "evidence": "fab-knowledge:evals/2026-10-13/flagship-midi-pad.md"
       },
       "status": "entered",
       "enteredBy": "K-04"
@@ -3052,7 +3052,7 @@
         "project": "AUGER 2026-07",
         "date": "2026-07",
         "what": "58 nets unroutable and 1178 of 1322 segments at 0.1 mm",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-boards-tools/auger"
+        "evidence": "fab-knowledge:evidence/x/downloads/dl-boards-tools/auger"
       },
       "status": "entered",
       "enteredBy": "M04-T12"
@@ -3073,7 +3073,7 @@
         "project": "ARMATURE 2026-08",
         "date": "2026-08",
         "what": "ARMATURE R1 would have failed four of the five netlist lints: pin completeness, nodes without components and single-node nets, duplicate supplier codes, port voltage",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-copper-pcb-a.md"
+        "evidence": "fab-knowledge:sources/benches/benches-copper-pcb-a.md"
       },
       "status": "entered",
       "enteredBy": "M04-T12"
@@ -3094,7 +3094,7 @@
         "project": "ARMATURE 2026-08",
         "date": "2026-08",
         "what": "ARMATURE R1 would have failed four of the five netlist lints: pin completeness, nodes without components and single-node nets, duplicate supplier codes, port voltage",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-copper-pcb-a.md"
+        "evidence": "fab-knowledge:sources/benches/benches-copper-pcb-a.md"
       },
       "status": "entered",
       "enteredBy": "M04-T12"
@@ -3115,7 +3115,7 @@
         "project": "ARMATURE 2026-08",
         "date": "2026-08",
         "what": "ARMATURE R1 would have failed four of the five netlist lints: pin completeness, nodes without components and single-node nets, duplicate supplier codes, port voltage",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-copper-pcb-a.md"
+        "evidence": "fab-knowledge:sources/benches/benches-copper-pcb-a.md"
       },
       "status": "entered",
       "enteredBy": "M04-T12",
@@ -3137,7 +3137,7 @@
         "project": "ARMATURE 2026-08",
         "date": "2026-08",
         "what": "ARMATURE R1 would have failed four of the five netlist lints: pin completeness, nodes without components and single-node nets, duplicate supplier codes, port voltage",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-copper-pcb-a.md"
+        "evidence": "fab-knowledge:sources/benches/benches-copper-pcb-a.md"
       },
       "status": "entered",
       "enteredBy": "M04-T12",
@@ -3159,7 +3159,7 @@
         "project": "GROMMET rev A 2026-07-28",
         "date": "2026-07-28",
         "what": "R4 100k over R5 16.9k on the TPS61088 FB against a declared 5.1 V",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-boards-tools/grommet/files (23)/grommet.tsx"
+        "evidence": "fab-knowledge:evidence/x/downloads/dl-boards-tools/grommet/files (23)/grommet.tsx"
       },
       "status": "entered",
       "enteredBy": "M04-T12",
@@ -3181,7 +3181,7 @@
         "project": "GROMMET rev A 2026-07-28",
         "date": "2026-07-28",
         "what": "Pi GPIO26 drives KILL while R6 100k pulls it to VSYS",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-boards-tools/grommet/files (23)/grommet.tsx"
+        "evidence": "fab-knowledge:evidence/x/downloads/dl-boards-tools/grommet/files (23)/grommet.tsx"
       },
       "status": "entered",
       "enteredBy": "M04-T12",
@@ -3203,7 +3203,7 @@
         "project": "AUGER 2026-07",
         "date": "2026-07",
         "what": "the U8 amplifier output was left unconnected to its load",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-boards-tools/auger"
+        "evidence": "fab-knowledge:evidence/x/downloads/dl-boards-tools/auger"
       },
       "status": "entered",
       "enteredBy": "M04-T12",
@@ -3225,7 +3225,7 @@
         "project": "LUG 2026-07",
         "date": "2026-07",
         "what": "LUG carries no HAT ID EEPROM and no back-power protection between the Pi USB 5 V and the boost output on header pins 2 and 4",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-copper-pcb-b.md"
+        "evidence": "fab-knowledge:sources/benches/benches-copper-pcb-b.md"
       },
       "status": "entered",
       "enteredBy": "M04-T12",
@@ -3269,7 +3269,7 @@
         "project": "SHUNT 2026-08",
         "date": "2026-08",
         "what": "estimated silk widths 15 percent narrow hid 3 collisions",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-copper-pcb-a.md"
+        "evidence": "fab-knowledge:sources/benches/benches-copper-pcb-a.md"
       },
       "status": "entered",
       "enteredBy": "M04-T12",
@@ -3291,7 +3291,7 @@
         "project": "SHUNT 2026-08",
         "date": "2026-08",
         "what": "the silk reparse gate requires the mirrored text to match under 98 percent, so the test can see a mirror",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-copper-pcb-a.md"
+        "evidence": "fab-knowledge:sources/benches/benches-copper-pcb-a.md"
       },
       "status": "entered",
       "enteredBy": "M04-T12",
@@ -3313,7 +3313,7 @@
         "project": "SHUNT 2026-08",
         "date": "2026-08",
         "what": "check3d_shunt.mjs proves 55 lead landings at 0.000 mm through an independently derived transform",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-copper-pcb-a.md"
+        "evidence": "fab-knowledge:sources/benches/benches-copper-pcb-a.md"
       },
       "status": "entered",
       "enteredBy": "M04-T12"
@@ -3334,7 +3334,7 @@
         "project": "TRUNNION rev A 2026-08-01",
         "date": "2026-08-01",
         "what": "SJ1 normally closed joins the SuperMini 5 V pin to the V5 rail that J5 feeds: \"Never feed J5 while the SJ1 bridge is intact and USB is plugged in\"; SPINDLE JP1 defaults open for the same hazard (D-088)",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-copper-pcb-b.md"
+        "evidence": "fab-knowledge:sources/benches/benches-copper-pcb-b.md"
       },
       "status": "entered",
       "enteredBy": "M08-T12"
@@ -3355,7 +3355,7 @@
         "project": "SPINDLE R1 2026-08-01",
         "date": "2026-08-01",
         "what": "kicad_out.py wrote a KiCad 7 board whose README readback (kiutils) gave 55 of 55 pads, offsets exact, 15 vias and 19 nets one island each; the readback script was never harvested (D-180) and kiutils is GPL-3.0 (D-090)",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/spindle/files/README.md"
+        "evidence": "fab-knowledge:originals/spindle/files/README.md"
       },
       "status": "entered",
       "enteredBy": "M08-T08"
@@ -3376,7 +3376,7 @@
         "project": "SPINDLE R1 2026-08-01",
         "date": "2026-08-01",
         "what": "the shipped board shorts 5V to GND on B.Cu: the 5V bottom trace at y 20.00 (pcb.py lines 184 to 185) runs through the GND vias at x 9.80, 16.00, 30.60 and 36.20 (lines 197 to 200), one bottom piece of 34.15 mm2 (computed, M08-T07 reparse); the legacy DRC unioned the uncleared pour and no rule read bottom copper between nets",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/spindle/outputs/spindle/pcb.py"
+        "evidence": "fab-work-directory:benches/spindle/outputs/spindle/pcb.py"
       },
       "status": "entered",
       "enteredBy": "M08-T12"
@@ -3409,7 +3409,7 @@
             "numbers": {
               "qualifier": "measured 2026-10-06 on the buck and stag presets (CHECKS.md 7.7)"
             },
-            "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/buck/files/src/engine.js"
+            "evidence": "fab-knowledge:originals/buck/files/src/engine.js"
           }
         ]
       },
@@ -3442,7 +3442,7 @@
             "numbers": {
               "qualifier": "measured 2026-10-06 on the buck and stag presets (CHECKS.md 7.7)"
             },
-            "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/buck/files/src/engine.js"
+            "evidence": "fab-knowledge:originals/buck/files/src/engine.js"
           }
         ]
       },
@@ -3487,7 +3487,7 @@
         "project": "NACELLE 2026-08-02",
         "date": "2026-08-02",
         "what": "the SCAD builds the Aug 2 console body 200 x 230 x 73 while the shipped STL is the Aug 3 CRT body 170 x 233 x 193.2",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-cases/nacelle/nacelle_viewer.html"
+        "evidence": "fab-knowledge:evidence/x/downloads/dl-cases/nacelle/nacelle_viewer.html"
       },
       "status": "entered",
       "enteredBy": "M04-T12"
@@ -3506,7 +3506,7 @@
         "project": "SPINDLE 2026-08",
         "date": "2026-08",
         "what": "the pin map labels GPIO21 while the code drives GPIO20",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-copper-pcb-b.md"
+        "evidence": "fab-knowledge:sources/benches/benches-copper-pcb-b.md"
       },
       "status": "entered",
       "enteredBy": "M04-T12",
@@ -3526,7 +3526,7 @@
         "project": "SLUG 2026-08",
         "date": "2026-08",
         "what": "tie_r2 is 52 in slug.scad and 70 in params.json and the slug.html P table",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-robots-b.md"
+        "evidence": "fab-knowledge:sources/benches/benches-robots-b.md"
       },
       "status": "entered",
       "enteredBy": "M04-T12",
@@ -3548,7 +3548,7 @@
         "project": "COTTER 2026-09",
         "date": "2026-09",
         "what": "the QR tile and kit cards warn per module when a QR module is under 1.9 mm",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/latest/cotter-sparger.md"
+        "evidence": "fab-knowledge:sources/latest/cotter-sparger.md"
       },
       "status": "entered",
       "enteredBy": "M04-T12",
@@ -3570,7 +3570,7 @@
         "project": "COTTER 2026-09",
         "date": "2026-09",
         "what": "mono kits deboss the QR 0.6 mm in one colour and the per-module warning says it will not scan",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/latest/cotter-sparger.md"
+        "evidence": "fab-knowledge:sources/latest/cotter-sparger.md"
       },
       "status": "entered",
       "enteredBy": "M04-T12",
@@ -3590,7 +3590,7 @@
         "project": "COTTER 2026-09",
         "date": "2026-09",
         "what": "a waiver card still pointed at the home page",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/latest/cotter-sparger.md"
+        "evidence": "fab-knowledge:sources/latest/cotter-sparger.md"
       },
       "status": "entered",
       "enteredBy": "M04-T12"
@@ -3611,7 +3611,7 @@
         "project": "research 2026-10",
         "date": "2026-10",
         "what": "Orca, Prusa and Cura generate interlocking beams where two filaments meet and interleave them up to interlocking_depth cells deep, which eats a conductor's cross section; no printed failure on record, loss inferred (research/3dp-landscape.md section 3 and section 11 idea 8)",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/research/3dp-landscape.md"
+        "evidence": "fab-knowledge:research/3dp-landscape.md"
       },
       "status": "entered",
       "enteredBy": "M05-T20"
@@ -3632,7 +3632,7 @@
         "project": "CASK 2026-09-05",
         "date": "2026-09-05",
         "what": "every slot of adaptive_pressure_advance_model held a literal backslash n where the template has a line break",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-cases/cask/cask_cap_hackbuild.3mf"
+        "evidence": "fab-knowledge:evidence/x/downloads/dl-cases/cask/cask_cap_hackbuild.3mf"
       },
       "status": "entered",
       "enteredBy": "M04-T12"
@@ -3651,7 +3651,7 @@
         "project": "LOUVER 2026-09-14",
         "date": "2026-09-14",
         "what": "LOUVER.ino line 134 enforces 65439 bytes, 65535 minus 96; 65535 minus 61 holds only for a short address",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/louver-clasp/outputs/LOUVER/LOUVER.ino"
+        "evidence": "fab-work-directory:benches/louver-clasp/outputs/LOUVER/LOUVER.ino"
       },
       "status": "entered",
       "enteredBy": "M04-T12",
@@ -3671,7 +3671,7 @@
         "project": "LOUVER, SPROCKET 2026-08",
         "date": "2026-08",
         "what": "a one-shot declared as a Param is replayed from the SNAPSHOT, so a rebooting camera acts on a snap command from an hour ago",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-tools-devices.md"
+        "evidence": "fab-knowledge:sources/benches/benches-tools-devices.md"
       },
       "status": "entered",
       "enteredBy": "M04-T12",
@@ -3691,7 +3691,7 @@
         "project": "SPROCKET 2026-08-02",
         "date": "2026-08-02",
         "what": "the page sends a heartbeat every 400 ms so the 1200 ms dead-man stays fed while the chassis idles",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-robots-b.md"
+        "evidence": "fab-knowledge:sources/benches/benches-robots-b.md"
       },
       "status": "entered",
       "enteredBy": "M04-T12",
@@ -3766,7 +3766,7 @@
         "project": "DAVIT R4 2026-08-02",
         "date": "2026-08-02",
         "what": "items 1 and 9: 4 detached gear teeth and a 22 mm3 splinter body",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-robots-machines/unzipped/davit_r4/README_R4.md"
+        "evidence": "fab-knowledge:evidence/x/downloads/dl-robots-machines/unzipped/davit_r4/README_R4.md"
       },
       "waitsOn": "a body count rule; overlaps CHK-PRT-01 and CHK-SHP-04"
     },
@@ -3776,7 +3776,7 @@
         "project": "DAVIT R4 2026-08-02",
         "date": "2026-08-02",
         "what": "item 2: fore yoke sections 42.5 to 224 and 54 to 299 mm2",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-robots-machines/unzipped/davit_r4/README_R4.md"
+        "evidence": "fab-knowledge:evidence/x/downloads/dl-robots-machines/unzipped/davit_r4/README_R4.md"
       },
       "waitsOn": "a limit source"
     },
@@ -3786,7 +3786,7 @@
         "project": "DAVIT R4 2026-08-02",
         "date": "2026-08-02",
         "what": "item 4: 0.95 mm walls to the servo pockets, 2.65 mm in R4",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-robots-machines/unzipped/davit_r4/README_R4.md"
+        "evidence": "fab-knowledge:evidence/x/downloads/dl-robots-machines/unzipped/davit_r4/README_R4.md"
       },
       "waitsOn": "a limit source"
     },
@@ -3796,7 +3796,7 @@
         "project": "DAVIT R4 2026-08-02",
         "date": "2026-08-02",
         "what": "item 6: a sealed 2.24 cm3 internal box in the palm",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-robots-machines/unzipped/davit_r4/README_R4.md"
+        "evidence": "fab-knowledge:evidence/x/downloads/dl-robots-machines/unzipped/davit_r4/README_R4.md"
       },
       "waitsOn": "a rule written in CHECKS.md"
     }

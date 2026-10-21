@@ -24,7 +24,7 @@
         "numbers": {
           "qualifier": "measured 2026-10-06 on the buck and stag presets (CHECKS.md 7.7)"
         },
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/buck/files/src/engine.js"
+        "evidence": "fab-knowledge:originals/buck/files/src/engine.js"
       }
     ]
   },

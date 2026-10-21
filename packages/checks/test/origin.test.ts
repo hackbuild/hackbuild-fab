@@ -6,6 +6,8 @@
 // by this file's own rules, never by the code under test.
 
 import { existsSync, readFileSync, readdirSync } from "node:fs";
+import { homedir } from "node:os";
+import { join } from "node:path";
 import { describe, expect, test } from "vitest";
 import {
   CHECK_MODULES, checkPage, checkPageMarkdown, coversOf, indexMarkdown, numberLine, originFromSeed, originGapsMarkdown,
@@ -17,6 +19,7 @@ const ROOT = new URL("../../../", import.meta.url);
 const read = (rel: string): string => readFileSync(new URL(rel, ROOT), "utf8");
 const seed = JSON.parse(read("packages/checks/seed/checks.seed.json")) as {
   checks: { id: string; origin: { project: string; date: string; what: string; knowledge?: string; evidence?: string | null; numbers?: Record<string, unknown> } }[];
+  candidates?: { title: string; origin: { evidence?: string | null } }[];
 };
 const defs = registerChecks({ seed }, CHECK_MODULES);
 
@@ -76,17 +79,30 @@ describe("origin records", () => {
     expect(numberLine("settleUs", "78 (computed)", "inferred")).toBe("78 (computed) us settle");
   });
 
-  // fab-knowledge: names the owner's evidence archive by prefix (CLAUDE.md, tools/publish-paths.mjs).
-  const ARCHIVE_PREFIX = "fab-knowledge:";
-  test("a repo evidence path exists; an absolute or fab-knowledge: one exists where its evidence tree is on this host", () => {
+  // fab-knowledge: and fab-work-directory: name the owner's evidence archive by
+  // prefix (CLAUDE.md, tools/publish-paths.mjs). Each is read from its variable
+  // when set, else from the owner's folder of that name under Projects/hackbuild.
+  const owner = (name: string, variable: string): { prefix: string; dir: string } =>
+    ({ prefix: `${name}:`, dir: process.env[variable] || join(homedir(), "Projects", "hackbuild", name) });
+  const ARCHIVES = [owner("fab-knowledge", "HBF_FAB_KNOWLEDGE"), owner("fab-work-directory", "HBF_FAB_WORK_DIRECTORY")];
+  test("an evidence path is repo-relative or fab-knowledge:, never a local absolute path", () => {
     for (const p of pages) {
       const e = p.origin.evidence;
       if (e === null) continue;
-      if (e.startsWith("/")) {
-        if (existsSync("/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence")) expect(existsSync(e), `${p.id} ${e}`).toBe(true);
-      } else if (e.startsWith(ARCHIVE_PREFIX)) {
-        const local = `/Users/obsidian/Projects/hackbuild/fab-knowledge/${e.slice(ARCHIVE_PREFIX.length)}`;
-        if (existsSync("/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence")) expect(existsSync(local), `${p.id} ${e}`).toBe(true);
+      expect(e.startsWith("/") || e.startsWith("~"), `${p.id} ${e}`).toBe(false);
+      expect(e, p.id).not.toMatch(/\/Users\//);
+      for (const a of p.origin.also) if (a.evidence !== null) expect(a.evidence.startsWith("/") || a.evidence.startsWith("~"), `${p.id} ${a.evidence}`).toBe(false);
+    }
+    for (const c of seed.candidates ?? []) if (typeof c.origin.evidence === "string") expect(c.origin.evidence.startsWith("/"), c.title).toBe(false);
+  });
+
+  test("a repo evidence path exists; an archive one exists where that archive is on this host", () => {
+    for (const p of pages) {
+      const e = p.origin.evidence;
+      if (e === null) continue;
+      const a = ARCHIVES.find((x) => e.startsWith(x.prefix));
+      if (a !== undefined) {
+        if (existsSync(a.dir)) expect(existsSync(join(a.dir, e.slice(a.prefix.length))), `${p.id} ${e}`).toBe(true);
       } else {
         expect(existsSync(new URL(e, ROOT)), `${p.id} ${e}`).toBe(true);
       }

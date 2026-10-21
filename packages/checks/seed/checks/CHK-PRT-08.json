@@ -18,7 +18,7 @@
     "date": "2026-07-30",
     "what": "two composed rotations sent the peak to -Z",
     "knowledge": "knowledge:designs/detent#53-teardrops-that-know-which-way-is-up-wcut-teardrop-gable-p-lines-223-to-269",
-    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-robots-machines/unzipped/detentfiles/DETENT-build-notes.md"
+    "evidence": "fab-knowledge:evidence/x/downloads/dl-robots-machines/unzipped/detentfiles/DETENT-build-notes.md"
   },
   "status": "seed"
 }

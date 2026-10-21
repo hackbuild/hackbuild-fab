@@ -15,7 +15,7 @@
     "project": "BAFFLE R3 2026-09-14",
     "date": "2026-09-14",
     "what": "the model's own check wants the element at least 30 percent of the loop resistance; TANG R6 cPLA arc read 6.9 percent",
-    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-baffle-inlay-coin/baffle/extracted/baffle-r3-model.from-baffle-36.js"
+    "evidence": "fab-knowledge:evidence/x/downloads/dl-baffle-inlay-coin/baffle/extracted/baffle-r3-model.from-baffle-36.js"
   },
   "status": "entered",
   "enteredBy": "M04-T12"

@@ -25,7 +25,7 @@
           "checkRowSays": 115,
           "qualifier": "computed by the OGEE build-it run"
         },
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-ogee-stipple-mech/derived/ogee_buildit_run.json"
+        "evidence": "fab-knowledge:evidence/x/downloads/dl-ogee-stipple-mech/derived/ogee_buildit_run.json"
       }
     ]
   },

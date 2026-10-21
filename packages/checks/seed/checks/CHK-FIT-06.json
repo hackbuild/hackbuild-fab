@@ -18,7 +18,7 @@
     "project": "PIP 2026-09",
     "date": "2026-09",
     "what": "the click beam failed at 2.7 to 3.3 percent strain; the strain formula is PLINTH's",
-    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-cases/plinth"
+    "evidence": "fab-knowledge:evidence/x/downloads/dl-cases/plinth"
   },
   "status": "entered",
   "enteredBy": "M04-T12",

@@ -14,7 +14,7 @@
     "project": "GROMMET rev A 2026-07-28",
     "date": "2026-07-28",
     "what": "Pi GPIO26 drives KILL while R6 100k pulls it to VSYS",
-    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-boards-tools/grommet/files (23)/grommet.tsx"
+    "evidence": "fab-knowledge:evidence/x/downloads/dl-boards-tools/grommet/files (23)/grommet.tsx"
   },
   "status": "entered",
   "enteredBy": "M04-T12",

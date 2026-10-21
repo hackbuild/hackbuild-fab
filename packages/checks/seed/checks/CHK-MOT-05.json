@@ -24,7 +24,7 @@
       "qualifier": "computed from stipple_latch.json and kin.py (CHECKS.md section 7.7)"
     },
     "knowledge": "knowledge:projects/mechanisms#ogee-seventeen-revisions",
-    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-ogee-stipple-mech/derived/stipple_latch.json"
+    "evidence": "fab-knowledge:evidence/x/downloads/dl-ogee-stipple-mech/derived/stipple_latch.json"
   },
   "status": "seed"
 }

@@ -17,7 +17,7 @@
     "project": "SKETCH 2026-09-14",
     "date": "2026-09-14",
     "what": "material ply3 declares minHingeRadius 14 and the living hinge never reads it",
-    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-robots-b.md"
+    "evidence": "fab-knowledge:sources/benches/benches-robots-b.md"
   },
   "status": "entered",
   "enteredBy": "M04-T12",

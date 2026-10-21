@@ -227,7 +227,7 @@ describe("entered rows (M04-T12)", () => {
       expect(c.origin.project, c.title).toBe("DAVIT R4 2026-08-02");
       expect(c.origin.date).toBe("2026-08-02");
       expect(c.origin.what.trim(), c.title).not.toBe("");
-      expect(c.origin.evidence, c.title).toBe("/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-robots-machines/unzipped/davit_r4/README_R4.md");
+      expect(c.origin.evidence, c.title).toBe("fab-knowledge:evidence/x/downloads/dl-robots-machines/unzipped/davit_r4/README_R4.md");
     }
     expect(seed.checks.some((r) => (cands as { title: string }[]).some((c) => c.title === r.title))).toBe(false);
   });

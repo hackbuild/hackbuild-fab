@@ -14,7 +14,7 @@
     "project": "FEELER 2026-08",
     "date": "2026-08",
     "what": "the pot collector may share only its strip; apartExcept rebuilds the union find without it and the taps must land on distinct nets",
-    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-conductive-a.md"
+    "evidence": "fab-knowledge:sources/benches/benches-conductive-a.md"
   },
   "status": "entered",
   "enteredBy": "M04-T12"

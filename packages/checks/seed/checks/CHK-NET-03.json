@@ -24,7 +24,7 @@
         "project": "BAFFLE R3 2026-09",
         "date": "2026-09",
         "what": "neither mating interface is proven by geometry here ... continuity has to be measured on the assembly",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-baffle-inlay-coin/baffle/extracted/baffle-r3-model.from-baffle-36.js"
+        "evidence": "fab-knowledge:evidence/x/downloads/dl-baffle-inlay-coin/baffle/extracted/baffle-r3-model.from-baffle-36.js"
       }
     ]
   },

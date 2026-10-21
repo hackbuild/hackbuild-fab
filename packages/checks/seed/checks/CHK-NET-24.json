@@ -14,7 +14,7 @@
     "project": "SPINDLE 2026-08",
     "date": "2026-08",
     "what": "the copper row of plan-deltas R54 splits soldermask from a dielectric faceplate; CHK-NET-09 carries the SPINDLE story",
-    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/synthesis/plan-deltas.md"
+    "evidence": "fab-knowledge:synthesis/plan-deltas.md"
   },
   "status": "entered",
   "enteredBy": "M04-T12",

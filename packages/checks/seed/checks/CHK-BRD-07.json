@@ -14,7 +14,7 @@
     "project": "AUGER 2026-07",
     "date": "2026-07",
     "what": "58 nets unroutable and 1178 of 1322 segments at 0.1 mm",
-    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-boards-tools/auger"
+    "evidence": "fab-knowledge:evidence/x/downloads/dl-boards-tools/auger"
   },
   "status": "entered",
   "enteredBy": "M04-T12"

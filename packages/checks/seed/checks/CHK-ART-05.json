@@ -14,7 +14,7 @@
     "project": "COTTER 2026-09",
     "date": "2026-09",
     "what": "the QR tile and kit cards warn per module when a QR module is under 1.9 mm",
-    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/latest/cotter-sparger.md"
+    "evidence": "fab-knowledge:sources/latest/cotter-sparger.md"
   },
   "status": "entered",
   "enteredBy": "M04-T12",

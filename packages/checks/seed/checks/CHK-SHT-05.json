@@ -31,7 +31,7 @@
           "marginMm": 0.785,
           "qualifier": "sag computed by the downloads read on 2026-10-04, no record saved; margin 0.7853 in stipple_latch.json"
         },
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-ogee-stipple-mech/derived/stipple_latch.json"
+        "evidence": "fab-knowledge:evidence/x/downloads/dl-ogee-stipple-mech/derived/stipple_latch.json"
       }
     ]
   },

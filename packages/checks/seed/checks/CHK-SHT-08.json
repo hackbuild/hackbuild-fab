@@ -14,7 +14,7 @@
     "project": "COTTER 2026-09",
     "date": "2026-09",
     "what": "test/laser_fit.mjs assembles the cut outlines at kerf 0 against a 4 mm3 collision budget",
-    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/latest/cotter-sparger.md"
+    "evidence": "fab-knowledge:sources/latest/cotter-sparger.md"
   },
   "status": "entered",
   "enteredBy": "M04-T12",

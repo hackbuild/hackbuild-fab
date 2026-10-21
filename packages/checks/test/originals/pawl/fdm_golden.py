@@ -24,7 +24,14 @@ import numpy as np
 # The originals of record stay untouched: no __pycache__ beside fdm.py.
 sys.dont_write_bytecode = True
 
-FDM = "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/pawl/files/src/fdm.py"
+# The record names fdm.py by archive prefix; the bytes are read from
+# HBF_ORIGINALS when set, else from the owner's fab-knowledge/originals,
+# as tools/test-support/originals-root.ts reads them.
+FDM_RECORD = "fab-knowledge:originals/pawl/files/src/fdm.py"
+ORIGINALS = os.environ.get("HBF_ORIGINALS") or os.path.join(os.path.expanduser("~"), "Projects", "hackbuild", "fab-knowledge", "originals")
+FDM = os.path.join(ORIGINALS, "pawl", "files", "src", "fdm.py")
+if not os.path.exists(FDM):
+    sys.exit(f"originals not found: {FDM} does not exist. set HBF_ORIGINALS to a copy of fab-knowledge/originals")
 HERE = os.path.dirname(os.path.abspath(__file__))
 PARTS = ["foot", "thigh", "ankle_yoke"]
 
@@ -52,7 +59,7 @@ fdm = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(fdm)
 
 sha = lambda p: hashlib.sha256(open(p, "rb").read()).hexdigest()
-out = {"source": FDM, "sourceSha256": sha(FDM), "parts": {}}
+out = {"source": FDM_RECORD, "sourceSha256": sha(FDM), "parts": {}}
 for name in PARTS:
     path = os.path.join(HERE, f"{name}.stl")
     up = fdm.ORIENT[name][0]

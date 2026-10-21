@@ -14,7 +14,7 @@
     "project": "AUGER 2026-07",
     "date": "2026-07",
     "what": "the U8 amplifier output was left unconnected to its load",
-    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-boards-tools/auger"
+    "evidence": "fab-knowledge:evidence/x/downloads/dl-boards-tools/auger"
   },
   "status": "entered",
   "enteredBy": "M04-T12",

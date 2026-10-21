@@ -18,7 +18,7 @@
     "project": "FEELER 2026-08",
     "date": "2026-08",
     "what": "makesContact records a gap that closes when actuated and was never tested on geometry, so the wiper bug went through",
-    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-conductive-a.md"
+    "evidence": "fab-knowledge:sources/benches/benches-conductive-a.md"
   },
   "status": "entered",
   "enteredBy": "M04-T12"

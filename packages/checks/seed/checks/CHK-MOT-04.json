@@ -27,7 +27,7 @@
         "project": "TAPPET R1 2026-08-11",
         "date": "2026-08-11",
         "what": "the half-select property stated as two signed margins, half-select clearance and full-select overshoot, each checked against print tolerance",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-sweep/tappet/tappet (3).html"
+        "evidence": "fab-knowledge:evidence/x/downloads/dl-sweep/tappet/tappet (3).html"
       }
     ]
   },

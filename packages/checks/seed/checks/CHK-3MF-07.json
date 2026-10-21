@@ -15,7 +15,7 @@
     "date": "2026-09",
     "what": "Flash Studio warned on the enum default",
     "knowledge": "knowledge:kernels/3mf-dialect#two-more-key-facts-from-cask",
-    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-cases/cask/cask_cap_hackbuild.3mf"
+    "evidence": "fab-knowledge:evidence/x/downloads/dl-cases/cask/cask_cap_hackbuild.3mf"
   },
   "status": "seed"
 }

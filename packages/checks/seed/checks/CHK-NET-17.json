@@ -14,7 +14,7 @@
     "project": "SPLINE 2026-08",
     "date": "2026-08",
     "what": "arc electrode ends offset 2 deg: the gate caught 0.485 mm",
-    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-conductive-b.md"
+    "evidence": "fab-knowledge:sources/benches/benches-conductive-b.md"
   },
   "status": "entered",
   "enteredBy": "M04-T12",

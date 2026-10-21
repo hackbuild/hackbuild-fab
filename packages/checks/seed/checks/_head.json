@@ -7,7 +7,7 @@
         "project": "DAVIT R4 2026-08-02",
         "date": "2026-08-02",
         "what": "items 1 and 9: 4 detached gear teeth and a 22 mm3 splinter body",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-robots-machines/unzipped/davit_r4/README_R4.md"
+        "evidence": "fab-knowledge:evidence/x/downloads/dl-robots-machines/unzipped/davit_r4/README_R4.md"
       },
       "waitsOn": "a body count rule; overlaps CHK-PRT-01 and CHK-SHP-04"
     },
@@ -17,7 +17,7 @@
         "project": "DAVIT R4 2026-08-02",
         "date": "2026-08-02",
         "what": "item 2: fore yoke sections 42.5 to 224 and 54 to 299 mm2",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-robots-machines/unzipped/davit_r4/README_R4.md"
+        "evidence": "fab-knowledge:evidence/x/downloads/dl-robots-machines/unzipped/davit_r4/README_R4.md"
       },
       "waitsOn": "a limit source"
     },
@@ -27,7 +27,7 @@
         "project": "DAVIT R4 2026-08-02",
         "date": "2026-08-02",
         "what": "item 4: 0.95 mm walls to the servo pockets, 2.65 mm in R4",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-robots-machines/unzipped/davit_r4/README_R4.md"
+        "evidence": "fab-knowledge:evidence/x/downloads/dl-robots-machines/unzipped/davit_r4/README_R4.md"
       },
       "waitsOn": "a limit source"
     },
@@ -37,7 +37,7 @@
         "project": "DAVIT R4 2026-08-02",
         "date": "2026-08-02",
         "what": "item 6: a sealed 2.24 cm3 internal box in the palm",
-        "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-robots-machines/unzipped/davit_r4/README_R4.md"
+        "evidence": "fab-knowledge:evidence/x/downloads/dl-robots-machines/unzipped/davit_r4/README_R4.md"
       },
       "waitsOn": "a rule written in CHECKS.md"
     }

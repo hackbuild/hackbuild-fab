@@ -14,7 +14,7 @@
     "project": "VERNIER 2026-08",
     "date": "2026-08",
     "what": "a wedge end overlap failed the opposite escape by 0.4 mm",
-    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-conductive-b.md"
+    "evidence": "fab-knowledge:sources/benches/benches-conductive-b.md"
   },
   "status": "entered",
   "enteredBy": "M04-T12",

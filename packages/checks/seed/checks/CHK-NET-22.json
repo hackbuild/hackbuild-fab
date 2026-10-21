@@ -14,7 +14,7 @@
     "project": "TESSERA 2026-08",
     "date": "2026-08",
     "what": "the lane graph gate requires it acyclic and ranked with same-lane spans disjoint",
-    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-conductive-b.md"
+    "evidence": "fab-knowledge:sources/benches/benches-conductive-b.md"
   },
   "status": "entered",
   "enteredBy": "M04-T12",

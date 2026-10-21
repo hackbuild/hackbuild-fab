@@ -14,7 +14,7 @@
     "project": "ARMATURE 2026-08",
     "date": "2026-08",
     "what": "ARMATURE R1 would have failed four of the five netlist lints: pin completeness, nodes without components and single-node nets, duplicate supplier codes, port voltage",
-    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-copper-pcb-a.md"
+    "evidence": "fab-knowledge:sources/benches/benches-copper-pcb-a.md"
   },
   "status": "entered",
   "enteredBy": "M04-T12",

@@ -12,7 +12,7 @@
     "project": "SPINDLE 2026-08",
     "date": "2026-08",
     "what": "the pin map labels GPIO21 while the code drives GPIO20",
-    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-copper-pcb-b.md"
+    "evidence": "fab-knowledge:sources/benches/benches-copper-pcb-b.md"
   },
   "status": "entered",
   "enteredBy": "M04-T12",

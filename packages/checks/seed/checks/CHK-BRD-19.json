@@ -14,7 +14,7 @@
     "project": "SHUNT 2026-08",
     "date": "2026-08",
     "what": "check3d_shunt.mjs proves 55 lead landings at 0.000 mm through an independently derived transform",
-    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-copper-pcb-a.md"
+    "evidence": "fab-knowledge:sources/benches/benches-copper-pcb-a.md"
   },
   "status": "entered",
   "enteredBy": "M04-T12"

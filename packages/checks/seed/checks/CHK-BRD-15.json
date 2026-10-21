@@ -14,7 +14,7 @@
     "project": "LUG 2026-07",
     "date": "2026-07",
     "what": "LUG carries no HAT ID EEPROM and no back-power protection between the Pi USB 5 V and the boost output on header pins 2 and 4",
-    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-copper-pcb-b.md"
+    "evidence": "fab-knowledge:sources/benches/benches-copper-pcb-b.md"
   },
   "status": "entered",
   "enteredBy": "M04-T12",

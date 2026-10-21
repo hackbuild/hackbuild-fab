@@ -15,7 +15,7 @@
     "project": "DETENT rev C 2026-07-30",
     "date": "2026-07-30",
     "what": "verify.py printed the 45 deg overhang area as information and gated only islands, so an inverted laser teardrop shipped",
-    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/originals/detent/files/revD/archive-revC/verify_revC.py"
+    "evidence": "fab-knowledge:originals/detent/files/revD/archive-revC/verify_revC.py"
   },
   "status": "entered",
   "enteredBy": "M04-T12"

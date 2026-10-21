@@ -12,7 +12,7 @@
     "project": "SPROCKET 2026-08-02",
     "date": "2026-08-02",
     "what": "the page sends a heartbeat every 400 ms so the 1200 ms dead-man stays fed while the chassis idles",
-    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-robots-b.md"
+    "evidence": "fab-knowledge:sources/benches/benches-robots-b.md"
   },
   "status": "entered",
   "enteredBy": "M04-T12",

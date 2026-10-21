@@ -15,7 +15,7 @@
     "date": "2026-08-17",
     "what": "the sim's conductive PLA panel says source impedance is what limits sample rate; the SNS pad reads through a 47k pullup with about 12k of series lead",
     "knowledge": "knowledge:04-heuristics#electrical",
-    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-gudgeon-tang-keyway/tang/tang_r5_sim (13).html"
+    "evidence": "fab-knowledge:evidence/x/downloads/dl-gudgeon-tang-keyway/tang/tang_r5_sim (13).html"
   },
   "status": "seed"
 }

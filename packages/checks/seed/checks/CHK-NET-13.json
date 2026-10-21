@@ -18,7 +18,7 @@
     "project": "TCB, CHI 2021-05",
     "date": "2021-05",
     "what": "vertical printed traces read about 7x the resistance of flat ones (measured by the TCB authors)",
-    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/synthesis/plan-deltas.md"
+    "evidence": "fab-knowledge:synthesis/plan-deltas.md"
   },
   "status": "entered",
   "enteredBy": "M04-T12"

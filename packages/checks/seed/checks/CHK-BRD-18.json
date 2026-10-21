@@ -14,7 +14,7 @@
     "project": "SHUNT 2026-08",
     "date": "2026-08",
     "what": "the silk reparse gate requires the mirrored text to match under 98 percent, so the test can see a mirror",
-    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-copper-pcb-a.md"
+    "evidence": "fab-knowledge:sources/benches/benches-copper-pcb-a.md"
   },
   "status": "entered",
   "enteredBy": "M04-T12",

@@ -12,7 +12,7 @@
     "project": "LOUVER 2026-09-14",
     "date": "2026-09-14",
     "what": "LOUVER.ino line 134 enforces 65439 bytes, 65535 minus 96; 65535 minus 61 holds only for a short address",
-    "evidence": "/Users/obsidian/Projects/hackbuild/fab-work-directory/benches/louver-clasp/outputs/LOUVER/LOUVER.ino"
+    "evidence": "fab-work-directory:benches/louver-clasp/outputs/LOUVER/LOUVER.ino"
   },
   "status": "entered",
   "enteredBy": "M04-T12",

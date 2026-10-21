@@ -14,7 +14,7 @@
     "project": "CASK 2026-09-05",
     "date": "2026-09-05",
     "what": "every slot of adaptive_pressure_advance_model held a literal backslash n where the template has a line break",
-    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/evidence/x/downloads/dl-cases/cask/cask_cap_hackbuild.3mf"
+    "evidence": "fab-knowledge:evidence/x/downloads/dl-cases/cask/cask_cap_hackbuild.3mf"
   },
   "status": "entered",
   "enteredBy": "M04-T12"

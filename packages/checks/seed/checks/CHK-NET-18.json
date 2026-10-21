@@ -14,7 +14,7 @@
     "project": "KEYWAY 2026-08",
     "date": "2026-08",
     "what": "the sensor film gate requires it to bridge only COM and its own zone, 260 of 260 per zone in the run",
-    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-conductive-b.md"
+    "evidence": "fab-knowledge:sources/benches/benches-conductive-b.md"
   },
   "status": "entered",
   "enteredBy": "M04-T12",

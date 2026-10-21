@@ -12,7 +12,7 @@
     "project": "LOUVER, SPROCKET 2026-08",
     "date": "2026-08",
     "what": "a one-shot declared as a Param is replayed from the SNAPSHOT, so a rebooting camera acts on a snap command from an hour ago",
-    "evidence": "/Users/obsidian/Projects/hackbuild/fab-knowledge/sources/benches/benches-tools-devices.md"
+    "evidence": "fab-knowledge:sources/benches/benches-tools-devices.md"
   },
   "status": "entered",
   "enteredBy": "M04-T12",
