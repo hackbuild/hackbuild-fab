@@ -604,6 +604,10 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-548 | inline draft widget contract | decided | UI |
 | D-549 | chase validation still runs on a draft | decided | Constraints and checks |
 | D-550 | counts.json and the PLAN.md Appendix B row committed on the R1-engine-24 branch | decided | Testing, docs, milestones, registry |
+| D-551 | CHK-CLAIM-01 bumped to 2.0.0, not 1.1.0 | decided | Constraints and checks |
+| D-552 | last measured reading wins; notes never set a number | decided | Constraints and checks |
+| D-553 | an evidence row records who as person only at a terminal | decided | Agent surface |
+| D-554 | evidence is a CLI utility verb, not an MCP tool | decided | Agent surface |
 
 ## House rules and process
 
@@ -6709,6 +6713,50 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. The builder committed the counts.mjs output (spec commands 31) on the branch, although the counts.mjs header calls these files integrator-only. The integrator reran counts.mjs on the merged tree and it did not move. |
 | Rationale | plan-drift fails while the staged counts lag, and the task prompt allowed counts.json through counts.mjs. |
 | Evidence | plan-drift and the other plan tests 98 of 98 on the merged tree; counts.mjs then git diff --exit-code docs/plan/counts.json exit 0 (computed). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-551 CHK-CLAIM-01 bumped to 2.0.0, not 1.1.0
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. Evidence rows that change the verdict count as a major bump: CHK-CLAIM-01 goes to 2.0.0 in the seed json, the per-check json and the generated docs pages, and `packages/checks/test/entered.test.ts` records the bump in ENTERED_VERSION. |
+| Rationale | `docs/plan/CHECKS.md` 1.3 calls for a major bump when a verdict can flip on the same Part IR. A measured reading can turn a pass into a fail with no geometry change. Version 1.1.0 moves registryHash the same as 2.0.0, so the higher bump costs nothing extra. |
+| Evidence | `docs/plan/CHECKS.md` lines 126 to 133; `core/test/metric-record.test.ts` and `core/test/project-graph.test.ts` passed after the bump, so no build golden moved (computed, R1-engine-26 builder run). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-552 last measured reading wins; notes never set a number
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. CHK-CLAIM-01 uses the last measured row of the claim, converted to want.unit. A note with a direction turns an in-band claim to warn and never lifts an out-of-band claim off fail. Photo and slicer-save rows are listed but move no verdict. |
+| Rationale | The brief says a note moves the claim to warn and never to a number. Using the latest reading lets a fresh coupon replace an older one without rewriting the append-only log. |
+| Evidence | `packages/checks/src/claims/evidence.ts` measuredOf and directionOf; `packages/checks/test/evidence.test.ts` (a 2.1 N reading fails, a too stiff note warns with no number, a 150 g reading passes at 0.150 x 9.80665 N; computed). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-553 an evidence row records who as person only at a terminal
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. A row records who: person when both gate streams are TTYs, agent otherwise. A coupon result an agent relays is recorded as the agent's. |
+| Rationale | This uses the same terminal test the export gate uses, so an agent cannot record a row as a person. |
+| Evidence | `core/src/main.ts` evidence branch; `core/src/commands/evidence.ts` header; `core/test/evidence.test.ts` (computed). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-554 evidence is a CLI utility verb, not an MCP tool
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `evidence` joins UTILITY_VERBS in `spec/commands.ts` and VERBS in `packages/commands/src/index.ts`. MCP routing (chase_patch op evidence, brief note F4) is not wired. |
+| Rationale | Keeps the MCP tool count fixed and stays inside the R1-engine-26 brief's files. |
+| Evidence | `spec/commands.ts`, `packages/commands/src/index.ts`; `core/test/surface.test.ts` (computed). |
 | Supersedes | new |
 | Milestone | none |
 
