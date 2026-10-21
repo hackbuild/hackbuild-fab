@@ -657,6 +657,8 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-600 | WASM spike slices with wipe tower type2 | decided | reach |
 | D-601 | Side-by-side grade shots, system Chrome, welcome starts | decided | reach |
 | D-602 | Legacy adapter bundle shared in tools/hook/adapter-page.ts | decided | reach |
+| D-603 | Drive pad readout at the note size under 640 px | decided | reach |
+| D-604 | midi-pad drive targets, default preset and json export | decided | reach |
 
 ## House rules and process
 
@@ -7320,6 +7322,28 @@ Status: decided (delegated, R1-spike-01). The WASM run changes one value of the 
 | Decision | Taken by the agent under owner delegation on 2026-10-20. `bundleAdapters` and `routeDeclared` move from `tools/hook/conformance.spec.ts` to `tools/hook/adapter-page.ts`; the conformance spec and `tools/gold/side-by-side.mjs` import that one copy. |
 | Rationale | The side-by-side tool opens legacy pages the way the conformance suite does; one implementation of each thing. |
 | Evidence | `npx tsc -p tools/hook/tsconfig.json` exit 0; `npx playwright test -c tools/hook/playwright.config.ts --grep "hook (toggle|flex-pair)"` 2 pass (measured, 2026-10-21). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-603 Under 640 px the drive pad readout takes the note size
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. In `packages/ui/src/bench/bench.css`, inside the max-width 640 px rule, `.hbf-pad-read` takes `font-size: var(--hbf-fs-note)` (13 px) in place of the read size (15 px), so the idle line of a four-key pad fits one line at 390 px. |
+| Rationale | G-52 holds the pad to a quarter of the stage at 390 px. At the read size the midi-pad idle line wraps to two lines and the pad takes 0.31 of the stage; at the note size it takes 0.24. The fix is in the shared shell so every bench with four or more drive targets gains it, without shortening the idle wording other tests read. |
+| Evidence | Pad 340 x 91 px on a 382 x 263 px stage became 322 x 74 px for midi-pad, and 284 x 74 px became 249 x 74 px for flex-pair (measured, headless Chrome, 2026-10-21); `node tools/gold/report.mjs --origin fab --bench <id> --only <bench-layer rules>` exit 0 for both; `npx vitest run packages/ui` 366 pass. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-604 midi-pad drive targets, default preset and json export
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. reference/keys/midi-pad build.ts emits `keys.<n>.travel` for n 1 to 4, copied from `flex-cone-key.<n-1>.key.travel`, and its ContactFn `contact` closes `flex-cone-key.<n-1>.contact.key` while key n is held. The chase gains preset `default` with empty params (the defaults are the worked example) and the json export the G-57 drive calls. The goldens were re-accepted at build 47b6df..ed. |
+| Rationale | The drive pad reads targets from a `metrics.<group>` prefix, which archetype metrics do not carry; one copy per key in the build gives the pad its targets without changing the archetype. The preset gives the welcome card and the virtual slice a name for the defaults. |
+| Evidence | `hbf parity reference/keys/midi-pad --accept`: only defHash moved, 107 mesh hashes and volumes equal to dc7800..a1, report.json and edit.json equal (computed, 2026-10-21); a mutant contact that closes nothing fails the reference test. |
 | Supersedes | new |
 | Milestone | none |
 
