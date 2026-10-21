@@ -644,6 +644,8 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-587 | The access switch card blocks have their own named writers beside D-227 | decided | Testing |
 | D-588 | The decision fragments take DECISIONS.md's exemptions, and D-471 loses a home path | decided | Testing, plan |
 | D-589 | metric-record builds one design per test, as project-graph does | decided | Testing |
+| D-590 | The legacy inventory rows tracked files of the four globs only | decided | Testing, registry |
+| D-591 | Legacy readers are recorded per folder and found by text | decided | Testing, registry |
 
 ## House rules and process
 
@@ -7179,6 +7181,28 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Rationale | The single test held every build under one 300 s limit and timed out under load in full core runs (R1-engine-26, R1-designs-reach-16, the wave 2 health run); alone it passes in about 104 s (measured). |
 | Evidence | Alone 51 of 51 in 111 s; dropping one metric from builds.json fails the comparison with every build passing (computed, 2026-10-21). |
 | Supersedes | none |
+| Milestone | none |
+
+### D-590 The legacy inventory rows tracked files of the four globs only
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `tools/legacy/inventory.json` (R1-rails-public-01) rows every file `git ls-files` lists whose folder is `designs/<id>/legacy`, `reference/copper/<id>/legacy`, `reference/fit/ogee16-r16p/legacy` or `tools/corpus/3mf/legacy`, one path segment for `<id>`. The M10-T01 copies D-286 holds out of git are untracked and get no row; their SHA256SUMS rows remain their record. `designs/pip/test/fixtures/legacy/` (3 files) is outside the globs and gets no row. The brief's figure of 318 originals is not reproduced: measured on main 7669cbe it is 208 tracked, and 104 of the 121 held files on the owner's disk also have a byte copy in `fab-knowledge:originals/`. |
+| Rationale | The brief scopes the inventory to tracked files; a held file absent on another checkout cannot be hashed by `--check`, so a row for it would fail every hosted run. |
+| Evidence | `HBF_ORIGINALS=<fab-knowledge:originals> node tools/legacy/inventory.mjs --write` prints lineage 62, original 208, unmatched 178, harness 46 over 494 rows in 34 folders (measured, 2026-10-21). The held count came from a scratch script hashing `git ls-files -o -i --exclude-standard` under the same globs in the owner checkout (measured). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-591 Legacy readers are recorded per folder and found by text
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The inventory keeps readers once per legacy folder (`folders.<path>.readers`), and each file row names no readers of its own. A tracked file outside the inventoried folders reads a folder when its non-comment text names the folder path, names `../legacy/` from inside the folder's parent, or names the parent path and a quoted or slashed `legacy` token (the davit.ts template literal case). Python path joins collapse to slashes before the match. Markdown, lineage.json, lineage fragments and the inventory's own files are not readers. Data files that cite a legacy path as provenance, such as check seeds, count as readers. |
+| Rationale | Readers name folders far more often than single files; one list per folder keeps the JSON at 115 KB (measured) and every row diffable. The brief prefers a false reader over a missed one. |
+| Evidence | `tools/test/legacy-inventory.test.mjs` asserts packages/sim/scenes/davit.ts reads designs/davit/legacy and tools/py/harness/collar_parity.py reads designs/collar/legacy, and that a comment-only mention does not count (computed). |
+| Supersedes | new |
 | Milestone | none |
 
 ## Owner queue
