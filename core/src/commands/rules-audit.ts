@@ -40,6 +40,7 @@ export const AUDIT_LEVELS: readonly CheckLevel[] = ["project", "source", "artifa
 export const SOURCE_SKIPS: readonly { readonly pattern: RegExp; readonly reason: string }[] = [
   { pattern: /^designs\/[^/]+\/legacy\//, reason: "legacy tree, evidence kept as shipped (M02-T02, D-142)" },
   { pattern: /^packages\/checks\/test\/fixtures\//, reason: "check fixtures: a fail fixture fails by design" },
+  { pattern: /^designs\/[^/]+\/extract\/fixtures\//, reason: "extracted legacy fixtures, pinned by their SHA256SUMS (R1-fix-18)" },
 ];
 
 /** The skip reason of a workspace relative path, or null when the source checks read it. */

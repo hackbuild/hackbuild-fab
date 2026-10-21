@@ -57,17 +57,19 @@ async function audit(store: Store, input: { chase?: string } = {}): Promise<{ co
 }
 
 describe("rules.audit sources (M04-T13 step 1)", () => {
-  it("reads the files git lists, leaving out legacy trees and check fixtures", async () => {
+  it("reads the files git lists, leaving out legacy trees, extracted fixtures and check fixtures", async () => {
     const files = gitFiles(ROOT);
     const legacy = files.filter((f) => /^designs\/[^/]+\/legacy\//.test(f));
     const fixtures = files.filter((f) => f.startsWith("packages/checks/test/fixtures/"));
+    const extracted = files.filter((f) => /^designs\/[^/]+\/extract\/fixtures\//.test(f));
     expect(legacy.length).toBeGreaterThan(0);
+    expect(extracted.length).toBeGreaterThan(0);
     expect(fixtures.length).toBeGreaterThan(0);
-    for (const f of [...legacy, ...fixtures]) expect(sourceSkip(f), f).not.toBeNull();
+    for (const f of [...legacy, ...fixtures, ...extracted]) expect(sourceSkip(f), f).not.toBeNull();
     const sources = (await auditSources(ROOT, files)).map((s) => s.path);
     expect(sources).toContain("RULES.md");
     expect(sources).toContain("core/src/commands/rules-audit.ts");
-    expect(sources.filter((p) => legacy.includes(p) || fixtures.includes(p))).toEqual([]);
+    expect(sources.filter((p) => legacy.includes(p) || fixtures.includes(p) || extracted.includes(p))).toEqual([]);
   });
 
   it("narrows sources to the directories it is given", async () => {
