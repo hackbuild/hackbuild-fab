@@ -64,6 +64,10 @@ decimal (brief finding 2). CHK-KEY-04 passes on each cell.
 
 ### Verified on this machine
 
+- 2026-10-21 (R1-fix-19): `npx --no-install hbf parity reference/keys/access-switch/coupon`
+  exits 0 at build e36b0a..5c against the goldens re-accepted when CHK-KEY-05
+  went to 2.0.0 and moved registryHash; every mesh hash and volume is
+  unchanged and the report moves only by that check (computed).
 - 2026-10-20 (R1-flagship-access-switch-10): `npx --no-install hbf parity
   reference/keys/access-switch/coupon --accept` wrote the first goldens at
   build d6f43d..34; the edit golden sets cup depth 8 to 10 mm and only the

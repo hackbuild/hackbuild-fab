@@ -65,6 +65,10 @@ each side.
 
 ### Verified on this machine
 
+- 2026-10-21 (R1-fix-19): `npx --no-install hbf parity reference/electrical/pip-buried-route`
+  exits 0 at build 4725de..c0 against the goldens re-accepted when CHK-KEY-05
+  went to 2.0.0 and moved registryHash; every mesh hash and volume is
+  unchanged and the report moves only by that check (computed).
 - 2026-10-14, accepted under the owner's delegation: the off-grid emit
   goldens were judged against the original and accepted with
   `SOURCE_DATE_EPOCH=315532800 npx --no-install hbf parity

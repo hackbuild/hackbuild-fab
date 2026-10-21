@@ -104,6 +104,10 @@ outside this claim. Sources: `docs/plan/PRIOR-ART.md` sections 1 and 3.
 
 ### Verified on this machine
 
+- 2026-10-21 (R1-fix-19): `npx --no-install hbf parity reference/electrical/blocks-pullup-band`
+  exits 0 at build 72b024..a1 against the goldens re-accepted when CHK-KEY-05
+  went to 2.0.0 and moved registryHash; every mesh hash and volume is
+  unchanged and the report moves only by that check (computed).
 - 2026-10-11 (integration after M06 and M08): `npx --no-install hbf parity reference/electrical/blocks-pullup-band`
   exits 0 at build 3d25ff..85 against the goldens re-accepted when CHK-KEY-01 2.1.0,
   CHK-KEY-02 2.0.0, CHK-PRT-03 2.0.0, CHK-PRT-04 2.0.0, CHK-KEY-04 2.0.1,

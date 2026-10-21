@@ -176,6 +176,10 @@ and does not read a fitted part, so the warn is the reminder to fit it.
 
 ### Verified on this machine
 
+- 2026-10-21 (R1-fix-19): `npx --no-install hbf parity reference/keys/midi-pad`
+  exits 0 at build 3b8824..9d against the goldens re-accepted when CHK-KEY-05
+  went to 2.0.0 and moved registryHash; every mesh hash and volume is
+  unchanged and the report moves only by that check (computed).
 - 2026-10-14: `hbf parity reference/keys/midi-pad` writes the goldens at
   build dc7800..a1, epoch 315532800, and a rerun at epoch 1000000000 comes back equal on all
   five files (computed).

@@ -68,6 +68,10 @@ at least 1.2 mm, constraint `opacity.lightOverDark`, and the fix sets
 
 ### Verified on this machine
 
+- 2026-10-21 (R1-fix-19): `npx --no-install hbf parity reference/cosmetic/coin-inlay`
+  exits 0 at build c137bf..cf against the goldens re-accepted when CHK-KEY-05
+  went to 2.0.0 and moved registryHash; every mesh hash and volume is
+  unchanged and the report moves only by that check (computed).
 - 2026-10-14 (V-08, TXT-04): `textSize` takes COLLAR's text size control,
   1 to 30 mm in 0.1 steps (collar.html line 2542), default 9 mm, the size
   of COLLAR's back face text (line 2891); the inlay kind goes to 2.0.0.

@@ -50,6 +50,10 @@ slicer's estimate. Evidence:
 
 ### Verified on this machine
 
+- 2026-10-21 (R1-fix-19): `npx --no-install hbf parity reference/seats/rp2040-zero-pressfit`
+  exits 0 at build 7ea745..d2 against the goldens re-accepted when CHK-KEY-05
+  went to 2.0.0 and moved registryHash; every mesh hash and volume is
+  unchanged and the report moves only by that check (computed).
 - 2026-10-11 (integration after M06 and M08): `npx --no-install hbf parity reference/seats/rp2040-zero-pressfit`
   exits 0 at build 8388e3..44 against the goldens re-accepted when CHK-KEY-01 2.1.0,
   CHK-KEY-02 2.0.0, CHK-PRT-03 2.0.0, CHK-PRT-04 2.0.0, CHK-KEY-04 2.0.1,

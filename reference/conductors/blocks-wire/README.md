@@ -61,6 +61,10 @@ A person has not looked at the render yet.
 
 ### Verified on this machine
 
+- 2026-10-21 (R1-fix-19): `npx --no-install hbf parity reference/conductors/blocks-wire`
+  exits 0 at build 03766e..65 against the goldens re-accepted when CHK-KEY-05
+  went to 2.0.0 and moved registryHash; every mesh hash and volume is
+  unchanged and the report moves only by that check (computed).
 - 2026-10-11 (M06 and M08 integration): `npx --no-install hbf parity
   reference/conductors/blocks-wire` exits 0 at build e71015..32 against the goldens in
   `expected/` (computed). A person accepts them (D-152); not run.

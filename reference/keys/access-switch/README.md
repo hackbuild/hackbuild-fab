@@ -150,6 +150,10 @@ device before the card claims the switch closes for it.
 
 ### Verified on this machine
 
+- 2026-10-21 (R1-fix-19): `npx --no-install hbf parity reference/keys/access-switch`
+  exits 0 at build c4188b..4f against the goldens re-accepted when CHK-KEY-05
+  went to 2.0.0 and moved registryHash; every mesh hash and volume is
+  unchanged and the report moves only by that check (computed).
 - 2026-10-20 (R1-fix-01): `npx --no-install hbf parity
   reference/keys/access-switch` exit 0 at build 90e387..5c, all four
   goldens equal (computed). The goldens were accepted at this build after
@@ -222,10 +226,10 @@ and the build disagree. Nothing in it was measured, and no export was run.
 <!-- generated: print card; rewrite with HBF_ACCEPT=1 npx vitest run reference/keys/access-switch -->
 
 - design: keys-access-switch, preset default, machine ffc5p
-- file: out/access-switch-default.3mf, 60909 bytes, sha256 f46861521bdb273c42b24a68d6389d26f925ee914f85a02c4b9690b6335ce7fc (computed from the writer bytes in process; no export was run)
-- artifact hash (hbf): 3ab29fc97a36aa32912dfc48e3141075bc03a6d89145393458937efef1eb9f40
+- file: out/access-switch-default.3mf, 60910 bytes, sha256 ed469ab6c4f46ac5666797032b4e637d0cd1abb41418582d06daec20f1852a29 (computed from the writer bytes in process; no export was run)
+- artifact hash (hbf): bcc08620e39a64b8927317d2796e68b6584d12a94bfd7abff1def8bbf4833551
 - write it, a person at the export gate: `SOURCE_DATE_EPOCH=315532800 npx --no-install hbf export.run reference/keys/access-switch --kind 3mf --preset default --out reference/keys/access-switch/out/access-switch-default.3mf` (the epoch is pinned; unset, it follows the HEAD commit time and the bytes move)
-- build: 9ef248624cc85289af2a88c7af98b520f2208330a0abe6b272c4d6272602ef70
+- build: c4188bf378080a6f50a373211bb7ce8704220f107f668eea9f349c5affb58e4f
 - slicer: Flashforge Creator 5 Pro 0.4 nozzle, process 0.24mm Standard @FF C5
 - plate: Textured PEI Plate
 - layer grid: ffc5p_20260819, first layer 0.25 mm, then 0.24 mm (profile)
