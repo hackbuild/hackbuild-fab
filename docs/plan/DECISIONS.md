@@ -648,6 +648,8 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-591 | Legacy readers are recorded per folder and found by text | decided | Testing, registry |
 | D-592 | Check evidence names archives by prefix and tests resolve them by variable | decided | Testing, registry |
 | D-593 | A private corpus row runs where its copy is present | decided | Testing, corpus |
+| D-594 | Lineage sources carry the archive prefix and tests read them through localSource | decided | Testing, lineage |
+| D-595 | R1-rails-public-04 converts every lineage source reader and leaves mechanisms legacy harness paths to item 05 | decided | Testing, lineage |
 
 ## House rules and process
 
@@ -7226,6 +7228,28 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. Each row of `tools/corpus/3mf/manifest.json` carries `where`, `repo` or `private`. A private row resolves under `HBF_CORPUS`, else `originals/_corpus/` in the fab-knowledge archive (`HBF_FAB_KNOWLEDGE`, else the owner folder, as D-592 reads it). It runs where its own copy is present and is otherwise counted: `run.py` prints "N private rows not run" and skips the owner key-set and round-trip reports and the set asserts, which read every row; `packages/3mf/test/validate.test.ts` registers each absent row as a skipped case. A repo row whose copy is missing stays a failure in both. Manifest `source` fields and the regenerated `reports/owner-keysets.json` carry the `publishText()` form, and `run.py` resolves that form by archive variable, else under the owner's Projects/hackbuild folder. |
 | Rationale | The item's done case marks a row private with `HBF_CORPUS` on an empty directory that exists, so presence is judged per row, never per directory. Reports computed over a partial set would rewrite tracked reports with rows missing. Resolving archives the way D-592 does keeps one rule and lets the source drift check run from a worktree. |
 | Evidence | Full `run.py` run: 126 rows, 0 outside, exit 0, per-row JSON outcomes byte-equal to the run before the change (measured); `tools/py/test/test_corpus.py` 11 passed; marking tenon-known-good and its sameAs target private with an empty `HBF_CORPUS` prints "1 private rows not run" (test); mutants on the repo guard and the private skip each fail a test (measured); 126 of 126 publish-form sources resolve with matching sha256 (measured). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-594 Lineage sources carry the archive prefix and tests read them through localSource
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. Every `source` in the `lineage/` fragments, the generated `lineage.json` and the `packages/mesh/seed/README.md` mirror is the `publishText()` form of `tools/publish-paths.mjs`: `fab-knowledge:originals/`, `fab-knowledge:`, `fab-work-directory:`, `~/`, a sibling repository name, or a repo path. `ORIGINALS_OF_RECORD` in `tools/test-support/originals-root.ts` is `fab-knowledge:originals/`. Two functions there map a source to a local path: `localSource` throws naming the archive variable when the archive folder is absent (never skip), and `sourcePath` maps without that check for a read the test guards with `existsSync`. The roots are `HBF_ORIGINALS`, `HBF_FAB_KNOWLEDGE` and `HBF_FAB_WORK_DIRECTORY` (the D-592 names, in place of the brief's `HBF_EVIDENCE` and `HBF_BENCHES`) and a new `HBF_REPOS` for sibling repositories, each defaulting to the folder beside this repository, so no home path is written. A source whose first segment exists in this repository is a repo path; any other unprefixed source names a sibling repository. `tools/test/lineage.test.mjs` uses `sourcePath`, so a hosted runner still reports "sources not on this machine" in place of failing, and a new case refuses any source that is absolute or not in publish form. `owner-files.mjs` counts `localSource` as a reader and a relocation; `sourcePath` stays an owner read. The `.mjs` callers import `originals-root.ts` directly under Node 22.18 type stripping; no `.mjs` twin was written because item 02 has not landed. |
+| Rationale | The brief asked lineage.test to use localSource, but lineage.test runs on hosted runners where the archives are absent, and a throwing reader there turns a diagnostic into a failure. The guarded readers (core mech tests, constraints, inlay, prism) would otherwise skip silently once the source stops being an absolute path. D-592 had already named the archive variables; a second pair of names for the same folders would be two rules. |
+| Evidence | `git grep -c /Users/obsidian -- lineage.json lineage tools/test-support .github packages/mesh` prints nothing (measured). Lineage "sources hashed" 728 of 734 before and after with the archive variables set (measured). `localSource` replaced with identity fails 2 of 6 tests in `originals-root.test.ts`; `localSource` dropped from `RELOCATE` fails `owner-files.test.mjs` (measured). `owner-files.mjs report` lists 31 files before and after. vitest tools/test-support, constraints, mesh, inlay, mechanisms, archetypes and the two core mech tests pass (measured). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-595 R1-rails-public-04 converts every lineage source reader and leaves mechanisms legacy harness paths to item 05
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. Beyond its Writes line, R1-rails-public-04 changed every reader of a lineage source that would break or skip silently on the publish form: `core/test/mech-cascade-slop` and `mech-hook-rule`, `packages/constraints/test/fixtures`, `packages/archetypes/test/load` and `originals-additions`, `packages/inlay/test/{intake,opacity,quantize,lineage}` and `fixtures/hygiene-legacy.ts`, `packages/mesh/test/routes/prism`, `packages/mesh/seed/test/heal.test.mjs`, the record scripts under `packages/mechanisms/test/legacy` and `packages/inlay/scripts`, and the `source` description in `tools/lineage.schema.json`. Seven files under `packages/mechanisms/test/legacy` still hold owner paths unrelated to lineage (`hook-rule.py`, `record-ogee16-latch.mjs`, `record-slew-ring.py`, `record-stanchion-bodies.py`, `record-stanchion.cjs` and the `command` text in two recorded JSON files), so the brief's done grep over `packages/mechanisms` is not empty; they stay for item 05 (and 07 for harness code). |
+| Rationale | One reader of a source string that still assumed an absolute path would either fail or quietly skip its check. The seven remaining files are harness code and recorded commands whose change belongs with item 05's regenerate-and-record rule, which this item does not run. |
+| Evidence | Each converted reader's suite passes with the archive variables set (measured); the inlay M03 card hash test ran 0 skipped where main skips it (measured). The record and golden scripts were edited but not run (not run). |
 | Supersedes | new |
 | Milestone | none |
 
