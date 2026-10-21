@@ -6,9 +6,9 @@
 // <repo>/<path> for a sibling repository and a bare repo path for this one.
 // That string stays the identity a test compares against; no home path is
 // written. The bytes are read from a local copy of each archive: HBF_ORIGINALS,
-// HBF_EVIDENCE (fab-knowledge), HBF_BENCHES (fab-work-directory) and HBF_REPOS
-// (the folder holding the sibling repositories) when set, else the sibling
-// folder next to this repository. A missing directory throws with the
+// HBF_FAB_KNOWLEDGE and HBF_FAB_WORK_DIRECTORY (the archive variables D-592
+// names) and HBF_REPOS (the folder holding the sibling repositories) when set,
+// else the sibling folder next to this repository. A missing directory throws with the
 // variable's name: these tests never skip, so a machine without the originals
 // reports them failed, never passed.
 
@@ -18,8 +18,8 @@ import { fileURLToPath } from "node:url";
 
 export const ORIGINALS_OF_RECORD = "fab-knowledge:originals/";
 export const ORIGINALS_VAR = "HBF_ORIGINALS";
-export const EVIDENCE_VAR = "HBF_EVIDENCE";
-export const BENCHES_VAR = "HBF_BENCHES";
+export const EVIDENCE_VAR = "HBF_FAB_KNOWLEDGE";
+export const BENCHES_VAR = "HBF_FAB_WORK_DIRECTORY";
 export const REPOS_VAR = "HBF_REPOS";
 
 const EVIDENCE_PREFIX = "fab-knowledge:";

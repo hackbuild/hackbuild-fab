@@ -7,6 +7,7 @@ import { createHash } from "node:crypto";
 import { existsSync, readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { describe, expect, test } from "vitest";
+import { sourcePath } from "../../../tools/test-support/originals-root.js";
 
 const root = fileURLToPath(new URL("../../../", import.meta.url));
 
@@ -58,7 +59,7 @@ describe("M03 legacy sources (card table against lineage.json)", () => {
     for (const c of legacy) {
       const hashes = (c[3] ?? "").match(HEX) ?? [];
       if (hashes.length === 0) continue;
-      const path = (c[2] ?? "").replace(/ lines \d+ to \d+$/, "").replace(/, member \S+$/, "");
+      const path = sourcePath((c[2] ?? "").replace(/ lines \d+ to \d+$/, "").replace(/, member \S+$/, ""));
       if (!existsSync(path)) continue;
       expect(sha(path), c[0]).toBe(hashes[0]);
       checked++;

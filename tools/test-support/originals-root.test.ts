@@ -1,5 +1,5 @@
-// The originals helper: HBF_ORIGINALS, HBF_EVIDENCE, HBF_BENCHES and
-// HBF_REPOS move where the bytes are read, the lineage identity stays the
+// The originals helper: HBF_ORIGINALS, HBF_FAB_KNOWLEDGE,
+// HBF_FAB_WORK_DIRECTORY and HBF_REPOS move where the bytes are read, the lineage identity stays the
 // archive-prefixed source, and a missing directory throws with the
 // variable's name. Every test that reads an original goes through
 // it (one helper for mechanisms, archetypes, checks, circuit and core), so
@@ -49,7 +49,7 @@ describe("originals root", () => {
 
   test("localSource throws naming the archive variable, sourcePath does not, and an absolute source is refused", () => {
     const env = { [BENCHES_VAR]: join(tmp, "absent") };
-    expect(() => localSource("fab-work-directory:benches/a.html", env)).toThrow(/HBF_BENCHES=.*absent does not exist/);
+    expect(() => localSource("fab-work-directory:benches/a.html", env)).toThrow(/HBF_FAB_WORK_DIRECTORY=.*absent does not exist/);
     expect(sourcePath("fab-work-directory:benches/a.html", env)).toBe(join(tmp, "absent/benches/a.html"));
     expect(() => localSource("/Users/someone/fab-knowledge/originals/a.html", env)).toThrow(/absolute path/);
   });
