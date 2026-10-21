@@ -9,6 +9,7 @@
 
 import { readFileSync } from "node:fs";
 import { afterAll, beforeAll, describe, expect, test } from "vitest";
+import { planCard } from "../../../tools/test-support/plan-root.js";
 import { isThrownCommandError, sha256Hex, type Assembly, type CheckResult, type Hash, type KernelId } from "@hackbuild/spec";
 import { DEFAULT_TEMPLATE } from "@hackbuild/3mf";
 import { createProfileLookup, loadProfile } from "@hackbuild/profile";
@@ -22,7 +23,7 @@ const bytes = (rel: string): Buffer => readFileSync(new URL(rel, ROOT));
 const text = (rel: string): string => bytes(rel).toString("utf8");
 
 // ---- the plan, read here ----
-const card = text("docs/plan/milestones/M04-checks-project.md");
+const card = planCard("M04-checks-project.md");
 const header = card.split(/^## M04-T01 /m)[0]!;
 const t11 = card.split(/^## M04-T11 /m)[1]!.split(/^## M04-T12 /m)[0]!;
 

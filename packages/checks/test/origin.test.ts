@@ -9,6 +9,7 @@ import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { homedir } from "node:os";
 import { join } from "node:path";
 import { describe, expect, test } from "vitest";
+import { planCard } from "../../../tools/test-support/plan-root.js";
 import {
   CHECK_MODULES, checkPage, checkPageMarkdown, coversOf, indexMarkdown, numberLine, originFromSeed, originGapsMarkdown,
   KERNEL_LANDS, PAGE_MILESTONE, kernelsAt, parseRecordId, registerChecks, renderCheckPage, type ReferenceCovers,
@@ -146,8 +147,8 @@ describe("check pages", () => {
   // KERNEL_LANDS): at M05 no page skips for a missing circuit or copper
   // kernel or for no net targets, and a sheet or motion check still waits on M07.
   test("run state at M05: circuit, copper and net targets landed", () => {
-    expect(read("docs/plan/milestones/M05-circuit-copper.md")).toMatch(/^\| circuit \| 1 \|/m);
-    expect(read("docs/plan/milestones/M05-circuit-copper.md")).toMatch(/^\| copper \| 1 \|/m);
+    expect(planCard("M05-circuit-copper.md")).toMatch(/^\| circuit \| 1 \|/m);
+    expect(planCard("M05-circuit-copper.md")).toMatch(/^\| copper \| 1 \|/m);
     const m05 = new Map(defs.map((d) => checkPage(d, refs, "M05")).map((p) => [p.id, p]));
     for (const p of m05.values()) expect(p.run.reason ?? "", p.id).not.toMatch(/kernel (circuit|copper)\b|no net targets/);
     expect(m05.get("CHK-NET-05")!.run).toEqual({ at: "M05", runs: true, reason: null });

@@ -8,6 +8,7 @@
 import { readFileSync, readdirSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { describe, expect, test } from "vitest";
+import { planCard } from "../../../tools/test-support/plan-root.js";
 import type { McuPinSpec } from "@hackbuild/spec";
 import { bossLegacyRow, mcuPinRow } from "@hackbuild/catalog";
 import { bossDigital, bossScene, sceneVolts, solveLegacyScenes, stateAt, type BossScene, type LegacySceneRow } from "@hackbuild/circuit";
@@ -16,7 +17,7 @@ const ROOT = fileURLToPath(new URL("../../../", import.meta.url));
 const REFERENCE = "reference/electrical/blocks-pullup-band";
 const SCENES = `${ROOT}${REFERENCE}/scenes/`;
 const FIXTURES = fileURLToPath(new URL("./fixtures/boss-scenes/", import.meta.url));
-const CARD = readFileSync(`${ROOT}docs/plan/milestones/M05-circuit-copper.md`, "utf8");
+const CARD = planCard("M05-circuit-copper.md");
 const T07 = CARD.slice(CARD.indexOf("## M05-T07 "), CARD.indexOf("## M05-T08 "));
 const FLAT = T07.replace(/\s+/g, " ");
 

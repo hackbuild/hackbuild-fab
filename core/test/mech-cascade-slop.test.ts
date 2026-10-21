@@ -10,6 +10,7 @@
 import { existsSync, readFileSync } from "node:fs";
 import { sourcePath } from "../../tools/test-support/originals-root.js";
 import { describe, expect, test } from "vitest";
+import { planCard } from "../../tools/test-support/plan-root.js";
 import { isThrownCommandError, type ConstraintCtx } from "@hackbuild/spec";
 type Facts = ConstraintCtx["facts"];
 import { createProfileLookup, loadProfile } from "@hackbuild/profile";
@@ -29,7 +30,7 @@ const ctxOf = (facts: Facts): ConstraintCtx => ({ profile, machine: "ffc5p", mat
 
 /** The M01-T10 section of the card. */
 const card = ((): string => {
-  const md = read("docs/plan/milestones/M01-constraints.md");
+  const md = planCard("M01-constraints.md");
   const at = md.indexOf("## M01-T10 ");
   return md.slice(at, md.indexOf("\n## ", at + 1));
 })();

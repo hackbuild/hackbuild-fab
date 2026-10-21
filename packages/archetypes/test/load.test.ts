@@ -8,6 +8,7 @@
 import { createHash } from "node:crypto";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { describe, expect, test } from "vitest";
+import { planCard } from "../../../tools/test-support/plan-root.js";
 import { parse } from "yaml";
 import { z } from "zod";
 import { FEATURE_KINDS, isThrownCommandError, type ArchetypeDef } from "@hackbuild/spec";
@@ -124,7 +125,7 @@ describe("archetype registry load", () => {
   });
 
   test("the alias tables equal the M06-T01 step 4 table of the card", () => {
-    const card = read("docs/plan/milestones/M06-canons.md");
+    const card = planCard("M06-canons.md");
     const t01 = card.slice(card.indexOf("## M06-T01 "), card.indexOf("## M06-T02 "));
     const rows = [...t01.matchAll(/^\s*\| (`[^|]+`)(?: \([^)]*\))? \| `([a-z.]+(?:-[a-z0-9]+)*)`(?:, `([a-z.]+)`)? \| (D-\d+)/gm)];
     const seedIds: Record<string, string> = {};

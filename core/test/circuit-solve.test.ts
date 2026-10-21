@@ -10,6 +10,7 @@
 import { readFileSync, readdirSync } from "node:fs";
 import path from "node:path";
 import { describe, expect, test, vi } from "vitest";
+import { planCard } from "../../tools/test-support/plan-root.js";
 import type { CheckResult, CommandResult, HookupDecl, McuPinSpec, OperatingPoint } from "@hackbuild/spec";
 import { isThrownCommandError } from "@hackbuild/spec";
 import { NODAL_LEAK_S, solveDc } from "@hackbuild/circuit";
@@ -37,7 +38,7 @@ const row = (id: string): Row => {
 };
 const CATALOG_IDS = ROWS.filter((r) => r.legacy === undefined).map((r) => r.id);
 
-const CARD = readFileSync(path.join(ROOT, "docs", "plan", "milestones", "M05-circuit-copper.md"), "utf8");
+const CARD = planCard("M05-circuit-copper.md");
 /** The T18 acceptance: the along segment of conductor.key1 equals <n> ohm within 0.1 percent. */
 const KEY1_ALONG = Number(/conductor\.key1 \(15\.0 mm centreline[^)]*\) equals ([\d.]+) ohm/.exec(CARD.replace(/\s+/g, " "))![1]);
 

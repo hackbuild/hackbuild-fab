@@ -12,6 +12,7 @@
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { describe, expect, test } from "vitest";
+import { planCard } from "../../../tools/test-support/plan-root.js";
 import { mcuPinRow } from "@hackbuild/catalog";
 import { createProfileLookup, loadProfile } from "@hackbuild/profile";
 import type { DriveSceneDecl, HookupDecl } from "@hackbuild/spec";
@@ -21,7 +22,7 @@ import {
 
 const ROOT = fileURLToPath(new URL("../../../", import.meta.url));
 const read = (p: string): string => readFileSync(`${ROOT}${p}`, "utf8");
-const CARD = read("docs/plan/milestones/M05-circuit-copper.md");
+const CARD = planCard("M05-circuit-copper.md");
 const T11 = CARD.slice(CARD.indexOf("## M05-T11"), CARD.indexOf("## M05-T12"));
 const profile = createProfileLookup(loadProfile());
 const rp2040 = mcuPinRow("rp2040");

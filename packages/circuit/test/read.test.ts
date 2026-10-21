@@ -10,6 +10,7 @@
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { describe, expect, test } from "vitest";
+import { planCard } from "../../../tools/test-support/plan-root.js";
 import { mcuPinRow } from "@hackbuild/catalog";
 import { createProfileLookup, loadProfile } from "@hackbuild/profile";
 import type { ReadModel } from "@hackbuild/spec";
@@ -21,7 +22,7 @@ import { SETTLE_TAUS } from "../src/read/index";
 
 const ROOT = fileURLToPath(new URL("../../../", import.meta.url));
 const read = (p: string): string => readFileSync(`${ROOT}${p}`, "utf8");
-const CARD = read("docs/plan/milestones/M05-circuit-copper.md");
+const CARD = planCard("M05-circuit-copper.md");
 const T05 = CARD.slice(CARD.indexOf("## M05-T05"), CARD.indexOf("## M05-T06"));
 const T07 = CARD.slice(CARD.indexOf("## M05-T07"), CARD.indexOf("## M05-T08"));
 const profile = createProfileLookup(loadProfile());

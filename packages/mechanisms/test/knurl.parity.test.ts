@@ -8,6 +8,7 @@
 
 import { readFileSync } from "node:fs";
 import { describe, expect, test } from "vitest";
+import { planCard } from "../../../tools/test-support/plan-root.js";
 import {
   DETENT_PARAMS, GENEVA_PARAMS, TUMBLER_MATERIALS, TUMBLER_MODULES, defaultsOf, detentDerive, genevaDerive, mechanisms, tumblerDefaults, tumblerModule,
 } from "@hackbuild/mechanisms";
@@ -26,7 +27,7 @@ const lineage = JSON.parse(readFileSync(new URL("lineage.json", root), "utf8")) 
 
 /** The card's golden table, M06-T04, read from the plan as text: quantity, value, tolerance. */
 const card = ((): Map<string, string> => {
-  const md = readFileSync(new URL("docs/plan/milestones/M06-canons.md", root), "utf8");
+  const md = planCard("M06-canons.md");
   const sec = md.slice(md.indexOf("## M06-T04 "), md.indexOf("## M06-T05 "));
   const rows = sec.split("\n").filter((l) => /^\| (Geneva|slot|carry|theta|detent|click|strain|pin sweep|pawl tip)/.test(l));
   return new Map(rows.map((l) => { const c = l.split("|").map((x) => x.trim()); return [c[1]!, c[2]!] as const; }));

@@ -10,6 +10,7 @@
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { createHash } from "node:crypto";
 import { describe, expect, test } from "vitest";
+import { planCard } from "../../../tools/test-support/plan-root.js";
 import { isThrownCommandError } from "@hackbuild/spec";
 import { archetypes } from "@hackbuild/archetypes";
 import { ORIGINALS_OF_RECORD, originalPath } from "../../../tools/test-support/originals-root.js";
@@ -23,7 +24,7 @@ const lineage = JSON.parse(read("lineage.json")) as LineageRow[];
 
 /** The M06-T14 table rows of the card, parsed from the card itself: id, family, registry, promotion column. */
 function cardRows(): { id: string; family: string; registry: string; promoted: string }[] {
-  const card = read("docs/plan/milestones/M06-canons.md");
+  const card = planCard("M06-canons.md");
   const sec = card.slice(card.indexOf("## M06-T14"), card.indexOf("## M06-T13"));
   return sec.split("\n").filter((l) => l.startsWith("| `")).map((l) => l.split("|").slice(1, -1).map((c) => c.trim()))
     .map((c) => ({ id: c[0]!.replace(/`/g, "").replace(" (update)", "").replace(" options", ""), family: c[1]!, registry: c[2]!, promoted: c[6]! }));

@@ -5,16 +5,14 @@
 // has not landed; each card deletes its entry, and M01-T11 checks the list
 // is empty.
 
-import { readFileSync } from "node:fs";
-import path from "node:path";
 import { describe, expect, it } from "vitest";
+import { planDoc } from "../../tools/test-support/plan-root.js";
 import { CLI_ONLY, CLI_ONLY_FIELDS, COMMAND_GROUP, COMMAND_NAMES, UTILITY_VERBS } from "@hackbuild/spec";
 import { CLI_FORM, COMMANDS, VERBS } from "../src/registry.js";
-import { ROOT } from "./hbf.js";
 
 /** Rows of the MILESTONES.md 1.3 table for the given milestones, as [milestone, commands cell]. */
 function surfaceRows(milestones: readonly string[]): [string, string][] {
-  const text = readFileSync(path.join(ROOT, "docs", "plan", "MILESTONES.md"), "utf8");
+  const text = planDoc("MILESTONES.md");
   const section = text.slice(text.indexOf("### 1.3"), text.indexOf("### 1.4"));
   return section.split("\n").filter((l) => /^\| [MR]/.test(l)).map((l) => l.split("|").map((c) => c.trim()))
     .filter((r) => milestones.includes(r[1]!)).map((r) => [r[1]!, r[2]!]);

@@ -2,12 +2,12 @@
 // placement table, exported by the package that row names, listing the
 // row's Bound.kernel. The table is read from the plan, never copied here.
 
-import { readFileSync } from "node:fs";
 import { describe, expect, test } from "vitest";
+import { planCard } from "../../tools/test-support/plan-root.js";
 import { collectConstraintDefs, loadConstraints } from "../src/load/constraints";
 
-const card = readFileSync(new URL("../../docs/plan/milestones/M01-constraints.md", import.meta.url), "utf8");
-const m06 = readFileSync(new URL("../../docs/plan/milestones/M06-canons.md", import.meta.url), "utf8");
+const card = planCard("M01-constraints.md");
+const m06 = planCard("M06-canons.md");
 
 /** Placement rows of a table: id, owning package (first word), Bound.kernel. */
 function rowsOf(text: string): Map<string, { pkg: string; kernel: string }> {

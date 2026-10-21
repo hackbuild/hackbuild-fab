@@ -6,6 +6,7 @@
 
 import { readFileSync } from "node:fs";
 import { describe, expect, test } from "vitest";
+import { planCard } from "../../../tools/test-support/plan-root.js";
 import { assignLanes, type LaneVersion, type RailAxis } from "../src/index.js";
 
 const repo = new URL("../../../", import.meta.url);
@@ -16,7 +17,7 @@ const fixture = JSON.parse(read("packages/copper/test/fixtures/lanes-legacy.json
 
 /** "TESSERA, FRET and STAVE lane counts used 4 of 9, 3 of 12, 5 of 6; SPLINE 6 of 8" from the M05-T14 acceptance. */
 function cardCounts(): Map<string, [number, number]> {
-  const card = read("docs/plan/milestones/M05-circuit-copper.md").split(/^## M05-T14 /m)[1]!.split(/^## M05-T15 /m)[0]!;
+  const card = planCard("M05-circuit-copper.md").split(/^## M05-T14 /m)[1]!.split(/^## M05-T15 /m)[0]!;
   const line = /TESSERA, FRET and STAVE lane counts\s+used ([^;]+); SPLINE (\d+) of (\d+)/.exec(card.replace(/\n\s*/g, " "));
   expect(line, "the card's lane count line").not.toBeNull();
   const three = [...line![1]!.matchAll(/(\d+) of (\d+)/g)].map((m) => [Number(m[1]), Number(m[2])] as [number, number]);

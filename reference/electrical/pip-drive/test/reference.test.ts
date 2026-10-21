@@ -8,6 +8,7 @@ import { readFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, test } from "vitest";
+import { planCard } from "../../../../tools/test-support/plan-root.js";
 import { readChaseSource } from "@hackbuild/chase";
 import type { CheckResult, ReadOutputs } from "@hackbuild/spec";
 import { sceneDrive } from "../../../../packages/copper/scripts/pip-drive-scene.mjs";
@@ -28,7 +29,7 @@ const solve = JSON.parse(readFileSync(path.join(DIR, "expected", "query-solve.js
 const ELEC = JSON.parse(read("packages/circuit/test/fixtures/pip-b137deb-elec.json")) as {
   keys: { id: string; pin: string; type: string; bench: { R: number; C: number; tauUs: number } }[];
 };
-const CARD = read("docs/plan/milestones/M05-circuit-copper.md");
+const CARD = planCard("M05-circuit-copper.md");
 const T11 = CARD.slice(CARD.indexOf("## M05-T11"), CARD.indexOf("## M05-T12"));
 const CARD_ROWS = T11.split("\n").filter((l) => /^\| [A-Z]+ \| GP\d+ \|/.test(l)).map((l) => l.split("|").slice(1, -1).map((c) => c.trim()));
 

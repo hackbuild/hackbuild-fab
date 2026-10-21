@@ -9,12 +9,13 @@ import { createHash } from "node:crypto";
 import { readFileSync, readdirSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { describe, expect, test } from "vitest";
+import { planCard } from "../../../tools/test-support/plan-root.js";
 import { solveDc, type DcElement, type DcNetwork } from "@hackbuild/circuit";
 
 const ROOT = fileURLToPath(new URL("../../../", import.meta.url));
 const SCENES = fileURLToPath(new URL("./fixtures/boss-scenes/", import.meta.url));
 const LEGACY = `${ROOT}designs/blocks/legacy/`;
-const CARD = readFileSync(`${ROOT}docs/plan/milestones/M05-circuit-copper.md`, "utf8");
+const CARD = planCard("M05-circuit-copper.md");
 
 const V_TOL = 1e-9;
 const A_TOL = 1e-12;

@@ -17,6 +17,7 @@
 
 import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { beforeAll, describe, expect, test } from "vitest";
+import { planCard } from "../../../tools/test-support/plan-root.js";
 import type { Section } from "@hackbuild/geom";
 import { flattenSvgPath, loadGeom, type Geom } from "@hackbuild/geom";
 import { createProfileLookup, loadProfile } from "@hackbuild/profile";
@@ -70,7 +71,7 @@ const CLEARANCE = /^(PASS|FAIL) min clearance ([\d.]+) mm at (\S+) \(gate ([\d.]
 
 /** The M05-T13 table row of the board: gates passed, failed, least clearance, tightest pair. */
 export function t13Row(name: string): { passed: number; failed: number; clearance: string; pair: string } {
-  const card = read("docs/plan/milestones/M05-circuit-copper.md").split(/^## M05-T13 /m)[1]!.split(/^## M05-T14 /m)[0]!;
+  const card = planCard("M05-circuit-copper.md").split(/^## M05-T13 /m)[1]!.split(/^## M05-T14 /m)[0]!;
   const line = card.split("\n").find((l) => l.startsWith(`| ${name} |`));
   expect(line, `the M05-T13 table names ${name}`).toBeDefined();
   const c = line!.split("|").slice(1, -1).map((x) => x.trim());

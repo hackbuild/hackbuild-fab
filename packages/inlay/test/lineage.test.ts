@@ -7,6 +7,7 @@ import { createHash } from "node:crypto";
 import { existsSync, readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { describe, expect, test } from "vitest";
+import { planCard } from "../../../tools/test-support/plan-root.js";
 import { sourcePath } from "../../../tools/test-support/originals-root.js";
 
 const root = fileURLToPath(new URL("../../../", import.meta.url));
@@ -33,7 +34,7 @@ function table(md: string, heading: string): string[][] {
   return lines.slice(2).map((l) => l.slice(1, -1).split("|").map((c) => c.trim()));
 }
 
-const card = readFileSync(root + "docs/plan/milestones/M03-inlay.md", "utf8");
+const card = planCard("M03-inlay.md");
 const legacy = table(card, "## Legacy sources and their hashes");
 
 describe("M03 legacy sources (card table against lineage.json)", () => {

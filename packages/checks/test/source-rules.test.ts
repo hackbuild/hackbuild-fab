@@ -8,6 +8,7 @@ import { readFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
+import { planCard } from "../../../tools/test-support/plan-root.js";
 import type { Finding, SourceFile } from "@hackbuild/spec";
 import { check as fit04, readsParams } from "../src/defs/fit/CHK-FIT-04.js";
 import { check as sht04, kerfLiterals } from "../src/defs/sht/CHK-SHT-04.js";
@@ -29,7 +30,7 @@ const verdicts = async (id: string, source: SourceFile): Promise<string[]> =>
 
 /** The planted line of the M04-T13 card, acceptance 2. */
 const PLANTED = (): string => {
-  const card = readFileSync(path.join(ROOT, "docs", "plan", "milestones", "M04-checks-project.md"), "utf8");
+  const card = planCard("M04-checks-project.md");
   return /A planted line `([^`]+)`/.exec(card)![1]!;
 };
 

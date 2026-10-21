@@ -13,6 +13,7 @@
 import { existsSync, readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { describe, expect, test } from "vitest";
+import { planCard } from "../../../tools/test-support/plan-root.js";
 import type { Assembly, CheckLevel, CheckResult, KernelId } from "@hackbuild/spec";
 import { DEFAULT_TEMPLATE } from "@hackbuild/3mf";
 import { LAYER_TOL_MM, createProfileLookup, layerTop, layerTopsAround, loadProfile, snapLayer } from "@hackbuild/profile";
@@ -38,7 +39,7 @@ const byId = new Map(seed.checks.map((r) => [r.id, r]));
 const profile = createProfileLookup(loadProfile());
 
 // ---- the plan, read here ----
-const card = read("docs/plan/milestones/M04-checks-project.md");
+const card = planCard("M04-checks-project.md");
 const t12 = card.split(/^## M04-T12 /m)[1]!.split(/^## M04-T13 /m)[0]!;
 const checks = read("docs/plan/CHECKS.md");
 const s9 = checks.split(/^## 9\. /m)[1]!.split(/^## 10\. /m)[0]!;

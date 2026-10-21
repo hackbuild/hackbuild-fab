@@ -8,6 +8,7 @@
 
 import { readFileSync } from "node:fs";
 import { describe, expect, test } from "vitest";
+import { planCard } from "../../../tools/test-support/plan-root.js";
 import { sha256Hex, type ExpectDecl, type Finding, type ResultTarget } from "@hackbuild/spec";
 import { localOriginal } from "../../../tools/test-support/originals-root.js";
 import { declaredSet, expectFinding, expectsFor, idSet, pairId, setDrift } from "../src/expect";
@@ -21,7 +22,7 @@ const original = (f: string): Buffer => readFileSync(localOriginal(`${SHUNT}${f}
 
 /** The SHUNT input hashes in the M04 card header table, by file name. */
 function cardHashes(): Map<string, string> {
-  const md = text("docs/plan/milestones/M04-checks-project.md");
+  const md = planCard("M04-checks-project.md");
   const out = new Map<string, string>();
   for (const m of md.matchAll(/^\| `corpus\/shunt\/outputs\/shunt-r1\/([^`]+)` \| ([0-9a-f]{64}) \|$/gm)) out.set(m[1]!, m[2]!);
   return out;
