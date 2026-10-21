@@ -108,6 +108,12 @@ const INFORMATIONAL: readonly { readonly pattern: RegExp; readonly why: string }
   { pattern: /^layout\.slot\.[A-Z]+$/, why: "designs/pip click slot direction each click key takes from the original's search (layout.js lines 281 to 345), an angle with no bound; the slot's fit rows are the click-spring-key archetype's (R1-designs-reach-09)" },
   { pattern: /^drive\.(UP|DOWN|LEFT|RIGHT|X|Y|A|B|SELECT|START|L|R)$/, why: "designs/pip drive pad targets, each the conductor id a key's contact closes, a name with no bound (R1-designs-reach-09)" },
   { pattern: /^keys\.\d+\.travel$/, why: "keys/midi-pad drive pad targets, each a copy of its key's flex-cone-key.<n>.key.travel, which CHK-KEY-01 gates (R1-designs-reach-07)" },
+  { pattern: /^[a-z0-9-]+\.\d+\.host\.size$/, why: "designs/toggle host extent as the tilt-stick archetype places it under the stick, a placement readout; no failure on record sets a bound (R1-fix-23)" },
+  { pattern: /^[a-z0-9-]+\.\d+\.stick\.(zf|topTrace|Rw|gateD|thContact|thStop|restBand|squeeze|Fc|Fs|strain|rCollar|ring|stemStress)$/, why: "designs/toggle tilt-stick readouts as the original bench computes them (packages/archetypes toggle/tilt.ts, port of part2a.js): heights, gate, contact and stop angles, forces, strain and stress on the material tier; the cup walls are CHK-PRT-04 (D-615, D-629) and no failure on record sets a bound on these (R1-fix-23)" },
+  { pattern: /^[a-z0-9-]+\.\d+\.drive\.\d+\.(contact|stop)$/, why: "designs/toggle conductor ids a tilt sector closes at contact and at the stop, names with no bound (R1-fix-23)" },
+  { pattern: /^drive\.(N|E|S|W)(\.deg)?$/, why: "designs/toggle drive pad sectors: the sector index of each direction and its centre angle, read by the drive pad; no failure on record sets a bound (R1-fix-23)" },
+  { pattern: /^route\.(layers|tries|comDeg)$/, why: "designs/toggle route readouts: trace layers settled on, attempts before the first clean route and the COM column angle; CHK-NET-12 reads route.conflicts and route.unrouted, never these, and no failure on record sets a bound (R1-fix-23)" },
+  { pattern: /^pinout\.P\d+$/, why: "designs/toggle net on each header terminal, a name with no bound (R1-fix-23)" },
   { pattern: /^R\.(leads|closed)$/, why: "keys/access-switch closed path resistance on the cPLA tier, PIP's readout (model.js lines 453 to 460 and 481); the threshold of a switch interface is unknown, so no failure on record sets a bound (R1-flagship-access-switch-06)" },
 ];
 
