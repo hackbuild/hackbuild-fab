@@ -55,6 +55,8 @@ export interface WidgetBuild {
   readonly bodies?: readonly Pick<Body, "id">[];
   /** The lit net by widget id (view.netlens). */
   readonly lenses?: Readonly<Record<string, string>>;
+  /** Measured readings by claim id in the claim's unit, from evidence rows (packages/checks measuredValues); plot.curve draws them where measured gives none. */
+  readonly readings?: Readonly<Record<string, readonly number[]>>;
 }
 
 /** A widget's model: every output the kind computes, and why it computes none. */

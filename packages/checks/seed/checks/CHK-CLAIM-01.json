@@ -1,6 +1,6 @@
 {
   "id": "CHK-CLAIM-01",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "title": "each function claim's value lies in its band, lo to hi; a value on an inferred basis with no evidence warns",
   "appliesTo": {
     "level": "part"

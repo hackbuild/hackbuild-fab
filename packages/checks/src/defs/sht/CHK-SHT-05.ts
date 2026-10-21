@@ -11,9 +11,7 @@
 import type { Finding, Metric } from "@hackbuild/spec";
 import { defineCheck } from "../../registry.js";
 import { fmt, intervalFinding, missing, partTarget, skip } from "../common.js";
-
-/** Standard gravity, m/s2 (exact by definition). */
-const G = 9.80665;
+import { STANDARD_GRAVITY as G } from "../../claims/evidence.js";
 
 export const check = defineCheck({
   id: "CHK-SHT-05",

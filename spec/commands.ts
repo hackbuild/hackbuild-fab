@@ -80,7 +80,7 @@ export const COMMAND_GROUP = {
 } as const satisfies Record<CommandName, Group>;
 
 /** Utility verbs: no CommandResult, no verdict. */
-export const UTILITY_VERBS = ["mcp", "doctor", "explain", "gc", "parity", "counts"] as const;
+export const UTILITY_VERBS = ["mcp", "doctor", "explain", "gc", "parity", "counts", "evidence"] as const;
 export type UtilityVerb = (typeof UTILITY_VERBS)[number];
 
 /** The 19 MCP tools, in the fixed order servers return them (D-107; position 12 is layout_solve, D-193). Names match ^[a-zA-Z0-9_-]{1,128}$. */

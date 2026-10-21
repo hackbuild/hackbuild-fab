@@ -3,7 +3,7 @@
 // spring peak only by a design-local test, reference/keys/access-switch
 // claim.ts; fab-knowledge:plan-v5/old-skills-scenarios.md item d). One
 // finding per claim on the part whose metrics the claim reads; the rule is
-// claims/check.ts.
+// claims/check.ts, and the evidence rows it reads are claims/evidence.ts.
 
 import { defineCheck } from "../../registry.js";
 import { partTarget, skip } from "../common.js";
@@ -18,6 +18,6 @@ export const check = defineCheck({
     const claims = (ctx as RegistryCtx).claims;
     const target = partTarget(t.part);
     if (claims === undefined || claims.decls.length === 0) return [skip(target, "not run", CLAIM_SKIP)];
-    return claims.decls.map((d, i) => claimFinding(target, d, checkClaim(d, t.part.metrics, claims, `/claims/${i}`)));
+    return claims.decls.map((d, i) => claimFinding(target, d, checkClaim(d, t.part.metrics, claims, `/claims/${i}`), claims.rows));
   },
 });

@@ -198,3 +198,17 @@ describe("drive.press and plot.curve refuse, naming why", () => {
     expect(plotLines(p).readout).toBe("no drive.press on this bench. the cursor needs the contact function.");
   });
 });
+
+describe("plot.curve measured points from evidence readings (R1-engine-26)", () => {
+  it("a reading sits at the claim's travel; on a claim without one, at the curve peak", () => {
+    const p = widgetModel(PLOT, build({ readings: { press: [2.1, 1.5] } })) as PlotModel;
+    expect(p.view.measured).toEqual([{ d: T, F: 2.1 }, { d: T, F: 1.5 }]);
+    const PEAK_CLAIM: ClaimDecl = { ...CLAIM, fn: "spring.peak", args: { at: KEY } };
+    const PEAK_PLOT: WidgetDecl = { ...PLOT, fn: "spring.peak" };
+    const q = widgetModel(PEAK_PLOT, build({ claims: [PEAK_CLAIM], claimFns: { "spring.peak": claimFn("spring.peak") }, readings: { press: [1.47] } })) as PlotModel;
+    expect(q.view.measured).toEqual([{ d: q.view.peak!.d, F: 1.47 }]);
+    // Points the host passes in measured win over readings.
+    const r = widgetModel(PLOT, build({ measured: { press: [{ d: 0.3, F: 1 }] }, readings: { press: [2.1] } })) as PlotModel;
+    expect(r.view.measured).toEqual([{ d: 0.3, F: 1 }]);
+  });
+});

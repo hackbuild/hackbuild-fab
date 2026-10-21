@@ -157,7 +157,8 @@ describe("entered rows (M04-T12)", () => {
   // then a patch when its message named the band's profile row overhang.bedBandMm (D-242).
   // CHK-ASM-10 and -11 took a patch for their BUCK second origin (CheckOrigin.also, CHECKS.md 7.7).
   // CHK-NET-28 took a patch for the Capricate sweep numbers and evidence in its origin (M05-T12 step 2).
-  const ENTERED_VERSION: Readonly<Record<string, string>> = { "CHK-NET-05": "2.0.0", "CHK-PRT-13": "2.0.1", "CHK-ASM-10": "1.0.1", "CHK-ASM-11": "1.0.1", "CHK-NET-28": "1.0.1", "CHK-SHT-11": "1.0.1" };
+  // CHK-CLAIM-01 took evidence rows (R1-engine-26): a measured reading can flip a pass to fail on the same Part IR (major).
+  const ENTERED_VERSION: Readonly<Record<string, string>> = { "CHK-NET-05": "2.0.0", "CHK-PRT-13": "2.0.1", "CHK-ASM-10": "1.0.1", "CHK-ASM-11": "1.0.1", "CHK-NET-28": "1.0.1", "CHK-SHT-11": "1.0.1", "CHK-CLAIM-01": "2.0.0" };
   test("every entered row has an origin with design, date and failure", () => {
     for (const r of seed.checks.filter((x) => x.status === "entered")) {
       const o = originFromSeed(r.origin as never);

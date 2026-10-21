@@ -166,6 +166,6 @@ The run state is the one check.run registers, read at M05. Kernels that land lat
 | [CHK-DEV-01](CHK-DEV-01.md) | 1.0.0 | block | CLASP payload at most 65439 bytes, or 65535 minus the encoded PUBLISH overhead of the actual address | LOUVER 2026-09-14 | skip: run lands M13 |
 | [CHK-DEV-02](CHK-DEV-02.md) | 1.0.0 | block | one-shot signals never declared as Param | LOUVER, SPROCKET 2026-08 | skip: run lands M13 |
 | [CHK-DEV-03](CHK-DEV-03.md) | 1.0.0 | block | heartbeat cadence under half the dead-man time: 0 to deadmanMs / 2, and heartbeatMs at least 300 (the washer.html floor), so a deadmanMs under 600 fails at check time (never an arm refusal) | SPROCKET 2026-08-02 | skip: run lands M13 |
-| [CHK-CLAIM-01](CHK-CLAIM-01.md) | 1.0.0 | block | each function claim's value lies in its band, lo to hi; a value on an inferred basis with no evidence warns | access switch 2026-10-20 | runs |
+| [CHK-CLAIM-01](CHK-CLAIM-01.md) | 2.0.0 | block | each function claim's value lies in its band, lo to hi; a value on an inferred basis with no evidence warns | access switch 2026-10-20 | runs |
 | [CHK-PRT-18](CHK-PRT-18.md) | 1.0.0 | block | each imported file has the declared number of pieces | hbf image eval 2026-10-20 | runs |
 | [CHK-PRT-19](CHK-PRT-19.md) | 1.0.0 | block | every piece of an imported part rests on the bed or on another piece | hbf image eval 2026-10-20 | runs |
