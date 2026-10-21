@@ -631,6 +631,8 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-574 | SLC-FOREIGN fails a foreign region at or over 1.0 mm2 | decided | Rails, virtual print |
 | D-575 | SLC-BED and SLC-SLOTS read the completed project config | decided | Rails, virtual print |
 | D-576 | repaired skill copies stay in the ignored archive folder | decided | Knowledge |
+| D-577 | hbf capabilities groups by ten functions, placed once each | decided | Agent surface |
+| D-578 | the capabilities slice row stays empty until core probes a slicer | decided | Agent surface |
 
 ## House rules and process
 
@@ -7022,6 +7024,28 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. The board-forge reference repairs (sensor-surfaces.md copied from fab-knowledge:originals/keyway/files/lessons with a provenance header, datasheet-intake.md written from the datasheet-forge SKILL.md step 1 and its ten rules with line citations, datasheets.md pointing at what exists, doc-figures.md given the hardware-diagrams trigger scope) are written to the ignored knowledge/references/board-forge/ of the main checkout, where the copies already live (.gitignore: assistant skill files kept in the owner archive). They are not committed. The tracked knowledge/test/references-links.test.mjs scans whatever copies are on disk: every references/ name resolves inside its skill folder, every scripts/ name to its repo home, or an external entry with a reason; a fresh checkout checks the tracked folders only and says so. Lineage rows knowledge.sensor-surfaces, knowledge.datasheet-forge and knowledge.hardware-diagrams name the sources with dest null, since an ignored dest fails the lineage dest test. |
 | Rationale | Committing the copies would reverse the public-tree exclusion in .gitignore; leaving them unrepaired leaves PLAN v9.1 section 3.4 open. The three conduyt references the installed conduyt skill names exist nowhere and stay listed external. |
 | Evidence | .gitignore lines 12 to 14; knowledge/test/references-links.test.mjs (96 names in 15 files with the copies present, 9 names in 4 files without; deleting sensor-surfaces.md fails naming board-forge-SKILL.md lines 21 and 29); sha256 f6ddd778... of the sensor-surfaces source; fab-knowledge:sources/downloads/skills-2026-10-06.md 3.3 and 3.4. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-577 hbf capabilities groups by ten functions, placed once each
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. hbf capabilities is a utility verb (UTILITY_VERBS, never an MCP tool, since MCP_TOOL_NAMES is owner-gated). It groups by ten functions: key (make a key, stick or slider), read (read a pin), seat (seat a board), mechanism, face (coin, tag or face), design (draft, build and look), check, slice, export and parts. The brief named seven; mechanism, face and design were added so every command group, archetype family, reference area, INDEX.md family and MECHANISMS.md section has one home. FUNCTIONS in core/src/commands/capabilities.ts places each key once (a key in two rows is E_KERNEL at load): commands by group with circuit.solve, catalog.pins, asm.solve, mech.find and mech.derive placed by name; archetypes by family; references by area; designs by the INDEX.md family whose row names them. A source key no row places is listed under unplaced; a registered command no row places is E_KERNEL. |
+| Rationale | The brief's seven functions leave the author, build and look commands, the mechanism and case references and the coin designs (collar, sprue) without a row, and the every-command test needs each command placed exactly once. Archetype family states process, not function, so the printed family lands under key and printed seats such as rp2040-zero-seat sit there; a finer placement needs a function field on ArchetypeDef. |
+| Evidence | core/src/commands/capabilities.ts FUNCTIONS; core/test/capabilities.test.ts (7 tests; a mutant dropping look from the design groups and skipping unplaced commands fails the every-command test on view.render); hbf capabilities on main at 3368632 lists 31 commands, unplaced empty (computed). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-578 The capabilities slice row stays empty until core probes a slicer
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The slice row of hbf capabilities lists no slicer and carries a note naming R1-designs-reach-01 and tools/slice/slice.mjs. Core does not import tools/slice/orca-family.mjs probe(): that module registers a resolve hook and loads JSZip and core/dist at import, and tools sit outside the tiers core may import. The row fills when the Orca-family driver moves its probe into a package core can read. |
+| Rationale | The brief allows the slicer group to stay empty with a reason when R1-designs-reach-01 has not landed a probe in core. |
+| Evidence | tools/slice/orca-family.mjs lines 16 to 27 and probe() at line 127; grep of core/src for a slicer probe finds none (measured). |
 | Supersedes | new |
 | Milestone | none |
 
