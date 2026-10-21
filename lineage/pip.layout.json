@@ -144,5 +144,17 @@
       "the board seat socket defaults (layout.js line 39: clr 0.3, sockOD 1.8, sockBore 0.75, pinLen 3.0) as profile constants jack.clr, jack.socketWall and jack.socketLen, read by the PJ398SM leg sockets and the jack pocket of reference/keys/access-switch/jack.ts (R1-flagship-access-switch-06)"
     ],
     "dest": "reference/keys/access-switch/jack.ts"
+  },
+  {
+    "id": "pip.layout/haft-9-pip-chase",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/pip/files/haft-src/src/layout.js",
+    "sha256": "2d1c6c10554b5c7d8dc333496529abee82e937d2d3fe85c41a8d7ee22bb2468c",
+    "fixes": [
+      "defaults() lines 26 to 54 declared as the defaults of designs/pip/chase.ts (R1-designs-reach-08): shape, stack.bezel, groups, flex, clicky, touch, stick, board, cups, bezel, route and seg; slots (lines 47 to 52) as the chase materials and pins (line 42) as its hookup; stack, route.w, route.bleed, clicky.E, phys and the board dimensions read profile and catalog rows instead (designs/pip/migrate/legacy.ts names each)",
+      "five legacy defaults sit off their slider step (flex.Hs 4.0, clicky.t 0.55, clicky.w 1.6, clicky.flangeT 1.0, cups.h 3.0); the chase keeps the default and takes the largest step holding both; stick.capH 1.2 sits under the part1.html line 283 floor of 1.92, so the range starts at 1.2",
+      "bezel.pins is false here and true at pip-controller b137deb; the chase defaults to false and the worked example preset sets pegs on"
+    ],
+    "dest": "designs/pip/chase.ts"
   }
 ]

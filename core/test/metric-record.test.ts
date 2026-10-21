@@ -21,11 +21,19 @@ const RECORD = path.join(ROOT, "packages", "checks", "test", "metric-gates", "bu
 const dirs = (p: string): string[] =>
   readdirSync(p, { withFileTypes: true }).filter((e) => e.isDirectory()).map((e) => e.name).sort();
 
+/**
+ * Designs whose chase landed before their build.ts: designs/pip/chase.ts
+ * (R1-designs-reach-08) ahead of its build (R1-designs-reach-09). Each must
+ * still lack build.ts, so the entry fails once the build lands and is then
+ * removed; nothing else is skipped.
+ */
+const BUILD_PENDING: readonly string[] = ["designs/pip"];
+
 /** reference/<area>/<id> and designs/<id> holding a chase.ts, read from the tree. */
 function chases(): string[] {
   const refs = dirs(path.join(ROOT, "reference")).flatMap((a) => dirs(path.join(ROOT, "reference", a)).map((id) => `reference/${a}/${id}`));
   const designs = dirs(path.join(ROOT, "designs")).map((id) => `designs/${id}`);
-  return [...designs, ...refs].filter((rel) => existsSync(path.join(ROOT, rel, "chase.ts"))).sort();
+  return [...designs, ...refs].filter((rel) => existsSync(path.join(ROOT, rel, "chase.ts")) && !BUILD_PENDING.includes(rel)).sort();
 }
 
 describe("metric record for the gate rule", () => {
@@ -55,6 +63,13 @@ describe("metric record for the gate rule", () => {
       });
     }, 120_000);
   }
+
+  it("skips only chases whose build.ts has not landed", () => {
+    for (const rel of BUILD_PENDING) {
+      expect(existsSync(path.join(ROOT, rel, "chase.ts")), `${rel} has a chase.ts`).toBe(true);
+      expect(existsSync(path.join(ROOT, rel, "build.ts")), `${rel}/build.ts landed: remove it from BUILD_PENDING`).toBe(false);
+    }
+  });
 
   it("equals a fresh build of every reference and design", () => {
     expect([...builds.keys()], "every build ran").toEqual(all);

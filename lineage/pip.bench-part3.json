@@ -104,5 +104,15 @@
       "the xray net colouring of VIEW.update (part3.js lines 219 to 225) as ported to packages/ui-core/src/viewer/scene.ts: the body to net rule moved to packages/ui-core/src/widgets/netlens.ts bodyNets, read by the scene and the view.netlens widget, and the lens mode lights one net and ghosts every other body (R1-engine-15)"
     ],
     "dest": "packages/ui-core/src/widgets/netlens.ts"
+  },
+  {
+    "id": "pip.bench-part3/haft-9-pip-chase",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/pip/files/haft-src/bench/part3.js",
+    "sha256": "ffb244c597bdb05fdab77c3fe533ba750ff56ddef753c98e677f2804e799b054",
+    "fixes": [
+      "renderGroups (lines 317 to 329) declared as four fixed groups of designs/pip/chase.ts (R1-designs-reach-08): kind on the left cluster only, type and pitch hidden while it is a stick, no pitch on the shoulder group; the stick dish row hidden on a separate cap (line 303) as a showWhen"
+    ],
+    "dest": "designs/pip/chase.ts"
   }
 ]

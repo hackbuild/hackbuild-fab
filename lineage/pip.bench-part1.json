@@ -16,5 +16,15 @@
     "sha256": "b878559160b27d7fc63e28d728b777fcb5cda2ed93649f4172b1740537c82f06",
     "fixes": [],
     "dest": "designs/pip/legacy/bench/part1.html"
+  },
+  {
+    "id": "pip.bench-part1/haft-9-pip-chase",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/pip/files/haft-src/bench/part1.html",
+    "sha256": "987a4ff51203315c0f974be9b5b4a15e1873d7c56a7655431c0abfa7358c6fb5",
+    "fixes": [
+      "rows, ranges, steps and the four steps LAYOUT, BUTTONS, BOARD, PRINT (lines 178 to 383) declared as the param groups of designs/pip/chase.ts (R1-designs-reach-08); notes of lines 238, 262, 271, 287, 288 and 312 kept in the wording packages/ui/test/fixtures/pip-notes.ts migrated; the stack and trace width rows (lines 354 to 357, 361), the bleed row (365), the modulus row (260) and the materials fold (339 to 345) become profile rows"
+    ],
+    "dest": "designs/pip/chase.ts"
   }
 ]

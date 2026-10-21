@@ -1,5 +1,11 @@
 # PIP
 
-PIP: the harvested original in `legacy/`; the chase port lands at M10 (D-142). `test/` checks that the legacy bake installs its `npm:` sources first.
+PIP: the harvested original in `legacy/` and the chase port. `test/legacy-install.test.ts` checks that the legacy bake installs its `npm:` sources first.
 
-`migrate/legacy.ts` reads a legacy PIP save (`{app: "pip-bench", v: 1, state}` or a bare state) into a design document for share links with no version prefix (D-167); the example saves it loads are copied under `test/fixtures/legacy/` with `SHA256SUMS` (M10-T03).
+`chase.ts` declares PIP as a single-kind chase (release 1; the composer binding of M10-T13 is engine work). Its param groups follow the legacy steps: LAYOUT (body, then the left cluster, face keys, menu keys and top l / r as four fixed groups), BUTTONS (flex cone, click spring, touch comb, stick), BOARD (mount, bezel) and PRINT (routing, plate). Rows, ranges and steps are the haft (9) bench `part1.html` and `part3.js` renderGroups, and defaults its `src/layout.js` defaults() (the canonical lineage rows pip.bench-part1, pip.bench-part3 and pip.layout). Presets: the worked example and the stick example, which are the two pip-controller saves, and blank.
+
+What the chase leaves to profile and catalog rows: the buried stack (stack.skin, stack.trace, stack.iso, stack.overL2, D-085), the trace width (stack.traceWidth), bleed (0, D-084), the petg modulus, the cpla and ctpu resistivity rows (500 along and 2000 through, 400; inferred, D-081), the rp2040 pin capacitance and leakage, and the RP2040-Zero board dimensions. The hookup reads keys by charge-release with the 3500 us wait and touch pads with 1500 us, waitSource default, until a coupon calibrates them (D-079, inferred). pip.ino in pip-controller still ships a 200 us key wait (D-080); this repository never edits pip-controller.
+
+`build.ts` is not here yet, so `npx --no-install hbf chase.validate designs/pip` reports one error, `chase-ref/build-module`; `test/chase.test.ts` validates the chase through packages/chase with no build module and passes the module once it exists.
+
+`migrate/legacy.ts` reads a legacy PIP save (`{app: "pip-bench", v: 1, state}` or a bare state) into a design document for share links with no version prefix (D-167), and `legacyParams` maps the save onto chase params, routing every legacy key to a chase field or to the row the chase reads in its place; a key with no route is listed as unknown. The example saves it loads are copied under `test/fixtures/legacy/` with `SHA256SUMS` (M10-T03); `test/chase.test.ts` holds both to no unknown key, to their presets, and the chase defaults to the legacy `layout.js` defaults().
