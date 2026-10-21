@@ -653,6 +653,8 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-596 | R1-rails-registries-05 checks a release check row against its fragment and requires its run | decided | Checks, testing |
 | D-597 | R1-rails-registries-07 freezes the constants id order, not the prefix order | decided | Profile, tooling |
 | D-598 | R1-rails-registries-08 generates the canon def indexes in repo | decided | Mechanisms, archetypes, tooling |
+| D-599 | Orca WASM spike uses the deployed upstream engine | decided | reach |
+| D-600 | WASM spike slices with wipe tower type2 | decided | reach |
 
 ## House rules and process
 
@@ -7288,6 +7290,14 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Evidence | Regenerated indexes differ from main in header comments only (git diff, measured). `npx vitest run packages/mechanisms` 136 pass, `packages/archetypes` 198 pass (measured). `node --test tools/test/canon-indexes.test.mjs` 5 pass; with def files starting with `a` skipped, 4 load tests and 2 canon-indexes tests fail (measured). |
 | Supersedes | new |
 | Milestone | none |
+
+### D-599 The Orca WASM spike uses the deployed upstream engine, pinned by sha256
+
+Status: decided (delegated, R1-spike-01). R1-spike-01 slices the access switch with the upstream Orca 2.4.2 single-thread WASM build served at cubbycad.com/slicer/wasm/orca, downloaded and pinned by sha256 in fab-knowledge:evidence/orca-wasm/SHA256SUMS.engine, instead of building orcaslicer-wasm. Rationale: the machine has no emsdk, 15 GiB free disk and a load of about 8 on 8 cores (measured); the toolchain and dependency build takes hours (inferred), beyond the spike's two-hour bound. The deployed build's source commit is unknown. Every engine file stays outside the repo (AGPL); no hackbuild-fab package imports it. Evidence: fab-knowledge:evidence/orca-wasm/REPORT.md.
+
+### D-600 The WASM spike slices with wipe_tower_type type2, recorded as a substitution
+
+Status: decided (delegated, R1-spike-01). The WASM run changes one value of the flattened Flash Studio ffc5p config: wipe_tower_type from type1 to type2. type1 fails cs_slice with the Clipper error "Coordinate outside allowed range" on every tower variant tried; type2 is the upstream default for non-Bambu machines. Part geometry matches native run 08 (55,845 of 55,860 non-tower extruding moves share XY endpoints, computed); tower, tool order, time and grams differ, so an orca-wasm driver labels them upstream preview and records the shim as a substitution. Open: the type1 cause on native upstream 2.4.2. Evidence: fab-knowledge:evidence/orca-wasm/compare.md.
 
 ## Owner queue
 
