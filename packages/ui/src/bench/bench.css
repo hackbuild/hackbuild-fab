@@ -70,12 +70,14 @@
 .hbf-pad-key:focus-visible{ outline:var(--hb-border) solid var(--hb-paper); outline-offset:var(--hbf-hair) }
 .hbf-pad-read{ color:var(--hb-slime); min-height:var(--hbf-pad-read-min); max-width:var(--hbf-pad-max); display:flex; flex-direction:column; overflow-wrap:anywhere }
 /* Under 640 the pad title sits beside the keys and the readout spans
-   below, so the pad holds at most a quarter of the stage with 44 px keys
-   (G-52). */
+   below in the note size, so the pad holds at most a quarter of the stage
+   with 44 px keys (G-52): at the read size the idle line of four pins
+   wraps to two lines and the pad takes 0.31 of a 382 x 263 px stage
+   (measured, keys midi-pad). */
 @media(max-width:640px){
   .hbf-pad{ display:grid; grid-template-columns:auto minmax(0,1fr); column-gap:var(--hb-s2); align-items:center }
   .hbf-pad-t{ margin-bottom:0 }
-  .hbf-pad-read{ grid-column:1 / -1 }
+  .hbf-pad-read{ grid-column:1 / -1; font-size:var(--hbf-fs-note) }
   .hbf-pad-keys{ max-width:var(--hbf-pad-keys-narrow) }
   .hbf-pad [data-hb="drive-mode"]{ display:none }
 }

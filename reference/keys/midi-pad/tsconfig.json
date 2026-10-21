@@ -19,5 +19,8 @@
     {
       "path": "../../../packages/sim"
     }
+  ],
+  "exclude": [
+    "bench.entry.ts"
   ]
 }

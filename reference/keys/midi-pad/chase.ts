@@ -57,9 +57,11 @@ export const chase = defineChase({
       { id: "wall", type: "mm", label: "wall", range: [2, 6], step: 0.5, default: 3, help: "body past the board pocket, the outer lane and the key wells" },
     ] },
   ],
-  presets: [],
+  // The defaults are the worked example; the preset names them for the
+  // welcome card and the virtual slice.
+  presets: [{ id: "default", label: "four keys and a fader", params: {} }],
   build: { module: "./build.ts", fn: "build" },
-  exports: [{ kind: "3mf", machine: "ffc5p", pose: "print" }, { kind: "stl" }],
+  exports: [{ kind: "3mf", machine: "ffc5p", pose: "print" }, { kind: "stl" }, { kind: "json" }],
   hookup: [
     { port: "flex-cone-key.0.port.key", mcu: "rp2040", pin: "GP8",
       read: { model: "charge-release", drive: "high", driveUs: 30, waitUs: 3500, waitSource: "default" } },

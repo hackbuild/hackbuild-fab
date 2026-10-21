@@ -41,7 +41,7 @@
 // place the seat's posts ask for, since Author has no move for an applied
 // archetype.
 
-import { defineBuild, qualify, type ApplyOut, type Assertion, type BodyDraft, type FaceFrame, type Feature, type Metric, type Ring, type ShapeDecl, type Vec2 } from "@hackbuild/spec";
+import { defineBuild, qualify, type ApplyOut, type Assertion, type BodyDraft, type ContactFn, type FaceFrame, type Feature, type Metric, type Ring, type ShapeDecl, type Vec2 } from "@hackbuild/spec";
 import { chase } from "./chase";
 
 const SEAT = "rp2040-zero-seat";
@@ -172,14 +172,16 @@ export const build = defineBuild(chase, (p, k) => {
   const xr = Math.max(lastWell.x1 + p.wall, plate.x1 + dx);
   const body = k.body("body", { role: "body", slot: 1, base: { route: "prism", outline: [[[cableX, yb], [xr, yb], [xr, yt], [cableX, yt]]], z: [0, top] } });
 
-  const metric = (id: string, value: number, note: string): Metric =>
-    ({ id, value: Number(value.toFixed(3)), unit: "mm", ...qualify([]), note, gate: "informational", group: "layout" });
+  const metric = (id: string, value: number, note: string, group = "layout"): Metric =>
+    ({ id, value: Number(value.toFixed(3)), unit: "mm", ...qualify([]), note, gate: "informational", group });
   const metrics: Metric[] = [
     ...(seat.metrics ?? []), ...keys.flatMap((o) => o.metrics ?? []), ...(raw.metrics ?? []),
     metric("layout.width", xr - cableX, "body, cable edge to the far wall"),
     metric("layout.depth", yt - yb, "body, fader edge to the far wall"),
     metric("layout.faderOverhang", cableX - (plate.x0 + dx), "fader base past the cable edge"),
     metric("layout.top", top, "body top, the seat's pocket need"),
+    // The drive pad's targets (bench.ts drive, metrics.keys): key n's travel, read from its archetype.
+    ...keys.map((o, i) => metric(`keys.${i + 1}.travel`, metricOf(o, `${KEY}.${i}.key.travel`), `key ${i + 1}: the gap its cap closes before the pin reads`, "keys")),
   ];
 
   const keyNets = ["K1", "K2", "K3", "K4"];
@@ -199,3 +201,15 @@ export const build = defineBuild(chase, (p, k) => {
     metrics, assertions,
   });
 });
+
+// The drive pad's contact function: a held key closes its contact once it
+// travels its gap. One function for the pad, the 3D pose, the readout and
+// BENCH.drive (G-20). Target n is key n, archetype instance n - 1.
+export const contact: ContactFn = (metrics, target, stimulus) => {
+  const travel = metrics.find((m) => m.id === `keys.${target}.travel`);
+  const held = stimulus === true;
+  return {
+    closed: held && travel ? [`${KEY}.${Number(target) - 1}.contact.key`] : [],
+    pose: { travelMm: held && typeof travel?.value === "number" ? travel.value : 0 },
+  };
+};

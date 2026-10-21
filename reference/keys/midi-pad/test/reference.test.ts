@@ -15,6 +15,7 @@ import { createProfileLookup } from "@hackbuild/profile";
 import { extractNets, readPath, type Extraction } from "@hackbuild/circuit";
 import { buildPart, loadDesign, resolveParams, type Built, type Design } from "../../../../core/src/commands/build.js";
 import { runParity } from "../../../../core/src/commands/parity.js";
+import { contact } from "../build.js";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, "..", "..", "..", "..");
@@ -86,6 +87,19 @@ describe("midi-pad reads through the seat", () => {
       const tap = ports.find((p) => p.net === net && p.tap !== undefined)!.tap!;
       expect([h.mcu, h.pin], h.port).toEqual([tap.mcu, tap.pin]);
     }
+  });
+
+  test("the drive pad's contact function: a held key closes its own contact at its archetype's travel", () => {
+    const metrics = built.part.metrics ?? [];
+    KEYS.forEach((_, i) => {
+      const target = String(i + 1);
+      const travel = metrics.find((m) => m.id === `flex-cone-key.${i}.key.travel`)?.value;
+      const held = contact(metrics, target, true);
+      expect(held.closed, target).toEqual([`flex-cone-key.${i}.contact.key`]);
+      expect(held.pose?.travelMm, target).toBe(travel);
+      expect(built.part.features.some((f) => f.kind === "contact" && f.id === held.closed[0])).toBe(true);
+      expect(contact(metrics, target, false)).toEqual({ closed: [], pose: { travelMm: 0 } });
+    });
   });
 
   test("parity goldens hold off the pinned epoch", { timeout: 540_000 }, async () => {

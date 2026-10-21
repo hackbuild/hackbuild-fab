@@ -132,7 +132,12 @@ and does not read a fitted part, so the warn is the reminder to fit it.
 
 ## Goldens (`hbf parity`, SOURCE_DATE_EPOCH 315532800)
 
-- `expected/build.json`: build dc7800..a1, 107 bodies.
+- `expected/build.json`: build 47b6df..ed, 107 bodies. Re-accepted
+  2026-10-21 from dc7800..a1 when the bench joined: build.ts emits
+  `keys.<n>.travel` and the ContactFn `contact`, the chase gains preset
+  `default` and the json export. Only defHash moved; all 107 mesh hashes
+  and volumes are equal to the dc7800..a1 set (computed), and
+  `report.json` and `edit.json` came back equal.
 - `expected/report.json`: 298 results, 152 pass, 5 warn (CHK-NET-29 x4,
   CHK-PRT-05), 0 fail, 141 skip.
 - `expected/query-solve.json`: circuit.solve, 151 results, 102 pass, 12
@@ -141,6 +146,18 @@ and does not read a fitted part, so the warn is the reminder to fit it.
 - `expected/edit.json`: wW 2.8 to 2.85 mm moves the body, faderW,
   faderWBase and the fader base meshes; no check verdict moves.
 - `expected/artifacts.json`: the 3MF hash.
+
+## Bench (`bench.ts`, baked to `dist/bench/midi-pad.html`)
+
+- Steps keys, fader, board, print, with goals in the flex-pair voice. The
+  drive pad holds the four keys (`metrics.keys`, gesture hold): target n
+  reads `keys.<n>.travel`, the archetype's `flex-cone-key.<n-1>.key.travel`,
+  and closes `flex-cone-key.<n-1>.contact.key`. The readout reads each
+  key's charge-release row from CHK-NET-29.
+- The fader stays a param in its step until the engine's drive.fader
+  widget lands; the pad does not drive it.
+- The page builds in the browser through createPageBuild (D-264) with no
+  draft kinds; every solid comes from a registered archetype.
 
 ## Deviations, each named
 
@@ -176,6 +193,27 @@ and does not read a fitted part, so the warn is the reminder to fit it.
   exit 0 at build dc7800..a1, all five files equal, CHK-NET-06 still warn
   at 138968 ohm in the query-solve golden (computed).
 
+- 2026-10-21: `hbf parity reference/keys/midi-pad --accept` at build
+  47b6df..ed with the bench changes; 107 mesh hashes and volumes equal to
+  dc7800..a1, only defHash moved (computed). `npx vitest run
+  reference/keys/midi-pad` passes, 12 tests, including the contact
+  function test; a mutant that makes `contact` close nothing fails it.
+- 2026-10-21: `node tools/bake/bake.mjs reference/keys/midi-pad/bake.json`
+  writes `dist/bench/midi-pad.html`, 4778099 bytes (measured, under the
+  16 MB cap). The gold run graded with `node tools/gold/report.mjs
+  --origin fab --bench midi-pad --only <bench-layer rules>` exits 0: of the 26 bench-layer rules 25 pass, 1 n/a (G-05, no light
+  field), 0 fail (measured, headless Chrome). G-55
+  fails outside that list: commit to settled p90 10980 ms over the 4500 ms
+  bound, 3 liveness edits (measured on a shared machine).
+- 2026-10-21: `node tools/slice/slice.mjs --design reference/keys/midi-pad
+  --preset default` with Flash Studio CLI 2.3.2 and a fresh datadir slices
+  exit 0: 62 layers, 61 tool changes, 1 h 36 min (slicer estimate,
+  computed); SLC-BED pass, SLC-SLOTS warn (slots 3 and 4 name "Generic TPU
+  @FF C5P", sliced with the stand-in "Generic TPU-95A @FF C5P", inferred),
+  SLC-FOREIGN pass on the analyze.py result. The analysis joins 3V3 and
+  GND through the fader track, as the design intends (computed).
+- The baked bench has not been looked at by a person.
+
 ### Measured on a printed body
 
 - none
@@ -190,8 +228,6 @@ and does not read a fitted part, so the warn is the reminder to fit it.
 
 ### Not verified by anything
 
-- No virtual print of this geometry: the flagship's slice ran with the test
-  leads and the plate copy that this reference drops.
 - No bezel exists for this body, so the press the bumps rely on is
   declared, unbuilt.
 - Contact resistance at the seat bumps, the caps and the cap bridge:
