@@ -13,11 +13,10 @@
 // is refused until hbf draft (R1-engine-24) gives it a behaviour.
 
 import { spawn } from "node:child_process";
-import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import { readChaseSource } from "@hackbuild/chase";
-import type { CommandError, CommandInput, CommandOutput, Hash } from "@hackbuild/spec";
+import { sha256Hex, type CommandError, type CommandInput, type CommandOutput, type Hash } from "@hackbuild/spec";
 import type { CoreCtx } from "../ctx.js";
 import { cmdError } from "../errors.js";
 import type { CommandOut } from "../result.js";
@@ -97,6 +96,6 @@ export async function runChaseBake(input: CommandInput<"chase.bake">, ctx: CoreC
   return {
     verdict: "pass", stage: "build", inputsHash: ctx.inputsHash,
     findings: [], counts: { pass: 0, warn: 0, fail: 0, skip: 0 }, errors: [], artifacts: [], next: [],
-    result: { file: posix(shown.startsWith("..") ? file : shown), bytes: bytes.length, hash: createHash("sha256").update(bytes).digest("hex") as Hash },
+    result: { file: posix(shown.startsWith("..") ? file : shown), bytes: bytes.length, hash: sha256Hex(bytes) as Hash },
   };
 }
