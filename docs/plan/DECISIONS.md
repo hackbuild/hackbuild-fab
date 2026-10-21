@@ -635,6 +635,8 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-578 | the capabilities slice row stays empty until core probes a slicer | decided | Agent surface |
 | D-579 | SECURITY.md names GitHub private vulnerability reporting as the only report path | decided | Public repo |
 | D-580 | policy link rows for README, CLAUDE.md and the print card wait as todo | decided | Public repo |
+| D-581 | the hbf plugin commits only the tracked forge references | decided | Knowledge |
+| D-582 | the plugin hook matches the plugin-scoped export_run name | decided | Agent surface |
 
 ## House rules and process
 
@@ -7070,6 +7072,28 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. tools/test/policy-files.test.mjs lists README.md and CLAUDE.md (waiting on R1-rails-public-16) and the print card template (waiting on the engine print card item, path not yet fixed) as pending rows that report todo while the link is absent and pass once it is present. The item that adds a link removes the pending field so the row becomes required. USE.md states provenance fields as what every export is to record, since no exporter writes the design hash, plugin hashes, partner versions or proposer yet. |
 | Rationale | The brief keeps the link rows pending until items 16 and the engine print card item; a todo row keeps the suite green without hiding the gap. |
 | Evidence | node --test tools/test/policy-files.test.mjs: pass 6, fail 0, todo 3 (measured); git grep over spec finds no proposedBy, pluginHashes or designHash field (measured). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-581 The hbf plugin commits only the tracked forge references
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. tools/plugin/build.mjs copies into plugin/hbf/skills/hbf/references/ only the files of the absorbed forge skills (print-forge, board-forge) that git tracks under knowledge/references, each with one provenance line and a generated INDEX.md. The board-forge folder and the forge SKILL.md copies, which .gitignore keeps in the owner archive (D-576), are built into references/archive/ only where they are on disk, and plugin/hbf/.gitignore keeps that folder out of git. The copies are generated from an in-repo source, so they carry no lineage row of their own. |
+| Rationale | Committing the archive copies would reverse the public-tree exclusion D-576 kept, and two of them carry local absolute paths; a plugin cannot reference files outside its root, so the owner's local plugin still holds the repaired board-forge, datasheet and diagram text. |
+| Evidence | node tools/plugin/build.mjs --check: 8 files clean without the archive, 26 with it (measured); node --test tools/test/plugin.test.mjs 7 pass in both modes (measured); grep finds /Users/ in board-forge/datasheet-intake.md and parts-sourcing.md (measured); Claude Code plugins-reference, path rules, read 2026-10-21. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-582 The plugin hook matches the plugin-scoped export_run name
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. plugin/hbf/hooks/hooks.json matches mcp__plugin_hbf_hbf__export_run as well as mcp__hbf__export_run, and its command always answers permissionDecision ask. plugin/hbf/.mcp.json runs sh -c 'cd "$1" && exec npx --no-install hbf mcp --workspace . --tools all' with ${CLAUDE_PROJECT_DIR} as $1, in place of a bare npx line. |
+| Rationale | The current Claude Code docs name a plugin MCP tool mcp__plugin_<plugin>_<server>__<tool> and say a matcher on the bare server key never fires, so the brief's mcp__hbf__export_run alone would leave the export unasked. hbf resolves its workspace from cwd before it reads --workspace (core/src/main.ts line 239) and the docs give a plugin stdio server no cwd field, so the line enters the project itself. |
+| Evidence | code.claude.com/docs/en/mcp and /hooks, read 2026-10-21; npx --no-install --prefix <worktree> hbf mcp from a temp dir fails E_REF (measured); tools/test/plugin.test.mjs lists export_run through the .mcp.json line from a temp cwd, and fails with the matcher set back to mcp__hbf__export_run (measured); claude plugin validate 2.1.306: passed, one icon warning (measured). |
 | Supersedes | new |
 | Milestone | none |
 
