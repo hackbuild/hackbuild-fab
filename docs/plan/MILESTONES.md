@@ -104,8 +104,8 @@ milestone exit.
 
 The CLI with CommandResult exists from M00 and each milestone adds its
 commands (D-114). D-106 fixed 30 commands; release 1 adds draft (plan v9
-3.1, R1-engine-24), CLI only, for 31. The MCP projection of 19 tools
-freezes at M12 (D-107). Rows marked "assigned here" have no
+3.1, R1-engine-24) and adopt (R1-engine-25), CLI only, for 32. The MCP
+projection of 19 tools freezes at M12 (D-107). Rows marked "assigned here" have no
 milestone in the briefs; this file assigns them so every command has a home,
 and the assignment is listed under 1.4.
 
@@ -127,7 +127,7 @@ and the assignment is listed under 1.4.
 | M11 | reference.list | M11 brief |
 | M12 | knowledge.search (records search); MCP server with 19 tools; utility verbs mcp, gc, counts | assigned here for knowledge.search, because knowledge_search is one of the 19 frozen tools; M16 adds the latch identity |
 | M16 | knowledge.search returns the OGEE latch identity with origin | M16 brief |
-| R1 | draft (CLI only; its MCP form waits on engine brief finding F4) | plan v9 3.1, R1-engine-24 |
+| R1 | draft, adopt (CLI only; their MCP form waits on engine brief finding F4) | plan v9 3.1, R1-engine-24 and R1-engine-25 |
 
 A test in `core/test/surface.test.ts` pins the count of registered commands
 at each milestone exit to the cumulative total of this table. The three

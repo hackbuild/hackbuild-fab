@@ -35,8 +35,8 @@ const posix = (p: string): string => p.split(path.sep).join("/");
 /** How often a running child checks the cancel signal, ms (inferred). */
 const POLL_MS = 100;
 
-/** Run node on a script; resolves with exit code, stdout and stderr, kills the child when the signal aborts. */
-function node(ctx: CoreCtx, root: string, args: readonly string[]): Promise<{ code: number; out: string; err: string }> {
+/** Run node on a script; resolves with exit code, stdout and stderr, kills the child when the signal aborts. adopt runs the slice driver through it. */
+export function runNode(ctx: CoreCtx, root: string, args: readonly string[]): Promise<{ code: number; out: string; err: string }> {
   return new Promise((resolve, reject) => {
     const child = spawn(process.execPath, [...args], { cwd: root, stdio: ["ignore", "pipe", "pipe"] });
     let out = "";
@@ -86,7 +86,7 @@ export async function runChaseBake(input: CommandInput<"chase.bake">, ctx: CoreC
   if (draft) await writeDraftBlock(dir, ctx.cwd, draftOrigin(dir));
   ctx.signal.throwIfAborted();
 
-  const gen = await node(ctx, root, [path.join(root, draft ? "tools/bake/draft.ts" : "tools/bake/from-chase.ts"), dir]);
+  const gen = await runNode(ctx, root, [path.join(root, draft ? "tools/bake/draft.ts" : "tools/bake/from-chase.ts"), dir]);
   if (gen.code !== 0) {
     return failed(ctx, [{ code: "E_KERNEL", path: "/chase", got: input.chase, record: "bake/manifest", hint: lastLine(gen.err).replace(/^(from-chase|draft): /, "") || "bake.json generation failed" }]);
   }
@@ -95,7 +95,7 @@ export async function runChaseBake(input: CommandInput<"chase.bake">, ctx: CoreC
 
   // A draft's page lands in its own directory (tools/bake/draft.ts sets out "."), a design's under dist.
   const outRoot = path.resolve(ctx.cwd, ctx.cli.out ?? (draft ? dir : path.join(root, "dist")));
-  const baked = await node(ctx, root, [path.join(root, "tools/bake/bake.mjs"), manifest, "--out-root", outRoot]);
+  const baked = await runNode(ctx, root, [path.join(root, "tools/bake/bake.mjs"), manifest, "--out-root", outRoot]);
   if (baked.code !== 0) {
     const why = lastLine(baked.err).replace(/^bake: /, "");
     return failed(ctx, [{ code: "E_KERNEL", path: "/chase", got: posix(path.relative(root, manifest)), record: bakeRecord(why), hint: why || "the baker stopped without a message" }]);

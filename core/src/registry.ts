@@ -36,6 +36,7 @@ import { runChaseDiff } from "./commands/chase-diff.js";
 import { runChaseScaffold } from "./commands/chase-scaffold.js";
 import { runChaseBake } from "./commands/chase-bake.js";
 import { runDraft } from "./commands/draft.js";
+import { runAdopt } from "./commands/adopt.js";
 
 export type { CliForm, FlagKind } from "@hackbuild/commands";
 export { CLI_FORM, VERBS };
@@ -80,6 +81,7 @@ export const RUNS: Runs = {
   "chase.scaffold": (i, ctx) => runChaseScaffold(i, ctx as CoreCtx),
   "chase.bake": (i, ctx) => runChaseBake(i, ctx as CoreCtx),
   draft: (i, ctx) => runDraft(i, ctx as CoreCtx),
+  adopt: (i, ctx) => runAdopt(i, ctx as CoreCtx),
 };
 
 /** Every CommandDef hbf registers, in COMMAND_NAMES order. */

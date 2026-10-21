@@ -16,7 +16,7 @@ import { ROOT } from "./hbf.js";
 function surfaceRows(milestones: readonly string[]): [string, string][] {
   const text = readFileSync(path.join(ROOT, "docs", "plan", "MILESTONES.md"), "utf8");
   const section = text.slice(text.indexOf("### 1.3"), text.indexOf("### 1.4"));
-  return section.split("\n").filter((l) => /^\| M/.test(l)).map((l) => l.split("|").map((c) => c.trim()))
+  return section.split("\n").filter((l) => /^\| [MR]/.test(l)).map((l) => l.split("|").map((c) => c.trim()))
     .filter((r) => milestones.includes(r[1]!)).map((r) => [r[1]!, r[2]!]);
 }
 
@@ -44,7 +44,7 @@ describe("registered surface (M00-T13 step 1, M01-T05 step 7, M02-T11 step 9, M0
   const m08 = surfaceRows(["M08"]).flatMap(([, cell]) => mentioned(cell, COMMAND_NAMES));
   const m06 = surfaceRows(["M06"]).flatMap(([, cell]) => mentioned(cell, COMMAND_NAMES));
   const m10 = surfaceRows(["M10"]).flatMap(([, cell]) => mentioned(cell, COMMAND_NAMES));
-  /** draft landed with R1-engine-24 (plan v9 3.1). The word also reads in the M-S cell ("draft contracts"), so the R1 row is what lists it. */
+  /** draft and adopt landed with R1-engine-24 and R1-engine-25 (plan v9 3.1); the R1 row lists them. draft also reads in the M-S cell ("draft contracts"). */
   const r1 = surfaceRows(["R1"]).flatMap(([, cell]) => mentioned(cell, COMMAND_NAMES));
 
   it("registers exactly the commands of the M-S, M00, M01, M02, M04, M05, M06, M07, M08, M10 and R1 rows, less the pending M01, M04, M06 and M10 ones", () => {

@@ -46,11 +46,12 @@ export const GROUPS = ["query", "author", "build", "prove", "look", "make"] as c
 export type Group = (typeof GROUPS)[number];
 
 /**
- * The 31 CLI commands, grouped (D-106). asm.declare folds into part.build,
+ * The 32 CLI commands, grouped (D-106). asm.declare folds into part.build,
  * and so does import for audit (D-146, D-160): part.build with `import`
  * set builds one Part from an STL, GLB, STEP, WRL or OpenSCAD file. draft
- * (plan v9 3.1, R1-engine-24) is the 31st and CLI only until the MCP
- * projection of draft and adopt is decided (engine brief finding F4).
+ * (plan v9 3.1, R1-engine-24) is the 31st and adopt (R1-engine-25) the
+ * 32nd, both CLI only until the MCP projection of draft and adopt is
+ * decided (engine brief finding F4).
  */
 export const COMMAND_NAMES = [
   // query (8)
@@ -63,8 +64,8 @@ export const COMMAND_NAMES = [
   "check.run", "fits.table", "sim.run", "sim.sweep", "circuit.solve", "motion.run", "rules.audit",
   // look (3)
   "view.render", "chase.render", "project.graph",
-  // make (4)
-  "chase.bake", "nest.pack", "export.run", "draft",
+  // make (5)
+  "chase.bake", "nest.pack", "export.run", "draft", "adopt",
 ] as const;
 export type CommandName = (typeof COMMAND_NAMES)[number];
 
@@ -76,7 +77,7 @@ export const COMMAND_GROUP = {
   "check.run": "prove", "fits.table": "prove", "sim.run": "prove", "sim.sweep": "prove",
   "circuit.solve": "prove", "motion.run": "prove", "rules.audit": "prove",
   "view.render": "look", "chase.render": "look", "project.graph": "look",
-  "chase.bake": "make", "nest.pack": "make", "export.run": "make", "draft": "make",
+  "chase.bake": "make", "nest.pack": "make", "export.run": "make", "draft": "make", "adopt": "make",
 } as const satisfies Record<CommandName, Group>;
 
 /** Utility verbs: no CommandResult, no verdict. */
@@ -95,8 +96,8 @@ export type McpToolName = (typeof MCP_TOOL_NAMES)[number];
 /** Claude API tool name pattern. */
 export const TOOL_NAME_PATTERN = /^[a-zA-Z0-9_-]{1,128}$/;
 
-/** CLI-only commands; project.graph is also served as a resource (hbf://project/graph); draft waits on the F4 decision. */
-export const CLI_ONLY = ["project.graph", "draft"] as const satisfies readonly CommandName[];
+/** CLI-only commands; project.graph is also served as a resource (hbf://project/graph); draft and adopt wait on the F4 decision. */
+export const CLI_ONLY = ["project.graph", "draft", "adopt"] as const satisfies readonly CommandName[];
 
 // Result contract (D-064).
 
@@ -816,6 +817,46 @@ export interface CommandIO {
       files: readonly string[];
       /** The baked DRAFT page, its size in bytes (measured, at most 16 MB, D-129) and sha256. */
       page: { file: string; bytes: number; hash: Hash };
+    };
+  };
+  "adopt": {
+    input: {
+      /** A DRAFT page (.html carrying the application/hbf-draft+json block) or a draft directory holding draft.json. */
+      draft: string;
+      /** Lowercase slug; becomes meta.id, designs/<name> and branch hbf/<name>. Absent, the draft's meta.id. */
+      name?: string;
+      /** A DRAFT_ 3MF the page wrote, stored as the golden; absent, the page's export is computed from the draft's sources at the state the page opens with. */
+      export?: string;
+      /** Slice the adopted 3MF through tools/slice/slice.mjs; absent or false, the slice is reported not run. */
+      slice?: boolean;
+    };
+    output: {
+      /** The design directory, relative to the git top: designs/<name>. */
+      design: string;
+      /** hbf/<name>; the files are staged on it, never committed. */
+      branch: string;
+      /** The files staged, relative to the git top, sorted. */
+      files: readonly string[];
+      defHash: Hash;
+      buildHash: Hash;
+      /** check.run on the adopted design: fails block its export as any design's do. */
+      checks: { pass: number; warn: number; fail: number; skip: number };
+      /** The release page chase.bake wrote: no draft block, no banner. */
+      page: { file: string; bytes: number; hash: Hash };
+      /**
+       * expected/draft-export.3mf: the draft's export stored as the golden,
+       * its sha256, where its bytes came from, and the 3MF part geometry
+       * hash of it and of the adopted build. diff is empty when they match;
+       * otherwise each line names a mesh that moved, for a person to accept.
+       */
+      golden: {
+        file: string; sha256: string; source: "page export" | "computed";
+        geometryHash: string; adoptedGeometryHash: string; diff: readonly string[];
+      };
+      /** The virtual slice: computed, never a print; not run carries the reason and is never a pass. */
+      slice: { status: "sliced" | "failed" | "not run"; reason: string };
+      /** designs/<name>/widgets/<file> holding the draft's inline widget as a candidate, or null. */
+      widget: string | null;
     };
   };
   "nest.pack": {
