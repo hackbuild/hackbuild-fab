@@ -678,6 +678,9 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-621 | Plan cards read through plan-root; a test without them skips as not run | decided | tooling |
 | D-622 | BLOCKS bench: three steps, two standard starts, json export | decided | reach |
 | D-623 | Selects take the 44 px touch floor; designs import the shell by package name | decided | reach |
+| D-624 | PIP lands with CHK-KEY-05 misreading its flex contacts | decided | reach |
+| D-625 | PIP's release 1 build: what it ports and what it leaves | decided | reach |
+| D-626 | PIP's routed terminals take the stack's posts and discs | decided | reach |
 
 ## House rules and process
 
@@ -7565,6 +7568,39 @@ Status: decided (delegated). The lead closed four reds from the wave 4 health ru
 | Decision | Taken by the agent under owner delegation on 2026-10-20. packages/ui/src/bench/bench.css adds `.hbf-bench .hb-select` to the coarse pointer and 640 px rule that gives steps, row numbers, buttons and chips a 44 px minimum. packages/ui/package.json exports `./bench/entry` as the source file `./src/bench/entry.ts`, and designs/blocks/bench.entry.ts imports `@hackbuild/ui/bench/entry` with `@hackbuild/ui` as a devDependency, in place of the relative `../../packages/ui/src/bench/entry` the reference benches use. |
 | Rationale | G-54 measured the wire shape select at 242 x 39 px at 390; the first bench with a five option enum in its rail. tools/tiers.mjs fails a design file whose relative import reaches a workspace; the package name lets it check the edge (tier 3 is legal outside build.ts and chase.ts), and the source export bundles through the bake's vue plugin as the relative path did (the bake's sha256 is unchanged). |
 | Evidence | G-54 pass after the change (measured 2026-10-21); `node tools/tiers.mjs` 0 failures, 1 before; `npx vitest run packages/ui` 366 pass; dist/bench/blocks.html sha256 8c7203ab..72eb with either import. The R1-designs-reach-12 worktree's toggle bench.entry.ts carries the relative import and will meet the same tiers failure. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-624 PIP lands with CHK-KEY-05 misreading its flex contacts
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. designs/pip lands with 4 CHK-KEY-05 fails at the chase defaults (2 in the stick example). CHK-KEY-05 1.0.1 stays as it is: it takes any contact on a part that holds a click spring for a click key contact, so in PIP, where flex and click keys share one part, it measures each flex column pair as a click tip over a pad (0 mm, legal 0.5). The fix, classifying by the contact (a contact that declares coneH is a flex key, spec/features.ts), is left as a follow up. |
+| Rationale | By CHECKS.md 1.3 a verdict that flips on the same Part IR is a major bump, and the check version enters registryHash, so the fix stales every report that holds the check (every reference and design golden lists it). That belongs in its own item with the golden refresh, not in a design build. The flex keys are covered by CHK-KEY-01 and -03, which pass on all four. |
+| Evidence | `npx --no-install hbf part.build designs/pip --json`: 250 pass, 1 warn, 4 fail, each CHK-KEY-05 on flex-cone-key.<n>.contact.key (computed); designs/pip/expected/report.json; every other committed report golden holding CHK-KEY-05 reads skip. designs/toggle landed the same way with a CHK-PRT-04 fail (D-615). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-625 PIP's release 1 build: what it ports and what it leaves
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. designs/pip/build.ts ports layout.js (outline, groups, one host top from each archetype's own need, the click slot search, the edge and overlap warnings, the net order) and model.js (the buried stack, the bezel plate with button holes, USB notch and press ribs). The bezel prints flipped beside the body; the click springs and caps sit at fixed plate spots below it. Left out, each with a build warning when its row is on: the bezel chamfer, labels, mark, lip and groove, pry notches and pegs (BEZEL), wire cups (MOUNT, D-096), the separate stick cap (STICK), PETG click caps (CLICKY); grips route inside the stadium (LAYOUT). The chase hookup ports (`port.A` and so on) stay unbound, HOOKUP_PORT_ABSENT, so the drive path ohm is not composed. |
+| Rationale | The brief's release 1 cut is chase, build on the existing archetypes, goldens; the bezel inlays need the font and mark ports and the plate packer, none ported. A design port per key fails the build (net X has no contact; the click archetype declares none), and binding the hookup to the seat ports drops the key names it carries, so the readout waits for the bench item. |
+| Evidence | designs/pip/README.md; per-slot volumes against pip-controller b137deb pip.3mf: slot 1 +378.439, slot 2 -80.181 (the 61.367 ink inlay among it), slot 3 -29.018 (the 24.542 pink inlay among it), slot 4 -0.175 mm3 (computed); circuit.solve prices A 87327 ohm and SELECT 272632 ohm and skips both reads (expected/query-solve.json, computed). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-626 PIP's routed terminals take the stack's posts and discs
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. In designs/pip the router's terminals are the posts each archetype emits, but on a routed net the build drops the archetypes' own terminal posts and layer discs and takes the ones packages/copper emitTraceLayers emits with the layer regions, as reference/electrical/pip-buried-route does. The stack is then the original's union (model.js lines 43 and 50) and no piece is declared twice. |
+| Rationale | With the archetype discs kept and the emit given no terminals, a short stub's region lay inside a disc and was empty after partition; with the archetype posts kept beside the emitted discs, the stage 8 union of every body was refused (open edges 2, winding errors 4, computed) on the original's own route. The emitted posts build clean, as they do in pip-buried-route. |
+| Evidence | `hbf part.build designs/pip` E_KERNEL at /features/conductor.GND.l2.2/bodies, then at /bodies, before the change; 0 errors after (computed). designs/pip/test/build.test.ts holds the count of stack posts to PIP's terminal count and no archetype disc or post id in the draft. |
 | Supersedes | new |
 | Milestone | none |
 
