@@ -633,6 +633,8 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-576 | repaired skill copies stay in the ignored archive folder | decided | Knowledge |
 | D-577 | hbf capabilities groups by ten functions, placed once each | decided | Agent surface |
 | D-578 | the capabilities slice row stays empty until core probes a slicer | decided | Agent surface |
+| D-579 | SECURITY.md names GitHub private vulnerability reporting as the only report path | decided | Public repo |
+| D-580 | policy link rows for README, CLAUDE.md and the print card wait as todo | decided | Public repo |
 
 ## House rules and process
 
@@ -7046,6 +7048,28 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. The slice row of hbf capabilities lists no slicer and carries a note naming R1-designs-reach-01 and tools/slice/slice.mjs. Core does not import tools/slice/orca-family.mjs probe(): that module registers a resolve hook and loads JSZip and core/dist at import, and tools sit outside the tiers core may import. The row fills when the Orca-family driver moves its probe into a package core can read. |
 | Rationale | The brief allows the slicer group to stay empty with a reason when R1-designs-reach-01 has not landed a probe in core. |
 | Evidence | tools/slice/orca-family.mjs lines 16 to 27 and probe() at line 127; grep of core/src for a slicer probe finds none (measured). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-579 SECURITY.md names GitHub private vulnerability reporting as the only report path
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. SECURITY.md sends reports through GitHub private vulnerability reporting on hackbuild/hackbuild-fab and names no email address. Supported versions reads "no version has been released"; fixes land on main. The plugin threat model is stated as the release 3 design (pinned sha256, QuickJS without fs, net or processes, no check removal or exporter ungating); SECURITY.md says the repository runs no third-party plugin until then. The owner confirms the contact and may add an address. |
+| Rationale | The brief names the GitHub path and leaves the contact to the owner; adding the owner's email to a security page is the owner's call. Stating the plugin rules as release 3 design avoids claiming a sandbox the code does not hold yet. |
+| Evidence | git grep -il quickjs over packages, core and spec finds none (measured); SECURITY.md; tools/test/policy-files.test.mjs reads the gate rows from .claude/settings.json. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-580 Policy link rows for README, CLAUDE.md and the print card wait as todo
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. tools/test/policy-files.test.mjs lists README.md and CLAUDE.md (waiting on R1-rails-public-16) and the print card template (waiting on the engine print card item, path not yet fixed) as pending rows that report todo while the link is absent and pass once it is present. The item that adds a link removes the pending field so the row becomes required. USE.md states provenance fields as what every export is to record, since no exporter writes the design hash, plugin hashes, partner versions or proposer yet. |
+| Rationale | The brief keeps the link rows pending until items 16 and the engine print card item; a todo row keeps the suite green without hiding the gap. |
+| Evidence | node --test tools/test/policy-files.test.mjs: pass 6, fail 0, todo 3 (measured); git grep over spec finds no proposedBy, pluginHashes or designHash field (measured). |
 | Supersedes | new |
 | Milestone | none |
 
