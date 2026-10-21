@@ -4,6 +4,7 @@
 // Tools come from spec MCP_TOOLS and the CommandDef registry; each result
 // carries structuredContent = the CommandResult, one text block holding
 // the text mirror the CLI prints, and one image block per png artifact.
+// Resources come from MCP_RESOURCES; a read builds its body at call time.
 
 import {
   CLIENT_CAPABILITIES_META_KEY, McpServer, inputRequired,
@@ -14,7 +15,7 @@ import { gateKey } from "../gate.js";
 import { FileNonceLedger } from "../gate-ledger.js";
 import { GATE_FORM, GATE_INPUT_KEY, handle, imageBlocks, type McpEnv } from "./handlers.js";
 import { COMMAND_RESULT_JSON, servedTools, standardOf, toolInputJson, type ServedTool } from "./schema.js";
-import { mcpFacts } from "./discover.js";
+import { MCP_RESOURCES, mcpFacts } from "./discover.js";
 
 export interface McpServerOptions {
   readonly workspace: string;
@@ -77,6 +78,11 @@ export function createHbfServer(o: McpServerOptions): McpServer {
       };
       return result;
     }) as never);
+  }
+  for (const r of MCP_RESOURCES) {
+    server.registerResource(r.name, r.uri, { title: r.title, description: r.description, mimeType: r.mimeType }, (uri) => ({
+      contents: [{ uri: uri.href, mimeType: r.mimeType, text: r.text(o.workspace) }],
+    }));
   }
   // server/discover keeps the SDK's answer and adds the facts a host caches by (M12-T09 step 1).
   // The serving entry reinstalls the discover handler on connect and calls the
