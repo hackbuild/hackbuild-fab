@@ -24,6 +24,7 @@ import { machineView } from "./author.js";
 import { adapterOf, stageMesh } from "./stage.js";
 import { mergeApplied } from "./applied-merge.js";
 import { draftProblem } from "./draft.js";
+import { applyWaivers, buildDay } from "./waive.js";
 import { resolveParams, type Values } from "./params.js";
 
 const isObject = (v: unknown): v is Values => typeof v === "object" && v !== null && !Array.isArray(v);
@@ -610,7 +611,8 @@ function mergeInferred(reads: readonly InferredRead[]): InferredRead[] {
 
 /**
  * The skeleton checks, the M00 Part IR checks and the registry checks of
- * the build levels on one build; `only` narrows each. export.run and a
+ * the build levels on one build, with the chase waivers applied (D-173,
+ * waive.ts); `only` narrows each. export.run and a
  * baked bench's fabrication exports gate on these results, so a registry
  * block fail (CHK-PRT-16 and kin) stops an export (D-109).
  */
@@ -639,6 +641,7 @@ export async function runAllChecks(built: Built, artifacts: readonly ArtifactByt
     ? await runBuildRegistry(built, [...skeleton.results, ...part], registryOnly)
     : { results: [], readsInferred: [], warnings: [] };
   const readsInferred = mergeInferred([...skeleton.readsInferred, ...registry.readsInferred]);
-  const warnings = [...skeleton.warnings, ...registry.warnings.filter((w) => !skeleton.warnings.some((x) => x.code === w.code && x.text === w.text))];
-  return { results: [...skeleton.results, ...part, ...registry.results], readsInferred, warnings };
+  const waived = applyWaivers([...skeleton.results, ...part, ...registry.results], built.design.chase.waive ?? [], buildDay(built.sourceDateEpoch), only === undefined);
+  const warnings = [...skeleton.warnings, ...registry.warnings.filter((w) => !skeleton.warnings.some((x) => x.code === w.code && x.text === w.text)), ...waived.warnings];
+  return { results: waived.results, readsInferred, warnings };
 }

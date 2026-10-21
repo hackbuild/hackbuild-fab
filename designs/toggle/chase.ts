@@ -119,6 +119,13 @@ export const chase = defineChase({
     { id: "blocks8", label: "blocks 8 way", params: { base: "blocks", dirs: 8 }, note: "three stud ledge rows, every net on a stud." },
   ],
   build: { module: "./build.ts", fn: "build" },
+  // The original's PETG walls are kept, not widened onto the 0.42 mm line
+  // grid (D-615, D-629): 0.64 mm between pin cups and 0.8 mm to the edge
+  // (part2d.js lines 62 to 87), and at blocks8 the 1.60 mm socket to
+  // footprint edge. The report still lists the CHK-PRT-04 measurement.
+  waive: [
+    { check: "CHK-PRT-04", target: "toggle", reason: "D-615: the original's walls are kept (0.64 mm between cups, 0.8 mm to the edge, 1.60 mm socket edge at blocks8); widening them is an owner call" },
+  ],
   exports: [{ kind: "3mf", machine: "ffc5p", pose: "print" }, { kind: "stl" }, { kind: "json" }],
   hookup: [
     { port: "tilt-stick.0.port.dir0", mcu: "rp2040", pin: "GP2", read: { model: "pullup", active: "low", externalOhm: { auto: "e12", ratio: 10 } } },

@@ -44,15 +44,17 @@ the lead end.
 
 ## solo4 at the chase defaults
 
-`hbf part.build designs/toggle --preset solo4`: 44 pass, 1 warn, 1 fail, 58
-skip.
+`hbf part.build designs/toggle --preset solo4`: 44 pass, 2 warn, 0 fail, 58
+skip (computed).
 
-- Fail, CHK-PRT-04: the PETG wall between two pin cups is 0.64 mm (2.54 mm
-  header pitch less two 0.95 mm cups) and the wall from a cup to the body
-  edge 0.8 mm, neither a multiple of the 0.42 mm line width. Both are the
-  original's dimensions (part2d.js lines 62 to 87): the original prints
-  them. Accepting them, or widening the cups so the walls land on the
-  line grid, is an owner question; the chase keeps the original.
+- Waived warn, CHK-PRT-04: the PETG wall between two pin cups is 0.64 mm
+  (2.54 mm header pitch less two 0.95 mm cups) and the wall from a cup to
+  the body edge 0.8 mm, neither a multiple of the 0.42 mm line width. Both
+  are the original's dimensions (part2d.js lines 62 to 87): the original
+  prints them. `chase.waive` accepts them with D-615 as its reason (D-629),
+  so the row keeps its measurement and stops blocking the export gate.
+  Widening the cups so the walls land on the line grid is an owner
+  question; the chase keeps the original. Drop the waiver to see the fail.
 - Warn, CHK-PRT-05: 17 faces sit between layer tops, the solved stick and
   cap heights.
 - Build warnings: the dots texture is not built (the cap prints smooth),
@@ -82,14 +84,14 @@ number, not a gate.
 
 ## Other presets
 
-- solo8: builds; the same CHK-PRT-04 fail over nine cups, and CHK-NET-02
-  fails two net pairs (E to SE, N to NE) at 0.50 mm plan gap against the
+- solo8: builds; the same waived CHK-PRT-04 row over nine cups, and
+  CHK-NET-02 fails two net pairs (E to SE, N to NE) at 0.50 mm plan gap against the
   0.6 mm floor: a routed lead passes the next 8 way lead sector at the
   router's own clearance (leadR 0.65 plus clr 0.6 plus half a trace from
   the foot centre), the original's spacing.
-- blocks8: builds on two trace layers; CHK-PRT-04 fails on the socket to
-  footprint edge wall (1.60 mm), and CHK-NET-02 fails seven net pairs at
-  0.48 to 0.50 mm against the buried stack's 0.6 mm floor (D-085): the
+- blocks8: builds on two trace layers; CHK-PRT-04 reads the socket to
+  footprint edge wall (1.60 mm), waived as above, and CHK-NET-02 fails
+  seven net pairs at 0.48 to 0.50 mm against the buried stack's 0.6 mm floor (D-085): the
   original's 0.48 mm separation layer between its trace layers, and its
   8 way lead sectors beside the routed leads. The original's numbers, not
   changed here.
