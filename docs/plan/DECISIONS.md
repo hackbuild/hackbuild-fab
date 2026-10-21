@@ -676,6 +676,8 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-619 | The Pico seat row reads KiCad gitlab library files committed beside it | decided | Canons, reference, profile, catalog |
 | D-620 | The catalog KiCad reader takes custom pads, a pads-centre origin and stacked power pins | decided | Canons, reference, profile, catalog |
 | D-621 | Plan cards read through plan-root; a test without them skips as not run | decided | tooling |
+| D-622 | BLOCKS bench: three steps, two standard starts, json export | decided | reach |
+| D-623 | Selects take the 44 px touch floor; designs import the shell by package name | decided | reach |
 
 ## House rules and process
 
@@ -7541,6 +7543,28 @@ Status: decided (delegated). The lead closed four reds from the wave 4 health ru
 | Decision | Taken by the agent under owner delegation on 2026-10-20. `tools/test-support/plan-root.mjs` is the one reader of the milestone cards, MILESTONES.md, RISKS.md and extractions.md (`PLAN_ARCHIVED`); `plan-root.ts` re-exports it for vitest files and `plan-root.d.mts` types it. The folder is HBF_PLAN when set, else docs/plan while docs/plan/milestones exists, else the sibling fab-knowledge/plan-archive. The plan is present when the folder holds MILESTONES.md; planDoc and planCard throw otherwise. A node test that reads the plan passes `{ skip: planSkip() }`, so the whole test reports "plan archive not on this runner: not run", including a test that also checks repo files beside the cards. A vitest file importing plan-root is an unguarded owner file in `.github/scripts/owner-files.mjs`, and its report prints a line naming the node tests that skip without the plan. |
 | Rationale | PLAN.md section 5 moves the plan process files out of the public repo; a test that kept reading docs/plan by path would fail on hosted runners, and one that dropped the card half of its assertions would report a pass for a check it did not make. Skipping the whole test keeps every reported pass whole. |
 | Evidence | `tools/test/plan-root.test.mjs` (4 pass, measured 2026-10-21) kills the mutant that tests the folder instead of MILESTONES.md. With HBF_PLAN on an empty folder, plan-drift reports 11 pass and 20 skipped, ci-exit-rows 4 and 11, plan-drift-audit3 0 and 7; with the cards in place every converted file passes except the plan-drift virtual-print test, red on main before this change. `git grep -n "docs/plan/milestones\|docs/plan/MILESTONES" -- tools/test` prints nothing. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-622 BLOCKS bench: three steps, two standard starts, json export
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. designs/blocks/bench.ts has steps part, materials, print: blocks.html's strip less BUILD, the scene composer that waits for M10-T10. The part step holds params.pick, params.wire and params.brick with focus `standard`, as blocks.html's PART pane holds CATALOG and PARAMETERS. The welcome starts are presets `boss-v1` and `blocks-html`, neither preselected (D-087); no drive pad. The chase gains the json export the G-57 drive calls. The brief's mutation reads "G-11 welcome rule"; G-11 is the thrown-build rule and no G rule reads welcome starts, so the mutant (remove the two starts) is killed by designs/blocks/test/bench.test.ts. The side-by-side legacy page is fab-knowledge:originals/blocks/files/blocks.html, the bytes the `blocks` hook adapter names, since designs/blocks/legacy holds BOSS only. |
+| Rationale | With the numeric fields on a later step, G-03, G-04, G-06, G-10, G-11 and G-46 found no numeric field on open and graded not run, so the report exited 1. Without the json export G-57 threw "unknown export kind: json". |
+| Evidence | Gold `--only` the bench-layer rules on dist/bench/blocks.html sha256 8c7203ab..72eb: 23 pass, 3 n/a, 0 fail, exit 0 (measured 2026-10-21); `hbf parity designs/blocks --accept` moved defHash and buildHash only, 10 mesh hashes and volumes equal (computed); removing the starts fails 1 of 6 bench tests; 18 side-by-side images in fab-knowledge:evidence/r1/side-by-side/blocks, scrollWidth equal to the viewport in all 12 page states (measured). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-623 Selects take the 44 px touch floor; designs import the shell by package name
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. packages/ui/src/bench/bench.css adds `.hbf-bench .hb-select` to the coarse pointer and 640 px rule that gives steps, row numbers, buttons and chips a 44 px minimum. packages/ui/package.json exports `./bench/entry` as the source file `./src/bench/entry.ts`, and designs/blocks/bench.entry.ts imports `@hackbuild/ui/bench/entry` with `@hackbuild/ui` as a devDependency, in place of the relative `../../packages/ui/src/bench/entry` the reference benches use. |
+| Rationale | G-54 measured the wire shape select at 242 x 39 px at 390; the first bench with a five option enum in its rail. tools/tiers.mjs fails a design file whose relative import reaches a workspace; the package name lets it check the edge (tier 3 is legal outside build.ts and chase.ts), and the source export bundles through the bake's vue plugin as the relative path did (the bake's sha256 is unchanged). |
+| Evidence | G-54 pass after the change (measured 2026-10-21); `node tools/tiers.mjs` 0 failures, 1 before; `npx vitest run packages/ui` 366 pass; dist/bench/blocks.html sha256 8c7203ab..72eb with either import. The R1-designs-reach-12 worktree's toggle bench.entry.ts carries the relative import and will meet the same tiers failure. |
 | Supersedes | new |
 | Milestone | none |
 
