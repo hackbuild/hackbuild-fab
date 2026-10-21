@@ -86,8 +86,8 @@ describe("MCU rows", () => {
 });
 
 describe("BLOCKS seat rows (step 3, R70)", () => {
-  test("c3mini rowX 8.75, pico 8.89, teensy40 7.62, each tier inferred, method derived, source the BLOCKS bench", () => {
-    for (const [id, rowX] of [["c3mini", 8.75], ["pico", 8.89], ["teensy40", 7.62]] as const) {
+  test("c3mini rowX 8.75 and teensy40 7.62, each tier inferred, method derived, source the BLOCKS bench (pico reads KiCad files, pico.test.ts)", () => {
+    for (const [id, rowX] of [["c3mini", 8.75], ["teensy40", 7.62]] as const) {
       const r = catalog.rows.get(id)!;
       expect(r.fields["dims.rowX"]?.value, id).toBe(rowX);
       expect(r.tier, id).toBe("inferred");
@@ -114,10 +114,11 @@ describe("kicad-mod reader", () => {
     expect(pads[0]).toEqual({ pad: "1", type: "thru_hole", shape: "circle", x: 7.62, y: -8.89, w: 1.14, h: 1.14, drill: 0.84 });
   });
 
-  test("module KiCad files are drawn in this repo (S-02): generator hackbuild-fab, 2 rows of 8 at 2.54, rows 15.24 apart", () => {
+  test("module KiCad files are drawn in this repo (S-02) or sit beside the KiCad LICENSE.md; supermini 2 rows of 8 at 2.54, rows 15.24 apart", () => {
+    const kicadLicence = (n: string): boolean => /^### KiCad Libraries License$/m.test(new TextDecoder().decode(files.get(n.replace(/[^/]+$/, "LICENSE.md")) ?? new Uint8Array()));
     const foreign = [...files.keys()].filter((n) => n.startsWith("modules/") && /\.kicad_(mod|sym)$/.test(n))
-      .filter((n) => !new TextDecoder().decode(files.get(n)!).includes('(generator "hackbuild-fab")'));
-    expect(foreign, "a module KiCad file not drawn by packages/catalog/scripts has no licence to ship").toEqual([]);
+      .filter((n) => !new TextDecoder().decode(files.get(n)!).includes('(generator "hackbuild-fab")') && !kicadLicence(n));
+    expect(foreign, "a module KiCad file neither drawn by packages/catalog/scripts nor beside the KiCad LICENSE.md has no licence to ship").toEqual([]);
     const pads = kicadModPads(new TextDecoder().decode(files.get("modules/esp32c3-supermini/supermini.kicad_mod")!), "supermini");
     expect(pads).toHaveLength(16);
     const xs = [...new Set(pads.map((p) => p.x))].sort((a, b) => a - b);

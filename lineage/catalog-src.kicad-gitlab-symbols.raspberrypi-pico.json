@@ -1,0 +1,12 @@
+[
+  {
+    "id": "catalog-src.kicad-gitlab-symbols.raspberrypi-pico/r1",
+    "kind": "canonical",
+    "source": "~/.cache/board-forge/kicad-gitlab-symbols/MCU_Module.kicad_symdir/RaspberryPi_Pico.kicad_sym",
+    "sha256": "720a2d3b6dbb0cda01b851f1a72425b91f3a91cd30bcc9e974e1e38cba599a6c",
+    "fixes": [
+      "byte copy of the blob at gitlab.com/kicad/libraries/kicad-symbols commit 9280a937942c74c7d6fd5148a2d49ee7d87773d1 (2026-10-15; read with tools/py/board/kicad_fetch.py get kicad-gitlab-symbols), committed as the pico catalog row symbol; pin numbers and names parse at load through packages/catalog/src/kicad-mod.ts, the six passive GND pins taking the role of the power_out GND (R1-designs-reach-19)"
+    ],
+    "dest": "packages/catalog/data/modules/pico/pico.kicad_sym"
+  }
+]

@@ -58,17 +58,46 @@ export interface ModPad {
   readonly holeDx?: number;
 }
 
+/**
+ * A custom pad reads as its anchor (circle or rect) at the anchor size, and
+ * only when every primitive lies inside the anchor's size box, so the copper
+ * the catalog drops is bounded by that box. The KiCad Pico footprint marks
+ * its GND pads this way: a 1.6 mm circle anchor with a half square inside
+ * the same 1.6 mm box (Module.pretty/RaspberryPi_Pico_Common_THT pad 3).
+ */
+function customShape(p: readonly Sx[], w: number, h: number, at: string): PadShape {
+  const anchor = child(child(p, "options") ?? [], "anchor")?.[1];
+  const shape = anchor === "circle" ? "circle" : anchor === "rect" ? "rect" : undefined;
+  if (shape === undefined) throw schemaError(at, `custom pad anchor ${String(anchor)} has no catalog form`);
+  const pts: [number, number][] = [];
+  for (const g of (child(p, "primitives") ?? []).filter(isList)) {
+    if (g[0] === "gr_poly") for (const xy of children(child(g, "pts") ?? [], "xy")) pts.push([num(xy[1], at), num(xy[2], at)]);
+    else if (g[0] === "gr_rect") for (const k of ["start", "end"]) { const c = child(g, k); pts.push([num(c?.[1], at), num(c?.[2], at)]); }
+    else if (g[0] === "gr_circle") {
+      const c = child(g, "center");
+      const e = child(g, "end");
+      const cx = num(c?.[1], at);
+      const cy = num(c?.[2], at);
+      const r = Math.hypot(num(e?.[1], at) - cx, num(e?.[2], at) - cy);
+      pts.push([cx - r, cy - r], [cx + r, cy + r]);
+    } else throw schemaError(at, `custom pad primitive ${String(g[0])} has no catalog form`);
+  }
+  const out = pts.find(([x, y]) => Math.abs(x) > w / 2 + 1e-9 || Math.abs(y) > h / 2 + 1e-9);
+  if (out !== undefined) throw schemaError(at, `custom pad primitive reaches (${out[0]}, ${out[1]}) mm, outside the ${w} x ${h} mm anchor box`);
+  return shape;
+}
+
 /** Pads of a .kicad_mod, part frame (+y up), in file order. `where` names the file in errors. */
 export function kicadModPads(text: string, where: string): readonly ModPad[] {
   const root = parseSexpr(text)[0];
   if (!isList(root) || (root[0] !== "module" && root[0] !== "footprint")) throw schemaError(where, "not a KiCad footprint: the first form is neither module nor footprint");
   return children(root, "pad").map((p, i): ModPad => {
     const at = `${where} pad ${i}`;
-    const shape = SHAPES[String(p[3])];
-    if (shape === undefined) throw schemaError(at, `pad shape ${String(p[3])} has no catalog form`);
     const a = child(p, "at");
     const s = child(p, "size");
     if (a === undefined || s === undefined) throw schemaError(at, "pad has no at or size");
+    const shape = p[3] === "custom" ? customShape(p, num(s[1], at), num(s[2], at), at) : SHAPES[String(p[3])];
+    if (shape === undefined) throw schemaError(at, `pad shape ${String(p[3])} has no catalog form`);
     const rot = a[3] === undefined ? 0 : num(a[3], at);
     if (rot % 90 !== 0) throw schemaError(at, `pad rotation ${rot} deg is not a multiple of 90`);
     const turned = Math.abs(rot % 180) === 90;
@@ -121,12 +150,29 @@ const count = (spec: Readonly<Record<string, unknown>>, path: string): number =>
   return n;
 };
 
-/** `from: {kind: "kicad", mod, sym?, count}` on a pads field: the land pattern, names from the symbol. */
+/**
+ * `from: {kind: "kicad", mod, sym?, count, origin?}` on a pads field: the
+ * land pattern, names from the symbol. `origin: "pads-centre"` moves the
+ * frame to the centre of the pad bounding box, for a library footprint
+ * whose origin is pad 1 while the row's dims read from the module centre.
+ */
 export const kicadPads: FieldResolver = (spec, ctx) => {
   const mod = String(spec["mod"]);
-  const pads = kicadModPads(ctx.text(mod), mod);
+  const raw = kicadModPads(ctx.text(mod), mod);
   const want = count(spec, ctx.path);
-  if (pads.length !== want) throw schemaError(`${ctx.path}/from/count`, `${mod} holds ${pads.length} pads, the row asserts ${want}`, { got: pads.length, expected: String(want) });
+  if (raw.length !== want) throw schemaError(`${ctx.path}/from/count`, `${mod} holds ${raw.length} pads, the row asserts ${want}`, { got: raw.length, expected: String(want) });
+  const origin = spec["origin"];
+  if (origin !== undefined && origin !== "pads-centre") throw schemaError(`${ctx.path}/from/origin`, `origin ${String(origin)} is not pads-centre`, { got: origin, expected: "pads-centre" });
+  let pads = raw;
+  if (origin === "pads-centre") {
+    const xs = raw.map((p) => p.x);
+    const ys = raw.map((p) => p.y);
+    const cx = (Math.min(...xs) + Math.max(...xs)) / 2;
+    const cy = (Math.min(...ys) + Math.max(...ys)) / 2;
+    // Rounded to 1e-6 mm so 17.78 / 2 lands on 8.89, not 8.889999999999999.
+    const r6 = (v: number): number => Math.round(v * 1e6) / 1e6 + 0;
+    pads = raw.map((p) => ({ ...p, x: r6(p.x - cx), y: r6(p.y - cy) }));
+  }
   const names = spec["sym"] === undefined ? undefined : kicadSymPins(ctx.text(String(spec["sym"])), String(spec["sym"]));
   if (names !== undefined && names.size !== want) throw schemaError(`${ctx.path}/from/count`, `${String(spec["sym"])} holds ${names.size} pins, the row asserts ${want}`);
   return pads.map((p): CatalogPad => {
@@ -137,20 +183,27 @@ export const kicadPads: FieldResolver = (spec, ctx) => {
   });
 };
 
+const isPower = (type: string): boolean => type === "power_in" || type === "power_out";
+
 /**
  * `from: {kind: "kicad-sym", sym, count}` on a pins field: number and name
- * from the symbol; role is the name lowercased for power_in and power_out pins and "gpio"
- * for the rest, which is what the symbol's electrical type says.
+ * from the symbol; role is the name lowercased for power_in and power_out
+ * pins and "gpio" for the rest, which is what the symbol's electrical type
+ * says. A passive pin named like a power pin of the same symbol takes the
+ * power role: the KiCad library types one of a set of same-net pins as
+ * power and the others passive (KLC S4.3), as the Pico's seven GND pins are.
  */
 export const kicadPins: FieldResolver = (spec, ctx) => {
   const sym = String(spec["sym"]);
   const pins = kicadSymPins(ctx.text(sym), sym);
   const want = count(spec, ctx.path);
   if (pins.size !== want) throw schemaError(`${ctx.path}/from/count`, `${sym} holds ${pins.size} pins, the row asserts ${want}`, { got: pins.size, expected: String(want) });
+  const power = new Set([...pins.values()].filter((p) => isPower(p.type)).map((p) => p.name));
   return [...pins.entries()].map(([no, p]): PinDef => {
     const n = Number(no);
     if (!Number.isInteger(n)) throw schemaError(`${ctx.path}/from`, `pin number ${no} is not an integer`);
-    return { n, name: p.name, role: p.type === "power_in" || p.type === "power_out" ? p.name.toLowerCase() : "gpio" };
+    const powered = isPower(p.type) || (p.type === "passive" && power.has(p.name));
+    return { n, name: p.name, role: powered ? p.name.toLowerCase() : "gpio" };
   }).sort((a, b) => a.n - b.n);
 };
 

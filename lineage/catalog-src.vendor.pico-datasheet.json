@@ -1,0 +1,10 @@
+[
+  {
+    "id": "catalog-src.vendor.pico-datasheet/r1",
+    "kind": "canonical",
+    "source": "https://datasheets.raspberrypi.com/pico/pico-datasheet.pdf",
+    "sha256": "757ff485227493b9fcc0c2c96c4dea9de020e1d8b2b11e2aa4f9ee8b25aa89eb",
+    "fixes": [],
+    "dest": null
+  }
+]

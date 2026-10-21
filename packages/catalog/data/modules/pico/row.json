@@ -1,0 +1,73 @@
+{
+  "id": "pico",
+  "name": "Raspberry Pi Pico (BLOCKS seat)",
+  "kind": "module",
+  "mcu": "pico",
+  "note": "Pads and pin names parse at load from pico.kicad_mod and pico.kicad_sym, byte copies of the KiCad library Module.pretty/RaspberryPi_Pico_Common_THT.kicad_mod (gitlab.com/kicad/libraries/kicad-footprints at f8440fa61a5690b48b325c891fdb99c0038a5a59, 2026-10-10) and MCU_Module.kicad_symdir/RaspberryPi_Pico.kicad_sym (gitlab.com/kicad/libraries/kicad-symbols at 9280a937942c74c7d6fd5148a2d49ee7d87773d1, 2026-10-15), fetched with tools/py/board/kicad_fetch.py. KiCad libraries are CC-BY-SA 4.0 with the KiCad design exception; KiCad's LICENSE.md sits beside them (tools/licences.json). n is the vendor pin number (1 to 20 down the left column, 21 to 40 up the right, USB at top); names are the KiCad symbol's (GPIO0, GPIO26_ADC0, AGND), which the BLOCKS seat calls GP0, GP26 and GND. The frame is the pad bounding box centre (origin pads-centre), +y toward the USB end. The GND pads are custom pads in the footprint; the catalog reads them as their 1.6 mm circle anchor.",
+  "fields": {
+    "pads": {
+      "from": {
+        "kind": "kicad",
+        "mod": "pico.kicad_mod",
+        "sym": "pico.kicad_sym",
+        "count": 40,
+        "origin": "pads-centre"
+      },
+      "unit": "mm",
+      "provenance": {
+        "tier": "community",
+        "method": "listing",
+        "date": "2026-10-21",
+        "source": "pico.kicad_mod sha256 5e9eaf236684e2284488f364555fa0b33d51a5404f88e4d6c89049add14d9dbe, KiCad library footprint RaspberryPi_Pico_Common_THT (community, the parts-audit tier for a library footprint), its descr citing datasheets.raspberrypi.com/pico/pico-datasheet.pdf; names from pico.kicad_sym sha256 720a2d3b6dbb0cda01b851f1a72425b91f3a91cd30bcc9e974e1e38cba599a6c. Cross-check, tools/py/board/kicad_fetch.py pads on the same file (KiCad frame, y down): 40 thru_hole pads 1.60 x 1.60 drill 1, pad 1 at (0, 0), pad 20 at (0, 48.26), pad 21 at (17.78, 48.26), pad 40 at (17.78, 0)"
+      }
+    },
+    "pins": {
+      "from": {
+        "kind": "kicad-sym",
+        "sym": "pico.kicad_sym",
+        "count": 40
+      },
+      "unit": "none",
+      "provenance": {
+        "tier": "community",
+        "method": "listing",
+        "date": "2026-10-21",
+        "source": "pico.kicad_sym sha256 720a2d3b6dbb0cda01b851f1a72425b91f3a91cd30bcc9e974e1e38cba599a6c, KiCad library symbol MCU_Module:RaspberryPi_Pico (community); the power pins agree with the Raspberry Pi Pico Datasheet section 2.1 (PDF page 8: PIN40 VBUS, PIN39 VSYS, PIN37 3V3_EN, PIN36 3V3, PIN35 ADC_VREF, PIN33 AGND; page 9: PIN30 RUN)"
+      }
+    },
+    "dims.body": {
+      "value": [
+        21,
+        51,
+        1
+      ],
+      "unit": "mm",
+      "provenance": {
+        "tier": "vendor",
+        "method": "datasheet",
+        "date": "2026-10-21",
+        "source": "Raspberry Pi Pico Datasheet (datasheets.raspberrypi.com/pico/pico-datasheet.pdf, built 2026-07-03, sha256 757ff485227493b9fcc0c2c96c4dea9de020e1d8b2b11e2aa4f9ee8b25aa89eb) section 2 Mechanical specification, PDF page 7: a single sided 51 by 21 mm, 1 mm thick PCB (multiplication sign written as by); width 21 and length 51 across the long axis, the micro-USB overhang not included"
+      }
+    },
+    "dims.pitch": {
+      "value": 2.54,
+      "unit": "mm",
+      "provenance": {
+        "tier": "vendor",
+        "method": "datasheet",
+        "date": "2026-10-21",
+        "source": "Raspberry Pi Pico Datasheet (sha256 757ff485227493b9fcc0c2c96c4dea9de020e1d8b2b11e2aa4f9ee8b25aa89eb) section 2, PDF page 7: the 40 main user pins on a 2.54 mm pitch grid with 1 mm holes (the inch figure left out); the parsed pads step 2.54 (computed, packages/catalog/test/pico.test.ts)"
+      }
+    },
+    "dims.rowX": {
+      "value": 8.89,
+      "unit": "mm",
+      "provenance": {
+        "tier": "community",
+        "method": "derived",
+        "date": "2026-10-21",
+        "source": "half the 17.78 mm row-to-row of pico.kicad_mod (pads 1 and 40 at x 0 and 17.78, KiCad frame), computed; equals the BLOCKS seat rowX of originals/blocks/files/src-extracted/parts.js line 34, held by packages/catalog/test/pico.test.ts"
+      }
+    }
+  }
+}

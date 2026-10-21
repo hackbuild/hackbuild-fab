@@ -152,10 +152,13 @@
       "glob": [
         "packages/catalog/data/kicad/**",
         "packages/catalog/data/connectors/pj398sm/pj398sm.kicad_mod",
-        "packages/catalog/data/connectors/pj398sm/LICENSE.md"
+        "packages/catalog/data/connectors/pj398sm/LICENSE.md",
+        "packages/catalog/data/modules/pico/pico.kicad_mod",
+        "packages/catalog/data/modules/pico/pico.kicad_sym",
+        "packages/catalog/data/modules/pico/LICENSE.md"
       ],
       "licence": "CC-BY-SA-4.0",
-      "note": "KiCad libraries, collection redistribution; KiCad's LICENSE.md sits beside them. The pj398sm footprint is a byte copy from github.com/KiCad/kicad-footprints at 7ebfa6b2 (2020-10-02), with that repository's LICENSE.md beside it",
+      "note": "KiCad libraries, collection redistribution; KiCad's LICENSE.md sits beside them. The pj398sm footprint is a byte copy from github.com/KiCad/kicad-footprints at 7ebfa6b2 (2020-10-02), with that repository's LICENSE.md beside it. The pico footprint and symbol are byte copies from gitlab.com/kicad/libraries/kicad-footprints at f8440fa6 (2026-10-10) and kicad-symbols at 9280a937 (2026-10-15), with their LICENSE.md beside them",
       "decision": [
         "D-090"
       ]

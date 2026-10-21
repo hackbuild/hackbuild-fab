@@ -1,0 +1,12 @@
+[
+  {
+    "id": "catalog-src.kicad-gitlab.raspberrypi-pico-common-tht/r1",
+    "kind": "canonical",
+    "source": "~/.cache/board-forge/kicad-gitlab/Module.pretty/RaspberryPi_Pico_Common_THT.kicad_mod",
+    "sha256": "5e9eaf236684e2284488f364555fa0b33d51a5404f88e4d6c89049add14d9dbe",
+    "fixes": [
+      "byte copy of the blob at gitlab.com/kicad/libraries/kicad-footprints commit f8440fa61a5690b48b325c891fdb99c0038a5a59 (2026-10-10; read with tools/py/board/kicad_fetch.py get kicad-gitlab, git show HEAD:<path> on the blobless clone), committed as the pico catalog row footprint; pads parse at load through packages/catalog/src/kicad-mod.ts, the custom GND pads as their circle anchor, framed at the pad bounding box centre (R1-designs-reach-19)"
+    ],
+    "dest": "packages/catalog/data/modules/pico/pico.kicad_mod"
+  }
+]
