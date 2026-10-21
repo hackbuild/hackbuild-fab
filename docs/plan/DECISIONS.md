@@ -689,6 +689,8 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-632 | Chase waivers apply in runAllChecks, matched by target id, lapsed by build day | decided | Constraints and checks |
 | D-633 | Welcome preset starts take the id preset:<id>; blank stays a legal preset id | decided | UI |
 | D-634 | chase.bake gives the design's package.json the ui devDependency with the entry | decided | UI |
+| D-635 | Graded legacy folders keep pages and bake inputs through release 1; four PIP files held | decided | none |
+| D-636 | blocks.html stays held; hosted BLOCKS grade reports not run | decided | none |
 
 ## House rules and process
 
@@ -7697,6 +7699,28 @@ Status: decided (delegated). The lead closed four reds from the wave 4 health ru
 | Decision | Taken by the agent under owner delegation on 2026-10-20. tools/bake/from-chase.ts writes the plain bench.entry.ts with the `@hackbuild/ui/bench/entry` import, as designs/blocks does, and in the same step adds `@hackbuild/ui` at the ui workspace version to the design's package.json devDependencies; with no package.json it writes one in the designs/blocks form (private, type module, the root package's licence and author). It never touches package.json when the entry already exists, so chase.bake on a committed reference leaves its folder as it was. The design does not join the root workspaces; the import resolves through the root node_modules link. R1-fix-22. |
 | Rationale | tools/tiers.mjs refuses a relative import from designs/ into packages/; the package name lets tiers check the edge, and the devDependency records it where a later workspace entry would need it. |
 | Evidence | core/test/chase-bake.test.ts: the access-switch copy bakes with the package import and gets a package.json whose ui devDependency equals designs/blocks/package.json's; 8 of 8 pass (measured). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-635 The five graded legacy folders keep their pages and bake inputs in git through release 1; PIP files no bake reads are held
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. designs/{pip,toggle,blocks,collar,sprue}/legacy keep in git every page, every PIP bake input (bake.json, package.json, package-lock.json, bench/, src/, tools/rastermesh.js, tools/orca3mf.js, vendor/manifold-classic.js), LICENSE, and every file a test or CI step reads (boss-src.zip and boss-src/ for the nodal and route-seat tests, sprue print-card.txt for the CI sprue parity). designs/pip/legacy build.sh, tools/build_bench.py, test/smoke.py and test/overflow.py, which no bake, test or CI step reads, are held out of git in the D-286 form. sprue.py stays: it has no reader, but its folder pins by sha256.txt and tools/legacy/held.mjs records held bytes only through a SHA256SUMS. Each folder README records its kept set. R1-rails-public-10. |
+| Rationale | The CI bake reproduces pip.html byte for byte and release 1 grades TOGGLE, PIP, BLOCKS and COLLAR beside their originals (PLAN.md 6 designs row, D-279), so those bytes must be on a hosted runner. Slicer saves, shots and print zips of these folders were already held at M10-T01, which leaves only the four PIP files as non-page files with no reader. |
+| Evidence | Measured 2026-10-21: tracked designs/pip/legacy 25 files 3032 KB du to 21 files 3008 KB; the four held files equal fab-knowledge:originals/pip/files/pip-controller/ by sha256; the PIP bake is 1924558 bytes, sha256 a1fa88bd6ffa603c76059567c8b27c804536e39e7c07ec56c58daad55b001263, cmp equal to pip.html; tools/test/m10-legacy.test.mjs passes and fails when a held row leaves the .gitignore block. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-636 blocks.html stays held out of git; the hosted BLOCKS side by side grade reports not run
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The R1-rails-public-10 brief keeps the BLOCKS page public through release 1, but designs/blocks/legacy/blocks.html (with boss.html, boss-examples.zip and shots/) was held out of git at M10-T01 (D-286). It is not re-added: the BLOCKS grade against its original runs where the owner's archive is present and reports not run on a hosted runner. R1-rails-public-10. |
+| Rationale | Re-adding the page puts 1201487 bytes (measured, M10-T01 README) into history that D-286 kept out; a later item can still track it, while history cannot shed it without a rewrite. |
+| Evidence | .gitignore held-legacy block names /designs/blocks/legacy/blocks.html; designs/blocks/legacy/README.md section "Public through release 1". |
 | Supersedes | new |
 | Milestone | none |
 
