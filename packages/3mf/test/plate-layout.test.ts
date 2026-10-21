@@ -1,14 +1,15 @@
 // M07-T02 step 2: the 3mf writer takes an optional plate layout, one
 // placed instance per copy with a quarter turn about z. The oracle is the
-// OGEE R16-P plate page's writeSTL rule (designs/ogee16/legacy/source/
-// plate_template.html lines 409 to 418, sha256 prefix 59507bfae682869f):
-// a part turned 90 maps (lx, ly) to (-ly + x + d, lx + y), d its depth.
-// The test reads those lines from the legacy file, parses the written
-// transform by the 3MF row vector rule, and compares vertex for vertex.
-// The legacy file lives in hackbuild-fab only, so in the hackbuild-3mf split
-// the read-back test skips with that reason and the vertex test still runs.
+// OGEE R16-P plate page's writeSTL rule (plate_template.html lines 409 to
+// 419 of ogee16-source.zip, sha256 prefix 59507bfae682869f, stored as
+// inputs/plate-template-409-419.txt with inputs/stored-inputs.json; lineage
+// ogee16.packone/r16p): a part turned 90 maps (lx, ly) to
+// (-ly + x + d, lx + y), d its depth. The test reads those stored lines,
+// parses the written transform by the 3MF row vector rule, and compares
+// vertex for vertex. The stored lines travel with this package, so the
+// read-back test also runs in the hackbuild-3mf split.
 
-import { existsSync, readFileSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { isThrownCommandError, type QuarterTurn, type Vec3 } from "../src/index.js";
 import {
@@ -17,7 +18,7 @@ import {
 } from "../src/index.js";
 import { box, EPOCH } from "./cube.js";
 
-const LEGACY = new URL("../../../designs/ogee16/legacy/source/plate_template.html", import.meta.url);
+const TURN_RULE = new URL("inputs/plate-template-409-419.txt", import.meta.url);
 
 function codeOf(fn: () => unknown): string | undefined {
   try {
@@ -67,9 +68,8 @@ const ok = (cfg: BuildConfig): Built => {
 const itemTransforms = (model: string): string[] => [...model.matchAll(/<item objectid="\d+"[^>]* transform="([^"]+)"/g)].map((m) => m[1]!);
 
 describe("plate layout input (M07-T02)", () => {
-  // skipped where designs/ogee16/legacy is absent: the hackbuild-3mf split carries no legacy designs
-  it.skipIf(!existsSync(LEGACY))("ports the legacy turn rule, read from the legacy file", () => {
-    const text = readFileSync(LEGACY, "utf8");
+  it("ports the page's turn rule, read from its stored lines", () => {
+    const text = readFileSync(TURN_RULE, "utf8");
     expect(text).toContain("const R = s.it.rot, ox = s.it.x + (R ? s.it.part.d : 0), oy = s.it.y;");
     expect(text).toContain("dv.setFloat32(o,   (R ? -ly : lx) + ox, true);");
     expect(text).toContain("dv.setFloat32(o+4, (R ?  lx : ly) + oy, true);");

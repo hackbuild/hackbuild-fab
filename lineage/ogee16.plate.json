@@ -8,6 +8,16 @@
     "dest": "designs/ogee16/legacy/ogee16-plate.html"
   },
   {
+    "id": "ogee16.plate/nest-tests-stored",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/ogee16/files/src/source/build_plate.py",
+    "sha256": "dc3f1772312360fda22e3ef5f89ebc243e714fbf88fc1498e30c6a2bfd0664ed",
+    "fixes": [
+      "lines 5 to 12 (COMMON, KNOB_DRIVE, SERVO_DRIVE) the nest tests read as the hand bill"
+    ],
+    "dest": "packages/nest/test/inputs/ogee16/build-plate-5-12.txt"
+  },
+  {
     "id": "ogee16.plate/r16p",
     "kind": "canonical",
     "source": "fab-knowledge:originals/ogee16/files/src/source/build_plate.py",

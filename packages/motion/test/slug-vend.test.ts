@@ -2,8 +2,9 @@
 // Records table row "SLUG vend with residual carry" (computed 2026-10-04),
 // typed below, and the drive is read from its sources: half steps per
 // revolution and the step rate from the profile, the gear ratio from
-// designs/slug/legacy/slug.scad; the page constant STEPS_REV of slug.html
-// line 224 is compared against the profile row so a drifted row is seen.
+// slug.scad (stored whole as packages/motion/inputs/slug/slug.scad); the
+// page constant STEPS_REV of slug.html line 224 is compared against the
+// profile row in slug-originals.test.ts so a drifted row is seen.
 
 import { readFileSync } from "node:fs";
 import { describe, expect, test } from "vitest";
@@ -13,13 +14,12 @@ import { SLUG_MACHINE, SLUG_NOT_RUN, rotorDeg, runProgram, slugDrive, slugVendPr
 
 const root = new URL("../../../", import.meta.url);
 const read = (p: string): string => readFileSync(new URL(p, root), "utf8");
-const D = slugDrive(createProfileLookup(loadProfile()), read("designs/slug/legacy/slug.scad"));
+const D = slugDrive(createProfileLookup(loadProfile()), read("packages/motion/inputs/slug/slug.scad"));
 const commands = (k: number): number[] => slugVendProgram(D, k).ops.flatMap((o) => (o.op === "steps" ? [o.halfSteps] : []));
 
 describe("the drive", () => {
   test("reads 4075.7728 half steps per revolution, 1000 half steps/s and the 76:19 train", () => {
     expect(D.halfStepsPerRev).toBe(4075.7728);
-    expect(read("designs/slug/legacy/slug.html").split("\n")[223]).toContain(`const STEPS_REV = ${D.halfStepsPerRev};`);
     expect(D.ratio).toBe(4);
     expect(D.rate).toBe(1000);
   });

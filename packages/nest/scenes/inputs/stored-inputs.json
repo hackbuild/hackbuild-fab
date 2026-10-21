@@ -1,0 +1,301 @@
+{
+  "files": [
+    {
+      "path": "ogee16-r16p-plates/params-scad-36.txt",
+      "sha256": "fe14cfe79633784473392e3bd95e8859e6101a41e667bf6f82c346f856cecf84",
+      "bytes": 14,
+      "source": "fab-knowledge:originals/ogee16/files/src/source/params.scad",
+      "sourceSha256": "1c0a4b898b4977d87d435273a04857111fab5d43324bee591c2a6ad641591d6d",
+      "lines": [
+        36,
+        36
+      ],
+      "lineage": "ogee16.params/plates-stored"
+    },
+    {
+      "path": "ogee16-r16p-plates/plate-template-178.txt",
+      "sha256": "247cd99ff143e7eb8078ed6fe2601a1d5dbc4a9de290892df3f0a606ccca0f49",
+      "bytes": 22,
+      "source": "fab-knowledge:originals/ogee16/files/src/source/plate_template.html",
+      "sourceSha256": "59507bfae682869fb87d9ff5d6aa59fe2746f51ece249359ab69b223290f04bf",
+      "lines": [
+        178,
+        178
+      ],
+      "lineage": "ogee16.packone/r16p"
+    },
+    {
+      "path": "ogee16-r16p-plates/plate-template-263.txt",
+      "sha256": "5102b6f8992fe0902e809b6d5aed656c26397d8fa20c4bd38ef2d8ce5056fcfe",
+      "bytes": 65,
+      "source": "fab-knowledge:originals/ogee16/files/src/source/plate_template.html",
+      "sourceSha256": "59507bfae682869fb87d9ff5d6aa59fe2746f51ece249359ab69b223290f04bf",
+      "lines": [
+        263,
+        263
+      ],
+      "lineage": "ogee16.packone/r16p"
+    },
+    {
+      "path": "ogee16-r16p-plates/print/base.stl",
+      "sha256": "df2bf519e413f89573584c613536a2ef42473bb926b2bed29c7177b8e9ad6354",
+      "bytes": 104250,
+      "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+      "sourceSha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+      "member": "print/base.stl",
+      "lineage": "ogee16.print-stl/plates-base"
+    },
+    {
+      "path": "ogee16-r16p-plates/print/cap.stl",
+      "sha256": "220b2642288b8d0bec4e2f9ecb20767bad7b94df5e1ddcc7cceb5506867b35f8",
+      "bytes": 119189,
+      "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+      "sourceSha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+      "member": "print/cap.stl",
+      "lineage": "ogee16.print-stl/plates-cap"
+    },
+    {
+      "path": "ogee16-r16p-plates/print/colbar_asm.stl",
+      "sha256": "7e382110c488495b3e10e2ae617643e8f94267f7363643de36a164107b237d84",
+      "bytes": 335481,
+      "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+      "sourceSha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+      "member": "print/colbar_asm.stl",
+      "lineage": "ogee16.print-stl/plates-colbar-asm"
+    },
+    {
+      "path": "ogee16-r16p-plates/print/crank.stl",
+      "sha256": "3dad6bca8ef0aa6259d2285147845a7ab451b601baa8c93f6dc56a17357ff078",
+      "bytes": 204150,
+      "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+      "sourceSha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+      "member": "print/crank.stl",
+      "lineage": "ogee16.print-stl/plates-crank"
+    },
+    {
+      "path": "ogee16-r16p-plates/print/crank_latch.stl",
+      "sha256": "56d9e5449cecb42baedd99d41efdf486a3d3bccecc8553bb8c301a110df9bb7e",
+      "bytes": 172336,
+      "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+      "sourceSha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+      "member": "print/crank_latch.stl",
+      "lineage": "ogee16.print-stl/plates-crank-latch"
+    },
+    {
+      "path": "ogee16-r16p-plates/print/deck.stl",
+      "sha256": "5ffff4e81b7eed5a3cfc02a7b17a0440843528a7d408f9d62122eddb4e761d3e",
+      "bytes": 198965,
+      "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+      "sourceSha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+      "member": "print/deck.stl",
+      "lineage": "ogee16.print-stl/plates-deck"
+    },
+    {
+      "path": "ogee16-r16p-plates/print/drivepin.stl",
+      "sha256": "fba34348a8300d27ee06df3664a5996b02525652e3c252e375d71246fd94b275",
+      "bytes": 59986,
+      "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+      "sourceSha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+      "member": "print/drivepin.stl",
+      "lineage": "ogee16.print-stl/plates-drivepin"
+    },
+    {
+      "path": "ogee16-r16p-plates/print/face_asm.stl",
+      "sha256": "1efc2db531597fc66d3c216f5252f9b0e6f3ee5e316ae087701c433e21fe1f94",
+      "bytes": 1949257,
+      "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+      "sourceSha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+      "member": "print/face_asm.stl",
+      "lineage": "ogee16.print-stl/plates-face-asm"
+    },
+    {
+      "path": "ogee16-r16p-plates/print/knob.stl",
+      "sha256": "d676a1659e9660266ee8294f0202959a795f5fd8b2ef5cc203d1fabcf368513f",
+      "bytes": 153425,
+      "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+      "sourceSha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+      "member": "print/knob.stl",
+      "lineage": "ogee16.print-stl/plates-knob"
+    },
+    {
+      "path": "ogee16-r16p-plates/print/latch_asm.stl",
+      "sha256": "e2dde02619f1b1f6eee9796c888edbf484e1eafda59298d9329ba4cc820b3721",
+      "bytes": 56519,
+      "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+      "sourceSha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+      "member": "print/latch_asm.stl",
+      "lineage": "ogee16.print-stl/plates-latch-asm"
+    },
+    {
+      "path": "ogee16-r16p-plates/print/latchpull.stl",
+      "sha256": "671055c010130bc235c180bac3077e910f23b99613a8136242ec9c6f74a6d756",
+      "bytes": 50136,
+      "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+      "sourceSha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+      "member": "print/latchpull.stl",
+      "lineage": "ogee16.print-stl/plates-latchpull"
+    },
+    {
+      "path": "ogee16-r16p-plates/print/latchtower.stl",
+      "sha256": "a6868f550c2313fe5448783b7959d96e13bc9237fcb42f4862e9251cdf4acf1b",
+      "bytes": 58323,
+      "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+      "sourceSha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+      "member": "print/latchtower.stl",
+      "lineage": "ogee16.print-stl/plates-latchtower"
+    },
+    {
+      "path": "ogee16-r16p-plates/print/link.stl",
+      "sha256": "55896c1a54cc6ea278e4cd28eec4d1bf1b742f6e37e17d8f7b2f304b3675b910",
+      "bytes": 158569,
+      "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+      "sourceSha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+      "member": "print/link.stl",
+      "lineage": "ogee16.print-stl/plates-link"
+    },
+    {
+      "path": "ogee16-r16p-plates/print/pivot.stl",
+      "sha256": "2480380d63851cbdc6e531bfb4981e4e13d6811d82bd180e8903d980d32b2b7a",
+      "bytes": 86846,
+      "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+      "sourceSha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+      "member": "print/pivot.stl",
+      "lineage": "ogee16.print-stl/plates-pivot"
+    },
+    {
+      "path": "ogee16-r16p-plates/print/rail.stl",
+      "sha256": "cd1a26268afad4b5440fb1a8ff5fe7c56b4f411f77e865febdd7951a50f2b88a",
+      "bytes": 8673,
+      "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+      "sourceSha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+      "member": "print/rail.stl",
+      "lineage": "ogee16.print-stl/plates-rail"
+    },
+    {
+      "path": "ogee16-r16p-plates/print/rod.stl",
+      "sha256": "49cc9d1dc954df0e12da1de307368c08159e687486dcd05d26820583e06bebfa",
+      "bytes": 6619,
+      "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+      "sourceSha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+      "member": "print/rod.stl",
+      "lineage": "ogee16.print-stl/plates-rod"
+    },
+    {
+      "path": "ogee16-r16p-plates/print/rowbar_asm.stl",
+      "sha256": "30fcd46b8c72d5d32f5ca9d20ac8155bd93ed0ed5ee7598a7b6905811319528d",
+      "bytes": 317103,
+      "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+      "sourceSha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+      "member": "print/rowbar_asm.stl",
+      "lineage": "ogee16.print-stl/plates-rowbar-asm"
+    },
+    {
+      "path": "ogee16-r16p-plates/print/shaft_col.stl",
+      "sha256": "5374c569d74807aac3bc13bfe55ba2475997a7c1a313b0e9591d6f33492581ca",
+      "bytes": 303056,
+      "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+      "sourceSha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+      "member": "print/shaft_col.stl",
+      "lineage": "ogee16.print-stl/plates-shaft-col"
+    },
+    {
+      "path": "ogee16-r16p-plates/print/shaft_row.stl",
+      "sha256": "d86927e891a73ccaf3774843514e9f715df035657d8beeedd776b8ef6c3c9855",
+      "bytes": 303012,
+      "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+      "sourceSha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+      "member": "print/shaft_row.stl",
+      "lineage": "ogee16.print-stl/plates-shaft-row"
+    },
+    {
+      "path": "ogee16-r16p-plates/print/svbracket_col.stl",
+      "sha256": "663908845339bcd6780b923e57fb074fb60a62a7369f09924611d4a7552db0a2",
+      "bytes": 166754,
+      "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+      "sourceSha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+      "member": "print/svbracket_col.stl",
+      "lineage": "ogee16.print-stl/plates-svbracket-col"
+    },
+    {
+      "path": "ogee16-r16p-plates/print/svbracket_row.stl",
+      "sha256": "e27f59441115963861b9c052f1a9206664027186078f709ad6f552ef2053f953",
+      "bytes": 166670,
+      "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+      "sourceSha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+      "member": "print/svbracket_row.stl",
+      "lineage": "ogee16.print-stl/plates-svbracket-row"
+    },
+    {
+      "path": "ogee16-r16p-plates/print/wall_xn.stl",
+      "sha256": "4f4970dd07172b02d376eeadbbe3cdd2842a2c5f998bef3e20a65959265e5be2",
+      "bytes": 58668,
+      "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+      "sourceSha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+      "member": "print/wall_xn.stl",
+      "lineage": "ogee16.print-stl/plates-wall-xn"
+    },
+    {
+      "path": "ogee16-r16p-plates/print/wall_xp.stl",
+      "sha256": "2cb852dce5a64a1c12752f6c0b08df4c4f3586f168e2a633b7a39b7c4c358241",
+      "bytes": 306124,
+      "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+      "sourceSha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+      "member": "print/wall_xp.stl",
+      "lineage": "ogee16.print-stl/plates-wall-xp"
+    },
+    {
+      "path": "ogee16-r16p-plates/print/wall_yn.stl",
+      "sha256": "01d1a5943525d4e0b3d9dc6b79a3af858e22874fb5005bcf1eb0612dd26a71bd",
+      "bytes": 59632,
+      "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+      "sourceSha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+      "member": "print/wall_yn.stl",
+      "lineage": "ogee16.print-stl/plates-wall-yn"
+    },
+    {
+      "path": "ogee16-r16p-plates/print/wall_yp.stl",
+      "sha256": "f2774d4f4effc80c6598eb50bd442e357202b493421a87f3e1d46846bf331d97",
+      "bytes": 312726,
+      "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+      "sourceSha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+      "member": "print/wall_yp.stl",
+      "lineage": "ogee16.print-stl/plates-wall-yp"
+    },
+    {
+      "path": "slug-sheets/slug-html-1042-1051.txt",
+      "sha256": "1469a16f1901add43ee01eef5d976e42d01f64651585b408a96690ae6b3acb7a",
+      "bytes": 685,
+      "source": "fab-knowledge:originals/slug/files/slug.html",
+      "sourceSha256": "2d09238c27d5ca4bf023eeee44939b1500470ad2058822b8d0add48ec9bf3241",
+      "lines": [
+        1042,
+        1051
+      ],
+      "lineage": "slug.sheets/slug-12"
+    },
+    {
+      "path": "slug-sheets/slug-html-174-177.txt",
+      "sha256": "f9189ce89f02e2b95ea6366216bd0902f48ef764982b1a40363634a126902c39",
+      "bytes": 440,
+      "source": "fab-knowledge:originals/slug/files/slug.html",
+      "sourceSha256": "2d09238c27d5ca4bf023eeee44939b1500470ad2058822b8d0add48ec9bf3241",
+      "lines": [
+        174,
+        177
+      ],
+      "lineage": "slug.sheets/slug-12"
+    },
+    {
+      "path": "slug-sheets/slug-html-272.txt",
+      "sha256": "6c1b748a73cfa9f7850f5083e1565f4d84af886ee45a2074895ec74efb760704",
+      "bytes": 307567,
+      "source": "fab-knowledge:originals/slug/files/slug.html",
+      "sourceSha256": "2d09238c27d5ca4bf023eeee44939b1500470ad2058822b8d0add48ec9bf3241",
+      "lines": [
+        272,
+        272
+      ],
+      "lineage": "slug.sheets/slug-12"
+    }
+  ]
+}

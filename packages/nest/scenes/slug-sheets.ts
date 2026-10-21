@@ -1,28 +1,31 @@
 // Scene slug-sheets (M07-T07 step 1): SLUG's laser sheets as a nest
-// request. Data only, read from the pinned legacy page and never typed:
-// the items are the PART_QTY names with their baked OUTLINES (slug.html
-// line 272 and lines 1042 to 1050, the lines
-// designs/slug/extract/extract-nest.mjs copies, read here as data;
-// lineage slug.nest/slug-12),
+// request. Data only, read from lines of the page stored under
+// inputs/slug-sheets/ (inputs/stored-inputs.json; lineage slug.sheets/slug-12)
+// and never typed: the items are the PART_QTY names with their baked
+// OUTLINES (slug.html line 272 and lines 1042 to 1050, the lines
+// designs/slug/extract/extract-nest.mjs copies, read here as data),
 // the stock of each from the ACRYLIC set (line 1051), and the sheet, gap
 // and margin from the page's sheet controls (lines 174 to 177, the values
 // buildSheets reads at lines 1147 and 1148). Kerf mode none: the page cuts
 // with compensation off and leaves the 0.15 mm slip to the outlines (lines
 // 1159 and 1160). Rotations 0 and 90: the shelf packer turns parts by a quarter only
 // (line 1060). The items come from the legacy extraction until M10 gives
-// SLUG a chase; then they move into its build.ts.
+// SLUG a chase; then they move into its build.ts. Each stored file holds
+// its page lines and a newline; the line numbers below are the page's.
 //
 // This file imports node and types only, so Node strips it without a build.
 
-import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import type { NestItem, NestRequest, Ring } from "@hackbuild/spec";
 import type { SheetScene } from "../src/scene.js";
 
-const PAGE = new URL("../../../designs/slug/legacy/slug.html", import.meta.url);
-/** designs/slug/legacy/SHA256SUMS, the same pin extract-nest.mjs reads with. */
+/** The page lines this scene reads, stored as slug-html-<first>[-<last>].txt. */
+export const SHEETS_INPUTS = new URL("inputs/slug-sheets/", import.meta.url);
+/** sha256 of fab-knowledge:originals/slug/files/slug.html, the page the stored lines are taken from. */
 export const PAGE_SHA256 = "2d09238c27d5ca4bf023eeee44939b1500470ad2058822b8d0add48ec9bf3241";
-const CITE = `designs/slug/legacy/slug.html (sha256 ${PAGE_SHA256.slice(0, 16)}, lineage slug.nest/slug-12)`;
+const CITE = `fab-knowledge:originals/slug/files/slug.html (sha256 ${PAGE_SHA256.slice(0, 16)}, lineage slug.nest/slug-12)`;
+/** The stored ranges, first and last page line of each file. */
+const RANGES: readonly (readonly [number, number])[] = [[174, 177], [272, 272], [1042, 1051]];
 
 /** The page's part data: baked outlines, quantities and the acrylic set. */
 export interface SlugPage {
@@ -31,12 +34,16 @@ export interface SlugPage {
   readonly ACRYLIC: ReadonlySet<string>;
 }
 
-/** The pinned page's lines; a page that is not the pinned copy stops the load. */
+/** The stored page lines, indexed by page line less one; lines not stored are absent. */
 function pageLines(): string[] {
-  const bytes = readFileSync(PAGE);
-  const sha = createHash("sha256").update(bytes).digest("hex");
-  if (sha !== PAGE_SHA256) throw new Error(`scene slug-sheets: slug.html sha256 ${sha} is not the pinned ${PAGE_SHA256}`);
-  return bytes.toString("utf8").split("\n");
+  const lines: string[] = [];
+  for (const [first, last] of RANGES) {
+    const name = first === last ? `slug-html-${first}.txt` : `slug-html-${first}-${last}.txt`;
+    const got = readFileSync(new URL(name, SHEETS_INPUTS), "utf8").replace(/\n$/, "").split("\n");
+    if (got.length !== last - first + 1) throw new Error(`scene slug-sheets: ${name} holds ${got.length} lines, not slug.html lines ${first} to ${last}`);
+    got.forEach((l, i) => (lines[first - 1 + i] = l));
+  }
+  return lines;
 }
 
 /** The text of a page line after its marker, refused when the marker moved. */
@@ -113,7 +120,7 @@ export function slugScene(id: string, qty: Readonly<Record<string, number>>, pag
       `items: ${CITE} line 272 (OUTLINES) and lines 1042 to 1051 (PART_QTY, ACRYLIC), read as data`,
       `sheet, gap, margin: ${CITE} lines 174 to 177 (nW, nH, nGap, nMar), read by buildSheets at lines 1147 and 1148`,
       `kerf mode none: ${CITE} lines 1159 and 1160, cut with kerf compensation off`,
-      "stocks ply3 and acrylic3: designs/slug/legacy/BUILD.md line 4, 3 mm ply throughout and 3 mm acrylic for the panes",
+      "stocks ply3 and acrylic3: fab-knowledge:originals/slug/files/BUILD.md line 4, 3 mm ply throughout and 3 mm acrylic for the panes",
       ...extra,
     ],
   };

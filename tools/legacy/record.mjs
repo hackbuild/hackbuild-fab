@@ -93,8 +93,18 @@ export function machine() {
 }
 
 /**
+ * The key a record names an input by: an archive id in the publish form of
+ * tools/publish-paths.mjs (fab-knowledge:originals/...) as given, a local
+ * path relative to the repository.
+ */
+const inputKey = (path) => (/^[a-z][\w-]*:/.test(path) ? path : relative(ROOT, path));
+
+/**
  * Finishes a record script. `spec` holds record, card, command, qualifier,
- * inputs (absolute paths with their pinned sha256) and the record path.
+ * inputs (archive ids or absolute paths, with their pinned sha256) and the
+ * record path. Without --write each pin must be among the record's input
+ * sha256, so a record written while the inputs sat in a legacy folder still
+ * checks against the originals they were copied from.
  * Without --write the committed record is the golden: the result must equal
  * it, and the asserts must hold. With --write the asserts must still hold.
  */
@@ -108,9 +118,9 @@ export function finish(spec, result, asserts, argv = process.argv) {
       const rec = JSON.parse(readFileSync(out, "utf8"));
       problems.push(...diff(result, rec.result, spec.tol ?? 1e-9));
       if (rec.resultSha256 !== sha256(canonical(rec.result))) problems.push(`${spec.out} resultSha256 does not match its result`);
+      const recorded = new Set(Object.values(rec.inputs ?? {}));
       for (const [path, pin] of Object.entries(spec.inputs)) {
-        const key = relative(ROOT, path);
-        if (rec.inputs?.[key] !== pin) problems.push(`input ${key}: pinned ${pin}, record ${rec.inputs?.[key]}`);
+        if (!recorded.has(pin)) problems.push(`input ${inputKey(path)}: pinned ${pin}, in no input of the record`);
       }
     }
   }
@@ -126,7 +136,7 @@ export function finish(spec, result, asserts, argv = process.argv) {
       qualifier: spec.qualifier,
       command: spec.command,
       machine: machine(),
-      inputs: Object.fromEntries(Object.entries(spec.inputs).map(([p, s]) => [relative(ROOT, p), s])),
+      inputs: Object.fromEntries(Object.entries(spec.inputs).map(([p, s]) => [inputKey(p), s])),
       resultSha256: sha256(canonical(result)),
       result,
     };

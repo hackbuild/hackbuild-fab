@@ -8,7 +8,8 @@
       "OUTLINES (line 272), PART_QTY (lines 1042 to 1050), ACRYLIC (line 1051) and the sheet controls nW, nH, nGap and nMar (lines 174 to 177) read as data into the slug-sheets scene; the parts and sheets equal the page's nest() and the 10 shipped DXF files vertex for vertex to 1e-3 mm, less 168 vertices the page repeats in place (pinion ring 4, rotor_gear_a and rotor_gear_b outer rings), which the writer drops as zero-length edges",
       "sheetDXF() of lines 1129 to 1137 (POLYLINE, no $ACADVER, no repeated first vertex) replaced by the one writer in packages/nest/src/dxf.ts with arcs off, AC1024 and CHK-SHT-03 by construction",
       "PART_QTY omits the baked door_flap, window, ret_lip and ret_back; the informational slug-sheets-complete scene adds one of each (inferred, BUILD.md lines 4, 67 to 70, 109 and 153; knowledge/designs/slug.md section 9)",
-      "the buildSheets label (line 1154) and BUILD.md line 85 say 6 mm ply and 10 sheets; the build gives 9 sheets of ply3 and 1 of acrylic3 (BUILD.md line 4, params.json t 3)"
+      "the buildSheets label (line 1154) and BUILD.md line 85 say 6 mm ply and 10 sheets; the build gives 9 sheets of ply3 and 1 of acrylic3 (BUILD.md line 4, params.json t 3)",
+      "the sheet controls (lines 174 to 177), OUTLINES (line 272) and PART_QTY with ACRYLIC (lines 1042 to 1051) stored for the slug-sheets scene as packages/nest/scenes/inputs/slug-sheets/slug-html-174-177.txt, packages/nest/scenes/inputs/slug-sheets/slug-html-272.txt, packages/nest/scenes/inputs/slug-sheets/slug-html-1042-1051.txt"
     ],
     "dest": "packages/nest/scenes/slug-sheets.ts"
   }

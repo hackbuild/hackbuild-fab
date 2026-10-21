@@ -7,7 +7,10 @@
 // cosine, tangent and atan2 from src/trig.ts: the legacy module reads Math
 // at call time, and this file points those four at the fdlibm port for its
 // run, so the comparison is of the page's arithmetic on every machine
-// (CI-03).
+// (CI-03). The page is the original of record
+// (fab-knowledge:originals/slug/files/slug.html), read here and by the
+// extraction through tools/test-support/originals-root.ts, so this file runs
+// on the owner runner and never skips.
 
 import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
@@ -16,6 +19,7 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { afterAll, beforeAll, describe, expect, test } from "vitest";
+import { localOriginal } from "../../../tools/test-support/originals-root.js";
 import { capsuleGeometry } from "../src/capsule/geometry.js";
 import { capsuleWorld, resetWorld, type CapsuleWorld } from "../src/capsule/solver.js";
 import { driveStep, runSlugTrial } from "../src/capsule/vend.js";
@@ -25,7 +29,7 @@ import { SLUG_SCENE } from "../scenes/slug.js";
 
 const SIM = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const ROOT = path.resolve(SIM, "..", "..");
-const LEGACY = path.join(ROOT, "designs", "slug", "legacy");
+const PAGE = "fab-knowledge:originals/slug/files/slug.html";
 const EXTRACT = path.join(ROOT, "designs", "slug", "extract", "extract.mjs");
 const lineage = JSON.parse(readFileSync(path.join(ROOT, "lineage.json"), "utf8")) as { id: string; sha256: string; dest: string | null }[];
 
@@ -106,7 +110,7 @@ beforeAll(() => {
 
 describe("SLUG legacy step against the port (M02-T08)", () => {
   test("the page is the lineage row's bytes and the extraction copies step and relax verbatim", () => {
-    const page = readFileSync(path.join(LEGACY, "slug.html"));
+    const page = readFileSync(localOriginal(PAGE));
     expect(createHash("sha256").update(page).digest("hex")).toBe(lineage.find((r) => r.id === "slug.bench/slug-12")?.sha256);
     const lines = page.toString("utf8").split("\n");
     const mod = readFileSync(legacyModule, "utf8");

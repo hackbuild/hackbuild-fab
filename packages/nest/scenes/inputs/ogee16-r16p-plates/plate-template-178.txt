@@ -1,0 +1,1 @@
+let gap = 4, cur = 0;

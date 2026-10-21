@@ -3553,6 +3553,16 @@
     "dest": "designs/ogee16/extract/connect-record.py"
   },
   {
+    "id": "ogee16.cutfiles/nest-tests-stored",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/ogee16/files/src/source/cutfiles.py",
+    "sha256": "ef535caca27def1a7b8a91e4c6273dfb1e85617c6087b93e4924debf3fb98800",
+    "fixes": [
+      "lines 18 to 32 (KERF, sheet, GAP and BOM) the nest tests read as their independent bill"
+    ],
+    "dest": "packages/nest/test/inputs/ogee16/cutfiles-18-32.txt"
+  },
+  {
     "id": "ogee16.cutfiles/r16p",
     "kind": "canonical",
     "source": "fab-knowledge:originals/ogee16/files/src/source/cutfiles.py",
@@ -3642,7 +3652,9 @@
     "sha256": "59507bfae682869fb87d9ff5d6aa59fe2746f51ece249359ab69b223290f04bf",
     "fixes": [
       "packOne() of lines 268 to 300 ported term for term as findFit and splitFree; the bed is the request's sheet (any width and height) instead of the square PLATE, the turns are the request's rotations, and the items are spec NestItems",
-      "pack() of lines 302 to 324 (one plate at a time per group, area order) becomes groupBy type with order area in packages/nest/src/sheet-loop.ts and GUSSET's best-sheet loop (row gusset.bench/nest-orders); with one part type per plate that fits one plate both give the page's plates placement for placement (packages/nest/test/maxrects-parity.test.ts, computed)"
+      "pack() of lines 302 to 324 (one plate at a time per group, area order) becomes groupBy type with order area in packages/nest/src/sheet-loop.ts and GUSSET's best-sheet loop (row gusset.bench/nest-orders); with one part type per plate that fits one plate both give the page's plates placement for placement (packages/nest/test/maxrects-parity.test.ts, computed)",
+      "lines 178 (gap) and 263 (margin) stored for the ogee16-r16p-plates scene as packages/nest/scenes/inputs/ogee16-r16p-plates/plate-template-178.txt and packages/nest/scenes/inputs/ogee16-r16p-plates/plate-template-263.txt",
+      "lines 409 to 419, the writeSTL quarter turn rule the 3mf plate layout test holds the writer to, stored as packages/3mf/test/inputs/plate-template-409-419.txt"
     ],
     "dest": "packages/nest/src/maxrects.ts"
   },
@@ -3673,6 +3685,26 @@
     "dest": "core/src/kinematics.ts"
   },
   {
+    "id": "ogee16.params/motion-stored",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/ogee16/files/src/source/params.scad",
+    "sha256": "1c0a4b898b4977d87d435273a04857111fab5d43324bee591c2a6ad641591d6d",
+    "fixes": [
+      "the OGEE16 machine motion.run, core kinematics and the motion and checks tests read, stored whole"
+    ],
+    "dest": "packages/motion/inputs/ogee16/params.scad"
+  },
+  {
+    "id": "ogee16.params/plates-stored",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/ogee16/files/src/source/params.scad",
+    "sha256": "1c0a4b898b4977d87d435273a04857111fab5d43324bee591c2a6ad641591d6d",
+    "fixes": [
+      "line 36, the array size N the plates scene reads"
+    ],
+    "dest": "packages/nest/scenes/inputs/ogee16-r16p-plates/params-scad-36.txt"
+  },
+  {
     "id": "ogee16.params/r16p",
     "kind": "canonical",
     "source": "fab-knowledge:originals/ogee16/files/src/source/params.scad",
@@ -3692,12 +3724,392 @@
     "dest": "designs/ogee16/legacy/ogee16-plate.html"
   },
   {
+    "id": "ogee16.plate/nest-tests-stored",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/ogee16/files/src/source/build_plate.py",
+    "sha256": "dc3f1772312360fda22e3ef5f89ebc243e714fbf88fc1498e30c6a2bfd0664ed",
+    "fixes": [
+      "lines 5 to 12 (COMMON, KNOB_DRIVE, SERVO_DRIVE) the nest tests read as the hand bill"
+    ],
+    "dest": "packages/nest/test/inputs/ogee16/build-plate-5-12.txt"
+  },
+  {
     "id": "ogee16.plate/r16p",
     "kind": "canonical",
     "source": "fab-knowledge:originals/ogee16/files/src/source/build_plate.py",
     "sha256": "dc3f1772312360fda22e3ef5f89ebc243e714fbf88fc1498e30c6a2bfd0664ed",
     "fixes": [],
     "dest": null
+  },
+  {
+    "id": "ogee16.print-stl/plates-base",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+    "sha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+    "fixes": [],
+    "dest": "packages/nest/scenes/inputs/ogee16-r16p-plates/print/base.stl"
+  },
+  {
+    "id": "ogee16.print-stl/plates-cap",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+    "sha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+    "fixes": [],
+    "dest": "packages/nest/scenes/inputs/ogee16-r16p-plates/print/cap.stl"
+  },
+  {
+    "id": "ogee16.print-stl/plates-colbar-asm",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+    "sha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+    "fixes": [],
+    "dest": "packages/nest/scenes/inputs/ogee16-r16p-plates/print/colbar_asm.stl"
+  },
+  {
+    "id": "ogee16.print-stl/plates-crank",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+    "sha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+    "fixes": [],
+    "dest": "packages/nest/scenes/inputs/ogee16-r16p-plates/print/crank.stl"
+  },
+  {
+    "id": "ogee16.print-stl/plates-crank-latch",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+    "sha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+    "fixes": [],
+    "dest": "packages/nest/scenes/inputs/ogee16-r16p-plates/print/crank_latch.stl"
+  },
+  {
+    "id": "ogee16.print-stl/plates-deck",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+    "sha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+    "fixes": [],
+    "dest": "packages/nest/scenes/inputs/ogee16-r16p-plates/print/deck.stl"
+  },
+  {
+    "id": "ogee16.print-stl/plates-drivepin",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+    "sha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+    "fixes": [],
+    "dest": "packages/nest/scenes/inputs/ogee16-r16p-plates/print/drivepin.stl"
+  },
+  {
+    "id": "ogee16.print-stl/plates-face-asm",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+    "sha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+    "fixes": [],
+    "dest": "packages/nest/scenes/inputs/ogee16-r16p-plates/print/face_asm.stl"
+  },
+  {
+    "id": "ogee16.print-stl/plates-knob",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+    "sha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+    "fixes": [],
+    "dest": "packages/nest/scenes/inputs/ogee16-r16p-plates/print/knob.stl"
+  },
+  {
+    "id": "ogee16.print-stl/plates-latch-asm",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+    "sha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+    "fixes": [],
+    "dest": "packages/nest/scenes/inputs/ogee16-r16p-plates/print/latch_asm.stl"
+  },
+  {
+    "id": "ogee16.print-stl/plates-latchpull",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+    "sha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+    "fixes": [],
+    "dest": "packages/nest/scenes/inputs/ogee16-r16p-plates/print/latchpull.stl"
+  },
+  {
+    "id": "ogee16.print-stl/plates-latchtower",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+    "sha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+    "fixes": [],
+    "dest": "packages/nest/scenes/inputs/ogee16-r16p-plates/print/latchtower.stl"
+  },
+  {
+    "id": "ogee16.print-stl/plates-link",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+    "sha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+    "fixes": [],
+    "dest": "packages/nest/scenes/inputs/ogee16-r16p-plates/print/link.stl"
+  },
+  {
+    "id": "ogee16.print-stl/plates-pivot",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+    "sha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+    "fixes": [],
+    "dest": "packages/nest/scenes/inputs/ogee16-r16p-plates/print/pivot.stl"
+  },
+  {
+    "id": "ogee16.print-stl/plates-rail",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+    "sha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+    "fixes": [],
+    "dest": "packages/nest/scenes/inputs/ogee16-r16p-plates/print/rail.stl"
+  },
+  {
+    "id": "ogee16.print-stl/plates-rod",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+    "sha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+    "fixes": [],
+    "dest": "packages/nest/scenes/inputs/ogee16-r16p-plates/print/rod.stl"
+  },
+  {
+    "id": "ogee16.print-stl/plates-rowbar-asm",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+    "sha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+    "fixes": [],
+    "dest": "packages/nest/scenes/inputs/ogee16-r16p-plates/print/rowbar_asm.stl"
+  },
+  {
+    "id": "ogee16.print-stl/plates-shaft-col",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+    "sha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+    "fixes": [],
+    "dest": "packages/nest/scenes/inputs/ogee16-r16p-plates/print/shaft_col.stl"
+  },
+  {
+    "id": "ogee16.print-stl/plates-shaft-row",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+    "sha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+    "fixes": [],
+    "dest": "packages/nest/scenes/inputs/ogee16-r16p-plates/print/shaft_row.stl"
+  },
+  {
+    "id": "ogee16.print-stl/plates-svbracket-col",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+    "sha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+    "fixes": [],
+    "dest": "packages/nest/scenes/inputs/ogee16-r16p-plates/print/svbracket_col.stl"
+  },
+  {
+    "id": "ogee16.print-stl/plates-svbracket-row",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+    "sha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+    "fixes": [],
+    "dest": "packages/nest/scenes/inputs/ogee16-r16p-plates/print/svbracket_row.stl"
+  },
+  {
+    "id": "ogee16.print-stl/plates-wall-xn",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+    "sha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+    "fixes": [],
+    "dest": "packages/nest/scenes/inputs/ogee16-r16p-plates/print/wall_xn.stl"
+  },
+  {
+    "id": "ogee16.print-stl/plates-wall-xp",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+    "sha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+    "fixes": [],
+    "dest": "packages/nest/scenes/inputs/ogee16-r16p-plates/print/wall_xp.stl"
+  },
+  {
+    "id": "ogee16.print-stl/plates-wall-yn",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+    "sha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+    "fixes": [],
+    "dest": "packages/nest/scenes/inputs/ogee16-r16p-plates/print/wall_yn.stl"
+  },
+  {
+    "id": "ogee16.print-stl/plates-wall-yp",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+    "sha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+    "fixes": [],
+    "dest": "packages/nest/scenes/inputs/ogee16-r16p-plates/print/wall_yp.stl"
+  },
+  {
+    "id": "ogee16.print-stl/r16p",
+    "kind": "canonical",
+    "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+    "sha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+    "fixes": [
+      "the R16-P print STLs (print/, 46 members) are the meshes of the ogee16-printed, ogee16-cranks and ogee16-r16p-plates scenes; the scenes read the stored members below, never the zip"
+    ],
+    "dest": null
+  },
+  {
+    "id": "ogee16.print-stl/sim-base-asm",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+    "sha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+    "fixes": [],
+    "dest": "packages/sim/scenes/inputs/ogee16/print/base_asm.stl"
+  },
+  {
+    "id": "ogee16.print-stl/sim-cap-asm",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+    "sha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+    "fixes": [],
+    "dest": "packages/sim/scenes/inputs/ogee16/print/cap_asm.stl"
+  },
+  {
+    "id": "ogee16.print-stl/sim-colbar-asm",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+    "sha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+    "fixes": [],
+    "dest": "packages/sim/scenes/inputs/ogee16/print/colbar_asm.stl"
+  },
+  {
+    "id": "ogee16.print-stl/sim-crank-col-asm",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+    "sha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+    "fixes": [],
+    "dest": "packages/sim/scenes/inputs/ogee16/print/crank_col_asm.stl"
+  },
+  {
+    "id": "ogee16.print-stl/sim-crank-latch-asm",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+    "sha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+    "fixes": [],
+    "dest": "packages/sim/scenes/inputs/ogee16/print/crank_latch_asm.stl"
+  },
+  {
+    "id": "ogee16.print-stl/sim-crank-row-asm",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+    "sha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+    "fixes": [],
+    "dest": "packages/sim/scenes/inputs/ogee16/print/crank_row_asm.stl"
+  },
+  {
+    "id": "ogee16.print-stl/sim-deck",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+    "sha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+    "fixes": [],
+    "dest": "packages/sim/scenes/inputs/ogee16/print/deck.stl"
+  },
+  {
+    "id": "ogee16.print-stl/sim-face-asm",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+    "sha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+    "fixes": [],
+    "dest": "packages/sim/scenes/inputs/ogee16/print/face_asm.stl"
+  },
+  {
+    "id": "ogee16.print-stl/sim-latch-asm",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+    "sha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+    "fixes": [],
+    "dest": "packages/sim/scenes/inputs/ogee16/print/latch_asm.stl"
+  },
+  {
+    "id": "ogee16.print-stl/sim-latchpull-asm",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+    "sha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+    "fixes": [],
+    "dest": "packages/sim/scenes/inputs/ogee16/print/latchpull_asm.stl"
+  },
+  {
+    "id": "ogee16.print-stl/sim-link",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+    "sha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+    "fixes": [],
+    "dest": "packages/sim/scenes/inputs/ogee16/print/link.stl"
+  },
+  {
+    "id": "ogee16.print-stl/sim-rail-asm",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+    "sha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+    "fixes": [],
+    "dest": "packages/sim/scenes/inputs/ogee16/print/rail_asm.stl"
+  },
+  {
+    "id": "ogee16.print-stl/sim-rod-asm",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+    "sha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+    "fixes": [],
+    "dest": "packages/sim/scenes/inputs/ogee16/print/rod_asm.stl"
+  },
+  {
+    "id": "ogee16.print-stl/sim-rowbar-asm",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+    "sha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+    "fixes": [],
+    "dest": "packages/sim/scenes/inputs/ogee16/print/rowbar_asm.stl"
+  },
+  {
+    "id": "ogee16.print-stl/sim-shaft-col",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+    "sha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+    "fixes": [],
+    "dest": "packages/sim/scenes/inputs/ogee16/print/shaft_col.stl"
+  },
+  {
+    "id": "ogee16.print-stl/sim-shaft-row",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+    "sha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+    "fixes": [],
+    "dest": "packages/sim/scenes/inputs/ogee16/print/shaft_row.stl"
+  },
+  {
+    "id": "ogee16.print-stl/sim-wall-xn-asm",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+    "sha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+    "fixes": [],
+    "dest": "packages/sim/scenes/inputs/ogee16/print/wall_xn_asm.stl"
+  },
+  {
+    "id": "ogee16.print-stl/sim-wall-xp-asm",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+    "sha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+    "fixes": [],
+    "dest": "packages/sim/scenes/inputs/ogee16/print/wall_xp_asm.stl"
+  },
+  {
+    "id": "ogee16.print-stl/sim-wall-yn-asm",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+    "sha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+    "fixes": [],
+    "dest": "packages/sim/scenes/inputs/ogee16/print/wall_yn_asm.stl"
+  },
+  {
+    "id": "ogee16.print-stl/sim-wall-yp-asm",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip",
+    "sha256": "855ffe7c28c139e5d2d173651027eb105f65e04feb727d5e0a0b46c36010faf5",
+    "fixes": [],
+    "dest": "packages/sim/scenes/inputs/ogee16/print/wall_yp_asm.stl"
   },
   {
     "id": "ogee16.printed/bench-zip",
@@ -5457,6 +5869,16 @@
     "dest": "designs/slug/legacy/slug.html"
   },
   {
+    "id": "slug.scad/motion-stored",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/slug/files/slug.scad",
+    "sha256": "a5990b866b0829282ec7dc9b6f090c64c447c8f1a3432164b279ebc8dcf3fef6",
+    "fixes": [
+      "the SLUG drive motion.run and the motion tests read, stored whole"
+    ],
+    "dest": "packages/motion/inputs/slug/slug.scad"
+  },
+  {
     "id": "slug.scad/slug-12",
     "kind": "canonical",
     "source": "fab-knowledge:originals/slug/files/slug.scad",
@@ -5485,7 +5907,8 @@
       "OUTLINES (line 272), PART_QTY (lines 1042 to 1050), ACRYLIC (line 1051) and the sheet controls nW, nH, nGap and nMar (lines 174 to 177) read as data into the slug-sheets scene; the parts and sheets equal the page's nest() and the 10 shipped DXF files vertex for vertex to 1e-3 mm, less 168 vertices the page repeats in place (pinion ring 4, rotor_gear_a and rotor_gear_b outer rings), which the writer drops as zero-length edges",
       "sheetDXF() of lines 1129 to 1137 (POLYLINE, no $ACADVER, no repeated first vertex) replaced by the one writer in packages/nest/src/dxf.ts with arcs off, AC1024 and CHK-SHT-03 by construction",
       "PART_QTY omits the baked door_flap, window, ret_lip and ret_back; the informational slug-sheets-complete scene adds one of each (inferred, BUILD.md lines 4, 67 to 70, 109 and 153; knowledge/designs/slug.md section 9)",
-      "the buildSheets label (line 1154) and BUILD.md line 85 say 6 mm ply and 10 sheets; the build gives 9 sheets of ply3 and 1 of acrylic3 (BUILD.md line 4, params.json t 3)"
+      "the buildSheets label (line 1154) and BUILD.md line 85 say 6 mm ply and 10 sheets; the build gives 9 sheets of ply3 and 1 of acrylic3 (BUILD.md line 4, params.json t 3)",
+      "the sheet controls (lines 174 to 177), OUTLINES (line 272) and PART_QTY with ACRYLIC (lines 1042 to 1051) stored for the slug-sheets scene as packages/nest/scenes/inputs/slug-sheets/slug-html-174-177.txt, packages/nest/scenes/inputs/slug-sheets/slug-html-272.txt, packages/nest/scenes/inputs/slug-sheets/slug-html-1042-1051.txt"
     ],
     "dest": "packages/nest/scenes/slug-sheets.ts"
   },

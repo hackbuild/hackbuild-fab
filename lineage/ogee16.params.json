@@ -26,6 +26,26 @@
     "dest": "core/src/kinematics.ts"
   },
   {
+    "id": "ogee16.params/motion-stored",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/ogee16/files/src/source/params.scad",
+    "sha256": "1c0a4b898b4977d87d435273a04857111fab5d43324bee591c2a6ad641591d6d",
+    "fixes": [
+      "the OGEE16 machine motion.run, core kinematics and the motion and checks tests read, stored whole"
+    ],
+    "dest": "packages/motion/inputs/ogee16/params.scad"
+  },
+  {
+    "id": "ogee16.params/plates-stored",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/ogee16/files/src/source/params.scad",
+    "sha256": "1c0a4b898b4977d87d435273a04857111fab5d43324bee591c2a6ad641591d6d",
+    "fixes": [
+      "line 36, the array size N the plates scene reads"
+    ],
+    "dest": "packages/nest/scenes/inputs/ogee16-r16p-plates/params-scad-36.txt"
+  },
+  {
     "id": "ogee16.params/r16p",
     "kind": "canonical",
     "source": "fab-knowledge:originals/ogee16/files/src/source/params.scad",

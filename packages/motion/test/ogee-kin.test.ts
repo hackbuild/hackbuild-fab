@@ -3,7 +3,7 @@
 // packages/motion/records/ogee16-kin.json (kin-record.py runs kin.py and
 // check_viewer.py lines 47 to 67 unedited), the kin.P scalars in
 // packages/sim/test/goldens/ogee-sweep-oracle.json (M02-T07 oracle), the
-// audit poses audit_print.py build() placed (designs/ogee16/legacy/poses,
+// audit poses audit_print.py build() placed (packages/sim/scenes/ogee16-poses,
 // tools/py/ogee16/export_poses.py), and the figures of the M07 Records
 // table typed below from kin.py's printout. The case inputs are typed from
 // check_viewer.py lines 47 to 55. The legacy check_viewer.py printed
@@ -29,7 +29,7 @@ interface KinRecord {
 }
 const record = JSON.parse(read("packages/motion/records/ogee16-kin.json").toString("utf8")) as KinRecord;
 const oracle = JSON.parse(read("packages/sim/test/goldens/ogee-sweep-oracle.json").toString("utf8")) as { kinSha256: string; paramsSha256: string; placement: { params: Record<string, number> } };
-const P = readScadParams(read("designs/ogee16/legacy/source/params.scad").toString("utf8"));
+const P = readScadParams(read("packages/motion/inputs/ogee16/params.scad").toString("utf8"));
 const K = ogeeKinematics(P);
 
 interface Case { zR: number[]; zC: number[]; lp: number; latched: boolean }
@@ -57,10 +57,12 @@ function row(i: number, j: number, c: Case): number[] {
 }
 
 describe("the records", () => {
-  test("name the legacy kin.py, params.scad and check_viewer.py byte for byte", () => {
-    for (const [f, h] of Object.entries(record.inputs)) expect(sha(read(f)), f).toBe(h);
-    expect(sha(read("designs/ogee16/legacy/source/kin.py"))).toBe(oracle.kinSha256);
-    expect(sha(read("designs/ogee16/legacy/source/params.scad"))).toBe(oracle.paramsSha256);
+  // ogee-originals.test.ts holds every record input to the originals of record.
+  test("the record and the oracle name the params.scad read here, byte for byte", () => {
+    const params = sha(read("packages/motion/inputs/ogee16/params.scad"));
+    expect(params).toBe(oracle.paramsSha256);
+    expect(Object.values(record.inputs)).toContain(params);
+    expect(Object.values(record.inputs)).toContain(oracle.kinSha256);
     expect(record.result.rows.kinPy).toHaveLength(128);
   });
 });
@@ -141,7 +143,7 @@ describe("kin.py readout", () => {
 
 describe("placements", () => {
   interface PoseFile { sources: Record<string, string>; poses: { label: string; zR: number[]; zC: number[]; lp: number; bodies: { label: string; stl: string; matrix: number[] }[] }[] }
-  const files = ["printed-4", "printed-negatives"].map((f) => JSON.parse(read(`designs/ogee16/legacy/poses/${f}.json`).toString("utf8")) as PoseFile);
+  const files = ["printed-4", "printed-negatives"].map((f) => JSON.parse(read(`packages/sim/scenes/ogee16-poses/${f}.json`).toString("utf8")) as PoseFile);
 
   test("place() reproduces audit_print.py build() at every audit pose: names, STLs and matrices within 1e-9", () => {
     let poses = 0;

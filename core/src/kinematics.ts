@@ -2,8 +2,8 @@
 // interface (D-139, PACKAGES.md 5.8): sim may not import motion
 // (tools/tiers.json), so the sim scenes read every placement through
 // SceneDeps.kinematics, and this is the one place the two meet. The OGEE16
-// dimensions are read from the legacy params.scad by motion's port of
-// kin.load_params.
+// dimensions are read from params.scad, stored whole in packages/motion/inputs
+// (lineage ogee16.params/m02-scene), by motion's port of kin.load_params.
 
 import { readFileSync } from "node:fs";
 import path from "node:path";
@@ -11,7 +11,7 @@ import { davitPlacements, ogeeKinematics, readScadParams } from "@hackbuild/moti
 import type { SceneKinematics } from "@hackbuild/sim";
 
 /** The params.scad the OGEE16 kinematics read, from the repository root. */
-export const OGEE16_PARAMS = "designs/ogee16/legacy/source/params.scad";
+export const OGEE16_PARAMS = "packages/motion/inputs/ogee16/params.scad";
 
 const bound = new Map<string, SceneKinematics>();
 

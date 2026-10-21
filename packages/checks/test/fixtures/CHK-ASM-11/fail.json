@@ -82,6 +82,6 @@
   "tolMm3": 0.5,
   "touchCeilingMm3": 120,
   "boxMarginMm": 0.000001,
-  "origin": "designs/ogee16/legacy/source/audit_print.py audit()"
+  "origin": "fab-knowledge:originals/ogee16/files/src/source/audit_print.py audit()"
  }
 }

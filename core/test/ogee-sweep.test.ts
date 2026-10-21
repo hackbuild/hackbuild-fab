@@ -44,12 +44,12 @@ function parseOracle(out: string) {
 }
 
 describe("oracle golden", () => {
-  test("names the legacy oracle, params and STLs byte for byte", () => {
-    expect(sha(read("designs/ogee16/legacy/source/check_sweep.py"))).toBe(golden.checkSweepSha256);
-    expect(sha(read("designs/ogee16/legacy/source/params.scad"))).toBe(golden.paramsSha256);
+  // ogee-sweep-originals.test.ts holds check_sweep.py and params.scad to the originals of record.
+  test("names the params and STLs the scenes read, byte for byte", () => {
+    expect(sha(read("packages/motion/inputs/ogee16/params.scad"))).toBe(golden.paramsSha256);
     const sums = read("designs/ogee16/extract/fixtures/proud-head/SHA256SUMS").toString("utf8");
     for (const c of CRANK_FILES) {
-      expect(sha(read(`designs/ogee16/legacy/out/print/${c}.stl`))).toBe(golden.shippedSha256[c]);
+      expect(sha(read(`packages/sim/scenes/inputs/ogee16/print/${c}.stl`))).toBe(golden.shippedSha256[c]);
       const fx = sha(read(`designs/ogee16/extract/fixtures/proud-head/${c}.stl`));
       expect(fx).toBe(golden.fixtureSha256[c]);
       expect(sums).toContain(`${fx}  ${c}.stl`);

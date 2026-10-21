@@ -28,7 +28,7 @@ interface Rec {
   };
 }
 const rec = JSON.parse(read("packages/motion/records/ogee16-kin.json")) as Rec;
-const K = ogeeKinematics(readScadParams(read("designs/ogee16/legacy/source/params.scad")));
+const K = ogeeKinematics(readScadParams(read("packages/motion/inputs/ogee16/params.scad")));
 const M = latchMachine(K.latch);
 const cells = (p: ReturnType<typeof ogeeProgram>, from = M.init()): string[] => {
   const m = { ...M, init: () => from };

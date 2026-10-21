@@ -1,0 +1,8 @@
+COMMON = [("base",1),("face_asm",1),("deck",1),("latch_asm",1),
+          ("wall_xp",1),("wall_xn",1),("wall_yp",1),("wall_yn",1),("rail",2),
+          ("rowbar_asm",4),("colbar_asm",4),("link",16),("rod",16),("cap",16),
+          ("pivot",32),("drivepin",9)]
+# The frame is the same either way: the brackets and latch tower tab into slots
+# the base and deck already carry, so one tray takes either drive.
+KNOB_DRIVE  = [("shaft_row",4),("shaft_col",4),("knob",8),("latchpull",1)]
+SERVO_DRIVE = [("svbracket_row",1),("svbracket_col",1),("latchtower",1),("crank",8),("crank_latch",1)]

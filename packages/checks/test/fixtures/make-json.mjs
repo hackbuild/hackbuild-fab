@@ -566,7 +566,7 @@ put("CHK-ASM-10", "fail", hookAsm({ verdict: "TRAPPED", stop: "exhausted", poses
 // ceiling and box margin, and the step 5 negative, row bar 0 driven 3 mm
 // past its stroke into the column bars, 144.00 mm3 per pair (computed),
 // drawn here as one 12 x 12 mm bar section overlapping its neighbour by 1 mm.
-const AUDIT_PRINT = { tolMm3: 0.5, touchCeilingMm3: 120, boxMarginMm: 1e-6, origin: "designs/ogee16/legacy/source/audit_print.py audit()" };
+const AUDIT_PRINT = { tolMm3: 0.5, touchCeilingMm3: 120, boxMarginMm: 1e-6, origin: "fab-knowledge:originals/ogee16/files/src/source/audit_print.py audit()" };
 const barAsm = (dz) => ({
   note: dz < 3
     ? "OGEE R16-P row bar 0 driven 3 mm past its stroke: 144 mm3 into column bar 0, not a touch pair (audit_print.py)"

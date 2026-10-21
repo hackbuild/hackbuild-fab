@@ -1,14 +1,14 @@
 // M07-T08: the OGEE R16-P printed bill on 256 mm plates. The bill the scene
 // derives from its instance rules is held to three sources it does not
-// read: build_plate.py's QTY (pinned designs/ogee16/legacy/source/build_plate.py
-// lines 5 to 12), the PARTS baked into ogee16-plate.html (read by the
-// M07-T01 tool) and the closed forms of D-186. The footprints the imported
-// route measures are held to the page's PARTS to 0.01 mm, the page's own
-// rounding. The layout is audited here on footprint rectangles with
-// arithmetic of this file, and held to the committed legacy record
+// read: build_plate.py's QTY (lines 5 to 12, stored in test/inputs), the
+// PARTS baked into ogee16-plate.html and the closed forms of D-186. The
+// page's PARTS and its own pack() are read by the M07-T01 tool from the
+// originals in ogee16-plates-originals.test.ts, which also holds the
+// footprints the imported route measures to the page's PARTS to 0.01 mm.
+// The layout is audited here on footprint rectangles with arithmetic of
+// this file, and held to the committed legacy record
 // (packages/nest/records/ogee16-plates-legacy.json, the page's pack()).
 
-import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -18,35 +18,23 @@ import { createProfileLookup, loadProfile } from "@hackbuild/profile";
 import { audit as meshAudit } from "@hackbuild/mesh";
 import { packPlates, plateLayouts, printableParts, type PlateScene } from "../src/plates.js";
 import { arraySize, billOf, DRIVES, INSTANCE_RULES, ogee16PlatesScene, type Drive } from "../scenes/ogee16-r16p-plates.js";
-// @ts-expect-error the legacy tool is plain JavaScript with no declarations
-import { data, packer } from "../../../designs/ogee16/extract/extract-plate.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "..", "..");
-const BUILD_PLATE = path.join(ROOT, "designs/ogee16/legacy/source/build_plate.py");
-const BUILD_PLATE_SHA256 = "dc3f1772312360fda22e3ef5f89ebc243e714fbf88fc1498e30c6a2bfd0664ed";
+/** build_plate.py lines 5 to 12, stored (test/inputs/stored-inputs.json, lineage ogee16.plate/nest-tests-stored). */
+const BUILD_PLATE = path.join(ROOT, "packages/nest/test/inputs/ogee16/build-plate-5-12.txt");
+/** The first page line the stored file holds, read from its name. */
+const firstLine = Number(/-(\d+)-\d+\.txt$/.exec(BUILD_PLATE)![1]);
 
 interface LegacyDrive { gap4: { plates: number; pieces: number; types: number; labels: string[] }; autoGap: { gap: number; plates: number } }
 const record = JSON.parse(readFileSync(path.join(ROOT, "packages/nest/records/ogee16-plates-legacy.json"), "utf8")) as { result: Record<Drive, LegacyDrive> };
 
-interface PagePart { id: string; qty: number; w: number; d: number; h: number }
-const page = data() as { PARTS: PagePart[]; GROUPS: unknown; DRIVE: Record<Drive, string[]> };
-
-interface PagePlaced { p: PagePart; x: number; y: number; rot: 0 | 90 }
-/** The page's own pack() at its gap 4 on its PARTS (plate_template.html lines 263 to 340, run by the M07-T01 tool). */
-function pagePack(drive: Drive): PagePlaced[][] {
-  const api = new Function("PARTS", "GROUPS", "DRIVE", packer() as string)(page.PARTS, page.GROUPS, page.DRIVE) as { setDrive: (d: string) => void; pack: () => PagePlaced[][] };
-  api.setDrive(drive);
-  return api.pack();
-}
-
-/** build_plate.py's hand bill, read from the pinned file: COMMON (lines 5 to 8), KNOB_DRIVE (line 11), SERVO_DRIVE (line 12). */
+/** build_plate.py's hand bill, read from its stored lines: COMMON (lines 5 to 8), KNOB_DRIVE (line 11), SERVO_DRIVE (line 12). */
 function handBill(): Record<"COMMON" | "KNOB_DRIVE" | "SERVO_DRIVE", [string, number][]> {
-  const bytes = readFileSync(BUILD_PLATE);
-  expect(createHash("sha256").update(bytes).digest("hex")).toBe(BUILD_PLATE_SHA256);
-  const lines = bytes.toString("utf8").split("\n");
+  const lines = readFileSync(BUILD_PLATE, "utf8").split("\n");
+  const at = (line: number): number => line - firstLine;
   const pairs = (from: number, to: number, marker: string): [string, number][] => {
-    expect(lines[from - 1]!.startsWith(marker), `build_plate.py line ${from} starts with ${marker}`).toBe(true);
-    return [...lines.slice(from - 1, to).join("\n").matchAll(/\("(\w+)",(\d+)\)/g)].map((m) => [m[1]!, Number(m[2])]);
+    expect(lines[at(from)]!.startsWith(marker), `build_plate.py line ${from} starts with ${marker}`).toBe(true);
+    return [...lines.slice(at(from), at(to) + 1).join("\n").matchAll(/\("(\w+)",(\d+)\)/g)].map((m) => [m[1]!, Number(m[2])]);
   };
   return { COMMON: pairs(5, 8, "COMMON = ["), KNOB_DRIVE: pairs(11, 11, "KNOB_DRIVE  = ["), SERVO_DRIVE: pairs(12, 12, "SERVO_DRIVE = [") };
 }
@@ -87,28 +75,17 @@ describe("the bill comes from instance counts (computed, D-186)", () => {
     expect(billOf("servos", 4)).toEqual([...hand.COMMON, ...hand.SERVO_DRIVE]);
   });
 
-  test("equals the PARTS and DRIVE baked into ogee16-plate.html", () => {
-    for (const d of DRIVES) {
-      const off = new Set(DRIVES.filter((k) => k !== d).flatMap((k) => page.DRIVE[k]));
-      expect(billOf(d, 4)).toEqual(page.PARTS.filter((p) => !off.has(p.id)).map((p) => [p.id, p.qty]));
-    }
-    expect(INSTANCE_RULES.filter((r) => r.drive !== "common").map((r) => r.id).sort()).toEqual([...page.DRIVE.knobs, ...page.DRIVE.servos].sort());
-  });
-
   test("every rule cites the instances that give its count", () => {
     for (const r of INSTANCE_RULES) expect(r.where, r.id).toMatch(/line/);
   });
 });
 
 describe("footprints through the imported route (computed)", () => {
-  test("w, d and h equal the page's PARTS to 0.01 mm, parked on z 0 at the origin", () => {
-    const parts = [...scenes.knobs.parts, ...scenes.servos.parts.filter((p) => page.DRIVE.servos.includes(p.id))];
+  test("parked on z 0 at the origin, on the 1/1024 mm grid", () => {
+    const ids = new Set(scenes.knobs.parts.map((p) => p.id));
+    const parts = [...scenes.knobs.parts, ...scenes.servos.parts.filter((p) => !ids.has(p.id))];
     expect(parts).toHaveLength(25);
     for (const p of parts) {
-      const want = page.PARTS.find((q) => q.id === p.id)!;
-      expect(Math.abs(p.w - want.w), `${p.id} w`).toBeLessThanOrEqual(0.005 + 1e-9);
-      expect(Math.abs(p.d - want.d), `${p.id} d`).toBeLessThanOrEqual(0.005 + 1e-9);
-      expect(Math.abs(p.h - want.h), `${p.id} h`).toBeLessThanOrEqual(0.005 + 1e-9);
       let lo = [Infinity, Infinity, Infinity];
       for (let i = 0; i < p.mesh.positions.length; i++) lo[i % 3] = Math.min(lo[i % 3]!, p.mesh.positions[i]!);
       expect(lo).toEqual([0, 0, 0]);
@@ -183,26 +160,6 @@ describe.each(DRIVES)("plates, %s drive (computed)", (drive) => {
     expect([r.sheets, r.placements.length]).toEqual([record.result[drive].gap4.plates, record.result[drive].gap4.pieces]);
   });
 
-  test("every placement's plate, part and turn equal the page's pack() at gap 4; positions within its 0.01 mm footprint rounding but one", () => {
-    const r = results[drive];
-    const legacyPlates = pagePack(drive);
-    const moved: string[] = [];
-    let k = 0;
-    legacyPlates.forEach((pl, s) => {
-      for (const it of pl) {
-        const p = r.placements[k++]!;
-        expect([p.sheet, p.id, p.rot]).toEqual([s, it.p.id, it.rot]);
-        if (Math.abs(p.at[0] - it.x) > 0.01 * pl.length || Math.abs(p.at[1] - it.y) > 0.01 * pl.length) moved.push(`${it.p.id} ${p.copy}: ${p.at.join(",")} vs ${it.x},${it.y}`);
-      }
-    });
-    expect(k).toBe(r.placements.length);
-    // The measured footprints sit up to 0.005 mm off the page's rounded PARTS, so one tie between free
-    // rectangles breaks the other way: the second rail goes to the other free corner of its plate
-    // (computed); the audit above holds that layout to 0 overlaps and the 4 mm gap.
-    expect(moved.map((m) => m.split(":")[0])).toEqual(["rail 1"]);
-    expect(r.placements.filter((p) => p.rot === 90).length).toBe(13);
-  });
-
   test("gap auto keeps the plate count at gap 16 (computed), the record's autoGap", () => {
     const r = packPlates(ogee16PlatesScene(profile, drive, "auto"), profile);
     expect([r.gap, r.sheets]).toEqual([16, want.plates]);
@@ -239,7 +196,8 @@ describe.each(DRIVES)("plates, %s drive (computed)", (drive) => {
 
 describe("printableParts (computed)", () => {
   test("rowbar_asm's 4 zero-area triangles from the weld are rebuilt away; every other part passes through untouched", async () => {
-    const parts = [...scenes.knobs.parts, ...scenes.servos.parts.filter((p) => page.DRIVE.servos.includes(p.id))];
+    const ids = new Set(scenes.knobs.parts.map((p) => p.id));
+    const parts = [...scenes.knobs.parts, ...scenes.servos.parts.filter((p) => !ids.has(p.id))];
     const failing = parts.filter((p) => !meshAudit(p.mesh).ok).map((p) => [p.id, meshAudit(p.mesh).degenerate]);
     expect(failing).toEqual([["rowbar_asm", 4]]);
     const out = await printableParts(parts);

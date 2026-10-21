@@ -1,0 +1,11 @@
+      const R = s.it.rot, ox = s.it.x + (R ? s.it.part.d : 0), oy = s.it.y;
+      const nx = s.dv.getFloat32(b,true), ny = s.dv.getFloat32(b+4,true);
+      dv.setFloat32(o,   R ? -ny : nx, true);
+      dv.setFloat32(o+4, R ?  nx : ny, true);
+      dv.setFloat32(o+8, s.dv.getFloat32(b+8,true), true);
+      o+=12;
+      for(let v=0;v<3;v++){
+        const lx = s.dv.getFloat32(b+12+v*12,   true);
+        const ly = s.dv.getFloat32(b+12+v*12+4, true);
+        dv.setFloat32(o,   (R ? -ly : lx) + ox, true);
+        dv.setFloat32(o+4, (R ?  lx : ly) + oy, true);

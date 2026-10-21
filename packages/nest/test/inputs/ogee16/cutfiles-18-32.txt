@@ -1,0 +1,15 @@
+KERF = 0.18            # measured beam width. Set this from the test coupon.
+SHEET_W, SHEET_H = 600.0, 400.0
+GAP = 4.0
+
+BOM = [
+    ("base", 1), ("face", 1), ("face2_circle", 1), ("deck", 1), ("latch", 1),
+    ("wallx", 2), ("wally", 2), ("rail", 2),
+    ("rowbar", 8), ("colbar", 8),
+    ("rowlug", 16), ("collug", 16), ("link", 16), ("rod", 16), ("cap_circle", 16),
+    ("rowdrive", 4), ("coldrive", 4), ("rowguide", 4), ("colguide", 8),
+    ("svbracket_row", 1), ("svbracket_col", 1),
+    ("latchbracket", 1), ("latchrib", 2),
+    ("crank", 8), ("latchcrank", 1), ("washer", 41),
+    ("coupon", 1),
+]

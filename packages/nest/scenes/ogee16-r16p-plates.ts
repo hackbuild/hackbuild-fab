@@ -2,37 +2,34 @@
 // 256 mm build plates, one part type per plate. The bill is derived from a
 // `drive` parameter (knobs by default) and the array size N, never typed:
 // each part type carries the instance rule of the printed viewer that
-// places it (designs/ogee16/legacy/source/printed_viewer_template.html,
-// cited per row), as a count c0 + c1 N + c2 N^2. N is read from the pinned
-// params.scad (line 36). The test holds the result to build_plate.py's QTY
+// places it (printed_viewer_template.html of ogee16-source.zip, cited per
+// row), as a count c0 + c1 N + c2 N^2. N is read from params.scad line 36,
+// stored as inputs/ogee16-r16p-plates/params-scad-36.txt. The test holds the result to build_plate.py's QTY
 // (lines 5 to 12), the PARTS baked into ogee16-plate.html and the closed
 // forms of D-186; this file reads none of them.
 //
 // Parts load through the imported mesh route (M02, D-053): each type is its
-// shipped print STL (designs/ogee16/legacy/out/print/<id>.stl, pinned in
-// ../../../designs/ogee16/legacy/SHA256SUMS), welded on the 1/1024 mm grid
+// shipped print STL, stored as inputs/ogee16-r16p-plates/print/<id>.stl
+// (members of ogee16-print-stl.zip, lineage ogee16.print-stl), welded on the 1/1024 mm grid
 // and parked on z 0 at the origin; its footprint is the XY bounds (the
 // build_plate.py rule, lines 43 to 52). Bed: machine centauri, read from the
 // profile (256 x 256 x 256, vendor). Margin 10 and gap 4 are the plate
-// page's packer settings (plate_template.html lines 263 and 178), the
+// page's packer settings (plate_template.html lines 263 and 178, stored as
+// plate-template-263.txt and plate-template-178.txt), the
 // rotations its two turns (line 274), the order its area sort (line 313).
 // Items stay here until M10 gives OGEE16 a chase; then they move into its
-// build.ts.
+// build.ts. Every file read here is a stored input
+// (inputs/stored-inputs.json, its sha256 held by
+// tools/test-support/stored-inputs.test.ts); no legacy folder is read.
 
-import { createHash } from "node:crypto";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import type { NestItem, NestRequest, ProfileLookup } from "@hackbuild/spec";
 import { bounds, importStl } from "@hackbuild/mesh";
 import type { PlatePart, PlateScene } from "../src/plates.js";
 
-const LEGACY = new URL("../../../designs/ogee16/legacy/", import.meta.url);
+/** The stored inputs of this scene: source lines and print STLs. */
+export const PLATES_INPUTS = new URL("inputs/ogee16-r16p-plates/", import.meta.url);
 const SOURCE_ZIP = "ogee16-source.zip (sha256 47d6077e0596eb4e)";
-
-/** Pins of the source files read here, from designs/ogee16/legacy/SHA256SUMS. */
-const PINS = {
-  "source/params.scad": "1c0a4b898b4977d87d435273a04857111fab5d43324bee591c2a6ad641591d6d",
-  "source/plate_template.html": "59507bfae682869fb87d9ff5d6aa59fe2746f51ece249359ab69b223290f04bf",
-} as const;
 
 export type Drive = "knobs" | "servos";
 export const DRIVES: readonly Drive[] = ["knobs", "servos"];
@@ -103,17 +100,14 @@ export function billOf(drive: Drive, n: number): readonly (readonly [string, num
     .filter(([, q]) => q > 0);
 }
 
-function readPinned(rel: keyof typeof PINS | string, sha256: string): Buffer {
-  const bytes = readFileSync(new URL(rel, LEGACY));
-  const got = createHash("sha256").update(bytes).digest("hex");
-  if (got !== sha256) throw new Error(`scene ogee16-r16p-plates: ${rel} sha256 ${got} is not the pinned ${sha256}`);
-  return bytes;
-}
+/** A source line stored as one file: `<stem>-<line>.txt`, the line and its newline. */
+type StoredLine = "params-scad" | "plate-template";
+const STORED_OF: Readonly<Record<StoredLine, string>> = { "params-scad": "params.scad", "plate-template": "plate_template.html" };
 
-/** The text of a pinned file's line after its marker, refused when the marker moved. */
-function lineAfter(rel: keyof typeof PINS, line: number, marker: string): string {
-  const text = readPinned(rel, PINS[rel]).toString("utf8").split("\n")[line - 1] ?? "";
-  if (!text.startsWith(marker)) throw new Error(`scene ogee16-r16p-plates: ${rel} line ${line} does not start with ${marker}`);
+/** The text of a stored source line after its marker, refused when the marker moved. */
+function lineAfter(stem: StoredLine, line: number, marker: string): string {
+  const text = readFileSync(new URL(`${stem}-${line}.txt`, PLATES_INPUTS), "utf8").replace(/\n$/, "");
+  if (!text.startsWith(marker)) throw new Error(`scene ogee16-r16p-plates: ${STORED_OF[stem]} line ${line} does not start with ${marker}`);
   return text.slice(marker.length);
 }
 
@@ -126,33 +120,22 @@ function leadNumber(rel: string, line: number, rest: string): number {
 
 /** The array size N, params.scad line 36 (`N        = 4;`). */
 export function arraySize(): number {
-  return leadNumber("source/params.scad", 36, lineAfter("source/params.scad", 36, "N        ="));
+  return leadNumber("params.scad", 36, lineAfter("params-scad", 36, "N        ="));
 }
 
 /** The plate page's margin and default gap, mm: `const MARGIN = 10;` (line 263) and `let gap = 4, cur = 0;` (line 178). */
 export function plateSettings(): { readonly margin: number; readonly gap: number } {
   return {
-    margin: leadNumber("source/plate_template.html", 263, lineAfter("source/plate_template.html", 263, "const MARGIN =")),
-    gap: leadNumber("source/plate_template.html", 178, lineAfter("source/plate_template.html", 178, "let gap =")),
+    margin: leadNumber("plate_template.html", 263, lineAfter("plate-template", 263, "const MARGIN =")),
+    gap: leadNumber("plate_template.html", 178, lineAfter("plate-template", 178, "let gap =")),
   };
 }
 
-/** Pins of the shipped print STLs, from designs/ogee16/legacy/SHA256SUMS. */
-function stlPins(): ReadonlyMap<string, string> {
-  const pins = new Map<string, string>();
-  for (const line of readFileSync(new URL("SHA256SUMS", LEGACY), "utf8").split("\n")) {
-    const m = /^([0-9a-f]{64}) {2}out\/print\/([a-z_]+)\.stl$/.exec(line);
-    if (m !== null) pins.set(m[2]!, m[1]!);
-  }
-  return pins;
-}
-
 /** One part type through the imported route, parked on z 0 at the origin. */
-export function loadPart(id: string, pins: ReadonlyMap<string, string> = stlPins()): PlatePart {
-  const pin = pins.get(id);
-  if (pin === undefined) throw new Error(`scene ogee16-r16p-plates: out/print/${id}.stl is not pinned in SHA256SUMS`);
-  const rel = `out/print/${id}.stl`;
-  const body = importStl(new Uint8Array(readPinned(rel, pin)), `designs/ogee16/legacy/${rel}`);
+export function loadPart(id: string): PlatePart {
+  const url = new URL(`print/${id}.stl`, PLATES_INPUTS);
+  if (!existsSync(url)) throw new Error(`scene ogee16-r16p-plates: print/${id}.stl is not a stored input of this scene`);
+  const body = importStl(new Uint8Array(readFileSync(url)), `print/${id}.stl`);
   const [lo, hi] = bounds(body.mesh);
   const positions = body.mesh.positions.map((v, i) => v - lo[i % 3]!);
   return { id, mesh: { positions, triangles: body.mesh.triangles }, w: hi[0] - lo[0], d: hi[1] - lo[1], h: hi[2] - lo[2] };
@@ -164,9 +147,8 @@ export function ogee16PlatesScene(profile: ProfileLookup, drive: Drive = "knobs"
   const env = profile.machine(machine).envelope;
   if (!Array.isArray(env)) throw new Error(`scene ogee16-r16p-plates: machine ${machine} has no 3 axis envelope`);
   const n = arraySize();
-  const pins = stlPins();
   const bill = billOf(drive, n);
-  const parts = bill.map(([id]) => loadPart(id, pins));
+  const parts = bill.map(([id]) => loadPart(id));
   const items: NestItem[] = bill.map(([id, qty], i): NestItem => {
     const p = parts[i]!;
     return { id, rings: [[[0, 0], [p.w, 0], [p.w, p.d], [0, p.d]]], qty, stock: "petg" };
@@ -180,7 +162,7 @@ export function ogee16PlatesScene(profile: ProfileLookup, drive: Drive = "knobs"
     id: "ogee16-r16p-plates", request, machine, parts, qualifier: "computed",
     sources: [
       `bill: instance rules of printed_viewer_template.html and printed.scad (${SOURCE_ZIP}), drive ${drive}, N ${n} from params.scad line 36`,
-      "parts: designs/ogee16/legacy/out/print/<id>.stl (ogee16-print-stl.zip, sha256 855ffe7c28c139e5), imported route, footprint the XY bounds parked at the origin (build_plate.py lines 43 to 52)",
+      "parts: fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip member print/<id>.stl (sha256 855ffe7c28c139e5), imported route, footprint the XY bounds parked at the origin (build_plate.py lines 43 to 52)",
       `bed: profile machine ${machine} envelope ${env[0]} x ${env[1]} x ${env[2]} mm (vendor, PROFILE.md 8)`,
       "margin, gap, rotations and order: plate_template.html lines 263, 178, 274 and 313 (lineage ogee16.packone/r16p)",
       "stock petg: the R16-P prints in PETG (knowledge/designs/ogee16.md section 2, notes/PRINT.md)",

@@ -31,11 +31,16 @@ import { countsOf, findingsOf, worst, type CommandOut } from "../result.js";
 import type { CoreCtx } from "../ctx.js";
 import { loadWorkspace } from "./build.js";
 
-/** The pinned sources each machine is read from, workspace relative; stipple is line 117 of stipple-r17b.html, stored (lineage stipple.kin/r17b). */
+/**
+ * The stored sources each machine is read from, workspace relative
+ * (packages/motion/inputs/stored-inputs.json): params.scad and slug.scad
+ * whole (lineage ogee16.params/motion-stored, slug.scad/motion-stored),
+ * stipple line 117 of stipple-r17b.html (lineage stipple.kin/r17b).
+ */
 const SOURCES = {
-  ogee16: "designs/ogee16/legacy/source/params.scad",
+  ogee16: "packages/motion/inputs/ogee16/params.scad",
   stipple: "packages/motion/inputs/stipple/stipple-r17b-DATA.txt",
-  slug: "designs/slug/legacy/slug.scad",
+  slug: "packages/motion/inputs/slug/slug.scad",
 } as const;
 
 /** A run: the machine, the program and the patterns --expect may name. */

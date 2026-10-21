@@ -1,0 +1,16 @@
+{
+  "files": [
+    {
+      "path": "plate-template-409-419.txt",
+      "sha256": "e9248c70de1ec7c527d928fca380785d1d792af9b122f5b43be373fbbdf6c4b1",
+      "bytes": 562,
+      "source": "fab-knowledge:originals/ogee16/files/src/source/plate_template.html",
+      "sourceSha256": "59507bfae682869fb87d9ff5d6aa59fe2746f51ece249359ab69b223290f04bf",
+      "lines": [
+        409,
+        419
+      ],
+      "lineage": "ogee16.packone/r16p"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "files": [
+    {
+      "path": "ogee16/build-plate-5-12.txt",
+      "sha256": "032864cc9b79801e87429e45cd446b1d0a52c06f116a0574fbd7f7e87586a783",
+      "bytes": 585,
+      "source": "fab-knowledge:originals/ogee16/files/src/source/build_plate.py",
+      "sourceSha256": "dc3f1772312360fda22e3ef5f89ebc243e714fbf88fc1498e30c6a2bfd0664ed",
+      "lines": [
+        5,
+        12
+      ],
+      "lineage": "ogee16.plate/nest-tests-stored"
+    },
+    {
+      "path": "ogee16/cutfiles-18-32.txt",
+      "sha256": "c48d450bbd957dc0114887df8afaedf40ca850e1c2faff8242db4d45078b0073",
+      "bytes": 604,
+      "source": "fab-knowledge:originals/ogee16/files/src/source/cutfiles.py",
+      "sourceSha256": "ef535caca27def1a7b8a91e4c6273dfb1e85617c6087b93e4924debf3fb98800",
+      "lines": [
+        18,
+        32
+      ],
+      "lineage": "ogee16.cutfiles/nest-tests-stored"
+    }
+  ]
+}

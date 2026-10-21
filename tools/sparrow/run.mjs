@@ -250,8 +250,8 @@ async function sets(geom) {
     machine: slug.machine, kerfMode: slug.kerfMode, profile,
     source: `packages/nest/scenes/slug-sheets.ts (M07-T07), stock ${stock}, kerf mode none`,
   });
-  // cutfiles.py KERF (line 19) and GAP (line 21), read from the script the way dxf.test.ts reads them
-  const cutfiles = readFileSync(path.join(ROOT, "designs/ogee16/legacy/source/cutfiles.py"), "utf8");
+  // cutfiles.py KERF (line 18) and GAP (line 20), read from its stored lines the way dxf.test.ts reads them
+  const cutfiles = readFileSync(path.join(ROOT, "packages/nest/test/inputs/ogee16/cutfiles-18-32.txt"), "utf8");
   const KERF = Number(/^KERF = ([0-9.]+)/m.exec(cutfiles)?.[1]);
   const GAP = Number(/^GAP = ([0-9.]+)/m.exec(cutfiles)?.[1]);
   const ogee = JSON.parse(readFileSync(path.join(ROOT, "packages/nest/records/ogee16-connect.json"), "utf8")).result;

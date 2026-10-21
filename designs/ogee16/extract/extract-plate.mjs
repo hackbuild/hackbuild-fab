@@ -1,7 +1,7 @@
-// OGEE R16-P build plates run headless from the legacy files (M07-T01 step 3).
+// OGEE R16-P build plates run headless from the original files (M07-T01 step 3).
 // The data is the PARTS, GROUPS and DRIVE JSON that build_plate.py baked
-// into ../legacy/ogee16-plate.html (lines 182, 266, 267; the base64 `stl` field is
-// dropped). The packer is the block of ../legacy/source/plate_template.html from
+// into the original ogee16-plate.html (lines 182, 266, 267; the base64 `stl` field is
+// dropped). The packer is the block of source/plate_template.html from
 // `const MARGIN = 10;` (line 263) to the line before `function show(n)`
 // (line 341), byte identical to the same block of the shipped page, with
 // the template's state lines 177 to 179 (`PLATE = 256`, `gap = 4`, `on`) and
@@ -20,18 +20,19 @@
 // input is not the pinned copy, a marker moved, a number of the M07 Records
 // table moved, or the result differs from the committed record.
 
-import { join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { Asserts, finish, legacyDir, marker, readPinned } from "../../../tools/legacy/record.mjs";
+import { Asserts, finish, marker, readPinned } from "../../../tools/legacy/record.mjs";
+import { localOriginal } from "../../../tools/test-support/originals-root.ts";
 
-const LEGACY = legacyDir("ogee16");
-const PAGE = join(LEGACY, "ogee16-plate.html");
+// The original page and template, as archive ids; read through
+// tools/test-support/originals-root.ts (HBF_ORIGINALS).
+const PAGE = "fab-knowledge:originals/ogee16/files/ogee16-plate.html";
 const PAGE_SHA256 = "86a000eb98eeb108fedfedc1d7c4ac9a08cfdeef8e8b2661b71069eb207c8837";
-const TEMPLATE = join(LEGACY, "source", "plate_template.html");
+const TEMPLATE = "fab-knowledge:originals/ogee16/files/src/source/plate_template.html";
 const TEMPLATE_SHA256 = "59507bfae682869fb87d9ff5d6aa59fe2746f51ece249359ab69b223290f04bf";
 
 export function data() {
-  const lines = readPinned(PAGE, PAGE_SHA256).toString("utf8").split("\n");
+  const lines = readPinned(localOriginal(PAGE), PAGE_SHA256).toString("utf8").split("\n");
   const grab = (name, line) => {
     marker(lines, `const ${name} = `, line);
     return JSON.parse(lines[line - 1].slice(`const ${name} = `.length).replace(/;\s*$/, ""));
@@ -41,7 +42,7 @@ export function data() {
 }
 
 export function packer() {
-  const lines = readPinned(TEMPLATE, TEMPLATE_SHA256).toString("utf8").split("\n");
+  const lines = readPinned(localOriginal(TEMPLATE), TEMPLATE_SHA256).toString("utf8").split("\n");
   marker(lines, "const PLATE = 256, MAXH = 256;", 177);
   marker(lines, "let gap = 4, cur = 0;", 178);
   marker(lines, "const on = {};", 179);

@@ -1,5 +1,5 @@
 // OGEE16 programs (M07-T11 step 2), ported from the viewer's command
-// layer: drive(i, j) and doClear() (designs/ogee16/legacy/source/
+// layer: drive(i, j) and doClear() (fab-knowledge:originals/ogee16/files/src/source/
 // viewer_template.html lines 587 to 591, through sweep() at lines 573 to
 // 586; the printed viewer's drive_ and pull, printed_viewer_template.html
 // lines 349 to 367, are the same commands at 760 ms) and the checker,

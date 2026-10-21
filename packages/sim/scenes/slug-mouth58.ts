@@ -8,7 +8,7 @@
 
 import type { SlugSceneVariant } from "../src/capsule/vend.js";
 
-const BUILD = "designs/slug/legacy/BUILD.md (sha256 9babb59b59ecbc3f5a6f991c2804d10858fd6cc155baa1223ec1117b7f2e4a3e)";
+const BUILD = "fab-knowledge:originals/slug/files/BUILD.md (sha256 9babb59b59ecbc3f5a6f991c2804d10858fd6cc155baa1223ec1117b7f2e4a3e)";
 
 export const SLUG_MOUTH58: SlugSceneVariant = {
   id: "slug-mouth58",

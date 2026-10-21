@@ -12,8 +12,8 @@ import { readFileSync } from "node:fs";
 import type { Provenance } from "@hackbuild/spec";
 import type { SlugScene } from "../src/capsule/vend.js";
 
-const PAGE = "designs/slug/legacy/slug.html (lineage slug.bench/slug-12, sha256 2d09238c27d5ca4bf023eeee44939b1500470ad2058822b8d0add48ec9bf3241)";
-const BUILD = "designs/slug/legacy/BUILD.md (sha256 9babb59b59ecbc3f5a6f991c2804d10858fd6cc155baa1223ec1117b7f2e4a3e)";
+const PAGE = "fab-knowledge:originals/slug/files/slug.html (lineage slug.bench/slug-12, sha256 2d09238c27d5ca4bf023eeee44939b1500470ad2058822b8d0add48ec9bf3241)";
+const BUILD = "fab-knowledge:originals/slug/files/BUILD.md (sha256 9babb59b59ecbc3f5a6f991c2804d10858fd6cc155baa1223ec1117b7f2e4a3e)";
 const fromPage = (lines: string): Provenance => ({ tier: "inferred", method: "derived", date: "2026-10-07", source: `${PAGE} lines ${lines}` });
 
 /** The shared SLUG rows file, beside this one. */

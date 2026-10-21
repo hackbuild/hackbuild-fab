@@ -28,6 +28,16 @@
     "dest": "designs/ogee16/extract/connect-record.py"
   },
   {
+    "id": "ogee16.cutfiles/nest-tests-stored",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/ogee16/files/src/source/cutfiles.py",
+    "sha256": "ef535caca27def1a7b8a91e4c6273dfb1e85617c6087b93e4924debf3fb98800",
+    "fixes": [
+      "lines 18 to 32 (KERF, sheet, GAP and BOM) the nest tests read as their independent bill"
+    ],
+    "dest": "packages/nest/test/inputs/ogee16/cutfiles-18-32.txt"
+  },
+  {
     "id": "ogee16.cutfiles/r16p",
     "kind": "canonical",
     "source": "fab-knowledge:originals/ogee16/files/src/source/cutfiles.py",

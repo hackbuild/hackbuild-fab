@@ -1,5 +1,15 @@
 [
   {
+    "id": "slug.scad/motion-stored",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/slug/files/slug.scad",
+    "sha256": "a5990b866b0829282ec7dc9b6f090c64c447c8f1a3432164b279ebc8dcf3fef6",
+    "fixes": [
+      "the SLUG drive motion.run and the motion tests read, stored whole"
+    ],
+    "dest": "packages/motion/inputs/slug/slug.scad"
+  },
+  {
     "id": "slug.scad/slug-12",
     "kind": "canonical",
     "source": "fab-knowledge:originals/slug/files/slug.scad",

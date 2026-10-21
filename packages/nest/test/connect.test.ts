@@ -4,7 +4,9 @@
 // own functions run by designs/ogee16/extract/connect-record.py
 // (packages/nest/records/ogee16-connect.json), and the card's arithmetic
 // cases on the fixtures in test/fixtures/. The kerf of the OGEE run is read
-// from cutfiles.py itself; no kerf is typed here (CHK-SHT-04).
+// from cutfiles.py itself (lines 18 to 32, stored in test/inputs); no kerf
+// is typed here (CHK-SHT-04). The SLUG outlines are the page lines the
+// slug-sheets scene stores, parsed by slugPage().
 
 import { readFileSync } from "node:fs";
 import path from "node:path";
@@ -15,8 +17,7 @@ import { loadGeom, type Geom } from "@hackbuild/geom";
 import { createProfileLookup, loadProfile } from "@hackbuild/profile";
 import { beamOf, connect, kerfNext, packSheets, type SheetFinding } from "../src/connect.js";
 import { compensate, partProfile } from "../src/profile.js";
-// @ts-expect-error the legacy tool is plain JavaScript with no declarations
-import { extract } from "../../../designs/slug/extract/extract-nest.mjs";
+import { slugPage } from "../scenes/slug-sheets.js";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "..", "..");
 const json = <T>(rel: string): T => JSON.parse(readFileSync(path.join(ROOT, rel), "utf8")) as T;
@@ -32,12 +33,11 @@ interface OgeePart {
 }
 const ogee = json<{ result: { params: { kerf: number }; parts: OgeePart[]; severed: unknown[] } }>("packages/nest/records/ogee16-connect.json").result;
 
-// cutfiles.py line 19: the beam its run compensated with.
-const cutfiles = readFileSync(path.join(ROOT, "designs/ogee16/legacy/source/cutfiles.py"), "utf8");
+// cutfiles.py line 18: the beam its run compensated with.
+const cutfiles = readFileSync(path.join(ROOT, "packages/nest/test/inputs/ogee16/cutfiles-18-32.txt"), "utf8");
 const BEAM = Number(/^KERF = ([0-9.]+)/m.exec(cutfiles)?.[1]);
 
-const body = (extract() as string).replace(/\nexport \{[^}]*\};\n$/, "\nreturn {OUTLINES,ACRYLIC};\n");
-const S = new Function(body)() as { OUTLINES: Record<string, number[][][]>; ACRYLIC: Set<string> };
+const S = slugPage();
 const slugItems: NestItem[] = Object.keys(S.OUTLINES).map((id) => ({
   id, rings: S.OUTLINES[id] as unknown as Ring[], qty: 1, stock: S.ACRYLIC.has(id) ? "acrylic" : "ply",
 }));

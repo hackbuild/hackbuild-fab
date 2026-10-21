@@ -5,7 +5,8 @@
 // and no two parts on a sheet share area. The card fixes the frame fixture
 // (200 x 200 frame, 150 x 150 hole, sixteen 30 x 30 squares, 220 x 220
 // sheet, margin 0, gap 4, 1 sheet against 2). The SLUG items, quantities,
-// stocks, sheet, gap and margin come from the page and its committed record;
+// stocks, sheet, gap and margin come from the page (the lines the
+// slug-sheets scene stores, parsed by slugPage()) and its committed record;
 // the sheet counts of SLUG fill mode with and without part-in-part are held
 // to packages/nest/records/slug-fill.json, which
 // HBF_SLUG_FILL_RECORD=1 npm test -w packages/nest -- part-in-part rewrites.
@@ -21,8 +22,7 @@ import { placeRings } from "../src/box.js";
 import { nest, nestTrials, type Trial } from "../src/sheet-loop.js";
 import { composePlacement, cutOrder, innerTurns, keyOf, nestHoles, ringsById } from "../src/part-in-part.js";
 import { extentOf } from "../src/box.js";
-// @ts-expect-error the legacy tool is plain JavaScript with no declarations
-import { extract } from "../../../designs/slug/extract/extract-nest.mjs";
+import { slugPage } from "../scenes/slug-sheets.js";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "..", "..");
 const RECORD = "packages/nest/records/slug-fill.json";
@@ -226,8 +226,7 @@ describe("frame fixture (computed)", () => {
 // SLUG, as shelf-parity.test.ts loads it: the page's PART_QTY over its baked OUTLINES
 interface SlugRecord { result: { params: { sheetW: number; sheetH: number; gap: number; margin: number } } }
 const slugParams = (JSON.parse(readFileSync(path.join(ROOT, "packages/nest/records/slug-legacy.json"), "utf8")) as SlugRecord).result.params;
-const body = (extract() as string).replace(/\nexport \{[^}]*\};\n$/, "\nreturn {OUTLINES,PART_QTY,ACRYLIC};\n");
-const S = new Function(body)() as { OUTLINES: Record<string, number[][][]>; PART_QTY: Record<string, number>; ACRYLIC: Set<string> };
+const S = slugPage();
 const slugItems: NestItem[] = Object.keys(S.PART_QTY).filter((n) => S.OUTLINES[n]).map((n) => ({
   id: n, rings: S.OUTLINES[n] as unknown as Ring[], qty: S.PART_QTY[n]!, stock: S.ACRYLIC.has(n) ? "acrylic" : "ply",
 }));
@@ -275,7 +274,7 @@ describe("SLUG fill mode with part-in-part (computed)", () => {
         qualifier: "computed; sheet counts are a metric of SLUG fill mode with part-in-part on and off, D-075",
         command: "HBF_SLUG_FILL_RECORD=1 npm test -w packages/nest -- part-in-part",
         machine: { cpu: cpus()[0]?.model ?? "unknown", os: `${process.platform} ${process.arch}`, node: process.version },
-        input: { file: "designs/slug/legacy/slug.html", items: slugItems.length, pieces: slugItems.reduce((n, it) => n + it.qty, 0), request: { ...slugReq, items: undefined } },
+        input: { file: "fab-knowledge:originals/slug/files/slug.html", items: slugItems.length, pieces: slugItems.reduce((n, it) => n + it.qty, 0), request: { ...slugReq, items: undefined } },
         result: s,
         resultSha256: sha256Hex(canonicalize(s)),
       };

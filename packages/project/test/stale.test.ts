@@ -24,7 +24,10 @@ const read = (rel: string): Buffer => readFileSync(path.join(ROOT, rel));
 const LINES = decodeLines(read("packages/project/test/fixtures/graph.jsonl").toString("utf8"));
 const OGEE = "reference/fit/ogee16-r16p";
 const CLICK = "reference/keys/click-spring-window";
+/** The graph item: the legacy copy the oracle records cite. */
 const PARAMS_SCAD = "designs/ogee16/legacy/source/params.scad";
+/** The same bytes, stored whole for motion and core (lineage ogee16.params/motion-stored). */
+const PARAMS_STORED = "packages/motion/inputs/ogee16/params.scad";
 
 /** Every source item at the one hash all its links recorded; a source two links disagree on fails here. */
 function baseline(): Map<string, Item> {
@@ -157,8 +160,8 @@ describe("scenario (a): editing the SLIDE fit band row", () => {
   });
 });
 
-describe("scenario (b): one byte of designs/ogee16/legacy/source/params.scad changed", () => {
-  const bytes = new Uint8Array(read(PARAMS_SCAD));
+describe("scenario (b): one byte of the OGEE16 params.scad changed", () => {
+  const bytes = new Uint8Array(read(PARAMS_STORED));
   const ID = `legacy:${PARAMS_SCAD}`;
 
   it("the fixture linked the file at its sha256 and its SHA256SUMS row", () => {
@@ -167,20 +170,18 @@ describe("scenario (b): one byte of designs/ogee16/legacy/source/params.scad cha
     expect(baseline().get(ID)?.hash).toBe(sha256(bytes));
   });
 
-  it("makes the OGEE oracle record and both ogee16 scene builds stale, and nothing else", () => {
+  it("makes the OGEE oracle records stale, and nothing else", () => {
     const edited = bytes.slice();
     edited[0] = edited[0]! ^ 1;
     const g = graphWith({ [ID]: sha256(edited) });
-    // Both scenes link params.scad: ogee16-cranks reads its dimensions there, ogee16-printed links the legacy source its poses were exported from.
-    // The M07 motion and nest oracle records rerun OGEE16's own scripts on the same legacy source, so they cite it too.
+    // The scenes read stored inputs (packages/sim/scenes/inputs, packages/motion/inputs) and link no legacy tree.
+    // The M07 motion and nest oracle records rerun OGEE16's own scripts on the same source and cite it.
     const m07 = [
       "packages/motion/records/ogee16-kin.json", "packages/nest/records/dxf-inventory.json", "packages/nest/records/ogee16-connect.json",
       "packages/nest/records/ogee16-cut-footprints.json", "packages/nest/records/ogee16-cut-legacy.json",
       "packages/nest/records/ogee16-plates-legacy.json", "packages/nest/records/ogee16-steps.json",
     ];
     expect(g.stale).toEqual([
-      { id: "build:scene/ogee16-cranks", because: [`reads ${ID}`] },
-      { id: "build:scene/ogee16-printed", because: [`reads ${ID}`] },
       ...m07.map((r) => ({ id: `oracleRecord:${r}`, because: [`recordOf ${ID}`] })),
       { id: "oracleRecord:packages/sim/records/ogee-sweep.json", because: [`recordOf ${ID}`] },
     ]);

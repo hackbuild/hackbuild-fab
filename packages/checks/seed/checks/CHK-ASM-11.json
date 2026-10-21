@@ -15,7 +15,7 @@
     "project": "OGEE R16-P 2026-08",
     "date": "2026-08",
     "what": "audit_print.py reads a boolean that throws as 0 mm3, so a crashed intersection reads as clear",
-    "evidence": "designs/ogee16/legacy/source/audit_print.py",
+    "evidence": "fab-knowledge:originals/ogee16/files/src/source/audit_print.py",
     "also": [
       {
         "project": "BUCK 2026-10-06",

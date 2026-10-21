@@ -4,10 +4,10 @@
 // records the mesh it registered and its `asm` step, exactly as the page
 // builds PARTS.
 //
-// - R16 lasercut: ../legacy/source/viewer_template.html, `reg(o, group, kind, ex,
+// - R16 lasercut: source/viewer_template.html of the original, `reg(o, group, kind, ex,
 //   asm)`, lines 250 to 371 (`const N=P.N` to the last servo reg before the
 //   kinematics), ASM at lines 608 to 611 (14 steps).
-// - R16-P printed: ../legacy/source/printed_viewer_template.html, `reg(o, group, ex,
+// - R16-P printed: source/printed_viewer_template.html of the original, `reg(o, group, ex,
 //   asm)`, lines 157 and 158 (`const N=P.N`, px, py) and 183 to 278
 //   (`const PARTS=[];` to the line before `/*KIN*/`), ASM at lines 520 to
 //   524 (12 steps).
@@ -44,13 +44,14 @@
 // not the pinned copy, a marker moved, a count differs from its bill, or
 // the result differs from the committed record.
 
-import { join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { Asserts, finish, legacyDir, marker, readPinned } from "../../../tools/legacy/record.mjs";
+import { Asserts, finish, marker, readPinned } from "../../../tools/legacy/record.mjs";
+import { localOriginal } from "../../../tools/test-support/originals-root.ts";
 
-const src = (f) => join(legacyDir("ogee16"), "source", f);
+/** A file of the original source tree, as an archive id; read through tools/test-support/originals-root.ts (HBF_ORIGINALS). */
+const src = (f) => `fab-knowledge:originals/ogee16/files/src/source/${f}`;
 
-/** From ../legacy/SHA256SUMS. */
+/** From the original's SHA256SUMS (files/src/source/). */
 const PIN = {
   "viewer_template.html": "9d101e0c28bd7ae75e81dce60483ac62b085460fc945d43d074077ecf5706dd9",
   "printed_viewer_template.html": "70f859f6524e0abc2fc1f3a7a22abe5a25b560848bf615868191607092dc61b8",
@@ -60,7 +61,7 @@ const PIN = {
   "build_plate.py": "dc3f1772312360fda22e3ef5f89ebc243e714fbf88fc1498e30c6a2bfd0664ed",
 };
 
-const linesOf = (f) => readPinned(src(f), PIN[f]).toString("utf8").split("\n");
+const linesOf = (f) => readPinned(localOriginal(src(f)), PIN[f]).toString("utf8").split("\n");
 
 /** N, GUIDE_Y, T and LAM from params.scad. */
 function params() {

@@ -1,12 +1,13 @@
-// SLUG's shelf nest run headless from the legacy page (M07-T01 step 2).
-// Two blocks of designs/slug/legacy/slug.html are copied byte for byte:
+// SLUG's shelf nest run headless from the original page (M07-T01 step 2).
+// Two blocks of fab-knowledge:originals/slug/files/slug.html, read through
+// tools/test-support/originals-root.ts (HBF_ORIGINALS), are copied byte for byte:
 // line 272 (`const OUTLINES`, the cut loops baked from slug.scad) and the
 // block from `const PART_QTY` (line 1042) to the line before
 // `function download` (line 1138), which holds ACRYLIC, extent, nest,
 // placedLoops, sheetSVG and sheetDXF. The page's own nest() packs ply and
 // acrylic at 600 x 400, gap 4, margin 6 (the page's call), and sheetDXF and
 // sheetSVG(forCut) regenerate every sheet for a byte compare against the 20
-// shipped files in ../legacy/sheets/.
+// shipped files in the original's files/sheets/.
 //
 //   node designs/slug/extract/extract-nest.mjs --check   compare with the record
 //   node designs/slug/extract/extract-nest.mjs --write   write the record
@@ -17,20 +18,20 @@
 // Records table moved, or the result differs from the committed record.
 
 import { readFileSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { Asserts, finish, legacyDir, marker, readPinned, sha256 } from "../../../tools/legacy/record.mjs";
+import { Asserts, finish, marker, readPinned, sha256 } from "../../../tools/legacy/record.mjs";
+import { localOriginal } from "../../../tools/test-support/originals-root.ts";
 
-const LEGACY = legacyDir("slug");
-const PAGE = join(LEGACY, "slug.html");
+const ORIGINAL = "fab-knowledge:originals/slug/";
+const PAGE = `${ORIGINAL}files/slug.html`;
 const PAGE_SHA256 = "2d09238c27d5ca4bf023eeee44939b1500470ad2058822b8d0add48ec9bf3241";
-const SHEETS = join(LEGACY, "sheets");
+const SHEETS = `${ORIGINAL}files/sheets`;
 
-/** The shipped sheets, pinned by the sheets/ lines of ../legacy/SHA256SUMS. */
+/** The shipped sheets, pinned by the files/sheets/ lines of the original's SHA256SUMS. */
 function shippedPins() {
   const pins = {};
-  for (const line of readFileSync(join(LEGACY, "SHA256SUMS"), "utf8").split("\n")) {
-    const m = line.match(/^([0-9a-f]{64}) {2}sheets\/(.+)$/);
+  for (const line of readFileSync(localOriginal(`${ORIGINAL}SHA256SUMS`), "utf8").split("\n")) {
+    const m = line.match(/^([0-9a-f]{64}) {2}files\/sheets\/(.+)$/);
     if (m) pins[m[2]] = m[1];
   }
   if (Object.keys(pins).length !== 20) throw new Error(`SHA256SUMS pins ${Object.keys(pins).length} sheet files, expected 20`);
@@ -38,7 +39,7 @@ function shippedPins() {
 }
 
 export function extract() {
-  const lines = readPinned(PAGE, PAGE_SHA256).toString("utf8").split("\n");
+  const lines = readPinned(localOriginal(PAGE), PAGE_SHA256).toString("utf8").split("\n");
   marker(lines, "const OUTLINES=JSON.parse(", 272);
   marker(lines, "const PART_QTY=", 1042);
   marker(lines, "const ACRYLIC=", 1051);
@@ -107,7 +108,7 @@ function run() {
     sheets.forEach((sh, i) => {
       for (const [ext, text] of [["dxf", sheetDXF(sh)], ["svg", sheetSVG(sh, W, H, true)]]) {
         const name = `slug_${label}_sheet${i + 1}.${ext}`;
-        const shipped = readFileSync(join(SHEETS, name));
+        const shipped = readFileSync(localOriginal(`${SHEETS}/${name}`));
         const equal = shipped.equals(Buffer.from(text, "utf8"));
         if (equal && ext === "dxf") dxfEqual++;
         if (equal && ext === "svg") svgEqual++;
@@ -144,7 +145,7 @@ if (argv[1] === fileURLToPath(import.meta.url)) {
   try {
     const o = argv.indexOf("--out");
     if (o > 0) { writeFileSync(argv[o + 1], extract()); process.exit(0); }
-    for (const [name, pin] of Object.entries(shippedPins())) readPinned(join(SHEETS, name), pin);
+    for (const [name, pin] of Object.entries(shippedPins())) readPinned(localOriginal(`${SHEETS}/${name}`), pin);
     const r = run();
     const a = new Asserts();
     // The M07 Records table, 2026-10-04 (computed).
@@ -167,7 +168,7 @@ if (argv[1] === fileURLToPath(import.meta.url)) {
     a.eq("holes outside their outer", r.connectivity.holesOutsideOuter, 0);
     a.eq("acrylic with door_flap and window", [r.acrylicWithDoorFlapAndWindow.sheets, r.acrylicWithDoorFlapAndWindow.partsPerSheet], [1, [5]]);
     const inputs = { [PAGE]: PAGE_SHA256 };
-    for (const f of r.files) inputs[join(SHEETS, f.name)] = f.shippedSha256;
+    for (const f of r.files) inputs[`${SHEETS}/${f.name}`] = f.shippedSha256;
     finish({
       record: "slug-legacy",
       out: "packages/nest/records/slug-legacy.json",

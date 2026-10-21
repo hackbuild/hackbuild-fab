@@ -1,0 +1,4 @@
+        <div><label class="sl">Sheet width mm</label><input type="number" id="nW" value="600" step="10"></div>
+        <div><label class="sl">Sheet height mm</label><input type="number" id="nH" value="400" step="10"></div>
+        <div><label class="sl">Part gap mm</label><input type="number" id="nGap" value="4" step="1"></div>
+        <div><label class="sl">Edge margin mm</label><input type="number" id="nMar" value="6" step="1"></div>

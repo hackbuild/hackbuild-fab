@@ -1,9 +1,10 @@
 // OGEE R16-P printed assembly at its audit poses (M04-T11 step 3). The
 // placements are the ones audit_print.build() applies, written per pose by
-// tools/py/ogee16/export_poses.py into designs/ogee16/legacy/poses/ from the
-// legacy source run unedited; kin.py is not ported here (the kinematics
+// tools/py/ogee16/export_poses.py into ogee16-poses/ from the original
+// source run unedited; kin.py is not ported here (the kinematics
 // module at M07 must reproduce these placements, D-139). The bodies are the
-// shipped print STLs read through the mesh imported route and staged into
+// shipped print STLs (stored as inputs/ogee16/print/<name>.stl, members of
+// ogee16-print-stl.zip) read through the mesh imported route and staged into
 // Part IR, one part per STL. Each pose is one AssemblyDraft: 75 instances
 // (computed by the exporter), and one contact assertion per pair
 // audit_print.is_touch declares. Nothing physical is typed here: the
@@ -18,9 +19,14 @@ import {
 } from "@hackbuild/spec";
 import { assemblePart, importStl, stageImported, type MeshData } from "@hackbuild/mesh";
 
-const LEGACY = new URL("../../../designs/ogee16/legacy/", import.meta.url);
+/** The pose files export_poses.py writes; their bytes enter the declaration hash. */
+const POSES = new URL("ogee16-poses/", import.meta.url);
+/** The stored print STLs (inputs/stored-inputs.json). */
+const PRINT = new URL("inputs/ogee16/print/", import.meta.url);
+/** The Part IR uri of a stored print STL, workspace relative. */
+const stlUri = (stl: string): string => `packages/sim/scenes/inputs/ogee16/print/${stl}.stl`;
 
-/** Scene id to its pose file under designs/ogee16/legacy/poses/. */
+/** Scene id to its pose file under ogee16-poses/. */
 export const OGEE_PRINTED_FILES = {
   "ogee16-printed": "printed-4.json",
   "ogee16-printed-negatives": "printed-negatives.json",
@@ -86,9 +92,9 @@ function refuse(path: string, got: unknown, expected: string, hint: string): nev
 
 export function readPoseFile(scene: OgeePrintedScene): PoseFile {
   const name = OGEE_PRINTED_FILES[scene];
-  const doc = JSON.parse(readFileSync(new URL(`poses/${name}`, LEGACY), "utf8")) as PoseFile;
+  const doc = JSON.parse(readFileSync(new URL(name, POSES), "utf8")) as PoseFile;
   if (doc.format !== "hbf-ogee16-poses-1") {
-    refuse("/format", doc.format, "hbf-ogee16-poses-1", `designs/ogee16/legacy/poses/${name} is not a pose file; rerun tools/py/ogee16/export_poses.py`);
+    refuse("/format", doc.format, "hbf-ogee16-poses-1", `packages/sim/scenes/ogee16-poses/${name} is not a pose file; rerun tools/py/ogee16/export_poses.py`);
   }
   return doc;
 }
@@ -129,7 +135,7 @@ export function poseOfMatrix(m: readonly number[], path: string): Pose {
 function partDraft(stl: string): PartDraft {
   const body: BodyDraft = {
     id: stl, role: "body", slot: 1, material: "",
-    base: { route: "imported", uri: `designs/ogee16/legacy/out/print/${stl}.stl`, format: "stl", tier: "inferred" },
+    base: { route: "imported", uri: stlUri(stl), format: "stl", tier: "inferred" },
   };
   return {
     id: stl, name: `${stl}.stl`, process: "fdm", machine: "",
@@ -189,11 +195,11 @@ export async function buildOgeePrinted(scene: OgeePrintedScene, buildHashOf: (de
   const parts: Part[] = [];
   for (const draft of decl.drafts[0]!.parts) {
     const stl = draft.id;
-    const uri = `designs/ogee16/legacy/out/print/${stl}.stl`;
-    const bytes = new Uint8Array(readFileSync(new URL(`out/print/${stl}.stl`, LEGACY)));
+    const uri = stlUri(stl);
+    const bytes = new Uint8Array(readFileSync(new URL(`${stl}.stl`, PRINT)));
     const sum = sha256Hex(bytes);
     if (sum !== decl.file.stl[stl]) {
-      refuse(`/stl/${stl}`, sum, decl.file.stl[stl]!, `${uri} moved since the poses were exported; restore it from SHA256SUMS or rerun tools/py/ogee16/export_poses.py`);
+      refuse(`/stl/${stl}`, sum, decl.file.stl[stl]!, `${uri} moved since the poses were exported; take it again from ogee16-print-stl.zip (inputs/stored-inputs.json) or rerun tools/py/ogee16/export_poses.py`);
     }
     const { staged } = await stageImported([{ draft: draft.bodies[0]!, read: importStl(bytes, `${stl}.stl`) }]);
     const built = assemblePart(draft, staged);

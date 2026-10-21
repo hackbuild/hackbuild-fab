@@ -1,5 +1,5 @@
 // M07-T03 shelf parity: SLUG's own nest() and placedLoops(), extracted from
-// the pinned designs/slug/legacy/slug.html by the M07-T01 tool, against
+// the original slug.html (read through originals-root, owner runner) by the M07-T01 tool, against
 // nest's legacy-shelf mode. Items, quantities, stocks, sheet, gap and margin
 // all come from the page and its committed record
 // (packages/nest/records/slug-legacy.json); nothing here is typed from the

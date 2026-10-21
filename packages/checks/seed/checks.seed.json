@@ -551,7 +551,7 @@
           "qualifier": "computed, per-step sum over 25 steps in check_sweep.py and the M02 port; the bench 577 is retired by D-233"
         },
         "knowledge": "knowledge:01-invariants#motion-and-latching",
-        "evidence": "designs/ogee16/legacy/source/check_sweep.py"
+        "evidence": "fab-knowledge:originals/ogee16/files/src/source/check_sweep.py"
       },
       "status": "seed"
     },
@@ -3433,7 +3433,7 @@
         "project": "OGEE R16-P 2026-08",
         "date": "2026-08",
         "what": "audit_print.py reads a boolean that throws as 0 mm3, so a crashed intersection reads as clear",
-        "evidence": "designs/ogee16/legacy/source/audit_print.py",
+        "evidence": "fab-knowledge:originals/ogee16/files/src/source/audit_print.py",
         "also": [
           {
             "project": "BUCK 2026-10-06",

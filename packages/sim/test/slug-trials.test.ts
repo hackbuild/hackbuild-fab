@@ -1,7 +1,8 @@
 // M02-T08 trials: the seeded SLUG vend protocol. Expected values come from
 // outside the code under test: the committed record records/slug-trials.json
 // (written by `npm run slug:trials -w packages/sim`), BUILD.md's declared
-// 126 of 128 as the scene states it, and a node:crypto rebuild of the
+// 126 of 128 as the scene states it (slug-originals.test.ts holds the
+// lines of the original BUILD.md), and a node:crypto rebuild of the
 // end-state hash layout. The 30-trial run is in the record only; the
 // default run repeats the 8-trial and the 58 mm mouth sets (about 15 s
 // measured on an Apple M1).
@@ -22,7 +23,6 @@ import { SLUG_MOUTH58 } from "../scenes/slug-mouth58.js";
 import { SLUG_SCENE } from "../scenes/slug.js";
 
 const SIM = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const ROOT = path.resolve(SIM, "..", "..");
 
 interface RecordSet { readonly result: TrialResult; readonly rows: readonly SlugTrialRow[] }
 const rec = JSON.parse(readFileSync(path.join(SIM, "records", "slug-trials.json"), "utf8")) as {
@@ -32,7 +32,6 @@ const rec = JSON.parse(readFileSync(path.join(SIM, "records", "slug-trials.json"
   readonly trials30: RecordSet;
   readonly mouth58: RecordSet & { readonly meanPasses: number; readonly mouth156MeanPasses: number; readonly belowMouth156: boolean };
 };
-const build = readFileSync(path.join(ROOT, "designs", "slug", "legacy", "BUILD.md"), "utf8").split("\n");
 
 /** Physics outcome of a run: everything but the wall time. */
 const outcome = (r: SlugRun): unknown => ({ ...r.result, wallMs: undefined, rows: r.rows });
@@ -77,8 +76,6 @@ describe("SLUG seeded trials (M02-T08)", () => {
   });
 
   test("the declared expectation is BUILD.md line 266 and the verdict compares count and miss positions", () => {
-    expect(build[265]).toContain("126 of 128 vends across eight trials delivered exactly one capsule");
-    expect(build[266]).toContain("both the first vend of a run");
     expect(SLUG_SCENE.expected).toMatchObject({ trials: 8, runs: 128, passes: 126, missVends: [1] });
     const row = (seed: number, delivered: number[]): SlugTrialRow => {
       const misses = delivered.flatMap((n, i) => (n === 1 ? [] : [{ vend: i + 1, delivered: n }]));
@@ -116,7 +113,6 @@ describe("SLUG seeded trials (M02-T08)", () => {
   });
 
   test("without the hood the exit pocket refills: capsules leak before the first coin and a vend hands out two (BUILD.md lines 219 to 221)", () => {
-    expect(build.slice(218, 221).join(" ")).toContain("Without the hood, the pocket sitting on the exit is refilled from above");
     const open = { ...SLUG_SCENE, geometry: { ...SLUG_SCENE.geometry, hood: { ...SLUG_SCENE.geometry.hood, r: 0 } }, protocol: { ...SLUG_SCENE.protocol, vends: 4 } };
     const hooded = run8.rows[0]!;
     const bare = runSlugTrial(open, 1);

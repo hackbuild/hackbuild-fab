@@ -1,6 +1,8 @@
 // OGEE16 swept cranks scene (M02-T07): check_sweep.py main (lineage
-// ogee16.check-sweep/r16p) over the shipped print STLs or the proud-head
-// fixture (designs/ogee16/extract/fixtures/proud-head). The crank placements
+// ogee16.check-sweep/r16p) over the shipped print STLs, stored as
+// inputs/ogee16/print/<name>.stl (members of ogee16-print-stl.zip, lineage
+// ogee16.print-stl), or the proud-head fixture
+// (designs/ogee16/extract/fixtures/proud-head). The crank placements
 // and the rest pose of audit_print.build come from the OGEE16 kinematics in
 // packages/motion (D-139) through the binding core hands the loader
 // (src/place.ts), with every dimension read from params.scad there; this
@@ -14,7 +16,8 @@ import { commandError } from "@hackbuild/spec";
 import type { BindKinematics, Mat4, SceneKinematics } from "../src/place.js";
 import { rotateSweep, type Obstacle, type RotateSweepResult, type RotatingPart } from "../src/sweep/rotate.js";
 
-const LEGACY = new URL("../../../designs/ogee16/legacy/", import.meta.url);
+/** The stored print STLs of the OGEE16 scenes (inputs/stored-inputs.json). */
+export const OGEE_PRINT = new URL("inputs/ogee16/print/", import.meta.url);
 const FIXTURE = new URL("../../../designs/ogee16/extract/fixtures/proud-head/", import.meta.url);
 
 export type Variant = "shipped" | "proud";
@@ -41,7 +44,7 @@ export function ogeeParams(): ReadonlyMap<string, number> {
 /** A parameter params.scad must define; a missing one is a port fault, never a default. */
 function need(P: ReadonlyMap<string, number>, k: string): number {
   const v = P.get(k);
-  if (v === undefined) throw commandError({ code: "E_REF", path: `/params/${k}`, got: null, expected: "a scalar params.scad defines", hint: `designs/ogee16/legacy/source/params.scad defines no ${k}; check the legacy copy against SHA256SUMS`, record: "viewer-sim" });
+  if (v === undefined) throw commandError({ code: "E_REF", path: `/params/${k}`, got: null, expected: "a scalar params.scad defines", hint: `params.scad defines no ${k}; check packages/motion/inputs/ogee16/params.scad against its stored-inputs.json sha256`, record: "viewer-sim" });
   return v;
 }
 
@@ -52,10 +55,10 @@ const cache = new Map<string, MeshData>();
 /** One OGEE16 STL as a welded mesh (the imported route, D-053); cranks come from the fixture when variant is proud. */
 export function ogeeMesh(name: string, variant: Variant = "shipped"): MeshData {
   const proud = variant === "proud" && (CRANK_FILES as readonly string[]).includes(name);
-  const key = (proud ? "fixtures/proud-head/" : "out/print/") + name;
+  const key = (proud ? "fixtures/proud-head/" : "print/") + name;
   let m = cache.get(key);
   if (m === undefined) {
-    m = importStl(readFileSync(proud ? new URL(`${name}.stl`, FIXTURE) : new URL(`out/print/${name}.stl`, LEGACY)), `${name}.stl`).mesh;
+    m = importStl(readFileSync(proud ? new URL(`${name}.stl`, FIXTURE) : new URL(`${name}.stl`, OGEE_PRINT)), `${name}.stl`).mesh;
     cache.set(key, m);
   }
   return m;

@@ -6,7 +6,8 @@
 // its own reader), entity facts with a group-code split written in this
 // file, and the OGEE R16 lasercut with the parts, kerf, gap and BOM of
 // cutfiles.py (packages/nest/records/ogee16-connect.json, the stitched
-// rings its rings_from_dxf() produced; KERF and GAP read from the script).
+// rings its rings_from_dxf() produced; KERF and GAP read from the script's
+// lines 18 to 32, stored in test/inputs).
 // HBF_DXF_RECORD=1 rewrites test/out; without it a byte that moved fails.
 
 import { createHash } from "node:crypto";
@@ -59,8 +60,8 @@ function golden(name: string, text: string): void {
 
 const template = json<{ ezdxf: string; layers: string[]; owner: string; first: number; tpl: string }>("packages/nest/data/dxf-template.json");
 
-// cutfiles.py: KERF (line 19), GAP (line 21), the BOM and the per-part rings its own functions produced.
-const cutfiles = readFileSync(path.join(ROOT, "designs/ogee16/legacy/source/cutfiles.py"), "utf8");
+// cutfiles.py: KERF (line 18), GAP (line 20), the BOM and the per-part rings its own functions produced.
+const cutfiles = readFileSync(path.join(ROOT, "packages/nest/test/inputs/ogee16/cutfiles-18-32.txt"), "utf8");
 const KERF = Number(/^KERF = ([0-9.]+)/m.exec(cutfiles)?.[1]);
 const GAP = Number(/^GAP = ([0-9.]+)/m.exec(cutfiles)?.[1]);
 const BOM = [...(/^BOM = \[([\s\S]*?)^\]/m.exec(cutfiles)?.[1] ?? "").matchAll(/\("(\w+)", (\d+)\)/g)].map((m) => [m[1]!, Number(m[2])] as const);

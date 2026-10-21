@@ -1,5 +1,5 @@
 // SLUG vend (M07-T11 step 3). The page commits targetSteps = motorSteps +
-// STEPS_VEND, a fractional 4075.7728 half steps (designs/slug/legacy/
+// STEPS_VEND, a fractional 4075.7728 half steps (fab-knowledge:originals/slug/files/
 // slug.html lines 224 to 226 and 965 to 969); a stepper takes whole steps,
 // so a fixed 4076 per vend drifts 227.2 half steps per 1000 vends and a
 // fixed 4075 drifts 772.8 (computed). Here the rotor axis target after vend
@@ -29,7 +29,7 @@ export interface SlugDrive {
 export function slugDrive(profile: Pick<ProfileLookup, "constant">, slugScad: string): SlugDrive {
   const ratio = readScadParams(slugScad).get("RATIO");
   if (ratio === undefined) {
-    throw commandError({ code: "E_REF", path: "/scad/RATIO", got: null, expected: "RATIO = gz_rot/gz_pin", hint: "designs/slug/legacy/slug.scad line 39 defines RATIO; check the copy against SHA256SUMS", record: "motion-latch" });
+    throw commandError({ code: "E_REF", path: "/scad/RATIO", got: null, expected: "RATIO = gz_rot/gz_pin", hint: "slug.scad line 39 defines RATIO; check packages/motion/inputs/slug/slug.scad against its stored-inputs.json sha256", record: "motion-latch" });
   }
   return { halfStepsPerRev: profile.constant("28byj48.halfStepsPerRev").value, rate: profile.constant("slug.vendRate").value, ratio };
 }

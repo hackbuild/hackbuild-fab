@@ -1,7 +1,7 @@
 // OGEE16 kinematics: the one place a moving OGEE part is placed (D-139).
 //
 // link3, pinState, crankPhi, lCrankPhi, CAM, E_REST and ceil_v are
-// kin_block.js (designs/ogee16/legacy/source, lines 4 to 38) line for line;
+// kin_block.js (fab-knowledge:originals/ogee16/files/src/source, lines 4 to 38) line for line;
 // kin_block.js is itself the JS twin of kin.py (lineage ogee16.kin/r16p,
 // canonical). CAMLIFT, canLatch and the readout are kin.py lines 90, 121 to
 // 124 and 144 to 166, which kin_block.js does not carry. place() is
@@ -116,7 +116,7 @@ function pick(P: ReadonlyMap<string, number>): OgeeParams {
     if (v === undefined) {
       throw commandError({
         code: "E_REF", path: `/params/${k}`, got: null, expected: "a scalar params.scad defines",
-        hint: `designs/ogee16/legacy/source/params.scad defines no ${k}; check the legacy copy against SHA256SUMS`, record: "viewer-sim",
+        hint: `params.scad defines no ${k}; check packages/motion/inputs/ogee16/params.scad against its stored-inputs.json sha256`, record: "viewer-sim",
       });
     }
     out[k] = v;

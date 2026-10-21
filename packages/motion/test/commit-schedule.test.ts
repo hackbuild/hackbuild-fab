@@ -15,7 +15,7 @@ import {
 
 const root = new URL("../../../", import.meta.url);
 const read = (p: string): string => readFileSync(new URL(p, root), "utf8");
-const OG = ogeeKinematics(readScadParams(read("designs/ogee16/legacy/source/params.scad")));
+const OG = ogeeKinematics(readScadParams(read("packages/motion/inputs/ogee16/params.scad")));
 const ST = stippleKinematics(readStippleParams(read("packages/motion/inputs/stipple/stipple-r17b-DATA.txt")), "stipple-r17b");
 const rec = JSON.parse(read("packages/motion/records/ogee16-kin.json")) as { result: { programs: { checker: { matrix: number[][] } } } };
 const cellsOf = (g: number[][]): string[] => g.flatMap((r, i) => r.flatMap((v, j) => (v ? [`${i},${j}`] : [])));

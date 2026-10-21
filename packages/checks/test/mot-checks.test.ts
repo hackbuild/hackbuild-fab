@@ -24,7 +24,7 @@ const seed = JSON.parse(text("packages/checks/seed/checks.seed.json")) as Parame
 const DEFS = registerChecks({ seed }, CHECK_MODULES).filter((d) => ["CHK-MOT-04", "CHK-MOT-05", "CHK-MOT-06"].includes(d.id));
 const KERNELS = new Set<KernelId>(["geom", "mesh", "profile", "motion"]);
 
-const OG = ogeeKinematics(readScadParams(text("designs/ogee16/legacy/source/params.scad")));
+const OG = ogeeKinematics(readScadParams(text("packages/motion/inputs/ogee16/params.scad")));
 const P17b = readStippleParams(text("packages/motion/inputs/stipple/stipple-r17b-DATA.txt"));
 const ST = stippleKinematics(P17b, "stipple-r17b");
 const ST17 = stippleKinematics(readStippleParams(text("packages/motion/inputs/stipple/stipple-r17-DATA.txt")), "stipple-r17");

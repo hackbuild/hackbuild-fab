@@ -19,7 +19,7 @@ const og = JSON.parse(read("packages/motion/records/ogee16-kin.json")) as {
 interface StippleRow { STROKE: number; LUG_TOT: number; camlift: number; half_rise: number; full_rise: number; margin: number; overshoot: number; identity_lhs: number; identity_rhs_general: number; identity_rhs_stroke_half: number }
 const st = JSON.parse(read("packages/motion/inputs/stipple/stipple_latch.json")) as Record<string, StippleRow>;
 
-const R16 = latchIdentity(ogeeKinematics(readScadParams(read("designs/ogee16/legacy/source/params.scad"))).latch);
+const R16 = latchIdentity(ogeeKinematics(readScadParams(read("packages/motion/inputs/ogee16/params.scad"))).latch);
 const R17 = latchIdentity(stippleKinematics(readStippleParams(read("packages/motion/inputs/stipple/stipple-r17-DATA.txt")), "stipple-r17").latch);
 const R17b = latchIdentity(stippleKinematics(readStippleParams(read("packages/motion/inputs/stipple/stipple-r17b-DATA.txt")), "stipple-r17b").latch);
 

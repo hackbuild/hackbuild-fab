@@ -1,0 +1,10 @@
+const PART_QTY={ rotor_gear_a:1, rotor_gear_b:1, rotor_ring:1, rotor_top:1, spacer_a:6, spacer_b:6,
+  pinion:2, motor_plate:2, thrust_washer:3, stiffener:1,
+  base_plate:1, deck_lower:1, deck_upper:1, ceiling_plate:1, roof_plate:1,
+  side_lower_l:1, side_lower_r:1, side_upper_l:1, side_upper_r:1,
+  front_lower:1, front_upper:1, back_lower:1, back_upper:1,
+  funnel_front:1, funnel_left:1, funnel_right:1, funnel_back:1,
+  ramp_panel:1, ramp_rail:2, coin_wall:1, coin_chute:1, coin_plate:1,
+  elec_plate:1, cash_face:1, turnbutton:1, splice:4, gauge:1,
+  tray_floor:1, tray_side:2, tray_end:2, ret_floor:1, ret_side:2 };
+const ACRYLIC=new Set(["door_flap","window","thrust_washer"]);

@@ -17,12 +17,31 @@
       "lineage": "derrick.arm-ref/regenerated-stored"
     },
     {
+      "path": "ogee16/params.scad",
+      "sha256": "1c0a4b898b4977d87d435273a04857111fab5d43324bee591c2a6ad641591d6d",
+      "bytes": 9133,
+      "source": "fab-knowledge:originals/ogee16/files/src/source/params.scad",
+      "sourceSha256": "1c0a4b898b4977d87d435273a04857111fab5d43324bee591c2a6ad641591d6d",
+      "lineage": "ogee16.params/motion-stored"
+    },
+    {
+      "path": "slug/slug.scad",
+      "sha256": "a5990b866b0829282ec7dc9b6f090c64c447c8f1a3432164b279ebc8dcf3fef6",
+      "bytes": 37190,
+      "source": "fab-knowledge:originals/slug/files/slug.scad",
+      "sourceSha256": "a5990b866b0829282ec7dc9b6f090c64c447c8f1a3432164b279ebc8dcf3fef6",
+      "lineage": "slug.scad/motion-stored"
+    },
+    {
       "path": "stipple/stipple-r17-DATA.txt",
       "sha256": "0ed04b4ad4501a43612f043e97fc5616d2210c476ceecd40604beaa1e3ba39af",
       "bytes": 131613,
       "source": "fab-knowledge:originals/stipple/files/companions/stipple-r17.html",
       "sourceSha256": "e1f4e1ddf366772e6658210b755e76ac7a34a61129c8bcbe2819eed9c1c67fb0",
-      "lines": [117, 117],
+      "lines": [
+        117,
+        117
+      ],
       "lineage": "stipple.bench/r17-data"
     },
     {
@@ -31,7 +50,10 @@
       "bytes": 132821,
       "source": "fab-knowledge:originals/stipple/files/stipple-r17b.html",
       "sourceSha256": "f4afad81c417627e84349c5f6cf6b1016e520083ce8ac631b7d71fc6c02f1767",
-      "lines": [117, 117],
+      "lines": [
+        117,
+        117
+      ],
       "lineage": "stipple.kin/r17b"
     },
     {

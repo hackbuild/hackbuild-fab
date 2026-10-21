@@ -4,8 +4,12 @@ Run from the repo root:
 
     uv run --project tools/py python tools/py/ogee16/export_poses.py
 
-The script imports designs/ogee16/legacy/source/audit_print.py without
-editing it (lineage: the R16-P source zip, sha256 in the M04 header) and
+The script imports audit_print.py of the original source tree
+(fab-knowledge:originals/ogee16/files/src/source, read through
+tools/py/hbf_archives.py) without editing it (lineage: the R16-P source
+zip, sha256 in the M04 header), in a temporary copy beside out/print/
+taken from the original ogee16-print-stl.zip, since audit_print.py reads
+source/../out/print, and
 calls audit_print.build(zR, zC, lp) for the four states of its __main__
 (rest; full select 0,0; all bars up; clear pull) and for the two negative
 poses of M04-T11 step 5 (row bar 0 and column bar 1 at STROKE plus 3).
@@ -25,9 +29,9 @@ audit() reads as 0 mm3, and the bodies that are not watertight. The clash
 list is computed with audit()'s own rule and compared with audit() run on
 the same pose; a difference exits 1.
 
-Outputs: designs/ogee16/legacy/poses/printed-4.json and
+Outputs: packages/sim/scenes/ogee16-poses/printed-4.json and
 printed-negatives.json; stdout is the record kept as
-designs/ogee16/legacy/records/export-poses.txt.
+packages/sim/scenes/ogee16-poses/export-poses.txt.
 """
 import ast
 import contextlib
@@ -37,13 +41,31 @@ import io
 import itertools
 import json
 import os
+import shutil
 import sys
+import tempfile
+import zipfile
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
-LEGACY = os.path.join(ROOT, "designs", "ogee16", "legacy")
-SOURCE = os.path.join(LEGACY, "source")
-OUT = os.path.join(LEGACY, "poses")
-# The legacy copy is byte identical to the harvest: no __pycache__ beside it.
+sys.path.insert(0, os.path.join(ROOT, "tools", "py"))
+from hbf_archives import local_source  # noqa: E402
+
+SOURCE_ID = "fab-knowledge:originals/ogee16/files/src/source"
+STL_ZIP_ID = "fab-knowledge:originals/ogee16/files/exports/ogee16-print-stl.zip"
+OUT = os.path.join(ROOT, "packages", "sim", "scenes", "ogee16-poses")
+# The label the committed pose files carry. It enters the ogee16-printed
+# declaration hash, so it names the tree the poses were first exported from
+# and stays as recorded; the bytes it names are the originals above.
+ORIGIN = "designs/ogee16/legacy/source/audit_print.py, build() and audit(), called unedited by tools/py/ogee16/export_poses.py"
+
+# audit_print.py reads source/../out/print: the original source tree and the
+# print/ members of the STL zip, side by side in a temporary folder.
+TREE = tempfile.mkdtemp(prefix="hbf-ogee16-poses-")
+SOURCE = os.path.join(TREE, "source")
+shutil.copytree(local_source(SOURCE_ID), SOURCE)
+with zipfile.ZipFile(local_source(STL_ZIP_ID)) as z:
+    z.extractall(os.path.join(TREE, "out"), [n for n in z.namelist() if n.startswith("print/") and n.endswith(".stl")])
+# No __pycache__ beside the copied source.
 sys.dont_write_bytecode = True
 sys.path.insert(0, SOURCE)
 
@@ -67,7 +89,7 @@ def check_sources():
     for name, want in SOURCES.items():
         got = sha256_file(os.path.join(SOURCE, name))
         if got != want:
-            sys.exit(f"{name}: sha256 {got}, want {want}; restore the legacy copy from SHA256SUMS")
+            sys.exit(f"{name}: sha256 {got}, want {want}; {SOURCE_ID} is not the R16-P source the M04 header pins")
 
 
 def thresholds():
@@ -178,7 +200,7 @@ def write(name, poses, tol, ceiling, margin):
             sys.exit(f"[{p['label']}] body labels differ from [{poses[0]['label']}]")
     doc = {
         "format": "hbf-ogee16-poses-1",
-        "origin": "designs/ogee16/legacy/source/audit_print.py, build() and audit(), called unedited by tools/py/ogee16/export_poses.py",
+        "origin": ORIGIN,
         "sources": {n: SOURCES[n] for n in sorted(SOURCES)},
         "stl": stl_sums(poses),
         "tolMm3": tol,
@@ -192,7 +214,7 @@ def write(name, poses, tol, ceiling, margin):
     with open(os.path.join(OUT, name), "w") as f:
         json.dump(doc, f, indent=1, sort_keys=True)
         f.write("\n")
-    print(f"wrote designs/ogee16/legacy/poses/{name}: {len(poses)} poses, {len(labels)} bodies each, {len(doc['touch'])} touch pairs")
+    print(f"wrote packages/sim/scenes/ogee16-poses/{name}: {len(poses)} poses, {len(labels)} bodies each, {len(doc['touch'])} touch pairs")
 
 
 def main():
@@ -223,4 +245,7 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    finally:
+        shutil.rmtree(TREE, ignore_errors=True)

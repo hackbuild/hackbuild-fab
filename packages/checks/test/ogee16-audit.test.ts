@@ -1,9 +1,9 @@
 // M04-T11: the OGEE R16-P printed interference audit as a registry check on
 // Part IR. Independent sources: the oracle's own stdout
-// (designs/ogee16/legacy/records/audit-print.txt, audit_print.py run
+// (packages/sim/scenes/ogee16-poses/audit-print.txt, audit_print.py run
 // unedited), the poses and the oracle's per pair volumes written by
 // tools/py/ogee16/export_poses.py with trimesh and manifold3d on the
-// legacy source, and the numbers the M04 card recorded on 2026-10-04 (its
+// original source (ogee16-audit-originals.test.ts holds its bytes), and the numbers the M04 card recorded on 2026-10-04 (its
 // Records table and step 5), read from the plan here. Nothing expected is
 // computed by the port under test.
 
@@ -86,12 +86,8 @@ afterAll(() => {
 });
 
 describe("oracle golden", () => {
-  test("audit_print.py, kin.py and params.scad are the bytes the M04 header pins", () => {
-    for (const m of ["audit_print.py", "kin.py", "params.scad"]) expect(sha256Hex(bytes(`designs/ogee16/legacy/source/${m}`)), m).toBe(headerSha(m));
-  });
-
   test("the oracle's stdout: four poses with clashes 0, TOTAL 0", () => {
-    const out = text("designs/ogee16/legacy/records/audit-print.txt");
+    const out = text("packages/sim/scenes/ogee16-poses/audit-print.txt");
     expect([...out.matchAll(/^\[(.+?)\s*\] clashes: (\d+)$/gm)].map((m) => [m[1], Number(m[2])])).toEqual([
       ["rest", 0], ["full select 0,0", 0], ["all bars up", 0], ["clear pull", 0],
     ]);
@@ -101,7 +97,7 @@ describe("oracle golden", () => {
   test("the pose file names the same oracle inputs and the shipped STL bytes", () => {
     const f = readPoseFile("ogee16-printed");
     for (const m of ["audit_print.py", "kin.py", "params.scad"]) expect(f.sources[m], m).toBe(headerSha(m));
-    for (const [stl, sum] of Object.entries(f.stl)) expect(sha256Hex(bytes(`designs/ogee16/legacy/out/print/${stl}.stl`)), stl).toBe(sum);
+    for (const [stl, sum] of Object.entries(f.stl)) expect(sha256Hex(bytes(`packages/sim/scenes/inputs/ogee16/print/${stl}.stl`)), stl).toBe(sum);
   });
 
   test("the exporter's records: 75 bodies in 4 poses, box-test pairs 198, 183, 183, 198, no exceptions, every body watertight", () => {

@@ -26,7 +26,7 @@ export const SLUG_OMITTED: Readonly<Record<string, number>> = { door_flap: 1, wi
 export function slugSheetsCompleteScene(): SheetScene {
   const page = slugPage();
   return slugScene("slug-sheets-complete", { ...page.PART_QTY, ...SLUG_OMITTED }, page, "informational", [
-    "door_flap 1 and window 1: inferred from designs/slug/legacy/BUILD.md lines 4, 109 and 153; baked in OUTLINES, listed in ACRYLIC, absent from PART_QTY",
-    "ret_lip 1 and ret_back 1: inferred from designs/slug/legacy/BUILD.md lines 67 to 70 and knowledge/designs/slug.md section 9; baked in OUTLINES, absent from PART_QTY",
+    "door_flap 1 and window 1: inferred from fab-knowledge:originals/slug/files/BUILD.md lines 4, 109 and 153; baked in OUTLINES, listed in ACRYLIC, absent from PART_QTY",
+    "ret_lip 1 and ret_back 1: inferred from fab-knowledge:originals/slug/files/BUILD.md lines 67 to 70 and knowledge/designs/slug.md section 9; baked in OUTLINES, absent from PART_QTY",
   ]);
 }

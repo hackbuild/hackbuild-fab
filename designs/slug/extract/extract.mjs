@@ -1,4 +1,4 @@
-// Extracts the capsule physics of designs/slug/legacy/slug.html as an ES
+// Extracts the capsule physics of the original slug.html as an ES
 // module that runs in node (M02-T08 step 1), the way the shipped tests
 // tri2.mjs and placecheck.mjs loaded the page through /tmp/app.mjs. Two
 // blocks are copied byte for byte: the parameter echo and funnel functions
@@ -16,15 +16,15 @@
 //
 //   node designs/slug/extract/extract.mjs --out <file.mjs>
 //
-// Exit 1 when the page bytes are not the legacy copy or a marker moved.
+// Exit 1 when the page bytes are not the original's or a marker moved.
 
 import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { legacyDir } from "../../../tools/legacy/record.mjs";
+import { localOriginal } from "../../../tools/test-support/originals-root.ts";
 
-const PAGE = join(legacyDir("slug"), "slug.html");
+/** The original page, read through tools/test-support/originals-root.ts (HBF_ORIGINALS). */
+const PAGE = "fab-knowledge:originals/slug/files/slug.html";
 const PAGE_SHA256 = "2d09238c27d5ca4bf023eeee44939b1500470ad2058822b8d0add48ec9bf3241";
 
 /** 1-based line numbers the card and the slug record cite; a moved marker fails the extraction. */
@@ -85,9 +85,9 @@ export const slug = {
 `;
 
 export function extract() {
-  const bytes = readFileSync(PAGE);
+  const bytes = readFileSync(localOriginal(PAGE));
   const sha = createHash("sha256").update(bytes).digest("hex");
-  if (sha !== PAGE_SHA256) throw new Error(`slug.html sha256 ${sha}, legacy copy is ${PAGE_SHA256}`);
+  if (sha !== PAGE_SHA256) throw new Error(`slug.html sha256 ${sha}, the original is ${PAGE_SHA256}`);
   const lines = bytes.toString("utf8").split("\n");
   for (const [text, line] of MARKERS) {
     const at = lines.findIndex((l) => l.startsWith(text)) + 1;

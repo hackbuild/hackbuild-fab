@@ -2,8 +2,10 @@
 // committed record packages/nest/records/ogee16-steps.json, written by
 // designs/ogee16/extract/extract-steps.mjs from the reg(...) calls of
 // viewer_template.html (14 steps) and printed_viewer_template.html (12),
-// is run again here and held to the bills neither viewer reads (cutfiles.py
-// BOM, build_plate.py QTY) and to the scene's instance rules. The step
+// is held to the bills neither viewer reads (cutfiles.py BOM, build_plate.py
+// QTY, their lines stored in test/inputs) and to the scene's instance
+// rules; assembly-order-originals.test.ts runs the extraction again on the
+// originals and holds it to the record. The step
 // order on the sheets is audited with arithmetic of this file on the
 // placements, and the sheet counts of both modes are held to the committed
 // record packages/nest/records/ogee16-assembly-order.json
@@ -13,7 +15,7 @@ import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { beforeAll, describe, expect, test } from "vitest";
-import { canonicalize, isThrownCommandError, type NestItem, type NestRequest, type NestResult, type ProfileLookup, type Ring } from "@hackbuild/spec";
+import { isThrownCommandError, type NestItem, type NestRequest, type NestResult, type ProfileLookup, type Ring } from "@hackbuild/spec";
 import { loadGeom, type Geom } from "@hackbuild/geom";
 import { createProfileLookup, loadProfile } from "@hackbuild/profile";
 import { assemblyReport, assignSteps, unassignedItems } from "../src/assembly-order.js";
@@ -21,8 +23,6 @@ import { packSheets } from "../src/connect.js";
 import { packPlates } from "../src/plates.js";
 import { nest } from "../src/sheet-loop.js";
 import { billOf, countOf, DRIVES, INSTANCE_RULES, ogee16PlatesScene, type Drive } from "../scenes/ogee16-r16p-plates.js";
-// @ts-expect-error the legacy tool is plain JavaScript with no declarations
-import { lasercut, printed } from "../../../designs/ogee16/extract/extract-steps.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "..", "..");
 const json = <T>(rel: string): T => JSON.parse(readFileSync(path.join(ROOT, rel), "utf8")) as T;
@@ -31,16 +31,13 @@ const RECORD = process.env.HBF_ASM_RECORD === "1";
 type Steps = Record<string, Record<string, number>>;
 interface ViewerSteps { asm: string[]; steps: Steps; unassigned: string[]; bill: Record<string, number> }
 const stepsRecord = json<{ result: { lasercut: ViewerSteps; printed: ViewerSteps } }>("packages/nest/records/ogee16-steps.json").result;
-/** The extraction run now, on the pinned legacy files. */
-const live = { lasercut: lasercut() as ViewerSteps, printed: printed() as ViewerSteps };
-
-// cutfiles.py: KERF (line 19), GAP (line 21) and BOM (lines 22 to 32), read here and not from the extraction.
-const cutfiles = readFileSync(path.join(ROOT, "designs/ogee16/legacy/source/cutfiles.py"), "utf8");
+// cutfiles.py: KERF (line 18), GAP (line 20) and BOM (lines 22 to 32), stored in test/inputs and read here, not from the extraction.
+const cutfiles = readFileSync(path.join(ROOT, "packages/nest/test/inputs/ogee16/cutfiles-18-32.txt"), "utf8");
 const KERF = Number(/^KERF = ([0-9.]+)/m.exec(cutfiles)?.[1]);
 const GAP = Number(/^GAP = ([0-9.]+)/m.exec(cutfiles)?.[1]);
 const BOM = [...(/^BOM = \[([\s\S]*?)^\]/m.exec(cutfiles)?.[1] ?? "").matchAll(/\("(\w+)", (\d+)\)/g)].map((m) => [m[1]!, Number(m[2])] as const);
-// build_plate.py QTY (lines 5 to 12), read here.
-const buildPlate = readFileSync(path.join(ROOT, "designs/ogee16/legacy/source/build_plate.py"), "utf8");
+// build_plate.py QTY (lines 5 to 12, stored in test/inputs), read here.
+const buildPlate = readFileSync(path.join(ROOT, "packages/nest/test/inputs/ogee16/build-plate-5-12.txt"), "utf8");
 const QTY = [...(/^COMMON = \[[\s\S]*?^SERVO_DRIVE = \[.*$/m.exec(buildPlate)?.[0] ?? "").matchAll(/\("(\w+)",(\d+)\)/g)].map((m) => [m[1]!, Number(m[2])] as const);
 
 const ogee = json<{ result: { parts: { id: string; qty: number; rings: number[][][] }[] } }>("packages/nest/records/ogee16-connect.json").result;
@@ -113,12 +110,8 @@ beforeAll(async () => {
 });
 
 describe("steps come from the viewers' reg(...) calls (computed)", () => {
-  test("the extraction run here equals the committed record", () => {
-    expect(canonicalize(live)).toBe(canonicalize(stepsRecord));
-  });
-
   test("lasercut: 14 steps; every BOM part but the coupon has a step; counts equal cutfiles.py BOM", () => {
-    const r = live.lasercut;
+    const r = stepsRecord.lasercut;
     expect(r.asm).toHaveLength(14);
     expect(r.unassigned).toEqual(["coupon"]);
     expect(BOM).toHaveLength(27);
@@ -129,7 +122,7 @@ describe("steps come from the viewers' reg(...) calls (computed)", () => {
   });
 
   test("printed: 12 steps; every QTY part but the drive pin has a step; counts equal build_plate.py QTY and the scene's rules", () => {
-    const r = live.printed;
+    const r = stepsRecord.printed;
     expect(r.asm).toHaveLength(12);
     expect(r.unassigned).toEqual(["drivepin"]);
     expect(QTY).toHaveLength(25);

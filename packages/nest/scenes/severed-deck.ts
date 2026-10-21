@@ -35,7 +35,7 @@ export function severedDeckScene(profile: ProfileLookup): SheetScene {
     sources: [
       "items: packages/nest/test/fixtures/severed-deck.json (M07-T04, synthetic, after the OGEE R12 deck)",
       `sheet: profile machine ${MACHINE} sheet envelope`,
-      "margin, gap: designs/slug/legacy/slug.html lines 176 and 177 (nGap, nMar)",
+      "margin, gap: fab-knowledge:originals/slug/files/slug.html lines 176 and 177 (nGap, nMar)",
     ],
   };
 }
