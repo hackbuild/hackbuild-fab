@@ -581,6 +581,10 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-525 | Off-file check added to the baker, scripts excluded | decided | Constraints and checks |
 | D-526 | Licence row for hackbuild-3mf added outside the brief file list | decided | Repos, packaging, toolchain, licensing |
 | D-527 | No lineage row for from-chase | decided | Testing, docs, milestones, registry |
+| D-528 | drive.code maps a wrong dialed code to tumbSolve's WRONG input | decided | UI |
+| D-529 | The host passes the code gate in, already bound to the build's params | decided | UI |
+| D-530 | view.light rests at PIP's key light and only aims that light | decided | UI |
+| D-531 | The netlens lens ghosts every body not on the lit net | decided | UI |
 
 ## House rules and process
 
@@ -6433,6 +6437,50 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. No lineage fragment written for `tools/bake/from-chase.ts`. |
 | Rationale | from-chase copies the in-repo M09 flex-pair manifest, not an original or a knowledge design. The baker lineage, pip.baker and cotter.baker, already covers bake.mjs. |
 | Evidence | `lineage/pip.baker.json`; byte-for-byte test against the committed flex-pair manifest (measured). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-528 drive.code maps a wrong dialed code to tumbSolve's WRONG input
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The widget calls the gate with KEY set to the insertion and WRONG set to 1 when any dialed digit differs from the cut code. It does not compare each pin against its own digit. |
+| Rationale | tumbSolve only ever reads the one cut code, so its only wrong-key input is the original's WRONG KEY switch. Calling the gate unchanged keeps the widget and the check on one function. The cost: a wrong code always shows pin 2 failing, whichever digit is wrong, as in the original's illustration. |
+| Evidence | `tumbler.html` lines 473 to 484 (tumbSolve) and line 1714 (the SIMS inputs KEY and WRONG); `packages/ui-core/src/widgets/code.ts` |
+| Supersedes | new |
+| Milestone | none |
+
+### D-529 The host passes the code gate in, already bound to the build's params
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. WidgetBuild.gates holds a WidgetCodeGate per fn id: the cut digits, the top digit and a solve(u) function. ui-core does not import @hackbuild/mechanisms. |
+| Rationale | This follows the claimFns pattern from R1-engine-13. ui-core does not depend on mechanisms, and a gate depends on the current params, which WidgetBuild does not carry. |
+| Evidence | `packages/ui-core/package.json` dependencies; `packages/ui-core/src/widgets/press.ts` header |
+| Supersedes | new |
+| Milestone | none |
+
+### D-530 view.light rests at PIP's key light and only aims that light
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. Azimuth and elevation move the key DirectionalLight at its own distance; fill and rim stay put. The elevation range is 0 to 90 degrees (inferred). The range step is 1 degree (inferred). |
+| Rationale | No original in fab-knowledge/originals has a light control that moves (checked coin, collar and others with grep), so the widget builds on the ported key light rather than inventing a new rig. |
+| Evidence | pip-controller `bench/part3.js` line 16; `packages/ui-core/src/viewer/scene.ts` LIGHTS |
+| Supersedes | new |
+| Milestone | none |
+
+### D-531 The netlens lens ghosts every body not on the lit net
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. In lens mode, bodies off the lit net, including bodies with no net, draw at the existing ghost opacity, XRAY_GHOST (0.13). Lens is off in plate mode. |
+| Rationale | This reuses the existing xray ghost opacity, so no new number is introduced. |
+| Evidence | `packages/ui-core/src/viewer/scene.ts` draw() |
 | Supersedes | new |
 | Milestone | none |
 
