@@ -692,6 +692,8 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-635 | Graded legacy folders keep pages and bake inputs through release 1; four PIP files held | decided | none |
 | D-636 | blocks.html stays held; hosted BLOCKS grade reports not run | decided | none |
 | D-637 | CHK-KEY-05 2.0.0 reads a contact that declares coneH as a flex key | decided | Constraints and checks |
+| D-638 | Scene and kernel inputs are stored copies with a manifest, never legacy reads | decided | tooling |
+| D-639 | Small original records are stored inputs; pages are read through the originals | decided | tooling |
 
 ## House rules and process
 
@@ -7734,6 +7736,28 @@ Status: decided (delegated). The lead closed four reds from the wave 4 health ru
 | Rationale | D-624 left PIP with 4 CHK-KEY-05 fails at the defaults because its flex and click keys share one part; the brief asks for the classification from the declaration, never a part name. D-152 guards geometry: each golden was diffed against HEAD before it stayed, and only inputs.registryHash, buildHash, the check version, the PIP rows and the flex skip text moved. A build hash that moves through registryHash alone is the bump itself (D-251 re-accepted the same way). |
 | Evidence | `npx --no-install hbf part.build designs/pip --json`: 247 pass, 1 warn, 0 fail, 192 skip; `--preset stick` 206 pass, 1 warn, 0 fail (computed). Mutant (coneH branch removed, tsc -b): PIP reads 4 CHK-KEY-05 fails and packages/checks/test/key05-flex-contact.test.ts fails 1 of 3. hbf parity exits ok on all 47 goldens rerun without --accept; every meshHash and volume equal to HEAD (computed). The flex-pair writer 3MF moves to 65701 bytes, sha256 e91d8a38...0f86, not sliced. |
 | Supersedes | new; refines D-624 (its follow up lands) |
+| Milestone | none |
+
+### D-638 Scene and kernel inputs are stored copies with a manifest, never legacy reads
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The meshes and page lines a shipped scene or kernel reads are committed as stored inputs: packages/sim/scenes/inputs (the 15 davit STLs, the R3 and R4 `const DATA` lines, hook_fit.py line 104 and the kit layout), packages/motion/inputs (the two STIPPLE DATA lines) and packages/sim/fixtures/davit-stored. Each folder holds a stored-inputs.json row per file: sha256, bytes, the archive source in publish form with its sha256, how the file is taken (whole file, one zip member, or a line range) and the lineage row that records the copy. tools/test-support/stored-inputs.test.ts checks the committed bytes with no archive; stored-inputs-originals.test.ts takes every row again from its source through localSource. A page datum is stored as its one source line, so extractData and readStippleParams read it unchanged. R1-rails-public-09. |
+| Rationale | PLAN.md 5 moves legacy copies private; a scene that read designs/*/legacy at run time would break when they move. A line range keeps the stored bytes a byte-for-byte slice of the original, which the owner test can prove, where a reformatted JSON could not. |
+| Evidence | Every stored file equals its take from the archive (owner test, all rows, computed 2026-10-21); the STL bytes equal the legacy copies' sha256 in tools/legacy/inventory.json, so mesh hashes do not move. Changing one byte of a stored file fails stored-inputs.test.ts (mutant shown). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-639 Small original records are stored inputs; pages are read through the originals
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. An original record of a few KB that a test takes as its expected values (stipple_latch.json, the WASHER plan-square drive record, both DERRICK arm_ref files, the DAVIT R4 sweep and verify_sim run records) is a stored input with a lineage copy row, so the test stays in the hosted runs. A test that reads an original page or source (gusset-v16.html, shunt board.json and gen_board.py, cotter kit.js, hook_fit.py line 62, stipple-r17b.html lines 154, 461 and 542, detent-plot.html and laser-rig.html profile lines, pawl run1, det1 and core.mjs, the R3 STL zip) reads it through localOriginal or localSource; those tests moved to their own files (expect-shunt, export-names-kit, planners-originals, stipple-originals, pawl-originals, cotter-insert-originals, imported-davit) so the rest of each file stays hosted. A golden that pinned a legacy copy's sha256 now pins its lineage row's (davit-chain, derrick-fk, davit-r4-parity-verify). The derrick capture fixture, written by export_bodies.py, moved to packages/checks/test/derrick-capture, and the CHK-ASM-10 origin evidence names the original hook_fit.py. The recorded project graph drops the cotter-hook and pawl scene lines, since those scenes no longer name a legacy tree; stored inputs are not graph sources yet. R1-rails-public-09. |
+| Rationale | The brief routes original comparisons to the owner runner (D-278); splitting keeps hosted coverage of everything that does not need the archive. A sha256 pinned to lineage is checked against the original by tools/test/lineage.test.mjs where the archive is present. The owner can reverse the stored records by deleting their rows. |
+| Evidence | owner-files.mjs list names the seven new owner files and gusset-orders; the hosted-like run with HBF_ORIGINALS unset and the ten legacy folders removed passes for nest, sim, motion, mesh and checks minus those files. Oracle reruns (cotter_insert_oracle.py, imported_oracle.py, davit_chain_golden.py, davit_r4_poses_golden.py) changed only source labels, every number equal (computed). |
+| Supersedes | new |
 | Milestone | none |
 
 ## Owner queue
