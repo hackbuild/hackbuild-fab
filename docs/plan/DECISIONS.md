@@ -665,6 +665,8 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-608 | Remaining owner paths read through sourcePath, localSource and hbf_archives.py | decided | Testing, publish |
 | D-609 | Owner slicer saves move to the private corpus; rows record bytes | decided | Testing, publish |
 | D-610 | counts.json moves to tools/reports as generated test data | decided | Tooling |
+| D-611 | BLOCKS release 1 chase leaves the board seat out | decided | reach |
+| D-612 | BLOCKS chase asks the standard with unset first and builds the wire by default | decided | reach |
 
 ## House rules and process
 
@@ -7416,6 +7418,28 @@ Status: decided (delegated, R1-spike-01). The WASM run changes one value of the 
 | Decision | Taken by the agent under owner delegation on 2026-10-20. `tools/counts.mjs` writes `tools/reports/counts.json` (public, generated) in place of `docs/plan/counts.json`; `npm run derived:counts` diffs the new path. The readers that name the path move with it: `tools/test/counts.test.mjs`, `plan-drift.test.mjs`, `plan-drift-audit3.test.mjs`, the M-1 acceptance command and the plan prose in PLAN.md, MILESTONES.md, DOCS.md, CANONS.md and the milestone cards that name the path. `counts.test.mjs` gains a test that the committed file equals a fresh run. Decision records that name the old path stay as written. The four package tests the brief listed read no counts.json and were left unchanged. |
 | Rationale | counts.json is generated test data (check, canon and archetype counts) that tests and plan text read, not a plan process file, so it leaves docs/plan; it stays public because tests read it. The card commands are executed by plan-drift, so the cards move with the path. |
 | Evidence | `test ! -e docs/plan/counts.json` holds; `npm run derived` and `npm run derived:counts` exit 0; `counts.test.mjs` 10 of 10 pass; editing `archetypes` 29 to 30 in the committed file fails the new test (measured). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-611 BLOCKS release 1 chase leaves the board seat out
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The release 1 `designs/blocks` chase offers part `wire` and `stud` only, the parts whose archetypes are proven (blocks-wire, blocks-stud). The board seat stays out of the chase and the build until M10-T10: its archetype `blocks-board-seat` stays refused, and no seat geometry, route data or seat test is committed. `src/route-seat.ts` and its tests are unchanged. |
+| Rationale | BOSS's c3mini press seat, built from `src/route-seat.ts` on packages/copper with BOSS v1 columns through blocks-stud, pin pads, plain columns and the stroked traces, fails two block checks by the BOSS v1 stack itself: CHK-NET-02, an L1 trace 0.24 mm over a foreign column's flange (flange top 3.12, L1 3.36), 0.51 mm net to net against the 0.6 floor (D-085); CHK-PRT-04, a plain socket void leaving a 1.5 mm wall to the body edge. The L2 trace layer also failed the mesh audit. Shipping it would ship a part with block fails; changing the stack would change a standard D-087 keeps open. |
+| Evidence | `hbf part.build designs/blocks --params '{"part":"seat","standard":"boss-v1"}'` on the trial build, 2026-10-21 (computed, not committed): CHK-NET-02 measured 0.5097 at plan gap 0.4497 and z gap 0.24 between blocks-stud.1.conductor.flange and an L1 trace, CHK-PRT-04 measured 1.5 between pocket.plainSocketC2.1 and the body outline; E_KERNEL degenerate 262 with L2 traces on; `designs/blocks/README.md` Release 1 cut. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-612 BLOCKS chase asks the standard with unset first and builds the wire by default
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The `designs/blocks` chase field `standard` is an enum `unset`, `boss-v1`, `blocks-html` with default `unset`, since an enum needs a default and D-087 gives none. build.ts refuses a stud with `unset` (E_SCHEMA at /standard) and a wire with `boss-v1` (the wire is ported on blocks-html only); the default part is the wire, so the defaults build and the parity goldens are the wire. The presets `boss-v1` and `blocks-html` are the two standard starts, each a stud brick. A standard whose layer differs from the machine preset warns LAYER. No queries.json: circuit.solve on a lone wire returns ok false with two TAP_NO_LEAD warnings, which pins nothing useful. |
+| Rationale | D-087 says no default until a print; a refusal keeps that while the defaults still build for parity and the bench welcome. The wire's caps are blocks-html dimensions whatever the field says, so the wire is the one part that needs no choice. |
+| Evidence | `designs/blocks/test/build.test.ts`: the wire meshes equal `reference/conductors/blocks-wire/expected/build.json`, the blocks-html stud meshes equal `reference/conductors/blocks-stud/expected/build.json`, the boss-v1 taps 9.1 and 1.2 and post top 9.6 equal BOSS in place (computed); dropping the standard field fails 2 chase tests (measured). |
 | Supersedes | new |
 | Milestone | none |
 
