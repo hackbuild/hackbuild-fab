@@ -608,6 +608,18 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-552 | last measured reading wins; notes never set a number | decided | Constraints and checks |
 | D-553 | an evidence row records who as person only at a terminal | decided | Agent surface |
 | D-554 | evidence is a CLI utility verb, not an MCP tool | decided | Agent surface |
+| D-555 | adopt group and MCP projection | decided | Process, engine, plan |
+| D-556 | validate before any write | decided | Process, engine, plan |
+| D-557 | golden source when no export file is given | decided | Process, engine, plan |
+| D-558 | 3MF part geometry hash definition | decided | Process, engine, plan |
+| D-559 | slice is opt-in | decided | Process, engine, plan |
+| D-560 | surface test reads release rows | decided | Process, engine, plan |
+| D-561 | generated design test | decided | Process, engine, plan |
+| D-562 | hackbuild-3mf 1efeda7 vendored for E_DRAFT | decided | Process, engine, plan |
+| D-563 | Usability path first in release 1 | decided | Process, engine, plan |
+| D-564 | Bench ports and legacy-reader moves last in release 1 | decided | Process, engine, plan |
+| D-565 | Builders land their own work; no integrator agent | decided | Process, engine, plan |
+| D-566 | Nothing is cut: plan version 9.1 schedules every cut item | decided | Plan, partners |
 
 ## House rules and process
 
@@ -6758,6 +6770,138 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Rationale | Keeps the MCP tool count fixed and stays inside the R1-engine-26 brief's files. |
 | Evidence | `spec/commands.ts`, `packages/commands/src/index.ts`; `core/test/surface.test.ts` (computed). |
 | Supersedes | new |
+| Milestone | none |
+
+### D-555 adopt group and MCP projection
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. adopt is command 32 in group make, beside draft, and CLI only (in CLI_ONLY) until finding F4 |
+| Rationale | It pairs with draft, which engine-24 put in make, and it ends in a bake. author was the other candidate because it writes designs/ like chase.scaffold. |
+| Evidence | spec/commands.ts COMMAND_NAMES make (5); spec/test/surface.test.ts perGroup make 5 |
+| Supersedes | new |
+| Milestone | none |
+
+### D-556 validate before any write
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. chase.validate runs on the draft source before chase.scaffold, so a validate error leaves no designs/<name> and no hbf/<name> branch |
+| Rationale | The brief says errors block. Validating after the scaffold would leave a broken design staged on a new branch. scaffold and patch each still validate their own edits. |
+| Evidence | core/test/adopt.test.ts unknown check id test; the mutant that skips the refusal is killed |
+| Supersedes | new |
+| Milestone | none |
+
+### D-557 golden source when no export file is given
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. Without --export, the draft's export is computed with pipeline draft3mf (the function the page's 3MF button calls) on the draft built at its embedded state, and recorded with source computed. --export takes the DRAFT_ 3MF the page wrote and requires its hbf:draft 1 metadata. |
+| Rationale | A page alone carries no downloaded export; the brief's done condition adopts from the HTML only. |
+| Evidence | core/src/commands/adopt.ts draftExport; packages/pipeline/src/page.ts line 208 |
+| Supersedes | new |
+| Milestone | none |
+
+### D-558 3MF part geometry hash definition
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The geometry hash is the sha256 over each object of every model part, keyed part#id, of its vertex Float64 bytes, triangle Uint32 bytes and component objectid, path and transform. Names and metadata are left out, so the draft's metadata and name do not move it. |
+| Rationale | No existing geometry hash read back from 3MF bytes was found; this reuses the hackbuild-3mf readModels reader. |
+| Evidence | core/src/commands/adopt.ts meshRows; the adopt test equates it with the reference build's draft3mf |
+| Supersedes | new |
+| Milestone | none |
+
+### D-559 slice is opt-in
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The slice runs only with --slice, the driver present and no failing check. Otherwise the result is not run with the reason. Output goes to an os.tmpdir folder; slice.mjs makes its own fresh --datadir. |
+| Rationale | A slice takes up to 600 s (slice.mjs default) and needs Flash Studio. The brief allows not run with a reason and never a pass. |
+| Evidence | core/src/commands/adopt.ts virtualSlice |
+| Supersedes | new |
+| Milestone | none |
+
+### D-560 surface test reads release rows
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. core/test/surface.test.ts surfaceRows now matches rows starting with M or R. Before this, the R1 row was never read, and draft counted only because the M-S cell happens to contain the word draft. |
+| Rationale | Without the fix, adopt could not be listed in MILESTONES 1.3 in a way the test sees. |
+| Evidence | core/test/surface.test.ts line 19 |
+| Supersedes | new |
+| Milestone | none |
+
+### D-561 generated design test
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. adopt writes designs/<name>/test/draft-export.test.ts, which imports draftExportDrift from core/src/commands/adopt.js by a relative path, the way reference tests import core |
+| Rationale | The brief asks for a test that the adopted build's 3MF geometry hash equals the golden; vitest already includes designs/**/test/** |
+| Evidence | core/src/commands/adopt.ts goldenTest |
+| Supersedes | new |
+| Milestone | none |
+
+### D-562 hackbuild-3mf 1efeda7 vendored for E_DRAFT
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. tools/vendor/hackbuild-3mf-0.1.0-1efeda7.tgz replaces fee8d2d: hackbuild-3mf 1efeda7 adds E_DRAFT to its contracts copy, which R1-engine-24 added to spec, so COMMAND_ERROR_IS_SPEC holds again. The lock changes only the resolved path and integrity; the pip.model thin-wall lineage row records the bump. hackbuild-3mf main is at 1efeda7 locally, not pushed. |
+| Rationale | tsc -b failed on main from e0faf3e and vitest refused every run; the vendored contracts copy drifts each time spec adds a code or area (CLAIM in R1-engine-11, E_DRAFT here). |
+| Evidence | tsc -b, tests and tools configs exit 0 on f68db73; node --test plan-drift, ci-exit-rows, ci-workflow, lineage, knowledge-ratchet, split-fresh, licences 103 of 103; checks, 3mf and spec suites 898 of 900 with 1 skipped and 1 unrelated fail (packages/profile/test/specifiers.test.ts) (computed 2026-10-20). Follow-up: generate the contracts copy from spec so it cannot drift. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-563 Usability path first in release 1
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The 13 items that make release 1 usable by a maker in Claude Code (engine 22 to 26, designs-reach 02 and 15 to 18, rails-public 15 to 17) run ahead of the bench ports and the public cleanup; queue priorities 10 to 22. |
+| Rationale | A maker can try the tool about a day sooner (inferred); every release 1 item still lands before the push. |
+| Evidence | .hbf-notes/r1/queue-slim.json priorities; release 1 status 63 of 108 items on main at f68db73 (counted). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-564 Bench ports and legacy-reader moves last in release 1
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. designs-reach 06 to 14 and 19 (TOGGLE, PIP and BLOCKS chases, builds, benches and grades, the midi-pad bench, Pico pins) and rails-public 07 to 11, 13a, 13b and 14 run after every other release 1 item (queue priority 90 and up). Nothing is cut. Taken at the owner request of 2026-10-20 to finish everything else first. |
+| Rationale | They are the heaviest verify work left (the last bench audit spent 79 percent of its time on verify and fix, measured) and nothing else waits on them. |
+| Evidence | Agent minutes over waves 1 to 4 (measured from the workflow transcripts): engine builders 1,015, integrator 552 serial, access switch 281, fixes 170. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-565 Builders land their own work; no integrator agent
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. From the next session, each builder rebases onto main, reruns the fast gates, fast-forwards main under a lock directory and records its own decisions; one health check per wave runs the full suites. Mechanical edits (splits, vendor bumps, renames) are done directly with codemods. At most three builders and two heavy test runs at once. Sessions start inside hackbuild-fab so its hooks load. |
+| Rationale | The serial integrator held about 9 of 14 wall-clock hours; per item cost was about 250K agent tokens; load reached 217 from parallel suites; repo hooks never loaded because the session started in the parent folder (Claude Code reads project settings from the start directory). |
+| Evidence | Workflow transcripts of waves 1 to 4 (measured); scratchpad r1-build.js self-landing version; research-agent-efficiency.md items 1, 2, 3 and 6; code.claude.com docs settings and prompt-caching. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-566 Nothing is cut: plan version 9.1 schedules every cut item
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Decided by the owner on 2026-10-20 ("i dont want things cut from the plan like orca wasm and stuff. its important to have print simulation"). fab-knowledge plan-v5/PLAN.md version 9.1: print simulation in the bench and studio through Orca WASM (first candidate JoshTheDerf/orcaslicer-wasm, Orca 2.4.2, as CubbySlicer runs it) in release 2, as a separately licensed AGPL-3.0 module no MIT package links, single-thread on file://, Kiri:Moto fallback; Cura and Snapmaker drivers, Nexar, Message Batches, replicad and the audit/overlap.md cut list in release 3. Spike R1-spike-01 runs the engine in node on the access switch in release 1, outside the repo. |
+| Rationale | The owner wants print simulation wherever a maker works. Linking an AGPL slicer makes the linking work AGPL (plan-v5/slicers.md, licence section), so the module stays separate. |
+| Evidence | plan-v5/PLAN.md 9.1, plan-v5/slicers.md addendum 2026-10-20, plan-v5/boundaries.md section 3 row slicers. Open owner question: whether pages that inline the module may be AGPL (default) or every hbf page stays MIT with the module loaded beside it. |
+| Supersedes | the version 9.0 cut list |
 | Milestone | none |
 
 ## Owner queue
