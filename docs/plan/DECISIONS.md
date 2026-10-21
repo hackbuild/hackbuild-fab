@@ -21,6 +21,7 @@ As of 2026-10-08 the log holds 238 entries: 182 decided, 48 owner, 8 superseded.
 ## Rules for this log
 
 - Entries are append-only after M-1. Nobody edits an entry's text, status or rows in place.
+- Each entry is a file `docs/plan/decisions/D-NNN.md` holding its index row, a blank line and the entry; this file is generated from those files and `docs/plan/decisions/_layout.md` by `npm run registries` (R1-split-01). Add a file, never edit this one.
 - A change is a new entry with the next free id. Its Supersedes row names the entry it replaces by id. The replaced entry then counts as superseded; the index below shows its status as `superseded by D-###`, and its body stays as written.
 - An owner answer is recorded the same way: a new decided entry that supersedes the owner entry and quotes the answer with its date.
 - A new entry carries all six rows. Evidence paths are absolute. A number in a new entry carries a qualifier (measured, computed, vendor, inferred, unknown) per D-007.
@@ -622,6 +623,8 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-566 | Nothing is cut: plan version 9.1 schedules every cut item | decided | Plan, partners |
 | D-567 | chase.render bakes from bake.json into a temp root and fails on smoke breaches | decided | Engine, look |
 | D-568 | hbf init writes a maker folder outside the repo, E_EXISTS joins the error codes | decided | Engine, author |
+| D-569 | One file per decision, DECISIONS.md generated | decided | Plan, process |
+| D-570 | R1-fix-08 closes without a code change: a stale dist, the rule holds | decided | Testing |
 
 ## House rules and process
 
@@ -6925,6 +6928,28 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under the owner delegation of 2026-10-20 for release 1 of plan v9.1 (R1-engine-23). `hbf init <name> [--from <design>] [--dir <folder>]` is the 33rd command, group author, CLI only until the F4 decision with draft and adopt. It writes <cwd>/<name> (or --dir): the chase.scaffold copy of the source with meta.id set to the name and meta.derivedFrom from its golden, a package.json pinning @hackbuild/kernel and every @hackbuild package the copied files import to this workspace as file: dependencies, and <name>.html baked by chase.bake on a staging copy under .hbf/init/ (gitignored), so nothing reaches the maker folder until the bake passes. A folder that holds files is refused with the new code E_EXISTS (exit input, http 409); a source with open chase.validate errors is refused with those errors. The CLI reads the workspace holding cwd, else the one the running hbf lives in, so commands run inside a maker folder. hackbuild-3mf 0dc2130 adds E_EXISTS to its contracts copy (D-562) and tools/vendor carries hackbuild-3mf-0.1.0-0dc2130.tgz; the lock changes only its resolved path and integrity. |
 | Rationale | PLAN.md 2 starts a session with hbf init --from toggle; a maker folder outside the repo needs the kernel without a checkout of its own, and a refusal that writes nothing leaves no half folder to clean. |
 | Evidence | core/test/init.test.ts (computed, run 2026-10-20); npm install --package-lock-only left the lock unchanged; split-fresh repacks 0dc2130 to the vendored bytes. |
+| Supersedes | none |
+| Milestone | none |
+
+### D-569 One file per decision, DECISIONS.md generated
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under the owner delegation of 2026-10-20 for release 1 of plan v9.1 (R1-split-01 step 2). Each entry lives in docs/plan/decisions/D-NNN.md: its index row, a blank line and the entry from "### D-NNN". docs/plan/decisions/_layout.md holds the prose, the section headings, the owner queue and two kinds of marker: one for the index rows and one per run of entries ("D-a D-b", or "D-286 on" for the open release 1 section, where new entries land). tools/gen/registries/decisions.mjs regenerates DECISIONS.md byte for byte, so its 13 code readers, counts.mjs and the grep habit keep working; a conflict on DECISIONS.md is resolved by npm run registries, as for lineage.json. The owner queue stays hand-written in the layout: its rows carry defaults that are not in the entries. |
+| Rationale | Every builder appended to one 7,200-line file (counted 2026-10-20), and each landing conflicted on it. A fragment per entry makes two builders' decisions disjoint files. |
+| Evidence | tools/test/decisions-fragments.test.mjs: the gathered text equals the committed DECISIONS.md, every heading and index row has its fragment, and a fragment with a wrong id or outside every range is refused (computed, 2026-10-20). |
+| Supersedes | none |
+| Milestone | none |
+
+### D-570 R1-fix-08 closes without a code change: a stale dist, the rule holds
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under the owner delegation of 2026-10-20 for release 1 of plan v9.1 (R1-fix-08). packages/profile/test/specifiers.test.ts passes on main 5217827 (4 of 4, computed). It reads packages/ui/dist/index.js, and the failure of 2026-10-20 ran while tsc -b was red on E_DRAFT, so dist was stale. A mutant that adds a DraftBanner.vue export to that dist entry fails the test and the restore passes it. The brief's clause "a node import of the ui node entry loads with plain node" holds for no package today: @hackbuild/spec exports its .ts source with extensionless imports, so plain node stops at spec/ids for mesh, ui-core and ui alike. That is the open M00 follow-up "spec extensionless imports and the resolve hook" (HANDOFF 4.4), not a .vue leak, and stays open there. |
+| Rationale | Changing the ui entry for a failure that was a stale build would move code with no defect behind it. |
+| Evidence | vitest packages/profile/test/specifiers.test.ts on main 5217827: 4 of 4; with the mutant 1 failed naming packages/ui/dist/bench/DraftBanner.vue (computed, 2026-10-20). |
 | Supersedes | none |
 | Milestone | none |
 

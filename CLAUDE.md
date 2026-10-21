@@ -45,7 +45,8 @@ Per task, about 25K tokens:
 - That task's section of the current card in `docs/plan/milestones/`, the card header and Exit.
 - `spec/index.ts` and the spec files named on the task's Inputs line. If a check you write reads
   triangles, ask which feature kind should carry the declaration.
-- Each D-id the task cites, found with `grep -n "^### D-NNN" docs/plan/DECISIONS.md`.
+- Each D-id the task cites, in `docs/plan/decisions/D-NNN.md` (one file per entry; DECISIONS.md
+  is generated from them by `npm run registries`).
 - `knowledge/README.md` and the kernel record for the package (table below).
 - `knowledge/kernels/agent-capability.md` (the error contract) for a command or error task.
 
