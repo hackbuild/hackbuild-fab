@@ -697,6 +697,7 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-640 | OGEE16 print STLs and SLUG page lines are public stored inputs of their scenes | decided | tooling |
 | D-641 | Extraction tools read the originals; records check inputs by sha256 | decided | tooling |
 | D-642 | Package, core and reference tests read plan cards through plan-root | decided | tooling |
+| D-643 | A refused build keeps the last good model; range-end kernel faults go to the owner | decided | UI |
 
 ## House rules and process
 
@@ -7793,6 +7794,17 @@ Status: decided (delegated). The lead closed four reds from the wave 4 health ru
 | Decision | Taken by the agent under owner delegation on 2026-10-20. The vitest files under core, packages and reference that read a milestone card or MILESTONES.md read it through `planCard` or `planDoc` from `tools/test-support/plan-root` (D-621), including two files the brief did not list (`core/test/circuit-solve.test.ts`, `packages/checks/test/source-rules.test.ts`). A file that reads a card anywhere imports plan-root, so the whole file is an owner file and hosted runners leave it out, including its tests that read no card; this covers the six `reference/copper/*/test/parity.test.ts` through `_harness/family.ts`. Provenance strings that cite a card path in data (profile constants, sim scenes, a circuit goldens note, two reference READMEs) are citations, not reads, and stay. |
 | Rationale | One reader of the plan, per D-621. A guarded per-test skip would keep the card-free tests in hosted runs, but owner-files.mjs classifies a plan-root import as unguarded and changing it was outside this item. |
 | Evidence | `git grep -n "docs/plan/milestones" -- core packages reference` prints only comments and data citations. Every converted file passes with cards present (measured 2026-10-21, originals files with HBF_ORIGINALS set); lanes.test fails when its planCard names M04 instead of M05. `node .github/scripts/owner-files.mjs list` prints 84 files, 64 on main before (computed). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-643 A refused build keeps the last good model; range-end kernel faults go to the owner
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-21. R1-fix-21 is re-scoped as R1-fix-26: when a commit's build refuses, the bench shell keeps the last good model drawn, marks it stale with the refusal code and message, logs the refused write and keeps the export gate closed. The range ends that refuse in the kernel (TOGGLE minGap 0.7 and 0.8, PIP W 100 to 120 and 17 more PIP ends) stay unfixed in release 1 and are listed for the owner, because each fix found moves default meshes (D-152) or changes packages/mesh partition. No chase range is narrowed for them. |
+| Rationale | The original TOGGLE builds at minGap 0.8, so narrowing its range departs from the original (D-222); the T-junction fix moved default meshHashes and volumes and added a 0.00 mm3 CHK-PRT-03 overlap at blocks8 (computed). The original PIP fails the same narrow widths with its own warnings. A bench that blanks on a refusal fails G-11 and G-15 for a reason the person cannot see; keeping the last good model with a named refusal is honest and leaves geometry alone. |
+| Evidence | R1-fix-21 branch r1/R1-fix-21-r1 (19f3773) and its sweep logs in wt/R1-fix-21-r1/.hbf/r1-fix-21/ (computed, 2026-10-21). |
 | Supersedes | new |
 | Milestone | none |
 
