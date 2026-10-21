@@ -5,15 +5,19 @@
     "incremental": true,
     "composite": false,
     "declaration": false,
-    "types": ["node"]
+    "types": ["node"],
+    "skipLibCheck": true
   },
   "include": ["*.ts", "test/*.ts", "migrate/*.ts"],
+  "exclude": ["bench.entry.ts"],
   "references": [
     { "path": "../../packages/chase" },
     { "path": "../../kernel" },
     { "path": "../../packages/archetypes" },
     { "path": "../../packages/copper" },
     { "path": "../../packages/pipeline" },
-    { "path": "../../packages/profile" }
+    { "path": "../../packages/profile" },
+    { "path": "../../packages/registry-loader" },
+    { "path": "../../packages/ui-core" }
   ]
 }

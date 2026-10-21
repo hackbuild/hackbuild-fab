@@ -12,8 +12,10 @@ has looked at the build yet.
 |---|---|
 | `chase.ts` | params, presets (worked example, stick example, blank), four slots, the hookup |
 | `build.ts` | the layout, the archetypes at one host top, the route, the buried stack, the bezel; the drive pad `contact` |
+| `bench.ts`, `bench.entry.ts`, `page-build.ts`, `page-facts.d.ts`, `bake.json` | the bench layout and the inputs `tools/bake/bake.mjs` bakes into `dist/bench/pip.html` |
 | `migrate/legacy.ts` | a legacy PIP save mapped onto chase params |
 | `queries.json`, `expected/` | parity goldens at SOURCE_DATE_EPOCH 315532800 for the chase defaults, with the edit `/clickCap` 10 to 11 and a circuit.solve golden |
+| `test/bench.test.ts` | the rail against PIP's GUIDES, every param group shown, the drive targets read from `worked-metrics.json` |
 | `test/chase.test.ts` | the chase through packages/chase, the legacy saves, the defaults against `layout.js` defaults() |
 | `test/build.test.ts`, `test/golden/` | build.ts in process: the layout against the original's own record, the route against copper's route of PIP's route input, the contact function, every worked example metric against `worked-metrics.json` (rewritten only with HBF_ACCEPT_METRICS=1) |
 
@@ -162,6 +164,28 @@ Mohm, computed by the legacy bench) is not composed here: circuit.solve
 inferred), but skips both reads, since the hookup ports are unbound
 (above) and neither the click nor the touch archetype declares a contact
 feature for the solve to cross. The bench item composes the readout.
+
+## The bench
+
+`bench.ts` follows PIP's GUIDES (haft-src `bench/part3.js` lines 253 to
+258, lineage pip.bench-part3/haft-9-designs-pip-bench): LAYOUT, BUTTONS,
+BOARD, PRINT. The drive pad holds the keys build.ts names as metrics
+`drive.<key>` (targets `metrics.drive`), several at once, through the
+`contact` function. `node tools/bake/bake.mjs designs/pip/bake.json`
+writes `dist/bench/pip.html`, which builds in its own page.
+
+Gold on that bake, the bench-layer rules only (`tools/gold/report.mjs
+--origin fab --bench pip --only` the M09 Exit list), 2026-10-21, bake
+sha256 102a97f9: 23 pass, 1 n/a (G-05), 2 fail (measured). Both fails
+are the D-643 range-end class, held for the owner: G-10 and G-15 leave
+earlier fields at their range ends, and the build then refuses with
+E_KERNEL at the /bodies union (solids that touch at an edge or a
+corner). A width of 100 mm at the defaults refused the same way in
+the first round (computed, D-643 lists PIP W 100 to 120).
+
+Side-by-side shots against `legacy/pip.html` at 390 and 1280 are in
+`fab-knowledge:evidence/r1/side-by-side/pip/` (scrollWidth 390 and 1280,
+measured). No person has looked at the bench or the shots (D-154).
 
 ## Parity
 

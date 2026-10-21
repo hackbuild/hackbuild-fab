@@ -240,7 +240,7 @@ export const chase = defineChase({
       note: "every group off: the body, the board pocket and the bezel." },
   ],
   build: { module: "./build.ts", fn: "build" },
-  exports: [{ kind: "3mf", machine: "ffc5p", pose: "print" }, { kind: "stl" }, { kind: "card" }],
+  exports: [{ kind: "3mf", machine: "ffc5p", pose: "print" }, { kind: "stl" }, { kind: "card" }, { kind: "json" }],
   hookup: [
     { port: "port.UP", mcu: "rp2040", pin: "GP29", read: { model: "charge-release", drive: "high", driveUs: 30, waitUs: 3500, waitSource: "default" } },
     { port: "port.LEFT", mcu: "rp2040", pin: "GP28", read: { model: "charge-release", drive: "high", driveUs: 30, waitUs: 3500, waitSource: "default" } },

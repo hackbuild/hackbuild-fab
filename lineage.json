@@ -4503,6 +4503,16 @@
     "dest": null
   },
   {
+    "id": "pip.bench-part3/haft-9-designs-pip-bench",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/pip/files/haft-src/bench/part3.js",
+    "sha256": "ffb244c597bdb05fdab77c3fe533ba750ff56ddef753c98e677f2804e799b054",
+    "fixes": [
+      "GUIDES (lines 253 to 258) carried as the four rail steps of designs/pip/bench.ts (R1-designs-reach-10): layout, buttons, board, print, one sentence each naming the materials; the board step leaves out the wiring drawing and firmware this cut does not emit"
+    ],
+    "dest": "designs/pip/bench.ts"
+  },
+  {
     "id": "pip.bench-part3/haft-9-pip-chase",
     "kind": "copy",
     "source": "fab-knowledge:originals/pip/files/haft-src/bench/part3.js",
