@@ -593,6 +593,7 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-537 | catalog.find fetch copy split between the description and the field describe | decided | Canons, reference, profile, catalog |
 | D-538 | the seeed fetch example queries XIAO-RP2040-SMD | decided | Canons, reference, profile, catalog |
 | D-539 | chase.bake page hash goes through spec sha256Hex | decided | Testing, docs, milestones, registry |
+| D-540 | gate-mcp exports at a params set of its own | decided | Testing, docs, milestones, registry |
 
 ## House rules and process
 
@@ -6577,6 +6578,17 @@ Taken by the agent under the owner delegation of 2026-10-20 for release 1 of pla
 | Decision | Taken by the agent under owner delegation on 2026-10-20. `core/src/commands/chase-bake.ts` hashes the baked bytes with `sha256Hex` from `@hackbuild/spec` instead of `node:crypto`. The jcs test allowlist stays as it is, with only `core/src/gate.ts` allowed. |
 | Rationale | One implementation of each thing (D-206). The brief says to use the jcs helper rather than widen the allowlist. |
 | Evidence | `spec/test/jcs.test.ts` lines 153 to 184 pass, 13 of 13 (measured); `core/test/chase-bake.test.ts` still checks the hash against `shasum -a 256` and passes, 7 of 7 (measured). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-540 gate-mcp exports at a params set of its own
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `core/test/gate-mcp.test.ts` exports flex-pair with params `{"/keys/0/gap": 1.86}`, not the defaults. A `beforeAll` approved export names the artifact hash, and the writes-nothing snapshot covers only the out folder, that artifact and the graph lines naming it. |
+| Rationale | `gate.test.ts` and `skeleton.test.ts` write the default-params artifact into the shared store at the same time, so no snapshot of the default hash can tell their writes from a gate leak. A private workspace with symlinks back to the checkout is refused by the build sandbox (node permission model, fs-read), and moving the store would mean changing `core/src`, which the brief does not allow. |
+| Evidence | The first fix (golden-hash scope) failed in a full core run with only the artifact mtime and graph line count moving and no out file (measured). The final version passed gate-mcp in three full core runs (measured), and the cancel-writes mutant at `core/src/mcp/handlers.ts` line 176 is killed (measured). |
 | Supersedes | new |
 | Milestone | none |
 
