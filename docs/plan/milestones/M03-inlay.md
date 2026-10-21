@@ -1751,7 +1751,7 @@ Card defects and run record (2026-10-06, local, macOS 12 arm64):
   block. view.render writes fixed-size sheets; the 390 px reading applies
   to the art board fixture. The person check is not done.
 - Acceptance 3 in the working tree is `node tools/counts.mjs && git diff
-  --exit-code -- docs/plan/counts.json docs/plan/PLAN.md` after staging
+  --exit-code -- tools/reports/counts.json docs/plan/PLAN.md` after staging
   (MILESTONES.md 3.3); the porcelain form holds on a CI checkout only.
 - Files to create was "none"; the card edits `.github/workflows/ci.yml`,
   `packages/geom/test/trace.test.ts`, PLAN.md section 16, PACKAGES.md and

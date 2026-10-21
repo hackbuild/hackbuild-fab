@@ -331,7 +331,7 @@ Steps:
        "lint": "node tools/lint-voice.mjs",
        "typecheck": "tsc -b",
        "test": "vitest run --passWithNoTests && node --test tools/test/*.test.mjs packages/*/seed/test/*.test.mjs",
-       "derived": "node tools/counts.mjs && git diff --exit-code -- docs/plan/counts.json docs/plan/PLAN.md",
+       "derived": "node tools/counts.mjs && git diff --exit-code -- tools/reports/counts.json docs/plan/PLAN.md",
        "tiers": "node tools/tiers.mjs",
        "check": "npm run lint && npm run typecheck && npm test && npm run tiers && npm run derived"
      },
@@ -1579,7 +1579,7 @@ Inputs:
 Steps:
 1. Write `tools/counts.mjs` (Node, no dependencies beyond yaml). It
    computes the repo counts, merges the external snapshot, writes
-   `docs/plan/counts.json` (sorted keys, two-space indent) and rewrites the
+   `tools/reports/counts.json` (sorted keys, two-space indent) and rewrites the
    Appendix B table in `docs/plan/PLAN.md` between the markers
    `<!-- counts:begin -->` and `<!-- counts:end -->`. If the markers are
    absent, T11 adds them once around the existing Appendix B table.
@@ -1632,14 +1632,14 @@ Steps:
 Files to create:
 - tools/counts.mjs
 - tools/counts.external.json
-- docs/plan/counts.json
+- tools/reports/counts.json
 - tools/test/counts.test.mjs
 - docs/plan/PLAN.md (markers and generated table only)
 
 Acceptance:
-- in the working repo, after `git add -A`: `node tools/counts.mjs && git diff --exit-code -- docs/plan/counts.json docs/plan/PLAN.md` -> exit 0 (regeneration changes nothing staged; works with zero commits)
+- in the working repo, after `git add -A`: `node tools/counts.mjs && git diff --exit-code -- tools/reports/counts.json docs/plan/PLAN.md` -> exit 0 (regeneration changes nothing staged; works with zero commits)
 - in the simulation clone (M-1-T05 step 4): `node tools/counts.mjs && test -z "$(git status --porcelain)"` -> exit 0, the command the `derived` CI job runs
-- `node -e 'const c=require("./docs/plan/counts.json"); process.exit(c.checks.total===86 && c.checks.block===77 && c.checks.warn===9 && c.tools.total===59 && c.seed.files===64 && c.mechanisms===24 && c.archetypes===29 ? 0 : 1)'` -> exit 0
+- `node -e 'const c=require("./tools/reports/counts.json"); process.exit(c.checks.total===86 && c.checks.block===77 && c.checks.warn===9 && c.tools.total===59 && c.seed.files===64 && c.mechanisms===24 && c.archetypes===29 ? 0 : 1)'` -> exit 0
 - `node tools/counts.mjs --external` on the builder's machine -> exit 0 (rows whose source is missing print "not run")
 - `node --test tools/test/counts.test.mjs` -> exit 0, including the git-backed case: an untracked, unignored file under `knowledge/` makes `node tools/counts.mjs` exit 1 and name it, so the derived row cannot pass in a form that skipped `git add -A` (added 2026-10-06 after `knowledge/designs/`, the D-222 sample set, sat untracked through M-S and M00)
 - the same file, second git-backed case: in a git checkout counts.mjs reads every source from its staged blob (`git cat-file --batch`) and lists counted files from the index, so an unstaged edit to a staged source (a new `### D-` heading, words added to a knowledge record) leaves counts.json and PLAN.md unmoved until it is staged (added 2026-10-06 after the global verifier ran the derived row while parallel agents held unstaged edits to DECISIONS.md and knowledge/designs/, and counts rewrote PLAN.md from working-tree text although no staged source had moved; PLAN.md is itself an output, read and written on disk, so an unstaged edit to PLAN.md outside the counts markers still fails `git diff --exit-code` and needs staging first, as the `git add -A` form does)
@@ -1907,7 +1907,7 @@ Done when: CLAUDE.md's reading order resolves to files in the repo and all of th
 | template diff: 37 missing, 7 extra keys against the gold file; 127 per-slot keys | M-1-T08 | `uv run --project tools/py tools/py/harvest_filament_template.py --check` |
 | healer: fixture B converges with 4 frozen cells where the seed healer leaves 1 non-manifold vertex; fixture C reports converged false with 2 ill-formed windows; fixture A (2137 cells, watertight, 0 non-manifold vertices, computed; 915 was the unseeded historical run) is a non-regression guard | M-1-T09 | `node --test packages/mesh/seed/test/heal.test.mjs` |
 | SHUNT 55 lead landings at 0.000 mm through the merged check3d | M-1-T10 | `node --test packages/board/seed/test/check3d.test.mjs` |
-| derived job clean | M-1-T11 | after `git add -A`: `node tools/counts.mjs && git diff --exit-code -- docs/plan/counts.json docs/plan/PLAN.md`; in the simulation clone, the CI form with `git status --porcelain` |
+| derived job clean | M-1-T11 | after `git add -A`: `node tools/counts.mjs && git diff --exit-code -- tools/reports/counts.json docs/plan/PLAN.md`; in the simulation clone, the CI form with `git status --porcelain` |
 | tiers job clean; 24 private packages | M-1-T12 | `node tools/tiers.mjs` |
 | registry/tools.json holds 59 tools; plan docs in docs/plan | M-1-T13 | `node tools/lint-voice.mjs docs knowledge registry` |
 | five CI jobs green | M-1-T05 | the first push the owner asks for |

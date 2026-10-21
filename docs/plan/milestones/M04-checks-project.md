@@ -1819,7 +1819,7 @@ Global rows: `npx tsc -b` exit 0 (2.9 s); `node tools/lint-voice.mjs` exit
 0 failures (checks imports spec, 3mf, circuit, constraints, geom, inlay,
 mesh, profile, sim; project imports spec, 3mf, mesh, profile; no project to
 checks edge is used); `node tools/counts.mjs && git diff --exit-code --
-docs/plan/counts.json docs/plan/PLAN.md` exit 0 before this record (the
+tools/reports/counts.json docs/plan/PLAN.md` exit 0 before this record (the
 working-tree form of 3.3). The literal `git status --porcelain` lists 1899
 staged paths and the other builders' unstaged hunks, since the repo has no
 commit (D-006).

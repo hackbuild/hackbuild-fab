@@ -475,7 +475,7 @@ declared rule values from the named source; computed goldens are in sections
 Expected split at M06 exit: typed 23, stub 1 (computed from source
 availability on 2026-10-04, after the STIPPLE R17 recovery; the port's split is the exit number, M06-T03).
 Refined by D-252: the exit split is the generated `canon.mechanisms` block of
-`docs/plan/counts.json` under the originals rule, and the forecasts in this section bind nothing.
+`tools/reports/counts.json` under the originals rule, and the forecasts in this section bind nothing.
 The originals pass of 2026-10-05 found a closed form in STANCHION that the
 2026-10-04 reading missed: `solveHorns` (section 11.1). Once
 M06-T03 ports it at parity the split is typed 24, stub 0; the M06 card and
@@ -741,7 +741,7 @@ Expected split at M06 exit over 34 ids: proven 26 in 27 reference folders, stub 
 unproven 1; the 29 seeded ids resolve, 27 directly and 2 through the alias
 table (computed from the tables above; the counts are generated, M06-T07).
 Refined by D-252: the exit split is the generated `canon.archetypes` block of
-`docs/plan/counts.json`; an id is proven only with a reference at parity with its original.
+`tools/reports/counts.json`; an id is proven only with a reference at parity with its original.
 The 22 STYLUS THINPOT candidates of section 6 register under their own
 `feeler-` ids, named for the legacy bench, and are counted separately.
 

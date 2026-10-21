@@ -283,7 +283,7 @@ Build notes, 2026-10-09 (written back by the M06-T01 build):
   the tang-r6.design4 subject; its load test names that exception.
 - Acceptance defect: `git status --porcelain` cannot print nothing while
   the tree is uncommitted (D-006). The derived check is `node
-  tools/counts.mjs && git diff --exit-code docs/plan/counts.json
+  tools/counts.mjs && git diff --exit-code tools/reports/counts.json
   docs/plan/PLAN.md` after staging; counts.json now carries
   `canon.mechanisms` and `canon.archetypes` (registered, byStatus,
   aliases), and both load tests compare them with the loaded registries.
@@ -1129,7 +1129,7 @@ Build notes, 2026-10-09 (written back by the M06-T07 build):
   an original) forbid; each entry not ported here stays candidate with
   "not ported yet: promotes in M06-T09 when its reference regenerates the
   original's numbers and bodies", and the acceptance count follows
-  docs/plan/counts.json.
+  tools/reports/counts.json.
 - Spec widened additively: `ConductorSection` and `ArchetypeDef.sections`
   (declared paths at the defaults). `resistances(sections, profile)` reads
   each row through `ProfileLookup.resistivity()` and calls profile

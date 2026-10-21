@@ -270,7 +270,7 @@ default) and `uv` for Python (D-140). Cards use these forms.
 | typecheck all | `npx tsc -b` | exit 0 |
 | package tests | `npm test -w packages/<name>` | exit 0 |
 | voice lint | `node tools/lint-voice.mjs` | exit 0 |
-| derived lists | after `git add -A`: `node tools/counts.mjs && git diff --exit-code -- docs/plan/counts.json docs/plan/PLAN.md` (CI and the M-1-T05 simulation clone run `test -z "$(git status --porcelain)"` instead) | exit 0 |
+| derived lists | after `git add -A`: `node tools/counts.mjs && git diff --exit-code -- tools/reports/counts.json docs/plan/PLAN.md` (CI and the M-1-T05 simulation clone run `test -z "$(git status --porcelain)"` instead) | exit 0 |
 | tiers | `node tools/tiers.mjs` | exit 0 |
 | Python | `uv run --project tools/py tools/py/<script>.py <args>` | as the card states |
 | 3MF validator | `uv run --project tools/py tools/py/validate_3mf.py --roundtrip <file>` (also `--export`, `--overlap`, `--target`) | as the card states |

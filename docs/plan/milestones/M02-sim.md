@@ -818,7 +818,7 @@ machine and include the contention.
 Global rows, same machine and date: `npx tsc -b` exit 0 (3.5 s); `node tools/lint-voice.mjs`
 exit 0, 1103 files, 0 block, 1 warn (RULES.md:31); `node tools/tiers.mjs` exit 0 (sim imports
 `@hackbuild/mesh` and `@hackbuild/spec` from src, plus `@hackbuild/profile` from tests);
-`node tools/counts.mjs && git diff --exit-code -- docs/plan/counts.json docs/plan/PLAN.md`
+`node tools/counts.mjs && git diff --exit-code -- tools/reports/counts.json docs/plan/PLAN.md`
 exit 0 (the working-tree form of 3.3). The literal `node tools/counts.mjs && git status
 --porcelain` prints every staged file, because the repo has no commit (D-006). CI: not run.
 

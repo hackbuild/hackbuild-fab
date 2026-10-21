@@ -12,7 +12,7 @@ const root = join(import.meta.dirname, "..", "..");
 const read = (p) => readFileSync(join(root, p), "utf8");
 const json = (p) => JSON.parse(read(p));
 
-const counts = json("docs/plan/counts.json");
+const counts = json("tools/reports/counts.json");
 // The seeded rows; rows entered later carry enteredBy (M04-T12) and CHECKS.md counts them in section 9.
 const seed = json("packages/checks/seed/checks.seed.json").checks.filter((r) => r.enteredBy === undefined);
 const CHECKS = read("docs/plan/CHECKS.md");
@@ -90,7 +90,7 @@ test("CHECKS.md section 15 lists no seeded id as entered by this file", () => {
 
 test("M-1 counts acceptance command exits 0", () => {
   const card = section(M1, "M-1-T");
-  const m = M1.match(/`(node -e 'const c=require\("\.\/docs\/plan\/counts\.json"\);[^`]*')`/);
+  const m = M1.match(/`(node -e 'const c=require\("\.\/tools\/reports\/counts\.json"\);[^`]*')`/);
   assert.ok(m && card, "counts node -e line present");
   const script = m[1].slice("node -e '".length, -1);
   execFileSync(process.execPath, ["-e", script], { cwd: root });
@@ -314,7 +314,7 @@ test("staged counts.json and PLAN.md Appendix B equal a fresh counts.mjs run", {
     const files = execFileSync("git", ["-C", root, "ls-files", "-z", "--cached", "--", ...COUNT_INPUTS], { encoding: "utf8", maxBuffer: 1 << 26 });
     execFileSync("git", ["-C", root, "checkout-index", "-z", "--stdin", `--prefix=${tmp}/`], { input: files });
     execFileSync(process.execPath, [join(root, "tools/counts.mjs"), `--root=${tmp}`], { encoding: "utf8" });
-    for (const p of ["docs/plan/counts.json", "docs/plan/PLAN.md"]) {
+    for (const p of ["tools/reports/counts.json", "docs/plan/PLAN.md"]) {
       const staged = execFileSync("git", ["-C", root, "show", `:${p}`], { encoding: "utf8", maxBuffer: 1 << 26 });
       assert.equal(readFileSync(join(tmp, p), "utf8"), staged, `${p} is stale: run node tools/counts.mjs and stage it`);
     }

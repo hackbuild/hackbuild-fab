@@ -1,4 +1,4 @@
-// Generates every count in docs/plan/counts.json and the PLAN.md Appendix B
+// Generates every count in tools/reports/counts.json and the PLAN.md Appendix B
 // table (D-010). Repo counts are recomputed on each run; rows whose source
 // lives outside the repo come from tools/counts.external.json.
 //
@@ -13,10 +13,10 @@
 //   node tools/counts.mjs --external      recheck snapshot rows whose source exists here; exit 1 on a mismatch
 //   node tools/counts.mjs --check-prose   list hand-typed counted numbers in docs/ and READMEs (warnings, exit 0)
 //   --root=<dir>                          run against another checkout (tests use a temp copy)
-import { readFileSync, writeFileSync, readdirSync, statSync, existsSync, realpathSync } from "node:fs";
+import { readFileSync, writeFileSync, readdirSync, statSync, existsSync, realpathSync, mkdirSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 import { gunzipSync } from "node:zlib";
-import { join, resolve, relative, sep } from "node:path";
+import { dirname, join, resolve, relative, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { parse } from "yaml";
 
@@ -341,8 +341,10 @@ function writePlan(c, ext) {
 function writeJson(c, ext) {
   const external = Object.fromEntries(ext.map((r) => [r.key, r.value]));
   const text = JSON.stringify(sortKeys({ ...c, external }), null, 2) + "\n";
-  const p = join(root, "docs/plan/counts.json");
-  if (!existsSync(p) || readFileSync(p, "utf8") !== text) writeFileSync(p, text);
+  const p = join(root, "tools/reports/counts.json");
+  if (existsSync(p) && readFileSync(p, "utf8") === text) return;
+  mkdirSync(dirname(p), { recursive: true });
+  writeFileSync(p, text);
 }
 
 // ---- external rechecks: each returns the value string the snapshot should hold ----
@@ -484,7 +486,7 @@ function main() {
   if (process.argv.includes("--check-prose")) { checkProse(c); return; }
   writeJson(c, ext);
   writePlan(c, ext);
-  console.log("counts: wrote docs/plan/counts.json and the PLAN.md Appendix B table");
+  console.log("counts: wrote tools/reports/counts.json and the PLAN.md Appendix B table");
   // A counted directory with untracked files gives one result here and another
   // after `git add -A` (the M-1-T11 form), so the derived row fails until they
   // are staged or ignored.

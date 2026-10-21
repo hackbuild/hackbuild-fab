@@ -38,8 +38,22 @@ function tempCopy() {
 }
 
 const run = (dir) => execFileSync(process.execPath, [script, `--root=${dir}`], { encoding: "utf8" });
-const outputs = (dir) => ["docs/plan/counts.json", "docs/plan/PLAN.md"].map((p) => readFileSync(join(dir, p)));
-const counts = (dir) => JSON.parse(readFileSync(join(dir, "docs/plan/counts.json"), "utf8"));
+const outputs = (dir) => ["tools/reports/counts.json", "docs/plan/PLAN.md"].map((p) => readFileSync(join(dir, p)));
+const counts = (dir) => JSON.parse(readFileSync(join(dir, "tools/reports/counts.json"), "utf8"));
+
+// The committed file is generated test data that the plan and the drift
+// tests read; a count edited by hand there differs from a fresh run.
+test("the committed tools/reports/counts.json equals a fresh run", () => {
+  const dir = tempCopy();
+  try {
+    run(dir);
+    const committed = readFileSync(join(repo, "tools/reports/counts.json"), "utf8");
+    assert.deepEqual(JSON.parse(committed), counts(dir), "tools/reports/counts.json is stale or hand-edited: run node tools/counts.mjs");
+    assert.equal(committed, readFileSync(join(dir, "tools/reports/counts.json"), "utf8"), "same bytes as a fresh run");
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
 
 test("two runs give byte-identical output", () => {
   const dir = tempCopy();

@@ -508,7 +508,7 @@ Acceptance:
   on the M01-T06 defs; the registered-dim list is empty before them).
 - `npm test -w core -- message-numbers` exits 0 over every M01 golden
   declared in a reference's queries.json, plus the fixture queries.
-- `node tools/counts.mjs && git diff --exit-code -- docs/plan/counts.json docs/plan/PLAN.md`
+- `node tools/counts.mjs && git diff --exit-code -- tools/reports/counts.json docs/plan/PLAN.md`
   exits 0 (D-010). CLI.md has no generator before M12-T10
   (`tools/gen-skill.mjs`), so its regeneration is an M12-T10 check.
 
@@ -1424,7 +1424,7 @@ Files to create:
 Acceptance:
 - Every CI job green on the PR.
 - `node tools/lint-voice.mjs` exits 0.
-- `node tools/counts.mjs && git diff --exit-code -- docs/plan/counts.json docs/plan/PLAN.md`
+- `node tools/counts.mjs && git diff --exit-code -- tools/reports/counts.json docs/plan/PLAN.md`
   exits 0 after staging (CI form: `git status --porcelain` prints nothing).
 - `node --test tools/test/determinism-queries.test.mjs` exits 0 after `npx tsc -b`.
 
@@ -1456,7 +1456,7 @@ Corrections found at build, 2026-10-06:
   re-date), and creates tools/test/determinism-queries.test.mjs.
 - Acceptance 3 used `git status --porcelain` prints nothing. Under D-006
   every staged file lists, so in the working tree the line is
-  `node tools/counts.mjs && git diff --exit-code -- docs/plan/counts.json
+  `node tools/counts.mjs && git diff --exit-code -- tools/reports/counts.json
   docs/plan/PLAN.md` after staging (MILESTONES.md 3.3); the porcelain form
   holds on a CI checkout only.
 - Step 1, rerun 2026-10-06 after every M01 card landed: root `npm test`

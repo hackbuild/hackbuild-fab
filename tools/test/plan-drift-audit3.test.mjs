@@ -20,7 +20,7 @@ const CANONS = read("docs/plan/CANONS.md");
 const M06 = read("docs/plan/milestones/M06-canons.md");
 const M08 = read("docs/plan/milestones/M08-board-catalog.md");
 const M10 = read("docs/plan/milestones/M10-chase.md");
-const counts = json("docs/plan/counts.json");
+const counts = json("tools/reports/counts.json");
 
 const HANDOFF_PATH = join(kb, "HANDOFF.md");
 const M08_REPORT = join(root, ".hbf-notes", "m08-report.md");

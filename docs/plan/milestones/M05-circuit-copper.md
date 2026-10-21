@@ -2028,7 +2028,7 @@ Card defects found while building (2026-10-08):
   title is kept as the generator writes it.
 - `node tools/counts.mjs && git status --porcelain` cannot print nothing
   here: nothing is committed, so `git status --porcelain` lists every
-  staged file, and counts.mjs writes `docs/plan/counts.json` and PLAN.md
+  staged file, and counts.mjs writes `tools/reports/counts.json` and PLAN.md
   Appendix B only (no reference INDEX is generated yet). The check that
   holds is that counts.mjs leaves no unstaged change.
 - The brand variants of the six boards are not exercised: no shipped

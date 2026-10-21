@@ -397,7 +397,7 @@ Steps:
 3. Test both directions: every non-null origin `record` resolves to a
    ledger entry that lists the check; every `enforcedBy` id is registered.
 4. tools/counts.mjs gains `ratchet.records`, `ratchet.enforced`,
-   `ratchet.prose`, `ratchet.taste`, written to docs/plan/counts.json.
+   `ratchet.prose`, `ratchet.taste`, written to tools/reports/counts.json.
 
 Files to create:
 - packages/knowledge/src/ratchet.ts, packages/knowledge/test/ratchet.test.ts
@@ -944,7 +944,7 @@ and the PLAN.md Appendix B table and the reference INDEX pages regenerate
 clean.
 
 Inputs:
-- tools/counts.mjs, docs/plan/counts.json (M-1-T11)
+- tools/counts.mjs, tools/reports/counts.json (M-1-T11)
 - docs/plan/PLAN.md Appendix B markers
 - the generated files of M16-T01 to M16-T10
 
@@ -963,7 +963,7 @@ Steps:
    generated one (MILESTONES.md rule 16).
 
 Files to create:
-- tools/counts.mjs (keys added), docs/plan/counts.json (regenerated)
+- tools/counts.mjs (keys added), tools/reports/counts.json (regenerated)
 - docs/reference/knowledge/INDEX.md (generated)
 
 Acceptance:

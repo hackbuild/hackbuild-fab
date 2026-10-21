@@ -304,7 +304,7 @@ Reference and Optional sections of links with one line each.
   `docs/reference/errors.md`. Reference links the INDEX.md of feature-kinds,
   checks, profile and references. Optional links mechanisms, archetypes and
   `docs/explanation/knowledge.md`.
-- Counts in its text come from `docs/plan/counts.json`.
+- Counts in its text come from `tools/reports/counts.json`.
 - Size under 20,480 bytes (`wc -c`), every link resolves, lint-voice clean
   (M12-T11 acceptance).
 - The tscircuit Repomix size in the api note is unverified (D-022) and is
@@ -470,7 +470,7 @@ section 2.1.
 ### 12.1 Counts
 
 Every count in docs, READMEs, llms.txt and the skill comes from
-`docs/plan/counts.json`, written by `tools/counts.mjs` (M-1-T11). In prose
+`tools/reports/counts.json`, written by `tools/counts.mjs` (M-1-T11). In prose
 a count sits between markers that the generator rewrites:
 
 ```
