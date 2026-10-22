@@ -719,6 +719,8 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-662 | key/flex-gap is a row of the M01 placement table | decided | Testing, docs, milestones, registry |
 | D-663 | Agent model routing and scripts over agents | decided | tooling |
 | D-664 | BLOCKS waives CHK-PRT-16 on the wire under D-629 | decided | designs/blocks |
+| D-665 | touch pass runs 1280 inside the touch-390 project | decided | tools/smoke |
+| D-666 | declared overlays read from bench.ts beside bake.json | decided | tools/smoke |
 
 ## House rules and process
 
@@ -8057,6 +8059,28 @@ Status: decided (delegated). The lead closed four reds from the wave 4 health ru
 | Decision | Taken by the agent under owner delegation on 2026-10-22 (R1-ci-01). designs/blocks/chase.ts waives CHK-PRT-16 for target wire, keeping the original's 10 to 400 mm length range. Goldens: only buildHash, defHash and the 3mf hash moved; mesh hashes and volumes did not. |
 | Rationale | The smoke slider release sets len to 400, a wire 407.6 mm long (computed) on the 256 mm ffc5p bed, so the gate closed correctly. The default build passes. The original has no bed, so the range is ported (D-222). Reversible: drop the waiver and cap len at the bed instead, which also blocks no oversize export. |
 | Evidence | hbf part.build designs/blocks --params len=400 fails CHK-PRT-16 measured 407.60 mm legal 0 to 256 mm; range-sweep len=400 exit=1; smoke edits test passes with the waiver and fails with the target renamed (mutant). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-665 touch pass runs 1280 inside the touch-390 project
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-22 (R1-ci-02). tools/smoke/touch.spec.ts runs every bench at 390 and at 1280 wide through test.describe and test.use viewport, under the existing touch-390 project, instead of a new touch-1280 project in playwright.config.ts. |
+| Rationale | The brief's Done line asks for a pass at 390 and 1280, and its Writes line names touch.spec.ts only; the config file is outside it. A separate project would give a clearer project name in reports. |
+| Evidence | 12 of 12 touch-only tests passed locally (6 bakes x 2 widths), .hbf-notes/pw-blocks.log and .hbf-notes/pw-rest.log |
+| Supersedes | new |
+| Milestone | none |
+
+### D-666 declared overlays read from bench.ts beside bake.json
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-22 (R1-ci-02). The drive step reads views.overlays from the bench.ts next to the bake.json whose id is the bake id; skip when it lacks drive, require a visible drive key when it has drive. |
+| Rationale | The brief says to read the bench's declared widgets. The bake manifest carries no overlay list and the BENCH hook exposes none, so the spec imports the bench declaration itself. |
+| Evidence | blocks annotates 'drive key skipped: blocks declares no drive overlay'; mutant showPad=false on flex-pair fails with 'flex-pair declares a drive pad' |
 | Supersedes | new |
 | Milestone | none |
 
