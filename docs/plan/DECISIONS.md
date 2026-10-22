@@ -717,6 +717,7 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-660 | contact.gap is registered as key/flex-gap and the goldens follow | decided | CORE |
 | D-661 | the chases naming pom3 or sheet15 are a known list, not a profile row | decided | CORE |
 | D-662 | key/flex-gap is a row of the M01 placement table | decided | Testing, docs, milestones, registry |
+| D-663 | Agent model routing and scripts over agents | decided | tooling |
 
 ## House rules and process
 
@@ -8033,6 +8034,17 @@ Status: decided (delegated). The lead closed four reds from the wave 4 health ru
 | Decision | Taken by the agent under owner delegation on 2026-10-20. The M01 card's Package placement table in `fab-knowledge:plan-archive/milestones/M01-constraints.md` gains the row `key/flex-gap`, owning package constraints (fixture def here until the keys canon exists, R1-score-02), tier 1, Bound.kernel mesh, registered at core load, in the form of the other fixture rows; the sentence under the table drops its count of fixture defs. The archive has no plan writer and is not a git repository, so the row was written by hand into the owner's record; the owner may reword or move it. `core/test/load-constraints.test.ts` counts 12 rows and reads that row from the card; `core/test/chase-validate.test.ts` and `core/test/chase-corpus.test.ts` expect the flex pair to validate with 0 errors. |
 | Rationale | The loader test reads the placement table from the plan so the test never keeps its own copy (architecture law, nothing hand-listed). key/flex-gap (R1-score-02, 010720d) registered contact.gap without a table row, which left three core files red on main e0030d4. Tier 1 and kernel mesh follow the def's `kernels` and the tier the card gives its other fixture defs. |
 | Evidence | The three core files pass alone, 73 tests (computed, 2026-10-21). With keyFlexGap removed from the fixtures constraintDefs and `tsc -b`, chase-validate and chase-corpus fail with `E_REF /params/1/fields/0/item/3/constraintDim contact.gap` (mutant killed); before the row, load-constraints failed "key/flex-gap is not in the M01 placement table" (rolling health 1). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-663 Agent model routing and scripts over agents
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent at the owner's request of 2026-10-22 ("smart model orchestrates cheaper models"). Queue items run through .hbf-notes/r1/scheduler/build.js: builders on Sonnet at medium effort; a builder's second round, a review of each diff before it lands and red-health triage on Opus; landing (land.sh), health (health.sh), gates, queue loading and decision recording as scripts, run by a Sonnet agent at low effort where a workflow needs an agent to run them. Every workflow agent names its model; a local PreToolUse hook refuses a workflow that does not, and local settings default subagents to Sonnet. Token use is reported per role and model from the transcripts (usage.mjs). Haiku is not used. Supersedes the "Opus throughout" line of plan section 7 for agents the session starts; the session itself stays on Opus. |
+| Rationale | Release 1, measured from the transcripts: 9,165 of 9,171 agent turns on Opus; 1.34 billion cache-read tokens against 3.4M output, so cost is context re-read every turn (about 156K tokens a builder turn, about 150 turns an item). Anthropic reports an Opus lead with Sonnet subagents beating single-agent Opus on research, and that multi-agent work suits separable tasks more than coupled coding; the Claude Code cost guide says Sonnet handles most coding and to offload processing to scripts and hooks. A Haiku probe ignored "use no tools" and spent 48K tokens. Quality holds through the gates, mutation rule, rolling health and the Opus diff review, now applied to every item. |
+| Evidence | node .hbf-notes/r1/scheduler/usage.mjs over the release 1 runs (computed, 2026-10-22); anthropic.com/engineering/multi-agent-research-system; code.claude.com/docs/en/costs; code.claude.com/docs/en/workflows (agent models, 5 minute subagent cache default). |
 | Supersedes | new |
 | Milestone | none |
 
