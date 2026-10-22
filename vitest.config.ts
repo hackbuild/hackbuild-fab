@@ -15,6 +15,10 @@ export default defineConfig({
     // tsc -b before any test, so tests never run against a stale dist (core/test/global-setup.ts).
     globalSetup: ["core/test/global-setup.ts"],
     testTimeout,
+    // Transformed modules persist in node_modules/.vitest-cache, so a run skips
+    // the transforms an earlier run already did (35 percent of tracked time on
+    // a cold packages/geom run, measured 2026-10-21).
+    fsModuleCache: true,
     include: ["spec/test/**/*.test.ts", "tools/test/**/*.test.ts", "tools/test-support/**/*.test.ts", "tools/parity/**/*.test.ts", "packages/*/test/**/*.test.ts", "reference/**/test/**/*.test.ts", "designs/**/test/**/*.test.ts", "core/test/**/*.test.ts", "kernel/test/**/*.test.ts"],
   },
 });

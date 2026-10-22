@@ -9,5 +9,6 @@ export default defineConfig({
     globalSetup: ["test/global-setup.ts"],
     include: ["test/**/*.test.ts"],
     testTimeout,
+    fsModuleCache: true,
   },
 });
