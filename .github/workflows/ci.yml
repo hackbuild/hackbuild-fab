@@ -574,9 +574,9 @@ jobs:
         # packages/nest/records, packages/motion/records and
         # packages/nest/test/out; each leg must reproduce them (D-056)
         if: ${{ !cancelled() && (matrix.kind == 'node') }}
-        run: |
-          npm test -w packages/nest
-          npm test -w packages/motion
+        # Through the root runner with the owner-file excludes: their originals tests need the owner
+        # archive, which a hosted runner lacks (run 39727418800).
+        run: npx vitest run packages/nest packages/motion $(node .github/scripts/owner-files.mjs excludes)
       - name: rapier snapshot hashes, every scene run twice on this runner (M02-T04)
         if: ${{ !cancelled() && (matrix.leg == 'x64' || matrix.leg == 'arm64') }}
         run: |

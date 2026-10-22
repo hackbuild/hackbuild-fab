@@ -25,7 +25,7 @@
     "derived:counts": "node tools/counts.mjs && git diff --exit-code -- tools/reports/counts.json docs/plan/PLAN.md",
     "tiers": "node tools/tiers.mjs",
     "check": "npm run lint && node tools/lint-authors.mjs && npm run typecheck && npm test && npm run tiers && npm run derived",
-    "bake:all": "tsc -b packages/ui && node tools/bake/bake.mjs --all"
+    "bake:all": "tsc -b && node tools/bake/bake.mjs --all"
   },
   "devDependencies": {
     "@changesets/cli": "3.0.3",

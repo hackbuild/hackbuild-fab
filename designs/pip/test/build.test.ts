@@ -109,7 +109,11 @@ describe("the worked example", () => {
   test("every metric equals the committed worked golden", () => {
     const now = Object.fromEntries((worked.draft.metrics ?? []).map((m) => [m.id, m.value]));
     if (process.env["HBF_ACCEPT_METRICS"] === "1") writeFileSync(GOLDEN, `${JSON.stringify(now, null, 1)}\n`);
-    expect(now).toEqual(JSON.parse(readFileSync(GOLDEN, "utf8")));
+    // Twelve significant digits: the spring solve differs by about 6e-14 relative between
+    // macOS and Linux (CI run 39727418800), so an exact compare fails one platform.
+    const sig = (o: Record<string, unknown>): Record<string, unknown> =>
+      Object.fromEntries(Object.entries(o).map(([k, v]) => [k, typeof v === "number" ? Number(v.toPrecision(12)) : v]));
+    expect(sig(now)).toEqual(sig(JSON.parse(readFileSync(GOLDEN, "utf8")) as Record<string, unknown>));
   });
 
   test("the layout warns of nothing; the bezel warning names what release 1 leaves out", () => {

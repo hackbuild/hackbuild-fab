@@ -67,10 +67,10 @@ gains a library this table does not list.
 
 | library | licence | banner kept in the file | files |
 |---|---|---|---|
-| three.js r128 | MIT | yes, `Copyright 2010-2021 Three.js Authors` | `cotter/legacy/cotter.html`, `knuckle/legacy/knuckle.html`, `ogee16/legacy/ogee16-buildit-app-20260818.html`, `ogee16/legacy/ogee16-plate.html`, `pip/legacy/pip.html`, `sash/legacy/sash.html`, `stipple/legacy/stipple-r17.html`, `stipple/legacy/stipple-r17b.html`, `tenon/legacy/tenon.html`, `toggle/legacy/toggle.html` |
-| JSZip 3.10.1 | MIT or GPLv3, used under MIT | yes, `(c) 2009-2016 Stuart Knightley` | `cotter/legacy/cotter.html`, `knuckle/legacy/knuckle.html`, `pip/legacy/pip.html`, `sash/legacy/sash.html`, `tenon/legacy/tenon.html`, `toggle/legacy/toggle.html` |
-| pako, bundled inside JSZip | MIT | named in the JSZip banner, no copyright line | the six JSZip files |
-| earcut (UMD build) | ISC | no | `knuckle/legacy/knuckle.html`, `ogee16/legacy/ogee16-buildit-app-20260818.html` |
+| three.js r128 | MIT | yes, `Copyright 2010-2021 Three.js Authors` | `cotter/legacy/cotter.html`, `knuckle/legacy/knuckle.html`, `pip/legacy/pip.html`, `tenon/legacy/tenon.html`, `toggle/legacy/toggle.html` |
+| JSZip 3.10.1 | MIT or GPLv3, used under MIT | yes, `(c) 2009-2016 Stuart Knightley` | `cotter/legacy/cotter.html`, `knuckle/legacy/knuckle.html`, `pip/legacy/pip.html`, `tenon/legacy/tenon.html`, `toggle/legacy/toggle.html` |
+| pako, bundled inside JSZip | MIT | named in the JSZip banner, no copyright line | the five JSZip files |
+| earcut (UMD build) | ISC | no | `knuckle/legacy/knuckle.html` |
 | qrcode-generator | MIT | yes, `Copyright (c) 2009 Kazuhiko Arase` | `cotter/legacy/cotter.html` |
 | manifold-3d with its wasm | Apache-2.0 | a one line `manifold-3d (Apache 2.0)` comment; 3.5.3 in the pip files, version unknown in cotter | `cotter/legacy/cotter.html`, `pip/legacy/pip.html`, `pip/legacy/vendor/manifold-classic.js` |
 

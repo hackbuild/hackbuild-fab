@@ -50,7 +50,7 @@ function treeHash(dir: string, skip: ReadonlySet<string>, h = createHash("sha256
 /** The toolchain a build runs on: core, kernel, spec and every package, as built, with the lock file. */
 export function toolchainHash(root: string): string {
   const h = createHash("sha256");
-  const pkgs = readdirSync(path.join(root, "packages")).sort().map((p) => `packages/${p}`);
+  const pkgs = readdirSync(path.join(root, "packages"), { withFileTypes: true }).filter((e) => e.isDirectory()).map((e) => `packages/${e.name}`).sort();
   for (const d of ["core", "kernel", "spec", ...pkgs]) treeHash(path.join(root, d), SKIP_DIRS, h.update(`${d}\0`), "");
   for (const f of ["package.json", "package-lock.json"]) h.update(`${f}\0`).update(readFileSync(path.join(root, f)));
   return h.digest("hex");
