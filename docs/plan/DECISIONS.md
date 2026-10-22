@@ -707,6 +707,8 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-650 | Build speed: incremental typecheck, seeded worktrees, one-call gates, rolling health | decided | tooling |
 | D-651 | The PIP bench lands with gold G-10 and G-15 held at range-end kernel refusals | decided | UI |
 | D-652 | Corpus tests share one build per key per run and run in name-declared shards | decided | CORE |
+| D-653 | hbf draft routes its goal to a reference by rarity-weighted goal words | decided | CORE |
+| D-654 | hbf draft writes where hbf init writes and refuses a full folder with E_EXISTS | decided | CORE |
 
 ## House rules and process
 
@@ -7913,6 +7915,28 @@ Status: decided (delegated). The lead closed four reds from the wave 4 health ru
 | Decision | Taken by the agent under owner delegation on 2026-10-20. core/test/global-setup.ts makes a per-run build store and hashes the toolchain; message-numbers shards, metric-record shards and project-graph wrap buildPart through core/test/support/build-cache.ts with vi.mock, so core/src is unchanged. The key is taken before the build, so it hashes the whole profile tables the build is handed (a superset of the rows profileHash covers) with defHash, every file of the design directory but expected/ and test/, the resolved values, the epoch, the workspace versions and the toolchain (dist, seed and data of core, kernel, spec and every package, package.json, package-lock.json). Sandbox options, accept runs and runs with no store build fresh. Shards are named family.shard-i-of-n.test.ts and take a round robin slice. project-graph recording stays in one file, since its fixture folds lines shared across references; scenario (a) and skeleton parity move to their own uncached files. The typed-number ledger stays with the check fixtures, which see every row. R1-speed-01. |
 | Rationale | Each corpus file built every reference again, and the core wall was bound by its longest file. A cache keyed after the build cannot be read before it, so the key takes a superset of the inputs; a false hit is the failure to avoid. Splitting the project-graph fixture comparison or the ledger across files needs an order between files that vitest does not give. Reversible: delete the shard files and the mocks. |
 | Evidence | The four corpus files: 346 s wall before, 141 s after, 359 to 367 tests (measured 2026-10-21 under shared load). Whole core suite 1384 tests pass, 451 s wall at load average 50 to 100 on 8 cores, so the 180 s idle bound is not measured. support/shards.test.ts fails with shard 3 of 4 removed; support/build-cache.test.ts fails with the tables dropped from the key (measured). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-653 hbf draft routes its goal to a reference by rarity-weighted goal words
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. Without --from, `hbf draft` scores every reference the capabilities index lists that holds a chase.ts against the goal: each goal word weighs ln((N + 1) / (n + 0.5)) over N references, n of them holding a word it starts; a word in the reference path, its readme title and lead paragraph, or the ids, senses and emits of the archetypes naming it counts whole, a word only in the rest of the readme counts half (inferred); the score is the share of the goal's weight held. The best reference at 0.5 or more (inferred, `MATCH_MIN`) is the source and `result.match` names it, its score (computed) and the words it holds; under 0.5 the command exits with E_REF on /goal naming the three closest references with their scores. Designs under designs/ are not candidates; --from still names one. |
+| Rationale | Four of six persona runs (R1-score-03) got the same disc scaffold whatever the goal and a PASS with zero counts. Rarity weighting keeps words every readme holds ("mm", "read") from carrying a match and lets a word no reference holds ("teapot") pull the score under the floor, so an unmatched goal fails instead of drafting a stand-in. It reuses the word split of canon-hits.ts that arch.find and mech.find share. |
+| Evidence | core/test/draft.test.ts: "two-key pad I can read on a Pico" routes to keys/flex-pair at 0.658, "big round switch on a 3.5 mm jack" to keys/access-switch at 0.604, "a teapot" exits 2 with E_REF (scores computed, 2026-10-21); a mutant that drafts from a fixed goal fails 2 of the routing tests. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-654 hbf draft writes where hbf init writes and refuses a full folder with E_EXISTS
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `hbf draft` writes `<cwd>/<name>`, or `--dir` relative to the cwd, as `hbf init` does, in place of `.hbf/drafts/<name>` under the git top. It bakes on a staged copy under `.hbf/init/` of the workspace and copies the baked folder out with init's package.json, and `result.dir` and `result.page.file` are absolute. A folder that holds files is refused with E_EXISTS naming it, and nothing is written. `spec/command-io/draft.ts` gains the `dir` input and the optional `match` output, and the draft def its `--dir` flag. The `draft:` form of chase.scaffold and adopt still finds `.hbf/drafts/<id>` for drafts written before. |
+| Rationale | The brief asks for the draft outside the repository unless --dir says otherwise, and for E_EXISTS or a suffix on a repeated name; E_EXISTS names the folder and matches init, so a person sees which draft is in the way. The staged bake is init's answer to a folder with no node_modules. |
+| Evidence | core/test/draft.test.ts runs both routed drafts from a temporary cwd outside the repository and reads their page hash back against shasum; a repeat exits 2 with E_EXISTS on /name (measured, 2026-10-21). A draft outside the workspace cannot be rebaked with chase.bake, which refuses a path outside the workspace (observed). |
 | Supersedes | new |
 | Milestone | none |
 
