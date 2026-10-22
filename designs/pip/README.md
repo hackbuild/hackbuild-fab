@@ -176,12 +176,18 @@ writes `dist/bench/pip.html`, which builds in its own page.
 
 Gold on that bake, the bench-layer rules only (`tools/gold/report.mjs
 --origin fab --bench pip --only` the M09 Exit list), 2026-10-21, bake
-sha256 102a97f9: 23 pass, 1 n/a (G-05), 2 fail (measured). Both fails
-are the D-643 range-end class, held for the owner: G-10 and G-15 leave
-earlier fields at their range ends, and the build then refuses with
-E_KERNEL at the /bodies union (solids that touch at an edge or a
-corner). A width of 100 mm at the defaults refused the same way in
-the first round (computed, D-643 lists PIP W 100 to 120).
+sha256 102a97f9, rerun on the bake rebased onto main: 23 pass, 1 n/a
+(G-05), 2 fail (measured). Both fails are the D-643 range-end class,
+and the bench lands with G-10 and G-15 held as TOGGLE's did (D-649):
+G-10 and G-15 leave earlier fields at their range ends, and the build
+then refuses with E_KERNEL at the /bodies union (solids that touch at
+an edge or a corner). The out-of-scope runtime rows (G-55) are not
+recorded: the runtime pass commits every numeric field at its ends and
+stops at the first refusal. Under D-644 the bench keeps the last good
+model and names the refusal. Ends that refuse alone at the defaults
+include W 100, H 100, leftX, leftY, faceX, faceY, menuX and menuY at
+both ends, leftPitch 30 and menuPitch 10 (computed, range sweep through
+`hbf part.build`; D-643 lists PIP W 100 to 120 and 17 more ends).
 
 Side-by-side shots against `legacy/pip.html` at 390 and 1280 are in
 `fab-knowledge:evidence/r1/side-by-side/pip/` (scrollWidth 390 and 1280,
