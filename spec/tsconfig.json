@@ -12,6 +12,7 @@
     "lib": ["ES2023"],
     "types": [],
     "noEmit": true,
+    "incremental": true,
     "noFallthroughCasesInSwitch": true,
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": false
