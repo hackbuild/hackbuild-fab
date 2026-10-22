@@ -2574,6 +2574,39 @@
         "date": "2026-10-09",
         "source": "packages/mechanisms/seed/mechanisms.seed.yaml line 101 (OGEE R7 to R17): ramp_a at least 40 deg against acrylic friction 0.45, a design value; OGEE16 params.scad line 88 and STIPPLE R17b DATA.P RAMP_A both build at 40; read by packages/mechanisms/src/constraints/coincidence-ramp.ts (M06-T03)"
       }
+    },
+    {
+      "id": "access.drive.input.lowFrac",
+      "value": 0.3,
+      "unit": "ratio",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-21",
+        "source": "highest pin voltage, as a fraction of the input supply, that a switch interface reads as pressed: the lower edge of the BLOCKS undefined band, 0.3 VIO (fab-knowledge:originals/blocks/files/src-extracted/app2.js line 383, lineage blocks.app2/blocks-1), the common CMOS VIL; no switch interface datasheet on record (inferred); read by the access switch contact closure read (R1-score-05)"
+      }
+    },
+    {
+      "id": "access.drive.input.pullupOhm",
+      "value": 50000,
+      "unit": "ohm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-21",
+        "source": "the pull a switch interface input holds its 3.5 mm tip to: the BLOCKS sim PULLUP element, 50e3 from the pin to VIO (fab-knowledge:originals/blocks/files/src-extracted/sim.js line 94, lineage blocks.sim/blocks-1), and the Teensy or ESP internal 45 kohm of knowledge/00-constants.md; no Xbox Adaptive Controller, AbleNet or iPad switch adapter datasheet on record gives its pullup, so an MCU internal pull stands in (inferred); read by the access switch contact closure read (R1-score-05)"
+      }
+    },
+    {
+      "id": "access.drive.toy.ceilOhm",
+      "value": 1.5,
+      "unit": "ohm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-10-21",
+        "source": "highest closed resistance an adapted toy (a battery interrupter in series with its motor) runs through: two AA cells, 3 V, a small toy DC motor at 0.2 A running, and no more than 10 percent of the supply lost in the switch, 0.3 V over 0.2 A is 1.5 ohm (computed from inferred inputs); no toy or interrupter datasheet on record; read by the access switch contact closure read (R1-score-05)"
+      }
     }
   ],
   "moved": [

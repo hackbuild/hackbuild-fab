@@ -4,7 +4,9 @@
     "kind": "canonical",
     "source": "fab-knowledge:originals/blocks/files/src-extracted/app2.js",
     "sha256": "3eeeab36a1dd9977e95cf85f43fa8b4c026c7f077f9f7bc9c2a39b42a85086bc",
-    "fixes": [],
+    "fixes": [
+      "the undefined band lower edge 0.3 VIO (app2.js line 383) is profile access.drive.input.lowFrac, the pin fraction a switch interface reads as pressed, read by reference/keys/access-switch/build.ts (R1-score-05)"
+    ],
     "dest": null
   }
 ]

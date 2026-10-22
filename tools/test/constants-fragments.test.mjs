@@ -55,12 +55,16 @@ function beforeText() {
   }
 }
 
-test("gathered constants parse equal to constants.json as it stood before the split", (t) => {
+test("gathered constants parse equal to constants.json as it stood before the split, rows added since after it", (t) => {
   const text = beforeText();
   if (text === null) return t.skip(`commit ${SPLIT_FROM} not in this checkout (shallow clone)`);
   const was = JSON.parse(publishText(text));
   assert.equal(was.constants.length, 234);
-  assert.deepEqual(gatherConstants(root), was);
+  const got = gatherConstants(root);
+  // Rows added after the split land after the frozen ones and never reuse a frozen id.
+  const frozen = new Set(was.constants.map((c) => c.id));
+  assert.deepEqual({ ...got, constants: got.constants.slice(0, was.constants.length) }, was);
+  for (const c of got.constants.slice(was.constants.length)) assert.equal(frozen.has(c.id), false, c.id);
 });
 
 test("one fragment per id prefix, each holding exactly the rows of that prefix", () => {

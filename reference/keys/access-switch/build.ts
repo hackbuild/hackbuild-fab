@@ -109,6 +109,27 @@ export const build = defineBuild(chase, (p, k) => {
   const jack = jackSeat(k, { R, top, rimTop, l1: skin, trace, l2Top: skin + trace + iso + trace, floor, tw, T: end(""), S: end("Common") });
   const rClosed = metricOf("key.R.switch") + metricOf("key.R.pads") + jack.rLeads;
 
+  // Contact closure read: the device classes a 3.5 mm switch jack meets,
+  // each with the highest closed resistance it reads as pressed. A switch
+  // interface pulls the tip up through Rpu and reads pressed while the pin
+  // sits at or under lowFrac of its supply: the divider R / (R + Rpu) of
+  // packages/circuit read/pullup.ts dividerV, solved for R. An adapted toy
+  // carries its motor current through the switch, so its ceiling is a
+  // profile row in ohm. A class past its ceiling warns DRIVE and names the
+  // metal contact swap; the printed geometry stays as drawn (owner call).
+  const pullup = k.profile.constant("access.drive.input.pullupOhm"), lowFrac = k.profile.constant("access.drive.input.lowFrac");
+  const toyCeil = k.profile.constant("access.drive.toy.ceilOhm");
+  const pinFrac = rClosed / (rClosed + pullup.value);
+  const drive = [
+    { id: "input", name: "a switch interface input with a pullup", ceil: (pullup.value * lowFrac.value) / (1 - lowFrac.value), rows: [pullup, lowFrac],
+      why: `set by a ${(pullup.value / 1000).toFixed(0)} kohm pullup read as pressed at or under ${(100 * lowFrac.value).toFixed(0)} percent of its supply (access.drive.input.pullupOhm, access.drive.input.lowFrac, inferred); the pin sits at ${(100 * pinFrac).toFixed(0)} percent pressed (computed)` },
+    { id: "toy", name: "an adapted toy or battery interrupter carrying load current", ceil: toyCeil.value, rows: [toyCeil],
+      why: "set by motor current through the switch (access.drive.toy.ceilOhm, inferred)" },
+  ];
+  for (const d of drive) {
+    if (rClosed > d.ceil) k.warn("DRIVE", `R.closed ${rClosed.toFixed(0)} ohm (computed) cannot drive ${d.name}: legal at most ${Number(d.ceil.toFixed(1))} ohm, ${d.why}; fix: a metal contact, copper tape over the floor pads or a microswitch seat`);
+  }
+
   // The press claim's band (claim.ts), so the panel and the card read it
   // from the build; the spread needs the sim and lives in the claim test.
   const target = k.profile.constant(PRESS_IDS.targetN), bandPct = k.profile.constant(PRESS_IDS.bandPct);
@@ -136,6 +157,8 @@ export const build = defineBuild(chase, (p, k) => {
     ...claimMetrics,
     ...jack.metrics,
     metric("jack", "R.closed", rClosed, "ohm", "pressed, T to S: key.R.switch + key.R.pads + R.leads (PIP model.js line 481); the legs in their printed sockets add a contact resistance with no profile row (unknown)", jack.rTiers),
+    metric("drive", "drive.input.pinFrac", pinFrac, "ratio", "pressed pin over its supply on a switch interface: R.closed / (R.closed + access.drive.input.pullupOhm)", [...jack.rTiers, pullup.provenance.tier]),
+    ...drive.map((d) => metric("drive", `drive.${d.id}.ceilOhm`, d.ceil, "ohm", `highest R.closed ${d.name} reads as pressed; build.ts warns DRIVE past it`, d.rows.map((r) => r.provenance.tier))),
   ];
 
   return k.part({

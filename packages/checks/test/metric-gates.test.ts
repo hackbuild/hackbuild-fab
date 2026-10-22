@@ -114,6 +114,7 @@ const INFORMATIONAL: readonly { readonly pattern: RegExp; readonly why: string }
   { pattern: /^drive\.(N|E|S|W)(\.deg)?$/, why: "designs/toggle drive pad sectors: the sector index of each direction and its centre angle, read by the drive pad; no failure on record sets a bound (R1-fix-23)" },
   { pattern: /^route\.(layers|tries|comDeg)$/, why: "designs/toggle route readouts: trace layers settled on, attempts before the first clean route and the COM column angle; CHK-NET-12 reads route.conflicts and route.unrouted, never these, and no failure on record sets a bound (R1-fix-23)" },
   { pattern: /^pinout\.P\d+$/, why: "designs/toggle net on each header terminal, a name with no bound (R1-fix-23)" },
+  { pattern: /^drive\.(input\.(ceilOhm|pinFrac)|toy\.ceilOhm)$/, why: "keys/access-switch contact closure read: each device class ceiling from profile access.drive rows (inferred) and the pressed pin fraction; build.ts warns DRIVE past a ceiling and names the metal contact swap, and no failure on record sets a check bound (R1-score-05)" },
   { pattern: /^R\.(leads|closed)$/, why: "keys/access-switch closed path resistance on the cPLA tier, PIP's readout (model.js lines 453 to 460 and 481); the threshold of a switch interface is unknown, so no failure on record sets a bound (R1-flagship-access-switch-06)" },
 ];
 

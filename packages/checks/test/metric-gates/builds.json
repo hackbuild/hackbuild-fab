@@ -2317,6 +2317,18 @@
         {
           "id": "R.closed",
           "gate": "informational"
+        },
+        {
+          "id": "drive.input.pinFrac",
+          "gate": "informational"
+        },
+        {
+          "id": "drive.input.ceilOhm",
+          "gate": "informational"
+        },
+        {
+          "id": "drive.toy.ceilOhm",
+          "gate": "informational"
         }
       ]
     },

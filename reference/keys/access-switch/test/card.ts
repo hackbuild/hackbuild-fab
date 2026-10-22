@@ -77,6 +77,17 @@ export function plateRows(xml: string, labels: ReadonlyMap<number, string>): str
   });
 }
 
+/** The contact closure read: one line per device class, from the build drive metrics and R.closed. */
+function driveLines(m: readonly Metric[]): string[] {
+  const r = num(m, "R.closed");
+  const read = (ceil: number): string => (r > ceil ? "it cannot drive this; swap the printed contact for a metal one, copper tape over the floor pads or a microswitch seat" : "it reads as pressed");
+  const input = num(m, "drive.input.ceilOhm"), toy = num(m, "drive.toy.ceilOhm");
+  return [
+    `- switch interface input (Xbox Adaptive Controller, AbleNet or iPad switch adapter): ceiling ${input.toFixed(0)} ohm (computed from the inferred profile pullup), the pin sits at ${(100 * num(m, "drive.input.pinFrac")).toFixed(0)} percent of its supply pressed (computed); ${read(input)}; the real pullup of your device is unknown, so read one device before you trust it`,
+    `- adapted toy or battery interrupter carrying motor current: ceiling ${fmt(toy)} ohm (inferred); ${read(toy)}`,
+  ];
+}
+
 export function printCard(c: CardInput): string {
   const slots = [...c.chase.materials].sort((a, b) => a.slot - b.slot);
   const m = c.metrics;
@@ -107,7 +118,8 @@ export function printCard(c: CardInput): string {
     ...(overrides.length === 0 ? [] : [`- per-object settings in the file (M05-T20): ${overrides.join("; ")}; the Flash Studio CLI applies these keys from model_settings.config (computed, M05-T20 headless probes), the GUI is not run, so confirm each in the slicer object list before slicing`]),
     `- brim: ${brim === undefined ? "the file sets none, and the bundled process fills auto_brim, which the virtual slice laid in the cap's TPU 95A around body and paddle (computed, see Virtual slice); turn the brim off before slicing" : String(brim)}`,
     `- press: target ${fmt(target)} N (${g(target)} g), band ${fmt(lo)} to ${fmt(hi)} N (${g(lo)} to ${g(hi)} g, inferred), drawn peak ${fmt(peak)} N (${g(peak)} g, computed at drawn geometry); unproven until a person enters a thickness ladder coupon reading`,
-    `- R.closed: ${num(m, "R.closed").toFixed(0)} ohm pressed, T to S (computed, tier inferred); the legs in their sockets add a contact resistance (unknown); the input threshold of the device you plug into is unknown, so read one device before you trust the switch closes for it`,
+    `- R.closed: ${num(m, "R.closed").toFixed(0)} ohm pressed, T to S (computed, tier inferred); the legs in their sockets add a contact resistance (unknown)`,
+    ...driveLines(m),
     "",
     "| slot | material | role | label | slicer type | slicer filament | colour |",
     "|---|---|---|---|---|---|---|",

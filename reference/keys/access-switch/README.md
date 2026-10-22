@@ -130,9 +130,39 @@ At defaults R.leads 269148 ohm, key.R.switch 9952 ohm and key.R.pads
 inferred; the reference test holds this line to the build). The legs in
 their printed sockets add a contact resistance no profile row covers
 (unknown).
-The input threshold of a switch interface (Xbox Adaptive Controller,
-AbleNet or iPad switch adapters) is unknown here; a person reads one
-device before the card claims the switch closes for it.
+
+## What the contacts can drive
+
+A 3.5 mm switch jack meets two device classes (R1-score-05). build.ts
+compares R.closed with each class ceiling, emits metrics
+`drive.input.ceilOhm`, `drive.input.pinFrac` and `drive.toy.ceilOhm`,
+and warns DRIVE naming each class it cannot drive; the print card carries
+one line per class.
+
+- Switch interface input with a pullup (Xbox Adaptive Controller, AbleNet
+  or iPad switch adapters): profile `access.drive.input.pullupOhm` 50
+  kohm, the BLOCKS sim pull, and `access.drive.input.lowFrac` 0.3, the
+  BLOCKS undefined band edge (both inferred; no switch interface datasheet
+  on record gives its pullup). The ceiling is 21429 ohm (computed); at
+  R.closed the pressed pin sits at 85 percent of its supply (computed), so
+  the input reads it as not pressed. The real pullup of a device is
+  unknown; a person reads one device before the card claims it closes.
+- Adapted toy or battery interrupter, the motor current through the
+  switch: profile `access.drive.toy.ceilOhm` 1.5 ohm (two AA cells, 0.2 A,
+  10 percent lost in the switch, inferred). Through R.closed the toy will
+  not run (computed).
+- Fix, named and not drawn: a metal contact, copper tape over the floor
+  pads or a microswitch seat. The printed geometry stays as drawn; the
+  swap is an owner call (default: warn and name the swap).
+
+circuit.solve and the build price different paths. circuit.solve reads
+KEY 4933 ohm and GND 4933 ohm (computed): each net from the key's port
+feature through the 0.74 mm seat under its pad, the only terminal it has,
+and it warns TAP_NO_LEAD on both ports because the jack sockets carry no
+port feature, so it never walks the leads. R.closed walks socket T to
+socket S through both leads, both posts, both pads and the switch, the
+path the plugged device sees; it is the figure for the closed path, and
+the circuit.solve figure is not a T to S value.
 
 ## Deviations, each named
 
@@ -226,17 +256,19 @@ and the build disagree. Nothing in it was measured, and no export was run.
 <!-- generated: print card; rewrite with HBF_ACCEPT=1 npx vitest run reference/keys/access-switch -->
 
 - design: keys-access-switch, preset default, machine ffc5p
-- file: out/access-switch-default.3mf, 60910 bytes, sha256 ed469ab6c4f46ac5666797032b4e637d0cd1abb41418582d06daec20f1852a29 (computed from the writer bytes in process; no export was run)
-- artifact hash (hbf): bcc08620e39a64b8927317d2796e68b6584d12a94bfd7abff1def8bbf4833551
+- file: out/access-switch-default.3mf, 60909 bytes, sha256 ff9814ca76b438fc8016027bea815a3a67ff965f8a9499a9a56330d7703096e9 (computed from the writer bytes in process; no export was run)
+- artifact hash (hbf): 256efef84b896f699ebba4157a532e2faf0882a038a0260354800aa4a1908ee5
 - write it, a person at the export gate: `SOURCE_DATE_EPOCH=315532800 npx --no-install hbf export.run reference/keys/access-switch --kind 3mf --preset default --out reference/keys/access-switch/out/access-switch-default.3mf` (the epoch is pinned; unset, it follows the HEAD commit time and the bytes move)
-- build: c4188bf378080a6f50a373211bb7ce8704220f107f668eea9f349c5affb58e4f
+- build: 3d6fca1bc2596126321483492ddbe7f9197b56706f3ff671be1b9ef6c53d14ea
 - slicer: Flashforge Creator 5 Pro 0.4 nozzle, process 0.24mm Standard @FF C5
 - plate: Textured PEI Plate
 - layer grid: ffc5p_20260819, first layer 0.25 mm, then 0.24 mm (profile)
 - per-object settings in the file (M05-T20): object access-switch interlocking_beam 0; object access-switch detect_thin_wall 1; sparse_infill_density 100% on tip, traces click-spring-key.0.conductor.pad, traces click-spring-key.0.conductor.padCommon, traces click-spring-key.0.conductor.post, traces click-spring-key.0.conductor.disc1, traces click-spring-key.0.conductor.disc2, traces click-spring-key.0.conductor.postCommon, traces click-spring-key.0.conductor.disc1Common, traces click-spring-key.0.conductor.disc2Common, traces conductor.socketS, traces conductor.socketSWallA, traces conductor.socketSWallB, traces conductor.leadS, traces conductor.socketT, traces conductor.socketTWallA, traces conductor.socketTWallB, traces conductor.leadT; the Flash Studio CLI applies these keys from model_settings.config (computed, M05-T20 headless probes), the GUI is not run, so confirm each in the slicer object list before slicing
 - brim: the file sets none, and the bundled process fills auto_brim, which the virtual slice laid in the cap's TPU 95A around body and paddle (computed, see Virtual slice); turn the brim off before slicing
 - press: target 1.47 N (150 g), band 1.176 to 1.764 N (120 to 180 g, inferred), drawn peak 1.552 N (158 g, computed at drawn geometry); unproven until a person enters a thickness ladder coupon reading
-- R.closed: 293423 ohm pressed, T to S (computed, tier inferred); the legs in their sockets add a contact resistance (unknown); the input threshold of the device you plug into is unknown, so read one device before you trust the switch closes for it
+- R.closed: 293423 ohm pressed, T to S (computed, tier inferred); the legs in their sockets add a contact resistance (unknown)
+- switch interface input (Xbox Adaptive Controller, AbleNet or iPad switch adapter): ceiling 21429 ohm (computed from the inferred profile pullup), the pin sits at 85 percent of its supply pressed (computed); it cannot drive this; swap the printed contact for a metal one, copper tape over the floor pads or a microswitch seat; the real pullup of your device is unknown, so read one device before you trust it
+- adapted toy or battery interrupter carrying motor current: ceiling 1.5 ohm (inferred); it cannot drive this; swap the printed contact for a metal one, copper tape over the floor pads or a microswitch seat
 
 | slot | material | role | label | slicer type | slicer filament | colour |
 |---|---|---|---|---|---|---|

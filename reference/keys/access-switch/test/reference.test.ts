@@ -17,6 +17,7 @@ import JSZip from "jszip";
 import { beforeAll, describe, expect, test } from "vitest";
 import type { Feature, Metric } from "@hackbuild/spec";
 import { KICAD_RESOLVERS, loadCatalog } from "@hackbuild/catalog";
+import { dividerV } from "@hackbuild/circuit";
 import { createProfileLookup, sectionResistance } from "@hackbuild/profile";
 import { PJ398SM_BODY, PJ398SM_PADS, toWall } from "../jack";
 import { buildPart, export3mf, loadDesign, resolveParams, type Built, type Design } from "../../../../core/src/commands/build.js";
@@ -190,6 +191,33 @@ describe("access switch", () => {
       expect(metric("R.closed")?.qualifier).toBe("computed");
       const readme = readFileSync(path.join(ROOT, REF, "README.md"), "utf8");
       expect(readme).toContain(`R.closed ${num("R.closed").toFixed(0)} ohm`);
+    });
+
+    test("the contact closure read warns DRIVE for each device class R.closed is past (R1-score-05)", () => {
+      const prof = createProfileLookup(design.ws.tables);
+      const rpu = prof.constant("access.drive.input.pullupOhm").value, low = prof.constant("access.drive.input.lowFrac").value;
+      const toy = prof.constant("access.drive.toy.ceilOhm").value;
+      // The input ceiling is the closed R that puts the pressed pin at lowFrac
+      // of its supply, read back through the circuit package divider.
+      expect(dividerV(1, rpu, 0, num("drive.input.ceilOhm"))).toBeCloseTo(low, 4);
+      expect(num("drive.input.pinFrac")).toBeCloseTo(dividerV(1, rpu, 0, num("R.closed")), 3);
+      expect(num("drive.toy.ceilOhm")).toBe(toy);
+      const drive = built.part.warnings.filter((w) => w.code === "DRIVE").map((w) => w.text);
+      const closed = num("R.closed");
+      const want = [["switch interface", num("drive.input.ceilOhm")], ["adapted toy", toy]] as const;
+      for (const [name, ceil] of want) {
+        const line = drive.find((t) => t.includes(name));
+        if (closed > ceil) {
+          expect(line, `${name} warning`).toContain(`R.closed ${closed.toFixed(0)} ohm (computed) cannot drive`);
+          expect(line).toContain("fix: a metal contact");
+        } else expect(line).toBeUndefined();
+      }
+      // At defaults the printed path is past both ceilings (computed).
+      expect(drive).toHaveLength(2);
+      const readme = readFileSync(path.join(ROOT, REF, "README.md"), "utf8");
+      expect(readme).toContain(`The ceiling is ${num("drive.input.ceilOhm").toFixed(0)} ohm (computed)`);
+      expect(readme).toContain(`sits at ${(100 * num("drive.input.pinFrac")).toFixed(0)} percent of its supply`);
+      expect(readme).toContain(`\`access.drive.toy.ceilOhm\` ${toy} ohm`);
     });
   });
 

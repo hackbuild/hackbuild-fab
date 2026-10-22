@@ -117,7 +117,9 @@
     "kind": "canonical",
     "source": "fab-knowledge:originals/blocks/files/src-extracted/app2.js",
     "sha256": "3eeeab36a1dd9977e95cf85f43fa8b4c026c7f077f9f7bc9c2a39b42a85086bc",
-    "fixes": [],
+    "fixes": [
+      "the undefined band lower edge 0.3 VIO (app2.js line 383) is profile access.drive.input.lowFrac, the pin fraction a switch interface reads as pressed, read by reference/keys/access-switch/build.ts (R1-score-05)"
+    ],
     "dest": null
   },
   {
@@ -342,7 +344,8 @@
     "sha256": "8b3435df11e5adcd38d435089aee3ac98b6fcaa466ff3f599beb8431ffca898d",
     "fixes": [
       "solve() and solveDense() (sim.js lines 66 to 157, BOSS lines 63 to 154, identical) ported to packages/circuit/src/dc/nodal.ts solveDc with the BOSS stamping order, ground row and leak kept for bit parity; the LED kept as the legacy ledPwl element; parity on every BOSS scene in packages/circuit/test/nodal.test.ts (M05-T03)",
-      "the PULLUP element (sim.js line 94, BOSS line 91, 50e3 to the pin node) is the divider VDD R / (R + Rpu) of packages/circuit/src/read/pullup.ts dividerV, evaluated at each end of the catalog pin row pullup range instead of the one 50 kohm and classified against the row VIL and VIH (M05-T05, D-076)"
+      "the PULLUP element (sim.js line 94, BOSS line 91, 50e3 to the pin node) is the divider VDD R / (R + Rpu) of packages/circuit/src/read/pullup.ts dividerV, evaluated at each end of the catalog pin row pullup range instead of the one 50 kohm and classified against the row VIL and VIH (M05-T05, D-076)",
+      "the PULLUP element (sim.js line 94, 50e3) is profile access.drive.input.pullupOhm, the pull a switch interface holds the access switch tip to; reference/keys/access-switch/build.ts solves the same divider for the closed resistance that pulls the pin to access.drive.input.lowFrac and warns DRIVE past it (R1-score-05)"
     ],
     "dest": "packages/circuit/src/dc/nodal.ts"
   },
