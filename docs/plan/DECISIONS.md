@@ -710,6 +710,8 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-653 | hbf draft routes its goal to a reference by rarity-weighted goal words | decided | CORE |
 | D-654 | hbf draft writes where hbf init writes and refuses a full folder with E_EXISTS | decided | CORE |
 | D-655 | a maker folder reads the kernel of the hbf that runs and keeps its store in its own .hbf | decided | CORE |
+| D-656 | the access switch warns DRIVE per device class and keeps its printed contact | decided | Electrical |
+| D-657 | R.closed is the access switch closed path figure, and circuit.solve reads a port to pad seat | decided | Electrical |
 
 ## House rules and process
 
@@ -7949,6 +7951,28 @@ Status: decided (delegated). The lead closed four reds from the wave 4 health ru
 | Decision | Taken by the agent under owner delegation on 2026-10-20. A folder whose package.json has no workspaces, lists `@hackbuild/kernel` among its dependencies and has chase.ts beside it is a maker folder (`makerFolder` in core/src/commands/build.ts). `workspaceRoot` of a path in it returns the workspace this hbf runs from (`hbfRoot`), so kernel, packages, seeds, registries and the sandbox's trusted roots come from the install. `commandWorkspace` (CLI, from a path target first, then the cwd) and `hbf mcp --workspace` return the folder itself, so the store and graph land in its `.hbf/`, and the design's target reads `.`. The build sandbox child resolves an allowlisted import from the install's node_modules when resolution from the design folder fails; the realpath check against the workspace package still applies. `hbf mcp` on a folder that is neither gives E_REF on /workspace. |
 | Rationale | The brief asks that the folder hbf init writes builds at the terminal and over MCP, with the kernel from the hbf install and the store under the folder, and that a maker folder never writes into the repository. Recognising the folder by the package.json init writes needs no new marker file, and drafts written by hbf draft (D-654) carry the same package.json. |
 | Evidence | core/test/maker-folder.test.ts: init --from buttons/flex-cone into a temp folder, then part.build, check.run, view.render --mode iso from inside and by path from the repository and capabilities from inside and outside, each exit 0; the build record lands in the folder's .hbf/store, the repository's git status is unchanged, and MCP part_build with --workspace on the folder returns the CLI's buildHash (measured, 2026-10-21). Returning the folder from workspaceRoot (the kernel from the folder) fails 3 of its 4 tests. chase.bake on a maker folder still fails: the baker resolves fonts from the design folder upward and the folder has no node_modules (observed). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-656 the access switch warns DRIVE per device class and keeps its printed contact
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The access switch reads its closed resistance against two device classes a 3.5 mm switch jack meets, from profile rows: a switch interface input with a pullup (`access.drive.input.pullupOhm` 50 kohm and `access.drive.input.lowFrac` 0.3, inferred, from the BLOCKS sim pull and undefined band) and an adapted toy or battery interrupter (`access.drive.toy.ceilOhm` 1.5 ohm, inferred). reference/keys/access-switch/build.ts emits informational metrics `drive.input.ceilOhm`, `drive.input.pinFrac` and `drive.toy.ceilOhm` and a build warning DRIVE for each class R.closed is past, naming a metal contact (copper tape over the floor pads or a microswitch seat) as the fix; the print card carries one line per class. The geometry is unchanged: a metal contact variant is an owner call, default warn and name the swap. The read is a build warning and no new check, because a new registered check moves registryHash and with it every reference golden. |
+| Rationale | R.closed 293423 ohm (computed) is past both ceilings, and the card only said the device threshold was unknown (Sam SAM-20). The divider ceiling is the pullup read model of packages/circuit (dividerV) solved for R, so one model prices both. |
+| Evidence | `hbf part.build reference/keys/access-switch` exit 0, verdict warn, two DRIVE warnings: switch interface ceiling 21428.6 ohm with the pin at 85 percent of its supply pressed, toy ceiling 1.5 ohm (computed, 2026-10-21). reference.test.ts holds the ceiling to dividerV and the README numbers to the build; dropping `access.drive.toy.ceilOhm` fails the file (E_REF), and skipping the toy warning fails the drive test (measured runs). Mesh hashes and volumes are unchanged in the re-accepted goldens. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-657 R.closed is the access switch closed path figure, and circuit.solve reads a port to pad seat
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. For the access switch, the build metric R.closed (socket T to socket S through both leads, posts, pads and the switch) is the closed path figure. circuit.solve's 4933 ohm per net is the key's port feature to its pad through the 0.74 mm seat, its only terminal, with TAP_NO_LEAD because the jack sockets carry no port feature; the README says so and circuit.solve is unchanged. tools/test/constants-fragments.test.mjs now holds the frozen 234 rows of the split and lets rows added after it land after them, never reusing a frozen id. |
+| Rationale | The brief allows either agreement or a stated reason; giving the jack sockets port features changes the Part IR of the flagship and circuit.solve's terminal rules, beyond a 100 line item. The split parity test compared the whole gathered file and so refused any new profile constant; these are the first rows added since the split. |
+| Evidence | `hbf circuit.solve reference/keys/access-switch` exit 0: nets KEY 4933 ohm, GND 4933 ohm, two TAP_NO_LEAD warnings (computed, 2026-10-21). A value change to a frozen row still fails the split test (measured run). |
 | Supersedes | new |
 | Milestone | none |
 
