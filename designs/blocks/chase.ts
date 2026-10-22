@@ -89,6 +89,13 @@ export const chase = defineChase({
       note: "the blocks standard: 2.2 socket, 0.6 flange and traces, 0.20 layers. one conductive column on a one stud brick." },
   ],
   build: { module: "./build.ts", fn: "build" },
+  // The original's wire length runs 10 to 400 mm (parts.js line 568, no bed
+  // in the original), and a straight 400 mm wire prints 407.6 mm long
+  // (computed) on the 256 mm ffc5p bed. The range is kept (D-222, D-629);
+  // the report still lists the CHK-PRT-16 measurement per build.
+  waive: [
+    { check: "CHK-PRT-16", target: "wire", reason: "D-629: the original's length range to 400 mm is kept; a wire past the 256 mm ffc5p bed (vendor) is listed in the report and the owner may cap the range instead" },
+  ],
   exports: [{ kind: "3mf", machine: "ffc5p", pose: "print" }, { kind: "stl" }, { kind: "json" }],
   assertions: [],
 });
