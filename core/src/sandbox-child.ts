@@ -124,7 +124,7 @@ registerHooks({
     const p = policy!;
     const pkg = p.allowed.get(specifier);
     if (pkg !== undefined) {
-      const r = resolveWithRetry(specifier, context, next as Next);
+      const r = resolveAllowed(specifier, context, next as Next);
       let real = "";
       try {
         real = realpathSync(fileURLToPath(r.url));
@@ -274,3 +274,18 @@ process.once("disconnect", () => process.exit(1));
 process.once("message", (req: Request) => {
   void run(req);
 });
+
+/**
+ * An allowlisted specifier from the design, else from the workspace's
+ * node_modules: a maker folder outside the workspace (hbf init, D-568)
+ * holds none, and its build reads the packages of the hbf that runs.
+ */
+function resolveAllowed(specifier: string, context: Parameters<Next>[1], next: Next): ReturnType<Next> {
+  try {
+    return resolveWithRetry(specifier, context, next);
+  } catch (e) {
+    const modules = policy?.trusted.find((t) => path.basename(t) === "node_modules");
+    if (modules === undefined) throw e;
+    return next(specifier, { ...context!, parentURL: pathToFileURL(path.join(modules, "index.js")).href });
+  }
+}

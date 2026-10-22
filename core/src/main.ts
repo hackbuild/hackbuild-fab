@@ -8,7 +8,7 @@
 // spec/errors.ts transport tables. Utility verbs print their own record.
 
 import path from "node:path";
-import { fileURLToPath } from "node:url";
+import { existsSync } from "node:fs";
 import { COMMAND_NAMES, isThrownCommandError, type CommandResult, type Hash } from "@hackbuild/spec";
 import { EXIT_INTERNAL, cmdError, didYouMean, exitOf } from "./errors.js";
 import { execute } from "./execute.js";
@@ -20,7 +20,7 @@ import { Store } from "./store.js";
 import { renderError, renderResult } from "./text.js";
 import { oneLine } from "./text/safe.js";
 import { PROCESS_STREAMS, type GateStreams } from "./tty-gate.js";
-import { workspaceRoot } from "./commands/build.js";
+import { hbfRoot, makerFolder, workspaceRoot } from "./commands/build.js";
 import { boardDoctor, doctor, renderDoctor } from "./commands/doctor.js";
 import { explain, explainUri, renderExplained } from "./commands/explain.js";
 import { runParity, type ParityOut } from "./commands/parity.js";
@@ -236,7 +236,8 @@ function renderParity(p: ParityOut): string {
 }
 
 async function runVerb(verb: string, rest: readonly string[], cwd: string, io: Io): Promise<number> {
-  const root = workspaceRoot(cwd);
+  // The registries these verbs read; outside any workspace, the ones of the hbf that runs.
+  const root = workspaceRoot(commandWorkspace(cwd));
   if (verb === "doctor") {
     const p = parseFlags(verb, rest, [], ["json"]);
     const board = boardDoctor(root);
@@ -312,15 +313,20 @@ async function runVerb(verb: string, rest: readonly string[], cwd: string, io: I
 }
 
 /**
- * The workspace a command runs in: the one holding cwd, else the one this
- * hbf runs from, so a maker folder outside the repository (hbf init,
- * R1-engine-23) reads the registries and profile of the hbf that made it.
+ * The workspace a command runs in, which holds its store: the maker folder
+ * a path target names (hbf init, D-568), else the one holding cwd, else the
+ * workspace this hbf runs from. A maker folder reads the registries,
+ * profile and kernel of the hbf that runs (workspaceRoot), and its store
+ * sits in its own .hbf/, so nothing it does writes into the repository.
  */
-export function commandWorkspace(cwd: string): string {
+export function commandWorkspace(cwd: string, target?: string): string {
+  const named = target === undefined || target === "" ? undefined : path.resolve(cwd, target);
+  const folder = (named !== undefined && existsSync(named) ? makerFolder(named) : undefined) ?? makerFolder(cwd);
+  if (folder !== undefined) return folder;
   try {
     return workspaceRoot(cwd);
   } catch (e) {
-    if (isThrownCommandError(e) && e.hbf.code === "E_REF") return workspaceRoot(path.dirname(fileURLToPath(import.meta.url)));
+    if (isThrownCommandError(e) && e.hbf.code === "E_REF") return hbfRoot();
     throw e;
   }
 }
@@ -351,7 +357,7 @@ export async function main(argv: readonly string[], cwd: string, io: Io = STDIO)
     target = String(input[form.target] ?? input["chase"] ?? "");
     inputsHash = hashOf({ ...input, ...cli }) as Hash;
     const r: CommandResult<unknown> = await execute(def, input, (): CoreCtx => {
-      const workspace = commandWorkspace(cwd);
+      const workspace = commandWorkspace(cwd, target);
       return {
         workspace, cwd, branch: "", store: new Store(workspace), transport: "cli",
         clientCaps: { elicitation: false, tasks: false },

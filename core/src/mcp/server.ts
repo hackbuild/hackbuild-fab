@@ -16,6 +16,7 @@ import { FileNonceLedger } from "../gate-ledger.js";
 import { GATE_FORM, GATE_INPUT_KEY, handle, imageBlocks, type McpEnv } from "./handlers.js";
 import { COMMAND_RESULT_JSON, servedTools, standardOf, toolInputJson, type ServedTool } from "./schema.js";
 import { MCP_RESOURCES, mcpFacts } from "./discover.js";
+import { workspaceRoot } from "../commands/build.js";
 
 export interface McpServerOptions {
   readonly workspace: string;
@@ -46,7 +47,9 @@ export function createHbfServer(o: McpServerOptions): McpServer {
     key: () => gateKey(o.workspace),
     ledger: new FileNonceLedger(o.workspace),
   };
-  const facts = mcpFacts(o.workspace, o.toolset);
+  // Facts and resources describe the hbf that serves; for a maker folder that is the hbf install.
+  const install = workspaceRoot(o.workspace);
+  const facts = mcpFacts(install, o.toolset);
   const server = new McpServer({ name: "hbf", version: "0.0.0" }, { capabilities: { tools: { listChanged: false } } });
   for (const t of servedTools(o.toolset)) {
     const annotations: ToolAnnotations = { ...t.def.annotations };
@@ -81,7 +84,7 @@ export function createHbfServer(o: McpServerOptions): McpServer {
   }
   for (const r of MCP_RESOURCES) {
     server.registerResource(r.name, r.uri, { title: r.title, description: r.description, mimeType: r.mimeType }, (uri) => ({
-      contents: [{ uri: uri.href, mimeType: r.mimeType, text: r.text(o.workspace) }],
+      contents: [{ uri: uri.href, mimeType: r.mimeType, text: r.text(install) }],
     }));
   }
   // server/discover keeps the SDK's answer and adds the facts a host caches by (M12-T09 step 1).

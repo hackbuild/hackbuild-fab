@@ -16,7 +16,7 @@
 
 import { existsSync, readFileSync, realpathSync, statSync } from "node:fs";
 import path from "node:path";
-import { pathToFileURL } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import {
   type ArtifactBytes, type ArtifactHash, type BuildWarning, type CheckResult,
   type CommandError, type FeatureKind, type FeatureOf, type GeneratedGeometry, type Hash, type KernelCtx, type NextCall, type SchemaLike,
@@ -54,19 +54,62 @@ export interface Workspace extends PipelineWorkspace {
 }
 const readJson = (file: string): unknown => JSON.parse(readFileSync(file, "utf8"));
 
-/** The npm workspace root holding `from`: the nearest package.json with workspaces. */
+/** The package.json in dir, parsed, or undefined when there is none. */
+function packageJson(dir: string): { workspaces?: unknown; dependencies?: Record<string, unknown> } | undefined {
+  const pj = path.join(dir, "package.json");
+  return existsSync(pj) ? (readJson(pj) as { workspaces?: unknown; dependencies?: Record<string, unknown> }) : undefined;
+}
+
+/** A package.json hbf init wrote: no workspaces, @hackbuild/kernel among its dependencies, chase.ts beside it. */
+const isMakerDir = (dir: string, pj: ReturnType<typeof packageJson>): boolean =>
+  pj !== undefined && pj.workspaces === undefined && pj.dependencies?.["@hackbuild/kernel"] !== undefined && existsSync(path.join(dir, "chase.ts"));
+
+/**
+ * The maker folder holding `from` (hbf init, D-568): the nearest folder
+ * upward whose package.json hbf init wrote, or undefined when an npm
+ * workspace or the filesystem root comes first.
+ */
+export function makerFolder(from: string): string | undefined {
+  let dir = path.resolve(from);
+  for (;;) {
+    const pj = packageJson(dir);
+    if (pj?.workspaces !== undefined) return undefined;
+    if (isMakerDir(dir, pj)) return dir;
+    const up = path.dirname(dir);
+    if (up === dir) return undefined;
+    dir = up;
+  }
+}
+
+let install: string | undefined;
+
+/** The workspace this hbf runs from: kernel, packages, seeds and registries come from here. */
+export function hbfRoot(): string {
+  install ??= workspaceRoot(path.dirname(fileURLToPath(import.meta.url)));
+  return install;
+}
+
+/**
+ * The npm workspace root holding `from`: the nearest package.json with
+ * workspaces. A maker folder on the way up reads the kernel and packages of
+ * the hbf that runs, never its own folder, which holds no node_modules.
+ */
 export function workspaceRoot(from: string): string {
   let dir = path.resolve(from);
   for (;;) {
-    const pj = path.join(dir, "package.json");
-    if (existsSync(pj) && (readJson(pj) as { workspaces?: unknown }).workspaces !== undefined) return dir;
+    const pj = packageJson(dir);
+    if (pj?.workspaces !== undefined) return dir;
+    if (isMakerDir(dir, pj)) return hbfRoot();
     const up = path.dirname(dir);
     if (up === dir) {
-      throw cmdError({ code: "E_REF", path: "/chase", got: from, expected: "a path inside the hackbuild-fab workspace", hint: "run hbf from the workspace or name a design inside it" });
+      throw cmdError({ code: "E_REF", path: "/chase", got: from, expected: "a path inside the hackbuild-fab workspace or a maker folder hbf init wrote", hint: "run hbf from the workspace or a maker folder, or name a design inside one" });
     }
     dir = up;
   }
 }
+
+/** Where a command's store and paths live: the maker folder holding `from`, else its workspace root. */
+export const projectRoot = (from: string): string => makerFolder(from) ?? workspaceRoot(from);
 
 /** The seed slice with the full profile's constant and fit tables. */
 function withConstants(seed: ProfileTables, full: ProfileTables): ProfileTables {
@@ -212,12 +255,15 @@ export async function loadDesign(target: string, cwd: string, opts: { readonly c
   const root = workspaceRoot(dir);
   const ws = await loadWorkspace(root);
   const rel = posix(path.relative(root, dir));
+  // Targets, labels and store records name the design from its project: a maker folder is ".".
+  const base = projectRoot(dir);
+  const named = path.relative(base, dir) || ".";
   const chaseFile = path.join(dir, "chase.ts");
   if (opts.chase === undefined && !existsSync(chaseFile)) {
     throw cmdError({ code: "E_REF", path: "/chase", got: target, expected: "chase.ts in the directory", hint: "add chase.ts to the directory, or start one with chase.scaffold" });
   }
   // Read as data: nothing in chase.ts runs (D-178).
-  const chase = opts.chase ?? readChaseSource(readFileSync(chaseFile, "utf8"), posix(path.relative(root, chaseFile))).chase;
+  const chase = opts.chase ?? readChaseSource(readFileSync(chaseFile, "utf8"), posix(path.relative(base, chaseFile))).chase;
   const buildFile = buildModuleFile(dir, root, chase.build.module);
   const kindsFile = path.join(dir, "skeleton-kinds.ts");
   const draftKinds = existsSync(kindsFile);
@@ -231,7 +277,7 @@ export async function loadDesign(target: string, cwd: string, opts: { readonly c
   const sources = sourceClosure([buildFile, ...(draftKinds ? [kindsFile] : [])], dir);
   const defHash = hashOf({ chase, sources });
   if (!draftKinds) {
-    return loadStageDesign({ dir, target: path.relative(root, dir), chase, buildFile, defHash, ws });
+    return loadStageDesign({ dir, target: named, chase, buildFile, defHash, ws });
   }
   const kindsMod = (await import(fileUrl(kindsFile))) as { generateSkeleton: Generate; SKELETON_KINDS: Record<string, { version: string; schema: SchemaLike }> };
   const kinds = Object.fromEntries(Object.entries(kindsMod.SKELETON_KINDS).map(([k, d]) => [k, d.version]));
@@ -241,7 +287,7 @@ export async function loadDesign(target: string, cwd: string, opts: { readonly c
   // exported conductors carry CHK-3MF-08 (core/src/kinds.ts, M05-T20).
   const listed = kernelKindsOf(chase.meta.kernels);
   return {
-    dir, target: path.relative(root, dir), chase, generate: kindsMod.generateSkeleton, kinds, featureSchemas,
+    dir, target: named, chase, generate: kindsMod.generateSkeleton, kinds, featureSchemas,
     kernelChecks: (seed) => listed.flatMap((e) => e.checks(seed)),
     defHash, ws, stages: false, buildFile,
   };
