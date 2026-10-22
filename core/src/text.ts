@@ -122,7 +122,15 @@ const RESULT_TEXT: Readonly<Record<string, (result: unknown) => string[]>> = {
       ...(r.verdictChanges ?? []).map((c) => `verdict  ${c.check}  ${c.from} to ${c.to}  measured ${c.measuredFrom ?? "none"} to ${c.measuredTo ?? "none"} (computed)`),
     ];
   },
-  "fits.table": (res) => ((res as { rows?: readonly FitRow[] }).rows ?? []).map((r) => {
+  draft: (res) => {
+    const r = res as { dir?: string; page?: { file: string; bytes: number }; match?: { from: string; score: number; words: readonly string[]; archetypes: readonly string[] } };
+    const m = r.match;
+    return [
+      ...(m === undefined ? [] : [`from  ${m.from}  score ${m.score.toFixed(3)} (computed)  goal words ${m.words.join(", ") || "none"}${m.archetypes.length === 0 ? "" : `  archetypes ${m.archetypes.join(", ")}`}`]),
+      ...(r.page === undefined || r.page.file === "" ? [] : [`page  ${r.page.file}  ${r.page.bytes} bytes (measured)`]),
+    ];
+  },
+  "fits.table": (res) =>((res as { rows?: readonly FitRow[] }).rows ?? []).map((r) => {
     const d = decimalsOf("mm");
     const band = r.band === undefined ? "" : `  band ${fixed(r.band[0], d, "up")} to ${fixed(r.band[1], d, "down")} mm`;
     return `${r.verdict}  ${r.label}  ${r.measured}${band}  ${r.class ?? ""}`;

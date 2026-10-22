@@ -1,15 +1,19 @@
 // hbf draft (plan v9 3.1, R1-engine-24). The CLI writes a draft of the
-// click spring window under .hbf/drafts/ (gitignored) and bakes its DRAFT
-// page; the page's bytes and sha256 are read back from disk and checked
+// click spring window into --dir .hbf/drafts/ (gitignored) and bakes its
+// DRAFT page; the page's bytes and sha256 are read back from disk and checked
 // against shasum, the sources it embeds against the files beside it.
 // export.run and a page bake refuse the draft with E_DRAFT. The DRAFT marks
 // are checked on the real writer output of the reference build: the 3mf
 // model carries hbf:draft = 1 with its prefix declared and still passes the
 // package checks, the card opens with the draft line, a fail shows as a
-// warning with the draft waiver.
+// warning with the draft waiver. Without --from the goal picks the
+// reference (R1-score-03): the routed drafts run from a cwd outside the
+// repository and land there, as hbf init places a folder, and a goal no
+// reference holds exits non-zero with the closest rows and writes nothing.
 
 import { execFileSync } from "node:child_process";
-import { existsSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { existsSync, mkdtempSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
+import os from "node:os";
 import path from "node:path";
 import JSZip from "jszip";
 import { afterAll, describe, expect, it } from "vitest";
@@ -20,15 +24,29 @@ import {
 } from "@hackbuild/spec";
 import { buildPart, loadDesign, resolveParams } from "../src/commands/build.js";
 import { runAllChecks, packageCheckIds } from "../src/commands/check-run.js";
-import { nameOfGoal } from "../src/commands/draft.js";
+import { goalMatch, nameOfGoal } from "../src/commands/draft.js";
+import { main } from "../src/main.js";
 import { json, ROOT } from "./hbf.js";
 
 const CLICK = "reference/keys/click-spring-window";
 /** A name no other test or person uses, so the run never meets a draft it did not write. */
 const NAME = `draft-test-${process.pid}`;
+const REL = `.hbf/drafts/${NAME}`;
 const DIR = path.join(ROOT, ".hbf", "drafts", NAME);
+/** A cwd outside the repository, as a maker runs hbf draft from their own folder. */
+const OUT = mkdtempSync(path.join(os.tmpdir(), "hbf-draft-"));
 
-afterAll(() => rmSync(DIR, { recursive: true, force: true }));
+afterAll(() => {
+  rmSync(DIR, { recursive: true, force: true });
+  rmSync(OUT, { recursive: true, force: true });
+});
+
+/** The CLI in process from cwd, --json. */
+async function jsonAt(cwd: string, ...argv: string[]): Promise<{ code: number; r: { errors: { code: string; path?: string; didYouMean?: string[]; hint: string }[]; result?: Record<string, unknown> } }> {
+  let out = "";
+  const code = await main([...argv, "--json"], cwd, { out: (x) => { out += `${x}\n`; }, err: (x) => { out += `${x}\n`; } });
+  return { code, r: JSON.parse(out) };
+}
 
 const shasum = (file: string): string => execFileSync("shasum", ["-a", "256", file], { encoding: "utf8" }).split(" ")[0]!;
 
@@ -43,14 +61,14 @@ describe("hbf draft (R1-engine-24)", () => {
   it("drafts the click spring window into one offline page under 16 MB carrying its sources", async () => {
     rmSync(DIR, { recursive: true, force: true });
     const t0 = performance.now();
-    const { code, r } = await json("draft", "access switch", "--from", "click-spring-window", "--name", NAME);
+    const { code, r } = await json("draft", "access switch", "--from", "click-spring-window", "--name", NAME, "--dir", REL);
     const ms = performance.now() - t0;
     expect(code, JSON.stringify(r.errors)).toBe(0);
     const res = r.result as unknown as Drafted;
-    expect(res.dir).toBe(`.hbf/drafts/${NAME}`);
+    expect(res.dir).toBe(DIR.split(path.sep).join("/"));
     for (const f of ["chase.ts", "build.ts", "bench.ts", "draft.json", "bake.json", "bench.entry.ts", "page-build.ts", `${NAME}.html`]) expect(res.files).toContain(f);
 
-    const file = path.join(ROOT, res.page.file);
+    const file = res.page.file;
     expect(file).toBe(path.join(DIR, `${NAME}.html`));
     expect(res.page.bytes, "bytes measured on disk").toBe(statSync(file).size);
     expect(res.page.bytes).toBeLessThanOrEqual(16_777_216);
@@ -84,13 +102,13 @@ describe("hbf draft (R1-engine-24)", () => {
     expect(existsSync(path.join(DIR, "out"))).toBe(false);
   }, 60_000);
 
-  it("a page bake of the draft refuses with E_DRAFT; a second draft of the same name refuses with E_SCHEMA", async () => {
+  it("a page bake of the draft refuses with E_DRAFT; a second draft into the same folder refuses with E_EXISTS", async () => {
     const bake = await json("chase.bake", DIR);
     expect(bake.code).toBe(2);
     expect(bake.r.errors[0]).toMatchObject({ code: "E_DRAFT", path: "/chase" });
-    const again = await json("draft", "access switch", "--from", "click-spring-window", "--name", NAME);
+    const again = await json("draft", "access switch", "--from", "click-spring-window", "--name", NAME, "--dir", REL);
     expect(again.code).toBe(2);
-    expect(again.r.errors[0]).toMatchObject({ code: "E_SCHEMA", path: "/name" });
+    expect(again.r.errors[0]).toMatchObject({ code: "E_EXISTS", path: "/dir", got: DIR.split(path.sep).join("/") });
   }, 60_000);
 
   it("a widget.ts added later rides in the block and the entry on the next draft bake", async () => {
@@ -101,6 +119,43 @@ describe("hbf draft (R1-engine-24)", () => {
     expect((JSON.parse(readFileSync(path.join(DIR, "draft.json"), "utf8")) as DraftBlock).widget).toBe(widget);
     expect(readFileSync(path.join(DIR, "bench.entry.ts"), "utf8")).toContain('import { widget } from "./widget";');
   }, 240_000);
+});
+
+describe("hbf draft reads the goal (R1-score-03)", () => {
+  it("routes a goal to the reference whose readme holds its words, and refuses one no reference holds", () => {
+    expect(goalMatch("two-key pad I can read on a Pico", ROOT)).toMatchObject({ from: "reference:keys/flex-pair", words: expect.arrayContaining(["pad", "pico"]) });
+    expect(goalMatch("big round switch on a 3.5 mm jack", ROOT)).toMatchObject({ from: "reference:keys/access-switch", words: expect.arrayContaining(["round", "jack"]) });
+    expect(() => goalMatch("a teapot", ROOT)).toThrow(/no reference matches the goal/);
+  });
+
+  for (const [goal, ref] of [["two-key pad I can read on a Pico", "keys/flex-pair"], ["big round switch on a 3.5 mm jack", "keys/access-switch"]] as const) {
+    it(`drafts "${goal}" from ${ref} into the cwd outside the repository, naming the match`, async () => {
+      const { code, r } = await jsonAt(OUT, "draft", goal);
+      expect(code, JSON.stringify(r.errors)).toBe(0);
+      const res = r.result as unknown as Drafted & { match: { from: string; score: number; words: string[] } };
+      const dir = path.join(OUT, nameOfGoal(goal));
+      expect(res.dir).toBe(dir.split(path.sep).join("/"));
+      expect(res.match.from).toBe(`reference:${ref}`);
+      expect(res.match.score).toBeGreaterThanOrEqual(0.5);
+      expect(res.files).toContain("package.json");
+      expect(res.page.hash).toBe(shasum(res.page.file));
+      expect((JSON.parse(readFileSync(path.join(dir, "draft.json"), "utf8")) as DraftBlock).from).toBe(`reference:${ref}`);
+      expect(readFileSync(path.join(dir, "chase.ts"), "utf8")).toContain(`id: "${nameOfGoal(goal)}"`);
+      const again = await jsonAt(OUT, "draft", goal);
+      expect(again.code).toBe(2);
+      expect(again.r.errors[0]).toMatchObject({ code: "E_EXISTS", path: "/name", got: res.dir });
+    }, 240_000);
+  }
+
+  it("a goal no reference holds exits non-zero with E_REF naming the closest rows and writes nothing", async () => {
+    const before = readdirSync(OUT).sort();
+    const { code, r } = await jsonAt(OUT, "draft", "a teapot");
+    expect(code).toBe(2);
+    expect(r.errors[0]).toMatchObject({ code: "E_REF", path: "/goal" });
+    expect(r.errors[0]!.didYouMean).toHaveLength(3);
+    for (const row of r.errors[0]!.didYouMean!) expect(r.errors[0]!.hint).toContain(row.slice("reference:".length));
+    expect(readdirSync(OUT).sort()).toEqual(before);
+  }, 60_000);
 });
 
 describe("DRAFT marks on the reference build's real writer output", () => {
