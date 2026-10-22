@@ -709,6 +709,7 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-652 | Corpus tests share one build per key per run and run in name-declared shards | decided | CORE |
 | D-653 | hbf draft routes its goal to a reference by rarity-weighted goal words | decided | CORE |
 | D-654 | hbf draft writes where hbf init writes and refuses a full folder with E_EXISTS | decided | CORE |
+| D-655 | a maker folder reads the kernel of the hbf that runs and keeps its store in its own .hbf | decided | CORE |
 
 ## House rules and process
 
@@ -7937,6 +7938,17 @@ Status: decided (delegated). The lead closed four reds from the wave 4 health ru
 | Decision | Taken by the agent under owner delegation on 2026-10-20. `hbf draft` writes `<cwd>/<name>`, or `--dir` relative to the cwd, as `hbf init` does, in place of `.hbf/drafts/<name>` under the git top. It bakes on a staged copy under `.hbf/init/` of the workspace and copies the baked folder out with init's package.json, and `result.dir` and `result.page.file` are absolute. A folder that holds files is refused with E_EXISTS naming it, and nothing is written. `spec/command-io/draft.ts` gains the `dir` input and the optional `match` output, and the draft def its `--dir` flag. The `draft:` form of chase.scaffold and adopt still finds `.hbf/drafts/<id>` for drafts written before. |
 | Rationale | The brief asks for the draft outside the repository unless --dir says otherwise, and for E_EXISTS or a suffix on a repeated name; E_EXISTS names the folder and matches init, so a person sees which draft is in the way. The staged bake is init's answer to a folder with no node_modules. |
 | Evidence | core/test/draft.test.ts runs both routed drafts from a temporary cwd outside the repository and reads their page hash back against shasum; a repeat exits 2 with E_EXISTS on /name (measured, 2026-10-21). A draft outside the workspace cannot be rebaked with chase.bake, which refuses a path outside the workspace (observed). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-655 a maker folder reads the kernel of the hbf that runs and keeps its store in its own .hbf
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. A folder whose package.json has no workspaces, lists `@hackbuild/kernel` among its dependencies and has chase.ts beside it is a maker folder (`makerFolder` in core/src/commands/build.ts). `workspaceRoot` of a path in it returns the workspace this hbf runs from (`hbfRoot`), so kernel, packages, seeds, registries and the sandbox's trusted roots come from the install. `commandWorkspace` (CLI, from a path target first, then the cwd) and `hbf mcp --workspace` return the folder itself, so the store and graph land in its `.hbf/`, and the design's target reads `.`. The build sandbox child resolves an allowlisted import from the install's node_modules when resolution from the design folder fails; the realpath check against the workspace package still applies. `hbf mcp` on a folder that is neither gives E_REF on /workspace. |
+| Rationale | The brief asks that the folder hbf init writes builds at the terminal and over MCP, with the kernel from the hbf install and the store under the folder, and that a maker folder never writes into the repository. Recognising the folder by the package.json init writes needs no new marker file, and drafts written by hbf draft (D-654) carry the same package.json. |
+| Evidence | core/test/maker-folder.test.ts: init --from buttons/flex-cone into a temp folder, then part.build, check.run, view.render --mode iso from inside and by path from the repository and capabilities from inside and outside, each exit 0; the build record lands in the folder's .hbf/store, the repository's git status is unchanged, and MCP part_build with --workspace on the folder returns the CLI's buildHash (measured, 2026-10-21). Returning the folder from workspaceRoot (the kernel from the folder) fails 3 of its 4 tests. chase.bake on a maker folder still fails: the baker resolves fonts from the design folder upward and the folder has no node_modules (observed). |
 | Supersedes | new |
 | Milestone | none |
 
