@@ -8,7 +8,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync, readdirSync, statSync, existsSync } from "node:fs";
 import { join, relative } from "node:path";
-import { planCard, planSkip } from "../test-support/plan-root.mjs";
+import { planCard, planPath, planSkip } from "../test-support/plan-root.mjs";
 
 const root = join(import.meta.dirname, "..", "..");
 const read = (p) => readFileSync(join(root, p), "utf8");
@@ -130,23 +130,38 @@ test("DECISIONS.md D-227 names the four JSON goldens, the render writer and the 
   assert.match(d, /^\| D-152 \| Testing pyramid \| decided, refined by [^|]*D-227/m, "D-152 index names the refinement");
 });
 
-test("every plan sentence that makes parity the only updater limits it to the JSON goldens and cites D-227", () => {
-  const plan = walk(join(root, "docs", "plan")).filter((p) => p.endsWith(".md"));
-  const ONLY = /only (golden )?updater|only way a (JSON )?golden changes|change only through `?(npx --no-install )?hbf parity --accept|Only `hbf parity\s+--accept`/;
+// A paragraph or a table row is the unit a claim and its citation share.
+// Each claim must cite D-227 and limit itself to the JSON goldens; returns
+// how many claims the files hold.
+const ONLY = /only (golden )?updater|only way a (JSON )?golden changes|change only through `?(npx --no-install )?hbf parity --accept|Only `hbf parity\s+--accept`/;
+function parityClaims(dir, label) {
   let seen = 0;
-  for (const p of plan) {
-    const rel = relative(root, p);
+  for (const p of walk(dir).filter((f) => f.endsWith(".md"))) {
+    const rel = relative(dir, p).split("\\").join("/");
     // The decision log: DECISIONS.md and the per-entry files it is generated from (D-569).
-    if (rel.endsWith("DECISIONS.md") || rel.startsWith("docs/plan/decisions/")) continue;
-    // A paragraph or a table row is the unit a claim and its citation share.
-    const units = read(rel).split(/\n\s*\n/).flatMap((u) => (u.trimStart().startsWith("|") ? u.split("\n") : [u]));
+    if (rel.endsWith("DECISIONS.md") || rel.startsWith("decisions/")) continue;
+    const units = readFileSync(p, "utf8").split(/\n\s*\n/).flatMap((u) => (u.trimStart().startsWith("|") ? u.split("\n") : [u]));
     for (const u of units.map(flat)) {
       if (!ONLY.test(u) || !/parity/.test(u)) continue;
       seen++;
-      assert.match(u, /D-227/, `${rel}: ${u.slice(0, 160)}`);
-      assert.match(u, /JSON golden/, `${rel}: ${u.slice(0, 160)}`);
+      assert.match(u, /D-227/, `${label}${rel}: ${u.slice(0, 160)}`);
+      assert.match(u, /JSON golden/, `${label}${rel}: ${u.slice(0, 160)}`);
     }
   }
+  return seen;
+}
+const PUBLIC_PLAN = join(root, "docs", "plan");
+
+test("every docs/plan sentence that makes parity the only updater limits it to the JSON goldens and cites D-227", () => {
+  parityClaims(PUBLIC_PLAN, "docs/plan/");
+});
+
+// The milestone cards and MILESTONES.md hold the other claims since they moved
+// to the plan archive; without the archive this half reports not run.
+test("every plan archive sentence that makes parity the only updater limits it to the JSON goldens and cites D-227, five or more over the plan", { skip: planSkip() }, () => {
+  const archive = planPath("");
+  const same = relative(PUBLIC_PLAN, archive) === "";
+  const seen = parityClaims(PUBLIC_PLAN, "docs/plan/") + (same ? 0 : parityClaims(archive, "plan archive "));
   assert.ok(seen >= 5, `parity-updater claims found: ${seen}`);
 });
 
