@@ -9,7 +9,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
-import { planDoc, planSkip } from "../test-support/plan-root.mjs";
+import { PLAN_ARCHIVED, planDoc, planPath, planSkip } from "../test-support/plan-root.mjs";
 
 const root = join(import.meta.dirname, "..", "..");
 const read = (p) => readFileSync(join(root, p), "utf8");
@@ -53,11 +53,20 @@ test("every finding names file, type and what failed, then a change or the decid
   }
 });
 
-test("every path a File line names exists", () => {
+/** The plan-folder path of a card or archived plan file named under docs/plan/, else null (a repo path). */
+const archived = (p) => {
+  const rel = p.startsWith("docs/plan/") ? p.slice("docs/plan/".length) : null;
+  return rel !== null && (rel.startsWith("milestones/") || PLAN_ARCHIVED.includes(rel)) ? rel : null;
+};
+
+test("every path a File line names exists", (t) => {
   for (const f of findings) {
     const line = f.body.match(/^- File: ([^\n]+)/m)[1];
     for (const m of line.matchAll(/\b((?:spec|reference|packages|docs|tools|core)\/[\w./-]+\.(?:ts|md|mjs|json))/g)) {
-      assert.ok(existsSync(join(root, m[1])), `${f.id} names ${m[1]}`);
+      const rel = archived(m[1]);
+      if (rel === null) assert.ok(existsSync(join(root, m[1])), `${f.id} names ${m[1]}`);
+      else if (SKIP === false) assert.ok(existsSync(planPath(rel)), `${f.id} names ${m[1]}, read as plan ${rel}`);
+      else t.diagnostic(`${f.id} names ${m[1]}: ${SKIP}`);
     }
   }
 });
