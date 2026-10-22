@@ -14,6 +14,7 @@ row with provenance (PROFILE.md 10.1).
 
 | def | dims | canonical source (lineage row) | lines |
 |---|---|---|---|
+| `key/flex-gap` | `contact.gap` | `originals/pip/files/haft-src/bench/part1.html` (`pip.bench-part1/haft-9`) | 233, 238 |
 | `mech/ogee16-latch-servo-window` | `latchServo.x` | `originals/ogee16/files/src/source/params.scad` (`ogee16.params/r16p`); `check_servos.py` (`ogee16.check-servos/r16p`) | params.scad 143, 148, 175, 177 to 186; check_servos.py 25 to 40 |
 
 Facts: `latchServo.x` reads none. Severity (D-067): `latchServo.x` is

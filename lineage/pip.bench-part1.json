@@ -5,7 +5,8 @@
     "source": "fab-knowledge:originals/pip/files/haft-src/bench/part1.html",
     "sha256": "987a4ff51203315c0f974be9b5b4a15e1873d7c56a7655431c0abfa7358c6fb5",
     "fixes": [
-      "packages/checks/src/skeleton/key01.ts and profile key.flexGapFracMin, key.flexGapFracMax: the contact gap slider flex.gapPct 35 to 50 (line 233) and the note \"35 to 50 percent of the cone, never under 1.2 mm\" (line 238), the same lines in pip-controller bench/part1.html (D-241)"
+      "packages/checks/src/skeleton/key01.ts and profile key.flexGapFracMin, key.flexGapFracMax: the contact gap slider flex.gapPct 35 to 50 (line 233) and the note \"35 to 50 percent of the cone, never under 1.2 mm\" (line 238), the same lines in pip-controller bench/part1.html (D-241)",
+      "packages/constraints/src/fixtures/key-flex-gap.ts: the contact.gap interval of the same lines 233 and 238, read from the same profile rows, so constraints.query and the rail give the CHK-KEY-01 band (R1-score-02)"
     ],
     "dest": null
   },
