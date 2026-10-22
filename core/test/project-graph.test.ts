@@ -3,36 +3,33 @@
 // come from sources the graph does not write: the reference goldens under
 // expected/ (defHash and profileHash are the hashes BuildInputs records, so
 // the graph's reads must reproduce them), the profile data rows and the
-// legacy SHA256SUMS. Scenario (a) edits the SLIDE fit band row in this
-// worker's loaded profile, the tables the build sandbox is handed, so no
-// file in the workspace changes. The packages/project stale scenarios read
+// legacy SHA256SUMS. The packages/project stale scenarios read
 // packages/project/test/fixtures/graph.jsonl; the first describe here checks
 // that fixture still equals a fresh recording, and writes it when
 // HBF_ACCEPT_GRAPH=1 is set by a person who has read the diff.
+//
+// Every build here reads the run's build store (support/build-cache.ts,
+// R1-speed-01), so a reference another corpus file built is not built
+// again. Scenario (a) builds in its own process with no store, as it edits
+// the profile in place: project-graph-scenario.test.ts.
 
 import { createHash } from "node:crypto";
-import { existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
-import { tmpdir } from "node:os";
+import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import path from "node:path";
-import { afterAll, beforeAll, describe, expect, it } from "vitest";
-import { canonicalize, type BuildInputs, type FitBand } from "@hackbuild/spec";
+import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
+import { canonicalize } from "@hackbuild/spec";
 import { assembleGraph, encodeLines, foldLines, type ProjectGraph } from "@hackbuild/project";
 import { defParts, loadDesign, readRow } from "../src/commands/build.js";
-import { runPartBuild } from "../src/commands/part-build.js";
-import { legacyItem, legacyRows, projectGraph, runProjectGraph, viewOf, workspaceLines, type GraphOut } from "../src/commands/project-graph.js";
+import { legacyItem, legacyRows, projectGraph, viewOf, workspaceLines } from "../src/commands/project-graph.js";
 import { isWiringDesign } from "../src/exporters/wiring.js";
 import { hashOf } from "../src/jcs.js";
 import { fullProfile } from "../src/load-build.js";
-import type { CoreCtx } from "../src/ctx.js";
-import { Store } from "../src/store.js";
 import { ROOT } from "./hbf.js";
+import { OGEE, build, cleanTmps, freshStore, golden, tmp } from "./support/project-graph.js";
 
-const OGEE = "reference/fit/ogee16-r16p";
-const CLICK = "reference/keys/click-spring-window";
+vi.mock("../src/commands/build.js", async (importOriginal) => (await import("./support/build-cache.js")).withBuildCache(await importOriginal()));
+
 const FIXTURE = path.join(ROOT, "packages", "project", "test", "fixtures", "graph.jsonl");
-
-const golden = (ref: string): { buildHash: string; inputs: BuildInputs } =>
-  JSON.parse(readFileSync(path.join(ROOT, ref, "expected", "build.json"), "utf8")) as { buildHash: string; inputs: BuildInputs };
 
 /** Every reference directory holding a chase.ts, read from the tree, never typed here. */
 function references(): string[] {
@@ -44,26 +41,7 @@ function references(): string[] {
   return out;
 }
 
-const tmps: string[] = [];
-function freshStore(): Store {
-  const dir = mkdtempSync(path.join(tmpdir(), "hbf-graph-"));
-  tmps.push(dir);
-  return new Store(dir);
-}
-afterAll(() => {
-  for (const d of tmps) rmSync(d, { recursive: true, force: true });
-});
-
-const ctxOf = (store: Store): CoreCtx => ({ workspace: ROOT, cwd: ROOT, store, inputsHash: hashOf("project-graph-test") } as unknown as CoreCtx);
-
-async function build(store: Store, ref: string): Promise<string> {
-  const r = await runPartBuild({ chase: ref }, ctxOf(store));
-  return r.buildHash!;
-}
-
-async function staleView(store: Store, opts: { stale?: boolean; from?: string } = { stale: true }): Promise<GraphOut> {
-  return (await runProjectGraph(opts, ctxOf(store))).result as GraphOut;
-}
+afterAll(cleanTmps);
 
 // Every reference is built once into one store, one test per reference so
 // each build has its own time limit; a single test over all of them timed
@@ -139,63 +117,13 @@ describe("links written when a build is stored (card step 2)", () => {
   });
 });
 
-describe("scenario (a) through project.graph: the SLIDE fit band row edited", () => {
-  const fits = fullProfile().fits!.fits as FitBand[];
-  const at = fits.findIndex((f) => f.class === "SLIDE");
-  const original = fits[at]!;
-  const edit = (row: FitBand): void => {
-    fits[at] = row;
-  };
-  let store: Store;
-  beforeAll(async () => {
-    store = freshStore();
-    await build(store, OGEE);
-    await build(store, CLICK);
-  }, 120_000);
-  afterAll(() => edit(original));
-
-  it("lists the ogee16 build and its report, each with because ending in the row id, and leaves click-spring-window fresh", async () => {
-    edit({ ...original, realHiPerSide: original.realHiPerSide + 0.01 });
-    const v = await staleView(store);
-    const why = new Map(v.because.map((s) => [s.id, s.because] as const));
-    expect(why.get(`build:${OGEE}`)).toEqual(["reads profileRow:fit/SLIDE"]);
-    expect(why.get(`report:${OGEE}`)).toEqual([`checked build:${OGEE}`, "reads profileRow:fit/SLIDE"]);
-    // The meshes and the golden are made from that build, so the stale rule carries them too.
-    expect(v.stale).toEqual([
-      `build:${OGEE}`, `golden:${OGEE}/expected/build.json`, `mesh:${OGEE}/bore`, `mesh:${OGEE}/shaft`, `report:${OGEE}`,
-    ]);
-    for (const s of v.because) expect(s.because.at(-1)).toBe("reads profileRow:fit/SLIDE");
-    expect(v.stale.some((id) => id.includes(CLICK))).toBe(false);
-  });
-
-  it("--from profileRow:fit/SLIDE lists exactly the items made from the row", async () => {
-    const v = await staleView(store, { from: "profileRow:fit/SLIDE" });
-    expect(v.items.map((i) => i.id)).toEqual([
-      `build:${OGEE}`, `golden:${OGEE}/expected/build.json`, `mesh:${OGEE}/bore`, `mesh:${OGEE}/shaft`, `report:${OGEE}`,
-    ]);
-    await expect(runProjectGraph({ from: "profileRow:fit/SLIDEX" }, ctxOf(store))).rejects.toMatchObject({ hbf: { code: "E_REF", path: "/from", didYouMean: expect.arrayContaining(["profileRow:fit/SLIDE"]) } });
-  });
-
-  it("rebuilding clears the build and report; the golden stays stale until accepted; restoring the row and rebuilding clears all", async () => {
-    await build(store, OGEE);
-    expect((await staleView(store)).because).toEqual([
-      { id: `golden:${OGEE}/expected/build.json`, because: [`expects build:${OGEE}`] },
-    ]);
-    edit(original);
-    expect((await staleView(store)).stale).toContain(`build:${OGEE}`);
-    expect(await build(store, OGEE)).toBe(golden(OGEE).buildHash);
-    expect((await staleView(store)).stale).toEqual([]);
-  }, 120_000);
-});
-
 describe("legacy copies held out of git (D-286)", () => {
   // A synthetic workspace: one legacy tree whose SHA256SUMS names a copy that
   // is on disk and one that is not, and an oracle record that names the tree.
   const sha = (s: string): string => createHash("sha256").update(s).digest("hex");
   let ws: string;
   beforeAll(() => {
-    ws = mkdtempSync(path.join(tmpdir(), "hbf-held-"));
-    tmps.push(ws);
+    ws = tmp("hbf-held-");
     mkdirSync(path.join(ws, "designs", "x", "legacy"), { recursive: true });
     mkdirSync(path.join(ws, "packages", "p", "records"), { recursive: true });
     writeFileSync(path.join(ws, "designs", "x", "legacy", "kept.txt"), "kept\n");

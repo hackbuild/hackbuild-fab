@@ -1,6 +1,7 @@
 // The CLI on the keys flex-pair reference through main() with captured
 // output: part.build, check.run, export.run with an answered gate, and
-// parity, both the --accept path and the committed goldens. Figures
+// parity on the --accept path; the committed goldens are checked in
+// skeleton-parity.test.ts. Figures
 // asserted here are computed by the build (the CHK-KEY-01 band and fix come
 // from the reference defaults on the ffc5p_20260819 grid: cone 4.0 snapped
 // to 4.08 mm, band 1.428 to 2.04 mm at 35 to 50 percent, fix 1.44 mm on
@@ -12,7 +13,7 @@ import { PassThrough } from "node:stream";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { afterAll, describe, expect, it } from "vitest";
 import { CLAIM_CHECKS, IMPORT_PATH_CHECKS } from "@hackbuild/checks";
 import { liveCount } from "@hackbuild/mesh";
 import type { CommandResult } from "@hackbuild/spec";
@@ -177,33 +178,4 @@ describe("hbf CLI on the flex pair", () => {
     expect(await run({ pointer: "/params/1/fields/0/item/3/default", from: 1.44, to: 2.15 })).toMatchObject({ code: "E_STALE", path: "/edit/from" });
     expect(await run({ pointer: "/params/2/fields/1/default", from: 1, to: 2 })).toMatchObject({ code: "E_REF", path: "/edit/pointer" });
   }, 120_000);
-});
-
-/**
- * The committed goldens (TESTING.md 5.1): each reference rebuilt now must
- * equal its expected/ folder file for file. SOURCE_DATE_EPOCH is set to a
- * value the goldens were not written at, so the test also proves parity
- * builds at the epoch build.json records and not at the caller's or the
- * HEAD commit's.
- */
-describe("parity against the committed goldens", () => {
-  const saved = process.env["SOURCE_DATE_EPOCH"];
-  beforeAll(() => {
-    process.env["SOURCE_DATE_EPOCH"] = "1791072000";
-  });
-  afterAll(() => {
-    if (saved === undefined) delete process.env["SOURCE_DATE_EPOCH"];
-    else process.env["SOURCE_DATE_EPOCH"] = saved;
-  });
-
-  for (const reference of [REF, "reference/exports/orca-3mf-roundtrip"]) {
-    it(`${reference}: build, report, edit and artifacts goldens are equal`, async () => {
-      const out = await runParity({ reference }, ROOT);
-      expect(out.files.map((f) => [f.file, f.status, f.moved])).toEqual([
-        ["build.json", "equal", []], ["report.json", "equal", []], ["edit.json", "equal", []], ["artifacts.json", "equal", []],
-        ...(reference === REF ? [["expected/query-solve.json", "equal", []]] : []),
-      ]);
-      expect(out.ok).toBe(true);
-    }, 300_000);
-  }
 });
