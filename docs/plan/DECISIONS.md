@@ -716,6 +716,7 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-659 | a CLI size flag takes one number as a square | decided | Agent surface |
 | D-660 | contact.gap is registered as key/flex-gap and the goldens follow | decided | CORE |
 | D-661 | the chases naming pom3 or sheet15 are a known list, not a profile row | decided | CORE |
+| D-662 | key/flex-gap is a row of the M01 placement table | decided | Testing, docs, milestones, registry |
 
 ## House rules and process
 
@@ -8021,6 +8022,17 @@ Status: decided (delegated). The lead closed four reds from the wave 4 health ru
 | Decision | Taken by the agent under owner delegation on 2026-10-20. core/test/init-every-reference.test.ts holds KNOWN_NO_MATERIAL, the 18 chases whose materials name pom3 (17) or sheet15 (1, joints/balance-beam), which no profile row registers. Each must fail chase.validate with only E_REF chase-ref/material on its named material; a chase that newly fails or one fixed and still listed fails the test. Every other chase validates and inits. No profile row is added. |
 | Rationale | D-149 and PROFILE.md: a missing material row is reported, never invented, and a model never writes to profile. Holding the list by cause keeps the conformance test strict over the other 36 chases while the owner decides the rows. |
 | Evidence | init-every-reference: 63 tests pass over 54 chases (computed 2026-10-21); the 18 listed fail only on chase-ref/material. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-662 key/flex-gap is a row of the M01 placement table
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The M01 card's Package placement table in `fab-knowledge:plan-archive/milestones/M01-constraints.md` gains the row `key/flex-gap`, owning package constraints (fixture def here until the keys canon exists, R1-score-02), tier 1, Bound.kernel mesh, registered at core load, in the form of the other fixture rows; the sentence under the table drops its count of fixture defs. The archive has no plan writer and is not a git repository, so the row was written by hand into the owner's record; the owner may reword or move it. `core/test/load-constraints.test.ts` counts 12 rows and reads that row from the card; `core/test/chase-validate.test.ts` and `core/test/chase-corpus.test.ts` expect the flex pair to validate with 0 errors. |
+| Rationale | The loader test reads the placement table from the plan so the test never keeps its own copy (architecture law, nothing hand-listed). key/flex-gap (R1-score-02, 010720d) registered contact.gap without a table row, which left three core files red on main e0030d4. Tier 1 and kernel mesh follow the def's `kernels` and the tier the card gives its other fixture defs. |
+| Evidence | The three core files pass alone, 73 tests (computed, 2026-10-21). With keyFlexGap removed from the fixtures constraintDefs and `tsc -b`, chase-validate and chase-corpus fail with `E_REF /params/1/fields/0/item/3/constraintDim contact.gap` (mutant killed); before the row, load-constraints failed "key/flex-gap is not in the M01 placement table" (rolling health 1). |
 | Supersedes | new |
 | Milestone | none |
 
