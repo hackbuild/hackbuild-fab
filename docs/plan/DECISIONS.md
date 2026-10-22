@@ -712,6 +712,8 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-655 | a maker folder reads the kernel of the hbf that runs and keeps its store in its own .hbf | decided | CORE |
 | D-656 | the access switch warns DRIVE per device class and keeps its printed contact | decided | Electrical |
 | D-657 | R.closed is the access switch closed path figure, and circuit.solve reads a port to pad seat | decided | Electrical |
+| D-658 | hbf capabilities takes words and matches a reference by its README title and lead | decided | Agent surface |
+| D-659 | a CLI size flag takes one number as a square | decided | Agent surface |
 
 ## House rules and process
 
@@ -7973,6 +7975,28 @@ Status: decided (delegated). The lead closed four reds from the wave 4 health ru
 | Decision | Taken by the agent under owner delegation on 2026-10-20. For the access switch, the build metric R.closed (socket T to socket S through both leads, posts, pads and the switch) is the closed path figure. circuit.solve's 4933 ohm per net is the key's port feature to its pad through the 0.74 mm seat, its only terminal, with TAP_NO_LEAD because the jack sockets carry no port feature; the README says so and circuit.solve is unchanged. tools/test/constants-fragments.test.mjs now holds the frozen 234 rows of the split and lets rows added after it land after them, never reusing a frozen id. |
 | Rationale | The brief allows either agreement or a stated reason; giving the jack sockets port features changes the Part IR of the flagship and circuit.solve's terminal rules, beyond a 100 line item. The split parity test compared the whole gathered file and so refused any new profile constant; these are the first rows added since the split. |
 | Evidence | `hbf circuit.solve reference/keys/access-switch` exit 0: nets KEY 4933 ohm, GND 4933 ohm, two TAP_NO_LEAD warnings (computed, 2026-10-21). A value change to a frozen row still fails the split test (measured run). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-658 hbf capabilities takes words and matches a reference by its README title and lead
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. `hbf capabilities <words>` lists the references and designs whose words hold a query word, most words held first, then by path; a reference's words are its path and the title and lead paragraph of its README, a design's its id, INDEX family and the title and lead of its record. The text form of a query prints only the matches. The access switch README lead gains one sentence naming accessibility and adapted toys, with the existing caveat that a device reading it closed is unknown until a person tries one. readmeParts moves from draft.ts to capabilities.ts so draft and capabilities read the lead one way. |
+| Rationale | The brief asks that switch, jack, accessibility and adapted toy name keys/access-switch from the README title and claim; accessibility and adapted toy were in no README, and a matcher that guesses stems would hit words no maker meant. The lead is the claim a README opens with and draft already weighs it as the head. |
+| Evidence | core/test/capabilities.test.ts: each of the four queries returns reference/keys/access-switch under key, holding the query words, and the test reads the README lead itself (2026-10-21, 29 of 29 pass with text-hits and draft). Mutant dropping the README lead from the words fails 4 tests. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-659 a CLI size flag takes one number as a square
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. A size flag (view.render --size, nest.pack --sheet) reads one number N as N by N, WxH, WXH or W,H as a pair, and a json pair as json; anything else reaches the schema unchanged and is refused there. Query text rows (arch.find, catalog.find, catalog.pins) qualify a number read from a catalog row by TIER_QUALIFIER of its tier and a resistance arch.find computed as computed with the row tier named. |
+| Rationale | N-07, SAM-23: --size 900 was E_SCHEMA expected tuple. A square is the one reading of a single number for a render; nest.pack shares the flag kind and a square sheet is the same reading. |
+| Evidence | view.render designs/collar --mode iso --size 900 and --size 1000x800 wrote 900x900 and 1000x800 png, read from the IHDR header in core/test/text-hits.test.ts (measured 2026-10-21). Mutant returning the raw string for one number fails 2 tests. |
 | Supersedes | new |
 | Milestone | none |
 
