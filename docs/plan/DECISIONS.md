@@ -718,6 +718,7 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-661 | the chases naming pom3 or sheet15 are a known list, not a profile row | decided | CORE |
 | D-662 | key/flex-gap is a row of the M01 placement table | decided | Testing, docs, milestones, registry |
 | D-663 | Agent model routing and scripts over agents | decided | tooling |
+| D-664 | BLOCKS waives CHK-PRT-16 on the wire under D-629 | decided | designs/blocks |
 
 ## House rules and process
 
@@ -8045,6 +8046,17 @@ Status: decided (delegated). The lead closed four reds from the wave 4 health ru
 | Decision | Taken by the agent at the owner's request of 2026-10-22 ("smart model orchestrates cheaper models"). Queue items run through .hbf-notes/r1/scheduler/build.js: builders on Sonnet at medium effort; a builder's second round, a review of each diff before it lands and red-health triage on Opus; landing (land.sh), health (health.sh), gates, queue loading and decision recording as scripts, run by a Sonnet agent at low effort where a workflow needs an agent to run them. Every workflow agent names its model; a local PreToolUse hook refuses a workflow that does not, and local settings default subagents to Sonnet. Token use is reported per role and model from the transcripts (usage.mjs). Haiku is not used. Supersedes the "Opus throughout" line of plan section 7 for agents the session starts; the session itself stays on Opus. |
 | Rationale | Release 1, measured from the transcripts: 9,165 of 9,171 agent turns on Opus; 1.34 billion cache-read tokens against 3.4M output, so cost is context re-read every turn (about 156K tokens a builder turn, about 150 turns an item). Anthropic reports an Opus lead with Sonnet subagents beating single-agent Opus on research, and that multi-agent work suits separable tasks more than coupled coding; the Claude Code cost guide says Sonnet handles most coding and to offload processing to scripts and hooks. A Haiku probe ignored "use no tools" and spent 48K tokens. Quality holds through the gates, mutation rule, rolling health and the Opus diff review, now applied to every item. |
 | Evidence | node .hbf-notes/r1/scheduler/usage.mjs over the release 1 runs (computed, 2026-10-22); anthropic.com/engineering/multi-agent-research-system; code.claude.com/docs/en/costs; code.claude.com/docs/en/workflows (agent models, 5 minute subagent cache default). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-664 BLOCKS waives CHK-PRT-16 on the wire under D-629
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-22 (R1-ci-01). designs/blocks/chase.ts waives CHK-PRT-16 for target wire, keeping the original's 10 to 400 mm length range. Goldens: only buildHash, defHash and the 3mf hash moved; mesh hashes and volumes did not. |
+| Rationale | The smoke slider release sets len to 400, a wire 407.6 mm long (computed) on the 256 mm ffc5p bed, so the gate closed correctly. The default build passes. The original has no bed, so the range is ported (D-222). Reversible: drop the waiver and cap len at the bed instead, which also blocks no oversize export. |
+| Evidence | hbf part.build designs/blocks --params len=400 fails CHK-PRT-16 measured 407.60 mm legal 0 to 256 mm; range-sweep len=400 exit=1; smoke edits test passes with the waiver and fails with the target renamed (mutant). |
 | Supersedes | new |
 | Milestone | none |
 
