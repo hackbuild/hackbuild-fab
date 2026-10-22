@@ -705,6 +705,7 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-648 | Plan process files leave the repo for the plan archive | decided | tooling |
 | D-649 | The TOGGLE bench lands with gold G-10 and G-15 held at combined range-end kernel refusals | decided | UI |
 | D-650 | Build speed: incremental typecheck, seeded worktrees, one-call gates, rolling health | decided | tooling |
+| D-651 | The PIP bench lands with gold G-10 and G-15 held at range-end kernel refusals | decided | UI |
 
 ## House rules and process
 
@@ -7889,6 +7890,17 @@ Status: decided (delegated). The lead closed four reds from the wave 4 health ru
 | Decision | Taken by the agent under owner delegation on 2026-10-21, at the owner's request to make speed and quality the way forward. (1) The 71 noEmit projects carry incremental true, so tsc -b skips unchanged projects. (2) Builder worktrees are seeded with APFS clones of main's node_modules, dist folders and tsbuildinfo files. (3) The fast gates run as one script with one line per gate. (4) At most two heavy runs share the machine, through a two-slot lock. (5) Builders wait on a log in one blocking call instead of 60 s polls. (6) Builders run related tests, not the whole core suite; a rolling health check runs every suite every four merges beside the builders, replacing the wave barrier. (7) A builder stops at about 45 minutes when the done condition has grown past twice the brief's size and reports the measured scope. (8) An item that changes a chase or build sweeps its range ends before any bench work. (9) vitest persists module transforms (fsModuleCache). R1-speed-01 is queued for the four corpus-wide core tests. |
 | Rationale | Measured over 45 builder runs in waves 3 to 6: model time was 12 percent of wall time and tool time 80 percent. Waiting on background runs took 33 percent, vitest 19 percent and tsc -b 14 percent. A warm tsc -b took 85 s because noEmit projects never counted as up to date, and the vitest global setup paid it on every run. Builders took 152 turns an item at a median 138K tokens of context a turn, 1.14 billion cache-read tokens in all, and 241 poll turns. Quality holds: the same gates and suites run, the full suites run every four merges, and the range sweep and checkpoint catch the faults that cost waves 5 and 6 a bench round and 147 min. |
 | Evidence | tsc -b on an unchanged tree 85 s to 2.3 s, tsconfig.tests 27 s to 3.8 s, tools 10 s to 1.5 s (measured, commit 7bdd5e3); first tsc -b in a seeded worktree 13 s against a median of about 100 s (max 542 s) cold; gates.sh 15 s warm; vitest transforms 10 to 4 percent of tracked time on packages/checks (measured). Scripts in .hbf-notes/r1/scheduler (gates.sh, heavy.sh, wait-log.sh, range-sweep.sh, wt-setup.sh). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-651 The PIP bench lands with gold G-10 and G-15 held at range-end kernel refusals
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. designs/pip lands its bench (bench.ts on PIP's GUIDES with the hold drive pad over metrics.drive and chords, bench.entry.ts, page-build.ts, page-facts.d.ts, bake.json) under the D-649 precedent, while gold G-10 and G-15 fail on it with E_KERNEL at the /bodies union, the D-643 range-end class that D-644 leaves rejecting in settled(). The chase gains the json export the G-57 drive calls, which moves defHash, the build hash and the 3mf artifact hash in the parity goldens; mesh hashes and report.json stay equal. The gold runtime rows (G-55, outside the bench-layer list) are not recorded on PIP, since the runtime pass commits each numeric field at its ends and stops at the first refusal. R1-designs-reach-10. |
+| Rationale | The other 23 applicable bench-layer rules pass, and PIP refuses at more single ends than TOGGLE (W 100, H 100, the left, face and menu group x and y at both ends, leftPitch 30, menuPitch 10, computed), all owner-held under D-643, so the bench cannot pass G-10 or G-15 without a kernel fix that moves default meshes. Reversible: the owner can unland the bench or take the kernel fix. |
+| Evidence | Gold on the bake sha256 102a97f9 rebased onto main (measured 2026-10-21): report --only on the bench-layer list gives 23 pass, 1 n/a (G-05), 2 fail (G-10, G-15). Side-by-side 18 images in fab-knowledge:evidence/r1/side-by-side/pip, scrollWidth equal to the viewport at 390 and 1280 (measured). vitest designs/pip with core metric-record, rules-audit and surface 112 pass; core message-numbers, project-graph and skeleton 304 pass; removing the drive block fails the bench test (measured). Range sweep of 49 of 162 ends: 16 E_KERNEL, 5 check fails (computed). |
 | Supersedes | new |
 | Milestone | none |
 
