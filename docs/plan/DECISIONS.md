@@ -706,6 +706,7 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-649 | The TOGGLE bench lands with gold G-10 and G-15 held at combined range-end kernel refusals | decided | UI |
 | D-650 | Build speed: incremental typecheck, seeded worktrees, one-call gates, rolling health | decided | tooling |
 | D-651 | The PIP bench lands with gold G-10 and G-15 held at range-end kernel refusals | decided | UI |
+| D-652 | Corpus tests share one build per key per run and run in name-declared shards | decided | CORE |
 
 ## House rules and process
 
@@ -7901,6 +7902,17 @@ Status: decided (delegated). The lead closed four reds from the wave 4 health ru
 | Decision | Taken by the agent under owner delegation on 2026-10-20. designs/pip lands its bench (bench.ts on PIP's GUIDES with the hold drive pad over metrics.drive and chords, bench.entry.ts, page-build.ts, page-facts.d.ts, bake.json) under the D-649 precedent, while gold G-10 and G-15 fail on it with E_KERNEL at the /bodies union, the D-643 range-end class that D-644 leaves rejecting in settled(). The chase gains the json export the G-57 drive calls, which moves defHash, the build hash and the 3mf artifact hash in the parity goldens; mesh hashes and report.json stay equal. The gold runtime rows (G-55, outside the bench-layer list) are not recorded on PIP, since the runtime pass commits each numeric field at its ends and stops at the first refusal. R1-designs-reach-10. |
 | Rationale | The other 23 applicable bench-layer rules pass, and PIP refuses at more single ends than TOGGLE (W 100, H 100, the left, face and menu group x and y at both ends, leftPitch 30, menuPitch 10, computed), all owner-held under D-643, so the bench cannot pass G-10 or G-15 without a kernel fix that moves default meshes. Reversible: the owner can unland the bench or take the kernel fix. |
 | Evidence | Gold on the bake sha256 102a97f9 rebased onto main (measured 2026-10-21): report --only on the bench-layer list gives 23 pass, 1 n/a (G-05), 2 fail (G-10, G-15). Side-by-side 18 images in fab-knowledge:evidence/r1/side-by-side/pip, scrollWidth equal to the viewport at 390 and 1280 (measured). vitest designs/pip with core metric-record, rules-audit and surface 112 pass; core message-numbers, project-graph and skeleton 304 pass; removing the drive block fails the bench test (measured). Range sweep of 49 of 162 ends: 16 E_KERNEL, 5 check fails (computed). |
+| Supersedes | new |
+| Milestone | none |
+
+### D-652 Corpus tests share one build per key per run and run in name-declared shards
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. core/test/global-setup.ts makes a per-run build store and hashes the toolchain; message-numbers shards, metric-record shards and project-graph wrap buildPart through core/test/support/build-cache.ts with vi.mock, so core/src is unchanged. The key is taken before the build, so it hashes the whole profile tables the build is handed (a superset of the rows profileHash covers) with defHash, every file of the design directory but expected/ and test/, the resolved values, the epoch, the workspace versions and the toolchain (dist, seed and data of core, kernel, spec and every package, package.json, package-lock.json). Sandbox options, accept runs and runs with no store build fresh. Shards are named family.shard-i-of-n.test.ts and take a round robin slice. project-graph recording stays in one file, since its fixture folds lines shared across references; scenario (a) and skeleton parity move to their own uncached files. The typed-number ledger stays with the check fixtures, which see every row. R1-speed-01. |
+| Rationale | Each corpus file built every reference again, and the core wall was bound by its longest file. A cache keyed after the build cannot be read before it, so the key takes a superset of the inputs; a false hit is the failure to avoid. Splitting the project-graph fixture comparison or the ledger across files needs an order between files that vitest does not give. Reversible: delete the shard files and the mocks. |
+| Evidence | The four corpus files: 346 s wall before, 141 s after, 359 to 367 tests (measured 2026-10-21 under shared load). Whole core suite 1384 tests pass, 451 s wall at load average 50 to 100 on 8 cores, so the 180 s idle bound is not measured. support/shards.test.ts fails with shard 3 of 4 removed; support/build-cache.test.ts fails with the tables dropped from the key (measured). |
 | Supersedes | new |
 | Milestone | none |
 
