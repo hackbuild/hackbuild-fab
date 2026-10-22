@@ -26,23 +26,33 @@ export interface Scored {
   readonly runs: boolean;
 }
 
+/** Where one query word starts a word of an entry: its id, its family, its text. */
+export type HitField = "id" | "family" | "text";
+
+/** Each query word that hits the entry, with the fields it starts a word of; a word that hits nothing is left out. */
+export function wordHits(e: Scored, ws: readonly string[]): { readonly word: string; readonly fields: readonly HitField[] }[] {
+  const tokens: Readonly<Record<HitField, readonly string[]>> = {
+    id: e.id.toLowerCase().split(/[^a-z0-9]+/),
+    family: e.family.toLowerCase().split(/[^a-z0-9]+/),
+    text: words(e.text.join(" ")),
+  };
+  return ws.flatMap((w) => {
+    // A word matches a whole word of the entry or its start, so "detent" finds "detents" and "in" finds nothing.
+    const fields = (["id", "family", "text"] as const).filter((f) => tokens[f].some((t) => t.startsWith(w)));
+    return fields.length === 0 ? [] : [{ word: w, fields }];
+  });
+}
+
+/** Points a hit in each field scores. */
+const FIELD_POINTS: Readonly<Record<HitField, number>> = { id: 3, family: 2, text: 1 };
+
 /**
  * Score of one entry: 3 per query word starting a word of the id, 2 when
  * a word starts a word of the family, 1 per word starting a word of the
  * entry's text. 0 means no hit.
  */
 export function score(e: Scored, ws: readonly string[]): number {
-  const tokens = words(e.text.join(" "));
-  const idTokens = e.id.toLowerCase().split(/[^a-z0-9]+/);
-  const family = e.family.toLowerCase();
-  let s = 0;
-  for (const w of ws) {
-    // A word matches a whole word of the entry or its start, so "detent" finds "detents" and "in" finds nothing.
-    if (idTokens.some((t) => t.startsWith(w))) s += 3;
-    if (family.split(/[^a-z0-9]+/).some((t) => t.startsWith(w))) s += 2;
-    if (tokens.some((t) => t.startsWith(w))) s += 1;
-  }
-  return s;
+  return wordHits(e, ws).reduce((s, h) => s + h.fields.reduce((n, f) => n + FIELD_POINTS[f], 0), 0);
 }
 
 /** Entries with a positive score, runnable first, then by score, then by id. */

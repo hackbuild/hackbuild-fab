@@ -7,6 +7,7 @@
 import type { ChaseChange, ChaseVerdictChange, CheckResult, CommandError, CommandResult, FitRow, LegalValues, NextCall, ResultTarget, ValidateQuestion } from "@hackbuild/spec";
 import { findingLabel } from "@hackbuild/checks";
 import { decimalsOf, fixed, fmt } from "./text/fmt.js";
+import { archFindLines, catalogFindLines, catalogPinsLines } from "./text/hits.js";
 import { queryLines, queryStatus } from "./text/interval-mirror.js";
 import { oneLine } from "./text/safe.js";
 
@@ -85,7 +86,10 @@ interface BodyLine {
 }
 
 /** Result lines a command prints between the status line and its findings, by command. */
-const RESULT_TEXT: Readonly<Record<string, (result: unknown) => string[]>> = {
+const RESULT_TEXT: Readonly<Record<string, (result: unknown, target: string) => string[]>> = {
+  "arch.find": (res, target) => archFindLines(res as Parameters<typeof archFindLines>[0], target),
+  "catalog.find": (res, target) => catalogFindLines(res as Parameters<typeof catalogFindLines>[0], target),
+  "catalog.pins": (res, target) => catalogPinsLines(res as Parameters<typeof catalogPinsLines>[0], target),
   "part.inspect": (res) => {
     const r = res as { bodies?: readonly BodyLine[]; warnings?: readonly { code: string; text: string }[] };
     const size = (b: BodyLine): string => {
@@ -137,8 +141,18 @@ const RESULT_TEXT: Readonly<Record<string, (result: unknown) => string[]>> = {
   }),
 };
 
+/** `PASS arch.find press   3 hits`, and how many a cap left out. */
+const hitsStatus = (command: string) => (target: string, r: CommandResult<unknown>): string => {
+  const n = (r.result as { hits?: readonly unknown[] } | undefined)?.hits?.length ?? 0;
+  const more = r.truncated === undefined ? "" : `, ${r.truncated.omitted} more (${r.truncated.cursor})`;
+  return `${r.verdict.toUpperCase()} ${command} ${target}   ${n} hits${more}`;
+};
+
 /** Status lines that replace the counts form, by command: a query has no findings to count. */
 const STATUS_TEXT: Readonly<Record<string, (target: string, r: CommandResult<unknown>) => string>> = {
+  "arch.find": hitsStatus("arch.find"),
+  "catalog.find": hitsStatus("catalog.find"),
+  "catalog.pins": (target, r) => `${r.verdict.toUpperCase()} catalog.pins ${target}   ${(r.result as { pins?: readonly unknown[] } | undefined)?.pins?.length ?? 0} pins`,
   "constraints.query": queryStatus,
   "chase.diff": (target, r) => {
     const x = r.result as { changes?: readonly unknown[]; verdictChanges?: readonly unknown[] | null } | undefined;
@@ -156,7 +170,7 @@ export function renderResult(command: string, target: string, r: CommandResult<u
   const head = STATUS_TEXT[command]?.(target, r)
     ?? `${r.verdict.toUpperCase()} ${command} ${target}${hash}   ${r.counts.fail} fail  ${r.counts.warn} warn  ${r.counts.pass} pass  ${r.counts.skip} skip`;
   const body = [
-    ...(r.result === undefined ? [] : RESULT_TEXT[command]?.(r.result) ?? []).map(oneLine),
+    ...(r.result === undefined ? [] : RESULT_TEXT[command]?.(r.result, target) ?? []).map(oneLine),
     ...r.findings.map(renderFinding),
     ...r.errors.map(renderError),
     ...r.artifacts.map((a) => oneLine(`wrote ${a.kind} ${a.uri}   ${a.bytes} bytes`)),

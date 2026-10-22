@@ -47,13 +47,18 @@ interface Entry extends Scored {
   readonly def: ArchetypeDef;
 }
 
+/** What an archetype offers the scorer: its senses and emits are its text, a proven one runs. */
+export function archScored(a: { readonly id: string; readonly family: string; readonly senses?: readonly string[]; readonly emits?: readonly string[]; readonly status?: string }): Scored {
+  return { id: a.id, family: a.family, text: [...(a.senses ?? []), ...(a.emits ?? [])], runs: a.status === "proven" };
+}
+
 export function runArchFind(input: CommandInput<"arch.find">, ctx: CoreCtx): CommandOut<CommandOutput<"arch.find">> {
   const profile = createProfileLookup(fullProfile());
   const entries: Entry[] = archetypes.entries
     .map((e) => e.def)
     .filter((d) => input.process === undefined || FAMILY_PROCESS[d.family].includes(input.process))
     .filter((d) => input.channels === undefined || d.channels === null || d.channels <= input.channels)
-    .map((d) => ({ id: d.id, family: d.family, text: [...d.senses, ...d.emits], runs: d.status === "proven", def: d }));
+    .map((d) => ({ ...archScored(d), def: d }));
   const { hits, truncated } = capped(rank(entries, input.behaviour).map((e) => archetypeHit(e.def, profile)));
   return {
     verdict: "pass", stage: "done", inputsHash: ctx.inputsHash, result: { hits }, findings: [], counts: { ...ZERO }, errors: [], artifacts: [], next: [],

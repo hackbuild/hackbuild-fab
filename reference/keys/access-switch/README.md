@@ -5,6 +5,9 @@ PIP click spring under a 56 mm round paddle, on a round PETG body with the
 PIP buried stack, two leads to a PJ398SM panel jack. Every number below is
 computed from the build and the profile rows, tier inferred where a profile
 row is inferred, unless it says otherwise. Nothing here has been printed.
+It is meant as an accessibility switch for an adapted toy or a switch
+interface on its jack; whether a given device reads it closed is unknown
+until a person tries one (The jack seat).
 
 Location: `reference/keys/`, beside `keys/midi-pad`, so the reference
 harness, `hbf parity` and its goldens apply as they do to the other

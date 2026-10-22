@@ -7,6 +7,9 @@
 // call time and every count is computed from the list it counts. FUNCTIONS
 // places each source key in one function; a key no row places is reported
 // under unplaced, never dropped, and a command no row places is E_KERNEL.
+// Each reference and design carries the words a maker types for it, read
+// from the title and lead paragraph of its README or record (R1-score-04),
+// and a query keeps the ones holding a query word, ranked by words held.
 
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
@@ -17,6 +20,7 @@ import { cmdError, didYouMean } from "../errors.js";
 import { designDirs } from "../artifact-rebuild.js";
 import { slugOf } from "../exporters/names.js";
 import { COMMANDS } from "../registry.js";
+import { words } from "./canon-hits.js";
 
 type Family = ArchetypeDef["family"];
 
@@ -84,8 +88,13 @@ const BY_MECHANISM = placement((f) => f.mechanisms);
 
 export interface CapabilityCommand { readonly name: string; readonly group: string; readonly summary: string }
 export interface CapabilityArchetype { readonly id: string; readonly family: string; readonly status: string }
-export interface CapabilityReference { readonly path: string; readonly covers: readonly string[] }
-export interface CapabilityDesign { readonly id: string; readonly path: string; readonly family: string; readonly record?: string }
+/** words: the title and lead paragraph of the README, lowercase, function words dropped. */
+export interface CapabilityReference { readonly path: string; readonly covers: readonly string[]; readonly words: readonly string[] }
+/** words: the id, the INDEX family, and the title and lead paragraph of the record when there is one. */
+export interface CapabilityDesign { readonly id: string; readonly path: string; readonly family: string; readonly record?: string; readonly words: readonly string[] }
+
+/** A reference or design a query named: the query words it holds, the function it sits under. */
+export interface CapabilityMatch { readonly path: string; readonly function: string; readonly held: readonly string[] }
 export interface CapabilityKnowledge { readonly file: string; readonly anchor: string; readonly heading: string }
 export interface CapabilitySlicer { readonly id: string; readonly available: boolean }
 
@@ -118,6 +127,9 @@ export interface Capabilities {
   readonly counts: CapabilityCounts;
   /** Source keys no row in FUNCTIONS places: reference areas, INDEX families, MECHANISMS sections, designs without an INDEX row. */
   readonly unplaced: readonly string[];
+  /** With a query: the query, and the references and designs holding at least one of its words, most words held first, then by path. */
+  readonly query?: string;
+  readonly matches?: readonly CapabilityMatch[];
 }
 
 /** The first sentence of a command description. */
@@ -152,8 +164,23 @@ function mechanismSections(text: string): (Heading & { readonly n: number })[] {
 
 const read = (file: string): string => (existsSync(file) ? readFileSync(file, "utf8") : "");
 
+/** Title and first paragraph of a readme, then the rest. */
+export function readmeParts(text: string): { readonly lead: string; readonly rest: string } {
+  const lines = text.split("\n");
+  let i = 0;
+  while (i < lines.length && (lines[i]!.trim() === "" || lines[i]!.startsWith("#"))) i++;
+  while (i < lines.length && lines[i]!.trim() !== "") i++;
+  return { lead: lines.slice(0, i).join("\n"), rest: lines.slice(i).join("\n") };
+}
+
+/** The distinct words of a title and lead, in order. */
+const leadWords = (...texts: string[]): string[] => [...new Set(words(texts.join(" ")))];
+
+/** The query words a list of words holds: a query word starting one of them, so "switch" holds "switches". */
+const heldBy = (ws: readonly string[], query: readonly string[]): string[] => query.filter((w) => ws.some((t) => t.startsWith(w)));
+
 /** Every capability of the workspace at root, by function, optionally one function. */
-export function capabilities(root: string, only?: string): Capabilities {
+export function capabilities(root: string, only?: string, query?: string): Capabilities {
   if (only !== undefined && !CAPABILITY_FUNCTIONS.includes(only)) {
     throw cmdError({ code: "E_REF", path: "/function", got: only, didYouMean: didYouMean(only, CAPABILITY_FUNCTIONS), hint: `name one of ${CAPABILITY_FUNCTIONS.join(", ")}` });
   }
@@ -182,7 +209,7 @@ export function capabilities(root: string, only?: string): Capabilities {
     if (area === "node_modules" || id === undefined || id.startsWith("_")) continue;
     const fn = BY_AREA.get(area!);
     if (fn === undefined) unplaced.add(`reference area ${area}`);
-    else row(fn).references.push({ path: r.path, covers: [...r.covers] });
+    else row(fn).references.push({ path: r.path, covers: [...r.covers], words: leadWords(r.path.slice("reference/".length), readmeParts(read(path.join(root, r.path, "README.md"))).lead) });
   }
 
   const INDEX = "knowledge/designs/INDEX.md";
@@ -209,7 +236,8 @@ export function capabilities(root: string, only?: string): Capabilities {
       continue;
     }
     const record = `knowledge/designs/${id}.md`;
-    row(fn).designs.push({ id, path: rel, family, ...(existsSync(path.join(root, record)) ? { record } : {}) });
+    const has = existsSync(path.join(root, record));
+    row(fn).designs.push({ id, path: rel, family, ...(has ? { record } : {}), words: leadWords(id, family, has ? readmeParts(read(path.join(root, record))).lead : "") });
   }
 
   const functions: CapabilityRow[] = FUNCTIONS.filter((f) => only === undefined || f.id === only).map((f) => {
@@ -221,7 +249,13 @@ export function capabilities(root: string, only?: string): Capabilities {
       notes: f.id === "slice" && r.slicers.length === 0 ? [SLICERS_NOTE] : [],
     };
   });
-  return { functions, counts: countsOf(functions), unplaced: [...unplaced] };
+  const base = { functions, counts: countsOf(functions), unplaced: [...unplaced] };
+  if (query === undefined) return base;
+  const qs = [...new Set(words(query))];
+  const matches = functions.flatMap((f) => [...f.references, ...f.designs].map((x) => ({ path: x.path, function: f.function, held: heldBy(x.words, qs) })))
+    .filter((m) => m.held.length > 0)
+    .sort((a, b) => b.held.length - a.held.length || (a.path < b.path ? -1 : a.path > b.path ? 1 : 0));
+  return { ...base, query, matches };
 }
 
 function countsOf(rows: readonly { readonly [K in keyof CapabilityCounts]: readonly unknown[] }[]): CapabilityCounts {
@@ -229,13 +263,22 @@ function countsOf(rows: readonly { readonly [K in keyof CapabilityCounts]: reado
   return { commands: sum("commands"), archetypes: sum("archetypes"), references: sum("references"), designs: sum("designs"), knowledge: sum("knowledge"), slicers: sum("slicers") };
 }
 
-/** The text mirror: one head line per function, then its commands and designs. */
+/** The text mirror: the matches of a query, then one head line per function, then its commands, references and designs. */
 export function renderCapabilities(c: Capabilities): string {
   const lines: string[] = [];
+  if (c.query !== undefined) {
+    const m = c.matches ?? [];
+    lines.push(`query     ${c.query}  ${m.length} matches`);
+    for (const x of m) lines.push(`match     ${x.path}  ${x.function}  holds ${x.held.join(", ")} in its title and lead`);
+    if (m.length === 0) lines.push("no match  no reference or design title or lead holds a query word. try the words a part does: press, switch, coin, hinge");
+    // A query asks which part; the function rows print without one.
+    return lines.join("\n");
+  }
   for (const r of c.functions) {
     const n = r.counts;
     lines.push(`${r.function.padEnd(10)}${r.title}  commands ${n.commands}, archetypes ${n.archetypes}, references ${n.references}, designs ${n.designs}, knowledge ${n.knowledge}, slicers ${n.slicers}`);
     if (r.commands.length > 0) lines.push(`  commands  ${r.commands.map((x) => x.name).join(", ")}`);
+    if (r.references.length > 0) lines.push(`  references  ${r.references.map((x) => x.path.slice("reference/".length)).join(", ")}`);
     if (r.designs.length > 0) lines.push(`  designs   ${r.designs.map((x) => x.path).join(", ")}`);
     for (const note of r.notes) lines.push(`  note      ${note}`);
   }

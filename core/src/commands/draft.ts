@@ -29,7 +29,7 @@ import { cmdError } from "../errors.js";
 import { slugOf } from "../exporters/names.js";
 import type { CommandOut } from "../result.js";
 import { workspaceRoot } from "./build.js";
-import { capabilities } from "./capabilities.js";
+import { capabilities, readmeParts } from "./capabilities.js";
 import { words } from "./canon-hits.js";
 import { runChaseBake } from "./chase-bake.js";
 import { plan, resolveFrom } from "./chase-scaffold.js";
@@ -79,15 +79,6 @@ interface Candidate {
   readonly head: readonly string[];
   readonly body: readonly string[];
   readonly archetypes: readonly string[];
-}
-
-/** Title and first paragraph of a readme, then the rest. */
-function readmeParts(text: string): { readonly lead: string; readonly rest: string } {
-  const lines = text.split("\n");
-  let i = 0;
-  while (i < lines.length && (lines[i]!.trim() === "" || lines[i]!.startsWith("#"))) i++;
-  while (i < lines.length && lines[i]!.trim() !== "") i++;
-  return { lead: lines.slice(0, i).join("\n"), rest: lines.slice(i).join("\n") };
 }
 
 /** Every reference the capabilities index lists that holds a chase, as a goal candidate. */

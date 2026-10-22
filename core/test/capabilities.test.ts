@@ -32,7 +32,7 @@ describe("hbf capabilities (R1-designs-reach-15)", () => {
   it("places designs/collar under face, with its record, and every design with a chase.ts somewhere", async () => {
     const { c } = await caps();
     const face = c.functions.find((f) => f.function === "face");
-    expect(face?.designs.find((d) => d.id === "collar")).toEqual({ id: "collar", path: "designs/collar", family: "coins-inlay", record: "knowledge/designs/collar.md" });
+    expect(face?.designs.find((d) => d.id === "collar")).toMatchObject({ id: "collar", path: "designs/collar", family: "coins-inlay", record: "knowledge/designs/collar.md" });
     const onDisk = dirs(path.join(ROOT, "designs")).filter((d) => existsSync(path.join(ROOT, "designs", d, "chase.ts"))).map((d) => `designs/${d}`).sort();
     expect(onDisk).toContain("designs/collar");
     expect(c.functions.flatMap((f) => f.designs.map((d) => d.path)).sort()).toEqual(onDisk);
@@ -85,10 +85,44 @@ describe("hbf capabilities (R1-designs-reach-15)", () => {
     expect(r.errors[0]?.didYouMean).toContain("face");
   });
 
-  it("prints a text mirror with one head line per function", async () => {
+  it("prints a text mirror with one head line per function, references included", async () => {
     const { code, out } = await hbf(["capabilities"]);
     expect(code).toBe(0);
     expect(out).toMatch(/^face\s+make a coin, tag or face {2}commands \d+, archetypes \d+/m);
     expect(out).toContain("designs/collar");
+    expect(out).toMatch(/^ {2}references {2}.*\bkeys\/access-switch\b/m);
+  });
+});
+
+/** Title and lead paragraph of a readme, read here with a plain line scan: the heading lines, then lines up to the first blank one. */
+function lead(file: string): string {
+  const ls = readFileSync(file, "utf8").split("\n");
+  const start = ls.findIndex((l) => l.trim() !== "" && !l.startsWith("#"));
+  const end = ls.findIndex((l, i) => i > start && l.trim() === "");
+  return ls.slice(0, end).join(" ").toLowerCase();
+}
+
+describe("hbf capabilities <words> (R1-score-04, V-06)", () => {
+  const readme = path.join(ROOT, "reference/keys/access-switch/README.md");
+
+  for (const q of ["switch", "jack", "accessibility", "adapted toy"]) {
+    it(`"${q}" names keys/access-switch, a word its README title and lead hold`, async () => {
+      for (const w of q.split(" ")) expect(lead(readme), w).toContain(w);
+      const { code, c } = await caps(...q.split(" "));
+      expect(code).toBe(0);
+      expect(c.query).toBe(q);
+      const m = c.matches?.find((x) => x.path === "reference/keys/access-switch");
+      expect(m).toEqual({ path: "reference/keys/access-switch", function: "key", held: q.split(" ") });
+      const text = await hbf(["capabilities", ...q.split(" ")]);
+      expect(text.out).toContain(`match     reference/keys/access-switch  key  holds ${q.split(" ").join(", ")} in its title and lead`);
+    });
+  }
+
+  it("keeps only rows holding a query word, most words first, and says so when none does", async () => {
+    const { c } = await caps("switch", "jack");
+    expect(c.matches?.[0]).toMatchObject({ path: "reference/keys/access-switch", held: ["switch", "jack"] });
+    for (const m of c.matches ?? []) expect(m.held.length).toBeGreaterThan(0);
+    const none = await hbf(["capabilities", "teapot"]);
+    expect(none.out).toMatch(/^query {5}teapot {2}0 matches\nno match {2}/);
   });
 });

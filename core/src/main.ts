@@ -54,7 +54,7 @@ export function usage(): string {
     "  parity            <reference> [--accept] [--json]",
     "  evidence add      <design> --claim <id> (--value <v> --unit <u> | --note <text> [--direction high|low] | --file <path>) [--kind <kind>] [--json]",
     "  evidence list     <design> [--claim <id>] [--json]",
-    "  capabilities      [--function <name>] [--json]",
+    "  capabilities      [words] [--function <name>] [--json]",
   ].join("\n");
 }
 
@@ -112,11 +112,21 @@ function readFlag(kind: CliForm["flags"][string]["kind"], name: string, raw: str
   if (kind === "facts") return readFacts(name, raw);
   if (kind === "pairs") return readPairs(name, raw);
   if (kind === "gap") return raw === "auto" ? raw : NUMBER.test(raw) ? Number(raw) : raw;
-  if (kind === "size") {
-    const m = /^(\d+)[x,](\d+)$/.exec(raw);
-    return m === null ? raw : [Number(m[1]), Number(m[2])];
-  }
+  if (kind === "size") return readSize(name, raw);
   return raw;
+}
+
+/**
+ * A size flag as WxH (1000x800, 1000,800) or one number for a square (900),
+ * or the json pair a next line prints ([1000,800]). Anything else stays as
+ * written and the schema refuses it with the path.
+ */
+export function readSize(name: string, raw: string): unknown {
+  const t = raw.trim();
+  if (t.startsWith("[")) return readFlag("json", name, t);
+  const pair = /^(\d+)\s*[xX,]\s*(\d+)$/.exec(t);
+  if (pair !== null) return [Number(pair[1]), Number(pair[2])];
+  return /^\d+$/.test(t) ? [Number(t), Number(t)] : raw;
 }
 
 /** chase.patch --set: a json value when the text parses as one (1.44, true, {"a":1}), else the text as a string. */
@@ -251,7 +261,7 @@ async function runVerb(verb: string, rest: readonly string[], cwd: string, io: I
   }
   if (verb === "capabilities") {
     const p = parseFlags(verb, rest, ["function"], ["json"]);
-    const out = capabilities(root, p.values["function"]);
+    const out = capabilities(root, p.values["function"], p.positional.length === 0 ? undefined : p.positional.join(" "));
     io.out(p.switches.has("json") ? JSON.stringify(out, null, 2) : renderCapabilities(out).split("\n").map(oneLine).join("\n"));
     return 0;
   }
