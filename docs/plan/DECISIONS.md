@@ -714,6 +714,8 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-657 | R.closed is the access switch closed path figure, and circuit.solve reads a port to pad seat | decided | Electrical |
 | D-658 | hbf capabilities takes words and matches a reference by its README title and lead | decided | Agent surface |
 | D-659 | a CLI size flag takes one number as a square | decided | Agent surface |
+| D-660 | contact.gap is registered as key/flex-gap and the goldens follow | decided | CORE |
+| D-661 | the chases naming pom3 or sheet15 are a known list, not a profile row | decided | CORE |
 
 ## House rules and process
 
@@ -7997,6 +7999,28 @@ Status: decided (delegated). The lead closed four reds from the wave 4 health ru
 | Decision | Taken by the agent under owner delegation on 2026-10-20. A size flag (view.render --size, nest.pack --sheet) reads one number N as N by N, WxH, WXH or W,H as a pair, and a json pair as json; anything else reaches the schema unchanged and is refused there. Query text rows (arch.find, catalog.find, catalog.pins) qualify a number read from a catalog row by TIER_QUALIFIER of its tier and a resistance arch.find computed as computed with the row tier named. |
 | Rationale | N-07, SAM-23: --size 900 was E_SCHEMA expected tuple. A square is the one reading of a single number for a render; nest.pack shares the flag kind and a square sheet is the same reading. |
 | Evidence | view.render designs/collar --mode iso --size 900 and --size 1000x800 wrote 900x900 and 1000x800 png, read from the IHDR header in core/test/text-hits.test.ts (measured 2026-10-21). Mutant returning the raw string for one number fails 2 tests. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-660 contact.gap is registered as key/flex-gap and the goldens follow
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. The constraint def key/flex-gap 1.0.0 registers contact.gap with the CHK-KEY-01 band ported from pip-controller bench/part1.html lines 233 and 238 (lineage pip.bench-part1/haft-9), reading the profile rows key.flexGapFloor, key.flexGapFracMin and key.flexGapFracMax that the check reads. Its version enters registryHash, so every golden whose registryHash or buildHash moved was re-accepted with hbf parity --accept after a diff against HEAD showed every meshHash and volume equal; graph.jsonl, the flex-pair and access-switch print cards, EXIT-B.md, the ui-core flex-pair Part fixture and each reference README parity line were regenerated in the same change. hbf init --from takes reference/<area>/<id>, <area>/<id>, reference:<area>/<id> and designs/<id>, and the maker package.json carries the workspace author line. |
+| Rationale | Devon V-01: chase.validate and init --from reference/keys/flex-pair failed E_REF on contact.gap, a dim spec/constraints.ts names and no def registered. The band already lives in the profile and the check; the def reads the same rows, so no number is new. A registry hash move with no mesh or volume move is the 895a232 and R1-fix-19 precedent. INES-28, INES-30: init took only the reference: form and wrote no author. |
+| Evidence | hbf parity failed on 50 goldens and passed after --accept; diff against HEAD: build.json moves only buildHash and inputs.registryHash (50), artifacts.json only the 3mf hash (25), query-solve.json only buildHash and its registryHash (8); report.json and edit.json unchanged; graph.jsonl moves 46 build and 46 golden item hashes and no mesh item hash (computed). Flex-pair writer 3MF 65701 to 65703 bytes, sha256 f082ad09...d36c, not sliced. Mutant (key/flex-gap dropped from constraintDefs, tsc -b) fails core/test/init-every-reference.test.ts on flex-pair with E_REF contact.gap. |
+| Supersedes | new |
+| Milestone | none |
+
+### D-661 the chases naming pom3 or sheet15 are a known list, not a profile row
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Taken by the agent under owner delegation on 2026-10-20. core/test/init-every-reference.test.ts holds KNOWN_NO_MATERIAL, the 18 chases whose materials name pom3 (17) or sheet15 (1, joints/balance-beam), which no profile row registers. Each must fail chase.validate with only E_REF chase-ref/material on its named material; a chase that newly fails or one fixed and still listed fails the test. Every other chase validates and inits. No profile row is added. |
+| Rationale | D-149 and PROFILE.md: a missing material row is reported, never invented, and a model never writes to profile. Holding the list by cause keeps the conformance test strict over the other 36 chases while the owner decides the rows. |
+| Evidence | init-every-reference: 63 tests pass over 54 chases (computed 2026-10-21); the 18 listed fail only on chase-ref/material. |
 | Supersedes | new |
 | Milestone | none |
 
