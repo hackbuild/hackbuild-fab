@@ -1,5 +1,7 @@
 {
   "extends": "../../../tsconfig.vue.json",
+  // The bad fixture must exit 2 on its errors; an incremental run exits 1 (R1-fix-29).
+  "compilerOptions": { "incremental": false },
   "include": ["Bad.vue"],
   "exclude": []
 }
