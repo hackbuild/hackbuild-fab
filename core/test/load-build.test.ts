@@ -19,7 +19,9 @@ import { REF, ROOT } from "./hbf.js";
 const tmp = mkdtempSync(path.join(tmpdir(), "hbf-load-"));
 const FIX = path.join(ROOT, "core", "test", "fixtures", "sandbox");
 const LOCAL = path.join(FIX, `.tmp-load-${process.pid}`);
-const MOVED = path.join(ROOT, "core", "test", "fixtures", `.tmp-moved-${process.pid}`);
+// Inside the workspace (loadDesign refuses a design outside one) and under
+// sandbox/.gitignore, so a parallel git status snapshot never sees it.
+const MOVED = path.join(FIX, `.tmp-moved-${process.pid}`);
 const CLAMPED = path.join(FIX, `.tmp-clamp-${process.pid}`);
 afterAll(() => {
   rmSync(CLAMPED, { recursive: true, force: true });
