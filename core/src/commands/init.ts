@@ -38,9 +38,32 @@ export const INIT_STAGE = ".hbf/init";
 const IMPORT = /\bfrom\s+["'](@hackbuild\/[a-z0-9-]+)(?:\/[^"']*)?["']/g;
 
 /**
- * The package.json of a maker folder: @hackbuild/kernel and every
- * @hackbuild package the files import, each pinned to its folder in this
- * workspace as a file: dependency, sorted by name.
+ * The from forms init takes: the path forms reference/<area>/<id> and
+ * designs/<id>, with or without a leading ./ or a trailing /, become the
+ * reference: and design: forms chase.scaffold takes; every other form
+ * passes through to fromForm unchanged.
+ */
+export function initFrom(from: string): string {
+  const p = from.replace(/^(\.\/)+/, "").replace(/\/+$/, "");
+  if (p.startsWith("reference/")) return `reference:${p.slice("reference/".length)}`;
+  if (p.startsWith("designs/")) return `design:${p.slice("designs/".length)}`;
+  return from;
+}
+
+/** The author line of the workspace's root package.json, which every package of the workspace carries. */
+function workspaceAuthor(root: string): string {
+  const author = (JSON.parse(readFileSync(path.join(root, "package.json"), "utf8")) as { author?: unknown }).author;
+  if (typeof author !== "string" || author === "") {
+    throw cmdError({ code: "E_SCHEMA", path: "/author", got: author ?? null, expected: "an author line", hint: `${posix(root)}/package.json has no author; add it there` });
+  }
+  return author;
+}
+
+/**
+ * The package.json of a maker folder: the workspace's author line,
+ * @hackbuild/kernel and every @hackbuild package the files import, each
+ * pinned to its folder in this workspace as a file: dependency, sorted by
+ * name.
  */
 export function makerPackage(name: string, files: ReadonlyMap<string, string>, root: string): string {
   const wanted = new Set(["@hackbuild/kernel"]);
@@ -53,7 +76,7 @@ export function makerPackage(name: string, files: ReadonlyMap<string, string>, r
     }
     dependencies[pkg] = `file:${posix(realpathSync(link))}`;
   }
-  return `${JSON.stringify({ name, version: "0.0.0", private: true, type: "module", dependencies }, null, 2)}\n`;
+  return `${JSON.stringify({ name, version: "0.0.0", private: true, type: "module", author: workspaceAuthor(root), dependencies }, null, 2)}\n`;
 }
 
 const NONE: Output = { dir: "", files: [], page: { file: "", bytes: 0, hash: "" as Hash } };
@@ -79,7 +102,7 @@ export async function runInit(input: CommandInput<"init">, ctx: CoreCtx): Promis
   let kind: ChaseKind = "single";
   let from: string | undefined;
   if (input.from !== undefined) {
-    from = fromForm(input.from, root, top, ctx.cwd);
+    from = fromForm(initFrom(input.from), root, top, ctx.cwd);
     const src = resolveFrom(from, root, top, ctx.cwd);
     const text = readFileSync(path.join(src.dir, "chase.ts"), "utf8");
     kind = readChaseSource(text, `${src.label}/chase.ts`).chase.meta.kind;

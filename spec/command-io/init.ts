@@ -7,7 +7,7 @@ export interface InitIO {
   input: {
     /** Lowercase slug; becomes meta.id, the folder name and the page <name>.html. */
     name: string;
-    /** The design or reference to start from: an id, or the reference: and design: forms chase.scaffold takes. Absent, the minimal single chase. */
+    /** The design or reference to start from: an id, the reference: and design: forms chase.scaffold takes, or the path forms reference/<area>/<id> and designs/<id>. Absent, the minimal single chase. */
     from?: string;
     /** The folder to write, relative to the cwd. Absent, <cwd>/<name>. It must be absent or empty (E_EXISTS). */
     dir?: string;
