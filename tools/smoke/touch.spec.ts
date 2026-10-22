@@ -34,6 +34,30 @@ async function centre(l: Locator): Promise<Pt> {
   return { x: b.x + b.width / 2, y: b.y + b.height / 2 };
 }
 
+/**
+ * A point on the stage where the viewer receives the touches: the points
+ * x +- half at y and at y + drop all resolve to hb-viewer, not to an overlay
+ * (a bench with a camera strip covers the middle of the stage at 390).
+ */
+async function freePoint(page: Page, half: number, drop: number): Promise<Pt> {
+  const p = await page.evaluate(([h, d]) => {
+    const r = document.querySelector("hb-viewer")!.getBoundingClientRect();
+    const hit = (x: number, y: number): boolean => document.elementFromPoint(x, y)?.tagName === "HB-VIEWER";
+    const top = Math.max(r.y, 0);
+    const bottom = Math.min(r.y + r.height, innerHeight);
+    for (let y = bottom - (d as number) - 2; y >= top; y -= 4) {
+      for (let x = r.x + r.width / 2, k = 0; k < r.width / 2 - (h as number); k += 6) {
+        for (const cx of k === 0 ? [x] : [x - k, x + k]) {
+          if ([-1, 1].every((s) => hit(cx + s * (h as number), y) && hit(cx + s * (h as number), y + (d as number)))) return { x: cx, y };
+        }
+      }
+    }
+    return null;
+  }, [half, drop]);
+  if (p === null) throw new Error("no free point on the stage for two touch points");
+  return p;
+}
+
 interface Cam { dist: number; target: number[] }
 const cam = (page: Page): Promise<Cam> =>
   page.evaluate(() => {
@@ -96,26 +120,31 @@ for (const bake of bakes().filter((b) => b.kind === "bench")) {
       expect(await range.inputValue(), "range value after the drag").not.toBe(r0);
       done.push("range by touch drag");
 
-      // A drive pad key held by a touch point.
+      // A drive pad key held by a touch point. A bench declares its drive pad by
+      // rendering the pad; a bench with none has no key to hold.
       const key = page.locator('[data-hb="drive-key"]').first();
-      const read = page.locator('[data-hb="drive-read"]');
-      const idle = await read.innerText();
-      const kp = await centre(key);
-      await touch(cdp, "touchStart", [kp]);
-      await expect(read).not.toHaveText(idle);
-      await expect(key).toHaveClass(/is-on/);
-      await touch(cdp, "touchEnd", []);
-      await expect(read).toHaveText(idle, { timeout: 400 });
-      done.push("drive key held by touch");
+      if ((await page.locator('[data-hb="drive-key"]').count()) === 0) {
+        done.push(`drive key skipped: ${bake.id} declares no drive pad`);
+      } else {
+        const read = page.locator('[data-hb="drive-read"]');
+        const idle = await read.innerText();
+        const kp = await centre(key);
+        await touch(cdp, "touchStart", [kp]);
+        await expect(read).not.toHaveText(idle);
+        await expect(key).toHaveClass(/is-on/);
+        await touch(cdp, "touchEnd", []);
+        await expect(read).toHaveText(idle, { timeout: 400 });
+        done.push("drive key held by touch");
+      }
 
       // Pinch zoom, then a two-finger pan, on the stage.
       const stage = page.locator('[data-hb="stage"] hb-viewer');
-      const c = await centre(stage);
+      const c = await freePoint(page, 90, 24);
       const c0 = await cam(page);
       await glide(cdp, [{ x: c.x - 30, y: c.y }, { x: c.x + 30, y: c.y }], [{ x: c.x - 90, y: c.y }, { x: c.x + 90, y: c.y }]);
       const c1 = await cam(page);
       expect(c1.dist, "pinch out moves the camera in").toBeLessThan(c0.dist);
-      await glide(cdp, [{ x: c.x - 40, y: c.y }, { x: c.x + 40, y: c.y }], [{ x: c.x - 40, y: c.y + 60 }, { x: c.x + 40, y: c.y + 60 }]);
+      await glide(cdp, [{ x: c.x - 40, y: c.y }, { x: c.x + 40, y: c.y }], [{ x: c.x - 40, y: c.y + 24 }, { x: c.x + 40, y: c.y + 24 }]);
       const c2 = await cam(page);
       expect(c2.target, "two-finger pan moves the target").not.toEqual(c1.target);
       done.push("pinch and two-finger pan");
