@@ -55,6 +55,11 @@ I2C, and no I2C header was placed, which is the owner's to settle.
 
 ### Verified on this machine
 
+- 2026-10-21 (R1-score-02): `npx --no-install hbf parity reference/boards/spindle-r2`
+  exits 0 at build 4ed1ab..58 against the goldens re-accepted when the
+  key/flex-gap constraint def registered contact.gap and moved
+  registryHash; every mesh hash and volume is unchanged and the report
+  does not move (computed).
 - 2026-10-21 (R1-rails-public-05): gen.py names pcb.py by archive prefix
   (`fab-work-directory:benches/spindle/outputs/spindle/pcb.py`), was a
   home path. `hbf parity --accept` re-recorded build.json (defHash,

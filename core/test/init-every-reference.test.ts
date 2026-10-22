@@ -4,6 +4,12 @@
 // --from <its path> writes a maker folder outside the repository whose
 // package.json carries the workspace's author line. The path form, the
 // <area>/<id> form and the reference: form name the same source.
+//
+// KNOWN_NO_MATERIAL holds the chases that name a sheet material no profile
+// row registers (D-149: a missing row is reported, never invented). Each
+// fails chase.validate with E_REF chase-ref/material on that material and
+// nothing else; a chase that newly fails, or one fixed and still listed,
+// fails this file.
 
 import { mkdtempSync, readFileSync, readdirSync, realpathSync, rmSync, statSync } from "node:fs";
 import os from "node:os";
@@ -32,6 +38,28 @@ function chaseDirs(base: string): string[] {
   return out.sort();
 }
 
+/** Chase folder to the unregistered material it names, waiting on an owner profile row. */
+const KNOWN_NO_MATERIAL: Readonly<Record<string, string>> = {
+  "reference/joints/balance-beam": "sheet15",
+  "reference/joints/finger": "pom3",
+  "reference/mechanisms/coanda-gate": "pom3",
+  "reference/mechanisms/coincidence-and": "pom3",
+  "reference/mechanisms/detent-latch": "pom3",
+  "reference/mechanisms/differential-xor": "pom3",
+  "reference/mechanisms/inhibit": "pom3",
+  "reference/mechanisms/living-hinge": "pom3",
+  "reference/mechanisms/membrane-valve": "pom3",
+  "reference/mechanisms/ratchet-pawl": "pom3",
+  "reference/mechanisms/shift-drum": "pom3",
+  "reference/mechanisms/snap-flexure": "pom3",
+  "reference/mechanisms/spur-pair": "pom3",
+  "reference/mechanisms/teeter-not": "pom3",
+  "reference/mechanisms/tesla-valve": "pom3",
+  "reference/mechanisms/tumbler-coded-and": "pom3",
+  "reference/mechanisms/wedge-or": "pom3",
+  "reference/mechanisms/whiffletree": "pom3",
+};
+
 const CHASES = [...chaseDirs("reference"), ...chaseDirs("designs")];
 const AUTHOR = (JSON.parse(readFileSync(path.join(ROOT, "package.json"), "utf8")) as { author: string }).author;
 
@@ -55,7 +83,20 @@ describe("every chase starts with hbf init (R1-score-02)", () => {
     expect(initFrom("reference:keys/midi-pad")).toBe("reference:keys/midi-pad");
   });
 
-  for (const dir of CHASES) {
+  it("every known no-material chase is still walked", () => {
+    for (const d of Object.keys(KNOWN_NO_MATERIAL)) expect(CHASES).toContain(d);
+  });
+
+  for (const dir of CHASES.filter((d) => Object.hasOwn(KNOWN_NO_MATERIAL, d))) {
+    it(`${dir}: chase.validate fails only E_REF chase-ref/material on ${KNOWN_NO_MATERIAL[dir]}`, async () => {
+      const v = await json("chase.validate", dir);
+      const errs = v.r.errors as readonly { code: string; record?: string; got?: unknown }[];
+      expect(errs.length).toBeGreaterThan(0);
+      for (const e of errs) expect({ code: e.code, record: e.record, got: e.got }).toEqual({ code: "E_REF", record: "chase-ref/material", got: KNOWN_NO_MATERIAL[dir] });
+    }, 240_000);
+  }
+
+  for (const dir of CHASES.filter((d) => !Object.hasOwn(KNOWN_NO_MATERIAL, d))) {
     it(`${dir}: chase.validate 0 errors, init --from ${dir} writes the folder`, async () => {
       const v = await json("chase.validate", dir);
       expect(v.r.errors, JSON.stringify(v.r.errors)).toEqual([]);

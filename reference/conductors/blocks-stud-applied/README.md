@@ -29,6 +29,11 @@ proven flex-cone-key by `core/test/arch-apply.test.ts` and the fixtures in
 
 ### Verified on this machine
 
+- 2026-10-21 (R1-score-02): `npx --no-install hbf parity reference/conductors/blocks-stud-applied`
+  exits 0 at build bfda77..aa against the goldens re-accepted when the
+  key/flex-gap constraint def registered contact.gap and moved
+  registryHash; every mesh hash and volume is unchanged and the report
+  does not move (computed).
 - 2026-10-21 (R1-fix-19): `npx --no-install hbf parity reference/conductors/blocks-stud-applied`
   exits 0 at build a03872..8a against the goldens re-accepted when CHK-KEY-05
   went to 2.0.0 and moved registryHash; every mesh hash and volume is

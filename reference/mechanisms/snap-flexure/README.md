@@ -54,6 +54,11 @@ Each step is the record's (`knowledge/designs/tumbler.md`), held by a test:
 
 ### Verified on this machine
 
+- 2026-10-21 (R1-score-02): `npx --no-install hbf parity reference/mechanisms/snap-flexure`
+  exits 0 at build c26a5a..06 against the goldens re-accepted when the
+  key/flex-gap constraint def registered contact.gap and moved
+  registryHash; every mesh hash and volume is unchanged and the report
+  does not move (computed).
 - 2026-10-21 (R1-fix-19): `npx --no-install hbf parity reference/mechanisms/snap-flexure`
   exits 0 at build eb89e0..86 against the goldens re-accepted when CHK-KEY-05
   went to 2.0.0 and moved registryHash; every mesh hash and volume is

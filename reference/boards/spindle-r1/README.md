@@ -55,6 +55,11 @@ covers: [CHK-BRD-01, CHK-BRD-02, CHK-BRD-05, CHK-BRD-06, CHK-BRD-07, CHK-BRD-09,
 
 ### Verified on this machine
 
+- 2026-10-21 (R1-score-02): `npx --no-install hbf parity reference/boards/spindle-r1`
+  exits 0 at build bc3f39..38 against the goldens re-accepted when the
+  key/flex-gap constraint def registered contact.gap and moved
+  registryHash; every mesh hash and volume is unchanged and the report
+  does not move (computed).
 - 2026-10-21 (R1-rails-public-05): gen.py names pcb.py by archive prefix
   (`fab-work-directory:benches/spindle/outputs/spindle/pcb.py`), was a
   home path. `hbf parity --accept` re-recorded build.json (defHash,

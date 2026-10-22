@@ -30,10 +30,10 @@ the writer makes in process and the chase. Do not edit it by hand.
 <!-- generated: coupon card; rewrite with HBF_ACCEPT=1 npx vitest run reference/keys/access-switch/coupon -->
 
 - design: keys-access-switch-coupon, preset default, machine ffc5p
-- file: out/access-switch-coupon-default.3mf, 91914 bytes, sha256 8372d5ec14eb461c716564c904dd818462487c11b0dd4e08c24831be5437fae3 (computed from the writer bytes in process; no export was run)
-- artifact hash (hbf): 2b0ac70448fc0976a143c5a040b6e066025bf9713e8a7f54949c71840ae7da05
+- file: out/access-switch-coupon-default.3mf, 91914 bytes, sha256 e97c3f59d90f316c06c1de9771592bc87dace0988a56930dd512c86a53a13c0a (computed from the writer bytes in process; no export was run)
+- artifact hash (hbf): 48bb10c9b5992b3cb806744602ebcae85368244551341e1aa1844555309d0a92
 - write it, a person at the export gate: `SOURCE_DATE_EPOCH=315532800 npx --no-install hbf export.run reference/keys/access-switch/coupon --kind 3mf --preset default --out reference/keys/access-switch/coupon/out/access-switch-coupon-default.3mf` (the epoch is pinned; unset, it follows the HEAD commit time and the bytes move)
-- build: e36b0a3fca49cb7a174fae86ecffc9fc76a643a4c687716d4eaa4d6358d9795c
+- build: eaca50cf2e9e39092b07646756bed700da55fcdd959f60cef200303cf0c940e9
 - slicer: Flashforge Creator 5 Pro 0.4 nozzle, process 0.24mm Standard @FF C5 (vendor preset names)
 - plate: Textured PEI Plate
 - layer grid: ffc5p_20260819, first layer 0.25 mm, then 0.24 mm (profile preset, vendor, a slicer save)

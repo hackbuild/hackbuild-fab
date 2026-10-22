@@ -32,12 +32,14 @@ Run every command from the repo root,
       shasum -a 256 reference/keys/flex-pair/out/flex-pair-two.3mf
       ```
 
-      Expected, from the print card `file:` line: 65701 bytes, sha256
-      e91d8a382579e57db26baf1d2c6001c205fe9965330443f86125dc669fb20f86
-      (regenerated 2026-10-21 when the CHK-KEY-05 2.0.0 bump moved the
-      registryHash and so the build hash the 3MF metadata carries; every
-      mesh hash and volume is unchanged, computed; the slicer and
-      validate_3mf.py were not run on it. It was 65702 bytes, sha256
+      Expected, from the print card `file:` line: 65703 bytes, sha256
+      f082ad09b854f271f13cb961cd41a9243bc9a4e8f5d616c2b41170d7a4ded36c
+      (regenerated 2026-10-21 when the key/flex-gap constraint def
+      registered contact.gap and moved the registryHash and so the build
+      hash the 3MF metadata carries; every mesh hash and volume is
+      unchanged, computed; the slicer and validate_3mf.py were not run on
+      it. It was 65701 bytes, sha256 e91d8a38...0f86, earlier on
+      2026-10-21 after the CHK-KEY-05 2.0.0 bump, and 65702 bytes, sha256
       f20da97e...4784, from 2026-10-14, when chase.ts dropped its coupon
       export and moved defHash. It was 65703
       bytes, sha256 4419e5df...0eeb, from the M06 and M08 integration on

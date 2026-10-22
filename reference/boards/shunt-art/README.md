@@ -51,6 +51,11 @@ covers: [CHK-BRD-01, CHK-BRD-02, CHK-BRD-03, CHK-BRD-05, CHK-BRD-09, CHK-BRD-19,
 
 ### Verified on this machine
 
+- 2026-10-21 (R1-score-02): `npx --no-install hbf parity reference/boards/shunt-art`
+  exits 0 at build d963bd..10 against the goldens re-accepted when the
+  key/flex-gap constraint def registered contact.gap and moved
+  registryHash; every mesh hash and volume is unchanged and the report
+  does not move (computed).
 - 2026-10-14 (D-254 call): chase.ts declares the CHK-BRD-09 set ENC,
   MAGIC, PROBE, RF_OUT, VBUS, was GND?, MAGIC, MATRIX, PROBE, VIBES.
   `hbf check.run reference/boards/shunt-art --only CHK-BRD-09,CHK-BRD-21`

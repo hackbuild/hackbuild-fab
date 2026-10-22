@@ -104,6 +104,11 @@ outside this claim. Sources: `docs/plan/PRIOR-ART.md` sections 1 and 3.
 
 ### Verified on this machine
 
+- 2026-10-21 (R1-score-02): `npx --no-install hbf parity reference/electrical/blocks-pullup-band`
+  exits 0 at build 96f8e1..da against the goldens re-accepted when the
+  key/flex-gap constraint def registered contact.gap and moved
+  registryHash; every mesh hash and volume is unchanged and the report
+  does not move (computed).
 - 2026-10-21 (R1-fix-19): `npx --no-install hbf parity reference/electrical/blocks-pullup-band`
   exits 0 at build 72b024..a1 against the goldens re-accepted when CHK-KEY-05
   went to 2.0.0 and moved registryHash; every mesh hash and volume is

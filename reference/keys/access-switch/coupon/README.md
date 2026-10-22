@@ -64,6 +64,11 @@ decimal (brief finding 2). CHK-KEY-04 passes on each cell.
 
 ### Verified on this machine
 
+- 2026-10-21 (R1-score-02): `npx --no-install hbf parity reference/keys/access-switch/coupon`
+  exits 0 at build eaca50..e9 against the goldens re-accepted when the
+  key/flex-gap constraint def registered contact.gap and moved
+  registryHash; every mesh hash and volume is unchanged and the report
+  does not move (computed).
 - 2026-10-21 (R1-fix-19): `npx --no-install hbf parity reference/keys/access-switch/coupon`
   exits 0 at build e36b0a..5c against the goldens re-accepted when CHK-KEY-05
   went to 2.0.0 and moved registryHash; every mesh hash and volume is

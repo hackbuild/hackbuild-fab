@@ -183,6 +183,11 @@ the circuit.solve figure is not a T to S value.
 
 ### Verified on this machine
 
+- 2026-10-21 (R1-score-02): `npx --no-install hbf parity reference/keys/access-switch`
+  exits 0 at build 7f1878..79 against the goldens re-accepted when the
+  key/flex-gap constraint def registered contact.gap and moved
+  registryHash; every mesh hash and volume is unchanged and the report
+  does not move (computed).
 - 2026-10-21 (R1-fix-19): `npx --no-install hbf parity reference/keys/access-switch`
   exits 0 at build c4188b..4f against the goldens re-accepted when CHK-KEY-05
   went to 2.0.0 and moved registryHash; every mesh hash and volume is
@@ -259,10 +264,10 @@ and the build disagree. Nothing in it was measured, and no export was run.
 <!-- generated: print card; rewrite with HBF_ACCEPT=1 npx vitest run reference/keys/access-switch -->
 
 - design: keys-access-switch, preset default, machine ffc5p
-- file: out/access-switch-default.3mf, 60909 bytes, sha256 ff9814ca76b438fc8016027bea815a3a67ff965f8a9499a9a56330d7703096e9 (computed from the writer bytes in process; no export was run)
-- artifact hash (hbf): 256efef84b896f699ebba4157a532e2faf0882a038a0260354800aa4a1908ee5
+- file: out/access-switch-default.3mf, 60910 bytes, sha256 6bd16ed6f733afefd2c60dd727e3b62c9feefe09c153dce3949b5d6163dc0966 (computed from the writer bytes in process; no export was run)
+- artifact hash (hbf): d8fc0bc75c349f75d77a90b2ba1795be1586fb21782ea2448ce619a3ea6424b5
 - write it, a person at the export gate: `SOURCE_DATE_EPOCH=315532800 npx --no-install hbf export.run reference/keys/access-switch --kind 3mf --preset default --out reference/keys/access-switch/out/access-switch-default.3mf` (the epoch is pinned; unset, it follows the HEAD commit time and the bytes move)
-- build: 3d6fca1bc2596126321483492ddbe7f9197b56706f3ff671be1b9ef6c53d14ea
+- build: 7f1878f485260102c54bf45cf06296cad38de388f0aef2c1120c723ebd500b79
 - slicer: Flashforge Creator 5 Pro 0.4 nozzle, process 0.24mm Standard @FF C5
 - plate: Textured PEI Plate
 - layer grid: ffc5p_20260819, first layer 0.25 mm, then 0.24 mm (profile)
