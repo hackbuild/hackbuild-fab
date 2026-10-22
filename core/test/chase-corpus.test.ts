@@ -39,13 +39,10 @@ const files = chaseFiles();
  * Reference ids the registries do not hold today, each stated in its own
  * chase.ts. The validator reports them; this list makes a new one fail and
  * a fixed one fail too, so it cannot drift. M10-T02 records them as
- * findings: pom3 and sheet15 have no profile row (M06-T02 card defects),
- * and no ConstraintDef registers contact.gap (CHK-KEY-01 carries that
- * interval itself).
+ * findings: pom3 and sheet15 have no profile row (M06-T02 card defects).
  */
 const KNOWN: Readonly<Record<string, readonly string[]>> = {
   "reference/joints/balance-beam/chase.ts": ["E_REF /materials/0/material sheet15"],
-  "reference/keys/flex-pair/chase.ts": ["E_REF /params/1/fields/0/item/3/constraintDim contact.gap"],
 };
 const POM3 = ["E_REF /materials/0/material pom3"];
 const known = (f: string): readonly string[] => KNOWN[f.split(path.sep).join("/")] ?? (readFileSync(path.join(ROOT, f), "utf8").includes('material: "pom3"') ? POM3 : []);

@@ -1,9 +1,7 @@
 // hbf chase.validate (M10-T04 acceptance, validate half). The CLI runs in
 // process on the flex pair and on the fixtures under
-// packages/chase/test/fixtures. The flex pair's one error is the
-// registry gap core/test/chase-corpus.test.ts records (no ConstraintDef
-// registers contact.gap); when one does, this list empties and the test
-// must be updated to the card's 0 errors and exit 0.
+// packages/chase/test/fixtures. The flex pair validates with 0 errors:
+// key/flex-gap registers the contact.gap dim its params name.
 
 import { describe, expect, it } from "vitest";
 import { ERROR_TRANSPORT, type CommandError, type ValidateQuestion } from "@hackbuild/spec";
@@ -19,7 +17,7 @@ const run = async (target: string) => {
 describe("chase.validate on the flex pair", () => {
   it("lists exactly two Q-TIER questions, at the cpla and ctpu slots, each with the inferred row in force", async () => {
     const { errors, result } = await run(REF);
-    expect(errors.map((e) => `${e.code} ${e.path} ${String(e.got)}`)).toEqual(["E_REF /params/1/fields/0/item/3/constraintDim contact.gap"]);
+    expect(errors.map((e) => `${e.code} ${e.path} ${String(e.got)}`)).toEqual([]);
     expect(result.questions.map((q) => [q.id, q.path, q.defaultInForce])).toEqual([
       ["Q-TIER", "/materials/1", "cpla.pip.along, 500 ohm cm inferred, CHK-NET-05 warns"],
       ["Q-TIER", "/materials/3", "ctpu.pip.bulk, 400 ohm cm inferred, CHK-NET-05 warns"],

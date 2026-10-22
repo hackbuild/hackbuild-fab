@@ -31,9 +31,10 @@ function placementWithCanons(): Map<string, { pkg: string; kernel: string }> {
 }
 
 describe("core constraints loader (D-044)", () => {
-  test("the placement table parses to its eleven rows, M05-T12's included", () => {
+  test("the placement table parses to its twelve rows, M05-T12's and key/flex-gap included", () => {
     const rows = placement();
-    expect(rows.size).toBe(11);
+    expect(rows.size).toBe(12);
+    expect(rows.get("key/flex-gap")).toEqual({ pkg: "constraints", kernel: "mesh" });
     expect(rows.get("circuit/capacitive-path-ceiling")).toEqual({ pkg: "circuit", kernel: "circuit" });
     expect(rows.get("circuit/trace-resistance-floor")).toEqual({ pkg: "circuit", kernel: "circuit" });
     expect(rows.get("mech/cascade-slop")).toEqual({ pkg: "mechanisms", kernel: "motion" });
