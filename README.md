@@ -17,9 +17,10 @@ yours.
 
 ## Status
 
-Work in progress, no release. Milestones M-1 to M10 are built and none is
-complete, and no part this code exported has been printed. The latest CI
-run is run 38667622976 on 13856c3, 2026-10-15 01:48 UTC: 26 jobs passed
+Work in progress, no release. The release 1 queue is built
+(2026-10-21); owner proof is open, and no part this code
+exported has been printed. The latest CI run is
+run 38667622976 on 13856c3, 2026-10-15 01:48 UTC: 26 jobs passed
 and 1 was skipped (measured, from `gh run view`). Commits after 13856c3
 have not run on a hosted runner.
 
