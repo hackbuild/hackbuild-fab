@@ -33,9 +33,10 @@ export function lint(text) {
 
 const benches = {};
 for (const f of html(path.join(root, "dist/bench"))) benches[path.basename(f, ".html")] = f;
+// A legacy page is keyed by its file stem, as the gold suite names it, so
+// it never overwrites the fab bake of the same design.
 for (const f of html(path.join(root, "dist/legacy"))) {
-  const id = adapters.get(createHash("sha256").update(readFileSync(f)).digest("hex"));
-  if (id !== undefined) benches[id] = f;
+  if (adapters.has(createHash("sha256").update(readFileSync(f)).digest("hex"))) benches[path.basename(f, ".html")] = f;
 }
 const out = { about: "CHK-LNT-06 over each baked page, tools/gold/static.mjs", benches: {} };
 for (const [id, f] of Object.entries(benches)) {

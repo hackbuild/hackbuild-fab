@@ -457,7 +457,9 @@ export async function runParity(args: ParityArgs, cwd: string): Promise<ParityOu
     if (old === undefined) return { file, status: "missing", moved };
     return { file, status: canonicalize(old ?? null) === canonicalize(fresh[file]) ? "equal" : "differs", moved };
   });
-  const queries = await queryGoldens(design.dir, cwd, pinned);
+  // A first accept into an empty dir has no pinned epoch; the queries take
+  // the one build.json is written at, never the repo golden's beside design.dir.
+  const queries = await queryGoldens(design.dir, cwd, pinned ?? built.inputs.sourceDateEpoch);
   for (const q of queries) {
     // queries.json names goldens under expected/; they live in the goldens dir.
     const at = path.join(dir, path.basename(q.file));

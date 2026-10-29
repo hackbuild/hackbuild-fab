@@ -46,6 +46,12 @@ export interface GoldBench {
   defaultView: string | null;
   /** The design folder of a fab bake, relative to the repo root, the oracle host builds; null on a legacy page. */
   design: string | null;
+  /**
+   * The legacy adapter key in tools/hook/legacy-adapters.ts; null on a fab bake.
+   * A legacy bench's id is its file stem (pip-legacy), so it never shares a
+   * test title with the fab bake of the same design (pip).
+   */
+  adapter: string | null;
 }
 
 export interface Dom {
@@ -147,9 +153,9 @@ export async function goldBenches(): Promise<GoldBench[]> {
       if (build === undefined) continue;
       const d = await declOf(b);
       out.push({ id, under: b, origin: "fab", build, na: naOf(d), dom: FAB_DOM, focus: (d.bench?.rail ?? []).map((r) => r.focus ?? null),
-        enter: (d.bench?.rail ?? []).map((r) => ({ cam: r.cam ?? null, view: r.view ?? null })), defaultView: d.bench?.views.default ?? null, design: d.dir });
+        enter: (d.bench?.rail ?? []).map((r) => ({ cam: r.cam ?? null, view: r.view ?? null })), defaultView: d.bench?.views.default ?? null, design: d.dir, adapter: null });
     } else if (b.origin === "legacy" && b.rel.startsWith(`dist${path.sep}legacy`) && b.adapter !== null && LEGACY_DOM[b.adapter] !== undefined) {
-      out.push({ id: b.adapter, under: b, origin: "legacy", build: null, na: { ...(LEGACY_NA[b.adapter] ?? {}) }, dom: LEGACY_DOM[b.adapter] as Dom, focus: [], enter: [], defaultView: null, design: null });
+      out.push({ id: path.basename(b.file, ".html"), under: b, origin: "legacy", build: null, na: { ...(LEGACY_NA[b.adapter] ?? {}) }, dom: LEGACY_DOM[b.adapter] as Dom, focus: [], enter: [], defaultView: null, design: null, adapter: b.adapter });
     }
   }
   cache = out;
@@ -180,7 +186,7 @@ export async function legacyRead<T>(page: Page, b: GoldBench, read: LegacyRead):
     const a = (globalThis as unknown as Hooked).__HBF_ADAPTERS?.[id];
     const f = a?.[k as LegacyRead];
     return f === undefined ? { has: false, value: null } : { has: true, value: f(globalThis) };
-  }, [b.id, read] as const);
+  }, [b.adapter ?? b.id, read] as const);
   if (!r.has) notRun(`${b.id}: the adapter has no ${read} read`);
   return r.value as T;
 }
@@ -227,7 +233,7 @@ export async function openGold(page: Page, b: GoldBench, opts: { welcome?: boole
       if (a === undefined) throw new Error(`adapter ${id} missing`);
       g.__hbfHook = a.adapt(globalThis);
       if (a.example !== undefined) a.example(globalThis);
-    }, b.id);
+    }, b.adapter ?? b.id);
     await hookSettled(page);
   }
   return { watch: w, readyMs };

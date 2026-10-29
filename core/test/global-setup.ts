@@ -8,6 +8,11 @@
 // toolchain hash, handed to every worker through the environment, so the
 // corpus files read one build per reference and design per run
 // (support/build-cache.ts). The directory is removed when the run ends.
+//
+// SOURCE_DATE_EPOCH is pinned to 315532800, the epoch the goldens record and
+// CI sets: unset, a build takes the HEAD commit time (core/src/epoch.ts), so
+// every new commit would move buildHash against the goldens. A test that
+// needs another epoch sets and restores its own.
 
 import { spawnSync } from "node:child_process";
 import { mkdtempSync, rmSync } from "node:fs";
@@ -19,7 +24,8 @@ import { STORE_ENV, TOOLCHAIN_ENV, toolchainHash } from "./support/build-cache.j
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "..");
 
 export default function setup(): () => void {
-  const r = spawnSync(path.join(ROOT, "node_modules", ".bin", "tsc"), ["-b"], { cwd: ROOT, stdio: "inherit" });
+  process.env["SOURCE_DATE_EPOCH"] ??= "315532800";
+  const r =spawnSync(path.join(ROOT, "node_modules", ".bin", "tsc"), ["-b"], { cwd: ROOT, stdio: "inherit" });
   if (r.status !== 0) throw new Error(`tsc -b exited ${String(r.status ?? r.signal)}; fix the build before the tests run against stale dist`);
   const store = mkdtempSync(path.join(tmpdir(), "hbf-test-builds-"));
   process.env[STORE_ENV] = store;
