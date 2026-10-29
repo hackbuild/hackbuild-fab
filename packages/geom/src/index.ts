@@ -2,6 +2,8 @@ export { FLOAT32_EXACT_LIMIT, GRID, isSnapped, q, snapPoint, snapRing } from "./
 export { MIN_CIRCULAR_ANGLE, MIN_CIRCULAR_EDGE_LENGTH, circularSegments, offsetRRect, rrect, rrectDistance, rrectRing } from "./rrect.js";
 export type { RRect } from "./rrect.js";
 export { UNIT_CIRCLE_MAX_SEGMENTS, UNIT_CIRCLE_MIN_SEGMENTS, checkSegments, circleRing, unitCircle } from "./unit-circle.js";
+export { adoptManifold, configureManifold, loadManifold } from "./manifold.js";
+export type { ManifoldOptions } from "./manifold.js";
 export { Geom, Section, geomError, loadGeom, ringArea2 } from "./cs.js";
 export type { Bounds, EntryOptions, FillRule, JoinType, OffsetOptions } from "./cs.js";
 export { ATTEMPTS, DEGENERATE_AREA2, JITTER, ROTATION, ROTATION_STEP, earcut, triangulate } from "./earcut.js";

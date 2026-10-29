@@ -20,6 +20,7 @@
   "dependencies": {
     "@hackbuild/catalog": "0.0.0",
     "@hackbuild/chase": "0.0.0",
+    "@hackbuild/geom": "0.0.0",
     "@hackbuild/inlay": "0.0.0",
     "@hackbuild/spec": "0.1.0",
     "three": "0.186.1"

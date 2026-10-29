@@ -23,7 +23,7 @@
 // in a fixed grid, not the original's plate packer; wire cups are not
 // ported (D-096); the grips outline routes inside its stadium.
 
-import { commandError, defineBuild, qualify, type ApplyOut, type BodyDraft, type ContactFn, type FaceFrame, type Feature, type Metric, type Ring, type ShapeDecl, type Vec2 } from "@hackbuild/spec";
+import { commandError, defineBuild, qualify, type ApplyOut, type BodyDraft, type FaceFrame, type Feature, type Metric, type Ring, type ShapeDecl, type Vec2 } from "@hackbuild/spec";
 import {
   clickDerive, clickParams, emitTraceLayers, pipCircle, flexDims, flexParams, flexZ, loadGeom, pipStack, route, routeMetrics, routeRecord, seatParams, seatZ,
   snapRing, snapUp, stickParams, stickZ, touchParams, touchZ, traceStack, type RouteNet,
@@ -370,15 +370,4 @@ export const build = defineBuild(chase, async (p, k) => {
   });
 });
 
-// The drive pad's contact function (G-20): target is a key name, A, SELECT
-// and so on, or a stick direction. A hold closes the contact region the
-// key's actuator bridges to its common: the flex column halves, the click
-// half pads, the touch combs, or the stick's wall pad and the ring above
-// it. Its partner region is the same id with Common for keys.
-export const contact: ContactFn = (metrics, target, stimulus) => {
-  const v = metrics.find((m) => m.id === `drive.${target}`)?.value;
-  const held = stimulus === true || (typeof stimulus === "number" && stimulus > 0) || (typeof stimulus === "object" && stimulus.tiltDeg > 0);
-  if (typeof v !== "string" || v === "" || !held) return { closed: [], dir: "none" };
-  const stickPad = /\.conductor\.pad\d$/.test(v);
-  return { closed: stickPad ? [v] : [v, `${v}Common`], dir: target };
-};
+export { contact } from "./contact";

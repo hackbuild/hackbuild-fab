@@ -7,7 +7,7 @@
 // the innermost open frame. Closing a frame frees what it owns, newest
 // first. This file is the only place in mesh and 3mf that calls `.delete()`.
 
-import Module from "manifold-3d";
+import { loadManifold as loadSharedManifold } from "@hackbuild/geom";
 import type { ErrorStatus, ExecutionContext, Manifold, ManifoldToplevel } from "manifold-3d";
 import type { AbortSignalLike } from "@hackbuild/spec";
 import { meshError } from "./routes/prism.js";
@@ -101,6 +101,27 @@ function wrapPrototype(C: { prototype: object }): void {
   }
 }
 
+// geom shares this instance and frees its own CrossSections by hand; a handle
+// deleted outside release() must leave the pool or liveCount never returns to zero.
+function unpoolOnDelete(C: { prototype: object }): void {
+  let P: object | null = C.prototype;
+  while (P !== null && !Object.prototype.hasOwnProperty.call(P, "delete")) P = Object.getPrototypeOf(P) as object | null;
+  if (P === null) return;
+  const del = (P as Record<string, unknown>)["delete"] as (this: Handle) => void;
+  if ((del as AnyFn)[WRAPPED]) return;
+  const w: AnyFn = function (this: Handle) {
+    const frame = pool.get(this);
+    if (frame !== undefined) {
+      const i = frame.owned.lastIndexOf(this);
+      if (i >= 0) frame.owned.splice(i, 1);
+      pool.delete(this);
+    }
+    del.call(this);
+  };
+  w[WRAPPED] = true;
+  (P as Record<string, unknown>)["delete"] = w;
+}
+
 function wrapStatics(C: object): void {
   for (const k of Object.getOwnPropertyNames(C)) {
     if (STATIC_SKIP.has(k) || k.startsWith("_")) continue;
@@ -129,6 +150,7 @@ function install(wasm: ManifoldToplevel): void {
   classes = [wasm.Manifold, wasm.CrossSection, ctx];
   for (const C of [wasm.Manifold, wasm.CrossSection, ctx]) {
     wrapPrototype(C);
+    unpoolOnDelete(C);
     wrapStatics(C);
   }
   wasm.Manifold = trackingConstructor(wasm.Manifold);
@@ -138,8 +160,7 @@ function install(wasm: ManifoldToplevel): void {
 
 /** Load manifold-3d once per process and patch it so every kernel object joins the pool. */
 export function loadManifold(): Promise<ManifoldToplevel> {
-  loading ??= Module().then((wasm) => {
-    wasm.setup();
+  loading ??= loadSharedManifold().then((wasm) => {
     install(wasm);
     loaded = wasm;
     return wasm;

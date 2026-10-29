@@ -29,11 +29,11 @@
 //   stops at the cup's outer edge: the original paints the bore over the
 //   lead end (order 9), a centreline conductor cannot carry the bore.
 
-import { commandError, defineBuild, qualify, type BodyDraft, type ContactFn, type FaceFrame, type Feature, type Metric, type Ring, type ShapeDecl, type Vec2 } from "@hackbuild/spec";
+import { commandError, defineBuild, qualify, type BodyDraft, type FaceFrame, type Feature, type Metric, type Ring, type ShapeDecl, type Vec2 } from "@hackbuild/spec";
 import { TOGGLE_BLOCKS, TOGGLE_NAMES, routeSearch, toggleHost, toggleParams } from "@hackbuild/kernel/author";
+import { STICK } from "./contact";
 import { chase } from "./chase";
 
-const STICK = "tilt-stick";
 const BED: FaceFrame = { origin: [0, 0, 0], normal: [0, 0, 1], u: [1, 0, 0] };
 const at = (z: number): FaceFrame => ({ origin: [0, 0, z], normal: [0, 0, 1], u: [1, 0, 0] });
 /** Facets of a terminal or stud circle (the archetype's wall polygon uses 96 on a radius near 5 mm). */
@@ -286,38 +286,4 @@ export const build = defineBuild(chase, (p, k) => {
   });
 });
 
-const num = (metrics: Parameters<ContactFn>[0], id: string): number | undefined => {
-  const v = metrics.find((m) => m.id === id)?.value;
-  return typeof v === "number" ? v : undefined;
-};
-const pads = (metrics: Parameters<ContactFn>[0], id: string): string[] => {
-  const v = metrics.find((m) => m.id === id)?.value;
-  return typeof v === "string" && v !== "" ? v.split(",").map((s) => `${STICK}.0.conductor.pad${s}`) : [];
-};
-
-// The drive pad's contact function (G-20): target is a direction name, E, N
-// and so on. A hold tilts the stick to its stop toward that direction's
-// sector centre and closes the pads the archetype's solver lists there; a
-// number is the tilt in degrees toward it (pads at contact from the contact
-// tilt, at the stop from the stop); a tilt and an angle take the direction
-// whose sector centre is nearest the angle. Between two sectors the solver
-// may close both; that case reads the nearest sector's lists, and a drive
-// over the full solver lands with the bench.
-export const contact: ContactFn = (metrics, target, stimulus) => {
-  const centre = (n: string): number | undefined => num(metrics, `drive.${n}.deg`);
-  let dirName = target;
-  let tilt: number;
-  const thContact = num(metrics, `${STICK}.0.stick.thContact`) ?? Infinity;
-  const thStop = num(metrics, `${STICK}.0.stick.thStop`) ?? thContact;
-  if (typeof stimulus === "object") {
-    const ids = metrics.filter((m) => /^drive\.[A-Z]+$/.test(m.id)).map((m) => m.id.slice(6));
-    const off = (n: string): number => { const d = Math.abs(((stimulus.phiDeg - (centre(n) ?? 0)) % 360 + 540) % 360 - 180); return d; };
-    dirName = ids.reduce((a, b) => (off(b) < off(a) ? b : a), ids[0] ?? target);
-    tilt = stimulus.tiltDeg;
-  } else tilt = stimulus === true ? thStop : stimulus === false ? 0 : stimulus;
-  const k = num(metrics, `drive.${dirName}`);
-  const phiDeg = centre(dirName) ?? 0;
-  if (k === undefined || !(tilt >= thContact - 1e-6)) return { closed: [], dir: "none", pose: { tiltDeg: tilt, phiDeg } };
-  const closed = pads(metrics, `${STICK}.0.drive.${k}.${tilt >= thStop - 1e-6 ? "stop" : "contact"}`);
-  return { closed, dir: closed.length > 0 ? dirName : "none", pose: { tiltDeg: tilt, phiDeg } };
-};
+export { contact } from "./contact";

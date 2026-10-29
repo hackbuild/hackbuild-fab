@@ -8,7 +8,7 @@
 import { mountBench, pageBench, pageOf } from "../../../packages/ui/src/bench/entry";
 import { bench } from "./bench";
 import { chase } from "./chase";
-import { contact } from "./build";
+import { contact } from "./contact";
 
 // The drive pad and BENCH.drive call the ContactFn bench.ts names (G-20).
 // The library build, its checks and the 3mf, stl and card writers come

@@ -9,12 +9,12 @@
 // on entry or emit is the exemption for a parity route that compares
 // against a non-dyadic legacy outline; its card states it.
 
-import Module from "manifold-3d";
 import type { CrossSection, FillRule, JoinType, ManifoldToplevel, SimplePolygon } from "manifold-3d";
 import type { CommandError, Mm, Ring, ThrownCommandError, Vec2 } from "@hackbuild/spec";
 import { commandError } from "@hackbuild/spec";
+import { loadManifold } from "./manifold.js";
 import { q } from "./snap.js";
-import { MIN_CIRCULAR_ANGLE, MIN_CIRCULAR_EDGE_LENGTH, rrectRing, type RRect } from "./rrect.js";
+import { rrectRing, type RRect } from "./rrect.js";
 
 export type { FillRule, JoinType };
 
@@ -230,15 +230,10 @@ export class Geom {
 let loading: Promise<Geom> | undefined;
 
 /**
- * Load manifold-3d once per process and apply COTTER's circular settings:
- * setMinCircularAngle(8) and setMinCircularEdgeLength(0.35).
+ * Load the shared manifold-3d instance; manifold.ts applies COTTER's
+ * circular settings, setMinCircularAngle(8) and setMinCircularEdgeLength(0.35).
  */
 export function loadGeom(): Promise<Geom> {
-  loading ??= Module().then((wasm) => {
-    wasm.setup();
-    wasm.setMinCircularAngle(MIN_CIRCULAR_ANGLE);
-    wasm.setMinCircularEdgeLength(MIN_CIRCULAR_EDGE_LENGTH);
-    return new Geom(wasm);
-  });
+  loading ??= loadManifold().then((wasm) => new Geom(wasm));
   return loading;
 }

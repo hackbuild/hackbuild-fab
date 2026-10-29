@@ -130,10 +130,10 @@ and the chase; never edit between the markers.
 <!-- generated: print card; rewrite with HBF_ACCEPT=1 npx vitest run reference/keys/flex-pair -->
 
 - design: keys-flex-pair, preset two, machine ffc5p
-- file: out/flex-pair-two.3mf, 65703 bytes, sha256 f082ad09b854f271f13cb961cd41a9243bc9a4e8f5d616c2b41170d7a4ded36c
-- artifact hash (hbf): d6ba18f53200f9a01f535d73612397bf8818f08c1f702be1a464b45910fdb0ea
+- file: out/flex-pair-two.3mf, 65701 bytes, sha256 26878203ec2d428c6665b8dc601320abd513c875ada90f9671f504661ae8b2e7
+- artifact hash (hbf): 702668cbf4f27a560aaab64e7e5f621105ea4ded7350d3f8455a5c185fc680b9
 - write it: `SOURCE_DATE_EPOCH=315532800 npx --no-install hbf export.run reference/keys/flex-pair --kind 3mf --preset two --out reference/keys/flex-pair/out/flex-pair-two.3mf` (the epoch is pinned; unset, it follows the HEAD commit time and the bytes move)
-- build: 06dd9557ae764f871d9c17f4ca020f0d5d964a327d3fc3bc9c979c88ac7f8b4d
+- build: 382577f6681da344f28dde2cea2353deeae17e32fd01f9c5902bb10db7db2488
 - slicer: Flashforge Creator 5 Pro 0.4 nozzle, process 0.24mm Standard @FF C5
 - plate: Textured PEI Plate
 - layer grid: ffc5p_20260819, first layer 0.25 mm, then 0.24 mm (profile)
