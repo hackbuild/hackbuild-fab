@@ -205,7 +205,9 @@ jobs:
           enable-cache: true
           cache-dependency-glob: tools/py/uv.lock
       - run: npm ci
-      - run: npx tsc -b
+      # build:lib runs tsc -b, then writes the dist/iife files and sidecars the
+      # chase.bake and chase.render tests bake on (tools/bake/from-chase.ts)
+      - run: npm run build:lib
       - name: owner-file tests not run here
         run: node .github/scripts/owner-files.mjs report
       - name: package, reference, core and kernel tests

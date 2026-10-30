@@ -4,11 +4,12 @@
 // flex-pair one (reference/keys/flex-pair/bake.json) with the design's id:
 // a `ui` shell, the five faces of the hackbuild-ui type scale, the
 // hackbuild-ui and bench CSS, manifold-3d as a classic script plus base64
-// wasm, jszip, the page build and the bench entry. three 0.186.1 reaches the
-// page through the entry bundle. A design that has no bench.entry.ts or
-// page-build.ts gets the plain ones below: the chase and bench mounted by
-// the bench shell, and the chase and build.ts run by the shared page build
-// (D-264). The plain entry imports the shell by the @hackbuild/bench source
+// wasm, jszip, the page build and the bench entry, baked on the library IIFEs
+// (`libraries`), so vue, pinia and three 0.186.1 come in as classic
+// scripts before the entry; npm run build:lib writes them. A design that
+// has no bench.entry.ts or page-build.ts gets the plain ones below: the
+// chase and bench mounted by the bench shell, and the chase and build.ts
+// run by the shared page build (D-264). The plain entry imports the shell by the @hackbuild/bench source
 // export, as designs/blocks/bench.entry.ts does, so tools/tiers.mjs checks
 // the edge; when it writes the entry it also gives the design's
 // package.json that devDependency, writing the package.json when there is
@@ -65,6 +66,7 @@ export function manifestFor(dir: string): BakeManifest {
     blocks: [{ from: "npm:jszip/dist/jszip.min.js", label: "inlined jszip.min.js", vendored: true }],
     build: { from: "./page-build.ts", global: "HbfPageBuild", label: `${id} page build: chase, build.ts and the build and check pipeline` },
     entry: "./bench.entry.ts",
+    libraries: "iife",
   };
 }
 
