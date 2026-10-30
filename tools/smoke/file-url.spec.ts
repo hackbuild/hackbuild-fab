@@ -27,7 +27,7 @@ interface Row { kind: string; started: boolean; answered: boolean; error: string
 test.skip(({ browserName }) => process.env["CI"] === undefined && browserName !== "chromium" && !existsSync(ENGINES[browserName].executablePath()), "not run: playwright has no installed build of this browser on this host");
 
 for (const [id, dir] of BENCHES) {
-  test(`${id} bake opens from file:// and builds to expected/build.json`, async ({ page }, info) => {
+  test(`${id} bake opens from file:// and builds to expected/build.json`, async ({ page, browserName }, info) => {
     const file = path.join(ROOT, "dist/bench", `${id}.html`);
     test.skip(!existsSync(file), `not run: ${file} is absent; bake it first`);
     const errors: string[] = [];
@@ -40,7 +40,15 @@ for (const [id, dir] of BENCHES) {
     const hash = await page.evaluate(() => (globalThis as unknown as { BENCH: Hook }).BENCH.buildHash);
     const expected = (JSON.parse(readFileSync(path.join(ROOT, dir, "expected/build.json"), "utf8")) as { buildHash: string }).buildHash;
     expect(hash, `${info.project.name} ${id}`).toBe(expected);
-    expect(errors).toEqual([]);
+    // The hosted runner has no GL driver for firefox or webkit (CI run 41014308781,
+    // FEATURE_FAILURE_WEBGL_EXHAUSTED_DRIVERS); chromium has swiftshader. There the
+    // stage is reported not run, and every other console error still fails.
+    const gl = browserName === "chromium" ? [] : errors.filter((e) => /WebGL/.test(e));
+    if (gl.length > 0) {
+      info.annotations.push({ type: "not run", description: `3D stage: no WebGL context in ${info.project.name} on this host (${gl.length} console lines)` });
+      console.log(`not run: ${info.project.name} ${id} 3D stage, no WebGL context on this host (${gl.length} console lines)`);
+    }
+    expect(errors.filter((e) => !gl.includes(e))).toEqual([]);
   });
 }
 
