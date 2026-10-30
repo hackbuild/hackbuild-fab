@@ -66,3 +66,7 @@ export { readSvgPaths } from "./artdoc/svg.js";
 export type { SvgPaths, SvgRead } from "./artdoc/svg.js";
 export { ART_FONT_SPECS, artSurfaces } from "./artdoc/surfaces.js";
 export { ART_OPS, artVerb } from "./artdoc/verbs.js";
+export { assertExportable, check3mfEntries, ExportSelfCheckError, readZipText, selfCheck3mf } from "./export/selfcheck.js";
+export type { SelfCheckFinding, SelfCheckRule } from "./export/selfcheck.js";
+export { buildOfflinePage, classicDesign, offlineAvailability, saveOffline } from "./offline/save.js";
+export type { OfflineAvailability, OfflineDeps, OfflineOptions, OfflinePage } from "./offline/save.js";

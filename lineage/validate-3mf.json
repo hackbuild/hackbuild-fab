@@ -4,7 +4,9 @@
     "kind": "canonical",
     "source": "fab-knowledge:originals/inlay/files/skill/print-forge/scripts/validate_3mf.py",
     "sha256": "cdc2c7d5fc170240e36e1e52bcdd3d5af03036607c242a8e48b9c0d00896aecf",
-    "fixes": [],
+    "fixes": [
+      "packages/bench-core/src/export/selfcheck.ts: the id, p:UUID, name and manifold rules of the tools/py validator (CHK-3MF-06, CHK-ART-01, CHK-PRT-01) ported to a zip and XML reader with no Python, so the shell refuses a failing 3MF before any download; vertex merge, degenerate area and vertex fan checks stay with the Python validator"
+    ],
     "dest": "tools/py/validate_3mf.py"
   }
 ]

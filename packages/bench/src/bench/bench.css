@@ -124,6 +124,13 @@
 .hbf-art-bar,.hbf-art-add{ display:flex; flex-wrap:wrap; gap:var(--hb-s1) }
 .hbf-art-canvas{ display:block; width:100%; max-width:100%; background:var(--hb-void); border:var(--hbf-hair) solid var(--hb-ink); touch-action:none; cursor:default }
 .hbf-art-canvas:focus-visible{ outline:var(--hb-border) solid var(--hb-ink); outline-offset:var(--hbf-hair) }
+.hbf-art-fit{ min-width:0; container-type:size }
+.hbf-art.is-all .hbf-art-fit{ container-type:normal }
+.hbf-art-stage{ position:absolute; inset:0; background:var(--hb-void); z-index:1; display:flex; min-width:0; min-height:0 }
+.hbf-art-stage .hbf-art{ flex:1 1 auto; padding:var(--hb-s7) var(--hb-s3) var(--hb-s3); min-height:0; gap:var(--hb-s2) }
+.hbf-art-stage .hbf-art-bar{ justify-content:center }
+.hbf-art-stage .hbf-art-fit{ flex:1 1 auto; min-height:0; display:flex; align-items:center; justify-content:center }
+.hbf-art-stage .hbf-art-canvas{ width:min(100cqw,calc(100cqh * var(--hbf-art-ar))); height:auto; max-width:none }
 .hbf-art-note,.hbf-art-empty{ margin:0; font-size:var(--hbf-fs-note); overflow-wrap:anywhere }
 .hbf-art-layers{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:var(--hb-s1) }
 .hbf-art-layers li{ display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:var(--hb-s1); border:var(--hbf-hair) solid var(--hb-ink-border); padding:var(--hb-s1) }

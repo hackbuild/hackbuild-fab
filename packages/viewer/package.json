@@ -1,6 +1,6 @@
 {
   "name": "@hackbuild/viewer",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "private": true,
   "type": "module",
   "description": "The stage viewer: three scene, orbit controls and the hb-viewer element. No Vue.",

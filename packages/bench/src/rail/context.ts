@@ -23,6 +23,20 @@ export const RAIL: InjectionKey<RailContext> = Symbol("hbf-rail");
 export type ArtHost = (id: string) => ArtDocController | null;
 export const ART_HOST: InjectionKey<ArtHost> = Symbol("hbf-art-host");
 
+/** The field id of the art param whose canvas the stage is showing; its rail row then drops the canvas and keeps the layer list and fields. */
+export const ART_STAGE: InjectionKey<Ref<string | null>> = Symbol("hbf-art-stage");
+
+/** The save-offline action of the export panel: whether it can run, why not, and the press. */
+export interface OfflineHost {
+  readonly ok: boolean;
+  readonly why: string;
+  readonly busy: boolean;
+  /** The line after a save, or after a refusal. */
+  readonly note: string;
+  run(): void;
+}
+export const OFFLINE: InjectionKey<OfflineHost> = Symbol("hbf-offline");
+
 /** How a settled edit commits: the field's declared commit, else a rebuild. */
 export const settleKind = (f: ParamField): CommitKind => f.commit ?? "commit";
 

@@ -4,7 +4,7 @@
 // region map (D-126). The bench-core bench core is the design's truth; this
 // component reads the Pinia mirror and writes only through core verbs.
 // PIP part1.html is the composer skeleton; COLLAR is the single one.
-import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from "vue";
+import { computed, inject, nextTick, onBeforeUnmount, onMounted, provide, ref, watch } from "vue";
 import {
   HbAppShell, HbGuide, HbHeader, HbPill, HbSelect, HbSpinner, HbStageOverlay, HbStatusBar, HbSteps, HbWelcome,
   type HbStepOption, type HbWelcomeStart,
@@ -28,7 +28,8 @@ import DraftBanner from "./DraftBanner.vue";
 import type { DraftWidget } from "./entry.js";
 import { bedFits, stepMarks } from "./steps.js";
 import { useShell, type BenchReport, type Values } from "../stores/shell.js";
-import type { CommitKind } from "../rail/context.js";
+import ArtBoard from "../art/ArtBoard.vue";
+import { ART_HOST, ART_STAGE, type CommitKind } from "../rail/context.js";
 
 interface Props {
   chase: Chase;
@@ -102,6 +103,35 @@ const exportStep = computed(() => steps.value.length - 1);
 const readoutPanels = computed(() => (stepNow.value?.panels ?? []).filter((p) => !p.startsWith("params.") && p !== "materials"));
 const rightRail = computed(() => layout.value === "composer" || (layout.value === "single3" && readoutPanels.value.length > 0));
 const logOpen = ref(false);
+
+// ---- art board on the stage
+// A step whose params panels include an art param that takes layers gives the
+// stage to its board; the rail keeps the layers and fields. A stage toggle
+// switches to the model and back. Without an ART_HOST controller (a host that
+// mounts the shell alone) the board stays in the rail row.
+const artHost = inject(ART_HOST, undefined);
+const artField = computed<string | null>(() => {
+  for (const id of stepNow.value?.panels ?? []) {
+    if (!id.startsWith("params.")) continue;
+    const g = props.chase.params.find((x) => x.id === id.slice("params.".length));
+    const f = g?.fields.find((x) => x.type === "art" && x.accepts.includes("layers"));
+    if (f !== undefined && artHost?.(f.id) != null) return f.id;
+  }
+  return null;
+});
+const stageView = ref<"board" | "model">("board");
+const artStage = computed<string | null>(() => (stageView.value === "board" ? artField.value : null));
+const artController = computed(() => (artStage.value === null ? null : artHost?.(artStage.value) ?? null));
+const artLabel = computed(() => {
+  const id = artField.value;
+  for (const g of props.chase.params) for (const f of g.fields) if (f.id === id) return f.label;
+  return "art";
+});
+provide(ART_STAGE, artStage);
+const artValue = computed(() => (artStage.value === null ? undefined : props.core.get(`${paramGroupOf(artStage.value)}.${artStage.value}`)));
+function paramGroupOf(fieldId: string): string {
+  return props.chase.params.find((g) => g.fields.some((f) => f.id === fieldId))?.id ?? "";
+}
 
 const starts = computed<HbWelcomeStart[]>(() =>
   chaseStarts(props.chase, props.bench).map((s) => ({ id: s.id, name: s.label, primary: s.primary })));
@@ -287,6 +317,7 @@ watch(marks, () => nextTick(tagHooks));
 // Entering the export step runs the build and every check (step 9).
 watch(() => shell.step, (i) => {
   if (i === exportStep.value) props.core.ensureMesh().catch(() => undefined);
+  stageView.value = "board";
   enterStep(i);
 });
 
@@ -386,8 +417,24 @@ const dims = computed(() => {
       </aside>
       <HbStageOverlay :graph="bench.views.stage === 'graph'" :quiet="shell.welcomeOpen" class="hbf-stage" data-hb="stage">
         <div ref="host" class="hbf-viewer-host" />
-        <template v-if="overlays.has('cams')" #tl>
+        <div v-if="artController !== null" class="hbf-art-stage" data-hb="art-stage">
+          <ArtBoard :controller="artController" :value="artValue" :label="artLabel" part="canvas" />
+        </div>
+        <template v-if="overlays.has('cams') || artField !== null" #tl>
           <div class="hbf-camstrip" role="group" aria-label="view">
+            <template v-if="artField !== null">
+              <button
+                v-for="v in (['board', 'model'] as const)"
+                :key="v"
+                type="button"
+                class="hbf-cam"
+                :aria-pressed="stageView === v"
+                data-hb="stage-view"
+                :data-view="v"
+                @click="stageView = v"
+              >{{ v }}</button>
+            </template>
+            <template v-if="overlays.has('cams') && artStage === null">
             <HbSelect
               v-if="narrow && cams.length > 0"
               class="hbf-cam-select"
@@ -427,6 +474,7 @@ const dims = computed(() => {
               :data-render="r"
               @click="toggleMode(r)"
             >{{ r }}</button>
+            </template>
           </div>
         </template>
         <template v-if="overlays.has('legend')" #tr>

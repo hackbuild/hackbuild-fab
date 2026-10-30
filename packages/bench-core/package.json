@@ -1,6 +1,6 @@
 {
   "name": "@hackbuild/bench-core",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "private": true,
   "type": "module",
   "license": "MIT",
@@ -23,7 +23,7 @@
     "@hackbuild/geom": "0.0.0",
     "@hackbuild/inlay": "0.0.0",
     "@hackbuild/spec": "0.1.0",
-    "@hackbuild/viewer": "0.0.0"
+    "@hackbuild/viewer": "0.1.0"
   },
   "devDependencies": {
     "@hackbuild/circuit": "0.0.0"

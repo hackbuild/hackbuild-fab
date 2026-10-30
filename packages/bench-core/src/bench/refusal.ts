@@ -70,7 +70,8 @@ export function refusedChanges(groups: readonly ParamGroup[], r: BuildRefusal): 
   return out;
 }
 
-const said = (r: BuildRefusal): string => (r.code === null ? r.message : `${r.code}, ${r.message}`);
+// A message may end in its own period; the line adds the one that joins it to the tail.
+const said = (r: BuildRefusal): string => (r.code === null ? r.message : `${r.code}, ${r.message}`).replace(/\.+$/, "");
 const named = (c: RefusedChange): string => `${c.path} ${String(c.value)}`;
 
 /** The stale line the shell shows: what refused, why, and that the model on screen is the last good one. */

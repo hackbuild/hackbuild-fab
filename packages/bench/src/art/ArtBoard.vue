@@ -17,9 +17,13 @@ interface Props {
   /** The param value the controller reads; a change from outside (undo) redraws. */
   value?: unknown;
   label?: string;
+  /** canvas is the face bar and canvas for a stage; panel is the add row, layer list and fields for a rail; all is both in one column. */
+  part?: "all" | "canvas" | "panel";
 }
 
-const props = withDefaults(defineProps<Props>(), { label: "art" });
+const props = withDefaults(defineProps<Props>(), { label: "art", part: "all" });
+const showCanvas = computed(() => props.part !== "panel");
+const showPanel = computed(() => props.part !== "canvas");
 
 /** Kinds the add row offers, in BAIL's order; path layers come from a dropped svg, relief has no painter. */
 const ADDABLE: readonly ArtLayerKind[] = ["text", "shape", "logo", "scope", "circuit"];
@@ -29,6 +33,7 @@ const picker = ref<HTMLInputElement | null>(null);
 const tick = ref(0);
 let attached: Attached | null = null;
 let off: (() => void) | null = null;
+let sizer: ResizeObserver | null = null;
 
 const c = computed(() => props.controller);
 const layers = computed(() => (tick.value, c.value.layers().slice().reverse()));
@@ -38,6 +43,7 @@ const rows = computed<ArtFieldDef[]>(() => (sel.value === null ? [] : layerField
 const notes = computed(() => (tick.value, c.value.notes()));
 const counts = computed(() => (tick.value, c.value.state().counts));
 const aspect = computed(() => `${c.value.frame().w} / ${c.value.frame().h}`);
+const ratio = computed(() => c.value.frame().w / c.value.frame().h);
 
 function theme(el: HTMLElement): ArtBoardTheme {
   const t = (name: string, fallback: string): string => cssToken(el, name) || fallback;
@@ -71,18 +77,27 @@ function onPick(e: Event): void {
 function bind(): void {
   off?.();
   attached?.detach();
-  const el = canvas.value;
-  if (el === null) return;
-  attached = attachArtBoard(el, c.value, { theme: theme(el), onDrop: fileTaken, keysOn: "canvas" });
+  attached = null;
+  sizer?.disconnect();
+  // every part follows the controller; only a canvas part attaches the board to a canvas
   off = c.value.on("change", () => {
     tick.value++;
     attached?.paint();
   });
   tick.value++;
+  const el = canvas.value;
+  if (el === null || !showCanvas.value) return;
+  attached = attachArtBoard(el, c.value, { theme: theme(el), onDrop: fileTaken, keysOn: "canvas" });
+  // a stage canvas follows its container; the paint reads the new rect
+  if (typeof ResizeObserver !== "undefined") {
+    sizer = new ResizeObserver(() => attached?.paint());
+    sizer.observe(el);
+  }
 }
 
 onMounted(bind);
 onBeforeUnmount(() => {
+  sizer?.disconnect();
   off?.();
   attached?.detach();
 });
@@ -106,8 +121,8 @@ const kindLine = (id: string): string => {
 </script>
 
 <template>
-  <div class="hbf-art" data-hb="art-board" :aria-label="label">
-    <div class="hbf-art-bar" role="group" aria-label="face">
+  <div class="hbf-art" :class="`is-${part}`" data-hb="art-board" :data-part="part" :aria-label="label" :style="{ '--hbf-art-ar': ratio }">
+    <div v-if="showCanvas" class="hbf-art-bar" role="group" aria-label="face">
       <HbChip
         v-for="f in ART_FACES"
         :key="f"
@@ -117,6 +132,7 @@ const kindLine = (id: string): string => {
         @click="c.setFace(f)"
       >{{ f }} {{ counts[f] }}</HbChip>
     </div>
+    <div v-if="showCanvas" class="hbf-art-fit">
     <canvas
       ref="canvas"
       class="hbf-art-canvas"
@@ -126,14 +142,15 @@ const kindLine = (id: string): string => {
       :aria-label="`${label} ${face} face. drag moves, corners scale, the dot rotates, wheel zooms, right drag pans, alt snaps, arrows nudge, delete removes`"
       :style="{ aspectRatio: aspect }"
     />
-    <p v-for="n in notes" :key="n" class="hbf-art-note" data-hb="art-note">{{ n }}</p>
-    <div class="hbf-art-add" role="group" aria-label="add layer">
+    </div>
+    <template v-if="showPanel"><p v-for="n in notes" :key="n" class="hbf-art-note" data-hb="art-note">{{ n }}</p></template>
+    <div v-if="showPanel" class="hbf-art-add" role="group" aria-label="add layer">
       <HbButton v-for="k in ADDABLE" :key="k" size="sm" variant="secondary" :data-add="k" @click="add(k)">{{ k }}</HbButton>
       <HbButton size="sm" variant="secondary" data-add="image" @click="picker?.click()">image</HbButton>
       <input ref="picker" type="file" accept=".svg,image/svg+xml,image/png,image/jpeg" class="hb-sr" tabindex="-1" aria-label="drop an svg or image" data-hb="art-file" @change="onPick" />
     </div>
-    <p v-if="layers.length === 0" class="hbf-art-empty" data-hb="art-empty">no layers on the {{ face }} face. add one, or drop an svg on the canvas.</p>
-    <ul v-else class="hbf-art-layers" data-hb="art-layers">
+    <p v-if="showPanel && layers.length === 0" class="hbf-art-empty" data-hb="art-empty">no layers on the {{ face }} face. add one, or drop an svg on the canvas.</p>
+    <ul v-else-if="showPanel" class="hbf-art-layers" data-hb="art-layers">
       <li v-for="L in layers" :key="L.id" :data-layer="L.id" :class="{ 'is-sel': sel?.id === L.id, 'is-mute': L.mute }">
         <HbChip toggle :model-value="sel?.id === L.id" class="hbf-art-pick" @click="c.select(L.id)">{{ kindLine(L.id) }}</HbChip>
         <span class="hbf-art-acts">
@@ -146,7 +163,7 @@ const kindLine = (id: string): string => {
         </span>
       </li>
     </ul>
-    <div v-if="sel !== null" class="hbf-art-props" data-hb="art-props" :data-layer="sel.id">
+    <div v-if="showPanel && sel !== null" class="hbf-art-props" data-hb="art-props" :data-layer="sel.id">
       <div v-for="f in rows" :key="`${sel.id}-${f.key}`" class="hbf-art-prop" :data-field="f.key">
         <label class="hbf-art-label" :for="`hbf-art-${sel.id}-${f.key}`">{{ f.label }}</label>
         <HbSelect

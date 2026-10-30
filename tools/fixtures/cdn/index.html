@@ -44,7 +44,7 @@ for (const file of meta.loadOrder) {
 }
 const { chase, bench, contact } = await import(`${base}design.js`);
 const { createBench, pageBench, pageOf } = await import("@hackbuild/bench");
-const controller = createBench({ chase, bench, contact, ...pageBench(pageOf(meta.globals.page)), globals: true, hook: true });
+const controller = createBench({ chase, bench, contact, ...pageBench(pageOf(meta.globals.page)), globals: true, hook: true, offline: { designBase: base } });
 controller.mount(document.getElementById("app"));
 globalThis.hbfCdn = controller;
 </script>

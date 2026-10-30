@@ -56,10 +56,14 @@ test.describe.configure({ timeout: 180_000 });
 
 test("the art board adds, moves, rotates, paints, takes an svg and refuses a png", async ({ page }) => {
   await open(page);
-  const board = page.locator('[data-hb="art-board"]');
+  const board = page.locator('[data-hb="art-board"][data-part="panel"]');
   await expect(board).toBeVisible();
   const canvas = page.locator('[data-hb="art-canvas"]');
   await expect(canvas).toBeVisible();
+  // the canvas sits on the stage, large; the rail keeps the layer list and fields
+  await expect(page.locator('[data-hb="stage"] [data-hb="art-canvas"]')).toHaveCount(1);
+  await expect(page.locator('[data-hb="rail-left"] [data-hb="art-canvas"]')).toHaveCount(0);
+  expect((await canvas.boundingBox())!.width).toBeGreaterThanOrEqual(600);
   expect(await uriOf(page)).toBeNull();
   await expect(page.locator('[data-hb="art-empty"]')).toContainText("no layers on the front face");
 
@@ -160,6 +164,13 @@ test("the art board adds, moves, rotates, paints, takes an svg and refuses a png
   await page.keyboard.press("Control+z");
   await expect.poll(async () => (await art(page, "state")).layers.length).toBe(2);
 
+  // the stage toggle reaches the model and back
+  await page.locator('[data-hb="stage-view"][data-view="model"]').click();
+  await expect(page.locator('[data-hb="art-stage"]')).toHaveCount(0);
+  await page.locator('[data-hb="stage-view"][data-view="board"]').click();
+  await expect(page.locator('[data-hb="art-stage"]')).toHaveCount(1);
+  expect((await canvas.boundingBox())!.width).toBeGreaterThanOrEqual(600);
+
   await page.screenshot({ path: shot("art-board-desktop-1280.png") });
   const o = await overflow(page);
   expect(o.scrollWidth).toBeLessThanOrEqual(o.width);
@@ -167,7 +178,7 @@ test("the art board adds, moves, rotates, paints, takes an svg and refuses a png
 
 test("touch-only @touch: the art board fits 390 wide and edits by tap", async ({ page }) => {
   await open(page);
-  await expect(page.locator('[data-hb="art-board"]')).toBeVisible();
+  await expect(page.locator('[data-hb="art-canvas"]')).toBeVisible();
   await page.locator('[data-add="circuit"]').tap();
   await page.locator('[data-add="scope"]').tap();
   const s = await art(page, "state");
@@ -177,6 +188,6 @@ test("touch-only @touch: the art board fits 390 wide and edits by tap", async ({
   await f.dispatchEvent("change");
   const o = await overflow(page);
   expect(o.scrollWidth, JSON.stringify(o)).toBeLessThanOrEqual(o.width);
-  await page.locator('[data-hb="art-board"]').scrollIntoViewIfNeeded();
+  await page.locator('[data-hb="art-canvas"]').scrollIntoViewIfNeeded();
   await page.screenshot({ path: shot("art-board-touch-390.png") });
 });

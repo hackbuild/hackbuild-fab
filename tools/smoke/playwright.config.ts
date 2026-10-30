@@ -31,7 +31,7 @@ export default defineConfig({
   projects: [
     {
       name: "desktop",
-      testMatch: gold ? ["gold/*.spec.ts"] : ["smoke.spec.ts", "legacy-report.spec.ts", "targets.spec.ts", "welcome.spec.ts", "rail.spec.ts", "drive.spec.ts", "page-build.spec.ts", "cdn.spec.ts", "vue-host.spec.ts", "draft.spec.ts", "refused.spec.ts", "art-board.spec.ts"],
+      testMatch: gold ? ["gold/*.spec.ts"] : ["smoke.spec.ts", "legacy-report.spec.ts", "targets.spec.ts", "welcome.spec.ts", "rail.spec.ts", "drive.spec.ts", "page-build.spec.ts", "cdn.spec.ts", "vue-host.spec.ts", "draft.spec.ts", "refused.spec.ts", "art-board.spec.ts", "save-offline.spec.ts"],
       grepInvert: /@touch/,
       use: { ...CHROME, viewport: { width: 1280, height: 844 } },
     },

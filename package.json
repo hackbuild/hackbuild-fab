@@ -31,7 +31,11 @@
     "pack:lib": "node tools/publish/pack-lib.mjs",
     "test:pack": "node --test tools/publish/pack.test.mjs",
     "build:design": "node tools/publish/build-design.mjs",
-    "test:design": "node --test tools/publish/design.test.mjs"
+    "test:design": "node --test tools/publish/design.test.mjs",
+    "skill:reference": "node tools/skill-kit/reference.mjs",
+    "skill:check": "node tools/skill-kit/reference.mjs --check",
+    "skill:release": "node tools/skill-kit/release.mjs",
+    "test:skill": "node --test tools/skill-kit/test/*.test.mjs"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.18.5",

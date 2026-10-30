@@ -75,6 +75,14 @@ describe("a refused build keeps the last good model", () => {
     expect(b.refused()?.line).toBe("build refused: E_KERNEL, union failed. nothing has built yet, so the stage is empty");
   });
 
+  it("a message that ends in a period does not double it before the tail", async () => {
+    const b = bindChase<ChaseReport>({ chase, bench, install: false, build: async () => { throw new Error("this bake carries no geometry build. the stage stays empty."); } });
+    await b.whenReady;
+    const line = b.refused()?.line ?? "";
+    expect(line).toContain("the stage stays empty. nothing has built yet");
+    expect(line).not.toContain("..");
+  });
+
   it("reads the code from a CommandError and from a message, and none from a plain throw", () => {
     expect(refusalOf(commandError({ code: "E_KERNEL", path: "/x", hint: "union failed", record: "mesh-kernel" }))).toEqual({ code: "E_KERNEL", message: "union failed" });
     expect(refusalOf(new Error("E_PARAM_MISSING at /keys/0/gap: check it"))).toEqual({ code: "E_PARAM_MISSING", message: "at /keys/0/gap: check it" });

@@ -18,7 +18,7 @@ import { createApp, type App } from "vue";
 import { createPinia, type Pinia } from "pinia";
 import { draftName, type Bench, type BuildWarning, type Chase, type CheckResult, type ContactFn, type Metric, type Part } from "@hackbuild/spec";
 import {
-  adoptBootedManifold, artSurfaces, bindChase, blockedLine, blockingChecks, bootManifold, NO_BUILD, NOT_IN_BAKE, openShare, setStorageLog, type BenchCore, type BootedManifold, type BuildOutput, type BuildResult, type ChaseBinding,
+  adoptBootedManifold, artSurfaces, bindChase, blockedLine, blockingChecks, bootManifold, NO_BUILD, NOT_IN_BAKE, openShare, setStorageLog, type BenchCore, type BootedManifold, type BuildOutput, type BuildResult, type ChaseBinding, type OfflineOptions,
 } from "@hackbuild/bench-core";
 import { HB_VIEWER_TAG, type HbViewer, type ViewMesh, type ViewPart } from "@hackbuild/viewer";
 import ChaseBench from "./ChaseBench.vue";
@@ -160,6 +160,13 @@ export interface CreateBenchOptions extends BenchOptions {
   readonly hash?: boolean;
   /** Write the kernel status to html data-kernel after a kernel boot; default false. */
   readonly dataset?: boolean;
+  /**
+   * The design folder a CDN page loaded its design from (build:design output).
+   * With it the export panel can save the page offline: one file with the
+   * classic library builds and the design inlined. Without it, or on a page
+   * that is already offline, the action is disabled and says why.
+   */
+  readonly offline?: OfflineOptions;
 }
 
 /** createBench options plus the page mount point, for a baked bench. */
@@ -192,6 +199,7 @@ export interface MountedBench {
 
 /** What BenchView hands the shell component: the options createBench read for the view. */
 export interface BenchViewOptions {
+  readonly offline: OfflineOptions | null;
   readonly stage: boolean;
   readonly draft: boolean;
   readonly widget: DraftWidget | null;
@@ -286,6 +294,7 @@ export function createBench(opts: CreateBenchOptions): BenchController {
   void binding.whenReady.then(() => shell.mirror(core));
 
   const view: BenchViewOptions = {
+    offline: opts.offline ?? null,
     stage: opts.stage !== false,
     draft: opts.draft === true,
     widget: opts.draft === true && opts.widget !== undefined ? opts.widget : null,
@@ -300,7 +309,7 @@ export function createBench(opts: CreateBenchOptions): BenchController {
       if (app !== null) throw new Error("bench is already mounted");
       host = el;
       app = createApp(ChaseBench, {
-        binding, stage: view.stage, draft: view.draft,
+        binding, stage: view.stage, draft: view.draft, offline: view.offline,
         ...(view.widget === null ? {} : { widget: view.widget }),
       });
       app.use(pinia);

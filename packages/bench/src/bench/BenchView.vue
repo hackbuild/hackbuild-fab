@@ -30,5 +30,5 @@ onBeforeUnmount(() => bench.attach(null));
 </script>
 
 <template>
-  <ChaseBench ref="inner" :binding="bench.binding" :stage="bench.view.stage" :draft="bench.view.draft" :widget="bench.view.widget" />
+  <ChaseBench ref="inner" :binding="bench.binding" :stage="bench.view.stage" :draft="bench.view.draft" :widget="bench.view.widget" :offline="bench.view.offline" />
 </template>
