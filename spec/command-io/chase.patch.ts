@@ -1,8 +1,8 @@
 // command chase.patch, group author.
 // spec/commands.ts CommandIO takes this interface; npm run registries regenerates it.
 
-import type { PatchEdit } from "../commands";
-import type { Hash } from "../ids";
+import type { PatchEdit } from "../commands.js";
+import type { Hash } from "../ids.js";
 
 export interface ChasePatchIO {
   input: { file: string; edits: readonly PatchEdit[] };

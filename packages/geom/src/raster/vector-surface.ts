@@ -25,7 +25,7 @@ function noResampler(got: unknown): Error {
     code: "E_KERNEL",
     got,
     record: "kernels/art-inlay",
-    hint: "image needs the browser canvas surface (ui-core canvasSurface); node has no image resampler",
+    hint: "image needs the browser canvas surface (bench-core canvasSurface); node has no image resampler",
   });
 }
 

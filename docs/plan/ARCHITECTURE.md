@@ -101,7 +101,7 @@ ASCII fallback for terminals and diff review:
 ```
 app     core (hbf: cli/ mcp/ http/)      apps/fab  apps/sketch  apps/blocks
         | headless only, never ui         \________ ui ________/
-tier 3  ui-core    ui    link             <- three, @virgilvox/hackbuild-ui, conduyt-js
+tier 3  viewer bench-core bench link             <- three, @virgilvox/hackbuild-ui, conduyt-js
 tier 2  checks  project  reference  knowledge  chase (schema and validator only)
 tier 1  3mf  sim  circuit  copper  board  nest  inlay  motion  wiring
         constraints  mechanisms  archetypes
@@ -146,11 +146,12 @@ are generated from it (D-010). The CI `tiers` job parses each
 | 2 | reference | spec, tier 0, tier 1; no tier 2 package | none |
 | 2 | knowledge | spec, tier 0, tier 1 | none |
 | 2 | chase | spec, tier 0, tier 1, checks, project, reference (pairs added at M10); schema and validator only | zod |
-| 3 | ui-core | spec, tiers 0 to 2; no Vue | three |
-| 3 | ui | ui-core (pair added at M09-T01) | vue, pinia, @virgilvox/hackbuild-ui; no three |
-| 3 | link | spec, profile, catalog, motion, checks; never ui-core, ui or vue | conduyt-js |
-| published | kernel | every package in tiers S to 2; never ui-core, ui or link | tsdown or tsc into `dist/` |
-| app | core | every headless package and kernel; never ui-core, ui or link | @modelcontextprotocol/server, zod; view.render uses no external dependency (software rasterizer, node:zlib, D-209) |
+| 3 | viewer | spec; no Vue | three (peer) |
+| 3 | bench-core | spec, tiers 0 to 2, viewer; no Vue | none |
+| 3 | bench (was ui) | bench-core, viewer (pair added at M09-T01) | vue, pinia, @virgilvox/hackbuild-ui; three as a peer |
+| 3 | link | spec, profile, catalog, motion, checks; never bench-core, viewer, bench or vue | conduyt-js |
+| published | kernel | every package in tiers S to 2; never bench-core, viewer, bench or link | tsdown or tsc into `dist/` |
+| app | core | every headless package and kernel; never bench-core, viewer, bench or link | @modelcontextprotocol/server, zod; view.render uses no external dependency (software rasterizer, node:zlib, D-209) |
 | app | apps/fab, apps/sketch, apps/blocks | everything | none beyond the packages |
 
 An edge passes when its target tier is strictly lower than its source tier
@@ -538,7 +539,7 @@ decision entry.
 | input | reader | rule | decision |
 |---|---|---|---|
 | 3MF and any zip | `packages/3mf` reader, `tools/py/validate_3mf.py`, harvester | reject entry names with a `..` segment, a leading `/` or `\`, or a drive letter; at most 4096 entries; total inflated size at most 256 MB, counted while inflating | D-166 |
-| share link `#d=<meta.chase>.<base64url>` | `packages/ui-core/src/bench/share.ts` | inflated payload at most 1 MB; version read, `packages/chase` migrate from it, deep normalise, zod validation, then `loadDesign`; no prefix routes through `migrate/legacy.ts` | D-166, D-167 |
+| share link `#d=<meta.chase>.<base64url>` | `packages/bench-core/src/bench/share.ts` | inflated payload at most 1 MB; version read, `packages/chase` migrate from it, deep normalise, zod validation, then `loadDesign`; no prefix routes through `migrate/legacy.ts` | D-166, D-167 |
 | design JSON | drop, file picker, `loadDesign` | 1 MB cap and the same validation; document text renders as text, never as HTML | D-166 |
 | OpenSCAD source | mesh `imported` route | only a file the user named; `openscad` with a 60 s timeout in a fresh temp directory holding a copy, `OPENSCADPATH` set to it; pre-scan refuses absolute or `..` paths in `include`, `use`, `import`, `surface` | D-146, D-166 |
 | SVG art | inlay intake, geom `fillPath` layers | refuse a DOCTYPE; strip `script`, `foreignObject`, `on*` attributes and every `href` not starting with `#` before parse | D-166 |
@@ -631,7 +632,7 @@ Every addition lands with its reference in the same milestone (D-105).
 | exporter | `packages/<kernel>/src/exporters/<id>.ts` (`ExporterDef`, `fabrication` flag set when it writes something a machine makes); `tools/corpus/<kind>/` pass and known-bad fixtures; `EXPORT_ALIASES` in `spec/hook.ts` only for a legacy name | corpus job; determinism under `SOURCE_DATE_EPOCH`; gate tests if fabrication |
 | archetype | `packages/archetypes/src/<id>.ts` (`ArchetypeDef` with `derive()` and `apply()`, tier, provenance; resistances computed at load from profile, D-098); `reference/<area>/<id>/` | `arch.apply` on a fresh prism with every conductor check unchanged (M06) |
 | mechanism | `packages/mechanisms/src/<id>.ts` (`MechanismDef` with typed `derive()`; stub marked when no equation); goldens with the D-096 corrected numbers where they apply | `mech.derive` goldens |
-| panel | `packages/ui/src/panels/<id>.vue`; the ui panels manifest; `requires` capabilities from D-161; generic primitives go upstream to @virgilvox/hackbuild-ui (D-116) | BenchHook conformance and smoke at 390, 768, 1280 px |
+| panel | `packages/bench/src/panels/<id>.vue`; the ui panels manifest; `requires` capabilities from D-161; generic primitives go upstream to @virgilvox/hackbuild-ui (D-116) | BenchHook conformance and smoke at 390, 768, 1280 px |
 | slot | `designs/<id>/chase.ts` `slots` entry naming a component for `rail.before`, `rail.after-params`, `stage.overlay` or `status.extra`; the component under `designs/<id>/` | the six kinds stay fixed (D-126); a seventh needs a measured layout sharing nothing |
 
 A new mesh route, registry kind or chase kind needs a decision entry first.

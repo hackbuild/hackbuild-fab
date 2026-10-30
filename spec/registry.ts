@@ -9,18 +9,18 @@
 // Version 4, 2026-10-04. Carries D-036, D-041, D-044, D-051, D-052, D-056,
 // D-057, D-095, D-109, D-126, D-134, D-159, D-161, D-174.
 
-import type { Hash, KernelId, Process, Spdx } from "./ids";
-import type { AnyFeatureKindDef, FeatureKindDef } from "./feature-kinds";
-import type { FeatureKind } from "./features";
-import type { AnyCheckDef, ArtifactBytes, CheckDef, CheckId, CheckLevel } from "./checks";
-import type { ConstraintDef } from "./constraints";
-import type { SimModelDef } from "./sim";
-import type { MechanismDef, ArchetypeDef } from "./canon";
-import type { Capability } from "./capabilities";
-import type { Assembly, Part } from "./part-ir";
-import type { Provenance } from "./profile";
-import type { Material, Machine, FitBand, LossRow, BleedRow, Constant } from "./profile";
-import type { SchemaLike } from "./schema";
+import type { Hash, KernelId, Process, Spdx } from "./ids.js";
+import type { AnyFeatureKindDef, FeatureKindDef } from "./feature-kinds.js";
+import type { FeatureKind } from "./features.js";
+import type { AnyCheckDef, ArtifactBytes, CheckDef, CheckId, CheckLevel } from "./checks.js";
+import type { ConstraintDef } from "./constraints.js";
+import type { SimModelDef } from "./sim.js";
+import type { MechanismDef, ArchetypeDef } from "./canon.js";
+import type { Capability } from "./capabilities.js";
+import type { Assembly, Part } from "./part-ir.js";
+import type { Provenance } from "./profile.js";
+import type { Material, Machine, FitBand, LossRow, BleedRow, Constant } from "./profile.js";
+import type { SchemaLike } from "./schema.js";
 
 export const REGISTRY_KINDS = [
   "featureKinds", "checks", "constraints", "exporters", "simModels", "panels",

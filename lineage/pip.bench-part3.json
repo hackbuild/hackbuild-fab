@@ -31,9 +31,9 @@
     "source": "fab-knowledge:evidence/x/pip-controller/bench/part3.js",
     "sha256": "594ee29b0c4ff173c0c656a818c4ea626b76c25b31e977d2e25bb20525253e24",
     "fixes": [
-      "range input calls touch, change calls commit (part3.js lines 277 to 295) carried as the touch and commit kinds of packages/ui-core/src/bench/core.ts"
+      "range input calls touch, change calls commit (part3.js lines 277 to 295) carried as the touch and commit kinds of packages/bench-core/src/bench/core.ts"
     ],
-    "dest": "packages/ui-core/src/bench/core.ts"
+    "dest": "packages/bench-core/src/bench/core.ts"
   },
   {
     "id": "pip.bench-part3/ui-core-drive",
@@ -41,9 +41,9 @@
     "source": "fab-knowledge:evidence/x/pip-controller/bench/part3.js",
     "sha256": "594ee29b0c4ff173c0c656a818c4ea626b76c25b31e977d2e25bb20525253e24",
     "fixes": [
-      "drive pad: padKeys, renderPad and padRefresh (part3.js lines 360 to 392; padKeys opens at line 361, measured 2026-10-13), ported to packages/ui-core/src/drive/drive.ts with every number read from the current build (M09-T10)"
+      "drive pad: padKeys, renderPad and padRefresh (part3.js lines 360 to 392; padKeys opens at line 361, measured 2026-10-13), ported to packages/bench-core/src/drive/drive.ts with every number read from the current build (M09-T10)"
     ],
-    "dest": "packages/ui-core/src/drive/drive.ts"
+    "dest": "packages/bench-core/src/drive/drive.ts"
   },
   {
     "id": "pip.bench-part3/ui-core-viewer-controls",
@@ -51,9 +51,9 @@
     "source": "fab-knowledge:evidence/x/pip-controller/bench/part3.js",
     "sha256": "594ee29b0c4ff173c0c656a818c4ea626b76c25b31e977d2e25bb20525253e24",
     "fixes": [
-      "z-up orbit, drag 0.008 rad per px, phi held to 1.5 rad, wheel 1.1 and 0.9 inside 20 to 1500 mm (part3.js lines 22 to 98), ported to packages/ui-core/src/viewer/controls.ts; the drag and wheel lines the port cites as 85 and 94 sit at 88 and 96 in this copy (measured 2026-10-13)"
+      "z-up orbit, drag 0.008 rad per px, phi held to 1.5 rad, wheel 1.1 and 0.9 inside 20 to 1500 mm (part3.js lines 22 to 98), ported to packages/viewer/src/controls.ts; the drag and wheel lines the port cites as 85 and 94 sit at 88 and 96 in this copy (measured 2026-10-13)"
     ],
-    "dest": "packages/ui-core/src/viewer/controls.ts"
+    "dest": "packages/viewer/src/controls.ts"
   },
   {
     "id": "pip.bench-part3/ui-core-viewer-scene",
@@ -61,9 +61,9 @@
     "source": "fab-knowledge:evidence/x/pip-controller/bench/part3.js",
     "sha256": "594ee29b0c4ff173c0c656a818c4ea626b76c25b31e977d2e25bb20525253e24",
     "fixes": [
-      "lights, bed and clip plane (part3.js lines 9 to 21) and VIEW.update xray, section and plate modes (lines 194 to 233), ported to packages/ui-core/src/viewer/scene.ts (M09-T06)"
+      "lights, bed and clip plane (part3.js lines 9 to 21) and VIEW.update xray, section and plate modes (lines 194 to 233), ported to packages/viewer/src/scene.ts (M09-T06)"
     ],
-    "dest": "packages/ui-core/src/viewer/scene.ts"
+    "dest": "packages/viewer/src/scene.ts"
   },
   {
     "id": "pip.bench-part3/ui-rail-showwhen",
@@ -71,9 +71,9 @@
     "source": "fab-knowledge:evidence/x/pip-controller/bench/part3.js",
     "sha256": "594ee29b0c4ff173c0c656a818c4ea626b76c25b31e977d2e25bb20525253e24",
     "fixes": [
-      "UI.visibility data-show rows (part3.js lines 296 to 308) and GROUP_NAMES with renderGroups (lines 315 to 324; the port cites GROUP_NAMES at 314, measured at 315 on 2026-10-13), ported to packages/ui/src/rail/showWhen.ts as ShowWhen (M09-T08)"
+      "UI.visibility data-show rows (part3.js lines 296 to 308) and GROUP_NAMES with renderGroups (lines 315 to 324; the port cites GROUP_NAMES at 314, measured at 315 on 2026-10-13), ported to packages/bench/src/rail/showWhen.ts as ShowWhen (M09-T08)"
     ],
-    "dest": "packages/ui/src/rail/showWhen.ts"
+    "dest": "packages/bench/src/rail/showWhen.ts"
   },
   {
     "id": "pip.bench-part3/ui-curve-panel",
@@ -81,9 +81,9 @@
     "source": "fab-knowledge:evidence/x/pip-controller/bench/part3.js",
     "sha256": "594ee29b0c4ff173c0c656a818c4ea626b76c25b31e977d2e25bb20525253e24",
     "fixes": [
-      "drawCurve (part3.js lines 394 to 417 in this copy, 396 to 419 in the canonical haft (9) copy, same text, measured 2026-10-20): the x and y scales, fmax 1.15 times the peak, the force grid step, the 0.5 mm travel ticks, the dashed contact line, the curve and the peak dot, ported to packages/ui/src/panels/curve.ts curveSvg and CurvePanel.vue as SVG with token colours; fmax also covers the claim band top so the band stays in frame, and the contact line sits where the design's ContactFn closes (R1-flagship-access-switch-12); the SVG drawing moved to packages/ui/src/widgets/PlotCurve.vue and the contact search to packages/ui-core/src/widgets/curve.ts contactTravel, so the rail panel and the plot.curve widget draw through one copy (R1-engine-13)"
+      "drawCurve (part3.js lines 394 to 417 in this copy, 396 to 419 in the canonical haft (9) copy, same text, measured 2026-10-20): the x and y scales, fmax 1.15 times the peak, the force grid step, the 0.5 mm travel ticks, the dashed contact line, the curve and the peak dot, ported to packages/bench/src/panels/curve.ts curveSvg and CurvePanel.vue as SVG with token colours; fmax also covers the claim band top so the band stays in frame, and the contact line sits where the design's ContactFn closes (R1-flagship-access-switch-12); the SVG drawing moved to packages/bench/src/widgets/PlotCurve.vue and the contact search to packages/bench-core/src/widgets/curve.ts contactTravel, so the rail panel and the plot.curve widget draw through one copy (R1-engine-13)"
     ],
-    "dest": "packages/ui/src/panels/curve.ts"
+    "dest": "packages/bench/src/panels/curve.ts"
   },
   {
     "id": "pip.bench-part3/ui-core-widget-light",
@@ -91,9 +91,9 @@
     "source": "fab-knowledge:evidence/x/pip-controller/bench/part3.js",
     "sha256": "594ee29b0c4ff173c0c656a818c4ea626b76c25b31e977d2e25bb20525253e24",
     "fixes": [
-      "the key light at (60, -90, 140) and 0.85 (part3.js line 16) is the rest pose of the view.light widget, packages/ui-core/src/widgets/light.ts: the widget keeps the key's distance and turns its position into an azimuth and elevation, and the viewer's keyLight moves that light (R1-engine-15)"
+      "the key light at (60, -90, 140) and 0.85 (part3.js line 16) is the rest pose of the view.light widget, packages/bench-core/src/widgets/light.ts: the widget keeps the key's distance and turns its position into an azimuth and elevation, and the viewer's keyLight moves that light (R1-engine-15)"
     ],
-    "dest": "packages/ui-core/src/widgets/light.ts"
+    "dest": "packages/bench-core/src/widgets/light.ts"
   },
   {
     "id": "pip.bench-part3/ui-core-widget-netlens",
@@ -101,9 +101,9 @@
     "source": "fab-knowledge:evidence/x/pip-controller/bench/part3.js",
     "sha256": "594ee29b0c4ff173c0c656a818c4ea626b76c25b31e977d2e25bb20525253e24",
     "fixes": [
-      "the xray net colouring of VIEW.update (part3.js lines 219 to 225) as ported to packages/ui-core/src/viewer/scene.ts: the body to net rule moved to packages/ui-core/src/widgets/netlens.ts bodyNets, read by the scene and the view.netlens widget, and the lens mode lights one net and ghosts every other body (R1-engine-15)"
+      "the xray net colouring of VIEW.update (part3.js lines 219 to 225) as ported to packages/viewer/src/scene.ts: the body to net rule moved to packages/bench-core/src/widgets/netlens.ts bodyNets, read by the scene and the view.netlens widget, and the lens mode lights one net and ghosts every other body (R1-engine-15)"
     ],
-    "dest": "packages/ui-core/src/widgets/netlens.ts"
+    "dest": "packages/bench-core/src/widgets/netlens.ts"
   },
   {
     "id": "pip.bench-part3/haft-9-pip-chase",

@@ -11,7 +11,7 @@
 // once as PIP chords; contact is build.ts's ContactFn (G-20). The worked
 // example leads the welcome as PIP's does (bench/part1.html line 202). The
 // chase preset blank is left off the welcome: its id is the shell's own
-// start blank (ui-core welcomeStarts), which already loads it.
+// start blank (bench-core welcomeStarts), which already loads it.
 // Cams are the original's iso, top, front, under.
 
 import { defineBench } from "@hackbuild/spec";

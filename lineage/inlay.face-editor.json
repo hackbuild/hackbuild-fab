@@ -17,9 +17,9 @@
       "centre snap within 0.6 mm with guide lines, alt turns it off (part6.js:479 to 482, 529)",
       "rotate snaps to 0, 90 and 180 within 4 deg, shift gives 15 deg steps (part6.js:539)",
       "wheel zoom about the pointer from 0.5 to 8 (part6.js:547)",
-      "packages/ui-core/src/artboard/hit.ts: mm2px and px2mm (406, 407), layerHandles (433 to 442), insideBox (443), hitTest (444 to 450), the move snap (526 to 530) and the rotate snap (536 to 540)"
+      "packages/bench-core/src/artboard/hit.ts: mm2px and px2mm (406, 407), layerHandles (433 to 442), insideBox (443), hitTest (444 to 450), the move snap (526 to 530) and the rotate snap (536 to 540)"
     ],
-    "dest": "packages/ui-core/src/artboard/controller.ts"
+    "dest": "packages/bench-core/src/artboard/controller.ts"
   },
   {
     "id": "inlay.face-editor/knuckle-src-zip",

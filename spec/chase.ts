@@ -23,13 +23,13 @@
 // 2026-10-20: claims (spec/claims.ts), R1-engine-10, listed in the PR as a
 // spec change.
 
-import type { FaceRef, Hash, IsoDate, KernelId, Micros, Mm, Ohm, Spdx } from "./ids";
-import type { Assertion, BodyRole, StackDecl } from "./part-ir";
-import type { BuildFn } from "./build";
-import type { ConstraintDim } from "./constraints";
-import type { ReadModel } from "./circuit";
-import type { CheckId } from "./checks";
-import type { ClaimDecl } from "./claims";
+import type { FaceRef, Hash, IsoDate, KernelId, Micros, Mm, Ohm, Spdx } from "./ids.js";
+import type { Assertion, BodyRole, StackDecl } from "./part-ir.js";
+import type { BuildFn } from "./build.js";
+import type { ConstraintDim } from "./constraints.js";
+import type { ReadModel } from "./circuit.js";
+import type { CheckId } from "./checks.js";
+import type { ClaimDecl } from "./claims.js";
 
 /**
  * Six fixed kinds (D-126). A seventh needs a measured layout sharing nothing

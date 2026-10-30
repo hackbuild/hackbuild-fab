@@ -283,7 +283,7 @@ default mapping, checked against package names in `tools/tiers.json`.
 | `motion-latch` | `packages/motion/**`, `packages/mechanisms/**` | default |
 | `sheet-design` | `packages/nest/**` | default |
 | `viewer-sim` | `packages/sim/**` | default |
-| `ui-anatomy` | `packages/ui/**`, `packages/ui-core/**`, `apps/**` | default |
+| `ui-anatomy` | `packages/bench/**`, `packages/bench-core/**`, `packages/viewer/**`, `apps/**` | default |
 | `verification` | `packages/checks/**`, `reference/**` | default |
 | `agent-capability` | `core/**` | default |
 

@@ -1,8 +1,8 @@
 // command circuit.solve, group prove.
 // spec/commands.ts CommandIO takes this interface; npm run registries regenerates it.
 
-import type { McuPinSpec, Net, OperatingPoint, ReadOutputs } from "../circuit";
-import type { CommandResult } from "../commands";
+import type { McuPinSpec, Net, OperatingPoint, ReadOutputs } from "../circuit.js";
+import type { CommandResult } from "../commands.js";
 
 export interface CircuitSolveIO {
   input: {

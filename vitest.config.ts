@@ -9,7 +9,7 @@ import { defineConfig } from "vitest/config";
 export const testTimeout = 60_000;
 
 export default defineConfig({
-  // packages/ui tests import single-file components (M09-T07).
+  // packages/bench tests import single-file components (M09-T07).
   plugins: [vue()],
   test: {
     // tsc -b before any test, so tests never run against a stale dist (core/test/global-setup.ts).

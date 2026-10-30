@@ -1,8 +1,8 @@
 // command motion.run, group prove.
 // spec/commands.ts CommandIO takes this interface; npm run registries regenerates it.
 
-import type { CommandResult } from "../commands";
-import type { MotionRunResult, PlanResult } from "../motion";
+import type { CommandResult } from "../commands.js";
+import type { MotionRunResult, PlanResult } from "../motion.js";
 
 export interface MotionRunIO {
   /** Reconciled with spec/motion.ts by M07-T14. */

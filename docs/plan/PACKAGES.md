@@ -86,8 +86,9 @@ syn/verified-claims.md applied.
 | knowledge | 2 | M12 (search), M16 | none | none | none (gap 9.5) |
 | chase | 2 | M00 (source reader `src/source.ts` with CHASE_SOURCE_RULES, D-178), M10 (defineChase, defineBuild, schema, validator, migrations, diff, patch) | none at M00; zod 4.6.5 at M10 | none | `./chase`, `./author` |
 | pipeline | 2 | M09 (D-264, moved out of core) | none | none | none |
-| ui-core | 3 | M03 (art board), M09 | three 0.186.1 | none | never (DOM) |
-| ui | 3 | M09 | @virgilvox/hackbuild-ui 0.2.0 | none | never (DOM) |
+| viewer | 3 | M09, split from ui-core in plan v10 phase 1 | three 0.186.1 (peer) | none | never (DOM) |
+| bench-core | 3 | M03 (art board), M09 (was ui-core) | none | none | never (DOM) |
+| bench | 3 | M09 (was ui) | @virgilvox/hackbuild-ui 0.2.0 | none | never (DOM) |
 | link | 3 | M13 | conduyt-js 1.0.0 | none | never (DOM) |
 | kernel | published | M00 skeleton, publish after D-037 | tsdown 0.23.0 | none | the package itself |
 | core | app | M00, MCP at M12 | @modelcontextprotocol/server 2.3.0 with core 2.3.0 (M12), zod 4.6.5 | none | never |
@@ -161,8 +162,8 @@ numbers of record.
 | 0 | profile, catalog, geom, mesh | spec, plus the tier 0 pairs in 3.2 |
 | 1 | 3mf, sim, circuit, copper, board, nest, inlay, motion, wiring, constraints, mechanisms, archetypes | spec, tier 0, plus the tier 1 pairs in 3.2; 3mf imports no workspace package (5.1, D-027) |
 | 2 | checks, project, reference, knowledge, chase | spec, tiers 0 and 1, plus the tier 2 pairs in 3.2 |
-| 3 | ui-core, ui, link | spec, tiers 0 to 2, plus the tier 3 pair in 3.2 |
-| app | core, apps/fab, apps/sketch, apps/blocks | everything; core never imports ui-core, ui or link |
+| 3 | viewer, bench-core, bench, link | spec, tiers 0 to 2, plus the tier 3 pair in 3.2 |
+| app | core, apps/fab, apps/sketch, apps/blocks | everything; core never imports bench-core, viewer, bench or link |
 
 Tiers S to 2 import no `document`, `window` or `vue`; `tools/tiers.mjs`
 fails on any such use under `src/` (D-045). `seed/` folders hold legacy
@@ -191,7 +192,8 @@ strictly-lower rule is a bug.
 | chase | checks | M10 | validator resolves check ids in `expect` and `rail` |
 | chase | project | M10 | `derivedFrom {id, buildHash}` resolves against the store |
 | chase | reference | M10 | `chase.scaffold --from reference:<id>` |
-| ui | ui-core | M09-T01 | the Vue layer renders ui-core state |
+| bench | bench-core | M09-T01 | the Vue layer renders bench-core state |
+| bench-core | viewer | plan v10 phase 1 | the controller types the stage parts it binds |
 
 Everything else composes in `core`: circuit never imports copper (a build
 hands router polylines to the kernel as conductor features, M05),
@@ -942,10 +944,13 @@ package out, with no node API and no DOM.
 
 ## 7. Tier 3
 
-### 7.1 ui-core
+### 7.1 bench-core and viewer
 
-Framework-free TypeScript for benches and the app: viewer, art board, bench
-core, BenchHook, renderer binding, bake inputs.
+Framework-free TypeScript for benches and the app: art board, bench core,
+BenchHook, renderer binding, bake inputs. Named ui-core until plan v10
+phase 1 split it into `packages/bench-core` and `packages/viewer` (the
+`<hb-viewer>` element, scene and controls, three as a peer, importing only
+spec).
 
 | field | value |
 |---|---|
@@ -954,8 +959,8 @@ core, BenchHook, renderer binding, bake inputs.
 | may import | spec, tiers 0 to 2, three 0.186.1; no Vue |
 | seed code | `packages/ui-core/seed/bench/part1.html`, `part2.js`, `part3.js` (the INLAY bench, from hbf/seed/bench/); bake seed x/pip-controller/tools/build_bench.py with COTTER baker features from x/cotter-src/tools/build.py (D-129); `tools/py/bench/build_bench.py`, `smoke_bench.py` |
 | adopted dependency | three 0.186.1 (r186), inlined as a module script in bakes; only the decoders a design uses are vendored (D-127) |
-| commands served | none directly; chase.render and chase.bake in core run the bake of ui-core code through tools/bake |
-| registries | none; ui-core displays the print card and writes no exporter |
+| commands served | none directly; chase.render and chase.bake in core run the bake of bench-core code through tools/bake |
+| registries | none; bench-core displays the print card and writes no exporter |
 | parity target | M03: art board handle set passes the existing Playwright suite. M09: BenchHook conformance on every baked bench with legacy adapters for TOGGLE, KNUCKLE, TENON, COTTER; bake at most 16 MB, zero network at load, same sha256 on a cold rebuild, no blob or module Workers under `file://` |
 | milestone | M03, M09, M10, M15 |
 | extraction | none; never a kernel subpath (D-045) |
@@ -971,15 +976,16 @@ core, BenchHook, renderer binding, bake inputs.
 | three.js, fonts and icons from CDNs in 15 benches | syn/patterns-and-lineage.md 4.9 | zero network at load (D-129) |
 | `String.replace` with a string replacement corrupted minified three.js through `$&` | AUGER `pack.ts` | function replacers in the baker |
 
-### 7.2 ui
+### 7.2 bench
 
-The thin Vue layer over ui-core, consuming the owner's design system.
+The thin Vue layer over bench-core and viewer (`packages/bench`, named
+`@hackbuild/ui` until plan v10 phase 1, D-117), consuming the owner's design system.
 
 | field | value |
 |---|---|
 | tier | 3 |
 | owns | bench shell components per chase kind, ParamRail generated from ParamField with list and showWhen, field renderers, notes panel (D-124), checks and fits panels with locate, drive pad overlay, legend with slot-chip collapse under 640 px, Pinia setup stores as thin shell mirrors, region maps for surface and machine, `ChaseBench.vue`, the type picker, the `/kit` page |
-| may import | ui-core (pair added at M09-T01, 3.2), vue, pinia, @virgilvox/hackbuild-ui; no three |
+| may import | bench-core and viewer (pair added at M09-T01 as ui-core, 3.2), vue, pinia, @virgilvox/hackbuild-ui; no three |
 | seed code | none; components and classes upstream in repos/hackbuild-ui |
 | adopted dependency | @virgilvox/hackbuild-ui 0.2.0 (65 Vue SFCs, 161 distinct `.hb-` classes in dist/styles/hackbuild.css, counted); the bench layer goes upstream as package 0.3.0 carrying GUIDELINES v1.3 (D-116); Vue and Pinia versions pinned by the lockfile at M09 (not in D-040) |
 | commands served | none |
@@ -1005,7 +1011,7 @@ driver.
 |---|---|
 | tier | 3 |
 | owns | the driver contract, shared transports and sim twins extracted from hackbuild-bench; the conduyt-js driver; the fab capability vocabulary (D-161); D-093 safety rules (duty-cycle limits in the lowest driver, clamped remote input, config authority as value, rev and origin, no CLASP SNAPSHOT replay, arm confirmed by telemetry, stop on page unload); the CLASP guard; codecs (DETENT text, WASHER escaped CRC-8 binary with A5 flat, A6 anchor plus int8 deltas, A7 escape, poly 0x07) with a lossy mock transport; `navigator.usb`, `navigator.serial` and `navigator.bluetooth` only under `src/transport/` |
-| may import | spec, profile, catalog, motion, checks (M13 placement table); never ui-core, ui, vue or GPL source |
+| may import | spec, profile, catalog, motion, checks (M13 placement table); never bench-core, viewer, bench, vue or GPL source |
 | seed code | repos/hackbuild-bench/src/core/drivers/ (conduyt, registry.ts, types.ts, sim), src/core/transport, src/core/capabilities.ts (23 strings, 12 observe plus 11 consequential, counted); `knowledge/references/conduyt-SKILL.md` and `clasp-SKILL.md` (from hbf/seed/references, M-1-T07); DETENT firmware in corpus/benches/detent-beam/outputs/detent_firmware.ino; WASHER `PanTiltLaser.ino` and `laser-rig.html` |
 | adopted dependency | conduyt-js 1.0.0 (the seed skill targeted 0.2.1 and is retargeted) |
 | commands served | none in the 30; panels in apps/fab |
@@ -1033,7 +1039,7 @@ driver.
 |---|---|
 | tier | published entry; may import S, 0, 1, 2 (tools/tiers.json `kernel` row) |
 | owns | re-exports and the subpath map: `.`, `./spec`, `./author`, `./profile`, `./geom`, `./mesh`, `./3mf`, `./checks`, `./constraints`, `./sim`, `./circuit`, `./copper`, `./board`, `./nest`, `./inlay`, `./canon` (mechanisms and archetypes), `./chase`, `./hook` (syn/api-library-ai-design.md 3.3); exports point at `dist/`; `"sideEffects": false`; `engines.node` `^22.18.0 \|\| >=24.11.0` (D-039 overrides the `>=22.12` in api-library 3.3) |
-| may import | every package in tiers S to 2; never ui-core, ui or link |
+| may import | every package in tiers S to 2; never bench-core, viewer, bench or link |
 | seed code | none |
 | adopted dependency | tsdown 0.23.0 or tsc from typescript 7.0.2 into `dist/`; publint 0.3.25 and attw 0.18.5 gate the pack (versions from api-library 3.3, not in D-040; confirm at first publish) |
 | commands served | none |
@@ -1057,7 +1063,7 @@ gate.
 |---|---|
 | tier | app |
 | owns | `core/src/registry.ts` collecting every RegistryEntry (3.3); the 30 commands of D-106 and the utility verbs mcp, doctor, explain, gc, parity, counts; `cli/`, `mcp/`, `http/`; CommandResult, CommandError and exit codes (pass 0, fail 1, input 2, gate unavailable 3, provenance 4, repeat 5, internal 70); the content-addressed store under `<workspace>/.hbf/store` (D-050); BuildInputs assembly (defHash, paramsHash, profileHash, registryHash, kernelVersion, engines for manifold, rapier and ngspice, adapter, seed, sourceDateEpoch, licences) and buildHash (D-051) from M00, with buildHash on the skeleton from M-S; the export gate with TTY on the CLI and MRTR with HMAC-SHA256 requestState on MCP (D-109); loop detection in `.hbf/calls.jsonl` (D-111); `--detail summary` capped at 5,000 tokens (D-110); ExporterDef bindings in `core/src/exporters/`; `SOURCE_DATE_EPOCH` resolution |
-| may import | every headless package and kernel; never ui-core, ui or link |
+| may import | every headless package and kernel; never bench-core, viewer, bench or link |
 | host | the owner machine is macOS 12.7.4 arm64; local Playwright launches use HBF_CHROMIUM (Chrome 150.0.7871.125) because 1.63.0 installs no Chromium there (R-24); the pinned Python is 3.14 (tools/py/.python-version), resolved to CPython 3.14.8 (measured 2026-10-05); lib3mf 2.5.0 carries the marker `platform_machine != 'aarch64'` (no linux aarch64 wheel) |
 | seed code | hbf/scaffold/core/README.md and bin |
 | adopted dependency | zod 4.6.5 (M00); @modelcontextprotocol/server 2.3.0 with @modelcontextprotocol/core 2.3.0, protocol 2026-07-28, stateless, `server/discover`, tasks extension (M12, D-108) |

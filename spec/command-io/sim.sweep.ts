@@ -1,8 +1,8 @@
 // command sim.sweep, group prove.
 // spec/commands.ts CommandIO takes this interface; npm run registries regenerates it.
 
-import type { Pose } from "../part-ir";
-import type { SweepResult } from "../sim";
+import type { Pose } from "../part-ir.js";
+import type { SweepResult } from "../sim.js";
 
 export interface SimSweepIO {
   input: {

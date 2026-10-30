@@ -11,7 +11,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 import type { Metric } from "@hackbuild/spec";
-import { padModel } from "@hackbuild/ui-core";
+import { padModel } from "@hackbuild/bench-core";
 import { bench } from "../bench";
 import { contact } from "../build";
 import { chase } from "../chase";

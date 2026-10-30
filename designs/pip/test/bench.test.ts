@@ -13,7 +13,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 import type { Metric } from "@hackbuild/spec";
-import { targetIds } from "@hackbuild/ui-core";
+import { targetIds } from "@hackbuild/bench-core";
 import { bench } from "../bench";
 import { contact } from "../build";
 import { chase } from "../chase";

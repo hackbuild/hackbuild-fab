@@ -1,8 +1,8 @@
 // command sim.run, group prove.
 // spec/commands.ts CommandIO takes this interface; npm run registries regenerates it.
 
-import type { Mm } from "../ids";
-import type { TrialResult } from "../sim";
+import type { Mm } from "../ids.js";
+import type { TrialResult } from "../sim.js";
 
 export interface SimRunIO {
   input: {

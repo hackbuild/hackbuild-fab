@@ -5232,7 +5232,7 @@
       "published": "MIT",
       "audited": "MIT",
       "evidence": "package-lock.json packages[\"node_modules/@types/three\"].license and node_modules/@types/three/LICENSE, read 2026-10-13",
-      "use": "typecheck: three types for ui-core viewer (M09)",
+      "use": "typecheck: three types for the viewer (M09)",
       "load": "dev-only",
       "status": "adopted",
       "decision": [
@@ -5611,6 +5611,748 @@
       "audited": "MIT",
       "evidence": "package-lock.json packages[\"node_modules/vue-tsc\"].license, read 2026-10-20",
       "use": "vue single-file component typecheck (tools/vue-check.mjs)",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@andrewbranch/untar.js",
+      "version": "1.0.4",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@andrewbranch/untar.js\"].license, read 2026-10-29",
+      "use": "dev toolchain, transitive of publint and attw",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@arethetypeswrong/cli",
+      "version": "0.18.5",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@arethetypeswrong/cli\"].license, read 2026-10-29",
+      "use": "package lint (lint:packages)",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "commander",
+      "version": "10.0.1",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@arethetypeswrong/cli/node_modules/commander\"].license, read 2026-10-29",
+      "use": "dev toolchain, transitive of publint and attw",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@arethetypeswrong/core",
+      "version": "0.18.5",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@arethetypeswrong/core\"].license, read 2026-10-29",
+      "use": "dev toolchain, transitive of publint and attw",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "typescript",
+      "version": "5.6.1-rc",
+      "published": "Apache-2.0",
+      "audited": "Apache-2.0",
+      "evidence": "package-lock.json packages[\"node_modules/@arethetypeswrong/core/node_modules/typescript\"].license, read 2026-10-29",
+      "use": "dev toolchain, transitive of publint and attw",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@braidai/lang",
+      "version": "1.1.2",
+      "published": "ISC",
+      "audited": "ISC",
+      "evidence": "package-lock.json packages[\"node_modules/@braidai/lang\"].license, read 2026-10-29",
+      "use": "dev toolchain, transitive of publint and attw",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@colors/colors",
+      "version": "1.5.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@colors/colors\"].license, read 2026-10-29",
+      "use": "dev toolchain, transitive of publint and attw",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@loaderkit/resolve",
+      "version": "1.0.6",
+      "published": "ISC",
+      "audited": "ISC",
+      "evidence": "package-lock.json packages[\"node_modules/@loaderkit/resolve\"].license, read 2026-10-29",
+      "use": "dev toolchain, transitive of publint and attw",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@publint/pack",
+      "version": "0.1.7",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@publint/pack\"].license, read 2026-10-29",
+      "use": "dev toolchain, transitive of publint and attw",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@sindresorhus/is",
+      "version": "4.6.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/@sindresorhus/is\"].license, read 2026-10-29",
+      "use": "dev toolchain, transitive of publint and attw",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "ansi-escapes",
+      "version": "7.3.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/ansi-escapes\"].license, read 2026-10-29",
+      "use": "dev toolchain, transitive of publint and attw",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "ansi-regex",
+      "version": "6.5.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/ansi-regex\"].license, read 2026-10-29",
+      "use": "dev toolchain, transitive of publint and attw",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "ansi-styles",
+      "version": "4.3.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/ansi-styles\"].license, read 2026-10-29",
+      "use": "dev toolchain, transitive of publint and attw",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "chalk",
+      "version": "4.1.2",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/chalk\"].license, read 2026-10-29",
+      "use": "dev toolchain, transitive of publint and attw",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "char-regex",
+      "version": "1.0.2",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/char-regex\"].license, read 2026-10-29",
+      "use": "dev toolchain, transitive of publint and attw",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "cjs-module-lexer",
+      "version": "1.4.3",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/cjs-module-lexer\"].license, read 2026-10-29",
+      "use": "dev toolchain, transitive of publint and attw",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "cli-highlight",
+      "version": "2.1.11",
+      "published": "ISC",
+      "audited": "ISC",
+      "evidence": "package-lock.json packages[\"node_modules/cli-highlight\"].license, read 2026-10-29",
+      "use": "dev toolchain, transitive of publint and attw",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "cli-table3",
+      "version": "0.6.5",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/cli-table3\"].license, read 2026-10-29",
+      "use": "dev toolchain, transitive of publint and attw",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "cliui",
+      "version": "7.0.4",
+      "published": "ISC",
+      "audited": "ISC",
+      "evidence": "package-lock.json packages[\"node_modules/cliui\"].license, read 2026-10-29",
+      "use": "dev toolchain, transitive of publint and attw",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "color-convert",
+      "version": "2.0.1",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/color-convert\"].license, read 2026-10-29",
+      "use": "dev toolchain, transitive of publint and attw",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "color-name",
+      "version": "1.1.4",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/color-name\"].license, read 2026-10-29",
+      "use": "dev toolchain, transitive of publint and attw",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "emoji-regex",
+      "version": "8.0.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/emoji-regex\"].license, read 2026-10-29",
+      "use": "dev toolchain, transitive of publint and attw",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "emojilib",
+      "version": "2.4.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/emojilib\"].license, read 2026-10-29",
+      "use": "dev toolchain, transitive of publint and attw",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "environment",
+      "version": "1.1.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/environment\"].license, read 2026-10-29",
+      "use": "dev toolchain, transitive of publint and attw",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "escalade",
+      "version": "3.2.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/escalade\"].license, read 2026-10-29",
+      "use": "dev toolchain, transitive of publint and attw",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "get-caller-file",
+      "version": "2.0.5",
+      "published": "ISC",
+      "audited": "ISC",
+      "evidence": "package-lock.json packages[\"node_modules/get-caller-file\"].license, read 2026-10-29",
+      "use": "dev toolchain, transitive of publint and attw",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "has-flag",
+      "version": "4.0.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/has-flag\"].license, read 2026-10-29",
+      "use": "dev toolchain, transitive of publint and attw",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "highlight.js",
+      "version": "10.7.3",
+      "published": "BSD-3-Clause",
+      "audited": "BSD-3-Clause",
+      "evidence": "package-lock.json packages[\"node_modules/highlight.js\"].license, read 2026-10-29",
+      "use": "dev toolchain, transitive of publint and attw",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "is-fullwidth-code-point",
+      "version": "3.0.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/is-fullwidth-code-point\"].license, read 2026-10-29",
+      "use": "dev toolchain, transitive of publint and attw",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "lru-cache",
+      "version": "11.5.3",
+      "published": "BlueOak-1.0.0",
+      "audited": "BlueOak-1.0.0",
+      "evidence": "package-lock.json packages[\"node_modules/lru-cache\"].license, read 2026-10-29",
+      "use": "dev toolchain, transitive of publint and attw",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "marked",
+      "version": "9.1.6",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/marked\"].license, read 2026-10-29",
+      "use": "dev toolchain, transitive of publint and attw",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "marked-terminal",
+      "version": "7.3.1",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/marked-terminal\"].license, read 2026-10-29",
+      "use": "dev toolchain, transitive of publint and attw",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "chalk",
+      "version": "5.6.2",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/marked-terminal/node_modules/chalk\"].license, read 2026-10-29",
+      "use": "dev toolchain, transitive of publint and attw",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "mri",
+      "version": "1.2.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/mri\"].license, read 2026-10-29",
+      "use": "dev toolchain, transitive of publint and attw",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "node-emoji",
+      "version": "2.2.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/node-emoji\"].license, read 2026-10-29",
+      "use": "dev toolchain, transitive of publint and attw",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "parse5",
+      "version": "5.1.1",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/parse5\"].license, read 2026-10-29",
+      "use": "dev toolchain, transitive of publint and attw",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "parse5-htmlparser2-tree-adapter",
+      "version": "6.0.1",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/parse5-htmlparser2-tree-adapter\"].license, read 2026-10-29",
+      "use": "dev toolchain, transitive of publint and attw",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "parse5",
+      "version": "6.0.1",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/parse5-htmlparser2-tree-adapter/node_modules/parse5\"].license, read 2026-10-29",
+      "use": "dev toolchain, transitive of publint and attw",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "publint",
+      "version": "0.3.25",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/publint\"].license, read 2026-10-29",
+      "use": "package lint (lint:packages)",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "require-directory",
+      "version": "2.1.1",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/require-directory\"].license, read 2026-10-29",
+      "use": "dev toolchain, transitive of publint and attw",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "sade",
+      "version": "1.8.1",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/sade\"].license, read 2026-10-29",
+      "use": "dev toolchain, transitive of publint and attw",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "skin-tone",
+      "version": "2.0.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/skin-tone\"].license, read 2026-10-29",
+      "use": "dev toolchain, transitive of publint and attw",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "string-width",
+      "version": "4.2.3",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/string-width\"].license, read 2026-10-29",
+      "use": "dev toolchain, transitive of publint and attw",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "strip-ansi",
+      "version": "6.0.1",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/strip-ansi\"].license, read 2026-10-29",
+      "use": "dev toolchain, transitive of publint and attw",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "ansi-regex",
+      "version": "5.0.1",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/strip-ansi/node_modules/ansi-regex\"].license, read 2026-10-29",
+      "use": "dev toolchain, transitive of publint and attw",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "supports-color",
+      "version": "7.2.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/supports-color\"].license, read 2026-10-29",
+      "use": "dev toolchain, transitive of publint and attw",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "supports-hyperlinks",
+      "version": "3.2.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/supports-hyperlinks\"].license, read 2026-10-29",
+      "use": "dev toolchain, transitive of publint and attw",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "unicode-emoji-modifier-base",
+      "version": "1.0.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/unicode-emoji-modifier-base\"].license, read 2026-10-29",
+      "use": "dev toolchain, transitive of publint and attw",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "validate-npm-package-name",
+      "version": "5.0.1",
+      "published": "ISC",
+      "audited": "ISC",
+      "evidence": "package-lock.json packages[\"node_modules/validate-npm-package-name\"].license, read 2026-10-29",
+      "use": "dev toolchain, transitive of publint and attw",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "wrap-ansi",
+      "version": "7.0.0",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/wrap-ansi\"].license, read 2026-10-29",
+      "use": "dev toolchain, transitive of publint and attw",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "y18n",
+      "version": "5.0.8",
+      "published": "ISC",
+      "audited": "ISC",
+      "evidence": "package-lock.json packages[\"node_modules/y18n\"].license, read 2026-10-29",
+      "use": "dev toolchain, transitive of publint and attw",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "yargs",
+      "version": "16.2.2",
+      "published": "MIT",
+      "audited": "MIT",
+      "evidence": "package-lock.json packages[\"node_modules/yargs\"].license, read 2026-10-29",
+      "use": "dev toolchain, transitive of publint and attw",
+      "load": "dev-only",
+      "status": "adopted",
+      "decision": [
+        "D-043"
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "name": "yargs-parser",
+      "version": "20.2.9",
+      "published": "ISC",
+      "audited": "ISC",
+      "evidence": "package-lock.json packages[\"node_modules/yargs-parser\"].license, read 2026-10-29",
+      "use": "dev toolchain, transitive of publint and attw",
       "load": "dev-only",
       "status": "adopted",
       "decision": [

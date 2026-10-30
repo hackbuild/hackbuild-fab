@@ -77,10 +77,13 @@
       "path": "packages/registry-loader"
     },
     {
-      "path": "packages/ui-core"
+      "path": "packages/viewer"
     },
     {
-      "path": "packages/ui"
+      "path": "packages/bench-core"
+    },
+    {
+      "path": "packages/bench"
     },
     {
       "path": "packages/link"

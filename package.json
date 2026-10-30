@@ -17,7 +17,7 @@
   "scripts": {
     "prepare": "git config core.hooksPath .githooks",
     "lint": "node tools/lint-voice.mjs",
-    "typecheck": "tsc -b && tsc -p tools/tsconfig.json && tsc -p tsconfig.tests.json && node tools/vue-check.mjs",
+    "typecheck": "tsc -b && tsc -p spec/tsconfig.fixtures.json && tsc -p tools/tsconfig.json && tsc -p tsconfig.tests.json && node tools/vue-check.mjs",
     "pretest": "tsc -b",
     "test": "vitest run && node --test tools/test/*.test.mjs packages/*/seed/test/*.test.mjs knowledge/test/*.test.mjs",
     "registries": "node tools/gen/registries.mjs",
@@ -25,9 +25,12 @@
     "derived:counts": "node tools/counts.mjs && git diff --exit-code -- tools/reports/counts.json docs/plan/PLAN.md",
     "tiers": "node tools/tiers.mjs",
     "check": "npm run lint && node tools/lint-authors.mjs && npm run typecheck && npm test && npm run tiers && npm run derived",
-    "bake:all": "tsc -b && node tools/bake/bake.mjs --all"
+    "bake:all": "tsc -b && node tools/bake/bake.mjs --all",
+    "build:lib": "node tools/build-lib.mjs",
+    "lint:packages": "node tools/lint-packages.mjs"
   },
   "devDependencies": {
+    "@arethetypeswrong/cli": "0.18.5",
     "@changesets/cli": "3.0.3",
     "@fontsource/ibm-plex-mono": "5.3.0",
     "@fontsource/libre-baskerville": "5.3.0",
@@ -42,6 +45,7 @@
     "earcut": "2.2.4",
     "fast-check": "4.10.2",
     "happy-dom": "21.0.1",
+    "publint": "0.3.25",
     "tsdown": "0.23.0",
     "typescript": "7.0.2",
     "typescript6": "npm:@typescript/typescript6@6.0.2",

@@ -40,7 +40,7 @@ export interface ChaseRegistries {
    */
   readonly claimFns?: readonly string[];
   /**
-   * Widget kinds a widget registry holds (packages/ui-core widgetKinds).
+   * Widget kinds a widget registry holds (packages/bench-core widgetKinds).
    * Absent reads as empty: a bench widget whose kind resolves to nothing
    * is E_REF, never a control that quietly draws nothing.
    */

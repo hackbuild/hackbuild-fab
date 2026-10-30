@@ -12,11 +12,11 @@
 import type {
   BuildHash, FaceFrame, Mm, MeshHash, MeshRoute, MeshUri, Plane, Process, Quat, Qualification,
   Ring, Tier, Vec3, Axis,
-} from "./ids";
-import type { Feature } from "./features";
-import type { BoardRecord, RecordRead } from "./board-features";
-import type { Bound } from "./constraints";
-import type { CheckId } from "./checks";
+} from "./ids.js";
+import type { Feature } from "./features.js";
+import type { BoardRecord, RecordRead } from "./board-features.js";
+import type { Bound } from "./constraints.js";
+import type { CheckId } from "./checks.js";
 
 /** Content-addressed mesh handle. Bytes live in the store; IR holds the uri (D-050). */
 export interface MeshRef {

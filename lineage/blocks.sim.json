@@ -44,8 +44,8 @@
     "source": "fab-knowledge:originals/blocks/files/src-extracted/sim.js",
     "sha256": "8b3435df11e5adcd38d435089aee3ac98b6fcaa466ff3f599beb8431ffca898d",
     "fixes": [
-      "the ADC reading round(clamp(V / vio) x 4095) (sim.js line 138, BOSS line 135) ported to packages/ui-core/src/widgets/fader.ts adcCounts as the clamped ratio to the hookup refV over 2^bits - 1, the full scale of packages/circuit/src/read/adc.ts fullScaleCounts, so the bits come from the hookup read instead of a fixed 12 (R1-engine-14)"
+      "the ADC reading round(clamp(V / vio) x 4095) (sim.js line 138, BOSS line 135) ported to packages/bench-core/src/widgets/fader.ts adcCounts as the clamped ratio to the hookup refV over 2^bits - 1, the full scale of packages/circuit/src/read/adc.ts fullScaleCounts, so the bits come from the hookup read instead of a fixed 12 (R1-engine-14)"
     ],
-    "dest": "packages/ui-core/src/widgets/fader.ts"
+    "dest": "packages/bench-core/src/widgets/fader.ts"
   }
 ]

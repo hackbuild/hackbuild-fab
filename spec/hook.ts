@@ -11,7 +11,7 @@
 // section 12): tilt and azimuth stimulus, release, the error state, clamps
 // on out-of-range writes, the unknown export kind message.
 
-import type { DriveStimulus } from "./build";
+import type { DriveStimulus } from "./build.js";
 
 /** Name of the global the hook lives on. */
 export const BENCH_GLOBAL = "BENCH";

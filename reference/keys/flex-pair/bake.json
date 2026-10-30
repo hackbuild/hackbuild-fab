@@ -57,7 +57,7 @@
       "from": "npm:@virgilvox/hackbuild-ui/dist/styles/hackbuild.css"
     },
     {
-      "from": "../../../packages/ui/src/bench/bench.css"
+      "from": "../../../packages/bench/src/bench/bench.css"
     }
   ],
   "wasm": {

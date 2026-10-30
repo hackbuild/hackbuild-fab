@@ -1,10 +1,10 @@
 // command nest.pack, group make.
 // spec/commands.ts CommandIO takes this interface; npm run registries regenerates it.
 
-import type { CommandResult } from "../commands";
-import type { Mm } from "../ids";
-import type { KerfMode, NestMode, NestResult } from "../nest";
-import type { Part } from "../part-ir";
+import type { CommandResult } from "../commands.js";
+import type { Mm } from "../ids.js";
+import type { KerfMode, NestMode, NestResult } from "../nest.js";
+import type { Part } from "../part-ir.js";
 
 export interface NestPackIO {
   /** Reconciled with spec/nest.ts by M07-T14. */

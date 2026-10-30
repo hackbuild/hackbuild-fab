@@ -1,8 +1,8 @@
 // command view.render, group look.
 // spec/commands.ts CommandIO takes this interface; npm run registries regenerates it.
 
-import type { ViewMode } from "../bench";
-import type { ArtifactUri } from "../ids";
+import type { ViewMode } from "../bench.js";
+import type { ArtifactUri } from "../ids.js";
 
 
 export interface ViewRenderIO {

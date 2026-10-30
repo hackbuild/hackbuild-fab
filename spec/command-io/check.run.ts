@@ -1,8 +1,8 @@
 // command check.run, group prove.
 // spec/commands.ts CommandIO takes this interface; npm run registries regenerates it.
 
-import type { CheckResult } from "../checks";
-import type { ReportUri } from "../ids";
+import type { CheckResult } from "../checks.js";
+import type { ReportUri } from "../ids.js";
 
 
 export interface CheckRunIO {

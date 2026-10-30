@@ -1,7 +1,7 @@
 // command knowledge.search, group query.
 // spec/commands.ts CommandIO takes this interface; npm run registries regenerates it.
 
-import type { KnowledgeHit, KnowledgeKind } from "../commands";
+import type { KnowledgeHit, KnowledgeKind } from "../commands.js";
 
 export interface KnowledgeSearchIO {
   input: { query: string; kinds?: readonly KnowledgeKind[] };

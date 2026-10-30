@@ -8,7 +8,7 @@
 //
 // It composes the layers the legacy page holds after a preset with
 // @hackbuild/inlay: sprueGeo for the blank and zone, the text layers painted
-// by the ui-core canvas surface in its "px" text mode, the `sprue` hygiene
+// by the bench-core canvas surface in its "px" text mode, the `sprue` hygiene
 // recipe and thinFlags. The fonts arrive from the harness, cut from the
 // legacy page's own embedded @font-face rules, so both pages paint one face.
 
@@ -16,7 +16,7 @@ import {
   composeSprue, sprueFont, sprueGeo, sprueThin,
   type SprueBlank, type SprueLayer, type ThinFlag,
 } from "@hackbuild/inlay";
-import { canvasSurface } from "@hackbuild/ui-core";
+import { canvasSurface } from "@hackbuild/bench-core";
 import { blankOutline, holeYOf } from "../build";
 import { chase, type SprueParams } from "../chase";
 

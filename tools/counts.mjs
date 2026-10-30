@@ -215,16 +215,16 @@ function tgzEntry(path, name) {
   throw new Error(`counts: ${name} not in ${path}`);
 }
 
-// Distinct .hb- class names in the hackbuild-ui stylesheet packages/ui
+// Distinct .hb- class names in the hackbuild-ui stylesheet packages/bench
 // installs: the vendored tarball while the dependency is a file: spec,
 // node_modules once it is an exact npm version (M09-T02 step 9).
 function uiCounts() {
-  const pkgPath = join(root, "packages/ui/package.json");
+  const pkgPath = join(root, "packages/bench/package.json");
   if (!existsSync(pkgPath)) return null;
   const spec = JSON.parse(readFileSync(pkgPath, "utf8")).dependencies?.["@virgilvox/hackbuild-ui"];
   if (!spec) return null;
   const css = spec.startsWith("file:")
-    ? tgzEntry(resolve(root, "packages/ui", spec.slice("file:".length)), "package/dist/styles/hackbuild.css")
+    ? tgzEntry(resolve(root, "packages/bench", spec.slice("file:".length)), "package/dist/styles/hackbuild.css")
     : readFileSync(join(root, "node_modules/@virgilvox/hackbuild-ui/dist/styles/hackbuild.css"), "utf8");
   return { hbClasses: new Set(css.match(/\.hb-[a-zA-Z0-9_-]*/g)).size, spec };
 }
@@ -314,7 +314,7 @@ function table(c, ext) {
     ["spec commands, MCP tools", `${c.spec.commands}, ${c.spec.mcpTools}`, "string-literal members of `CommandName` and `McpToolName` in `spec/commands.ts`"],
     ["knowledge files", `${c.knowledge.files}, with ${fmt(c.knowledge.words)} words`, "tracked files under `knowledge/` outside `knowledge/references/`; words as `wc -w` splits them"],
     ["reference words", fmt(c.references.words), "tracked files under `knowledge/references/`; words as `wc -w` splits them"],
-    ...(c.ui ? [["hackbuild-ui `.hb-` classes", `${c.ui.hbClasses} in the stylesheet packages/ui installs (${c.ui.spec})`, "distinct `.hb-` names in `dist/styles/hackbuild.css` of the `@virgilvox/hackbuild-ui` dependency of `packages/ui/package.json`"]] : []),
+    ...(c.ui ? [["hackbuild-ui `.hb-` classes", `${c.ui.hbClasses} in the stylesheet packages/bench installs (${c.ui.spec})`, "distinct `.hb-` names in `dist/styles/hackbuild.css` of the `@virgilvox/hackbuild-ui` dependency of `packages/bench/package.json`"]] : []),
     ...ext.map((r) => [r.label, r.note ? `${r.value}; ${r.note}` : r.value, `${r.method} (snapshot ${r.date}, \`tools/counts.external.json\` ${r.key})`]),
   ];
   const cell = (s) => String(s).replace(/\|/g, "\\|");

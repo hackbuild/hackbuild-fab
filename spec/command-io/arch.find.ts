@@ -1,8 +1,8 @@
 // command arch.find, group query.
 // spec/commands.ts CommandIO takes this interface; npm run registries regenerates it.
 
-import type { CanonHit } from "../commands";
-import type { Process } from "../ids";
+import type { CanonHit } from "../commands.js";
+import type { Process } from "../ids.js";
 
 export interface ArchFindIO {
   input: {

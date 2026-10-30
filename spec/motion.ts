@@ -9,7 +9,7 @@
 // for the owner.
 // Version 1, 2026-10-08. Carries D-051, D-056, D-139.
 
-import type { Hash } from "./ids";
+import type { Hash } from "./ids.js";
 
 /** A named state variable of a machine, for example "zR[0]" or "rotorSteps". */
 export type StateVar = string;

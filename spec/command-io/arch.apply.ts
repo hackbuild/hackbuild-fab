@@ -1,9 +1,9 @@
 // command arch.apply, group author.
 // spec/commands.ts CommandIO takes this interface; npm run registries regenerates it.
 
-import type { AppliedArchetype, MaterialSlot } from "../chase";
-import type { FaceFrame, FaceRef } from "../ids";
-import type { Params } from "./_shared";
+import type { AppliedArchetype, MaterialSlot } from "../chase.js";
+import type { FaceFrame, FaceRef } from "../ids.js";
+import type { Params } from "./_shared.js";
 
 export interface ArchApplyIO {
   /**

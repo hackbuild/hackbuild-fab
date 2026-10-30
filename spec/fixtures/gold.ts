@@ -9,12 +9,12 @@
 // and COTTER; numbers are illustrations and prove nothing.
 // 2026-10-05.
 
-import { defineChase, type ParamsOf } from "../chase";
-import { defineBench } from "../bench";
-import type { ContactFn } from "../build";
-import type { BenchHook } from "../hook";
-import type { ResultTarget } from "../checks";
-import type { ReadModel } from "../circuit";
+import { defineChase, type ParamsOf } from "../chase.js";
+import { defineBench } from "../bench.js";
+import type { ContactFn } from "../build.js";
+import type { BenchHook } from "../hook.js";
+import type { ResultTarget } from "../checks.js";
+import type { ReadModel } from "../circuit.js";
 
 export const chase = defineChase({
   meta: {

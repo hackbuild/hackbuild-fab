@@ -1,7 +1,7 @@
 // command adopt, group make, cli only.
 // spec/commands.ts CommandIO takes this interface; npm run registries regenerates it.
 
-import type { Hash } from "../ids";
+import type { Hash } from "../ids.js";
 
 export interface AdoptIO {
   input: {

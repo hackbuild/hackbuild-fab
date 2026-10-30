@@ -1,22 +1,12 @@
 {
+  "extends": "../tsconfig.base.json",
   "compilerOptions": {
-    "strict": true,
-    "noUncheckedIndexedAccess": true,
-    "exactOptionalPropertyTypes": true,
-    "noImplicitOverride": true,
-    "verbatimModuleSyntax": true,
-    "isolatedModules": true,
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
-    "target": "ES2023",
+    "outDir": "dist",
+    "rootDir": ".",
+    "tsBuildInfoFile": "dist/.tsbuildinfo",
     "lib": ["ES2023"],
-    "types": [],
-    "noEmit": true,
-    "incremental": true,
-    "noFallthroughCasesInSwitch": true,
-    "forceConsistentCasingInFileNames": true,
     "skipLibCheck": false
   },
-  "include": ["*.ts", "command-io/*.ts", "fixtures/*.ts"],
-  "exclude": ["test"]
+  "include": ["*.ts", "command-io/*.ts"],
+  "exclude": ["test", "dist", "node_modules"]
 }

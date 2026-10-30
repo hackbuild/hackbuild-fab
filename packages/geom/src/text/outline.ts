@@ -6,7 +6,7 @@
 // here from that table with no font file, no DOM and no clock. One string,
 // font and size give the same rings on every machine.
 //
-// Placement follows the canvas calls the ui-core canvas surface issues for
+// Placement follows the canvas calls the bench-core canvas surface issues for
 // the same TextDraw, in model terms (y up): the run starts `along` mm along
 // the baseline, or is centred there for align "center"; letter spacing is
 // added after every character, as canvas letterSpacing adds it, and counts

@@ -6,7 +6,7 @@
 // legacy page.
 //
 // It composes COLLAR's 'hack.build coin' preset (legacy collar.html lines
-// 2853 to 2878) with @hackbuild/inlay on the ui-core canvas surface: the
+// 2853 to 2878) with @hackbuild/inlay on the bench-core canvas surface: the
 // mark as a palette image, the back text through the pipe split, the
 // collar-v5 hygiene recipe clipped to the art radius. The reeded edge and the
 // rim band are geometry, outside the art grid. The per-slot volumes come from
@@ -22,7 +22,7 @@ import {
   type Layer, type NativeImage, type RasterGrid,
 } from "@hackbuild/inlay";
 import { findConstant, loadProfile } from "@hackbuild/profile";
-import { canvasSurface } from "@hackbuild/ui-core";
+import { canvasSurface } from "@hackbuild/bench-core";
 import { cellCounts, cellMm, labelBands, stateOf } from "../build";
 import { chase, type CollarParams } from "../chase";
 

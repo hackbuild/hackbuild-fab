@@ -5,7 +5,7 @@
 // equals the SNAPFE curve at cg within 0.01 N (G-20). The curve value is
 // read from packages/sim clickRigid run here on the design's params and
 // the profile modulus, an independent path from the archetype's sampled
-// metrics. The plot.curve panel's data function (packages/ui curveView)
+// metrics. The plot.curve panel's data function (packages/bench curveView)
 // reads the same contact function and must agree with the pad to 0.01.
 // The bench declaration follows the flex-pair bench rules (gold-standard
 // GOLD-10, GOLD-12, GOLD-13).
@@ -17,9 +17,9 @@ import { createProfileLookup } from "@hackbuild/profile";
 import { CLICK_DEFAULTS } from "@hackbuild/archetypes";
 import { clickRigid, clickRules } from "@hackbuild/sim";
 import { DRIVE_READOUTS, type Metric } from "@hackbuild/spec";
-import { targetIds } from "../../../../packages/ui-core/src/drive/drive.js";
+import { targetIds } from "../../../../packages/bench-core/src/drive/drive.js";
 import { buildPart, loadDesign, resolveParams, type Built } from "../../../../core/src/commands/build.js";
-import { CONTACT_TOL_MM, CURVE_TOLERANCE, curveView, type CurveEntry } from "../../../../packages/ui/src/panels/curve.js";
+import { CONTACT_TOL_MM, CURVE_TOLERANCE, curveView, type CurveEntry } from "../../../../packages/bench/src/panels/curve.js";
 import { bench } from "../bench";
 import { contact } from "../build";
 import { chase } from "../chase";

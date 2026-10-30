@@ -12,7 +12,7 @@
 // guard isThrownCommandError and the helpers commandError, editDistance
 // and didYouMean.
 
-import type { Verdict } from "./ids";
+import type { Verdict } from "./ids.js";
 
 export const ERROR_CODES = [
   "E_SCHEMA",

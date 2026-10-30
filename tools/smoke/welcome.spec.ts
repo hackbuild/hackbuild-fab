@@ -7,8 +7,8 @@
 // Two targets. The flex-pair bake (M09-T13) at WELCOME_BENCH, default
 // dist/bench/flex-pair.html, where `node tools/bake/bake.mjs
 // reference/keys/flex-pair/bake.json` writes it; it is skipped and reported
-// not run while the file is absent. The ui-core fixture
-// (packages/ui-core/test/bench/welcome.fixture.*) bundled here into one
+// not run while the file is absent. The bench-core fixture
+// (packages/bench-core/test/bench/welcome.fixture.*) bundled here into one
 // offline file. Both answer `BENCH` (ready, designJson, loadDesign) and the
 // data-hb hooks welcome, welcome-dismiss and guide.
 //
@@ -21,11 +21,11 @@ import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { expect, test, type BrowserContext, type Page } from "@playwright/test";
 import { SHOTS } from "./measure.ts";
-import { encodeShare } from "../../packages/ui-core/src/bench/share.ts";
+import { encodeShare } from "../../packages/bench-core/src/bench/share.ts";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
 const BAKE = path.resolve(ROOT, process.env["WELCOME_BENCH"] ?? "dist/bench/flex-pair.html");
-const FIXTURE_DIR = path.join(ROOT, "packages/ui-core/test/bench");
+const FIXTURE_DIR = path.join(ROOT, "packages/bench-core/test/bench");
 /** meta.chase of the designs both targets carry (spec/chase.ts CHASE_SCHEMA_VERSION). */
 const CHASE = 2;
 
@@ -82,7 +82,7 @@ const welcomeCard = (page: Page) => page.locator('[data-hb="welcome"]');
 function targets(): { name: string; file: () => Promise<string | null> }[] {
   return [
     { name: "flex-pair bake", file: async () => (existsSync(BAKE) ? BAKE : null) },
-    { name: "ui-core fixture", file: async () => fixtureFile(test.info().outputPath("fixture")) },
+    { name: "bench-core fixture", file: async () => fixtureFile(test.info().outputPath("fixture")) },
   ];
 }
 
@@ -183,7 +183,7 @@ for (const target of targets()) {
     });
 
     test("screenshots at 390 and 1280 px with the welcome open", async ({ page }) => {
-      test.skip(target.name !== "ui-core fixture" && process.env["SHOTS_BAKE"] === undefined, "bake shots belong to M09-T14");
+      test.skip(target.name !== "bench-core fixture" && process.env["SHOTS_BAKE"] === undefined, "bake shots belong to M09-T14");
       mkdirSync(SHOTS, { recursive: true });
       for (const width of [390, 1280]) {
         await page.setViewportSize({ width, height: 844 });

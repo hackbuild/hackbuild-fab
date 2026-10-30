@@ -1,7 +1,7 @@
 // command chase.render, group look.
 // spec/commands.ts CommandIO takes this interface; npm run registries regenerates it.
 
-import type { ArtifactUri } from "../ids";
+import type { ArtifactUri } from "../ids.js";
 
 export interface ChaseRenderIO {
   /** screenshots false measures every view and stores no png; default true. */

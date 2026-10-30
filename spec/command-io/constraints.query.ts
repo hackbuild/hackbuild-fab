@@ -1,8 +1,8 @@
 // command constraints.query, group query.
 // spec/commands.ts CommandIO takes this interface; npm run registries regenerates it.
 
-import type { ConstraintDim, Interval, ParamEnvelope, ParamPointer } from "../constraints";
-import type { Facts, Params } from "./_shared";
+import type { ConstraintDim, Interval, ParamEnvelope, ParamPointer } from "../constraints.js";
+import type { Facts, Params } from "./_shared.js";
 
 export interface ConstraintsQueryIO {
   /**

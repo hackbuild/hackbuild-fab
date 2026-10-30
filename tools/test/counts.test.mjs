@@ -24,7 +24,7 @@ const INPUTS = [
   "docs/plan/PLAN.md",
   "docs/plan/DECISIONS.md",
   "docs/plan/CHECKS.md",
-  "packages/ui/package.json",
+  "packages/bench/package.json",
   "tools/vendor",
 ];
 
@@ -221,7 +221,7 @@ test("hackbuild-ui class count reads the vendored tarball and rises by the nine 
   try {
     run(dir);
     const ui = counts(dir).ui;
-    assert.ok(ui, "packages/ui depends on @virgilvox/hackbuild-ui");
+    assert.ok(ui, "packages/bench depends on @virgilvox/hackbuild-ui");
     const base = JSON.parse(readFileSync(join(repo, "tools/counts.external.json"), "utf8")).find((r) => r.key === "hackbuildUi.hbClasses");
     assert.ok(ui.hbClasses >= Number(base.value) + 9, `${ui.hbClasses} classes, 0.2.0 had ${base.value}`);
     const plan = readFileSync(join(dir, "docs/plan/PLAN.md"), "utf8");
@@ -239,7 +239,7 @@ test("hackbuild-ui class count follows the stylesheet inside the tarball", () =>
     writeFileSync(join(stage, "package/dist/styles/hackbuild.css"), ".hb-a{ color:red } .hb-b .hb-a{ } .hb-c-d:hover{ }\n");
     writeFileSync(join(stage, "package/package.json"), "{}\n");
     execFileSync("tar", ["-czf", join(dir, "tools/vendor/probe.tgz"), "-C", stage, "package"]);
-    const pkgPath = join(dir, "packages/ui/package.json");
+    const pkgPath = join(dir, "packages/bench/package.json");
     const pkg = JSON.parse(readFileSync(pkgPath, "utf8"));
     pkg.dependencies["@virgilvox/hackbuild-ui"] = "file:../../tools/vendor/probe.tgz";
     writeFileSync(pkgPath, JSON.stringify(pkg, null, 2) + "\n");

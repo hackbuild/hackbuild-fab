@@ -122,7 +122,7 @@ exists to protect that.
 
 - TypeScript strict, named exports only. Vue 3 SFCs with `<script setup
   lang="ts">`, typed props with `withDefaults`, typed emits.
-- No DOM below tier 3. State lives in `ui-core`; Pinia setup stores only
+- No DOM below tier 3. State lives in `bench-core`; Pinia setup stores only
   mirror shell state. localStorage keys start `hbf.`, inside try/catch.
 - Every wasm object is freed by its owner scope; sweeps end at zero live.
 - Comments state constraints the code cannot show. Never narrate the next

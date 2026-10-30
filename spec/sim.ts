@@ -11,8 +11,8 @@
 // Multi-trial by default.
 // Version 4, 2026-10-04. Carries D-055, D-056, D-071, D-134, D-135, D-136.
 
-import type { Hash, Mm, Vec3 } from "./ids";
-import type { SchemaLike } from "./schema";
+import type { Hash, Mm, Vec3 } from "./ids.js";
+import type { SchemaLike } from "./schema.js";
 
 /** Closest approach between two bodies over a motion range. */
 export interface ClosestApproach {

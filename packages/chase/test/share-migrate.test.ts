@@ -3,8 +3,8 @@
 // PIP legacy save loads through designs/pip/migrate/legacy.ts; every file
 // under designs/*/test/fixtures/legacy/ matches its SHA256SUMS and loads
 // with 0 E_SCHEMA. The link is the D-125 form `#d=<meta.chase>.<base64url
-// of deflate-raw JSON>`; ui-core decodeShare reads it in the bench, and
-// packages/ui-core/test/share-chase.test.ts runs the same options through
+// of deflate-raw JSON>`; bench-core decodeShare reads it in the bench, and
+// packages/bench-core/test/share-chase.test.ts runs the same options through
 // that decoder.
 
 import { createHash } from "node:crypto";

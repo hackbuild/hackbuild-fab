@@ -1,10 +1,10 @@
 // command catalog.pins, group query.
 // spec/commands.ts CommandIO takes this interface; npm run registries regenerates it.
 
-import type { PinDef } from "../catalog";
-import type { McuPinSpec } from "../circuit";
-import type { Tier } from "../ids";
-import type { Provenance } from "../profile";
+import type { PinDef } from "../catalog.js";
+import type { McuPinSpec } from "../circuit.js";
+import type { Tier } from "../ids.js";
+import type { Provenance } from "../profile.js";
 
 export interface CatalogPinsIO {
   input: { part: string };

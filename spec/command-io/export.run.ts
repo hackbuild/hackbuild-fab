@@ -1,9 +1,9 @@
 // command export.run, group make.
 // spec/commands.ts CommandIO takes this interface; npm run registries regenerates it.
 
-import type { ArtifactUri } from "../ids";
-import type { BuildWarning } from "../part-ir";
-import type { Params } from "./_shared";
+import type { ArtifactUri } from "../ids.js";
+import type { BuildWarning } from "../part-ir.js";
+import type { Params } from "./_shared.js";
 
 export interface ExportRunIO {
   /**

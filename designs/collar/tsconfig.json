@@ -14,6 +14,7 @@
     { "path": "../../packages/geom" },
     { "path": "../../packages/profile" },
     { "path": "../../packages/inlay" },
-    { "path": "../../packages/ui-core" }
+    { "path": "../../packages/bench-core" },
+    { "path": "../../packages/viewer" }
   ]
 }

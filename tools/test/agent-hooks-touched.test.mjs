@@ -28,7 +28,7 @@ const CASES = [
   ["packages/geom/test/x.test.ts", { kind: "tests" }],
   ["reference/keys/flex-pair/build.ts", { kind: "build", dir: "reference/keys/flex-pair" }],
   ["designs/collar/src/x.ts", { kind: "build", dir: "designs/collar" }],
-  ["packages/ui/src/bench/Rail.vue", { kind: "vue" }],
+  ["packages/bench/src/bench/Rail.vue", { kind: "vue" }],
   ["tools/test/x.ts", { kind: "tools" }],
   ["README.md", null],
 ];

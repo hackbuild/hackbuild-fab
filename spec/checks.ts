@@ -13,15 +13,15 @@
 // rely on target ids and on measured matching legal.kind.
 // 2026-10-05: pair target (gold standard P-23); an open interval end is null (D-225).
 
-import type { CheckUri, IsoDate, KernelId, Severity, Vec3, Verdict } from "./ids";
-import type { Feature, FeatureKind, FeatureOf } from "./features";
-import type { Assembly, AssertionType, Body, JointDecl, Part, Sheet } from "./part-ir";
-import type { Net } from "./circuit";
-import type { ProfileLookup } from "./profile";
-import type { SimHandle } from "./sim";
-import type { MotionHandle } from "./motion";
-import type { HookupDecl } from "./chase";
-import type { PatchEdit } from "./commands";
+import type { CheckUri, IsoDate, KernelId, Severity, Vec3, Verdict } from "./ids.js";
+import type { Feature, FeatureKind, FeatureOf } from "./features.js";
+import type { Assembly, AssertionType, Body, JointDecl, Part, Sheet } from "./part-ir.js";
+import type { Net } from "./circuit.js";
+import type { ProfileLookup } from "./profile.js";
+import type { SimHandle } from "./sim.js";
+import type { MotionHandle } from "./motion.js";
+import type { HookupDecl } from "./chase.js";
+import type { PatchEdit } from "./commands.js";
 
 /**
  * Fixed check areas: the 13 seeded prefixes (api-library-ai-design.md

@@ -155,7 +155,7 @@ test("the command filter acts on the brief's tools and no other", (t) => {
   const dir = repo();
   t.after(() => rmSync(dir, { recursive: true, force: true }));
   const acts = (command) => handle(input(dir, vitestLog(), { tool_input: { command } })) !== null;
-  for (const command of ["npx vitest run packages/ui", "npx tsc -b", "node --test tools/test/x.test.mjs", "npx playwright test", "uv run --project tools/py pytest", "npm test", "npm run check", "npm run typecheck"]) {
+  for (const command of ["npx vitest run packages/bench", "npx tsc -b", "node --test tools/test/x.test.mjs", "npx playwright test", "uv run --project tools/py pytest", "npm test", "npm run check", "npm run typecheck"]) {
     assert.equal(acts(command), true, command);
   }
   for (const command of ["git log", "cat README.md", "npm run build", "node tools/counts.mjs"]) assert.equal(acts(command), false, command);

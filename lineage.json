@@ -355,9 +355,9 @@
     "source": "fab-knowledge:originals/blocks/files/src-extracted/sim.js",
     "sha256": "8b3435df11e5adcd38d435089aee3ac98b6fcaa466ff3f599beb8431ffca898d",
     "fixes": [
-      "the ADC reading round(clamp(V / vio) x 4095) (sim.js line 138, BOSS line 135) ported to packages/ui-core/src/widgets/fader.ts adcCounts as the clamped ratio to the hookup refV over 2^bits - 1, the full scale of packages/circuit/src/read/adc.ts fullScaleCounts, so the bits come from the hookup read instead of a fixed 12 (R1-engine-14)"
+      "the ADC reading round(clamp(V / vio) x 4095) (sim.js line 138, BOSS line 135) ported to packages/bench-core/src/widgets/fader.ts adcCounts as the clamped ratio to the hookup refV over 2^bits - 1, the full scale of packages/circuit/src/read/adc.ts fullScaleCounts, so the bits come from the hookup read instead of a fixed 12 (R1-engine-14)"
     ],
-    "dest": "packages/ui-core/src/widgets/fader.ts"
+    "dest": "packages/bench-core/src/widgets/fader.ts"
   },
   {
     "id": "blocks.sim/boss-legacy",
@@ -762,9 +762,9 @@
     "source": "fab-knowledge:evidence/x/pip-controller/bench/part2.js",
     "sha256": "e1cf608f117d655ca6e4e95e7075c2669b2e8a77767b1fd345a548c1e612496c",
     "fixes": [
-      "rev, built, the 320 ms schedule, runBuild with BUILDING and QUEUED, ensureMesh and blankState (part2.js lines 8 to 15, 46 to 92) ported to packages/ui-core/src/bench/core.ts; a thrown build keeps the previous model where line 82 set MODEL to null (M09-T03 step 3)"
+      "rev, built, the 320 ms schedule, runBuild with BUILDING and QUEUED, ensureMesh and blankState (part2.js lines 8 to 15, 46 to 92) ported to packages/bench-core/src/bench/core.ts; a thrown build keeps the previous model where line 82 set MODEL to null (M09-T03 step 3)"
     ],
-    "dest": "packages/ui-core/src/bench/core.ts"
+    "dest": "packages/bench-core/src/bench/core.ts"
   },
   {
     "id": "catalog-src.pip.part2/ui-core-bench-hook",
@@ -772,9 +772,9 @@
     "source": "fab-knowledge:evidence/x/pip-controller/bench/part2.js",
     "sha256": "e1cf608f117d655ca6e4e95e7075c2669b2e8a77767b1fd345a548c1e612496c",
     "fixes": [
-      "BENCH getters over rev, built, busy, state set replaces and rebuilds, exportBytes base64 over 0x8000-byte slices (part2.js lines 405 to 428) ported to packages/ui-core/src/bench/hook.ts; ready turns true after the first build settles, settled() added, an unknown kind rejects with unknown export kind: <k> where PIP read an undefined blob, state writes clamp and log (M09-T11, D-214)"
+      "BENCH getters over rev, built, busy, state set replaces and rebuilds, exportBytes base64 over 0x8000-byte slices (part2.js lines 405 to 428) ported to packages/bench-core/src/bench/hook.ts; ready turns true after the first build settles, settled() added, an unknown kind rejects with unknown export kind: <k> where PIP read an undefined blob, state writes clamp and log (M09-T11, D-214)"
     ],
-    "dest": "packages/ui-core/src/bench/hook.ts"
+    "dest": "packages/bench-core/src/bench/hook.ts"
   },
   {
     "id": "catalog-src.pip.part2/ui-core-bench-merge",
@@ -782,9 +782,9 @@
     "source": "fab-knowledge:evidence/x/pip-controller/bench/part2.js",
     "sha256": "e1cf608f117d655ca6e4e95e7075c2669b2e8a77767b1fd345a548c1e612496c",
     "fixes": [
-      "loadDesign merge onto fresh defaults with retired keys dropped (part2.js lines 188 to 197) ported to packages/ui-core/src/bench/merge.ts, each dropped key now logged by pointer (M09-T03 step 7)"
+      "loadDesign merge onto fresh defaults with retired keys dropped (part2.js lines 188 to 197) ported to packages/bench-core/src/bench/merge.ts, each dropped key now logged by pointer (M09-T03 step 7)"
     ],
-    "dest": "packages/ui-core/src/bench/merge.ts"
+    "dest": "packages/bench-core/src/bench/merge.ts"
   },
   {
     "id": "catalog-src.pip.part2/ui-core-bench-undo",
@@ -792,9 +792,9 @@
     "source": "fab-knowledge:evidence/x/pip-controller/bench/part2.js",
     "sha256": "e1cf608f117d655ca6e4e95e7075c2669b2e8a77767b1fd345a548c1e612496c",
     "fixes": [
-      "HIST snapshot 450 ms, identical skipped, 80 deep, undo takes a pending snapshot first (part2.js lines 31 to 43) ported to packages/ui-core/src/bench/undo.ts"
+      "HIST snapshot 450 ms, identical skipped, 80 deep, undo takes a pending snapshot first (part2.js lines 31 to 43) ported to packages/bench-core/src/bench/undo.ts"
     ],
-    "dest": "packages/ui-core/src/bench/undo.ts"
+    "dest": "packages/bench-core/src/bench/undo.ts"
   },
   {
     "id": "catalog-src.spindle.supermini-2/m08",
@@ -1140,9 +1140,9 @@
     "sha256": "ef0864ab66ca40e2930d12aba4cab3159aa470f743eee533d052fc99f844fd46",
     "fixes": [
       "arc text drag sets arcR and arcDeg, ring drag moves the centre radius keeping the width, ring corner scales both radii (collar.html:2659 to 2679); KNUCKLE has neither kind",
-      "packages/ui-core/src/artboard/controller.ts: arc text and ring drags (collar.html lines 2001 to 2142 and 2604 to 2690) beside the KNUCKLE face editor handles"
+      "packages/bench-core/src/artboard/controller.ts: arc text and ring drags (collar.html lines 2001 to 2142 and 2604 to 2690) beside the KNUCKLE face editor handles"
     ],
-    "dest": "packages/ui-core/src/artboard/manip.ts"
+    "dest": "packages/bench-core/src/artboard/manip.ts"
   },
   {
     "id": "collar.bench/ui-core-canvas-surface",
@@ -1150,7 +1150,7 @@
     "source": "fab-knowledge:originals/collar/files/collar.html",
     "sha256": "ef0864ab66ca40e2930d12aba4cab3159aa470f743eee533d052fc99f844fd46",
     "fixes": [],
-    "dest": "packages/ui-core/src/surface/canvas-surface.ts"
+    "dest": "packages/bench-core/src/surface/canvas-surface.ts"
   },
   {
     "id": "collar.export/example-preset",
@@ -2321,9 +2321,9 @@
     "source": "fab-knowledge:originals/gib/files/src/src/part2.js",
     "sha256": "2ca8ce4a73db2091fc56ad70cae37439288f5fc8fdcb6c970ff00214347bf2fe",
     "fixes": [
-      "simFinger (part2.js lines 431 to 436), the finger pot divider Ra = (Rdead - Rret) + Rtrack pos, Rb = Rret + Rtrack (1 - pos), ported to packages/ui-core/src/widgets/fader.ts fingerLegs over the finger-pot archetype's gib.Rtrack, gib.Rret and gib.Rdead, with VDD from the catalog pin row in place of the page's 3.3 V; packages/archetypes/scripts/gib-legacy.mjs records the page's own simFinger at five positions as the parity source (R1-engine-14)"
+      "simFinger (part2.js lines 431 to 436), the finger pot divider Ra = (Rdead - Rret) + Rtrack pos, Rb = Rret + Rtrack (1 - pos), ported to packages/bench-core/src/widgets/fader.ts fingerLegs over the finger-pot archetype's gib.Rtrack, gib.Rret and gib.Rdead, with VDD from the catalog pin row in place of the page's 3.3 V; packages/archetypes/scripts/gib-legacy.mjs records the page's own simFinger at five positions as the parity source (R1-engine-14)"
     ],
-    "dest": "packages/ui-core/src/widgets/fader.ts"
+    "dest": "packages/bench-core/src/widgets/fader.ts"
   },
   {
     "id": "gib.shell/gib-4",
@@ -2461,9 +2461,9 @@
     "source": "hackbuild-bench/src/core/dsp/spectrumMath.ts",
     "sha256": "de594664105e648ed0182dd895c38ede6109a3afaf1dbb694947d775e1fb9c61",
     "fixes": [
-      "parseFrequency (spectrumMath.ts lines 65 to 76), commas stripped and a case-insensitive suffix after optional space, is the model of packages/ui-core/src/bench/parse-length.ts parseLength (plan-deltas R35)"
+      "parseFrequency (spectrumMath.ts lines 65 to 76), commas stripped and a case-insensitive suffix after optional space, is the model of packages/bench-core/src/bench/parse-length.ts parseLength (plan-deltas R35)"
     ],
-    "dest": "packages/ui-core/src/bench/parse-length.ts"
+    "dest": "packages/bench-core/src/bench/parse-length.ts"
   },
   {
     "id": "hackbuild-ui.css/0.2.0",
@@ -2601,9 +2601,9 @@
       "centre snap within 0.6 mm with guide lines, alt turns it off (part6.js:479 to 482, 529)",
       "rotate snaps to 0, 90 and 180 within 4 deg, shift gives 15 deg steps (part6.js:539)",
       "wheel zoom about the pointer from 0.5 to 8 (part6.js:547)",
-      "packages/ui-core/src/artboard/hit.ts: mm2px and px2mm (406, 407), layerHandles (433 to 442), insideBox (443), hitTest (444 to 450), the move snap (526 to 530) and the rotate snap (536 to 540)"
+      "packages/bench-core/src/artboard/hit.ts: mm2px and px2mm (406, 407), layerHandles (433 to 442), insideBox (443), hitTest (444 to 450), the move snap (526 to 530) and the rotate snap (536 to 540)"
     ],
-    "dest": "packages/ui-core/src/artboard/controller.ts"
+    "dest": "packages/bench-core/src/artboard/controller.ts"
   },
   {
     "id": "inlay.face-editor/knuckle-src-zip",
@@ -3257,7 +3257,7 @@
     "source": "fab-knowledge:evidence/x/pip-controller/vendor/manifold-classic.js",
     "sha256": "de8460e9fe841ac81bb561950210521e4a28aa6bbba5345b2d0a2713686c5a99",
     "fixes": [],
-    "dest": "packages/ui-core/src/stage/manifold-boot.ts"
+    "dest": "packages/bench-core/src/stage/manifold-boot.ts"
   },
   {
     "id": "manifold-classic/pip-controller-b137deb",
@@ -4478,7 +4478,7 @@
     "source": "fab-knowledge:originals/pip/files/haft-src/bench/part1.html",
     "sha256": "987a4ff51203315c0f974be9b5b4a15e1873d7c56a7655431c0abfa7358c6fb5",
     "fixes": [
-      "rows, ranges, steps and the four steps LAYOUT, BUTTONS, BOARD, PRINT (lines 178 to 383) declared as the param groups of designs/pip/chase.ts (R1-designs-reach-08); notes of lines 238, 262, 271, 287, 288 and 312 kept in the wording packages/ui/test/fixtures/pip-notes.ts migrated; the stack and trace width rows (lines 354 to 357, 361), the bleed row (365), the modulus row (260) and the materials fold (339 to 345) become profile rows"
+      "rows, ranges, steps and the four steps LAYOUT, BUTTONS, BOARD, PRINT (lines 178 to 383) declared as the param groups of designs/pip/chase.ts (R1-designs-reach-08); notes of lines 238, 262, 271, 287, 288 and 312 kept in the wording packages/bench/test/fixtures/pip-notes.ts migrated; the stack and trace width rows (lines 354 to 357, 361), the bleed row (365), the modulus row (260) and the materials fold (339 to 345) become profile rows"
     ],
     "dest": "designs/pip/chase.ts"
   },
@@ -4550,9 +4550,9 @@
     "source": "fab-knowledge:evidence/x/pip-controller/bench/part3.js",
     "sha256": "594ee29b0c4ff173c0c656a818c4ea626b76c25b31e977d2e25bb20525253e24",
     "fixes": [
-      "range input calls touch, change calls commit (part3.js lines 277 to 295) carried as the touch and commit kinds of packages/ui-core/src/bench/core.ts"
+      "range input calls touch, change calls commit (part3.js lines 277 to 295) carried as the touch and commit kinds of packages/bench-core/src/bench/core.ts"
     ],
-    "dest": "packages/ui-core/src/bench/core.ts"
+    "dest": "packages/bench-core/src/bench/core.ts"
   },
   {
     "id": "pip.bench-part3/ui-core-drive",
@@ -4560,9 +4560,9 @@
     "source": "fab-knowledge:evidence/x/pip-controller/bench/part3.js",
     "sha256": "594ee29b0c4ff173c0c656a818c4ea626b76c25b31e977d2e25bb20525253e24",
     "fixes": [
-      "drive pad: padKeys, renderPad and padRefresh (part3.js lines 360 to 392; padKeys opens at line 361, measured 2026-10-13), ported to packages/ui-core/src/drive/drive.ts with every number read from the current build (M09-T10)"
+      "drive pad: padKeys, renderPad and padRefresh (part3.js lines 360 to 392; padKeys opens at line 361, measured 2026-10-13), ported to packages/bench-core/src/drive/drive.ts with every number read from the current build (M09-T10)"
     ],
-    "dest": "packages/ui-core/src/drive/drive.ts"
+    "dest": "packages/bench-core/src/drive/drive.ts"
   },
   {
     "id": "pip.bench-part3/ui-core-viewer-controls",
@@ -4570,9 +4570,9 @@
     "source": "fab-knowledge:evidence/x/pip-controller/bench/part3.js",
     "sha256": "594ee29b0c4ff173c0c656a818c4ea626b76c25b31e977d2e25bb20525253e24",
     "fixes": [
-      "z-up orbit, drag 0.008 rad per px, phi held to 1.5 rad, wheel 1.1 and 0.9 inside 20 to 1500 mm (part3.js lines 22 to 98), ported to packages/ui-core/src/viewer/controls.ts; the drag and wheel lines the port cites as 85 and 94 sit at 88 and 96 in this copy (measured 2026-10-13)"
+      "z-up orbit, drag 0.008 rad per px, phi held to 1.5 rad, wheel 1.1 and 0.9 inside 20 to 1500 mm (part3.js lines 22 to 98), ported to packages/viewer/src/controls.ts; the drag and wheel lines the port cites as 85 and 94 sit at 88 and 96 in this copy (measured 2026-10-13)"
     ],
-    "dest": "packages/ui-core/src/viewer/controls.ts"
+    "dest": "packages/viewer/src/controls.ts"
   },
   {
     "id": "pip.bench-part3/ui-core-viewer-scene",
@@ -4580,9 +4580,9 @@
     "source": "fab-knowledge:evidence/x/pip-controller/bench/part3.js",
     "sha256": "594ee29b0c4ff173c0c656a818c4ea626b76c25b31e977d2e25bb20525253e24",
     "fixes": [
-      "lights, bed and clip plane (part3.js lines 9 to 21) and VIEW.update xray, section and plate modes (lines 194 to 233), ported to packages/ui-core/src/viewer/scene.ts (M09-T06)"
+      "lights, bed and clip plane (part3.js lines 9 to 21) and VIEW.update xray, section and plate modes (lines 194 to 233), ported to packages/viewer/src/scene.ts (M09-T06)"
     ],
-    "dest": "packages/ui-core/src/viewer/scene.ts"
+    "dest": "packages/viewer/src/scene.ts"
   },
   {
     "id": "pip.bench-part3/ui-core-widget-light",
@@ -4590,9 +4590,9 @@
     "source": "fab-knowledge:evidence/x/pip-controller/bench/part3.js",
     "sha256": "594ee29b0c4ff173c0c656a818c4ea626b76c25b31e977d2e25bb20525253e24",
     "fixes": [
-      "the key light at (60, -90, 140) and 0.85 (part3.js line 16) is the rest pose of the view.light widget, packages/ui-core/src/widgets/light.ts: the widget keeps the key's distance and turns its position into an azimuth and elevation, and the viewer's keyLight moves that light (R1-engine-15)"
+      "the key light at (60, -90, 140) and 0.85 (part3.js line 16) is the rest pose of the view.light widget, packages/bench-core/src/widgets/light.ts: the widget keeps the key's distance and turns its position into an azimuth and elevation, and the viewer's keyLight moves that light (R1-engine-15)"
     ],
-    "dest": "packages/ui-core/src/widgets/light.ts"
+    "dest": "packages/bench-core/src/widgets/light.ts"
   },
   {
     "id": "pip.bench-part3/ui-core-widget-netlens",
@@ -4600,9 +4600,9 @@
     "source": "fab-knowledge:evidence/x/pip-controller/bench/part3.js",
     "sha256": "594ee29b0c4ff173c0c656a818c4ea626b76c25b31e977d2e25bb20525253e24",
     "fixes": [
-      "the xray net colouring of VIEW.update (part3.js lines 219 to 225) as ported to packages/ui-core/src/viewer/scene.ts: the body to net rule moved to packages/ui-core/src/widgets/netlens.ts bodyNets, read by the scene and the view.netlens widget, and the lens mode lights one net and ghosts every other body (R1-engine-15)"
+      "the xray net colouring of VIEW.update (part3.js lines 219 to 225) as ported to packages/viewer/src/scene.ts: the body to net rule moved to packages/bench-core/src/widgets/netlens.ts bodyNets, read by the scene and the view.netlens widget, and the lens mode lights one net and ghosts every other body (R1-engine-15)"
     ],
-    "dest": "packages/ui-core/src/widgets/netlens.ts"
+    "dest": "packages/bench-core/src/widgets/netlens.ts"
   },
   {
     "id": "pip.bench-part3/ui-curve-panel",
@@ -4610,9 +4610,9 @@
     "source": "fab-knowledge:evidence/x/pip-controller/bench/part3.js",
     "sha256": "594ee29b0c4ff173c0c656a818c4ea626b76c25b31e977d2e25bb20525253e24",
     "fixes": [
-      "drawCurve (part3.js lines 394 to 417 in this copy, 396 to 419 in the canonical haft (9) copy, same text, measured 2026-10-20): the x and y scales, fmax 1.15 times the peak, the force grid step, the 0.5 mm travel ticks, the dashed contact line, the curve and the peak dot, ported to packages/ui/src/panels/curve.ts curveSvg and CurvePanel.vue as SVG with token colours; fmax also covers the claim band top so the band stays in frame, and the contact line sits where the design's ContactFn closes (R1-flagship-access-switch-12); the SVG drawing moved to packages/ui/src/widgets/PlotCurve.vue and the contact search to packages/ui-core/src/widgets/curve.ts contactTravel, so the rail panel and the plot.curve widget draw through one copy (R1-engine-13)"
+      "drawCurve (part3.js lines 394 to 417 in this copy, 396 to 419 in the canonical haft (9) copy, same text, measured 2026-10-20): the x and y scales, fmax 1.15 times the peak, the force grid step, the 0.5 mm travel ticks, the dashed contact line, the curve and the peak dot, ported to packages/bench/src/panels/curve.ts curveSvg and CurvePanel.vue as SVG with token colours; fmax also covers the claim band top so the band stays in frame, and the contact line sits where the design's ContactFn closes (R1-flagship-access-switch-12); the SVG drawing moved to packages/bench/src/widgets/PlotCurve.vue and the contact search to packages/bench-core/src/widgets/curve.ts contactTravel, so the rail panel and the plot.curve widget draw through one copy (R1-engine-13)"
     ],
-    "dest": "packages/ui/src/panels/curve.ts"
+    "dest": "packages/bench/src/panels/curve.ts"
   },
   {
     "id": "pip.bench-part3/ui-rail-showwhen",
@@ -4620,9 +4620,9 @@
     "source": "fab-knowledge:evidence/x/pip-controller/bench/part3.js",
     "sha256": "594ee29b0c4ff173c0c656a818c4ea626b76c25b31e977d2e25bb20525253e24",
     "fixes": [
-      "UI.visibility data-show rows (part3.js lines 296 to 308) and GROUP_NAMES with renderGroups (lines 315 to 324; the port cites GROUP_NAMES at 314, measured at 315 on 2026-10-13), ported to packages/ui/src/rail/showWhen.ts as ShowWhen (M09-T08)"
+      "UI.visibility data-show rows (part3.js lines 296 to 308) and GROUP_NAMES with renderGroups (lines 315 to 324; the port cites GROUP_NAMES at 314, measured at 315 on 2026-10-13), ported to packages/bench/src/rail/showWhen.ts as ShowWhen (M09-T08)"
     ],
-    "dest": "packages/ui/src/rail/showWhen.ts"
+    "dest": "packages/bench/src/rail/showWhen.ts"
   },
   {
     "id": "pip.build-sh/m09-manifest",
@@ -6443,7 +6443,7 @@
     "source": "fab-knowledge:originals/sprue/files/sprue.html",
     "sha256": "a1acb293ad96c7dd5062a9e65741a7f27959584dfb10e64decb41468c59e4fe7",
     "fixes": [],
-    "dest": "packages/ui-core/src/surface/canvas-surface.ts"
+    "dest": "packages/bench-core/src/surface/canvas-surface.ts"
   },
   {
     "id": "sprue.print-card/design-legacy",
@@ -6916,9 +6916,9 @@
     "source": "fab-knowledge:evidence/x/tenon/src/src/part3.js",
     "sha256": "f80686c2e6e1610e819da476a6d841db04c1b594e2b28ac23a469016b3103eed",
     "fixes": [
-      "commitLight, mass and colour only with no geometry build (part3.js lines 49 to 53), ported as the light commit of packages/ui-core/src/bench/core.ts with built set to rev"
+      "commitLight, mass and colour only with no geometry build (part3.js lines 49 to 53), ported as the light commit of packages/bench-core/src/bench/core.ts with built set to rev"
     ],
-    "dest": "packages/ui-core/src/bench/core.ts"
+    "dest": "packages/bench-core/src/bench/core.ts"
   },
   {
     "id": "tenon.bench-part3/ui-core-viewer-scene",
@@ -6926,9 +6926,9 @@
     "source": "fab-knowledge:evidence/x/tenon/src/src/part3.js",
     "sha256": "f80686c2e6e1610e819da476a6d841db04c1b594e2b28ac23a469016b3103eed",
     "fixes": [
-      "explode as a fixed step per gap in the declared axial order, explodeOffsets (part3.js lines 199 to 204; the port cites 191 to 197, measured 2026-10-13), ported to the explode of packages/ui-core/src/viewer/scene.ts (M09-T06)"
+      "explode as a fixed step per gap in the declared axial order, explodeOffsets (part3.js lines 199 to 204; the port cites 191 to 197, measured 2026-10-13), ported to the explode of packages/viewer/src/scene.ts (M09-T06)"
     ],
-    "dest": "packages/ui-core/src/viewer/scene.ts"
+    "dest": "packages/viewer/src/scene.ts"
   },
   {
     "id": "tenon.bench/m09-legacy",
@@ -7094,9 +7094,9 @@
     "source": "fab-knowledge:evidence/x/toggle/src/src/part4.js",
     "sha256": "37d194fff6702f85510e846d3ebda6b82fa136b420b8e4e55c88e6cb692ce71a",
     "fixes": [
-      "loadDesign merges onto blankState and drops unknown keys one level deep (part4.js lines 62 to 68); packages/ui-core/src/bench/merge.ts keeps the PIP recursion instead"
+      "loadDesign merges onto blankState and drops unknown keys one level deep (part4.js lines 62 to 68); packages/bench-core/src/bench/merge.ts keeps the PIP recursion instead"
     ],
-    "dest": "packages/ui-core/src/bench/merge.ts"
+    "dest": "packages/bench-core/src/bench/merge.ts"
   },
   {
     "id": "toggle.shell/part3",
@@ -7167,9 +7167,9 @@
     "source": "fab-knowledge:originals/tumbler/files/tumbler.html",
     "sha256": "fe14c0cd07d8b10f8852317942fb86aa6ae3e30d12b60af344890e68cbc47178",
     "fixes": [
-      "the code digit buttons of buildParams (tumbler.html lines 1900 to 1907; a click takes a digit to (v + 1) mod (max + 1) at line 1906) ported to packages/ui-core/src/widgets/code.ts nextDigit and the wheels of packages/ui/src/widgets/DriveCode.vue; the verdict is tumbSolve (line 473, packages/mechanisms tumbler/modules.ts) at its SIMS inputs KEY and WRONG (line 1714), WRONG set when the dialed code differs from the cut code (R1-engine-15)"
+      "the code digit buttons of buildParams (tumbler.html lines 1900 to 1907; a click takes a digit to (v + 1) mod (max + 1) at line 1906) ported to packages/bench-core/src/widgets/code.ts nextDigit and the wheels of packages/bench/src/widgets/DriveCode.vue; the verdict is tumbSolve (line 473, packages/mechanisms tumbler/modules.ts) at its SIMS inputs KEY and WRONG (line 1714), WRONG set when the dialed code differs from the cut code (R1-engine-15)"
     ],
-    "dest": "packages/ui-core/src/widgets/code.ts"
+    "dest": "packages/bench-core/src/widgets/code.ts"
   },
   {
     "id": "ui-anatomy/handoff",

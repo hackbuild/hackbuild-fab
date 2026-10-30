@@ -2,7 +2,7 @@
 // 3.1, R1-engine-24): a failing check reads as a warning carrying the
 // draft waiver, the 3MF model carries the metadata hbf:draft = 1, and the
 // print card opens with the draft line. File names take DRAFT_ in the page
-// (packages/ui pageBench and createPageBuild below). The constants live in
+// (packages/bench pageBench and createPageBuild below). The constants live in
 // spec/draft.ts once.
 
 import {

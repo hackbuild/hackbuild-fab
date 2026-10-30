@@ -5,7 +5,7 @@
     "source": "fab-knowledge:evidence/x/pip-controller/vendor/manifold-classic.js",
     "sha256": "de8460e9fe841ac81bb561950210521e4a28aa6bbba5345b2d0a2713686c5a99",
     "fixes": [],
-    "dest": "packages/ui-core/src/stage/manifold-boot.ts"
+    "dest": "packages/bench-core/src/stage/manifold-boot.ts"
   },
   {
     "id": "manifold-classic/pip-controller-b137deb",

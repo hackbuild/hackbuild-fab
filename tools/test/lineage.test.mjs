@@ -185,7 +185,7 @@ test('every rastermesh.js under fab-knowledge/originals is a healer row', (t) =>
 // in packages/constraints/src/fixtures (M01-T10), the M01 interval ports in
 // circuit, sim and profile, the OGEE R16-P fits reference (M01-T09), and
 // the M-S circuit slice and skeleton checks (M-S-T05, M-S-T06).
-// The ui-core bench seeds (inlay part2.js, part3.js) and the mesh
+// The bench-core bench seeds (inlay part2.js, part3.js) and the mesh
 // rastermesh seed are not yet recorded; each prefix or file joins its list
 // when its row names the dest.
 const SEED_SCOPE = ['packages/3mf/', 'tools/py/'];

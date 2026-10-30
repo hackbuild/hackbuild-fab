@@ -14,14 +14,14 @@
 // 2026-10-05: ContactFn for the drive pad (gold standard P-05, G-20).
 // 2026-10-20: loft and sweep routes and the csg hull op (PLAN.md 3.3).
 
-import type { Axis, FaceFrame, FaceRef, FitClassId, Mm, MeshRoute, Process, Ring, Tier, Vec2, Vec3 } from "./ids";
-import type { Feature, FeatureAt, KindMilestone } from "./features";
-import type { AppliedArchetype } from "./chase";
-import type { ApplyOut, MechanismApplyOut } from "./canon";
+import type { Axis, FaceFrame, FaceRef, FitClassId, Mm, MeshRoute, Process, Ring, Tier, Vec2, Vec3 } from "./ids.js";
+import type { Feature, FeatureAt, KindMilestone } from "./features.js";
+import type { AppliedArchetype } from "./chase.js";
+import type { ApplyOut, MechanismApplyOut } from "./canon.js";
 import type {
   Assertion, BodyRole, BoughtBody, BuildWarning, Connection, FrameDecl, JointDecl, Metric, Pose, StackDecl,
-} from "./part-ir";
-import type { ProfileLookup } from "./profile";
+} from "./part-ir.js";
+import type { ProfileLookup } from "./profile.js";
 
 /** Base shape of a body, one variant per mesh route (D-053). */
 export type ShapeDecl =

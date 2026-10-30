@@ -9,8 +9,8 @@
 // CHK-BRD reads (D-089).
 // Version 4, 2026-10-04; the record section M08-T02, 2026-10-09. Carries D-051, D-061, D-088, D-089, D-102.
 
-import type { Deg, Hash, Mm, Ring, Tier, Vec2 } from "./ids";
-import type { Provenance } from "./profile";
+import type { Deg, Hash, Mm, Ring, Tier, Vec2 } from "./ids.js";
+import type { Provenance } from "./profile.js";
 
 export type BoardSide = "top" | "bottom";
 export type BoardLayer = "F.Cu" | "B.Cu" | "F.SilkS" | "B.SilkS" | "F.Mask" | "B.Mask" | "Edge.Cuts" | "F.Fab" | "B.Fab";

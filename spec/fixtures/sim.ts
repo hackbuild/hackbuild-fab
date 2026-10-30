@@ -6,8 +6,8 @@
 // reports it. Numbers are illustrations and prove nothing.
 // 2026-10-08.
 
-import type { CommandIO } from "../commands";
-import type { Hash } from "../ids";
+import type { CommandIO } from "../commands.js";
+import type { Hash } from "../ids.js";
 
 export const poseSweep: CommandIO["sim.sweep"]["output"] = {
   sweptHash: "sha256:0000000000000000000000000000000000000000000000000000000000000000" as Hash,

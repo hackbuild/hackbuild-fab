@@ -12,7 +12,7 @@
 // file as a spec change for the owner.
 // Version 1, 2026-10-20.
 
-import type { Qualification, Verdict } from "./ids";
+import type { Qualification, Verdict } from "./ids.js";
 
 /**
  * A nominal value with absolute bounds, all in `unit`: lo <= nominal <= hi.

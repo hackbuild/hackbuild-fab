@@ -19,7 +19,7 @@ collar_parity.py: COLLAR v5 against @hackbuild/inlay in one Chromium (M03-T09).
    Permanent Marker, runs applyPreset('hack.build coin', true), waits for
    the mark image, reads buildFace('front', res) and buildFace('back', res).
 5. Package: COLLAR_PARITY.run({res, mark}) composes the same preset with
-   the inlay package on the ui-core canvas surface.
+   the inlay package on the bench-core canvas surface.
 6. Compares cell by cell. On any difference writes both grids and a diff
    PNG to the output folder and exits 1 (D-153).
 7. Checks the legacy back grid against the M03-T05 capture

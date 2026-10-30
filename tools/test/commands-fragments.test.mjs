@@ -39,7 +39,7 @@ test("a new fragment joins its group after the frozen order, and cli only joins 
     const t = render(dir);
     assert.match(t, /\/\/ look \(4\)\n  "view\.render", "chase\.render", "project\.graph", "aa\.new",/);
     assert.match(t, /export const CLI_ONLY = \[[^\]]*"aa\.new"/);
-    assert.match(t, /^import type \{ AaNewIO \} from "\.\/command-io\/aa\.new";$/m);
+    assert.match(t, /^import type \{ AaNewIO \} from "\.\/command-io\/aa\.new\.js";$/m);
   } finally {
     rmSync(dir, { recursive: true, force: true });
   }

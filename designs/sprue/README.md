@@ -11,7 +11,7 @@ inlay layers.
 | `chase.ts` | the bench state after its boot preset `phx` (sprue.html line 956 and 980) and the bench slider ranges |
 | `build.ts` | SPRUE.build's slab plan on vector outlines: one prism per slab, one csg body per colour; the pick outline and SPRUE's coin polygon for the parity page |
 | `legacy/` | the bench, the generator and its print card as harvested, with sha256 and a lineage README |
-| `test/parity.entry.ts`, `test/parity.html` | the package side of the browser parity: SPRUE faces composed by `@hackbuild/inlay` on the ui-core canvas surface |
+| `test/parity.entry.ts`, `test/parity.html` | the package side of the browser parity: SPRUE faces composed by `@hackbuild/inlay` on the bench-core canvas surface |
 | `test/legacy-read.js` | the legacy side of the browser parity, shared by both harness forms |
 
 Two routes, one plan. The browser route (sprue.html) composes text and

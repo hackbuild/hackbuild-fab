@@ -11,10 +11,10 @@
 // Version 4, 2026-10-04; PartRow, CatalogField and ActuatorRow M08-T03 and
 // M08-T05, 2026-10-09. Carries D-076, D-102, D-103, D-104.
 
-import type { Brand, Mm, Process, Tier, Vec3 } from "./ids";
-import type { PadShape } from "./board-features";
-import type { McuPinSpec } from "./circuit";
-import type { Provenance } from "./profile";
+import type { Brand, Mm, Process, Tier, Vec3 } from "./ids.js";
+import type { PadShape } from "./board-features.js";
+import type { McuPinSpec } from "./circuit.js";
+import type { Provenance } from "./profile.js";
 
 export interface CatalogHit {
   readonly id: string;

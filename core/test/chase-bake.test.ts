@@ -85,23 +85,23 @@ describe("chase.bake (M10-T07 step 2)", () => {
     expect(JSON.parse(readFileSync(path.join(dir, "bake.json"), "utf8"))).toEqual({ ...JSON.parse(committed), title: "access-switch" });
     // The shell comes in by the package export designs/blocks uses, never a path into packages/ (tiers).
     const entry = readFileSync(path.join(dir, "bench.entry.ts"), "utf8");
-    expect(entry).toContain(`from "@hackbuild/ui/bench/entry";`);
+    expect(entry).toContain(`from "@hackbuild/bench/entry";`);
     expect(entry).not.toMatch(/from "\.[^"]*packages\//);
     const pj = JSON.parse(readFileSync(path.join(dir, "package.json"), "utf8")) as Record<string, unknown>;
     const blocks = JSON.parse(readFileSync(path.join(ROOT, "designs/blocks/package.json"), "utf8")) as Record<string, Record<string, string>>;
     expect(pj).toMatchObject({ name: "@hackbuild/design-access-switch", private: true, type: "module", author: blocks["author"] });
-    expect(pj["devDependencies"]).toEqual({ "@hackbuild/ui": blocks["devDependencies"]!["@hackbuild/ui"] });
+    expect(pj["devDependencies"]).toEqual({ "@hackbuild/bench": blocks["devDependencies"]!["@hackbuild/bench"] });
     expect(readFileSync(path.join(dir, "page-build.ts"), "utf8")).toContain("createPageBuild({ chase, module, facts: pageFacts(facts) })");
     const res = r.result as Baked;
     expect(res.hash).toBe(shasum(path.join(out, "bench", "access-switch.html")));
   }, 180_000);
 
   it("adds the ui devDependency to an existing package.json, keeps the rest, and leaves one that has it", () => {
-    expect(UI_ENTRY).toBe("@hackbuild/ui/bench/entry");
+    expect(UI_ENTRY).toBe("@hackbuild/bench/entry");
     const had = { name: "@hackbuild/design-x", devDependencies: { "@hackbuild/profile": "0.0.0" }, dependencies: { "@hackbuild/geom": "0.0.0" } };
     const out = JSON.parse(packageWithUi("designs/x", JSON.stringify(had))!) as typeof had;
     expect(out.dependencies).toEqual(had.dependencies);
-    expect(Object.keys(out.devDependencies)).toEqual(["@hackbuild/profile", "@hackbuild/ui"]);
+    expect(Object.keys(out.devDependencies)).toEqual(["@hackbuild/bench", "@hackbuild/profile"]);
     expect(packageWithUi("designs/blocks", readFileSync(path.join(ROOT, "designs/blocks/package.json"), "utf8"))).toBeNull();
   });
 

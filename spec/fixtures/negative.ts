@@ -4,20 +4,20 @@
 // directive" and the acceptance command exits non-zero.
 // Version 4, 2026-10-04. Carries D-058, D-064, D-107, D-131, D-165, D-173, D-174, D-177.
 
-import type { FeatureKindDef, GeneratedGeometry } from "../feature-kinds";
-import type { CheckResult } from "../checks";
-import type { CommandIO, McpToolDef, McpToolIO, McpToolName } from "../commands";
-import type { Severity } from "../ids";
-import type { AppliedArchetype, Chase, ParamsOf, WaiverDecl } from "../chase";
-import type { SchemaLike } from "../schema";
-import type { BoreFeature, FeatureAt, FeatureKind } from "../features";
-import type { FeatureKindRegistryAt } from "../feature-kinds";
-import type { SimHandle } from "../sim";
-import type { FitClassId } from "../ids";
-import type { BuildFn } from "../build";
-import { defineBuild, defineChase } from "../chase";
-import { defineBench } from "../bench";
-import { build, chase } from "./keys-flex-pair";
+import type { FeatureKindDef, GeneratedGeometry } from "../feature-kinds.js";
+import type { CheckResult } from "../checks.js";
+import type { CommandIO, McpToolDef, McpToolIO, McpToolName } from "../commands.js";
+import type { Severity } from "../ids.js";
+import type { AppliedArchetype, Chase, ParamsOf, WaiverDecl } from "../chase.js";
+import type { SchemaLike } from "../schema.js";
+import type { BoreFeature, FeatureAt, FeatureKind } from "../features.js";
+import type { FeatureKindRegistryAt } from "../feature-kinds.js";
+import type { SimHandle } from "../sim.js";
+import type { FitClassId } from "../ids.js";
+import type { BuildFn } from "../build.js";
+import { defineBuild, defineChase } from "../chase.js";
+import { defineBench } from "../bench.js";
+import { build, chase } from "./keys-flex-pair.js";
 
 declare const boreSchema: SchemaLike<unknown, BoreFeature>;
 declare const empty: GeneratedGeometry;

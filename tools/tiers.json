@@ -5,7 +5,7 @@
     "0": ["profile", "catalog", "geom", "mesh"],
     "1": ["3mf", "sim", "circuit", "copper", "board", "nest", "inlay", "motion", "wiring", "constraints", "mechanisms", "archetypes"],
     "2": ["checks", "project", "reference", "knowledge", "chase", "pipeline", "registry-loader", "commands"],
-    "3": ["ui-core", "ui", "link"],
+    "3": ["viewer", "bench-core", "bench", "link"],
     "app": ["core", "apps/fab", "apps/sketch", "apps/blocks"]
   },
   "kernel": { "package": "kernel", "mayImport": ["S", "0", "1", "2"] },
@@ -35,14 +35,15 @@
     "pipeline": ["spec", "profile", "catalog", "geom", "mesh", "3mf", "sim", "circuit", "inlay", "mechanisms", "archetypes", "checks"],
     "registry-loader": ["spec", "profile", "constraints", "circuit", "mechanisms", "mesh", "sim", "checks", "chase", "pipeline"],
     "commands": ["spec"],
-    "ui-core": ["spec", "profile", "catalog", "geom", "mesh", "3mf", "sim", "circuit", "copper", "board", "nest", "inlay", "motion", "wiring", "constraints", "mechanisms", "archetypes", "checks", "project", "reference", "knowledge", "chase"],
-    "ui": ["spec", "checks", "ui-core"],
+    "viewer": ["spec"],
+    "bench-core": ["spec", "profile", "catalog", "geom", "mesh", "3mf", "sim", "circuit", "copper", "board", "nest", "inlay", "motion", "wiring", "constraints", "mechanisms", "archetypes", "checks", "project", "reference", "knowledge", "chase", "viewer"],
+    "bench": ["spec", "checks", "bench-core", "viewer"],
     "link": ["spec", "profile", "catalog", "motion", "checks"],
     "kernel": ["spec", "profile", "catalog", "geom", "mesh", "3mf", "sim", "circuit", "copper", "board", "nest", "inlay", "motion", "wiring", "constraints", "mechanisms", "archetypes", "checks", "project", "reference", "knowledge", "chase"],
     "core": ["spec", "profile", "catalog", "geom", "mesh", "3mf", "sim", "circuit", "copper", "board", "nest", "inlay", "motion", "wiring", "constraints", "mechanisms", "archetypes", "checks", "project", "reference", "knowledge", "chase", "pipeline", "registry-loader", "commands", "kernel"],
     "apps/fab": ["*"],
     "apps/sketch": ["*"],
-    "apps/blocks": ["ui", "designs/blocks"]
+    "apps/blocks": ["bench", "designs/blocks"]
   },
   "designs": {
     "root": "designs",
@@ -50,13 +51,13 @@
     "mayImport": ["S", "0", "1", "2", "kernel"],
     "slotsMayImport": ["3"],
     "skip": ["legacy", "node_modules", "dist", "out"],
-    "why": "M10 package placement: build.ts and chase.ts read spec and tiers 0 to 2 (through @hackbuild/kernel/author from M10-T02); slots/ and test/ may also read ui-core and ui; node runs build.ts for hbf part.build, so it touches no DOM and imports no vue (D-045); legacy/ is byte-identical harvest and is not scanned"
+    "why": "M10 package placement: build.ts and chase.ts read spec and tiers 0 to 2 (through @hackbuild/kernel/author from M10-T02); slots/ and test/ may also read bench-core, viewer and bench; node runs build.ts for hbf part.build, so it touches no DOM and imports no vue (D-045); legacy/ is byte-identical harvest and is not scanned"
   },
   "tools": {
     "tools/glue": { "mayImport": ["typescript"], "why": "the glue and bespoke-UI counter reads source as text: node built-ins and typescript 7.0.2, no workspace package (M10 package placement)" }
   },
   "edgeExceptions": [],
-  "sameTier": [["geom", "profile"], ["mesh", "profile"], ["mesh", "geom"], ["catalog", "profile"], ["catalog", "mesh"], ["pipeline", "checks"], ["registry-loader", "checks"], ["registry-loader", "chase"], ["registry-loader", "pipeline"], ["ui", "ui-core"]],
+  "sameTier": [["geom", "profile"], ["mesh", "profile"], ["mesh", "geom"], ["catalog", "profile"], ["catalog", "mesh"], ["pipeline", "checks"], ["registry-loader", "checks"], ["registry-loader", "chase"], ["registry-loader", "pipeline"], ["bench", "bench-core"], ["bench", "viewer"], ["bench-core", "viewer"]],
   "headless": ["S", "0", "1", "2", "kernel"],
   "forbid": [
     {

@@ -2,7 +2,7 @@
 /**
  * Status: draft until the release 1 exit. MILESTONES.md 1.5, D-179.
  * Release 1 item R1-engine-12 is the first that runs this file (the widget
- * registry in packages/ui-core/src/widgets and packages/ui/src/widgets).
+ * registry in packages/bench-core/src/widgets and packages/bench/src/widgets).
  */
 // Widgets (PLAN.md section 3.2). A widget is a registry entry: a kind, the
 // claim or contact function it calls, its inputs, its outputs and the

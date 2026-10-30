@@ -28,7 +28,7 @@ if (!html || !out || !flag('--chrome') || !flag('--puppeteer')) {
 }
 const puppeteer = createRequire(path.join(path.resolve(flag('--puppeteer')), 'node_modules') + '/')('puppeteer-core');
 
-for (const cmd of [['npx', 'tsc', '-b', 'packages/ui-core'], ['npm', 'run', 'fixture', '-w', 'packages/ui-core']]) {
+for (const cmd of [['npx', 'tsc', '-b', 'packages/bench-core'], ['npm', 'run', 'fixture', '-w', 'packages/bench-core']]) {
   execFileSync(cmd[0], cmd.slice(1), { cwd: root, stdio: 'inherit' });
 }
 mkdirSync(out, { recursive: true });

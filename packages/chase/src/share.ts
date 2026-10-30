@@ -1,9 +1,9 @@
 // Share links and legacy saves through migrate (D-167; M10-T03 step 5).
-// ui-core decodeShare and admitDesign (M09-T04) take a migrate, a legacy
+// bench-core decodeShare and admitDesign (M09-T04) take a migrate, a legacy
 // reader and a validate; this module builds the three from the chase
 // package so a `#d=1.` link migrates through 1-to-2 and a link with no
 // prefix routes through the design's migrate/legacy.ts. The object is
-// structurally ui-core's AdmitOptions; this package cannot import ui-core
+// structurally bench-core's AdmitOptions; this package cannot import bench-core
 // (tier 3), and bindChase (M10-T06) passes it in.
 
 import { CHASE_SCHEMA_VERSION, isThrownCommandError, type Chase, type CommandError } from "@hackbuild/spec";

@@ -15,8 +15,8 @@
     "source": "fab-knowledge:evidence/x/toggle/src/src/part4.js",
     "sha256": "37d194fff6702f85510e846d3ebda6b82fa136b420b8e4e55c88e6cb692ce71a",
     "fixes": [
-      "loadDesign merges onto blankState and drops unknown keys one level deep (part4.js lines 62 to 68); packages/ui-core/src/bench/merge.ts keeps the PIP recursion instead"
+      "loadDesign merges onto blankState and drops unknown keys one level deep (part4.js lines 62 to 68); packages/bench-core/src/bench/merge.ts keeps the PIP recursion instead"
     ],
-    "dest": "packages/ui-core/src/bench/merge.ts"
+    "dest": "packages/bench-core/src/bench/merge.ts"
   }
 ]

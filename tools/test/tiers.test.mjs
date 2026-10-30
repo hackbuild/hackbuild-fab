@@ -104,40 +104,40 @@ test('a downward edge the edges list does not name fails (copper to mesh)', () =
   assert.match(r.stdout, /copper imports @hackbuild\/mesh, an edge tools\/tiers\.json edges\.copper does not list/);
 });
 
-// M09-T01 step 5 (D-044): ui and ui-core share tier 3 and ui renders
-// ui-core state, so sameTier admits ui to ui-core in that direction only.
+// M09-T01 step 5 (D-044): bench and bench-core share tier 3 and bench renders
+// bench-core state, so sameTier admits bench to bench-core in that direction only.
 const uiImportsCore = (root) => {
-  depend(root, 'packages/ui', ['ui-core']);
-  writeJson(path.join(root, 'packages/ui/tsconfig.json'), { include: ['src'], references: [{ path: '../ui-core' }] });
-  fs.writeFileSync(path.join(root, 'packages/ui/src/index.ts'), "export { } from '@hackbuild/ui-core';\n");
+  depend(root, 'packages/bench', ['bench-core']);
+  writeJson(path.join(root, 'packages/bench/tsconfig.json'), { include: ['src'], references: [{ path: '../bench-core' }] });
+  fs.writeFileSync(path.join(root, 'packages/bench/src/index.ts'), "export { } from '@hackbuild/bench-core';\n");
 };
 
-test('ui importing ui-core passes on the sameTier pair and fails without it', () => {
-  assert.ok(table.sameTier.some((p) => p[0] === 'ui' && p[1] === 'ui-core'), 'tools/tiers.json sameTier has no ["ui", "ui-core"]');
+test('bench importing bench-core passes on the sameTier pair and fails without it', () => {
+  assert.ok(table.sameTier.some((p) => p[0] === 'bench' && p[1] === 'bench-core'), 'tools/tiers.json sameTier has no ["bench", "bench-core"]');
   const root = scratch();
   uiImportsCore(root);
   const r = run(root);
   assert.equal(r.status, 0, r.stdout + r.stderr);
-  writeJson(path.join(root, 'tools/tiers.json'), { ...table, edgeExceptions: [], sameTier: table.sameTier.filter((p) => p[0] !== 'ui') });
+  writeJson(path.join(root, 'tools/tiers.json'), { ...table, edgeExceptions: [], sameTier: table.sameTier.filter((p) => p[0] !== 'bench') });
   const bare = run(root);
   assert.equal(bare.status, 1, bare.stdout);
-  assert.match(bare.stdout, /ui \(tier 3\) imports @hackbuild\/ui-core \(tier 3\), legal only from a higher tier/);
+  assert.match(bare.stdout, /bench \(tier 3\) imports @hackbuild\/bench-core \(tier 3\), legal only from a higher tier/);
 });
 
-test('ui-core importing @hackbuild/ui fails, even with the edge listed', () => {
+test('bench-core importing @hackbuild/bench fails, even with the edge listed', () => {
   const root = scratch();
-  depend(root, 'packages/ui-core', ['ui']);
-  writeJson(path.join(root, 'packages/ui-core/tsconfig.json'), { include: ['src'], references: [{ path: '../ui' }] });
-  fs.writeFileSync(path.join(root, 'packages/ui-core/src/index.ts'), "export { } from '@hackbuild/ui';\n");
+  depend(root, 'packages/bench-core', ['bench']);
+  writeJson(path.join(root, 'packages/bench-core/tsconfig.json'), { include: ['src'], references: [{ path: '../bench' }] });
+  fs.writeFileSync(path.join(root, 'packages/bench-core/src/index.ts'), "export { } from '@hackbuild/bench';\n");
   const r = run(root);
   assert.equal(r.status, 1, r.stdout);
-  assert.match(r.stdout, /ui-core imports @hackbuild\/ui, an edge tools\/tiers\.json edges\.ui-core does not list/);
+  assert.match(r.stdout, /bench-core imports @hackbuild\/bench, an edge tools\/tiers\.json edges\.bench-core does not list/);
   // the pair is directional: listing the edge still meets the rank rule
-  const edges = { ...table.edges, 'ui-core': [...table.edges['ui-core'], 'ui'] };
+  const edges = { ...table.edges, 'bench-core': [...table.edges['bench-core'], 'bench'] };
   writeJson(path.join(root, 'tools/tiers.json'), { ...table, edgeExceptions: [], edges });
   const listed = run(root);
   assert.equal(listed.status, 1, listed.stdout);
-  assert.match(listed.stdout, /ui-core \(tier 3\) imports @hackbuild\/ui \(tier 3\), legal only from a higher tier/);
+  assert.match(listed.stdout, /bench-core \(tier 3\) imports @hackbuild\/bench \(tier 3\), legal only from a higher tier/);
 });
 
 test('3mf importing any workspace package fails without an exception', () => {
@@ -232,13 +232,13 @@ test('a relative import in src/ that leaves the workspace fails', () => {
 
 test('a computed import() in a headless src/ fails; a literal import() passes', () => {
   const root = scratch();
-  put(root, 'packages/geom/src/zz-dyn.ts', 'const name = "@hackbuild/checks";\nexport const m = () => import(name);\nexport const n = () => import(`@hackbuild/${"ui"}`);\n');
+  put(root, 'packages/geom/src/zz-dyn.ts', 'const name = "@hackbuild/checks";\nexport const m = () => import(name);\nexport const n = () => import(`@hackbuild/${"bench"}`);\n');
   put(root, 'packages/geom/src/zz-lit.ts', 'export const l = () => import("./index.js");\n// a comment: import(name) is not code\n');
   put(root, 'packages/geom/src/zz-prose.ts', 'export const why = "archetypes may not import (tools/tiers.json) here";\nexport const t = `nor import(${1})`;\n');
   const r = run(root);
   assert.equal(r.status, 1, r.stdout);
   assert.match(r.stdout, /packages\/geom\/src\/zz-dyn\.ts: import\(name\) is computed/);
-  assert.match(r.stdout, /packages\/geom\/src\/zz-dyn\.ts: import\(`@hackbuild\/\$\{"ui"\}`\) is computed/);
+  assert.match(r.stdout, /packages\/geom\/src\/zz-dyn\.ts: import\(`@hackbuild\/\$\{"bench"\}`\) is computed/);
   assert.doesNotMatch(r.stdout, /zz-lit/);
   assert.doesNotMatch(r.stdout, /zz-prose/);
 });
@@ -339,7 +339,7 @@ test('Date and Math.random in nest tests, and words like update or SOURCE_DATE_E
 test('a trig placement of an OGEE16, DAVIT or DERRICK part outside packages/motion/src/kinematics fails (M07-T10 step 4)', () => {
   const cases = [
     ['packages/sim/scenes/ogee.ts', 'export const rocker = (dz: number, dx: number) => Math.atan2(dz, dx);\n', /packages\/sim\/scenes\/ogee\.ts: calls atan2 and names ogee16 part rocker/],
-    ['packages/ui-core/src/view.ts', 'const crankPhi = (s: number) => 180 - Math.asin(s);\nexport { crankPhi };\n', /calls asin and names ogee16 part crankPhi/],
+    ['packages/bench-core/src/view.ts', 'const crankPhi = (s: number) => 180 - Math.asin(s);\nexport { crankPhi };\n', /calls asin and names ogee16 part crankPhi/],
     ['core/test/arm.test.ts', 'const jaw_drive = Math.hypot(3, 4);\nexport { jaw_drive };\n', /calls hypot and names davit part jaw_drive/],
     ['designs/derrick/build.ts', 'export const M_hinge = (q: number) => Math.atan2(Math.sin(q), Math.cos(q));\n', /calls atan2 and names derrick part M_hinge/],
   ];
@@ -384,16 +384,16 @@ test('an inline normal x u outside packages/geom/src fails; the geom face-frame 
 });
 
 // M10-T01 step 4: the designs and tools rows of tools/tiers.json.
-test('a design build.ts importing @hackbuild/ui fails; the same import under slots/ or test/ passes', () => {
+test('a design build.ts importing @hackbuild/bench fails; the same import under slots/ or test/ passes', () => {
   const root = scratch();
-  put(root, 'designs/knurl/build.ts', 'import { x } from "@hackbuild/ui";\nexport { x };\n');
+  put(root, 'designs/knurl/build.ts', 'import { x } from "@hackbuild/bench";\nexport { x };\n');
   let r = run(root);
   assert.equal(r.status, 1, r.stdout);
-  assert.match(r.stdout, /designs\/knurl\/build\.ts: designs\/knurl imports @hackbuild\/ui, outside tools\/tiers\.json designs mayImport \(node runs this file\)/);
+  assert.match(r.stdout, /designs\/knurl\/build\.ts: designs\/knurl imports @hackbuild\/bench, outside tools\/tiers\.json designs mayImport \(node runs this file\)/);
   for (const file of ['designs/knurl/slots/sequence.ts', 'designs/knurl/test/x.test.ts']) {
     const ok = scratch();
     put(ok, 'designs/knurl/build.ts', 'import { m } from "@hackbuild/mesh";\nexport { m };\n');
-    put(ok, file, 'import { x } from "@hackbuild/ui";\nexport { x };\n');
+    put(ok, file, 'import { x } from "@hackbuild/bench";\nexport { x };\n');
     r = run(ok);
     assert.equal(r.status, 0, `${file}: ${r.stdout}`);
   }
@@ -408,7 +408,7 @@ test('a design chase.ts or src/ touching the DOM fails; a legacy/ page under the
     assert.match(r.stdout, new RegExp(`${file.replace(/[./]/g, '\\$&')} touches the DOM; node runs it`));
   }
   const root = scratch();
-  put(root, 'designs/knurl/legacy/app.js', 'import * as T from "@hackbuild/ui";\nexport const c = document.body;\n');
+  put(root, 'designs/knurl/legacy/app.js', 'import * as T from "@hackbuild/bench";\nexport const c = document.body;\n');
   const r = run(root);
   assert.equal(r.status, 0, r.stdout);
 });
@@ -423,15 +423,15 @@ test('a design importing another design fails', () => {
 
 test('apps/blocks may import designs/blocks; a tier 3 package may not', () => {
   const root = scratch();
-  writeJson(path.join(root, 'apps/blocks/package.json'), { name: '@hackbuild/app-blocks', version: '0.0.0', private: true, dependencies: { '@hackbuild/design-blocks': '0.0.0', '@hackbuild/ui': '0.0.0' } });
+  writeJson(path.join(root, 'apps/blocks/package.json'), { name: '@hackbuild/app-blocks', version: '0.0.0', private: true, dependencies: { '@hackbuild/design-blocks': '0.0.0', '@hackbuild/bench': '0.0.0' } });
   const ts = JSON.parse(fs.readFileSync(path.join(root, 'tsconfig.json'), 'utf8'));
   writeJson(path.join(root, 'tsconfig.json'), { ...ts, references: [...ts.references, { path: 'apps/blocks' }] });
   let r = run(root);
   assert.equal(r.status, 0, r.stdout);
-  depend(root, 'packages/ui', ['design-blocks']);
+  depend(root, 'packages/bench', ['design-blocks']);
   r = run(root);
   assert.equal(r.status, 1, r.stdout);
-  assert.match(r.stdout, /ui \(tier 3\) imports designs\/blocks, which only an app whose edges name it may import/);
+  assert.match(r.stdout, /bench \(tier 3\) imports designs\/blocks, which only an app whose edges name it may import/);
 });
 
 test('tools/glue imports node built-ins and typescript only', () => {

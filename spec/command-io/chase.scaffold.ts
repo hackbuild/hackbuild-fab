@@ -1,7 +1,7 @@
 // command chase.scaffold, group author.
 // spec/commands.ts CommandIO takes this interface; npm run registries regenerates it.
 
-import type { ChaseKind } from "../chase";
+import type { ChaseKind } from "../chase.js";
 
 
 export interface ChaseScaffoldIO {

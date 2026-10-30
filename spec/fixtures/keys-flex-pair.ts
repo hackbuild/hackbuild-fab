@@ -5,12 +5,12 @@
 // tests keep one source, and holds the CommandIO examples for that chase.
 // Version 4, 2026-10-05.
 
-import type { CommandIO, McpToolIO } from "../commands";
-import type { FlexPairParams } from "../../reference/keys/flex-pair/chase";
+import type { CommandIO, McpToolIO } from "../commands.js";
+import type { FlexPairParams } from "../../reference/keys/flex-pair/chase.js";
 
-export { chase, type FlexPairParams } from "../../reference/keys/flex-pair/chase";
-export { build, contact } from "../../reference/keys/flex-pair/build";
-export { bench } from "../../reference/keys/flex-pair/bench";
+export { chase, type FlexPairParams } from "../../reference/keys/flex-pair/chase.js";
+export { build, contact } from "../../reference/keys/flex-pair/build.js";
+export { bench } from "../../reference/keys/flex-pair/bench.js";
 
 // Compile-time proofs that ParamsOf maps fields as specified, at the D-223
 // defaults of the reference.

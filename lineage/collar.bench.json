@@ -156,9 +156,9 @@
     "sha256": "ef0864ab66ca40e2930d12aba4cab3159aa470f743eee533d052fc99f844fd46",
     "fixes": [
       "arc text drag sets arcR and arcDeg, ring drag moves the centre radius keeping the width, ring corner scales both radii (collar.html:2659 to 2679); KNUCKLE has neither kind",
-      "packages/ui-core/src/artboard/controller.ts: arc text and ring drags (collar.html lines 2001 to 2142 and 2604 to 2690) beside the KNUCKLE face editor handles"
+      "packages/bench-core/src/artboard/controller.ts: arc text and ring drags (collar.html lines 2001 to 2142 and 2604 to 2690) beside the KNUCKLE face editor handles"
     ],
-    "dest": "packages/ui-core/src/artboard/manip.ts"
+    "dest": "packages/bench-core/src/artboard/manip.ts"
   },
   {
     "id": "collar.bench/ui-core-canvas-surface",
@@ -166,7 +166,7 @@
     "source": "fab-knowledge:originals/collar/files/collar.html",
     "sha256": "ef0864ab66ca40e2930d12aba4cab3159aa470f743eee533d052fc99f844fd46",
     "fixes": [],
-    "dest": "packages/ui-core/src/surface/canvas-surface.ts"
+    "dest": "packages/bench-core/src/surface/canvas-surface.ts"
   },
   {
     "id": "collar.bench/geom-edge",

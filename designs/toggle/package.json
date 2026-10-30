@@ -6,6 +6,6 @@
   "license": "MIT",
   "author": "Moheeb Zara <hackbuildvideo@gmail.com>",
   "devDependencies": {
-    "@hackbuild/ui": "0.0.0"
+    "@hackbuild/bench": "0.0.0"
   }
 }

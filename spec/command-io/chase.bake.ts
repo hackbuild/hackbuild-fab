@@ -1,7 +1,7 @@
 // command chase.bake, group make.
 // spec/commands.ts CommandIO takes this interface; npm run registries regenerates it.
 
-import type { Hash } from "../ids";
+import type { Hash } from "../ids.js";
 
 
 export interface ChaseBakeIO {

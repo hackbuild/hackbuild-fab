@@ -1,10 +1,10 @@
 // command part.build, group build.
 // spec/commands.ts CommandIO takes this interface; npm run registries regenerates it.
 
-import type { CommandResult, Detail, ImportSpec, InferredRead, PartSummary } from "../commands";
-import type { BuildUri } from "../ids";
-import type { Assembly, BuildWarning, Metric, Part } from "../part-ir";
-import type { Params } from "./_shared";
+import type { CommandResult, Detail, ImportSpec, InferredRead, PartSummary } from "../commands.js";
+import type { BuildUri } from "../ids.js";
+import type { Assembly, BuildWarning, Metric, Part } from "../part-ir.js";
+import type { Params } from "./_shared.js";
 
 
 export interface PartBuildIO {

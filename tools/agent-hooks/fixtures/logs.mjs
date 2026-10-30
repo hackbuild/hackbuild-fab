@@ -100,10 +100,10 @@ export function passingLog(total = 90) {
 export function tscLog(count = 40) {
   const out = [];
   for (let i = 0; i < count; i++) {
-    out.push(`packages/ui/src/panel${i % 8}.ts(${10 + i},${5 + (i % 9)}): error TS2322: Type 'string | undefined' is not assignable to type 'string'.`);
+    out.push(`packages/bench/src/panel${i % 8}.ts(${10 + i},${5 + (i % 9)}): error TS2322: Type 'string | undefined' is not assignable to type 'string'.`);
     out.push(`  Type 'undefined' is not assignable to type 'string'.`);
     out.push(`    The expected type comes from property 'note' which is declared here on type 'RailField'`);
-    out.push(`    packages/ui-core/src/rail.ts(${20 + i},3): 'note' is declared here.`);
+    out.push(`    packages/bench-core/src/rail.ts(${20 + i},3): 'note' is declared here.`);
   }
   out.push(`Found ${count} errors in 8 files.`);
   return out.join("\n") + "\n";

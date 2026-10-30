@@ -1,5 +1,5 @@
 // The injected painter (D-045). The kernel lays out text, rings and images
-// in model mm and hands the painting to a Surface: ui-core supplies a canvas
+// in model mm and hands the painting to a Surface: bench-core supplies a canvas
 // surface for the browser, geom a vector surface for node. Coordinates are
 // model mm with the origin at the grid centre and y up; angles are radians,
 // counter-clockwise.

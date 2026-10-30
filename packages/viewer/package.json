@@ -1,0 +1,35 @@
+{
+  "name": "@hackbuild/viewer",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "The stage viewer: three scene, orbit controls and the hb-viewer element. No Vue.",
+  "license": "MIT",
+  "author": "Moheeb Zara <hackbuildvideo@gmail.com>",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -b",
+    "test": "vitest run",
+    "pretest": "tsc -b"
+  },
+  "dependencies": {
+    "@hackbuild/spec": "0.1.0"
+  },
+  "peerDependencies": {
+    "three": "0.186.1"
+  },
+  "devDependencies": {
+    "three": "0.186.1"
+  },
+  "unpkg": "./dist/iife/viewer.js",
+  "jsdelivr": "./dist/iife/viewer.js"
+}

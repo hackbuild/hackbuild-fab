@@ -31,8 +31,8 @@
 // resistance, and the through row is 4 times the along row in the PIP preset
 // (2000 against 500 ohm cm, inferred, pip-controller src/layout.js:46).
 
-import type { Micros, Ohm, Qualified, Qualifier, Tier, Volt, Mm, IsoDate } from "./ids";
-import type { ContactKind } from "./profile";
+import type { Micros, Ohm, Qualified, Qualifier, Tier, Volt, Mm, IsoDate } from "./ids.js";
+import type { ContactKind } from "./profile.js";
 
 /** Capacitance in picofarads (pF). */
 export type Picofarad = number;

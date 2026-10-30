@@ -1,7 +1,7 @@
 // Otsu threshold and polarity for dropped art (M03-T03 step 5). Ported from
 // SPRUE autoThreshold (sprue.html lines 1517 to 1538), lineage
 // sprue.bench/inlay-otsu. The source downscales on a canvas first; that
-// resample belongs to ui-core, so otsu takes the already-scaled image and
+// resample belongs to bench-core, so otsu takes the already-scaled image and
 // otsuSize gives the size the source would scale to.
 
 import { commandError } from "@hackbuild/spec";

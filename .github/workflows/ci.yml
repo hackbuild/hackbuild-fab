@@ -99,6 +99,9 @@ jobs:
       - name: "typecheck: vue single-file components (vue-tsc on TypeScript 6)"
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: node tools/vue-check.mjs
+      - name: "packages: library outputs, publint, attw, size budget"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: npm run build:lib && npm run lint:packages
       - name: "tiers: import edges"
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: node tools/tiers.mjs
@@ -363,7 +366,7 @@ jobs:
             uv run --project tools/py --extra bench python -m playwright install --with-deps chromium
           fi
           uv run --project tools/py --extra bench tools/py/harness/sprue_parity.py designs/sprue/legacy/sprue.html designs/sprue/test/parity.html
-          uv run --project tools/py --extra bench tools/py/harness/artboard_smoke.py packages/ui-core/test/artboard/fixture.html "$RUNNER_TEMP/artboard"
+          uv run --project tools/py --extra bench tools/py/harness/artboard_smoke.py packages/bench-core/test/artboard/fixture.html "$RUNNER_TEMP/artboard"
   exit-m06-m08:
     # M06 and M08 Exit rows run as commands: the AILERON differential
     # derivation (refused at E_REF while candidate; the step goes red the
@@ -760,7 +763,7 @@ jobs:
           name: bake
           path: dist
       - run: npx playwright install --with-deps chrome
-      - run: npm test -w packages/ui -- range
+      - run: npm test -w packages/bench -- range
       - run: node --test tools/gold/report.test.mjs
       - run: npx playwright test -c tools/smoke/playwright.config.ts
       - name: gold specs, then the report grades them

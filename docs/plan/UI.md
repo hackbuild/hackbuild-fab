@@ -142,7 +142,7 @@ mismatch (CI job `ui-css`, M09-T13).
 
 No headless component library, no declarative 3D layer, no Storybook. A
 `/kit` route renders every component and panel in every state with
-fixture data (`packages/ui/kit/` at M09, moved under `apps/fab` at M12).
+fixture data (`packages/bench/kit/` at M09, moved under `apps/fab` at M12).
 One custom element, `<hb-viewer>`, because the viewer is used outside Vue
 (baked benches, docs, the app). Revisit if the app becomes multi-user.
 Native elements carry keyboard and ARIA behaviour; the four overlays the
@@ -865,7 +865,7 @@ Decides: D-125, D-142
 | overlays | the welcome never covers the header, the legend never covers a cam, the drive pad never covers the step's target | gold G-54; at 390 every gold bench has one overlay covering what the step points at (gold section 10) |
 | touch parity | section 9.2; touch-only pass at 390 x 844 with `hasTouch` and `isMobile`, no mouse calls | D-125 |
 | targets | 44 x 44 px minimum hit box for every button, `nav[aria-label=steps] button`, `select` and `input[type=range]`; preset tiles 96 px; cam buttons and guide icon buttons 44 x 44; range inputs keep the native thumb and `accent-color`; under `(pointer: coarse)` and under 820 px `.hb-range` is 44 px tall (upstream rule in M09-T02), so the hit box is 44 px with no custom thumb | GUIDELINES `.hb-tiles`; WCAG 2.2 2.5.8 sets 24 px, this rule is stricter |
-| target test | `tools/smoke/targets.spec.ts` at 390 x 844 with `hasTouch` and `isMobile`, on every step and with the welcome open and closed: for each visible, enabled button, `nav[aria-label=steps] button`, `select` and `input[type=range]`, the box from `getBoundingClientRect` is at least 44 x 44, and `document.elementFromPoint` at the four points 21 px from the centre along each diagonal returns the element or a descendant, so a neighbour or an overlay covering part of the box fails it; a range input passes when its box is 44 px tall and a CSS unit test (`npm test -w packages/ui -- range`) finds `.hb-range` at height 44 px inside the coarse-pointer and under-820 media blocks; on failure it prints up to 8 elements with their box and the point that missed | M09-T14 |
+| target test | `tools/smoke/targets.spec.ts` at 390 x 844 with `hasTouch` and `isMobile`, on every step and with the welcome open and closed: for each visible, enabled button, `nav[aria-label=steps] button`, `select` and `input[type=range]`, the box from `getBoundingClientRect` is at least 44 x 44, and `document.elementFromPoint` at the four points 21 px from the centre along each diagonal returns the element or a descendant, so a neighbour or an overlay covering part of the box fails it; a range input passes when its box is 44 px tall and a CSS unit test (`npm test -w packages/bench -- range`) finds `.hb-range` at height 44 px inside the coarse-pointer and under-820 media blocks; on failure it prints up to 8 elements with their box and the point that missed | M09-T14 |
 | status strip | wraps, published gaps | hackbuild.css `.hb-statusbar` |
 | plate and section cams | plate view switches to a high camera so the bezel does not hide behind the body; section cuts the near half | CHK-UI-02 (origin PIP) |
 | look | a person opens the bake in a real browser at desktop and at 390 px before it ships | D-154 |
@@ -1254,7 +1254,7 @@ Decides: D-034, D-121, D-127, D-129
 | Layer | Holds | Rule |
 |---|---|---|
 | ui-core bench core | design state, rev, built, building, queued, log, last build result, undo stack | plain TypeScript with explicit commit; no Vue import; the truth |
-| Pinia setup stores in `packages/ui/src/stores/` | shell state only: current step, cam, modes, welcome open | thin mirrors that copy from the core on each core event so computeds invalidate; never the truth |
+| Pinia setup stores in `packages/bench/src/stores/` | shell state only: current step, cam, modes, welcome open | thin mirrors that copy from the core on each core event so computeds invalidate; never the truth |
 | storage | welcome memory, fields with `remember: true` | `packages/ui-core/src/bench/storage.ts` is the only module touching `localStorage`; keys prefixed `hbf.`; every call inside try/catch. A key change ships with a reader for the previous key (migrate, then write the new key), so a bench never orphans saved state. Origin: GUSSET bumped `gusset:v1` to `gusset:v16` and each build read only its own key, dropping saved designs 15 times (`fab-work-directory:gusset (10).html` line 2102 reads `gusset:v16`; `fab-knowledge:evidence/x/downloads/dl-pip-latest/gusset/gusset.html` line 1612 writes `gusset:v1`; `gusset (8).html` beside it uses `gusset:v15`) |
 | URL | share link | `location.hash` `#d=...`; never written to storage |
 
@@ -1389,16 +1389,16 @@ Decides: D-118, D-125, D-126, D-128
 | plate camera high, section cuts the near half | CHK-UI-02 | M09, kinds at M11 |
 | one focal pink per view | `tools/smoke/pink.ts` | M09-T14 |
 | touch-only pass | `tools/smoke/touch.spec.ts` at 390 x 844 | M09-T14 |
-| 44 px hit boxes for buttons, step buttons, selects and range inputs | `tools/smoke/targets.spec.ts` at 390 x 844; `npm test -w packages/ui -- range` | M09-T14 |
+| 44 px hit boxes for buttons, step buttons, selects and range inputs | `tools/smoke/targets.spec.ts` at 390 x 844; `npm test -w packages/bench -- range` | M09-T14 |
 | zero network, no blob or module workers | `tools/smoke/network.ts` | M09-T14 |
 | DOM text voice | `node tools/lint-voice.mjs --stdin --kind dom` | M09-T14 |
 | interaction timers | `npm test -w packages/ui-core -- bench` | M09-T03 |
 | welcome memory, share link | `npm test -w packages/ui-core -- storage share`; `tools/smoke/welcome.spec.ts` | M09-T04 |
 | locate and fix | M09-T05 tests | M09-T05 |
 | viewer frees what it allocates | `tools/smoke/viewer.spec.ts` | M09-T06 |
-| export step last, unknown kind refused | `npm test -w packages/ui -- shell` | M09-T07 |
-| rail from declarations | `npm test -w packages/ui -- rail` | M09-T08 |
-| no free paragraphs; PIP notes assigned | `npm test -w packages/ui -- notes` | M09-T09 |
+| export step last, unknown kind refused | `npm test -w packages/bench -- shell` | M09-T07 |
+| rail from declarations | `npm test -w packages/bench -- rail` | M09-T08 |
+| no free paragraphs; PIP notes assigned | `npm test -w packages/bench -- notes` | M09-T09 |
 | drive pad readout qualified | `npm test -w packages/ui-core -- drive`; `tools/smoke/drive.spec.ts` | M09-T10 |
 | hook conformance | `npx playwright test -c tools/hook/playwright.config.ts` | M09-T11, M09-T12 |
 | bake parity, size, determinism, CSS lock | `tools/bake/` tests; jobs `bake`, `bake-determinism`, `ui-css` | M09-T13 |

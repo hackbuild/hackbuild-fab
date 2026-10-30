@@ -109,6 +109,6 @@
     "source": "fab-knowledge:originals/sprue/files/sprue.html",
     "sha256": "a1acb293ad96c7dd5062a9e65741a7f27959584dfb10e64decb41468c59e4fe7",
     "fixes": [],
-    "dest": "packages/ui-core/src/surface/canvas-surface.ts"
+    "dest": "packages/bench-core/src/surface/canvas-surface.ts"
   }
 ]

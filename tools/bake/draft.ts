@@ -39,7 +39,7 @@ export function draftManifest(dir: string): BakeManifest {
 
 /** The draft bench entry: the plain one with the draft flag from the page build and the inline widget when there is one. */
 export function draftEntrySource(dir: string, widget: boolean): string {
-  const ui = posix(relative(resolve(dir), join(REPO, "packages/ui/src/bench/entry")));
+  const ui = posix(relative(resolve(dir), join(REPO, "packages/bench/src/bench/entry")));
   return [
     "/// <reference lib=\"dom\" />",
     "// The draft bench entry hbf draft writes on every bake (tools/bake/draft.ts):",

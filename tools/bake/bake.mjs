@@ -161,7 +161,7 @@ function productionEnv() {
 export async function bundleEntry(entry) {
   productionEnv();
   const { build } = await import('vite');
-  // Single-file components of packages/ui compile here; they carry no <style>,
+  // Single-file components of packages/bench compile here; they carry no <style>,
   // so the bundle stays one chunk with no CSS asset.
   const { default: vue } = await import('@vitejs/plugin-vue');
   const out = await build({

@@ -10,7 +10,7 @@ part fills its pocket, so both faces finish at one Z.
 | `chase.ts` | the design: the legacy `ST` defaults of collar.html line 643 and the legacy slider ranges |
 | `build.ts` | a headless port of the slab planner and labeller; emits one raster body per slot; its bytes enter defHash |
 | `legacy/` | the bench as harvested, its sha256 and a lineage README |
-| `test/parity.entry.ts`, `test/parity.html` | the hack.build preset composed by `@hackbuild/inlay` on the ui-core canvas surface, bundled as one IIFE for the browser parity (M03-T09) |
+| `test/parity.entry.ts`, `test/parity.html` | the hack.build preset composed by `@hackbuild/inlay` on the bench-core canvas surface, bundled as one IIFE for the browser parity (M03-T09) |
 | `test/nfc-pause.fixture.ts`, `test/nfc-pause.test.ts` | the owner's NFC pocket as two sealed pocket cases for CHK-PRT-15 (M03-T09 step 7) |
 
 The build is raster in XY and exact in Z. `planSlabs` puts a Z break at

@@ -1,8 +1,8 @@
 // command chase.diff, group author.
 // spec/commands.ts CommandIO takes this interface; npm run registries regenerates it.
 
-import type { ChaseChange, ChaseMigrations, ChaseVerdictChange } from "../commands";
-import type { Hash } from "../ids";
+import type { ChaseChange, ChaseMigrations, ChaseVerdictChange } from "../commands.js";
+import type { Hash } from "../ids.js";
 
 export interface ChaseDiffIO {
   /**

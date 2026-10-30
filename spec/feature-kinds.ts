@@ -17,13 +17,13 @@
 // lack a check; boss, chamfer, round and snap lack a reference; round lacks
 // a generator in harvested code. coupon left the union (D-177).
 
-import type { CheckId } from "./checks";
-import type { FeatureKind, FeatureOf, KindMilestone, KindsAdmittedBy } from "./features";
-import type { FitClassId, MeshRoute, Plane, Process } from "./ids";
-import type { BodyDraft, FaceDecl, MachineView, ShapeDecl } from "./build";
-import type { BodyRole } from "./part-ir";
-import type { ProfileLookup } from "./profile";
-import type { SchemaLike } from "./schema";
+import type { CheckId } from "./checks.js";
+import type { FeatureKind, FeatureOf, KindMilestone, KindsAdmittedBy } from "./features.js";
+import type { FitClassId, MeshRoute, Plane, Process } from "./ids.js";
+import type { BodyDraft, FaceDecl, MachineView, ShapeDecl } from "./build.js";
+import type { BodyRole } from "./part-ir.js";
+import type { ProfileLookup } from "./profile.js";
+import type { SchemaLike } from "./schema.js";
 
 /** Context a generator reads. */
 export interface KernelCtx {

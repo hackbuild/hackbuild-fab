@@ -1,5 +1,5 @@
 // M09-T02 step 9: the packed hackbuild-ui branch is vendored with its sha256,
-// and packages/ui installs exactly that file until 0.3.0 is on npm.
+// and packages/bench installs exactly that file until 0.3.0 is on npm.
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
@@ -27,14 +27,14 @@ test("every vendored file matches its SHA256SUMS line, and every tarball has one
   for (const f of readdirSync(vendor).filter((n) => n.endsWith(".tgz"))) assert.ok(listed.has(f), `${f} listed in SHA256SUMS`);
 });
 
-test("packages/ui depends on a listed hackbuild-ui tarball or an exact 0.3.0", () => {
-  const spec = JSON.parse(readFileSync(join(repo, "packages/ui/package.json"), "utf8")).dependencies?.["@virgilvox/hackbuild-ui"];
-  assert.ok(spec, "packages/ui names @virgilvox/hackbuild-ui");
+test("packages/bench depends on a listed hackbuild-ui tarball or an exact 0.3.0", () => {
+  const spec = JSON.parse(readFileSync(join(repo, "packages/bench/package.json"), "utf8")).dependencies?.["@virgilvox/hackbuild-ui"];
+  assert.ok(spec, "packages/bench names @virgilvox/hackbuild-ui");
   if (!spec.startsWith("file:")) {
     assert.equal(spec, "0.3.0", "an npm dependency is the exact published version");
     return;
   }
-  const file = resolve(repo, "packages/ui", spec.slice("file:".length));
+  const file = resolve(repo, "packages/bench", spec.slice("file:".length));
   assert.equal(dirname(file), vendor, "the tarball lives in tools/vendor");
   assert.match(basename(file), /^hackbuild-ui-0\.3\.0-(pr\.)?[0-9a-f]{7}\.tgz$/);
   assert.ok(existsSync(file), `${basename(file)} exists`);

@@ -8,7 +8,7 @@
 // page through the entry bundle. A design that has no bench.entry.ts or
 // page-build.ts gets the plain ones below: the chase and bench mounted by
 // the bench shell, and the chase and build.ts run by the shared page build
-// (D-264). The plain entry imports the shell by the @hackbuild/ui source
+// (D-264). The plain entry imports the shell by the @hackbuild/bench source
 // export, as designs/blocks/bench.entry.ts does, so tools/tiers.mjs checks
 // the edge; when it writes the entry it also gives the design's
 // package.json that devDependency, writing the package.json when there is
@@ -49,7 +49,7 @@ export function manifestFor(dir: string): BakeManifest {
     shell: "ui",
     title: id,
     fonts: FACES.map(([family, weight, style, file]) => ({ family, weight, style, from: `npm:@fontsource/${file}.woff2` })),
-    css: [{ from: "npm:@virgilvox/hackbuild-ui/dist/styles/hackbuild.css" }, { from: `${repo}/packages/ui/src/bench/bench.css` }],
+    css: [{ from: "npm:@virgilvox/hackbuild-ui/dist/styles/hackbuild.css" }, { from: `${repo}/packages/bench/src/bench/bench.css` }],
     wasm: { from: "npm:manifold-3d/manifold.wasm", global: "MANIFOLD_WASM_B64", label: "manifold.wasm" },
     classic: [{
       from: "npm:manifold-3d/manifold.js",
@@ -69,9 +69,9 @@ export function manifestFor(dir: string): BakeManifest {
 }
 
 /** The workspace the plain entry imports the bench shell from. */
-export const UI_PACKAGE = "@hackbuild/ui";
-/** The shell's source export (packages/ui/package.json `./bench/entry`). */
-export const UI_ENTRY = `${UI_PACKAGE}/bench/entry`;
+export const UI_PACKAGE = "@hackbuild/bench";
+/** The shell's source export (packages/bench/package.json `./entry`). */
+export const UI_ENTRY = `${UI_PACKAGE}/entry`;
 
 type PackageJson = Record<string, unknown> & { devDependencies?: Record<string, string>; dependencies?: Record<string, string> };
 
@@ -89,7 +89,7 @@ export function packageWithUi(dir: string, existing: string | null): string | nu
     ? { name: `@hackbuild/design-${basename(resolve(dir))}`, version: "0.0.0", private: true, type: "module", license: root["license"], author: root["author"] }
     : (JSON.parse(existing) as PackageJson);
   if (pj.dependencies?.[UI_PACKAGE] !== undefined || pj.devDependencies?.[UI_PACKAGE] !== undefined) return null;
-  const version = readJson(join(REPO, "packages/ui/package.json"))["version"] as string;
+  const version = readJson(join(REPO, "packages/bench/package.json"))["version"] as string;
   const dev = { ...pj.devDependencies, [UI_PACKAGE]: version };
   pj.devDependencies = Object.fromEntries(Object.entries(dev).sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0)));
   return `${JSON.stringify(pj, null, 2)}\n`;

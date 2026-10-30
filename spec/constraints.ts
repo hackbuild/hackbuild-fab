@@ -16,11 +16,11 @@
 // cm (inferred) the floor is 53.8 mm, legal is null, and E_UNSAT names
 // 71.8 kohm as the budget that fits 6.00.
 
-import type { BuildHash, KernelId, Qualification, Tier } from "./ids";
-import type { Feature } from "./features";
-import type { Part } from "./part-ir";
-import type { Constant, ProfileLookup } from "./profile";
-import { commandError, type ThrownCommandError } from "./errors";
+import type { BuildHash, KernelId, Qualification, Tier } from "./ids.js";
+import type { Feature } from "./features.js";
+import type { Part } from "./part-ir.js";
+import type { Constant, ProfileLookup } from "./profile.js";
+import { commandError, type ThrownCommandError } from "./errors.js";
 
 /**
  * `<featureKind>.<field>`, `<role>.<field>` or `net.<quantity>`, for example

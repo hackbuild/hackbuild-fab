@@ -5,12 +5,12 @@
 // twin is spec/test/surface.test.ts.
 // Version 4, 2026-10-04. Carries D-057, D-058, D-059, D-106, D-107, D-177.
 
-import { COMMAND_NAMES, MCP_TOOL_NAMES, MCP_TOOLS, CLI_ONLY, type CliOnlyField, type CommandName, type CommandIO, type McpToolIO, type McpToolName } from "../commands";
-import { FEATURE_KINDS, CORE_FEATURE_KINDS, ADMITTED_FEATURE_KINDS, type FeatureKind, type KindsAdmittedBy, type MovedFeatureKind } from "../features";
-import { BOARD_FEATURE_KINDS, type BoardFeatureKind } from "../board-features";
-import { ERROR_CODES } from "../errors";
-import { REGISTRY_KINDS } from "../registry";
-import { KERNEL_IDS, MESH_ROUTES, TIERS, QUALIFIERS } from "../ids";
+import { COMMAND_NAMES, MCP_TOOL_NAMES, MCP_TOOLS, CLI_ONLY, type CliOnlyField, type CommandName, type CommandIO, type McpToolIO, type McpToolName } from "../commands.js";
+import { FEATURE_KINDS, CORE_FEATURE_KINDS, ADMITTED_FEATURE_KINDS, type FeatureKind, type KindsAdmittedBy, type MovedFeatureKind } from "../features.js";
+import { BOARD_FEATURE_KINDS, type BoardFeatureKind } from "../board-features.js";
+import { ERROR_CODES } from "../errors.js";
+import { REGISTRY_KINDS } from "../registry.js";
+import { KERNEL_IDS, MESH_ROUTES, TIERS, QUALIFIERS } from "../ids.js";
 
 type Equal<A, B> = (<T>() => T extends A ? 1 : 2) extends (<T>() => T extends B ? 1 : 2) ? true : false;
 type Expect<T extends true> = T;

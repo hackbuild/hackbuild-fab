@@ -17,12 +17,12 @@ const PACKAGES = join(ROOT, "packages");
 const SPECIFIER = /(?:\bfrom\s*|\bimport\s*\(?\s*)(["'])(\.{1,2}\/[^"'\n]*)\1/g;
 const EXTENSION = /\.(?:js|mjs|cjs|json|wasm)$/;
 /**
- * Packages whose bench vite builds (packages/ui, M09): their bench modules
+ * Packages whose bench vite builds (packages/bench, M09): their bench modules
  * import single file components as "./X.vue", which vite compiles and plain
  * node never loads, because the package entry dist/index.js reaches no bench
  * module (held below). Every other package keeps the plain node rule.
  */
-const VITE_BUILT = new Set(["ui"]);
+const VITE_BUILT = new Set(["bench"]);
 const VUE = /\.vue$/;
 
 function files(dir: string, keep: (name: string) => boolean): string[] {
@@ -90,8 +90,8 @@ describe("relative specifiers carry their extension (plain node loads dist)", ()
   });
 
   test("the vite exemption: .vue specifiers pass only in a vite-built package, and its node entry reaches none", () => {
-    expect(rejects("ui", "./BenchShell.vue")).toBe(false);
-    expect(rejects("ui", "./lookup")).toBe(true);
+    expect(rejects("bench", "./BenchShell.vue")).toBe(false);
+    expect(rejects("bench", "./lookup")).toBe(true);
     expect(rejects("mesh", "./Panel.vue")).toBe(true);
     for (const p of VITE_BUILT) {
       const entry = join(PACKAGES, p, "dist", "index.js");

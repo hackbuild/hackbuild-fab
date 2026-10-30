@@ -26,7 +26,7 @@
 // kernel recomputes the gap per side from the two drawn sizes and refuses a
 // FitDecl.drawnPerSide that differs from it by more than 1e-6 mm.
 
-import type { Axis, BendDirection, Deg, FaceFrame, FitClassId, GapBasis, Mm, MeshHash, Process, Ring, Vec2, Vec3 } from "./ids";
+import type { Axis, BendDirection, Deg, FaceFrame, FitClassId, GapBasis, Mm, MeshHash, Process, Ring, Vec2, Vec3 } from "./ids.js";
 
 /**
  * A mating gap declared through the fit system: the fit class and the drawn

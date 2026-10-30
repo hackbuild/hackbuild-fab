@@ -15,8 +15,8 @@
 
 import type {
   BendDirection, FitClassId, GapBasis, IsoDate, Mm, Ohm, Process, Qualification, ResistivityDirection, Tier, Vec3,
-} from "./ids";
-import { TIERS, TIER_QUALIFIER } from "./ids";
+} from "./ids.js";
+import { TIERS, TIER_QUALIFIER } from "./ids.js";
 
 /** How a number was obtained (D-099). felt covers OGEE16's hand-raised bands. */
 export type ProvenanceMethod = "datasheet" | "coupon" | "failure" | "felt" | "listing" | "derived";

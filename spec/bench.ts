@@ -16,8 +16,8 @@
 // 2026-10-05: gold standard gaps P-04, P-05, P-08 to P-11, P-13, P-21,
 // P-28, P-29 (synthesis/gold-standard.md section 12).
 
-import type { Chase } from "./chase";
-import type { WidgetDecl } from "./widgets";
+import type { Chase } from "./chase.js";
+import type { WidgetDecl } from "./widgets.js";
 
 /** Current bench schema version. */
 export const BENCH_SCHEMA_VERSION = 1;

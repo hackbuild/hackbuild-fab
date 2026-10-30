@@ -1,8 +1,8 @@
 // command part.probe, group build.
 // spec/commands.ts CommandIO takes this interface; npm run registries regenerates it.
 
-import type { ProbeResult } from "../commands";
-import type { Vec3 } from "../ids";
+import type { ProbeResult } from "../commands.js";
+import type { Vec3 } from "../ids.js";
 
 export interface PartProbeIO {
   input: {

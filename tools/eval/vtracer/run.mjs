@@ -97,7 +97,7 @@ export function decodePng(buf) {
 
 /**
  * Nearest sample at cell centres of `box` onto gw x gh cells. The browser
- * does this resample on a canvas (ui-core); here both routes read the same
+ * does this resample on a canvas (bench-core); here both routes read the same
  * samples, so the comparison does not depend on the resampler.
  */
 export function resample(img, box, gw, gh) {

@@ -1,7 +1,7 @@
 // command asm.solve, group build.
 // spec/commands.ts CommandIO takes this interface; npm run registries regenerates it.
 
-import type { Assertion, Pose } from "../part-ir";
+import type { Assertion, Pose } from "../part-ir.js";
 
 export interface AsmSolveIO {
   input: { build: string };

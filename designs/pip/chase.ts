@@ -10,7 +10,7 @@
 // tree's src/layout.js defaults() (pip.layout/haft-9, cited as layout.js).
 // pip-controller b137deb carries the same lines with the same values
 // except where a comment names the difference. The BODY rows are the M09
-// fixture packages/ui/test/fixtures/pip-layout.ts.
+// fixture packages/bench/test/fixtures/pip-layout.ts.
 //
 // Steps (bench.ts lands with the bench item): LAYOUT body and the groups;
 // BUTTONS flex, clicky, touch and stick; BOARD mount and bezel; PRINT

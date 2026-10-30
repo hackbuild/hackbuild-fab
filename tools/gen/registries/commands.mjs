@@ -65,7 +65,7 @@ function wrap(items, width = 100) {
 function regions(cmds) {
   const byGroup = Object.fromEntries(GROUPS.map((g) => [g, frozenThenSorted(cmds.filter((c) => c.group === g).map((c) => c.name), FROZEN[g])]));
   const order = GROUPS.flatMap((g) => byGroup[g]);
-  const imports = [...order].sort().map((n) => `import type { ${ioName(n)} } from "./command-io/${n}";`);
+  const imports = [...order].sort().map((n) => `import type { ${ioName(n)} } from "./command-io/${n}.js";`);
   const names = [
     "/**",
     " * The CLI commands by group (D-106), one file each in spec/command-io/.",

@@ -19,7 +19,7 @@ Built: M03, staged, not released.
 - The `inlay` FeatureKindDef and CHK-INL-01 to 04 (M03-T08).
 
 No DOM, no canvas and no `ImageData` constructor (D-045). Text, images and
-SVG reach the package through the `Surface` interface; ui-core supplies the
+SVG reach the package through the `Surface` interface; bench-core supplies the
 canvas surface and geom a vector surface for node, which sets text in the
 vendored IBM Plex Mono 400 and 700 (`packages/geom/src/text`, OK-01).
 

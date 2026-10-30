@@ -10,7 +10,7 @@
 // 2026-10-08: DeclaredHole, HubDecl, KerfMode and NestItem holes and hubs
 // (M07-T04 steps 2, 4 and 5), listed in the PR as a spec change.
 
-import type { Hash, Ring, Vec2 } from "./ids";
+import type { Hash, Ring, Vec2 } from "./ids.js";
 
 /** A rotation about the sheet normal in quarter turns, deg. */
 export type QuarterTurn = 0 | 90 | 180 | 270;

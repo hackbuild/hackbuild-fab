@@ -18,6 +18,7 @@
     { "path": "../../packages/pipeline" },
     { "path": "../../packages/profile" },
     { "path": "../../packages/registry-loader" },
-    { "path": "../../packages/ui-core" }
+    { "path": "../../packages/bench-core" },
+    { "path": "../../packages/viewer" }
   ]
 }

@@ -1,0 +1,22 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": "src",
+    "skipLibCheck": true
+  },
+  "include": [
+    "src"
+  ],
+  "references": [
+    {
+      "path": "../bench-core"
+    },
+    {
+      "path": "../viewer"
+    }
+  ],
+  "exclude": [
+    "src/index.ts"
+  ]
+}

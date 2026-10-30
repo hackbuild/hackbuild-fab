@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """artboard_smoke.py: drive the art board fixture's handles in Chromium (M03-T12 step 5).
 
-    uv run --project tools/py --extra bench tools/py/harness/artboard_smoke.py packages/ui-core/test/artboard/fixture.html out/artboard
+    uv run --project tools/py --extra bench tools/py/harness/artboard_smoke.py packages/bench-core/test/artboard/fixture.html out/artboard
 
 Ported from the SASH smoke drive (sash-src/smoke.py lines 49 to 87, lineage
 sash.smoke/sash-src): read UI.FE.handles, drag the centre 30 px right and
@@ -25,7 +25,7 @@ POLL_S = 3.0
 
 
 def build():
-    for cmd in (["npx", "tsc", "-b", "packages/ui-core"], ["npm", "run", "fixture", "-w", "packages/ui-core"]):
+    for cmd in (["npx", "tsc", "-b", "packages/bench-core"], ["npm", "run", "fixture", "-w", "packages/bench-core"]):
         subprocess.run(cmd, cwd=ROOT, check=True)
 
 

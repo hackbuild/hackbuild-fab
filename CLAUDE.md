@@ -78,7 +78,7 @@ Never read whole: `DECISIONS.md`, `PLAN.md`, the `milestones/` directory, `_arch
 | nest | `knowledge/kernels/sheet-design.md` |
 | sim | `knowledge/kernels/viewer-sim.md` |
 | checks, reference | `knowledge/kernels/verification.md` |
-| ui-core, ui | `knowledge/kernels/ui-anatomy.md` |
+| bench-core, viewer, bench | `knowledge/kernels/ui-anatomy.md` |
 | core, chase | `knowledge/kernels/agent-capability.md` |
 | profile, constraints | `knowledge/00-constants.md` |
 | archetypes | `knowledge/projects/printed-circuits.md` |

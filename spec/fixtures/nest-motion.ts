@@ -11,7 +11,7 @@
 import type {
   CalibrationReadout, Hash, MotionOp, MotionProgram, MotionRunResult, NestItem, NestRequest, NestResult, PathPoint,
   Placement, PlanResult, Planner, QuarterTurn, Ring,
-} from "../index";
+} from "../index.js";
 
 const square: Ring = [[0, 0], [10, 0], [10, 10], [0, 10]];
 const hole: Ring = [[2, 2], [2, 8], [8, 8], [8, 2]];

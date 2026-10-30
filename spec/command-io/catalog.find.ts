@@ -1,8 +1,8 @@
 // command catalog.find, group query.
 // spec/commands.ts CommandIO takes this interface; npm run registries regenerates it.
 
-import type { CatalogHit } from "../catalog";
-import type { Process, Tier } from "../ids";
+import type { CatalogHit } from "../catalog.js";
+import type { Process, Tier } from "../ids.js";
 
 export interface CatalogFindIO {
   /**

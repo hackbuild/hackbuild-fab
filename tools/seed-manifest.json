@@ -52,17 +52,17 @@
   {
     "source": "seed/bench/part1.html",
     "sha256": "d339b11207a902c23f638c76a37ec02595ad790231846ca93e9f3db43ccf0995",
-    "dest": "packages/ui-core/seed/bench/part1.html"
+    "dest": "packages/bench-core/seed/bench/part1.html"
   },
   {
     "source": "seed/bench/part2.js",
     "sha256": "b207f95f8bf4c01d212ec56014f1f52f6bf1dfc2f996bc2cd60fe798d816e651",
-    "dest": "packages/ui-core/seed/bench/part2.js"
+    "dest": "packages/bench-core/seed/bench/part2.js"
   },
   {
     "source": "seed/bench/part3.js",
     "sha256": "91a1dab64f49dc755c79348cbb8c2f61fd4a2a11279d7bfbe257ad10a0287c73",
-    "dest": "packages/ui-core/seed/bench/part3.js"
+    "dest": "packages/bench-core/seed/bench/part3.js"
   },
   {
     "source": "seed/bench/smoke_bench.py",
