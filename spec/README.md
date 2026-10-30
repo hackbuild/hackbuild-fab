@@ -79,6 +79,7 @@ comment of each file states the same status.
 | `capabilities.ts` | draft | M13 | | |
 | `nest.ts` | draft | M07 | | |
 | `motion.ts` | draft | M07 | | |
+| `art.ts` | draft | plan v11 4.3 step a | | the art board, step b |
 | `index.ts` | follows the files it re-exports | | | |
 
 ## Files
@@ -108,6 +109,7 @@ comment of each file states the same status.
 | `capabilities.ts` | observe and consequential capabilities | D-161 |
 | `nest.ts` | QuarterTurn, NestItem, NestMode, Packer, SortOrder, NestGroupBy, NestRequest, Placement, NestResult (added by M07-T02, NestGroupBy and the optional packer, order and groupBy fields by M07-T03, DeclaredHole, HubDecl, KerfMode and the optional NestItem holes and hubs by M07-T04; D-046 names no file for them) | D-051, D-054, D-075, D-137 |
 | `motion.ts` | StateVar, MotionOp, MotionProgram, MotionRule, MotionViolation, MotionRunResult, PlannedPoint, PlanResult, PathPoint, Planner, CalibrationReadout (added by M07-T02) | D-051, D-056, D-139 |
+| `art.ts` | ArtDocument (front and back faces of layers), ArtLayer and its seven kinds, ArtValue, artLayer and the BAIL defaults, artDocumentUri, artDocumentIssues and artDocumentSchema (added by plan v11 4.3 step a; the `art` param's `layers` kind) | plan v11 4.3, D-222 |
 | `index.ts` | re-exports | D-046 |
 
 ## Rules for changing a contract

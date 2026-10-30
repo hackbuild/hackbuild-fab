@@ -13,8 +13,8 @@
 
 import { z } from "zod";
 import {
-  CARD_SECTIONS, CHASE_ID_PATTERN, CHASE_KINDS, CHASE_SCHEMA_VERSION, KERNEL_IDS, didYouMean,
-  type Chase, type CommandError, type ParamField, type ParamGroup, type ShowWhen,
+  CARD_SECTIONS, CHASE_ID_PATTERN, CHASE_KINDS, CHASE_SCHEMA_VERSION, KERNEL_IDS, artDocumentIssues, didYouMean,
+  type ArtDocument, type Chase, type CommandError, type ParamField, type ParamGroup, type ShowWhen,
 } from "@hackbuild/spec";
 
 /** RFC 6901 escape of one pointer segment. */
@@ -78,7 +78,7 @@ const field: z.ZodType<unknown> = z.lazy(() => z.discriminatedUnion("type", [
   z.strictObject({ type: z.literal("bool"), default: z.boolean(), ...common }),
   z.strictObject({ type: z.literal("enum"), options: z.array(z.strictObject({ value: z.string(), label: z.string() })).min(1), default: z.string(), ...common }),
   z.strictObject({ type: z.literal("text"), default: z.string(), max: count.optional(), ...common }),
-  z.strictObject({ type: z.literal("art"), accepts: z.array(z.enum(["svg", "png", "text"])).min(1), ...common }),
+  z.strictObject({ type: z.literal("art"), accepts: z.array(z.enum(["svg", "png", "text", "layers"])).min(1), frame: z.tuple([z.number().positive(), z.number().positive()]).optional(), ...common }),
   z.strictObject({ type: z.literal("part"), catalog: z.string().min(1), default: z.string().optional(), ...common }),
   z.strictObject({ type: z.literal("list"), item: z.array(field).min(1), min: count, max: count, ...common }),
   z.strictObject({
@@ -266,7 +266,7 @@ function valueSchema(f: ParamField): z.ZodType<unknown> | undefined {
       return values.length === 0 ? z.never() : z.enum(values as [string, ...string[]]);
     }
     case "text": return f.max === undefined ? z.string() : z.string().max(f.max);
-    case "art": return z.strictObject({ uri: z.string().min(1), kind: z.enum(["svg", "png", "text"]) }).nullable();
+    case "art": return z.strictObject({ uri: z.string().min(1), kind: z.enum(["svg", "png", "text", "layers"]), doc: z.custom<ArtDocument>((v) => artDocumentIssues(v).length === 0, "an art document of spec/art.ts").optional() }).nullable();
     case "part": return z.string();
     case "slot": return z.number().int().min(1);
     case "list": return z.array(z.strictObject(shapeOf(f.item))).min(f.min).max(f.max);

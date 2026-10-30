@@ -5,12 +5,13 @@
 // memory, the file and preset verbs and the download of an export. The
 // bench's views.widgets resolve through the widget registry here, so a
 // declared kind without a component logs its refusal at mount.
-import { onMounted } from "vue";
+import { onMounted, provide } from "vue";
 import { createWelcome, type ChaseBinding } from "@hackbuild/bench-core";
 import BenchShell from "./BenchShell.vue";
 import { useShell, type BenchReport } from "../stores/shell.js";
 import { widgetComponent } from "../widgets/registry.js";
 import type { DraftWidget } from "./entry.js";
+import { ART_HOST } from "../rail/context.js";
 
 interface Props {
   binding: ChaseBinding<BenchReport>;
@@ -25,6 +26,8 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), { stage: true, draft: false, widget: null });
 const shell = useShell();
 const b = props.binding;
+// Rail rows of type art take their controller from the binding, so BENCH.verbs.art and the board edit one state.
+provide(ART_HOST, (id: string) => b.art(id));
 
 const welcome = createWelcome(b.chase.meta.id, (open) => {
   shell.welcomeOpen = open;

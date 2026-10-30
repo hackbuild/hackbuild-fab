@@ -25,6 +25,7 @@
 
 import type { FaceRef, Hash, IsoDate, KernelId, Micros, Mm, Ohm, Spdx } from "./ids.js";
 import type { Assertion, BodyRole, StackDecl } from "./part-ir.js";
+import type { ArtValue } from "./art.js";
 import type { BuildFn } from "./build.js";
 import type { ConstraintDim } from "./constraints.js";
 import type { ReadModel } from "./circuit.js";
@@ -253,7 +254,8 @@ export type ParamFieldSpec =
   | { readonly type: "enum"; readonly options: readonly EnumOption[]; readonly default: string }
   /** Text; max is a character count. */
   | { readonly type: "text"; readonly default: string; /** characters */ readonly max?: number }
-  | { readonly type: "art"; readonly accepts: readonly ("svg" | "png" | "text")[] }
+  /** frame is the art area the board shows, [width, height] in mm, centred on the origin; default 100 by 64. */
+  | { readonly type: "art"; readonly accepts: readonly ("svg" | "png" | "text" | "layers")[]; readonly frame?: readonly [number, number] }
   /** A catalog part picker filtered by `catalog` (a catalog query). */
   | { readonly type: "part"; readonly catalog: string; readonly default?: string }
   /** Repeatable group: N instances with their own fields; min and max are counts. */
@@ -676,7 +678,7 @@ export interface CouponDecl {
 // array of tagged records, one shape per type; slot to its 1-based number;
 // derived is omitted.
 
-type ArtValue = { readonly uri: string; readonly kind: "svg" | "png" | "text" };
+// ArtValue is in ./art.ts: kind "layers" is a uri of an art document.
 
 type FieldValue<F> =
   F extends { readonly type: "mm" | "deg" | "int" | "ratio" | "number" } ? number

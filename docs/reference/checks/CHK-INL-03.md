@@ -31,6 +31,7 @@ Numbers from the failure story:
 
 ## References
 
+- `reference/cosmetic/art-layers`
 - `reference/cosmetic/coin-inlay`
 
 ## Version history

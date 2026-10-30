@@ -25,8 +25,11 @@ import { admitDesign, type AdmitOptions } from "../bench/share.js";
 import { startPreset, welcomeStarts, type WelcomeStart } from "../bench/welcome.js";
 import { createPad, padModel, type Pad, type PadModel } from "../drive/drive.js";
 import { widgetRecords, type WidgetBuild } from "../widgets/registry.js";
+import { artValueOf, createArtDoc, DOC_FRAME, type ArtDocController } from "../artdoc/controller.js";
+import { artVerb } from "../artdoc/verbs.js";
 import type { WidgetClaimFn } from "../widgets/press.js";
 import type { ViewPart } from "@hackbuild/viewer";
+import type { RasterGrid, Surface } from "@hackbuild/inlay";
 
 export type Values = Record<string, unknown>;
 
@@ -182,6 +185,8 @@ export interface BindOptions<R extends ChaseReport = ChaseReport> {
   readonly install?: boolean;
   /** Pauses the viewer for an export and returns the resume. */
   readonly pause?: () => () => void;
+  /** Surfaces for the art controllers (artdoc/surfaces.ts artSurfaces); `ready` runs when fonts settle. Without it text, marks and paths have no preview. */
+  readonly artSurfaces?: (ready: () => void) => (grid: RasterGrid) => Surface;
   /** Page boot (kernel, share link), handed the binding; the first build runs after it. */
   readonly boot?: (binding: ChaseBinding<R>) => Promise<unknown>;
 }
@@ -222,6 +227,10 @@ export interface ChaseBinding<R extends ChaseReport = ChaseReport> {
   refused(): RefusedView | null;
   drive(): PadModel | null;
   widgets(): WidgetRecord[];
+  /** The art controller of an `art` param by field id, made once; null for any other id. Edits write the param through the core, so undo restores them. */
+  art(id: string): ArtDocController | null;
+  /** Field ids of the chase's `art` params, in chase order. */
+  readonly artIds: readonly string[];
   /** Admits a dropped or picked file and loads it; a refusal goes to the log. */
   open(text: string): void;
   /** A welcome start: BLANK_START, or a preset's presetStart id. */
@@ -325,8 +334,37 @@ export function bindChase<R extends ChaseReport = ChaseReport>(opts: BindOptions
     return m;
   };
 
+  const artFields = chase.params.flatMap((g) => g.fields).filter((f): f is Extract<typeof f, { type: "art" }> => f.type === "art");
+  const artIds = artFields.map((f) => f.id);
+  const arts = new Map<string, ArtDocController>();
+  const slotColours = [...chase.materials].sort((a, b) => a.slot - b.slot).reduce<string[]>((out, m) => {
+    out[m.slot - 1] = m.preview ?? "#808080";
+    return out;
+  }, []).map((c) => c ?? "#808080");
+  const art = (id: string): ArtDocController | null => {
+    const f = artFields.find((x) => x.id === id);
+    if (f === undefined) return null;
+    let c = arts.get(id);
+    if (c === undefined) {
+      const created: ArtDocController = createArtDoc({
+        read: () => core.get(id),
+        write: (v) => {
+          core.set(id, v);
+          core.commitAs("commit");
+        },
+        frame: f.frame === undefined ? DOC_FRAME : { w: f.frame[0], h: f.frame[1] },
+        slots: slotColours,
+        ...(opts.artSurfaces === undefined ? {} : { surface: opts.artSurfaces(() => created.invalidate()) }),
+      });
+      c = created;
+      arts.set(id, c);
+    }
+    return c;
+  };
+
   const hookOptions: HookOptions<ViewPart, R> = {
     exports,
+    ...(artIds.length === 0 ? {} : { verbs: { art: artVerb(artIds, art) as (...args: readonly unknown[]) => unknown } }),
     params: chase.params,
     checks: (r) => r.report.results ?? [],
     model,
@@ -360,7 +398,7 @@ export function bindChase<R extends ChaseReport = ChaseReport>(opts: BindOptions
     writers, admit,
     hook: hooked.hook,
     whenReady: hooked.whenReady,
-    view, drive,
+    view, drive, art, artIds,
     refused() {
       const r = core.refusal;
       return r === null ? null : { line: refusalLine(chase.params, r), exportWhy: exportClosedLine(chase.params, r) };

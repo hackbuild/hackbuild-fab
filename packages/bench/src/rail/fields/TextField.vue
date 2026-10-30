@@ -1,12 +1,16 @@
 <script setup lang="ts">
 // text, art and part rows (M09-T08 table). text is a field that commits on
-// change. art hosts the M03 art board, which mounts on the stage of a kind
-// that declares it; part is the catalog picker stub until M10. Both say so
-// on the row instead of offering a control that does nothing.
-import { computed } from "vue";
+// change. art mounts the art board under its label: the bench hands the
+// controller of the param (ART_HOST), and a host that mounts a row alone gets
+// one made from the row's own value and edit event. part is the catalog
+// picker stub until M10 and says so on the row instead of offering a control
+// that does nothing.
+import { computed, inject } from "vue";
 import { HbInput } from "@virgilvox/hackbuild-ui";
+import { artSurfaces, createArtDoc, DOC_FRAME, type ArtDocController } from "@hackbuild/bench-core";
 import type { ParamField, ParamPointer } from "@hackbuild/spec";
-import { describe, settleKind, type CommitKind } from "../context.js";
+import ArtBoard from "../../art/ArtBoard.vue";
+import { ART_HOST, describe, settleKind, type CommitKind } from "../context.js";
 
 type TextLike = Extract<ParamField, { readonly type: "text" | "art" | "part" }>;
 
@@ -22,6 +26,27 @@ const emit = defineEmits<{ edit: [path: string, value: unknown, kind: CommitKind
 const tip = computed(() => describe(props.field, null));
 const inputId = computed(() => `hbf-in-${props.path.replace(/\W/g, "-")}`);
 const max = computed(() => (props.field.type === "text" ? props.field.max : undefined));
+const host = inject(ART_HOST, undefined);
+
+// Made once per row. Without a bench host the row reads its own value and
+// edits through the same event every other row uses.
+let own: ArtDocController | null = null;
+const controller = computed<ArtDocController | null>(() => {
+  if (props.field.type !== "art") return null;
+  const shared = host?.(props.field.id) ?? null;
+  if (shared !== null) return shared;
+  if (own === null) {
+    const frame = props.field.frame === undefined ? DOC_FRAME : { w: props.field.frame[0], h: props.field.frame[1] };
+    const made: ArtDocController = createArtDoc({
+      read: () => props.value,
+      write: (v) => emit("edit", props.path, v, "commit"),
+      frame,
+      surface: artSurfaces(() => made.invalidate()),
+    });
+    own = made;
+  }
+  return own;
+});
 
 function onChange(e: Event): void {
   emit("edit", props.path, (e.target as HTMLInputElement).value, settleKind(props.field));
@@ -29,7 +54,11 @@ function onChange(e: Event): void {
 </script>
 
 <template>
-  <div class="hbf-row hb-prow" data-hb="param" :data-field="field.id" :data-path="path" :title="tip || undefined">
+  <div v-if="controller !== null && field.type === 'art' && field.accepts.includes('layers')" class="hbf-row hbf-art-row" data-hb="param" :data-field="field.id" :data-path="path" :title="tip || undefined">
+    <span class="hb-prow-label">{{ field.label }}</span>
+    <ArtBoard :controller="controller" :value="value" :label="field.label" />
+  </div>
+  <div v-else class="hbf-row hb-prow" data-hb="param" :data-field="field.id" :data-path="path" :title="tip || undefined">
     <label class="hb-prow-label" :for="inputId">{{ field.label }}</label>
     <div class="hb-prow-ctl">
       <HbInput
@@ -39,7 +68,7 @@ function onChange(e: Event): void {
         :maxlength="max"
         @change="onChange"
       />
-      <span v-else-if="field.type === 'art'" :id="inputId" class="hb-prow-why" data-hb="art-host">art board opens on the stage of this step.</span>
+      <span v-else-if="field.type === 'art'" :id="inputId" class="hb-prow-why" data-hb="art-host">this art param takes {{ field.accepts.join(", ") }} files. the layer board needs layers in accepts.</span>
       <span v-else :id="inputId" class="hb-prow-why" data-hb="part-stub">catalog picker not in this bench yet. {{ value ?? "no part" }} stays set.</span>
     </div>
   </div>

@@ -1,0 +1,154 @@
+[
+  {
+    "id": "bail.bench/bail-html",
+    "kind": "canonical",
+    "source": "fab-knowledge:originals/bail/files/bail.html",
+    "sha256": "4accb6428d31b3e687340ed8e35c2fb5f0edc19307d4090bd37d066474e86ccd",
+    "fixes": [
+      "layer painters, 13 shapes (shapePath bail.html:1349 to 1406), scope (1457 to 1462), circuit (circuitOf 1297 to 1347, paint 1463 to 1466), logo (1445 to 1456) and text per glyph with letter spacing and arcs (1416 to 1444), ported to packages/inlay/src/layers by cell-centre tests; each ported painter and the fixture of BAIL's own canvas cells (tools/inlay/bail-canvas.cjs) have a row below",
+      "marks registry, the hack.build and HeatSync marks verbatim (bail.html:1056 to 1059), packages/inlay/src/marks.ts",
+      "layer model lay() and the factories T, SH, LOGO, SCOPE, CIRC, RELIEF (bail.html:1128 to 1140): spec/art.ts",
+      "label slab kernel (buildSlide bail.html:1699 to 1876), clasps (claspGeom 1685 to 1697), banded revolved tips (tipProfile 1885 to 1946, revolve 1947 to 1972, buildTip 1973 to 2018) and the checks of build (2019 to 2040): not ported, designs/bail (plan v11 4.3 step c)",
+      "face editor (bail.html:2850 to 3119): ported as the art document controller and the art board, packages/bench-core/src/artdoc and packages/bench/src/art; the relief route (2100 to 2291, Depth Anything V2 small through transformers.js 4.3.2) is not ported, plan v11 4.3 step e"
+    ],
+    "dest": null
+  },
+  {
+    "id": "bail.bench/bail-r1",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/bail/files/bail-r1.html",
+    "sha256": "0664393a0bee63bb66662de20857bf575287e28536a53ca74abf782237ec1d14",
+    "fixes": [],
+    "dest": null
+  },
+  {
+    "id": "bail.bench/inlay-art-doc",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/bail/files/bail.html",
+    "sha256": "4accb6428d31b3e687340ed8e35c2fb5f0edc19307d4090bd37d066474e86ccd",
+    "fixes": [
+      "BAIL's partsOf and slotFor (bail.html:1282 to 1296) and paintLayer branches as one lowering from an art layer to a painter layer; muted layers keep their place, pocket cuts, image and relief layers refused"
+    ],
+    "dest": "packages/inlay/src/art-lower.ts"
+  },
+  {
+    "id": "bail.bench/inlay-canvas-capture",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/bail/files/bail.html",
+    "sha256": "4accb6428d31b3e687340ed8e35c2fb5f0edc19307d4090bd37d066474e86ccd",
+    "fixes": [
+      "loads the canonical bench in Chrome and runs paintLayer and circuitOf unchanged on 44 layers, writing the cells BAIL's canvas paints"
+    ],
+    "dest": "tools/inlay/bail-canvas.cjs"
+  },
+  {
+    "id": "bail.bench/inlay-canvas-fixture",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/bail/files/bail.html",
+    "sha256": "4accb6428d31b3e687340ed8e35c2fb5f0edc19307d4090bd37d066474e86ccd",
+    "fixes": [
+      "the capture of tools/inlay/bail-canvas.cjs: run-length cells of 44 layers at 8 cells per mm and circuitOf output for 5 seeds"
+    ],
+    "dest": "packages/inlay/test/fixtures/bail-canvas.json.gz"
+  },
+  {
+    "id": "bail.bench/inlay-circuit",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/bail/files/bail.html",
+    "sha256": "4accb6428d31b3e687340ed8e35c2fb5f0edc19307d4090bd37d066474e86ccd",
+    "fixes": [
+      "mulberry32 and circuitOf, line for line (bail.html:1297 to 1347), equal to BAIL node for node on 5 seeds; traces, pads and body-colour drills as three parts (1463 to 1466, slotFor 1291)"
+    ],
+    "dest": "packages/inlay/src/layers/circuit.ts"
+  },
+  {
+    "id": "bail.bench/inlay-logo",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/bail/files/bail.html",
+    "sha256": "4accb6428d31b3e687340ed8e35c2fb5f0edc19307d4090bd37d066474e86ccd",
+    "fixes": [
+      "the logo layer through Surface.fillPath, parts in BAIL's paint order and slot rule (bail.html:1289 to 1295, 1445 to 1456)"
+    ],
+    "dest": "packages/inlay/src/layers/logo.ts"
+  },
+  {
+    "id": "bail.bench/inlay-marks",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/bail/files/bail.html",
+    "sha256": "4accb6428d31b3e687340ed8e35c2fb5f0edc19307d4090bd37d066474e86ccd",
+    "fixes": [
+      "the two marks as data with their offsets, centre, span, part order, slot and canvas fill rule, strings copied by script and held by sha256 in packages/inlay/test/marks.test.ts"
+    ],
+    "dest": "packages/inlay/src/marks.ts"
+  },
+  {
+    "id": "bail.bench/inlay-raster",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/bail/files/bail.html",
+    "sha256": "4accb6428d31b3e687340ed8e35c2fb5f0edc19307d4090bd37d066474e86ccd",
+    "fixes": [
+      "cell-centre painting helpers for shapePath and paintLayer (bail.html:1349 to 1496): capsule strokes for round caps and joins, miter pieces with the canvas miter limit 10, a nonzero polygon union"
+    ],
+    "dest": "packages/inlay/src/layers/raster.ts"
+  },
+  {
+    "id": "bail.bench/inlay-scope",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/bail/files/bail.html",
+    "sha256": "4accb6428d31b3e687340ed8e35c2fb5f0edc19307d4090bd37d066474e86ccd",
+    "fixes": [
+      "the Lissajous trace of 1600 segments with round caps and joins (bail.html:1457 to 1462)"
+    ],
+    "dest": "packages/inlay/src/layers/scope.ts"
+  },
+  {
+    "id": "bail.bench/inlay-shapes",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/bail/files/bail.html",
+    "sha256": "4accb6428d31b3e687340ed8e35c2fb5f0edc19307d4090bd37d066474e86ccd",
+    "fixes": [
+      "the 13 shapes of shapePath (bail.html:1349 to 1406), including the steps and zigzag miter strokes and the nonzero cancelling of overlapping arrow subpaths"
+    ],
+    "dest": "packages/inlay/src/layers/shapes.ts"
+  },
+  {
+    "id": "bail.bench/inlay-text",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/bail/files/bail.html",
+    "sha256": "4accb6428d31b3e687340ed8e35c2fb5f0edc19307d4090bd37d066474e86ccd",
+    "fixes": [
+      "letter spacing set glyph by glyph with the run measured as the sum of advances less one ls (bail.html:1421 to 1443) and arcs centred on dx, dy and turned rot, set on the middle baseline (1411, 1416); both opt in, a layer without ls and anchored renders as COLLAR's"
+    ],
+    "dest": "packages/inlay/src/layers/text.ts"
+  },
+  {
+    "id": "bail.bench/spec-art",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/bail/files/bail.html",
+    "sha256": "4accb6428d31b3e687340ed8e35c2fb5f0edc19307d4090bd37d066474e86ccd",
+    "fixes": [
+      "the layer document of lay() (bail.html:1128) and its six factories, with the validator and the hbf://art content address"
+    ],
+    "dest": "spec/art.ts"
+  },
+  {
+    "id": "bail.bench/ui-art-state",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/bail/files/bail.html",
+    "sha256": "4accb6428d31b3e687340ed8e35c2fb5f0edc19307d4090bd37d066474e86ccd",
+    "fixes": [
+      "layer add, remove, raise, lower, duplicate, copy to the other face and the property rows per kind (bail.html:2786 to 2877), the move, scale and rotate rules and the keys (3057 to 3111), on the art document of spec/art.ts as headless state with no DOM; an edit writes the param value, so history is the bench core's and not BAIL's 80 snapshots; svg drop reads path elements into a path layer, a raster drop is refused"
+    ],
+    "dest": "packages/bench-core/src/artdoc/controller.ts"
+  },
+  {
+    "id": "bail.bench/ui-art-board",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/bail/files/bail.html",
+    "sha256": "4accb6428d31b3e687340ed8e35c2fb5f0edc19307d4090bd37d066474e86ccd",
+    "fixes": [
+      "the face canvas with handles and the layer panel (bail.html:2899 to 3111) as ArtBoard.vue on hackbuild-ui components and tokens; add buttons for text, shape, logo, scope, circuit and image, the front and back toggle, and the selected layer's fields"
+    ],
+    "dest": "packages/bench/src/art/ArtBoard.vue"
+  }
+]

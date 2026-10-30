@@ -97,6 +97,10 @@ Each read model has one canonical source. Printed tracks come from GIB, THINPOT 
 | Peg-into-socket press contact across two parts (neck joinery) | tang-r6 | **tang-r6** `03_design.js` line 57, `04_design.js` line 406, `05_design.js` line 242 | MISSING | MISSING |
 | Six-edge port standard on a hex tile (pads, ground tabs, ground ring, mirror rule) | coffer | **coffer** `coffer/files/hexcore.py` lines 23 to 43 and 125 to 156 | coffer-port | surfaces/coffer-tile (planned, absent) |
 | ESP32-C3 SuperMini carrier on copper (nested-L fans, channel trunk) | coffer (M1), spindle, splice | **coffer** `gen_coffer.py` `tile_M1` lines 210 to 290; tape form **spindle** `spindle/files/gen_board.py` | c3-carrier (candidate) | seats/c3-supermini (planned, absent) |
+| Store back recess with a locating peg: a recess the hardware plate size plus 0.4 mm (`padW`, `padH`, corner `padR`) cut `padDepth` into the back face, a square peg of the plate's hole less 0.2 mm rising from its floor; the recess exists face down only | bail | **bail** `bail/files/bail.html` `applyBackHw` lines 1112 to 1120, pad masks 1739 to 1748, recess and peg layers 1821, 1826 and 1836, checks 1774 to 1781 | MISSING | designs/bail (plan v11 4.3 step c, planned, absent) |
+| Twin printed bridges: two blocks `cw + 2 wall` wide standing on the back face, each with a cord channel `cw` wide and a 1.2 mm roof printed as a bridge, thread the cord in from the top edge; face down only, rebuilt as buried channels face up | bail | **bail** `bail/files/bail.html` `claspGeom` lines 1685 to 1697, masks 1749 to 1773, layers 1837 to 1843, checks 1783 to 1789 | MISSING | designs/bail (planned, absent) |
+| Buried channels: cord channels cut inside the body between a floor and a 1.2 mm back skin, the body thickened to hold them, leaving through the top and bottom edges | bail | **bail** `bail/files/bail.html` lines 1717 to 1724 and 1820 | MISSING | designs/bail (planned, absent) |
+| TPU grip fins: ribs 1.5 times the min feature wide (at least 0.9 mm) every 2.4 mm across a cord channel, in a TPU slot, squeezing the strand to the cord less twice `gripP` (0.35 mm) | bail | **bail** `bail/files/bail.html` lines 1693 to 1694, 1759 to 1762 and 1790 to 1792 | MISSING | designs/bail (planned, absent) |
 
 ## 6. Copper tape, vinyl and board circuits
 
@@ -225,6 +229,8 @@ Each read model has one canonical source. Printed tracks come from GIB, THINPOT 
 | Single-stroke label and mark inlay on a bezel | pip | **pip** `model.js` lines 301 to 363 with `src/font.js` | MISSING | MISSING |
 | Elephant foot relief on bed-side skins; as-printed fit model | knurl | **knurl** `knurl.html` lines 981, 1014 to 1015, 1032 to 1036 and `K.checks` lines 1206 to 1221 | MISSING | MISSING |
 | Recessed emblem badge with stepped chamfer and magnet backer for plating | escutcheon | **escutcheon** record section 4 (generator not found; third-party faces stay out per LICENSING 1.6) | MISSING | MISSING |
+| Layer kinds on one layer model (ten shared fields): 13 shapes, a Lissajous scope, seeded circuit traces with pads and drills, logos from a marks registry, text with letter spacing and arcs, each painting up to three slots in a documented order | bail | **bail** `bail/files/bail.html` `lay` and the factories lines 1128 to 1140, `shapePath` 1349 to 1406, `paintLayer` 1408 to 1496, `circuitOf` 1297 to 1347, `partsOf` and `slotFor` 1282 to 1295 | MISSING | cosmetic/art-layers |
+| Relief cameo: a depth map from Depth Anything V2 small in the browser (transformers.js 4.3.2 from jsDelivr, loaded on demand, stored as a PNG in the layer), or luma, or an inflated silhouette, built as a smooth heightfield part or terraced into the label slabs with a second colour above a split | bail | **bail** `bail/files/bail.html` lines 2100 to 2291, `runDepth` 2246 to 2275 | MISSING | MISSING |
 
 ## 12. Kernels and exports
 
@@ -244,6 +250,8 @@ Each read model has one canonical source. Printed tracks come from GIB, THINPOT 
 | Constrained 2D sketch solver | sketch | **sketch** `sketch.html` `SKS` lines 1002 to 1998 | MISSING | MISSING |
 | Viewer bake with int16 mesh packing | auger, davit, derrick, spool, stanchion | **auger** `auger/files/src/pack.ts` lines 1 to 38 | MISSING | exports/viewer-bake (proposed) |
 | KiCad file parsed live in the viewer | trunnion, board-viewers | **trunnion** `trunnion/files/trunnion-layers-3d.html` `parsePCB` lines 6528 to 6905 (fix `e.value` to `e.target.value`) | MISSING | MISSING |
+| Label slab kernel: one label grid per print layer built from the front art, back art, body, chamfer inset, pocket, pad recess, channels and bridges, equal neighbours merged into slabs, meshed by the print-forge raster mesher with its pinch healer | bail (collar has its own slab planner) | **bail** `bail/files/bail.html` `buildSlide` lines 1699 to 1876 over `RasterMesh` lines 400 to 753 | kernel | MISSING |
+| Banded revolved tips: seven outer profiles revolved at 48 segments, split into bands that take up to three slots, with a bore found by stepping shorter until a 0.9 mm wall holds | bail | **bail** `bail/files/bail.html` `tipProfile` 1885 to 1946, `clipChain` and `revolve` 1927 to 1972, `buildTip` 1973 to 2018 | kernel | MISSING |
 
 ## 13. Bench UX patterns
 
@@ -260,3 +268,4 @@ The bar for the bench itself: a lit 3D stage, steps on a rail, a drive pad, a co
 | Error retention: last good model kept under an ERROR chip | toggle | **toggle** `part3.js` and `part4.js` (record 6.5) | UX | MISSING |
 | BENCH hook for drives and tests | toggle, pip, cotter, blocks, collar | **toggle** `part4.js` lines 88 to 109 | UX | MISSING |
 | Firmware UI on the device texture | auger | **auger** `auger/files/viewer/sim.js` (record 4.13) | UX | MISSING |
+| Face editor on a shared layer model: handles from the layer's own mask bounds, corner scale, a rotate dot with snaps, alt to turn snapping off, shift axis lock, arrow nudge, wheel zoom about the pointer, right drag pan, duplicate, raise, lower, copy to the other face, SVG and PNG drop, 80 step history | collar, inlay, sprue, knuckle, coaming, gudgeon, bail | **bail** `bail/files/bail.html` lines 2899 to 3111 (the newest of the editors; collar `collar.html` lines 2002 to 2062 is the earlier one) | UX | MISSING |

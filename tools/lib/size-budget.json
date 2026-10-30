@@ -1,14 +1,14 @@
 {
   "about": "Recorded size in bytes (measured) of each library output; lint:packages fails on growth over 10 percent. Rewrite with node tools/lint-packages.mjs --update-budget after a reviewed change.",
   "bytes": {
-    "spec/dist/cdn/spec.js": 22298,
-    "spec/dist/iife/spec.js": 17790,
+    "spec/dist/cdn/spec.js": 27729,
+    "spec/dist/iife/spec.js": 21767,
     "packages/viewer/dist/cdn/viewer.js": 22074,
     "packages/viewer/dist/iife/viewer.js": 16086,
-    "packages/bench-core/dist/cdn/bench-core.js": 606244,
-    "packages/bench-core/dist/iife/bench-core.js": 490771,
-    "packages/bench/dist/cdn/bench.js": 187587,
-    "packages/bench/dist/iife/bench.js": 179889,
+    "packages/bench-core/dist/cdn/bench-core.js": 659784,
+    "packages/bench-core/dist/iife/bench-core.js": 532692,
+    "packages/bench/dist/cdn/bench.js": 198106,
+    "packages/bench/dist/iife/bench.js": 189873,
     "tools/vendor/three/dist/three.js": 736325
   }
 }

@@ -118,6 +118,21 @@
 
 /* Rail rows. */
 .hbf-row{ position:relative }
+/* The art board in a rail row: the label above, then face chips, the void canvas, the add row, the layer list and the selected layer's fields. */
+.hbf-art-row{ display:flex; flex-direction:column; gap:var(--hb-s1); min-width:0 }
+.hbf-art{ display:flex; flex-direction:column; gap:var(--hb-s2); min-width:0 }
+.hbf-art-bar,.hbf-art-add{ display:flex; flex-wrap:wrap; gap:var(--hb-s1) }
+.hbf-art-canvas{ display:block; width:100%; max-width:100%; background:var(--hb-void); border:var(--hbf-hair) solid var(--hb-ink); touch-action:none; cursor:default }
+.hbf-art-canvas:focus-visible{ outline:var(--hb-border) solid var(--hb-ink); outline-offset:var(--hbf-hair) }
+.hbf-art-note,.hbf-art-empty{ margin:0; font-size:var(--hbf-fs-note); overflow-wrap:anywhere }
+.hbf-art-layers{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:var(--hb-s1) }
+.hbf-art-layers li{ display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:var(--hb-s1); border:var(--hbf-hair) solid var(--hb-ink-border); padding:var(--hb-s1) }
+.hbf-art-layers li.is-mute .hbf-art-pick{ opacity:.55 }
+.hbf-art-acts{ display:flex; flex-wrap:wrap; gap:var(--hb-s1) }
+.hbf-art-props{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:var(--hb-s1) var(--hb-s2) }
+.hbf-art-prop{ display:flex; flex-direction:column; gap:var(--hb-s1); min-width:0 }
+.hbf-art-label{ font-family:var(--hb-utility); font-size:var(--hbf-fs-label); text-transform:uppercase; letter-spacing:.1em }
+.hbf-art-prop input,.hbf-art-prop select{ min-width:0; width:100% }
 .hbf-chips{ flex:1 1 0; min-width:0; display:flex; flex-wrap:wrap; gap:var(--hb-s1) }
 .hbf-band{ position:relative; height:var(--hb-border-hd); margin:0 calc(var(--hbf-prow-num) + var(--hbf-prow-reset) + 2 * var(--hb-s2)) var(--hb-s1) calc(var(--hbf-prow-label) + var(--hb-s2)) }
 .hbf-band::after{

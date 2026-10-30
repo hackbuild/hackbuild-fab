@@ -6,7 +6,10 @@
 
 import type { ImageInput, RgbaImage } from "@hackbuild/inlay";
 import type { ArtBoard } from "./controller.js";
-import { drawArtBoard, type ArtBoardTheme } from "./draw.js";
+import { drawArtBoard, type ArtBoardTheme, type DrawableBoard } from "./draw.js";
+
+/** What attachArtBoard drives: the older board, or the art document controller, which has no image drop. */
+export type AttachableBoard = DrawableBoard & Pick<ArtBoard, "resize" | "pointerDown" | "pointerMove" | "pointerUp" | "wheel" | "dblclick" | "key" | "cursor"> & Partial<Pick<ArtBoard, "drop">>;
 
 export interface AttachOptions {
   readonly theme: ArtBoardTheme;
@@ -14,6 +17,10 @@ export interface AttachOptions {
   readonly decode?: (file: File) => Promise<ImageInput>;
   /** Runs after each repaint. */
   readonly onPaint?: () => void;
+  /** A dropped file at canvas px (x, y); true when the host took it, so the default image drop is skipped. */
+  readonly onDrop?: (file: File, x: number, y: number) => boolean;
+  /** Where keys are heard: the document (default) or only while the canvas has focus. */
+  readonly keysOn?: "document" | "canvas";
 }
 
 export interface Attached {
@@ -39,7 +46,7 @@ async function decodeFile(file: File): Promise<ImageInput> {
   return { width: bmp.width, height: bmp.height, native: bmp };
 }
 
-export function attachArtBoard(canvas: HTMLCanvasElement, board: ArtBoard, opts: AttachOptions): Attached {
+export function attachArtBoard(canvas: HTMLCanvasElement, board: AttachableBoard, opts: AttachOptions): Attached {
   const g = canvas.getContext("2d")!;
   const dpr = (): number => globalThis.devicePixelRatio || 1;
   const paint = (): void => {
@@ -124,17 +131,19 @@ export function attachArtBoard(canvas: HTMLCanvasElement, board: ArtBoard, opts:
   on("drop", (e) => {
     e.preventDefault();
     const file = e.dataTransfer?.files[0];
-    if (file === undefined || !file.type.startsWith("image/")) return;
+    if (file === undefined) return;
     const [x, y] = local(e);
+    if (opts.onDrop?.(file, x, y) === true) return;
+    if (!file.type.startsWith("image/") || board.drop === undefined) return;
     void (opts.decode ?? decodeFile)(file).then((img) => {
-      board.drop(x, y, img);
+      board.drop?.(x, y, img);
       paint();
     });
   });
-  document.addEventListener("keydown", (e) => {
+  (opts.keysOn === "canvas" ? canvas : document).addEventListener("keydown", (e) => {
     const t = e.target as Element | null;
     if (t !== null && t.matches?.("input, textarea, select")) return;
-    if (board.key(e)) {
+    if (board.key(e as KeyboardEvent)) {
       e.preventDefault();
       paint();
     }

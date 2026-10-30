@@ -24,7 +24,7 @@ import {
 } from "@hackbuild/spec";
 import { fillPolygonEvenOdd, vectorSurface } from "@hackbuild/geom";
 import type { RasterMask } from "@hackbuild/mesh";
-import { composeFace, type ComposedFace, type Layer } from "./face.js";
+import { composeFace, type ComposedFace, type PaintLayer } from "./face.js";
 import { hygiene } from "./hygiene/recipes.js";
 import { splitBodies, type SplitBodies } from "./split.js";
 import type { RasterGrid } from "./surface.js";
@@ -44,7 +44,7 @@ export interface InlayArt {
   /** Cell grid centred on the part origin: w by h cells at res cells per mm. */
   readonly grid: RasterGrid;
   /** Layers per face in paint order; the bed face as read in hand. */
-  readonly layers: { readonly top: readonly Layer[]; readonly bed: readonly Layer[] };
+  readonly layers: { readonly top: readonly PaintLayer[]; readonly bed: readonly PaintLayer[] };
   readonly recipe: InlayRecipe;
   /** Stroke boost, mm. */
   readonly boost: Mm;
@@ -86,7 +86,7 @@ export interface ArtFaces {
 
 const isRecord = (v: unknown): v is Record<string, unknown> => typeof v === "object" && v !== null && !Array.isArray(v);
 
-function hasCut(layers: readonly Layer[]): boolean {
+function hasCut(layers: readonly PaintLayer[]): boolean {
   return layers.some((L) => L.cut === true && L.off !== true);
 }
 

@@ -18,7 +18,7 @@ import { createApp, type App } from "vue";
 import { createPinia, type Pinia } from "pinia";
 import { draftName, type Bench, type BuildWarning, type Chase, type CheckResult, type ContactFn, type Metric, type Part } from "@hackbuild/spec";
 import {
-  adoptBootedManifold, bindChase, blockedLine, blockingChecks, bootManifold, NO_BUILD, NOT_IN_BAKE, openShare, setStorageLog, type BenchCore, type BootedManifold, type BuildOutput, type BuildResult, type ChaseBinding,
+  adoptBootedManifold, artSurfaces, bindChase, blockedLine, blockingChecks, bootManifold, NO_BUILD, NOT_IN_BAKE, openShare, setStorageLog, type BenchCore, type BootedManifold, type BuildOutput, type BuildResult, type ChaseBinding,
 } from "@hackbuild/bench-core";
 import { HB_VIEWER_TAG, type HbViewer, type ViewMesh, type ViewPart } from "@hackbuild/viewer";
 import ChaseBench from "./ChaseBench.vue";
@@ -247,6 +247,7 @@ export function createBench(opts: CreateBenchOptions): BenchController {
   };
 
   const binding: ChaseBinding<BenchReport> = bindChase<BenchReport>({
+    artSurfaces,
     chase, bench, pause,
     ...(opts.build === undefined ? {} : { build: opts.build }),
     ...(opts.writers === undefined ? {} : { writers: opts.writers }),

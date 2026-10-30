@@ -17,6 +17,14 @@ Built: M03, staged, not released.
 - Split into slot bodies with role `art`, bed-face mirroring (M03-T06).
 - The opacity rule, read from profile (M03-T07).
 - The `inlay` FeatureKindDef and CHK-INL-01 to 04 (M03-T08).
+- BAIL's layer kinds, from the owner's BAIL bench (plan v11 section 4.3 step a,
+  lineage `bail.bench/*`): shape in 13 kinds, scope, seeded circuit and logo
+  painters that test cell centres and need no Surface (logo uses
+  `Surface.fillPath`), a marks registry (hack.build, HeatSync Labs), text with
+  letter spacing and anchored arcs, and `lowerArtDocument`, which turns an art
+  document of `spec/art.ts` into the layers a face composes. Reference
+  `cosmetic/art-layers`. Image and relief layers and pocket cuts are typed in
+  the document and refused by the lowering.
 
 No DOM, no canvas and no `ImageData` constructor (D-045). Text, images and
 SVG reach the package through the `Surface` interface; bench-core supplies the
@@ -54,6 +62,16 @@ subject. `test/lineage.test.ts` holds this table equal to `lineage.json`.
 
 ### Verified on this machine
 
+- 2026-10-30: `npx vitest run packages/inlay spec packages/chase` passes, 762
+  tests in 40 files (measured), with the BAIL layer kinds in
+  `test/bail-layers.test.ts` (shape in 13 kinds, scope, circuit, logo, text
+  with letter spacing, each held to determinism, bounds, slot assignment and
+  to the cells of BAIL's own canvas, within 2 percent on shapes, scope and
+  logo and 8 percent on the circuit parts, circuitOf equal node for node on 5
+  seeds), `test/marks.test.ts`, `test/art-lower.test.ts` and
+  `test/art-layers.test.ts` (reference `cosmetic/art-layers`, goldens equal).
+  A mutant that moved the circuit seed to `seed * 9973 + 18` failed 5 tests
+  and was restored.
 - 2026-10-14: `npx vitest run` in packages/inlay passes, 274 tests and 1 skipped in 15
   files (measured), with `test/text-coin.test.ts` building coin-inlay with initials.
 - 2026-10-13: `npm test -w packages/inlay` passes, 270 tests and 1 skipped in 14 files

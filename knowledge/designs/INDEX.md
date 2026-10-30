@@ -1,6 +1,6 @@
 # Originals: the sample set index
 
-Written 2026-10-05; BUCK added 2026-10-06. This is the sample set a builder copies from: every design below is one of the owner's original benches, prints or boards, curated with its own record. The generated mockups at `fab-knowledge:mockups/` are quarantined and are not part of this set; nothing here cites or copies them.
+Written 2026-10-05; BUCK added 2026-10-06; BAIL added 2026-10-30. This is the sample set a builder copies from: every design below is one of the owner's original benches, prints or boards, curated with its own record. The generated mockups at `fab-knowledge:mockups/` are quarantined and are not part of this set; nothing here cites or copies them.
 
 The owner's originals are the bar. Every design is a full lit 3D bench or a real artifact (board, print, slicer save), and each record says how it was made so a new thing is made the same way. The cross index from every mechanism to these designs is `MECHANISMS.md` beside this file.
 
@@ -23,7 +23,7 @@ Tiers used in the last column:
 - lineage: kept for its techniques and failure lessons; a newer original supersedes it or it is broken as shipped
 - evidence: owner prints, slicer saves or printed artwork; read, never port as code
 
-Count: 80 designs in 13 families (computed from this table, 2026-10-06; BUCK added to robots on 2026-10-06).
+Count: 81 designs in 13 families (computed from this table, 2026-10-30; BUCK added to robots on 2026-10-06, BAIL added to coins-inlay on 2026-10-30).
 
 ## pip-buttons
 
@@ -50,6 +50,7 @@ Count: 80 designs in 13 families (computed from this table, 2026-10-06; BUCK add
 | design | canonical revision (dates are file mtimes from the record) | sha256 of the canonical file | what it makes | best shot | record | tier |
 |---|---|---|---|---|---|---|
 | **collar** | collar (7).html, 2026-08-19 19:25; file `files/collar.html` | `ef0864ab66ca40e2930d12aba4cab3159aa470f743eee533d052fc99f844fd46` | Multicolour coin and chip bench: blank shapes, a registry of numismatic edge profiles, rim band and edge spots, face art with hygiene, sealed NFC pocket with a pause layer, Orca project 3MF | `fab-knowledge:originals/collar/shots/c-02-hackbuild-exploded-colour-step.png` | `fab-knowledge:originals/collar/RECORD.md`, repo `knowledge/designs/collar.md` | gold |
+| **bail** | bail.html, 2026-10-30 01:15 (r1 at 00:56 kept); file `files/bail.html` | `4accb6428d31b3e687340ed8e35c2fb5f0edc19307d4090bd37d066474e86ccd` | Multimaterial bolo tie bench: a slide with front and back face art on one layer model (text, 13 shapes, logo, scope, seeded circuit, image, relief), a store back recess with a locating peg, twin printed bridges or buried channels with TPU grip fins, banded revolved tips, a hardware table, 11 presets, a wear pose, a Depth Anything relief cameo, Orca project 3MF | `fab-knowledge:originals/bail/shots/b-03-hackbuild-art-step.png` | `fab-knowledge:originals/bail/RECORD.md`, repo `knowledge/designs/bail.md` | bar |
 | **sprue** | sprue.html plus sprue.py, 2026-09-06 15:59; file `files/sprue.html` | `a1acb293ad96c7dd5062a9e65741a7f27959584dfb10e64decb41468c59e4fe7` | Two colour flush giveaways (guitar picks, coins, tags) traced from art, packed to fill the bed, written as a split model project 3MF | `fab-knowledge:originals/sprue/shots/s-06-mixed-plate-3d-and-plate-view-scrolled.png` | `fab-knowledge:originals/sprue/RECORD.md`, repo `knowledge/designs/sprue.md` | bar |
 | **sash** | sash (1).html, 2026-09-08 01:38, with sash-src.zip; file `files/sash.html` | `1af452be6cccc94aced78f7d7cb292ba34742740410bd7560b2edf07b5d33cf5` | Slider badge: an in-plane cantilever slide detent, a thumb tab under a keeper rib, press-fit cover pegs and magnet pockets, art per station | `fab-knowledge:originals/sash/shots/a-02-fit-step-exploded-check-panel.png` | `fab-knowledge:originals/sash/RECORD.md`, repo `knowledge/designs/sash.md` | bar |
 | **inlay** | inlay-bench (1).html, 2026-09-07 16:20 (print-forge seed bench); file `files/inlay-bench.html` | `6524005d7d6b82b2a8cd6c9f148fe64817425dc804d3fa54b187f182fcfbddef` | The print-forge seed bench: blank SDFs, face composer, three-slab build, rastermesh healer, orca3mf writer and the skill scripts (validate_3mf and others) | `fab-knowledge:originals/inlay/shots/i-03-shape-step-exploded.png` | `fab-knowledge:originals/inlay/RECORD.md`, repo `knowledge/designs/inlay.md` | bar |

@@ -66,8 +66,11 @@ export function faceRgba(face: ComposedFace, theme: ArtBoardTheme): RgbaImage {
   return { width: w, height: h, data };
 }
 
+/** What the painter reads of a board: the older layer board and the art document controller both fit. */
+export type DrawableBoard = Pick<ArtBoard, "view" | "raster" | "drag" | "handles"> & { frame(): { readonly w: number; readonly h: number }; selected(): object | null };
+
 /** Paint the board; `bitmap` turns RGBA into something drawImage takes. */
-export function drawArtBoard(g: Paint2D, b: ArtBoard, theme: ArtBoardTheme, bitmap: (img: RgbaImage) => unknown): void {
+export function drawArtBoard(g: Paint2D, b: DrawableBoard, theme: ArtBoardTheme, bitmap: (img: RgbaImage) => unknown): void {
   const v = b.view(), f = b.frame();
   g.setTransform(1, 0, 0, 1, 0, 0);
   g.fillStyle = theme.void;
@@ -111,7 +114,8 @@ export function drawArtBoard(g: Paint2D, b: ArtBoard, theme: ArtBoardTheme, bitm
     g.fillStyle = theme.readout;
     g.font = `15px ${theme.numberFont}`;
     if (d?.mode === "rotate") {
-      const deg = "rot" in L ? L.rot ?? 0 : "arcDeg" in L ? L.arcDeg ?? 0 : 0;
+      const at = L as { rot?: number; arcDeg?: number };
+      const deg = "rot" in at ? at.rot ?? 0 : at.arcDeg ?? 0;
       g.fillText(`${deg} deg`, hd.dot[0] + 12, hd.dot[1] + 5);
     }
     if (d?.mode === "scale") {

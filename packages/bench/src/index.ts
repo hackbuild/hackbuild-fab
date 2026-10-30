@@ -6,6 +6,7 @@
 export { BenchRefusal, createBench, mountBench, pageBench, pageOf, type BenchBuild, type BenchController, type BenchOptions, type BenchViewOptions, type BenchWriter, type CreateBenchOptions, type DraftWidget, type MountOptions, type MountedBench, type PageBuildLike } from "./bench/entry.js";
 export { useBench, type UseBench } from "./bench/use-bench.js";
 export { useShell, type BenchReport, type BenchResult, type Values } from "./stores/shell.js";
+export { default as ArtBoard } from "./art/ArtBoard.vue";
 export { default as BenchShell } from "./bench/BenchShell.vue";
 export { default as BenchView } from "./bench/BenchView.vue";
 export { default as ChaseBench } from "./bench/ChaseBench.vue";

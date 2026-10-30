@@ -6,14 +6,23 @@
 // radius. Hygiene and the art-radius clip are the recipes of M03-T05.
 
 import { commandError } from "@hackbuild/spec";
+import { renderCircuit, type CircuitLayer } from "./layers/circuit.js";
 import { drawImageLayer, type ImageLayer } from "./layers/image.js";
+import { renderLogo, type LogoLayer } from "./layers/logo.js";
 import { renderPath, type PathLayer } from "./layers/path.js";
 import { renderRing, type RingLayer } from "./layers/ring.js";
+import { renderScope, type ScopeLayer } from "./layers/scope.js";
+import { renderShape, type ShapeLayer } from "./layers/shapes.js";
 import { renderText, type TextLayer } from "./layers/text.js";
 import { quantize } from "./quantize.js";
 import type { LabelGrid, LayerResult, RasterGrid, Surface } from "./surface.js";
 
+/** COLLAR's four layer kinds, the set the art board manipulates (bench-core artboard/manip.ts). */
 export type Layer = TextLayer | RingLayer | ImageLayer | PathLayer;
+/** BAIL's four added kinds (lineage bail.bench/inlay-*). */
+export type BailLayer = ShapeLayer | ScopeLayer | CircuitLayer | LogoLayer;
+/** Every kind a face composes; the registry below holds one renderer for each. */
+export type PaintLayer = Layer | BailLayer;
 
 export interface FaceContext {
   readonly surface: Surface;
@@ -31,13 +40,18 @@ export interface ComposedFace {
   readonly holes: Uint8Array | null;
 }
 
-type Renderers = { readonly [K in Layer["kind"]]: (L: Extract<Layer, { kind: K }>, ctx: FaceContext) => LayerResult[] };
+type Renderers = { readonly [K in PaintLayer["kind"]]: (L: Extract<PaintLayer, { kind: K }>, ctx: FaceContext) => LayerResult[] };
 
 /** The layer kind registry: one renderer per kind. */
 export const LAYER_RENDERERS: Renderers = {
   text: (L, ctx) => renderText(L, ctx.surface, ctx.grid),
   ring: (L, ctx) => renderRing(L, ctx.grid),
   path: (L, ctx) => renderPath(L, ctx.surface, ctx.grid),
+  // Shape, scope and circuit paint at cell centres and never reach the surface, so they render alike in node and in the browser. A circuit's drills take the body label, FaceContext.palette.body, 0 (the host) when no palette is given.
+  shape: (L, ctx) => renderShape(L, ctx.grid),
+  scope: (L, ctx) => renderScope(L, ctx.grid),
+  circuit: (L, ctx) => renderCircuit(L, ctx.grid, ctx.palette?.body ?? 0),
+  logo: (L, ctx) => renderLogo(L, ctx.surface, ctx.grid),
   image: (L, ctx) => {
     const img = drawImageLayer(L, ctx.surface, ctx.grid, ctx.rArt);
     if (img === null) return [];
@@ -55,12 +69,12 @@ export const LAYER_RENDERERS: Renderers = {
   },
 };
 
-export function renderLayer(L: Layer, ctx: FaceContext): LayerResult[] {
-  const render = LAYER_RENDERERS[L.kind] as (l: Layer, c: FaceContext) => LayerResult[];
+export function renderLayer(L: PaintLayer, ctx: FaceContext): LayerResult[] {
+  const render = LAYER_RENDERERS[L.kind] as (l: PaintLayer, c: FaceContext) => LayerResult[];
   return render(L, ctx);
 }
 
-export function composeFace(layers: readonly Layer[], ctx: FaceContext): ComposedFace {
+export function composeFace(layers: readonly PaintLayer[], ctx: FaceContext): ComposedFace {
   const { w, h, res } = ctx.grid;
   const n = w * h;
   const out = new Uint8Array(n);

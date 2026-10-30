@@ -1,0 +1,17 @@
+{
+  "extends": "../../../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "incremental": true,
+    "composite": false,
+    "declaration": false
+  },
+  "include": [
+    "*.ts"
+  ],
+  "references": [
+    {
+      "path": "../../../packages/profile"
+    }
+  ]
+}

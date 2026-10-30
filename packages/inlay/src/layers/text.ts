@@ -34,6 +34,21 @@ export interface TextLayer {
   flip?: boolean;
   /** advance multiplier, arc mode, default 1 */
   track?: number;
+  /**
+   * Letter spacing, mm, set character by character as BAIL does (bail.html:1421
+   * to 1443): each glyph is drawn alone at its own advance plus ls and the run
+   * is centred on its width less the last ls. Absent leaves the run set whole,
+   * as COLLAR sets it, so a layer without ls renders as before.
+   */
+  ls?: number;
+  /**
+   * Arc mode: the arc is centred on (dx, dy), turned rot degrees and set on
+   * the layer's baseline, as BAIL places it (bail.html:1411 and 1416, translate
+   * and rotate before the arc, textBaseline middle). Absent leaves the arc
+   * about the origin on the alphabetic baseline and ignores dx, dy, rot and
+   * baseline, as COLLAR does.
+   */
+  anchored?: boolean;
   /** mm, straight mode */
   dx: number;
   /** mm, straight mode */
@@ -72,7 +87,7 @@ export interface TextDraw {
   readonly align: "left" | "center";
   /** arc mode: the angle A of the character's middle, radians */
   readonly angle?: number;
-  /** straight mode: the layer's baseline, absent for alphabetic */
+  /** the layer's baseline, absent for alphabetic; arc draws carry it only when the layer is anchored */
   readonly baseline?: "middle";
 }
 
@@ -96,21 +111,37 @@ export function textSlots(lines: readonly (readonly TextRun[])[]): number[] {
   return slots;
 }
 
-/** Straight mode: runs centred on dx, lines centred on dy, the block rotated rot (collar.html:1052 to 1070). */
+/**
+ * Straight mode: runs centred on dx, lines centred on dy, the block rotated
+ * rot (collar.html:1052 to 1070). With ls set each glyph is its own draw at
+ * the running advance plus ls, and a run measures the sum of its glyph
+ * advances plus ls each, less one ls, so an empty run measures -ls
+ * (bail.html:1421 to 1443, kept as BAIL has it).
+ */
 export function layoutStraight(L: TextLayer, surface: Surface): TextDraw[] {
   const lines = textLines(L);
   const font = textFont(L);
   const gapMM = L.runGap || 0;
   const lh = L.size * LINE_HEIGHT;
   const rot = (L.rot || 0) * Math.PI / 180;
+  const ls = L.ls;
+  const base = L.baseline === "middle" ? { baseline: "middle" as const } : {};
   const out: TextDraw[] = [];
   lines.forEach((runs, li) => {
-    const ws = runs.map((r) => surface.measure(r.t, font, L.size));
+    const glyphs = (s: string): number[] => [...s].map((ch) => surface.measure(ch, font, L.size));
+    const ws = runs.map((r) => (ls === undefined ? surface.measure(r.t, font, L.size) : glyphs(r.t).reduce((a, g) => a + g + ls, 0) - ls));
     const total = ws.reduce((a, b) => a + b, 0) + gapMM * (runs.length - 1);
     const yy = -(L.dy || 0) + (li - (lines.length - 1) / 2) * lh;
     let x = -total / 2;
     runs.forEach((r, ri) => {
-      if (r.t) out.push({ text: r.t, slot: r.slot, x: L.dx || 0, y: -yy, rot, along: x, align: "left", ...(L.baseline === "middle" ? { baseline: "middle" as const } : {}) });
+      if (r.t && ls === undefined) out.push({ text: r.t, slot: r.slot, x: L.dx || 0, y: -yy, rot, along: x, align: "left", ...base });
+      else if (r.t) {
+        let xx = x;
+        for (const ch of r.t) {
+          out.push({ text: ch, slot: r.slot, x: L.dx || 0, y: -yy, rot, along: xx, align: "left", ...base });
+          xx += surface.measure(ch, font, L.size) + ls!;
+        }
+      }
       x += ws[ri]! + gapMM;
     });
   });
@@ -120,8 +151,10 @@ export function layoutStraight(L: TextLayer, surface: Surface): TextDraw[] {
 /**
  * Arc mode, first line only: one entry per character, a space measured as
  * `n`, widths times track, a runGap entry with no glyph at each split.
- * Character n sits at A = A0 + sign (cur + adv / 2) / Rb, sign = flip ? 1 :
- * -1, Rb = max(1, arcR) (collar.html:1024 to 1050).
+ * Character n sits at A = A0 + sign (cur + width / 2) / Rb, sign = flip ? 1 :
+ * -1, Rb = max(1, arcR) (collar.html:1024 to 1050). With ls each glyph
+ * advances its width plus ls and the run is centred on its width less one ls;
+ * with anchored the whole arc is moved to (dx, dy) and turned rot degrees.
  */
 export function layoutArc(L: TextLayer, surface: Surface): TextDraw[] {
   if (L.arcR === undefined || L.arcDeg === undefined) {
@@ -136,27 +169,26 @@ export function layoutArc(L: TextLayer, surface: Surface): TextDraw[] {
     for (const ch of r.t) chars.push({ ch, slot: r.slot });
     if (ri < first.length - 1 && gapMM) chars.push({ ch: "", slot: r.slot, extra: gapMM });
   });
+  const ls = L.ls ?? 0;
   const widths = chars.map((c) => (c.extra ? c.extra : surface.measure(c.ch === " " ? "n" : c.ch, font, L.size) * (L.track ?? 1)));
-  const total = widths.reduce((a, b) => a + b, 0);
+  // A glyph advances its width plus ls; the run is centred on its width less the last ls (bail.html:1425 to 1428).
+  const advances = widths.map((w, n) => (chars[n]!.extra ? w : w + ls));
+  const total = advances.reduce((a, b) => a + b, 0) - ls;
   const Rb = Math.max(1, L.arcR), sign = L.flip ? 1 : -1, A0 = L.arcDeg * Math.PI / 180;
+  const turn = L.anchored ? (L.rot || 0) * Math.PI / 180 : 0, ca = Math.cos(turn), sa = Math.sin(turn);
+  const base = L.anchored && L.baseline === "middle" ? { baseline: "middle" as const } : {};
   let cur = -total / 2;
   const out: TextDraw[] = [];
   chars.forEach((c, n) => {
-    const adv = widths[n]!;
+    const w = widths[n]!;
     if (c.ch && c.ch !== " ") {
-      const A = A0 + sign * ((cur + adv / 2) / Rb);
-      out.push({
-        text: c.ch,
-        slot: c.slot,
-        x: Rb * Math.cos(A),
-        y: Rb * Math.sin(A),
-        rot: L.flip ? Math.PI / 2 + A : A - Math.PI / 2,
-        along: 0,
-        align: "center",
-        angle: A,
-      });
+      const A = A0 + sign * ((cur + w / 2) / Rb);
+      const x = Rb * Math.cos(A), y = Rb * Math.sin(A), rot = L.flip ? Math.PI / 2 + A : A - Math.PI / 2;
+      out.push(L.anchored
+        ? { text: c.ch, slot: c.slot, x: (L.dx || 0) + ca * x - sa * y, y: (L.dy || 0) + sa * x + ca * y, rot: rot + turn, along: 0, align: "center", angle: A, ...base }
+        : { text: c.ch, slot: c.slot, x, y, rot, along: 0, align: "center", angle: A });
     }
-    cur += adv;
+    cur += advances[n]!;
   });
   return out;
 }

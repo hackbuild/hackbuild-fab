@@ -4,6 +4,7 @@
 
 import type { InjectionKey, Ref } from "vue";
 import type { Metric, ParamEnvelope, ParamField, ParamPointer } from "@hackbuild/spec";
+import type { ArtDocController } from "@hackbuild/bench-core";
 import { bandOf, legalLine, type Band } from "./model.js";
 
 export type CommitKind = "touch" | "commit" | "light";
@@ -17,6 +18,10 @@ export interface RailContext {
 }
 
 export const RAIL: InjectionKey<RailContext> = Symbol("hbf-rail");
+
+/** The art controller of an `art` param by field id (bench-core ChaseBinding.art); a row without one makes its own from its value. */
+export type ArtHost = (id: string) => ArtDocController | null;
+export const ART_HOST: InjectionKey<ArtHost> = Symbol("hbf-art-host");
 
 /** How a settled edit commits: the field's declared commit, else a rebuild. */
 export const settleKind = (f: ParamField): CommitKind => f.commit ?? "commit";

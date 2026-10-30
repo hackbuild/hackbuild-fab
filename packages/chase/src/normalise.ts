@@ -13,7 +13,7 @@
 // non-finite, or under a key the chase does not declare (__proto__
 // included).
 
-import type { BuildWarning, Chase, ParamField } from "@hackbuild/spec";
+import { artDocumentIssues, type BuildWarning, type Chase, type ParamField } from "@hackbuild/spec";
 import { isNumeric, seg } from "./schema.js";
 
 export interface NormaliseReport {
@@ -46,7 +46,10 @@ function scalar(f: ParamField, v: unknown, p: string, rep: NormaliseReport): unk
     case "slot": return keep(typeof v === "number" && Number.isInteger(v) && v >= 1, f.default);
     case "art": {
       const ok = v === null || (isPlain(v) && typeof v["uri"] === "string" && typeof v["kind"] === "string" && (f.accepts as readonly string[]).includes(v["kind"]));
-      return ok ? (v === null ? null : { uri: (v as Obj)["uri"], kind: (v as Obj)["kind"] }) : keep(false, null);
+      if (!ok) return keep(false, null);
+      if (v === null) return null;
+      const doc = (v as Obj)["doc"];
+      return { uri: (v as Obj)["uri"], kind: (v as Obj)["kind"], ...(doc !== undefined && artDocumentIssues(doc).length === 0 ? { doc } : {}) };
     }
   }
   return undefined;
