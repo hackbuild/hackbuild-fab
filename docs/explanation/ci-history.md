@@ -6,9 +6,20 @@ latest run only; the runs and the local evidence behind it stay here.
 
 ## Runs on main
 
+- Run 41016217627 on ecd38a8, 2026-10-30 06:48 UTC: 17 of 19 jobs
+  passed, owner-files was skipped, and browser failed on one gold row,
+  access-switch G-15, which waits on an owner decision. The smoke suite
+  passed on Chromium, Firefox and WebKit; the hosted runner has no GL
+  driver for Firefox or WebKit, so their 3D stage is reported not run
+  (measured, from `gh run view`). It is the latest run.
+- Runs on 9c10ce5, 6bd8b48, ffd3d6a, 13638ad, 4ed8eb1 and a0bd6c5,
+  2026-10-29 and 2026-10-30, failed: the keys reference goldens after a
+  file move, npm ci with no project building spec, the access-switch
+  G-15 gold row, then the new firefox and webkit projects (measured,
+  from `gh run list`).
 - Run 38667622976 on 13856c3, 2026-10-15 01:48 UTC: 26 jobs passed and
-  owner-files was skipped (measured, from `gh run view`). It is the
-  latest run and the first green one.
+  owner-files was skipped (measured, from `gh run view`). It was the
+  first green run.
 - Run 38643946246 on 2026-10-14 21:55 UTC and run 38542405799 on
   2026-10-14 09:26 UTC failed; run 38513976956 on 2026-10-14 04:56 UTC
   failed (measured, from `gh run list`). Their failing jobs are not

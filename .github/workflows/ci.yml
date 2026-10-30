@@ -323,14 +323,17 @@ jobs:
           node tools/legacy/collar-dump.mjs "$RUNNER_TEMP/collar.json"
           node -e 'const a=require("./tools/corpus/collar/legacy-defaults.json"),b=require(process.argv[1]);const k=(d)=>JSON.stringify([d.labelsSha256,d.rows.map((r)=>[r.parts,r.heal,r.perFilament])]);if(k(a)!==k(b)){console.error("legacy dump differs from tools/corpus/collar/legacy-defaults.json");process.exit(1)}' "$RUNNER_TEMP/collar.json"
       - run: npx vitest run tools/parity $(node .github/scripts/owner-files.mjs excludes)
-      - name: every reference against its goldens, query goldens included (M01-T11), surface chases too (M05-T14, M05-T15)
+      - name: every reference and every design with goldens against its goldens, query goldens included (M01-T11), surface chases too (M05-T14, M05-T15)
         if: ${{ !cancelled() }}
-        # every reference runs; each failure is printed and the step fails after the loop
+        # every reference runs, and every design that keeps expected/build.json
+        # (a comment edit in designs/pip/chase.ts moved its defHash unseen while
+        # only references ran); each failure is printed and the step fails after the loop
         run: |
           status=0
           failed=""
-          for d in reference/*/*/; do
+          for d in reference/*/*/ designs/*/; do
             test -f "${d}chase.ts" || test -f "${d}chase.surface.ts" || continue
+            case "$d" in designs/*) test -f "${d}expected/build.json" || continue ;; esac
             if ! npx --no-install hbf parity "${d%/}"; then
               echo "parity failed: ${d%/}"
               failed="$failed ${d%/}"

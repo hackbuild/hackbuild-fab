@@ -50,9 +50,11 @@ test("exit-a tests and validates the file the gated export writes", async () => 
   assert.ok(!/out\/flex-pair\.3mf/.test(steps), "no step names out/flex-pair.3mf");
 });
 
-test("the parity reference loop runs every reference before it fails", () => {
+test("the parity loop runs every reference and every design with goldens before it fails", () => {
   const loop = runs("parity").find((r) => r.includes("for d in reference/*/*/"));
   assert.ok(loop, "parity runs the reference loop");
+  assert.match(loop, /for d in reference\/\*\/\*\/ designs\/\*\/;/, "the loop covers designs too");
+  assert.ok(loop.includes('designs/*) test -f "${d}expected/build.json" || continue'), "a design runs only when it keeps goldens");
   const body = loop.slice(loop.indexOf("for d in"), loop.indexOf("done"));
   assert.ok(!/\bexit\b/.test(body), "no exit inside the loop");
   assert.match(loop, /exit \$status\s*$/);

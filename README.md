@@ -17,20 +17,20 @@ yours.
 
 ## Status
 
-Work in progress, no release. The release 1 queue is built
-(2026-10-21); owner proof is open, and no part this code
-exported has been printed. The latest CI run is
-run 38667622976 on 13856c3, 2026-10-15 01:48 UTC: 26 jobs passed
-and 1 was skipped (measured, from `gh run view`). Commits after 13856c3
-have not run on a hosted runner.
+Work in progress, no release. Owner proof is open: no part this code
+exported has been printed, and profile values stay inferred until a
+person enters coupon results. The latest CI run is run 41016217627 on
+ecd38a8 (2026-10-30): 17 of 19 jobs passed; browser failed on one gold
+row, access-switch G-15, which waits on an owner decision (measured).
 
 The flex-pair bench builds, checks and exports 3mf, stl and card in the
-page from file://, and its 3mf bytes equal the `hbf` writer's for the
-same values (D-264). Known red locally:
-`reference/electrical/pip-buried-route` parity (D-251). The CI history
-and the verified block are in
-[docs/explanation/ci-history.md](docs/explanation/ci-history.md); what
-changed per milestone is in [CHANGELOG.md](CHANGELOG.md).
+page from file:// (D-264). The bench pieces are becoming libraries
+(`@hackbuild/spec`, `viewer`, `bench-core`, `bench`) built as npm ESM,
+CDN ESM and an IIFE; a CDN page and a Vue app mount TOGGLE from the
+staged packages, and the bakes open from file:// in Chromium, Firefox
+and WebKit. Nothing is published (D-037). CI history and the verified
+block: [docs/explanation/ci-history.md](docs/explanation/ci-history.md);
+changes per milestone: [CHANGELOG.md](CHANGELOG.md).
 
 ## Install
 
