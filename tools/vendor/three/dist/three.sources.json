@@ -1,0 +1,15 @@
+{
+ "iife": "three.js",
+ "sha256": "498c016c8acd919ec830e29445fdf2097b708f303c3aa6f525e20b9f43671f46",
+ "reads": [],
+ "own": {
+  "tools/vendor/three/entry.js": "dacf2a9b8269a4e2d45303ba5ec735b4b1b5cbb2e985e0ade0ef59055ec48c02"
+ },
+ "packages": [
+  {
+   "name": "three",
+   "version": "0.186.1",
+   "root": "node_modules/three"
+  }
+ ]
+}

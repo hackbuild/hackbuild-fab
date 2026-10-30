@@ -1,0 +1,198 @@
+/* Bench shell layout glue (M09-T07). Only what hackbuild-ui 0.3.0 lacks:
+   the per-kind region grids, the PIP mobile rules (bench/part1.html lines
+   124 to 125: rail 290 under 820; under 640 the main area stacks and the
+   rail takes 46 percent with a 3 px top border), the stage strip on the
+   void, the status chips and the rail band. Tokens only; the fixed widths
+   mirror hackbuild-ui's own .hb-prow columns and the kind table of D-126.
+   Each rule here is a candidate for the next hackbuild-ui release. */
+
+/* Bench layer tokens: the one place this file holds a px figure. Each is
+   a candidate for the hackbuild-ui 0.3.0 bench layer (D-116); the rules
+   below read only tokens. Widths are the D-126 single-kind columns, PIP's
+   rail under 820 and pad caps (bench/part1.html lines 124 to 140), and
+   hackbuild-ui's own .hb-prow columns (96 px label, 64 px number). */
+:root{
+  --hbf-rail-design:330px; --hbf-rail-readouts:300px; --hbf-rail-narrow:290px;
+  --hbf-prow-label:96px; --hbf-prow-num:64px; --hbf-prow-reset:22px;
+  --hbf-prow-label-narrow:72px; --hbf-prow-num-narrow:56px;
+  --hbf-pad-max:340px; --hbf-pad-keys:300px; --hbf-pad-keys-narrow:220px; --hbf-pad-read-min:18px;
+  --hbf-touch:44px; --hbf-hair:1px; --hbf-knob-half:7px;
+  --hbf-fs-label:10px; --hbf-fs-note:13px; --hbf-fs-read:15px; --hbf-fs-busy:16px; --hbf-fs-head:17px; --hbf-fs-derived:18px;
+}
+
+.hbf-bench.hb-app{ height:100vh; height:100dvh; overflow:hidden }
+.hbf-bench.hb-app > .hb-work{ grid-template-columns:minmax(0,1fr) var(--hb-rail); overflow:hidden; min-height:0 }
+.hbf-bench.hb-app .hb-main{ overflow:hidden }
+.hbf-bench.hb-app .hb-rail{ overflow:auto; background:var(--hb-paper); border-left:var(--hb-border-hd) solid var(--hb-ink); padding-left:var(--hb-s2) }
+.hbf-bench .hbf-composer,.hbf-bench .hbf-single{ flex:1 1 auto; min-height:0; display:grid; padding:0 var(--hb-s2) var(--hb-s2) 0 }
+.hbf-bench .hbf-composer{ grid-template-columns:minmax(0,1fr) }
+.hbf-bench .hbf-single{ grid-template-columns:var(--hbf-rail-design) minmax(0,1fr); gap:var(--hb-s4) }
+.hbf-bench .hbf-single.is-stage-only{ grid-template-columns:minmax(0,1fr) }
+.hbf-layout-single3.hb-app > .hb-work{ grid-template-columns:minmax(0,1fr) var(--hbf-rail-readouts) }
+.hbf-layout-single2.hb-app > .hb-work{ grid-template-columns:minmax(0,1fr) }
+.hbf-bench.is-no-readouts.hb-app > .hb-work{ grid-template-columns:minmax(0,1fr) }
+.hbf-rail-left{ min-width:0; overflow:auto; background:var(--hb-paper-sunk); border:var(--hb-border) solid var(--hb-ink); padding:var(--hb-s2) }
+.hbf-pane{ display:flex; flex-direction:column; gap:var(--hb-s4) }
+
+.hbf-stage.hb-stage{ min-height:0; height:100%; margin:0; container-type:inline-size }
+/* A narrow stage keeps the cams strip clear of the legend at the top right. */
+@container (max-width:600px){ .hbf-stage .hb-ov-tl{ max-width:55% } }
+.hbf-viewer-host,.hbf-viewer-host > *{ position:absolute; inset:0; display:block }
+.hbf-viewer-host > hb-viewer{ width:100%; height:100%; aspect-ratio:auto }
+
+/* The cams and modes strip: one wrapping strip, top left. */
+.hbf-camstrip{ display:flex; flex-wrap:wrap; gap:var(--hb-s1); max-width:calc(100% - var(--hb-s4) - var(--hb-s1)) }
+.hbf-cam{
+  font-family:var(--hb-utility); font-size:var(--hbf-fs-label); text-transform:uppercase; letter-spacing:.1em;
+  color:var(--hb-lit-label); background:transparent; border:var(--hbf-hair) solid var(--hb-ink-border);
+  padding:var(--hb-s1) var(--hb-s2); cursor:pointer;
+}
+.hbf-cam-select{ flex:0 0 auto; width:auto; font-size:var(--hbf-fs-label); text-transform:uppercase }
+.hbf-cam[aria-pressed="true"]{ color:var(--hb-paper); border-color:var(--hb-paper) }
+.hbf-cam:focus-visible{ outline:var(--hb-border) solid var(--hb-paper); outline-offset:var(--hbf-hair) }
+.hbf-busy{ font-family:var(--hb-readout); font-size:var(--hbf-fs-busy); color:var(--hb-paper); display:inline-flex; gap:var(--hb-s2); align-items:center }
+
+/* The drive pad, bottom left on the void (PIP bench/part1.html lines 132
+   to 140). Held keys fill with paper, never pink: the stage keeps the one
+   pink focus. Keys cap at 300 px, 220 under 640, as PIP did. */
+.hbf-pad{
+  background:color-mix(in srgb, var(--hb-void) 86%, transparent); border:var(--hb-border) solid var(--hb-ink-border);
+  padding:var(--hb-s1) var(--hb-s2); color:var(--hb-paper); font-family:var(--hb-readout); font-size:var(--hbf-fs-read); line-height:1.15;
+  user-select:none; -webkit-user-select:none; touch-action:none; max-width:min(var(--hbf-pad-max), calc(100cqw - 2 * var(--hb-s3)))
+}
+.hbf-pad-t{ display:flex; justify-content:space-between; gap:var(--hb-s3); margin-bottom:var(--hb-s1); color:var(--hb-lit-label) }
+.hbf-pad-keys{ display:flex; flex-wrap:wrap; gap:var(--hb-s1); max-width:var(--hbf-pad-keys) }
+.hbf-pad-key{
+  font-family:var(--hb-readout); font-size:var(--hbf-fs-read); letter-spacing:0; text-transform:none; color:var(--hb-paper);
+  background:transparent; border:var(--hbf-hair) solid var(--hb-ink-border); padding:calc(var(--hb-s1) / 4) var(--hb-s2); cursor:pointer; touch-action:none
+}
+.hbf-pad-key.is-on{ background:var(--hb-paper); border-color:var(--hb-paper); color:var(--hb-ink) }
+.hbf-pad-key:focus-visible{ outline:var(--hb-border) solid var(--hb-paper); outline-offset:var(--hbf-hair) }
+.hbf-pad-read{ color:var(--hb-slime); min-height:var(--hbf-pad-read-min); max-width:var(--hbf-pad-max); display:flex; flex-direction:column; overflow-wrap:anywhere }
+/* Under 640 the pad title sits beside the keys and the readout spans
+   below in the note size, so the pad holds at most a quarter of the stage
+   with 44 px keys (G-52): at the read size the idle line of four pins
+   wraps to two lines and the pad takes 0.31 of a 382 x 263 px stage
+   (measured, keys midi-pad). */
+@media(max-width:640px){
+  .hbf-pad{ display:grid; grid-template-columns:auto minmax(0,1fr); column-gap:var(--hb-s2); align-items:center }
+  .hbf-pad-t{ margin-bottom:0 }
+  .hbf-pad-read{ grid-column:1 / -1; font-size:var(--hbf-fs-note) }
+  .hbf-pad-keys{ max-width:var(--hbf-pad-keys-narrow) }
+  .hbf-pad [data-hb="drive-mode"]{ display:none }
+}
+/* Touch targets (G-52, G-54): drive keys and the log toggle take 44 px
+   under 640 or on a coarse pointer. */
+@media(pointer:coarse),(max-width:640px){
+  .hbf-pad-key,.hbf-log-toggle{ min-height:var(--hbf-touch); min-width:var(--hbf-touch) }
+}
+/* D-630: at 390 a pad with more than four keys cannot hold a quarter of
+   the 382 x 285 px stage with 44 px keys (computed, PIP's ten), so the
+   shell docks it in a row below the stage at full width. */
+.hbf-composer.is-pad-docked,.hbf-single.is-pad-docked{ grid-template-rows:minmax(0,1fr) auto }
+.hbf-pad-dock{ grid-column:1 / -1; min-width:0; background:var(--hb-void) }
+.hbf-pad-dock .hbf-pad{ max-width:none; border-top:0 }
+.hbf-pad-dock .hbf-pad-keys{ max-width:none }
+
+/* Status strip: readouts left, worded chips right; good chips slime. */
+.hbf-bench .hb-statusbar{ flex-wrap:wrap }
+.hbf-status-chips{ margin-left:auto; display:flex; flex-wrap:wrap; gap:var(--hb-s2); align-items:center }
+.hbf-chip{ font-family:var(--hb-readout); font-size:var(--hbf-fs-read); padding:0 var(--hb-s2); border:var(--hbf-hair) solid currentColor }
+.hbf-chip.is-good{ color:var(--hb-slime) }
+.hbf-chip.is-bad{ color:var(--hb-lit-warn) }
+.hbf-log-toggle{ background:transparent; color:var(--hb-lit-label); cursor:pointer; font-family:var(--hb-readout) }
+.hbf-log-toggle[aria-expanded="true"]{ color:var(--hb-paper) }
+.hbf-log-drawer{
+  position:fixed; right:var(--hb-s2); bottom:calc(var(--hb-s7) + var(--hb-s2)); z-index:var(--hb-z-drawer);
+  width:min(var(--hbf-rail-readouts), calc(100vw - 2 * var(--hb-s2))); box-shadow:var(--hb-shadow-lg)
+}
+.hbf-status-err{ color:var(--hb-lit-err); overflow-wrap:anywhere }
+/* D-643: the refused build line under the guide; the model drawn is the last good one. */
+.hbf-refused{ margin:0; padding:var(--hb-s1) var(--hb-s2); font-family:var(--hb-utility); font-size:var(--hbf-fs-label); color:var(--hb-lit-err); overflow-wrap:anywhere }
+.hbf-scope{ font-family:var(--hb-utility); font-size:var(--hbf-fs-label); text-transform:uppercase; letter-spacing:.1em; color:var(--hb-lit-label) }
+
+/* Welcome step-grid numbers and fit values are ink (UI.md section 10: a
+   number is pink only when it is the view's focal value); hackbuild-ui
+   0.3.0 colours both pink. */
+.hb-welcome-steps b,.hbf-fit-value{ color:var(--hb-ink) }
+
+/* Rail rows. */
+.hbf-row{ position:relative }
+/* The art board in a rail row: the label above, then face chips, the void canvas, the add row, the layer list and the selected layer's fields. */
+.hbf-art-row{ display:flex; flex-direction:column; gap:var(--hb-s1); min-width:0 }
+.hbf-art{ display:flex; flex-direction:column; gap:var(--hb-s2); min-width:0 }
+.hbf-art-bar,.hbf-art-add{ display:flex; flex-wrap:wrap; gap:var(--hb-s1) }
+.hbf-art-canvas{ display:block; width:100%; max-width:100%; background:var(--hb-void); border:var(--hbf-hair) solid var(--hb-ink); touch-action:none; cursor:default }
+.hbf-art-canvas:focus-visible{ outline:var(--hb-border) solid var(--hb-ink); outline-offset:var(--hbf-hair) }
+.hbf-art-fit{ min-width:0; container-type:size }
+.hbf-art.is-all .hbf-art-fit{ container-type:normal }
+.hbf-art-stage{ position:absolute; inset:0; background:var(--hb-void); z-index:1; display:flex; min-width:0; min-height:0 }
+.hbf-art-stage .hbf-art{ flex:1 1 auto; padding:var(--hb-s7) var(--hb-s3) var(--hb-s3); min-height:0; gap:var(--hb-s2) }
+.hbf-art-stage .hbf-art-bar{ justify-content:center }
+.hbf-art-stage .hbf-art-fit{ flex:1 1 auto; min-height:0; display:flex; align-items:center; justify-content:center }
+.hbf-art-stage .hbf-art-canvas{ width:min(100cqw,calc(100cqh * var(--hbf-art-ar))); height:auto; max-width:none }
+.hbf-art-note,.hbf-art-empty{ margin:0; font-size:var(--hbf-fs-note); overflow-wrap:anywhere }
+.hbf-art-layers{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:var(--hb-s1) }
+.hbf-art-layers li{ display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:var(--hb-s1); border:var(--hbf-hair) solid var(--hb-ink-border); padding:var(--hb-s1) }
+.hbf-art-layers li.is-mute .hbf-art-pick{ opacity:.55 }
+.hbf-art-acts{ display:flex; flex-wrap:wrap; gap:var(--hb-s1) }
+.hbf-art-props{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:var(--hb-s1) var(--hb-s2) }
+.hbf-art-prop{ display:flex; flex-direction:column; gap:var(--hb-s1); min-width:0 }
+.hbf-art-label{ font-family:var(--hb-utility); font-size:var(--hbf-fs-label); text-transform:uppercase; letter-spacing:.1em }
+.hbf-art-prop input,.hbf-art-prop select{ min-width:0; width:100% }
+.hbf-chips{ flex:1 1 0; min-width:0; display:flex; flex-wrap:wrap; gap:var(--hb-s1) }
+.hbf-band{ position:relative; height:var(--hb-border-hd); margin:0 calc(var(--hbf-prow-num) + var(--hbf-prow-reset) + 2 * var(--hb-s2)) var(--hb-s1) calc(var(--hbf-prow-label) + var(--hb-s2)) }
+.hbf-band::after{
+  content:""; position:absolute; top:0; bottom:0; background:var(--hb-slime);
+  left:calc(var(--hbf-band-from) * 100%); width:calc((var(--hbf-band-to) - var(--hbf-band-from)) * 100%);
+}
+.hbf-band.is-unsat::after{ background:var(--hb-err); left:0; width:100% }
+.hbf-list{ display:flex; flex-direction:column; gap:var(--hb-s2) }
+.hbf-inst{ border-top:var(--hbf-hair) dashed var(--hb-ink-4); padding-top:var(--hb-s2) }
+.hbf-inst:first-child{ border-top:0; padding-top:0 }
+.hbf-inst-head{ display:flex; align-items:center; justify-content:space-between; font-family:var(--hb-readout); font-size:var(--hbf-fs-head); text-transform:uppercase; color:var(--hb-pink-deep) }
+.hbf-derived{ font-family:var(--hb-readout); font-size:var(--hbf-fs-derived); color:var(--hb-ink) }
+.hbf-derived.is-over{ color:var(--hb-err) }
+.hbf-q,.hbf-word{ font-family:var(--hb-utility); font-size:var(--hbf-fs-label); color:var(--hb-ink-3); margin-left:var(--hb-s1) }
+.hbf-note{ font-family:var(--hb-body); font-size:var(--hbf-fs-note); color:var(--hb-ink-2); margin:var(--hb-s2) 0 0 }
+.hbf-readouts{ border-top:var(--hbf-hair) solid var(--hb-ink-4); margin-top:var(--hb-s2); padding-top:var(--hb-s1) }
+
+@media(max-width:900px){
+  .hbf-bench.hb-app{ height:100vh; height:100dvh; overflow:hidden }
+  .hbf-bench.hb-app > .hb-work{ grid-template-columns:minmax(0,1fr) var(--hb-rail); overflow:hidden }
+  .hbf-bench.hb-app .hb-main{ overflow:hidden }
+  .hbf-bench.hb-app .hb-rail{ overflow:auto }
+}
+@media(max-width:820px){
+  .hbf-bench.hb-app{ --hb-rail:var(--hbf-rail-narrow) }
+  /* hackbuild-ui's 96 px label and 64 px number wrap a row in a 290 px rail. */
+  .hbf-bench .hb-rail .hb-prow-label{ flex-basis:var(--hbf-prow-label-narrow) }
+  .hbf-bench .hb-rail .hb-prow-num.hb-input{ width:var(--hbf-prow-num-narrow) }
+}
+@media(max-width:640px){
+  /* The legend moves to the status strip under 640, so the strip may span the stage. */
+  .hbf-bench .hbf-stage .hb-ov-tl{ max-width:none }
+  .hbf-bench.hb-app > .hb-work{ grid-template-columns:minmax(0,1fr); grid-template-rows:minmax(0,1fr) 46%; padding:0; gap:0 }
+  .hbf-bench.hb-app .hb-rail{ border-left:0; border-top:var(--hb-border-hd) solid var(--hb-ink); padding:var(--hb-s2) }
+  .hbf-bench .hbf-stage.hb-stage{ box-shadow:none }
+}
+@media(pointer:coarse),(max-width:640px){
+  .hbf-cam{ min-height:var(--hbf-touch); min-width:var(--hbf-touch) }
+  /* 44 px touch targets at 390 (UI.md section 11, G-54): hackbuild-ui 0.3.0
+     sizes steps, row numbers, small buttons, chips and selects to 27 to
+     39 px (measured). */
+  .hbf-bench .hb-steps .hb-tab,.hbf-bench .hb-prow-num,.hbf-bench .hb-btn,.hbf-bench .hb-chip,.hbf-bench .hb-select{ min-height:var(--hbf-touch); min-width:var(--hbf-touch) }
+  /* The bool switch is 42 x 22 px (measured, the PIP group on rows); it
+     grows to the touch floor and its 14 px knob (hackbuild-ui 0.3.0)
+     rides the middle. */
+  .hbf-bench .hb-switch{ min-height:var(--hbf-touch); min-width:var(--hbf-touch) }
+  .hbf-bench .hb-switch::after{ top:calc(50% - var(--hbf-knob-half)) }
+}
+@media(prefers-reduced-motion:reduce){
+  .hbf-bench *{ transition:none; animation:none }
+}
+
+/* The draft banner (R1-engine-24): an ink chip with paper text, first in
+   the status strip, so a draft never reads as an adopted design. */
+.hbf-draft{ font-family:var(--hb-utility); font-size:var(--hbf-fs-label); text-transform:uppercase; letter-spacing:.1em; background:var(--hb-ink); color:var(--hb-paper); padding:0 var(--hb-s2); border:var(--hbf-hair) solid var(--hb-paper) }
+.hbf-draft-widget{ font-family:var(--hb-readout); font-size:var(--hbf-fs-read); color:var(--hb-paper) }

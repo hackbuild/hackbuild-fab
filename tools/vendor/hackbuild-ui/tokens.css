@@ -1,0 +1,118 @@
+/* ==========================================================================
+   hack.build design tokens
+   Version 1.3
+
+   The single source of truth for every value in the system. The class layer
+   in hackbuild.css and the Tailwind bridge in tailwind.css both read from
+   here. If a value in any other file disagrees with this one, this one wins.
+
+   The favicon values are the record. Older files carrying #ff3366, #ff2d7b,
+   #E91E8C or #f5f2eb are wrong and should be corrected wherever found.
+   ========================================================================== */
+
+:root{
+  /* ---- surface ---------------------------------------------------------- */
+  --hb-paper:        #f5f0e6;   /* page background, the default surface */
+  --hb-paper-raised: #fffdf7;   /* cards and panels that sit above the page */
+  --hb-paper-sunk:   #efe9db;   /* wells, inset panels, table stripes */
+  --hb-paper-edge:   #e8e0d0;   /* code blocks, disabled fills */
+
+  /* ---- ink -------------------------------------------------------------- */
+  --hb-ink:       #1a1a1a;      /* text, borders, dark panels, silkscreen black */
+  --hb-ink-2:     #444444;      /* secondary text */
+  --hb-ink-3:     #6b6459;      /* labels, captions, muted copy */
+  --hb-ink-4:     #9a9184;      /* placeholders, disabled text */
+  --hb-void:      #0a0a0a;      /* deepest background: canvases, scopes, consoles */
+
+  /* ---- the one accent --------------------------------------------------- */
+  --hb-pink:      #FE0386;      /* favicon value. This is the only correct pink. */
+  --hb-pink-deep: #c70269;      /* pressed and hover on pink fills */
+  --hb-pink-10:   rgba(254,3,134,.10);
+  --hb-pink-18:   rgba(254,3,134,.18);
+
+  /* ---- signal colors. Data only, never chrome. -------------------------- */
+  --hb-ok:    #1f9d55;
+  --hb-warn:  #c77700;
+  --hb-err:   #c3251f;
+  --hb-info:  #2b6cb0;
+
+  /* ---- the plate palette. Identity colors for media plates, avatars and
+     category coding, the way the magazine and resume cards use them.
+     Solid fills behind a paper icon or marker initials. Never chrome,
+     never text, never a page background. ---------------------------------- */
+  --hb-plate-teal:   #14b8a6;
+  --hb-plate-purple: #8b5cf6;
+  --hb-plate-blue:   #3b82f6;
+  --hb-plate-amber:  #f59e0b;
+  --hb-plate-green:  #22c55e;
+
+  /* ---- the lit set. On-void replacements for the signal colors. --------- */
+  --hb-slime:    #a6e22e;               /* on-void ok, meter fill below threshold */
+  --hb-lit-warn: #ffb020;
+  --hb-lit-err:  #ff5c4d;
+  --hb-lit-info: #58a6ff;
+  --hb-lit-dim:  rgba(245,240,230,.35); /* ghost paths, graticules, axes */
+
+  /* ---- on-ink lines. Dividers and frames drawn on ink bars and the void,
+     where the ink and void ladder has no step. -------------------------- */
+  --hb-ink-line:   #33312c;     /* hairline divider on ink */
+  --hb-ink-inset:  #2a2822;     /* inset well on ink */
+  --hb-ink-border: #44413a;     /* frame around a control on ink or void */
+  /* Solid label on the void. --hb-lit-dim is translucent and reads 2.90:1
+     on void (computed), which fails AA for small labels that carry meaning. */
+  --hb-lit-label:  #9a9184;
+
+  /* ---- stage part palette. Data on the void for mechanism and assembly
+     views, one color per part role. Never chrome. ------------------------ */
+  --hb-part-a: var(--hb-pink);      /* row train, primary moving part */
+  --hb-part-b: var(--hb-slime);     /* column train, secondary */
+  --hb-part-c: var(--hb-lit-warn);  /* links, couplings */
+  --hb-part-d: #f5f0e6;             /* rods, pivots, pins */
+  --hb-part-e: #6b6459;             /* decks, plates */
+  --hb-part-f: #4a463c;             /* frame, case */
+
+  /* ---- board render. Copper, solder mask and silkscreen on a PCB or a
+     printed circuit view. Data only. ------------------------------------- */
+  --hb-gold: #d9b45a;           /* copper and ENIG */
+  --hb-mask: #FE0386;           /* solder mask */
+  --hb-silk: #ffffff;           /* silkscreen */
+
+  /* ---- type. Four faces, four jobs. ------------------------------------- */
+  --hb-display:  'Permanent Marker', cursive;                 /* headlines only */
+  --hb-body:     'Special Elite', 'Courier New', monospace;   /* prose */
+  --hb-utility:  'IBM Plex Mono', ui-monospace, monospace;    /* labels, UI, wordmark */
+  --hb-readout:  'VT323', ui-monospace, monospace;            /* numbers, console */
+  --hb-tagline:  'Libre Baskerville', Georgia, serif;         /* the tagline only */
+
+  /* ---- structure -------------------------------------------------------- */
+  --hb-border:    2px;
+  --hb-border-hd: 3px;          /* header rule, active tab, emphasis */
+  --hb-shadow:    3px 3px 0 var(--hb-ink);
+  --hb-shadow-lg: 5px 5px 0 var(--hb-ink);
+  --hb-shadow-xl: 7px 7px 0 var(--hb-ink);
+  --hb-shadow-pink: 5px 5px 0 var(--hb-pink);
+
+  /* ---- spacing. 4 px base. ---------------------------------------------- */
+  --hb-s1: 4px;  --hb-s2: 8px;  --hb-s3: 12px; --hb-s4: 16px;
+  --hb-s5: 24px; --hb-s6: 32px; --hb-s7: 48px; --hb-s8: 64px;
+
+  /* ---- motion. Short and mechanical. Nothing eases for long. ------------ */
+  --hb-t-fast: .06s;            /* press, release */
+  --hb-t:      .12s;            /* hover fills, chips */
+  --hb-t-slow: .25s;            /* drawers, modals, toasts */
+
+  /* ---- stacking --------------------------------------------------------- */
+  --hb-z-dropdown: 100;
+  --hb-z-sticky:   200;
+  --hb-z-drawer:   700;
+  --hb-z-modal:    900;
+  --hb-z-toast:    1000;
+  --hb-z-grain:    9999;        /* the one fixed texture overlay */
+
+  /* ---- layout ----------------------------------------------------------- */
+  --hb-measure: 68ch;           /* prose line length ceiling */
+  --hb-narrow:  860px;          /* docs and article shells */
+  --hb-wide:    1180px;         /* app and page shell width */
+  --hb-rail:    336px;          /* bench rail beside the stage */
+  --hb-tray:    210px;          /* bench tray under the stage */
+}
