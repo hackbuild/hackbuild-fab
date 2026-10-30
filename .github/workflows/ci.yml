@@ -102,6 +102,12 @@ jobs:
       - name: "packages: library outputs, publint, attw, size budget"
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: npm run build:lib && npm run lint:packages
+      - name: "packages: staged tarballs install, import, typecheck and bundle (needs network)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: npm run pack:lib && npm run test:pack
+      - name: "packages: design bundles load in a node vm and hash to expected/build.json"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: npm run test:design
       - name: "tiers: import edges"
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: node tools/tiers.mjs

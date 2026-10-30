@@ -3,10 +3,11 @@
 // build (vite.config.ts) bundles this file to dist/index.js; tsc -b leaves
 // it out, since tsc cannot compile the single-file components it names.
 
-export { BenchRefusal, createBench, mountBench, pageBench, pageOf, type BenchBuild, type BenchController, type BenchOptions, type BenchWriter, type CreateBenchOptions, type DraftWidget, type MountOptions, type MountedBench, type PageBuildLike } from "./bench/entry.js";
+export { BenchRefusal, createBench, mountBench, pageBench, pageOf, type BenchBuild, type BenchController, type BenchOptions, type BenchViewOptions, type BenchWriter, type CreateBenchOptions, type DraftWidget, type MountOptions, type MountedBench, type PageBuildLike } from "./bench/entry.js";
 export { useBench, type UseBench } from "./bench/use-bench.js";
 export { useShell, type BenchReport, type BenchResult, type Values } from "./stores/shell.js";
 export { default as BenchShell } from "./bench/BenchShell.vue";
+export { default as BenchView } from "./bench/BenchView.vue";
 export { default as ChaseBench } from "./bench/ChaseBench.vue";
 export { default as ChecksPanel } from "./panels/ChecksPanel.vue";
 export { default as CurvePanel } from "./panels/CurvePanel.vue";

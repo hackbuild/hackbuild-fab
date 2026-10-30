@@ -27,7 +27,11 @@
     "check": "npm run lint && node tools/lint-authors.mjs && npm run typecheck && npm test && npm run tiers && npm run derived",
     "bake:all": "tsc -b && node tools/bake/bake.mjs --all",
     "build:lib": "node tools/build-lib.mjs",
-    "lint:packages": "node tools/lint-packages.mjs"
+    "lint:packages": "node tools/lint-packages.mjs",
+    "pack:lib": "node tools/publish/pack-lib.mjs",
+    "test:pack": "node --test tools/publish/pack.test.mjs",
+    "build:design": "node tools/publish/build-design.mjs",
+    "test:design": "node --test tools/publish/design.test.mjs"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.18.5",

@@ -15,7 +15,7 @@
 // status names why; nothing outside the page stands in for the build.
 
 import { createApp, type App } from "vue";
-import { createPinia } from "pinia";
+import { createPinia, type Pinia } from "pinia";
 import { draftName, type Bench, type BuildWarning, type Chase, type CheckResult, type ContactFn, type Metric, type Part } from "@hackbuild/spec";
 import {
   adoptBootedManifold, bindChase, blockedLine, blockingChecks, bootManifold, NO_BUILD, NOT_IN_BAKE, openShare, setStorageLog, type BenchCore, type BootedManifold, type BuildOutput, type BuildResult, type ChaseBinding,
@@ -138,6 +138,13 @@ export interface BenchOptions {
  * an opt-in and defaults off, so a host app can hold several benches.
  */
 export interface CreateBenchOptions extends BenchOptions {
+  /**
+   * The Pinia the shell store mirrors the core into. A host app passes the
+   * one it installs so the bench's store sits beside its own; default, the
+   * controller makes its own. Two controllers that share one Pinia share
+   * the shell store, so give each its own.
+   */
+  readonly pinia?: Pinia;
   /** Define `BENCH` on globalThis (BenchHook); default false. */
   readonly hook?: boolean;
   /**
@@ -183,12 +190,29 @@ export interface MountedBench {
   unmount(): void;
 }
 
-/** What createBench returns: the headless parts at once, the Vue shell on mount. */
+/** What BenchView hands the shell component: the options createBench read for the view. */
+export interface BenchViewOptions {
+  readonly stage: boolean;
+  readonly draft: boolean;
+  readonly widget: DraftWidget | null;
+}
+
+/** What createBench returns: the headless parts at once, the Vue shell on mount or in a BenchView. */
 export interface BenchController {
   readonly core: BenchCore<Values, ViewPart, BenchReport>;
   readonly binding: ChaseBinding<BenchReport>;
+  /** The Pinia the shell store mirrors the core into: the one passed to createBench or the controller's own. */
+  readonly pinia: Pinia;
+  /** What BenchView passes to the shell component. */
+  readonly view: BenchViewOptions;
   /** Mounts the shell into `el`. Call once. */
   mount(el: HTMLElement): void;
+  /**
+   * Names the element that holds the shell, so an export can pause the stage
+   * viewer inside it (G-46). mount(el) does this itself; BenchView calls it
+   * with null on unmount.
+   */
+  attach(el: HTMLElement | null): void;
   /** Unmounts the shell if mounted and disposes the core; the controller is spent after it. */
   unmount(): void;
 }
@@ -206,7 +230,7 @@ export function createBench(opts: CreateBenchOptions): BenchController {
   const refused = kindError(chase.meta.kind);
   if (refused !== null) throw new BenchRefusal(refused);
 
-  const pinia = createPinia();
+  const pinia = opts.pinia ?? createPinia();
   const shell = useShell(pinia);
   let host: HTMLElement | null = null;
   let app: App | null = null;
@@ -260,18 +284,30 @@ export function createBench(opts: CreateBenchOptions): BenchController {
   setStorageLog((line) => core.appendLog(line));
   void binding.whenReady.then(() => shell.mirror(core));
 
+  const view: BenchViewOptions = {
+    stage: opts.stage !== false,
+    draft: opts.draft === true,
+    widget: opts.draft === true && opts.widget !== undefined ? opts.widget : null,
+  };
+
   return {
     core,
     binding,
+    pinia,
+    view,
     mount(el: HTMLElement): void {
       if (app !== null) throw new Error("bench is already mounted");
       host = el;
       app = createApp(ChaseBench, {
-        binding, stage: opts.stage !== false, draft: opts.draft === true,
-        ...(opts.draft === true && opts.widget !== undefined ? { widget: opts.widget } : {}),
+        binding, stage: view.stage, draft: view.draft,
+        ...(view.widget === null ? {} : { widget: view.widget }),
       });
       app.use(pinia);
       app.mount(el);
+    },
+    attach(el: HTMLElement | null): void {
+      if (app !== null) return;
+      host = el;
     },
     unmount(): void {
       app?.unmount();

@@ -249,13 +249,16 @@ export function pageModules(m, facts) {
   return mods;
 }
 
-/** Bundle a page build entry with vite into one classic script that assigns its exports to `global`. */
-export async function bundleBuild(spec, base, m) {
+/**
+ * Bundle a page build entry with vite into one classic script that assigns its exports to `global`.
+ * `facts` defaults to designFacts(base); a caller that already holds them (tools/publish/build-design.mjs) passes them in.
+ */
+export async function bundleBuild(spec, base, m, facts = designFacts(base)) {
   productionEnv();
   const { build } = await import('vite');
   const entry = resolve(base, spec.from);
   pageModules(m, null);
-  const mods = pageModules(m, designFacts(base));
+  const mods = pageModules(m, facts);
   const PREFIX = '\0hbf-page:';
   const plugin = {
     name: 'hbf-page-modules',

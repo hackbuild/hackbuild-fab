@@ -29,7 +29,7 @@ const ROOT = `${path.resolve(HERE, "../../..")}${path.sep}`;
 const NAME = "@hackbuild/bench";
 
 const EXPECTED = [
-  "BenchRefusal", "BenchShell", "ChaseBench", "ChecksPanel", "CurvePanel", "DriveCode", "DriveFader", "DrivePad", "DrivePress", "DriveTouch", "ExportsPanel", "FitsPanel", "LogPanel",
+  "BenchRefusal", "BenchShell", "BenchView", "ChaseBench", "ChecksPanel", "CurvePanel", "DriveCode", "DriveFader", "DrivePad", "DrivePress", "DriveTouch", "ExportsPanel", "FitsPanel", "LogPanel",
   "NotesPanel", "ParamRail", "PlotCurve", "ReadoutSignal", "ViewLight", "ViewNetlens", "createBench", "mountBench", "pageBench", "pageOf", "useBench", "useShell",
 ];
 
