@@ -5,7 +5,7 @@
 // excludes it: it imports single-file components, which only the ui
 // package's vue shim declares (packages/bench/src/vue-shim.d.ts).
 
-import { mountBench, pageBench, pageOf } from "../../../packages/bench/src/bench/entry";
+import { mountBench, pageBench, pageOf } from "@hackbuild/bench/entry";
 import { bench } from "./bench";
 import { chase } from "./chase";
 import { contact } from "./build";

@@ -7,15 +7,18 @@
 // Seeds: pip-controller tools/build_bench.py (block format, vendor swap, @font-face
 // rule text, assembly order) and the COTTER baker tools/build.py (ESM manifold to a
 // classic script, base64 wasm, exactly-one-match asserts, dash assert).
+// A ui manifest with `libraries: "iife"` bakes on the dist/iife files of
+// npm run build:lib instead of bundling the shell from source (iifeBlocks).
 // The output carries no timestamp and no absolute path, uses LF line endings, and is
 // written in manifest order, so two runs on the same inputs give the same sha256.
 
 import { execFileSync } from 'node:child_process';
-import { createHash } from 'node:crypto';
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { basename, dirname, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { lintText } from '../../packages/checks/voice/rules.mjs';
+import { PACKAGES, PEER_FILES, PEER_GLOBALS, TARGET, matches } from '../lib/outputs.mjs';
+import { packageOf, sha256, sidecarPath, sourcesOf } from '../lib/sidecar.mjs';
 import { licenceManifest, npmSources, readTable } from './licence-manifest.mjs';
 
 export const REPO = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..');
@@ -28,7 +31,7 @@ function fail(msg) {
   throw new BakeError(msg);
 }
 
-export const sha256 = (buf) => createHash('sha256').update(buf).digest('hex');
+export { packageOf, sha256 };
 
 /** Resolve `from` against the manifest folder; `npm:<pkg>/<path>` walks up to node_modules. */
 export function resolveFrom(base, from) {
@@ -43,18 +46,6 @@ export function resolveFrom(base, from) {
     if (existsSync(join(root, 'package.json'))) return join(root, rest);
     if (dirname(dir) === dir) fail(`package ${pkg} not installed above ${rel(base)}. run npm ci first.`);
   }
-}
-
-/** Version and name of the installed package that holds a resolved file, if any. */
-export function packageOf(file) {
-  for (let dir = dirname(file); dirname(dir) !== dir; dir = dirname(dir)) {
-    const meta = join(dir, 'package.json');
-    if (existsSync(meta) && dir.split(sep).includes('node_modules')) {
-      const { name, version } = JSON.parse(readFileSync(meta, 'utf8'));
-      if (name) return { name, version, root: dir };
-    }
-  }
-  return null;
 }
 
 function rel(p) {
@@ -201,6 +192,212 @@ export async function bundleEntry(entry) {
   return { code: chunks[0].code.replace(/\s+$/, ''), own, inlined };
 }
 
+// The classic-script route (manifest `libraries: "iife"`, plan v10 Phase 1 step 4).
+// The shell is not bundled into the entry: the page loads the peer vendor
+// scripts and the published packages' IIFE builds (npm run build:lib), then
+// the design entry as one more IIFE that reads them from their globals. The
+// set and the order come from what the entry reads and what each script
+// reads in turn, never from the manifest.
+
+const PEERS = Object.keys(PEER_GLOBALS);
+const PUBLISHED = PACKAGES.map((p) => p.name);
+/** Tie order of the load order: the peers, then the published packages as outputs.mjs lists them. */
+const RANK = [...PEERS, ...PUBLISHED];
+
+/** The library a bare import is read from: a peer by its bare name, a published package by name or subpath; null when neither. */
+export function libraryOf(id) {
+  if (PEERS.includes(id)) return id;
+  return PUBLISHED.find((n) => matches(id, [n])) ?? null;
+}
+
+const globalOfLibrary = (lib) => PEER_GLOBALS[lib] ?? PACKAGES.find((p) => p.name === lib)?.global;
+
+/**
+ * The libraries an entry needs, in load order. `reads` are the bare imports of
+ * the entry; `depsOf(lib)` gives the bare imports a library reads in turn.
+ * A library loads after every library it reads; a tie goes to RANK, so the
+ * order is the same on every machine.
+ */
+export function libraryOrder(reads, depsOf) {
+  const wanted = (id, who) => libraryOf(id) ?? fail(`${who} reads ${id}, which no peer or published package provides`);
+  const deps = new Map();
+  const todo = reads.map((id) => wanted(id, 'the entry'));
+  for (let lib = todo.shift(); lib !== undefined; lib = todo.shift()) {
+    if (deps.has(lib)) continue;
+    const own = [...new Set(depsOf(lib).map((id) => wanted(id, lib)))].filter((d) => d !== lib);
+    deps.set(lib, new Set(own));
+    todo.push(...own);
+  }
+  const order = [];
+  while (order.length < deps.size) {
+    const next = RANK.find((l) => deps.has(l) && !order.includes(l) && [...deps.get(l)].every((d) => order.includes(d)));
+    if (next === undefined) fail(`libraries read each other in a cycle: ${[...deps.keys()].filter((l) => !order.includes(l)).join(', ')}`);
+    order.push(next);
+  }
+  return order;
+}
+
+const relFrom = (root, p) => relative(root, p).split(sep).join('/');
+
+/** A published package's IIFE or the three vendor IIFE, with its sidecar read and checked against the files on disk. */
+function sidecarLibrary(file, root) {
+  const side = sidecarPath(file);
+  for (const f of [file, side]) if (!existsSync(f)) fail(`${relFrom(root, f)} is missing. run npm run build:lib.`);
+  const bytes = readFileSync(file);
+  const data = JSON.parse(readText(side));
+  if (sha256(bytes) !== data.sha256) fail(`${relFrom(root, file)} does not match ${relFrom(root, side)}. run npm run build:lib.`);
+  for (const [path, hash] of Object.entries(data.own)) {
+    const src = join(root, path);
+    if (!existsSync(src) || sha256(readFileSync(src)) !== hash) fail(`${relFrom(root, file)} is older than ${path}. run npm run build:lib.`);
+  }
+  return {
+    code: bytes.toString('utf8').replace(/\s+$/, ''),
+    reads: data.reads,
+    own: Object.keys(data.own).map((p) => join(root, p)),
+    packages: data.packages.map((p) => ({ ...p, root: join(root, p.root) })),
+  };
+}
+
+/**
+ * The installed packages a peer's classic build holds: the package that owns
+ * the file, and every package in the module graph of the bare import (vue's
+ * global build holds runtime-dom, runtime-core, reactivity and shared; the
+ * flat file names none of them).
+ */
+export async function vendorPackages(peer, file) {
+  productionEnv();
+  const { build } = await import('vite');
+  const ID = 'hbf-vendor-entry';
+  const out = await build({
+    configFile: false,
+    logLevel: 'silent',
+    root: REPO,
+    mode: 'production',
+    plugins: [{ name: 'hbf-vendor-entry', enforce: 'pre', resolveId: (id) => (id === ID ? `\0${ID}` : null), load: (id) => (id === `\0${ID}` ? `import * as ns from ${JSON.stringify(peer)};\nglobalThis.hbfVendor = ns;\n` : null) }],
+    // The flags the prod classic builds were made with: no devtools, so pinia holds no @vue/devtools-kit.
+    define: { 'process.env.NODE_ENV': '"production"', __VUE_PROD_DEVTOOLS__: 'false' },
+    build: {
+      write: false, minify: false, sourcemap: false, copyPublicDir: false, reportCompressedSize: false, modulePreload: false,
+      rollupOptions: { input: ID, external: PEERS.filter((p) => p !== peer), output: { format: 'es', codeSplitting: false } },
+    },
+  });
+  const chunks = (Array.isArray(out) ? out : [out]).flatMap((o) => o.output).filter((o) => o.type === 'chunk');
+  const owner = packageOf(file);
+  const found = new Map(owner === null ? [] : [[`${owner.name}@${owner.version}`, owner]]);
+  for (const c of chunks) {
+    for (const id of c.moduleIds) {
+      const p = id.includes(`${sep}node_modules${sep}`) ? packageOf(id.replace(/\?.*$/, '')) : null;
+      if (p !== null) found.set(`${p.name}@${p.version}`, p);
+    }
+  }
+  return [...found.values()];
+}
+
+/** One library ready to inline: its script text, the bare imports it reads, and what it holds. */
+async function loadLibrary(lib, root) {
+  const pkg = PACKAGES.find((p) => p.name === lib);
+  if (pkg !== undefined) {
+    const meta = JSON.parse(readText(join(root, pkg.dir, 'package.json')));
+    const l = sidecarLibrary(join(root, pkg.dir, 'dist', 'iife', `${pkg.short}.js`), root);
+    return { ...l, lib, label: `${lib} ${meta.version}, iife build, global ${pkg.global}` };
+  }
+  const from = PEER_FILES[lib];
+  if (from === undefined) fail(`peer ${lib} has no classic script in PEER_FILES (tools/lib/outputs.mjs)`);
+  if (!from.startsWith('npm:')) {
+    const l = sidecarLibrary(join(root, from), root);
+    const version = l.packages.find((p) => p.name === lib)?.version;
+    return { ...l, lib, reads: [], label: `${lib} ${version}, shared vendor iife, global ${PEER_GLOBALS[lib]}` };
+  }
+  const file = resolveFrom(root, from);
+  if (!existsSync(file)) fail(`missing ${relFrom(root, file)}. run npm ci first.`);
+  const owner = packageOf(file);
+  const peerDeps = Object.keys(JSON.parse(readText(join(owner.root, 'package.json'))).peerDependencies ?? {});
+  return {
+    lib,
+    code: readText(file).replace(/\s+$/, ''),
+    reads: peerDeps.filter((d) => PEERS.includes(d)),
+    own: [],
+    packages: await vendorPackages(lib, file),
+    label: `${lib} ${owner.version}, prod classic build, global ${PEER_GLOBALS[lib]}`,
+  };
+}
+
+/** Bundle a ui entry with vite into one classic script that reads the peers and published packages from their globals. */
+export async function bundleIifeEntry(entry) {
+  productionEnv();
+  const { build } = await import('vite');
+  const { default: vue } = await import('@vitejs/plugin-vue');
+  const subpaths = [];
+  const external = (id) => {
+    if (libraryOf(id) !== null) return true;
+    if (PEERS.some((p) => id.startsWith(`${p}/`))) subpaths.push(id);
+    return subpaths.includes(id);
+  };
+  const out = await build({
+    configFile: false,
+    plugins: [vue()],
+    logLevel: 'silent',
+    root: REPO,
+    mode: 'production',
+    define: { 'process.env.NODE_ENV': '"production"', 'import.meta.url': 'self.location.href' },
+    build: {
+      write: false,
+      target: TARGET,
+      minify: true,
+      sourcemap: false,
+      modulePreload: false,
+      copyPublicDir: false,
+      reportCompressedSize: false,
+      lib: { entry, formats: ['iife'], name: 'HbfEntry', fileName: () => 'entry.js' },
+      rollupOptions: { external, output: { globals: (id) => globalOfLibrary(libraryOf(id)) ?? 'undefined', codeSplitting: false } },
+    },
+  });
+  if (subpaths.length > 0) fail(`entry ${rel(entry)} imports ${subpaths[0]}; the ${subpaths[0].split('/')[0]} global holds the bare module only`);
+  const outputs = (Array.isArray(out) ? out : [out]).flatMap((o) => o.output);
+  const chunks = outputs.filter((o) => o.type === 'chunk');
+  if (chunks.length !== 1 || outputs.length !== 1) fail(`entry ${rel(entry)} bundled to ${outputs.length} files, legal 1; list stylesheets under css`);
+  const { own, packages } = sourcesOf(chunks[0].moduleIds);
+  return {
+    code: chunks[0].code.replace(/\s+$/, ''),
+    reads: chunks[0].imports,
+    own: Object.keys(own).map((p) => join(REPO, p)),
+    packages: packages.map((p) => ({ ...p, root: join(REPO, p.root) })),
+  };
+}
+
+/**
+ * The script blocks of a ui entry on the classic-script route, in load order,
+ * the repo files they inline (for the dash check) and the installed packages
+ * they inline (for the licence manifest). `root` is where dist/iife is read.
+ */
+export async function iifeBlocks(entry, { root = REPO } = {}) {
+  const e = await bundleIifeEntry(entry);
+  const loaded = new Map();
+  const todo = e.reads.map((id) => libraryOf(id)).filter((l) => l !== null);
+  for (let lib = todo.shift(); lib !== undefined; lib = todo.shift()) {
+    if (loaded.has(lib)) continue;
+    const l = await loadLibrary(lib, root);
+    loaded.set(lib, l);
+    todo.push(...l.reads.map((id) => libraryOf(id)).filter((d) => d !== null));
+  }
+  const order = libraryOrder(e.reads, (lib) => loaded.get(lib).reads);
+  const scripts = [...order.map((lib) => loaded.get(lib)), { lib: null, label: `entry ${basename(entry)}`, code: e.code, reads: e.reads, own: e.own, packages: e.packages }];
+  // Each script runs when it is parsed, so everything it reads must come before it.
+  const provided = new Set();
+  for (const s of scripts) {
+    for (const id of s.reads) {
+      const lib = libraryOf(id);
+      if (lib !== null && !provided.has(lib)) fail(`${s.label} reads ${id} and no earlier script sets ${globalOfLibrary(lib)}`);
+    }
+    if (s.lib !== null) provided.add(s.lib);
+  }
+  return {
+    blocks: scripts.map((s) => ({ label: s.label, code: s.code })),
+    own: [...new Set(scripts.flatMap((s) => s.own))],
+    inlined: scripts.flatMap((s) => s.packages),
+  };
+}
+
 /** The PageFacts of the design in `dir`, computed by core in a child process (tools/bake/design-facts.mjs). */
 export function designFacts(dir) {
   try {
@@ -335,6 +532,7 @@ export async function bake(manifestPath, opts = {}) {
   for (const k of ['id', 'shell']) if (typeof m[k] !== 'string' || !m[k]) fail(`${rel(mpath)}: ${k} missing`);
   const ui = m.shell === 'ui';
   if (ui && !m.entry) fail(`${rel(mpath)}: a ui shell needs entry`);
+  if (m.libraries !== undefined && (m.libraries !== 'iife' || !ui)) fail(`${rel(mpath)}: libraries is legal as "iife" on a ui shell only`);
   const budget = m.budget ?? DEFAULT_BUDGET;
 
   let html;
@@ -401,6 +599,14 @@ export async function bake(manifestPath, opts = {}) {
       for (const id of own) noDash(readText(id), rel(id));
       noScriptClose(code, `build ${m.build.label}`);
       blocks.push(block(m.build.label, code));
+    } else if (key === 'entry' && m.libraries === 'iife') {
+      const { blocks: scripts, own, inlined: bundled } = await iifeBlocks(resolve(base, m.entry), { root: opts.libRoot });
+      inlined.push(...bundled);
+      for (const id of own) noDash(readText(id), rel(id));
+      for (const s of scripts) {
+        noScriptClose(s.code, s.label);
+        blocks.push(block(s.label, s.code));
+      }
     } else if (key === 'entry') {
       const entry = resolve(base, m.entry);
       const { code, own, inlined: bundled } = await bundleEntry(entry);

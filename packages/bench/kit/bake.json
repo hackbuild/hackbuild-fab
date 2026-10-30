@@ -64,5 +64,6 @@
       "from": "./kit.css"
     }
   ],
-  "entry": "./main.ts"
+  "entry": "./main.ts",
+  "libraries": "iife"
 }

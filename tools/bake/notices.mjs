@@ -8,7 +8,7 @@
 
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
-import { bundleEntry, findManifests, packageOf, REPO, resolveFrom } from './bake.mjs';
+import { bundleEntry, findManifests, iifeBlocks, packageOf, REPO, resolveFrom } from './bake.mjs';
 import { licenceManifest, npmSources, readTable } from './licence-manifest.mjs';
 
 export const NOTICES = 'THIRD-PARTY-NOTICES.txt';
@@ -24,7 +24,7 @@ async function inlinedEverywhere(repo) {
     const m = JSON.parse(readFileSync(mp, 'utf8'));
     const base = dirname(mp);
     const pk = npmSources(m).map((f) => packageOf(resolveFrom(base, f))).filter((p) => p !== null);
-    if (m.entry) pk.push(...(await bundleEntry(resolve(base, m.entry))).inlined);
+    if (m.entry) pk.push(...(await (m.libraries === 'iife' ? iifeBlocks : bundleEntry)(resolve(base, m.entry))).inlined);
     for (const p of pk) if (!all.has(`${p.name}@${p.version}`)) all.set(`${p.name}@${p.version}`, p);
   }
   return [...all.values()];

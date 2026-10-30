@@ -8,9 +8,11 @@ import { spawnSync } from 'node:child_process';
 import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { REPO, bake, BakeError, offFileRequests, pageModules, sha256, styleTag } from '../bake.mjs';
+import { REPO, bake, BakeError, bundleIifeEntry, findManifests, iifeBlocks, libraryOrder, offFileRequests, pageModules, resolveFrom, sha256, styleTag, vendorPackages } from '../bake.mjs';
 import { checkBaked, checkInstalled } from '../check-ui-css.mjs';
-import { licenceManifest } from '../licence-manifest.mjs';
+import { licenceManifest, readTable } from '../licence-manifest.mjs';
+import { PEER_FILES } from '../../lib/outputs.mjs';
+import { sourcesPlugin } from '../../lib/sidecar.mjs';
 
 const SHELL = '<!doctype html>\n<html>\n<head>\n<style>\nbody{margin:0}\n</style>\n</head>\n<body>\n';
 
@@ -317,5 +319,221 @@ test('a data block is one line of JSON under its +json type with every </ escape
     await rejects(dir, /is not an application\/<name>\+json type/);
   } finally {
     rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+// The classic-script route (manifest `libraries: "iife"`).
+
+/** What each library reads from globals, as the real sidecars and peer package.json files record it. */
+const READS = {
+  '@hackbuild/bench': ['@hackbuild/bench-core', '@hackbuild/spec', '@hackbuild/viewer', 'pinia', 'vue'],
+  '@hackbuild/bench-core': ['@hackbuild/spec', '@hackbuild/viewer'],
+  '@hackbuild/viewer': ['three'],
+  '@hackbuild/spec': [],
+  pinia: ['vue'],
+  vue: [],
+  three: [],
+};
+const NAMES = ['vue', 'pinia', 'three', '@hackbuild/spec', '@hackbuild/viewer', '@hackbuild/bench-core', '@hackbuild/bench'];
+
+test('library order: each library after everything it reads, peers first, ties by outputs.mjs order', () => {
+  const reads = (lib) => READS[lib];
+  assert.deepEqual(libraryOrder(['@hackbuild/bench/entry', '@hackbuild/spec'], reads), NAMES);
+  assert.deepEqual(libraryOrder(['@hackbuild/spec', '@hackbuild/bench/entry'], reads), NAMES, 'the order the entry reads in does not matter');
+  assert.deepEqual(libraryOrder(['@hackbuild/viewer'], reads), ['three', '@hackbuild/viewer'], 'only what the entry reaches');
+  assert.deepEqual(libraryOrder(['pinia'], reads), ['vue', 'pinia']);
+  assert.throws(() => libraryOrder(['vue'], (lib) => (lib === 'vue' ? ['pinia'] : ['vue'])), /read each other in a cycle: vue, pinia/);
+  assert.throws(() => libraryOrder(['lodash'], reads), /the entry reads lodash, which no peer or published package provides/);
+  assert.throws(() => libraryOrder(['vue'], () => ['three/addons/x']), /vue reads three\/addons\/x, which no peer or published package provides/);
+});
+
+const SPEC_SRC = (value) => `export const defineChase = (): string => ${JSON.stringify(value)};\n`;
+
+/** Builds the fixture spec library from spec/src.ts with the real sidecar plugin, as build:lib does. */
+async function buildSpec(dir) {
+  process.env.NODE_ENV = 'production';
+  const { build } = await import('vite');
+  await build({
+    root: dir,
+    configFile: false,
+    logLevel: 'silent',
+    plugins: [sourcesPlugin('spec.js', dir)],
+    build: {
+      outDir: join(dir, 'spec', 'dist', 'iife'),
+      emptyOutDir: true,
+      minify: false,
+      copyPublicDir: false,
+      reportCompressedSize: false,
+      lib: { entry: join(dir, 'spec', 'src.ts'), formats: ['iife'], name: 'HackbuildSpec', fileName: () => 'spec.js' },
+      rollupOptions: { external: ['vue'], output: { exports: 'named', globals: { vue: 'Vue' } } },
+    },
+  });
+}
+
+/** A root with a built spec library and a ui manifest whose entry reads it; the library path is <root>/spec/dist/iife. */
+async function iifeFixture(source = SPEC_SRC('a')) {
+  mkdirSync(join(REPO, 'out'), { recursive: true });
+  const dir = mkdtempSync(join(REPO, 'out', 'bake-iife-'));
+  mkdirSync(join(dir, 'spec'), { recursive: true });
+  writeFileSync(join(dir, 'spec', 'package.json'), '{"name":"@hackbuild/spec","version":"9.9.9"}');
+  writeFileSync(join(dir, 'spec', 'src.ts'), source);
+  writeFileSync(join(dir, 'entry.ts'), 'import { defineChase } from "@hackbuild/spec";\ndefineChase();\n');
+  writeFileSync(join(dir, 'bake.json'), JSON.stringify({ id: 'fx', shell: 'ui', entry: './entry.ts', libraries: 'iife' }));
+  await buildSpec(dir);
+  return dir;
+}
+
+const failsOneLine = (promise, pattern) =>
+  assert.rejects(promise, (e) => {
+    assert.ok(e instanceof BakeError, `expected BakeError, got ${e}`);
+    assert.match(e.message, pattern);
+    assert.ok(!e.message.includes('\n'), 'one line');
+    return true;
+  });
+
+test('the sidecar a library build writes is read back: scripts in order, own files, packages', async () => {
+  const dir = await iifeFixture();
+  try {
+    const side = JSON.parse(readFileSync(join(dir, 'spec', 'dist', 'iife', 'spec.sources.json'), 'utf8'));
+    const js = readFileSync(join(dir, 'spec', 'dist', 'iife', 'spec.js'));
+    assert.equal(side.iife, 'spec.js');
+    assert.equal(side.sha256, sha256(js), 'the sidecar hashes the file beside it');
+    assert.deepEqual(Object.keys(side.own), ['spec/src.ts']);
+    assert.equal(side.own['spec/src.ts'], sha256(readFileSync(join(dir, 'spec', 'src.ts'))));
+    assert.deepEqual(side.reads, []);
+    assert.deepEqual(side.packages, []);
+    const r = await iifeBlocks(join(dir, 'entry.ts'), { root: dir });
+    assert.deepEqual(r.blocks.map((b) => b.label), ['@hackbuild/spec 9.9.9, iife build, global HackbuildSpec', 'entry entry.ts']);
+    assert.equal(r.blocks[0].code, js.toString('utf8').replace(/\s+$/, ''));
+    assert.match(r.blocks[1].code, /HackbuildSpec/, 'the entry reads the library from its global');
+    assert.ok(r.own.includes(join(dir, 'spec', 'src.ts')) && r.own.includes(join(dir, 'entry.ts')));
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test('the sidecar records the installed packages a library inlines and the imports it leaves to globals', async () => {
+  const dir = await iifeFixture();
+  try {
+    writeFileSync(join(dir, 'spec', 'src.ts'), 'import { ref } from "vue";\nimport { z } from "zod";\nexport const defineChase = () => [ref, z];\n');
+    await buildSpec(dir);
+    const side = JSON.parse(readFileSync(join(dir, 'spec', 'dist', 'iife', 'spec.sources.json'), 'utf8'));
+    assert.deepEqual(side.reads, ['vue'], 'vue stays an import; zod is bundled');
+    assert.deepEqual(side.packages.map((p) => `${p.name}@${p.version}`), [`zod@${JSON.parse(readFileSync(join(REPO, 'node_modules', 'zod', 'package.json'), 'utf8')).version}`]);
+    assert.equal(join(dir, side.packages[0].root), join(REPO, 'node_modules', 'zod'), 'the root is relative to the build root');
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test('a missing dist/iife file or sidecar fails in one line naming the file and npm run build:lib', async () => {
+  const dir = await iifeFixture();
+  try {
+    const entry = join(dir, 'entry.ts');
+    const side = join(dir, 'spec', 'dist', 'iife', 'spec.sources.json');
+    const sideText = readFileSync(side);
+    rmSync(side);
+    await failsOneLine(iifeBlocks(entry, { root: dir }), /^spec\/dist\/iife\/spec\.sources\.json is missing\. run npm run build:lib\.$/);
+    writeFileSync(side, sideText);
+    rmSync(join(dir, 'spec', 'dist', 'iife', 'spec.js'));
+    await failsOneLine(iifeBlocks(entry, { root: dir }), /^spec\/dist\/iife\/spec\.js is missing\. run npm run build:lib\.$/);
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test('a library older than its sources, or not matching its sidecar, fails', async () => {
+  const dir = await iifeFixture();
+  try {
+    const entry = join(dir, 'entry.ts');
+    const src = join(dir, 'spec', 'src.ts');
+    writeFileSync(src, SPEC_SRC('b'));
+    await failsOneLine(iifeBlocks(entry, { root: dir }), /^spec\/dist\/iife\/spec\.js is older than spec\/src\.ts\. run npm run build:lib\.$/);
+    writeFileSync(src, SPEC_SRC('a'));
+    await iifeBlocks(entry, { root: dir });
+    writeFileSync(join(dir, 'spec', 'dist', 'iife', 'spec.js'), 'var HackbuildSpec={defineChase(){}};\n');
+    await failsOneLine(iifeBlocks(entry, { root: dir }), /^spec\/dist\/iife\/spec\.js does not match spec\/dist\/iife\/spec\.sources\.json\. run npm run build:lib\.$/);
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test('the dash, script-close and licence gates hold on the libraries route', async () => {
+  const dir = await iifeFixture();
+  try {
+    const run = () => bake(join(dir, 'bake.json'), { outRoot: join(dir, 'dist'), libRoot: dir });
+    const baked = await run();
+    const text = readFileSync(baked.out, 'utf8');
+    assert.ok(text.indexOf('/* @hackbuild/spec 9.9.9') < text.indexOf('/* entry entry.ts */'), 'the library precedes the entry');
+    assert.ok(!text.includes('type="module"'), 'every script is classic');
+    assert.deepEqual(baked.licences, [], 'a library that inlines no installed package adds no row');
+    writeFileSync(join(dir, 'spec', 'src.ts'), SPEC_SRC(`a ${String.fromCodePoint(0x2014)} b`));
+    await buildSpec(dir);
+    await assert.rejects(run(), (e) => e instanceof BakeError && /dash U\+2014 in .*spec\/src\.ts line 1/.test(e.message));
+    // The bundler escapes a closing tag it finds in source, so the script text is written over the built one.
+    writeFileSync(join(dir, 'spec', 'src.ts'), SPEC_SRC('a'));
+    await buildSpec(dir);
+    const js = join(dir, 'spec', 'dist', 'iife', 'spec.js');
+    const side = join(dir, 'spec', 'dist', 'iife', 'spec.sources.json');
+    const closing = 'var HackbuildSpec={defineChase(){return "</script>"}};\n';
+    writeFileSync(js, closing);
+    writeFileSync(side, JSON.stringify({ ...JSON.parse(readFileSync(side, 'utf8')), sha256: sha256(closing) }));
+    await assert.rejects(run(), (e) => e instanceof BakeError && /@hackbuild\/spec 9\.9\.9.* holds a closing script tag/.test(e.message));
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test('libraries is legal as "iife" on a ui shell only; an entry cannot import a peer subpath', async () => {
+  const dir = fixture({ 'shell.html': SHELL, 'bake.json': { id: 'fx', shell: 'shell.html', libraries: 'iife' } });
+  try {
+    await rejects(dir, /libraries is legal as "iife" on a ui shell only/);
+    writeFileSync(join(dir, 'bake.json'), JSON.stringify({ id: 'fx', shell: 'ui', entry: './e.ts', libraries: 'esm' }));
+    await rejects(dir, /libraries is legal as "iife" on a ui shell only/);
+    writeFileSync(join(dir, 'e.ts'), 'import "three/examples/jsm/controls/OrbitControls.js";\n');
+    await assert.rejects(bundleIifeEntry(join(dir, 'e.ts')), (e) => e instanceof BakeError && /imports three\/examples\/jsm\/controls\/OrbitControls\.js; the three global holds the bare module only/.test(e.message));
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test('peer vendor scripts: licence rows for vue with the packages its global build holds, and for pinia', async () => {
+  const table = readTable(REPO);
+  const expected = {
+    vue: ['@vue/reactivity', '@vue/runtime-core', '@vue/runtime-dom', '@vue/shared', 'vue'],
+    pinia: ['pinia'],
+  };
+  for (const [peer, names] of Object.entries(expected)) {
+    const file = resolveFrom(REPO, PEER_FILES[peer]);
+    const found = await vendorPackages(peer, file);
+    const { rows, problems } = licenceManifest(found, table);
+    assert.deepEqual(problems, [], `${peer}: every inlined package has a licence row`);
+    assert.deepEqual(rows.map((r) => r.name).sort(), names);
+    assert.ok(rows.every((r) => r.audited === 'MIT'));
+  }
+});
+
+// The real libraries and sidecars of npm run build:lib; CI runs this file before bake:all, where this test reports not run.
+test('every ui manifest on the libraries route loads peers, packages and its entry in derived order', async (t) => {
+  const missing = ['spec/dist/iife/spec.sources.json', 'tools/vendor/three/dist/three.sources.json'].filter((f) => !existsSync(join(REPO, f)));
+  if (missing.length > 0) {
+    t.skip(`not run: ${missing[0]} is missing; run npm run build:lib`);
+    return;
+  }
+  const table = readTable(REPO);
+  const manifests = findManifests().filter((p) => JSON.parse(readFileSync(p, 'utf8')).libraries === 'iife');
+  assert.ok(manifests.length > 0, 'at least one manifest bakes on the libraries route');
+  for (const path of manifests) {
+    const m = JSON.parse(readFileSync(path, 'utf8'));
+    const r = await iifeBlocks(join(path, '..', m.entry));
+    const names = r.blocks.map((b) => b.label.split(' ')[0]);
+    assert.equal(names.at(-1), 'entry');
+    const libs = names.slice(0, -1);
+    assert.deepEqual(libs, NAMES.filter((n) => libs.includes(n)), `${m.id}: libraries follow the derived order`);
+    if (libs.includes('@hackbuild/bench')) assert.deepEqual(libs, NAMES, `${m.id}: the bench shell pulls in every peer and package`);
+    const rows = licenceManifest(r.inlined, table);
+    assert.deepEqual(rows.problems, []);
+    const have = rows.rows.map((x) => x.name);
+    for (const name of ['vue', 'pinia', 'three', 'zod', '@virgilvox/hackbuild-ui', '@vue/runtime-core']) assert.ok(have.includes(name), `${m.id}: licence row for ${name}`);
   }
 });

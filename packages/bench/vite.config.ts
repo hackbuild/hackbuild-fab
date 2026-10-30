@@ -8,8 +8,9 @@ import { defineConfig, type Plugin } from "vite";
 // module; every dependency stays an import. The types come from vue-tsc
 // (tsconfig.lib.json, through tools/vue-check.mjs) into dist/types. tsc -b
 // still compiles the .ts modules the bake and the tests read. The bake
-// bundles a design's bench entry itself (tools/bake/bake.mjs bundleEntry)
-// and never reads this file.
+// never reads this file: it bundles a design's bench entry itself
+// (tools/bake/bake.mjs bundleEntry), or reads dist/iife on a manifest
+// with `libraries`.
 
 const here = (p: string): string => fileURLToPath(new URL(p, import.meta.url));
 const pkg = JSON.parse(readFileSync(here("./package.json"), "utf8")) as { dependencies: Record<string, string> };

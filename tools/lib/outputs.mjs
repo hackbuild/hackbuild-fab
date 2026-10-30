@@ -17,6 +17,19 @@ export const TARGET = "es2020";
 /** Peer dependency specifiers and the page global each one is read from in an IIFE. */
 export const PEER_GLOBALS = { vue: "Vue", pinia: "Pinia", three: "THREE" };
 
+export const VENDOR_THREE = "tools/vendor/three/dist/three.js";
+
+/**
+ * The classic script each peer is read from on a page: an `npm:` source (the
+ * package's own prod global build) or a repo path build:lib writes. A peer
+ * listed in PEER_GLOBALS and missing here cannot be baked.
+ */
+export const PEER_FILES = {
+  vue: "npm:vue/dist/vue.runtime.global.prod.js",
+  pinia: "npm:pinia/dist/pinia.iife.prod.js",
+  three: VENDOR_THREE,
+};
+
 export const PACKAGES = [
   { short: "spec", name: "@hackbuild/spec", dir: "spec", entry: "index.ts", global: "HackbuildSpec", peers: [], vue: false },
   { short: "viewer", name: "@hackbuild/viewer", dir: "packages/viewer", entry: "src/index.ts", global: "HackbuildViewer", peers: ["three"], vue: false },
@@ -40,5 +53,4 @@ export function globalsOf(pkg) {
 /** Does an import specifier belong to an external name (the name itself or a subpath)? */
 export const matches = (id, names) => names.some((n) => id === n || id.startsWith(`${n}/`));
 
-export const VENDOR_THREE = "tools/vendor/three/dist/three.js";
 export const BUDGET_FILE = "tools/lib/size-budget.json";

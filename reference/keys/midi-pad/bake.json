@@ -99,5 +99,6 @@
     "global": "HbfPageBuild",
     "label": "midi-pad page build: chase, build.ts and the build and check pipeline"
   },
-  "entry": "./bench.entry.ts"
+  "entry": "./bench.entry.ts",
+  "libraries": "iife"
 }

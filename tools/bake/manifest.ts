@@ -90,8 +90,16 @@ export interface BakeManifest {
   shell: string;
   /** Page title for a `ui` shell. */
   title?: string;
-  /** For `ui` shells: the TypeScript entry bundled by vite into one ES module. */
+  /** For `ui` shells: the TypeScript entry bundled by vite, into one ES module or, with `libraries`, one classic script. */
   entry?: string;
+  /**
+   * For `ui` shells: "iife" bakes the shell from the library IIFEs instead of
+   * bundling it into the entry. The page inlines the peer vendor scripts, the
+   * published packages' dist/iife files and the entry as an IIFE that reads
+   * them from globals, in an order derived from what each one reads. Needs
+   * npm run build:lib; absent, the entry bundles the shell from source.
+   */
+  libraries?: "iife";
   /** Exact shell strings removed; each must match exactly once. */
   drop?: string[];
   vendor?: BakeVendor[];

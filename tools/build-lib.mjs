@@ -3,8 +3,9 @@
 //   1. tsc -b                      dist/ of every package (the npm ESM for spec, viewer, bench-core)
 //   2. bench vite lib + vue-tsc    dist/index.js, dist/style.css, dist/types (the npm ESM for bench)
 //   3. dist/cdn/<short>.js         one ESM file, peers and sibling published packages left as bare imports
-//   4. dist/iife/<short>.js        one classic script, one global, externals read from globals
-//   5. tools/vendor/three/dist/three.js  the shared three IIFE (global THREE)
+//   4. dist/iife/<short>.js        one classic script, one global, externals read from globals,
+//                                  with <short>.sources.json beside it (tools/lib/sidecar.mjs)
+//   5. tools/vendor/three/dist/three.js  the shared three IIFE (global THREE), with its sidecar
 //
 // Duplication note: a cdn or iife file bundles the private workspace packages
 // it uses (geom, chase, catalog, inlay and what they import, zod) until a
@@ -20,6 +21,7 @@ import { spawnSync } from "node:child_process";
 import { mkdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { PACKAGES, ROOT, TARGET, VENDOR_THREE, externalsOf, globalsOf, matches } from "./lib/outputs.mjs";
+import { sourcesPlugin } from "./lib/sidecar.mjs";
 
 // Vue and vite choose development paths when NODE_ENV is unset; set it
 // before the first load so the outputs match the bake's.
@@ -43,7 +45,7 @@ async function bundle(pkg, format) {
     root: join(ROOT, pkg.dir),
     configFile: false,
     logLevel: "warn",
-    plugins: pkg.vue ? [vue()] : [],
+    plugins: [...(pkg.vue ? [vue()] : []), ...(iife ? [sourcesPlugin(`${pkg.short}.js`)] : [])],
     // Only the iife needs it: es output keeps import.meta.url as written.
     define: iife ? { "import.meta.url": "self.location.href" } : {},
     build: {
@@ -81,6 +83,7 @@ await build({
   root: join(ROOT, "tools/vendor/three"),
   configFile: false,
   logLevel: "warn",
+  plugins: [sourcesPlugin("three.js")],
   build: {
     outDir: join(ROOT, "tools/vendor/three/dist"),
     emptyOutDir: true,

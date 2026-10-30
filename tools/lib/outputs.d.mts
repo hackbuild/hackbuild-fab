@@ -13,6 +13,7 @@ export const TARGET: string;
 export const PEER_GLOBALS: Readonly<Record<string, string>>;
 export const PACKAGES: readonly LibPackage[];
 export const VENDOR_THREE: string;
+export const PEER_FILES: Readonly<Record<string, string>>;
 export const BUDGET_FILE: string;
 export function externalsOf(pkg: LibPackage): string[];
 export function globalsOf(pkg: LibPackage): Record<string, string>;
