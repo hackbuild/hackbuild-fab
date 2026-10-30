@@ -1394,6 +1394,11 @@
       ]
     },
     {
+      "build": "reference/cosmetic/art-layers",
+      "part": "plate",
+      "metrics": []
+    },
+    {
       "build": "reference/cosmetic/coin-inlay",
       "part": "coin",
       "metrics": []

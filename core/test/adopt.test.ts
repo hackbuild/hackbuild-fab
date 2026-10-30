@@ -108,7 +108,8 @@ describe("hbf adopt (R1-engine-25)", () => {
     expect(res.page.bytes, "bytes measured on disk").toBe(statSync(page).size);
     expect(res.page.hash).toBe(shasum(page));
     const html = readFileSync(page, "utf8");
-    expect(html).not.toContain(DRAFT_BLOCK_TYPE);
+    // The draft block is a script element; the bench-core IIFE names the type as a string.
+    expect(html).not.toContain(`<script type="${DRAFT_BLOCK_TYPE}">`);
     expect(readFileSync(path.join(dir, "page-build.ts"), "utf8")).not.toContain("draft: true");
 
     const golden = path.join(top, res.golden.file);
