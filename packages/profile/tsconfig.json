@@ -9,5 +9,9 @@
     "src",
     "data/*.json"
   ],
-  "references": []
+  "references": [
+    {
+      "path": "../../spec"
+    }
+  ]
 }

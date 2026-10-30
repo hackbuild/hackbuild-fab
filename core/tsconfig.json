@@ -12,6 +12,9 @@
   ],
   "references": [
     {
+      "path": "../spec"
+    },
+    {
       "path": "../packages/chase"
     },
     {
