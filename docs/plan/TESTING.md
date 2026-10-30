@@ -927,6 +927,7 @@ Inputs.
 | static | `out/lint/gold-static.json` | `static` rows (the CHK-LNT-06 source lint for G-37) |
 | person | `out/review/looked.json`, written when the section 13 checkbox is ticked | `person` rows (G-24) |
 | calibration | `tools/gold/calibration.json` | with `--calibrate` only: per gold bench and rule, `expect` of `pass`, `fail` or `n/a` with the study note line it was read from (`fab-knowledge:sources/gold/<bench>.md`) |
+| known failures | `tools/gold/known.json` | without `--calibrate`: fab rows a decision holds failing (bench, rule, decision id, reason); such a row grades fail without failing the run, and passing fails the run until the row is removed |
 
 Grading, per bench and rule, in this order:
 

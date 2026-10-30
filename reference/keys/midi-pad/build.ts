@@ -41,11 +41,11 @@
 // place the seat's posts ask for, since Author has no move for an applied
 // archetype.
 
-import { defineBuild, qualify, type ApplyOut, type Assertion, type BodyDraft, type FaceFrame, type Feature, type Metric, type Ring, type ShapeDecl, type Vec2 } from "@hackbuild/spec";
-import { KEY } from "./contact";
+import { defineBuild, qualify, type ApplyOut, type Assertion, type BodyDraft, type ContactFn, type FaceFrame, type Feature, type Metric, type Ring, type ShapeDecl, type Vec2 } from "@hackbuild/spec";
 import { chase } from "./chase";
 
 const SEAT = "rp2040-zero-seat";
+const KEY = "flex-cone-key";
 const POT = "membrane-slider-thinpot";
 const at = (z: number): FaceFrame => ({ origin: [0, 0, z], normal: [0, 0, 1], u: [1, 0, 0] });
 
@@ -202,4 +202,14 @@ export const build = defineBuild(chase, (p, k) => {
   });
 });
 
-export { contact } from "./contact";
+// The drive pad's contact function: a held key closes its contact once it
+// travels its gap. One function for the pad, the 3D pose, the readout and
+// BENCH.drive (G-20). Target n is key n, archetype instance n - 1.
+export const contact: ContactFn = (metrics, target, stimulus) => {
+  const travel = metrics.find((m) => m.id === `keys.${target}.travel`);
+  const held = stimulus === true;
+  return {
+    closed: held && travel ? [`${KEY}.${Number(target) - 1}.contact.key`] : [],
+    pose: { travelMm: held && typeof travel?.value === "number" ? travel.value : 0 },
+  };
+};

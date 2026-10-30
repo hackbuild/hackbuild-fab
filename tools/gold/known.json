@@ -1,0 +1,9 @@
+{
+ "about": "fab gold rows a decision holds failing; tools/gold/report.mjs grades them fail without failing the run and fails the run once one passes. Remove a row when its fix lands; add one only with a decision id.",
+ "rows": [
+  { "bench": "pip", "id": "G-10", "decision": "D-651", "reason": "range-end E_KERNEL refusal at the /bodies union, owner-held under D-643" },
+  { "bench": "pip", "id": "G-15", "decision": "D-651", "reason": "range-end E_KERNEL refusal at the /bodies union, owner-held under D-643" },
+  { "bench": "toggle", "id": "G-10", "decision": "D-649", "reason": "combined range-end E_KERNEL refusal at the /bodies union, owner-held under D-643" },
+  { "bench": "toggle", "id": "G-15", "decision": "D-649", "reason": "combined range-end E_KERNEL refusal at the /bodies union, owner-held under D-643" }
+ ]
+}

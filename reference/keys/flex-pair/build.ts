@@ -49,7 +49,7 @@
 // charge-release with a 3500 us wait (inferred margin over the measured
 // 113 to 2431 us crossings, D-079) until a coupon calibrates it.
 
-import { defineBuild, qualify, type Assertion, type BodyDraft, type FaceFrame, type Feature, type Metric, type Ring, type Vec2 } from "@hackbuild/spec";
+import { defineBuild, qualify, type Assertion, type BodyDraft, type ContactFn, type FaceFrame, type Feature, type Metric, type Ring, type Vec2 } from "@hackbuild/spec";
 import { chase } from "./chase";
 
 const top = (z: number): FaceFrame => ({ origin: [0, 0, z], normal: [0, 0, 1], u: [1, 0, 0] });
@@ -286,4 +286,13 @@ export const build = defineBuild(chase, (p, k) => {
   });
 });
 
-export { contact } from "./contact";
+// The drive pad's contact function: a held key closes its contact. One
+// function for the pad, the 3D pose, the readout and BENCH.drive (G-20).
+export const contact: ContactFn = (metrics, target, stimulus) => {
+  const travel = metrics.find((m) => m.id === `keys.${target}.travel`);
+  const held = stimulus === true;
+  return {
+    closed: held && travel ? [`contact.key${target}`] : [],
+    pose: { travelMm: held && typeof travel?.value === "number" ? travel.value : 0 },
+  };
+};

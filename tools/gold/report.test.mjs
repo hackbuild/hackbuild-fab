@@ -183,6 +183,32 @@ test("a timeout grades not run with hang; a skip carries its reason; person rows
   }
 });
 
+test("a known failure grades fail without failing the run, and fails the run once it passes", () => {
+  const dir = root();
+  try {
+    const known = (rows) => writeFileSync(path.join(dir, "tools/gold/known.json"), `${JSON.stringify({ rows })}\n`);
+    playwright(dir, "G-10", "failed", "build failed: E_KERNEL");
+    assert.equal(run(dir, "--only", "G-10").code, 1, "no known.json: the fail counts");
+    known([{ bench: "fx", id: "G-10", decision: "D-000", reason: "held" }]);
+    const r = run(dir, "--only", "G-10");
+    assert.equal(r.code, 0, r.out + r.err);
+    assert.match(r.out, /^known failure fx G-10: held by D-000, held$/m);
+    const rep = JSON.parse(readFileSync(path.join(dir, "out/gold/report.json"), "utf8"));
+    const row = rep.benches[0].rows.find((x) => x.id === "G-10");
+    assert.equal(row.verdict, "fail");
+    assert.equal(row.known, "D-000");
+    playwright(dir, "G-10", "passed");
+    const now = run(dir, "--only", "G-10");
+    assert.equal(now.code, 1);
+    assert.match(now.out, /^known failure now passes fx G-10: remove it from tools\/gold\/known\.json \(D-000\)$/m);
+    known([{ bench: "fx", id: "G-11", decision: "D-000", reason: "held" }]);
+    playwright(dir, "G-10", "failed", "build failed: E_KERNEL");
+    assert.equal(run(dir, "--only", "G-10").code, 1, "a known row on another rule holds nothing here");
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
+
 test("--calibrate exits 0 on an expected fail and 1 on a recorded pass that now fails", () => {
   const dir = root();
   try {

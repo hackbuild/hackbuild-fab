@@ -332,9 +332,23 @@ export function run(argv, env = {}) {
       }
     }
   } else {
+    // A known failure is a fab row a decision holds failing. It grades fail
+    // in the report without failing the run, and fails the run once it
+    // passes, so the list only shrinks (plan v10 section 7).
+    const held = readJson(path.join(root, "tools/gold/known.json"))?.rows ?? [];
     for (const b of out) {
       for (const r of b.rows) {
         if (only !== null && !only.has(r.id)) continue;
+        const k = held.find((h) => h.bench === b.bench && h.id === r.id);
+        if (k !== undefined && r.verdict === "fail") {
+          r.known = k.decision;
+          lines.push(`known failure ${b.bench} ${r.id}: held by ${k.decision}, ${k.reason}`);
+          continue;
+        }
+        if (k !== undefined && r.verdict === "pass") {
+          code = 1;
+          lines.push(`known failure now passes ${b.bench} ${r.id}: remove it from tools/gold/known.json (${k.decision})`);
+        }
         if (r.verdict === "fail" || r.verdict === "not run" || r.verdict === "over target") code = 1;
       }
       if (only === null && b.runtime.some((r) => r.verdict !== "pass")) code = 1;

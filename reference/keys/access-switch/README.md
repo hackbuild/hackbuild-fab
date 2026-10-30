@@ -264,10 +264,10 @@ and the build disagree. Nothing in it was measured, and no export was run.
 <!-- generated: print card; rewrite with HBF_ACCEPT=1 npx vitest run reference/keys/access-switch -->
 
 - design: keys-access-switch, preset default, machine ffc5p
-- file: out/access-switch-default.3mf, 60910 bytes, sha256 78cc757267c786a75f54e6d43603e27ee9b50b9f0c4d8fe0c3d11017ec4d2b96 (computed from the writer bytes in process; no export was run)
-- artifact hash (hbf): a3a594b39517d9ae11d08cf8124ea056052296f1fb6dd46e3db6eb8f9ddec2c9
+- file: out/access-switch-default.3mf, 60910 bytes, sha256 6bd16ed6f733afefd2c60dd727e3b62c9feefe09c153dce3949b5d6163dc0966 (computed from the writer bytes in process; no export was run)
+- artifact hash (hbf): d8fc0bc75c349f75d77a90b2ba1795be1586fb21782ea2448ce619a3ea6424b5
 - write it, a person at the export gate: `SOURCE_DATE_EPOCH=315532800 npx --no-install hbf export.run reference/keys/access-switch --kind 3mf --preset default --out reference/keys/access-switch/out/access-switch-default.3mf` (the epoch is pinned; unset, it follows the HEAD commit time and the bytes move)
-- build: 3e8178947f4a0d24fcb7e117d660e3bfb5858874151e6afca02fd7b83b535e13
+- build: 7f1878f485260102c54bf45cf06296cad38de388f0aef2c1120c723ebd500b79
 - slicer: Flashforge Creator 5 Pro 0.4 nozzle, process 0.24mm Standard @FF C5
 - plate: Textured PEI Plate
 - layer grid: ffc5p_20260819, first layer 0.25 mm, then 0.24 mm (profile)
