@@ -36,8 +36,9 @@ export default defineConfig({
       use: { ...CHROME, viewport: { width: 1280, height: 844 } },
     },
     // file:// on three browsers (file-url.spec.ts only); chromium here is the system Chrome the other specs use.
+    // Firefox blocklists WebGL on a runner with no GPU ("AllowWebgl2:false", CI run 41012533168); the pref lifts it.
     { name: "file-chromium", testMatch: gold ? [] : ["file-url.spec.ts"], use: { ...CHROME, viewport: { width: 1280, height: 844 } } },
-    { name: "file-firefox", testMatch: gold ? [] : ["file-url.spec.ts"], use: { browserName: "firefox", viewport: { width: 1280, height: 844 } } },
+    { name: "file-firefox", testMatch: gold ? [] : ["file-url.spec.ts"], use: { browserName: "firefox", launchOptions: { firefoxUserPrefs: { "webgl.force-enabled": true } }, viewport: { width: 1280, height: 844 } } },
     { name: "file-webkit", testMatch: gold ? [] : ["file-url.spec.ts"], use: { browserName: "webkit", viewport: { width: 1280, height: 844 } } },
     {
       name: "touch-390",
