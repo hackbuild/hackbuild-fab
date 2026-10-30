@@ -768,7 +768,8 @@ jobs:
         with:
           name: bake
           path: dist
-      - run: npx playwright install --with-deps chrome firefox webkit
+      - run: npx playwright install --with-deps chrome
+      - run: npx playwright install --with-deps firefox webkit
       - name: "fixtures: library outputs, tarballs, design bundles and the Vue host (needs network)"
         run: |
           npm run build:lib && npm run pack:lib

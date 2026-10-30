@@ -13,6 +13,7 @@ import { fileURLToPath } from "node:url";
 import { defineConfig } from "@playwright/test";
 
 const GL = ["--use-gl=swiftshader", "--enable-webgl", "--ignore-gpu-blocklist"];
+const CHROME = { channel: "chrome", launchOptions: { args: GL } };
 const SERVE = path.join(path.dirname(fileURLToPath(import.meta.url)), "../fixtures/serve.mjs");
 const gold = process.argv.some((a) => a.includes("@gold"));
 
@@ -25,23 +26,24 @@ export default defineConfig({
   reporter: [["list"], ["json", { outputFile: `../../out/smoke/${gold ? "gold-playwright" : "playwright"}.json` }]],
   // The static server for the fixture pages (cdn.spec.ts, vue-host.spec.ts), rooted at the repo.
   webServer: { command: `node ${SERVE} 4173`, url: "http://127.0.0.1:4173/tools/fixtures/serve.mjs", reuseExistingServer: true },
-  use: { channel: "chrome", headless: true, launchOptions: { args: GL } },
+  // A project value of undefined does not clear a top-level one, so the chrome channel and GL flags sit on each chromium project.
+  use: { headless: true },
   projects: [
     {
       name: "desktop",
       testMatch: gold ? ["gold/*.spec.ts"] : ["smoke.spec.ts", "legacy-report.spec.ts", "targets.spec.ts", "welcome.spec.ts", "rail.spec.ts", "drive.spec.ts", "page-build.spec.ts", "cdn.spec.ts", "vue-host.spec.ts", "draft.spec.ts", "refused.spec.ts"],
       grepInvert: /@touch/,
-      use: { viewport: { width: 1280, height: 844 } },
+      use: { ...CHROME, viewport: { width: 1280, height: 844 } },
     },
     // file:// on three browsers (file-url.spec.ts only); chromium here is the system Chrome the other specs use.
-    { name: "file-chromium", testMatch: gold ? [] : ["file-url.spec.ts"], use: { viewport: { width: 1280, height: 844 } } },
-    { name: "file-firefox", testMatch: gold ? [] : ["file-url.spec.ts"], use: { browserName: "firefox", channel: undefined, launchOptions: {}, viewport: { width: 1280, height: 844 } } },
-    { name: "file-webkit", testMatch: gold ? [] : ["file-url.spec.ts"], use: { browserName: "webkit", channel: undefined, launchOptions: {}, viewport: { width: 1280, height: 844 } } },
+    { name: "file-chromium", testMatch: gold ? [] : ["file-url.spec.ts"], use: { ...CHROME, viewport: { width: 1280, height: 844 } } },
+    { name: "file-firefox", testMatch: gold ? [] : ["file-url.spec.ts"], use: { browserName: "firefox", viewport: { width: 1280, height: 844 } } },
+    { name: "file-webkit", testMatch: gold ? [] : ["file-url.spec.ts"], use: { browserName: "webkit", viewport: { width: 1280, height: 844 } } },
     {
       name: "touch-390",
       testMatch: gold ? ["gold/*.spec.ts"] : ["touch.spec.ts"],
       grep: gold ? /@touch/ : /touch-only/,
-      use: { viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true, deviceScaleFactor: 2 },
+      use: { ...CHROME, viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true, deviceScaleFactor: 2 },
     },
   ],
 });
