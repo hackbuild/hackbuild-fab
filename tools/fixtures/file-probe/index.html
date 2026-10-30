@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>file probe</title>
+<!-- Opened from file:// by tools/smoke/file-url.spec.ts. Starts three Worker
+kinds and records, per kind, whether the worker started and answered one
+message. The result is on window.hbfProbe.done (a promise) and window.hbfProbe.rows. -->
+</head>
+<body>
+<pre id="out">probing</pre>
+<script>
+(function () {
+  var SRC = "self.onmessage = function (e) { self.postMessage('pong:' + e.data); };";
+  var rows = [];
+  function attempt(kind, make) {
+    return new Promise(function (resolve) {
+      var row = { kind: kind, started: false, answered: false, error: "" };
+      var worker = null;
+      var ended = false;
+      var timer = setTimeout(function () { finish(); }, 4000);
+      function finish() {
+        if (ended) return;
+        ended = true;
+        clearTimeout(timer);
+        try { if (worker) worker.terminate(); } catch (e) { /* already gone */ }
+        rows.push(row);
+        resolve(row);
+      }
+      try {
+        worker = make();
+        row.started = true;
+        worker.onmessage = function (e) { row.answered = e.data === "pong:ping"; finish(); };
+        worker.onerror = function (e) { row.error = String((e && e.message) || "worker error"); finish(); };
+        worker.postMessage("ping");
+      } catch (e) {
+        row.error = String(e && e.name ? e.name + ": " + e.message : e);
+        finish();
+      }
+    });
+  }
+  var done = attempt("classic blob", function () {
+    return new Worker(URL.createObjectURL(new Blob([SRC], { type: "text/javascript" })));
+  }).then(function () {
+    return attempt("data url", function () { return new Worker("data:text/javascript," + encodeURIComponent(SRC)); });
+  }).then(function () {
+    return attempt("module blob", function () {
+      return new Worker(URL.createObjectURL(new Blob([SRC], { type: "text/javascript" })), { type: "module" });
+    });
+  }).then(function () {
+    document.getElementById("out").textContent = JSON.stringify(rows);
+    return rows;
+  });
+  window.hbfProbe = { rows: rows, done: done };
+})();
+</script>
+</body>
+</html>

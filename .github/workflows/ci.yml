@@ -768,7 +768,13 @@ jobs:
         with:
           name: bake
           path: dist
-      - run: npx playwright install --with-deps chrome
+      - run: npx playwright install --with-deps chrome firefox webkit
+      - name: "fixtures: library outputs, tarballs, design bundles and the Vue host (needs network)"
+        run: |
+          npm run build:lib && npm run pack:lib
+          npm run build:design -- designs/toggle
+          npm run build:design -- reference/keys/flex-pair
+          node tools/fixtures/vue-host/build.mjs toggle
       - run: npm test -w packages/bench -- range
       - run: node --test tools/gold/report.test.mjs
       - run: npx playwright test -c tools/smoke/playwright.config.ts

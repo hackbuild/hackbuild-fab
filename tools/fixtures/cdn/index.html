@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>cdn fixture</title>
+<link rel="icon" href="data:,">
+<!-- Needs npm run build:lib, npm run pack:lib and npm run build:design -- designs/<id>. Served over http by tools/fixtures/serve.mjs. -->
+<link rel="stylesheet" href="/node_modules/@virgilvox/hackbuild-ui/dist/styles/hackbuild.css">
+<link rel="stylesheet" href="/out/publish/bench/dist/style.css">
+<script type="importmap">
+{
+  "imports": {
+    "vue": "/node_modules/vue/dist/vue.esm-browser.js",
+    "pinia": "/node_modules/pinia/dist/pinia.esm-browser.js",
+    "three": "/node_modules/three/build/three.module.js",
+    "nostics": "/node_modules/nostics/dist/index.mjs",
+    "@vue/devtools-api": "/node_modules/@vue/devtools-api/dist/vue-devtools-api.esm-browser.js",
+    "@hackbuild/spec": "/out/publish/spec/dist/cdn/spec.js",
+    "@hackbuild/viewer": "/out/publish/viewer/dist/cdn/viewer.js",
+    "@hackbuild/bench-core": "/out/publish/bench-core/dist/cdn/bench-core.js",
+    "@hackbuild/bench": "/out/publish/bench/dist/cdn/bench.js"
+  }
+}
+</script>
+</head>
+<body class="hb">
+<div id="app"></div>
+<script type="module">
+// The design id comes from ?design= (toggle or flex-pair). design.json holds
+// the classic script order and the page build global; the classic scripts are
+// written in that order before the module runs, as a bake inlines them.
+const id = new URLSearchParams(location.search).get("design") ?? "toggle";
+const base = `/out/design/${id}/`;
+const meta = await (await fetch(`${base}design.json`)).json();
+for (const file of meta.loadOrder) {
+  await new Promise((resolve, reject) => {
+    const s = document.createElement("script");
+    s.src = base + file;
+    s.onload = resolve;
+    s.onerror = () => reject(new Error(`${file} failed to load`));
+    document.head.append(s);
+  });
+}
+const { chase, bench, contact } = await import(`${base}design.js`);
+const { createBench, pageBench, pageOf } = await import("@hackbuild/bench");
+const controller = createBench({ chase, bench, contact, ...pageBench(pageOf(meta.globals.page)), globals: true, hook: true });
+controller.mount(document.getElementById("app"));
+globalThis.hbfCdn = controller;
+</script>
+</body>
+</html>
