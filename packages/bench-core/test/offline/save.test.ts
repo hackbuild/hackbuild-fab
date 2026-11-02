@@ -3,7 +3,7 @@
 // fetch answers from a table.
 
 import { describe, expect, it } from "vitest";
-import { buildOfflinePage, classicDesign, offlineAvailability, type OfflineDeps } from "../../src/offline/save.js";
+import { buildOfflinePage, classicDesign, classicInline, offlineAvailability, type OfflineDeps } from "../../src/offline/save.js";
 
 const ROOT = "https://cdn.jsdelivr.net/gh/hackbuild/hackbuild-fab@lib-v0.1.0/";
 const MAP = {
@@ -89,5 +89,35 @@ describe("save offline", () => {
     expect(text).toContain("T = { chase: a, a: a };");
     expect(() => classicDesign('import { x } from "left-pad";', {}, "T")).toThrow("no classic global");
     expect(() => classicDesign("export default 1;", {}, "T")).toThrow("export form");
+  });
+  it("an inline page: the module script becomes a classic script, the engine loads first and the wasm is inlined", async () => {
+    const map = { imports: { ...MAP.imports, "@hackbuild/engine": `${ROOT}packages/engine/dist/cdn/engine.js`, "manifold-3d": "https://cdn.jsdelivr.net/npm/manifold-3d@3.5.4/manifold.js" } };
+    // built from parts: the page script is data here, not an import of this test file
+    const from = (name: string): string => `from "@hackbuild/${name}";`;
+    const script = `import { createPageBuild, factsFor } ${from("engine")}\nimport {\n  createBench,\n  pageBench,\n} ${from("bench")}\nconst page = createPageBuild({});\nawait 0;`;
+    const base = deps({}, map);
+    const doc = {
+      ...base.doc,
+      querySelectorAll: (sel: string) => (sel.includes("module") ? [{ getAttribute: () => null, textContent: script }] : [{ getAttribute: () => "https://example.test/hackbuild.css" }]),
+    } as unknown as OfflineDeps["doc"];
+    const fetchText = base.fetchText;
+    const out = await buildOfflinePage({
+      ...base, doc,
+      fetchText: async (u) => (u === `${ROOT}packages/engine/dist/iife/engine.sources.json` ? JSON.stringify({ reads: ["@hackbuild/spec"] }) : u === `${ROOT}packages/engine/dist/iife/engine.js` ? "var HackbuildEngine={};" : fetchText(u)),
+      fetchBytes: async () => new Uint8Array([0, 97, 115, 109]),
+    }, { inline: true });
+    const labels = [...out.html.matchAll(/<script>\/\* ([^*]*?) \*\//g)].map((m) => m[1]);
+    expect(labels.indexOf("@hackbuild/engine 0.1.0, iife build, global HackbuildEngine")).toBeGreaterThan(labels.indexOf("@hackbuild/spec 0.1.0, iife build, global HackbuildSpec"));
+    expect(labels.at(-1)).toBe("manifold, manifold.wasm as base64");
+    expect(out.html).toContain("<script data-hbf-page>/* page:");
+    expect(out.html).toContain('HackbuildEngine.configureManifold({ wasmBinary: u })');
+    expect(out.html).toContain("const { createPageBuild, factsFor } = HackbuildEngine;");
+    expect(out.html).toContain("const { createBench, pageBench } = HackbuildBench;");
+    expect(out.html).toContain("(async function () {");
+    expect(out.html).not.toMatch(/<script[^>]+\bsrc=|type="importmap"|\bimport\s+\{/);
+    expect(out.name).toBe("cdn-fixture-offline.html");
+    expect(() => classicInline('import x from "left-pad";', {})).toThrow("no classic global");
+    expect(() => classicInline("export const a = 1;", {})).toThrow("no form for");
+    expect(offlineAvailability({ doc: doc, protocol: "https:" }, { inline: true }).ok).toBe(true);
   });
 });

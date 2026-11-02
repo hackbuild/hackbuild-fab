@@ -35,6 +35,7 @@ const NPM_ESM = {
   three: "build/three.module.js",
   nostics: "dist/index.mjs",
   "@vue/devtools-api": "dist/vue-devtools-api.esm-browser.js",
+  "manifold-3d": "manifold.js",
 };
 /** The classic builds of the peers an IIFE page loads from npm. */
 const NPM_CLASSIC = { vue: "dist/vue.runtime.global.prod.js", pinia: "dist/pinia.iife.prod.js" };
@@ -42,7 +43,7 @@ const npmUrl = (name, version, file) => `https://cdn.jsdelivr.net/npm/${name}@${
 
 /** The text of `export interface|type|const <name>` in a built .d.ts, with its comment, brace balanced. */
 export function declOf(text, name) {
-  const m = new RegExp(`(?:\\/\\*\\*(?:(?!\\*\\/)[\\s\\S])*\\*\\/\\s*)?export (?:declare )?(interface|type|const) ${name}\\b`).exec(text);
+  const m = new RegExp(`(?:\\/\\*\\*(?:(?!\\*\\/)[\\s\\S])*\\*\\/\\s*)?export (?:declare )?(interface|type|const|function) ${name}\\b`).exec(text);
   if (m === null) throw new Error(`no declaration ${name} in the built types`);
   let depth = 0;
   let i = m.index + m[0].length;
@@ -57,15 +58,55 @@ export function declOf(text, name) {
   return text.slice(m.index, i).trim();
 }
 
+/** The members of an interface body as { name, decl, doc }; a nested object member is flattened to `outer.inner`. */
+export function membersOf(body, prefix = "") {
+  const out = [];
+  let doc = "";
+  for (let i = 0; i < body.length;) {
+    const ws = /^\s+/.exec(body.slice(i));
+    if (ws !== null) { i += ws[0].length; continue; }
+    if (body.startsWith("/**", i)) {
+      const end = body.indexOf("*/", i);
+      doc = body.slice(i + 3, end).split("\n").map((l) => l.replace(/^\s*\*\s?/, "")).join("\n").trim();
+      i = end + 2;
+      continue;
+    }
+    let depth = 0, j = i;
+    for (; j < body.length; j++) {
+      const c = body[j];
+      if ("({[".includes(c)) depth++;
+      else if (")}]".includes(c)) depth--;
+      else if (c === ";" && depth === 0) break;
+    }
+    const decl = body.slice(i, j).trim();
+    i = j + 1;
+    const nested = /^(?:readonly )?(\w+): \{([\s\S]*)\}$/.exec(decl);
+    if (nested !== null) out.push(...membersOf(nested[2], `${prefix}${nested[1]}.`));
+    else out.push({ name: prefix + /^(?:readonly )?(\w+)/.exec(decl)[1], decl, doc });
+    doc = "";
+  }
+  return out;
+}
+
+/** The members of `export interface <name>` in a built .d.ts. */
+export function interfaceMembers(text, name) {
+  const m = new RegExp(`export interface ${name}\\b[^{]*\\{`).exec(text);
+  if (m === null) throw new Error(`no interface ${name} in the built types`);
+  let depth = 1, i = m.index + m[0].length;
+  const start = i;
+  for (; i < text.length && depth > 0; i++) depth += text[i] === "{" ? 1 : text[i] === "}" ? -1 : 0;
+  return membersOf(text.slice(start, i - 1));
+}
+
 function fence(lang, body) {
   return `\`\`\`${lang}\n${body.replace(/\n+$/, "")}\n\`\`\`\n`;
 }
 
 /** Load order of the classic scripts for a page that reads @hackbuild/bench, from the sidecars. */
-export function iifeOrder(root) {
+export function iifeOrder(root, entries = ["@hackbuild/bench"]) {
   const reads = new Map();
   for (const p of PACKAGES) reads.set(p.name, JSON.parse(read(root, sidecarPath(`${p.dir}/dist/iife/${p.short}.js`)).toString()).reads);
-  return libraryOrder(["@hackbuild/bench"], (lib) => reads.get(lib) ?? []);
+  return libraryOrder(entries, (lib) => reads.get(lib) ?? []);
 }
 
 export async function generate(root = ROOT) {
@@ -85,11 +126,12 @@ export async function generate(root = ROOT) {
     three: npmUrl("three", vers["three"], NPM_ESM["three"]),
     nostics: npmUrl("nostics", vers["nostics"], NPM_ESM["nostics"]),
     "@vue/devtools-api": npmUrl("@vue/devtools-api", vers["@vue/devtools-api"], NPM_ESM["@vue/devtools-api"]),
+    "manifold-3d": npmUrl("manifold-3d", vers["manifold-3d"], NPM_ESM["manifold-3d"]),
     ...Object.fromEntries(PACKAGES.map((p) => [p.name, byPath.get(`${p.dir}/dist/cdn/${p.short}.js`).url])),
   };
   const integrity = {
     [imports["vue"]]: esmSri("vue"), [imports["pinia"]]: esmSri("pinia"), [imports["three"]]: esmSri("three"),
-    [imports["nostics"]]: esmSri("nostics"), [imports["@vue/devtools-api"]]: esmSri("@vue/devtools-api"),
+    [imports["nostics"]]: esmSri("nostics"), [imports["@vue/devtools-api"]]: esmSri("@vue/devtools-api"), [imports["manifold-3d"]]: esmSri("manifold-3d"),
     ...Object.fromEntries(PACKAGES.map((p) => [imports[p.name], byPath.get(`${p.dir}/dist/cdn/${p.short}.js`).sri])),
   };
   const importMap = JSON.stringify({ imports, integrity }, null, 2);
@@ -184,6 +226,30 @@ createBench({ chase, bench, hook: true }).mount(document.getElementById("app"));
 </body>
 </html>`;
 
+  // ---- engine and author types
+  const engineFacts = read(root, "packages/engine/dist/facts.d.ts").toString();
+  const pageTypes = read(root, "packages/pipeline/dist/page.d.ts").toString();
+  const buildTypes = read(root, "spec/dist/build.d.ts").toString();
+  const chaseTypes = read(root, "spec/dist/chase.d.ts").toString();
+  const authorCalls = interfaceMembers(buildTypes, "Author");
+  const buildOrder = iifeOrder(root, ["@hackbuild/bench", "@hackbuild/engine"]);
+  const worked = (id) => ["chase", "build"].map((f) => `// reference/cosmetic/${id}/${f}.ts\n${readFileSync(join(root, `reference/cosmetic/${id}/${f}.ts`), "utf8").replace(/^\/\/ reference\/cosmetic\/[^\n]*\n/, "")}`);
+  const buildScript = `import { defineBench, defineBuild, defineChase } from "@hackbuild/spec";
+import { createPageBuild, factsFor } from "@hackbuild/engine";
+import { createBench, pageBench } from "@hackbuild/bench";
+
+const chase = defineChase({ /* declarations only: meta, materials, params, build, exports */ });
+const bench = defineBench(chase, { /* the rail steps and panels */ });
+const build = defineBuild(chase, (p, k) => {
+  /* geometry from the params p, written with the author calls k */
+  return k.part({ /* id, name, process, machine, bodies, features */ });
+});
+
+// the engine hashes the text of this script into defHash, so an edit moves the build hash
+const source = document.querySelector("script[data-hbf-page]").textContent;
+const page = createPageBuild({ chase, module: { build }, facts: factsFor(chase, source) });
+createBench({ chase, bench, ...pageBench(page), hook: true, offline: { inline: true } }).mount(document.getElementById("app"));`;
+
   const out = [];
   const h = (s) => out.push(s);
   h(`# hackbuild bench libraries ${version}
@@ -229,12 +295,55 @@ Each IIFE has a sidecar \`<short>.sources.json\` beside it with the sha256 of th
 
 A page opened over http can call the shell's "save offline" action (print panel): it fetches these classic scripts and writes one file that opens from file:// with no network.
 `);
+  h(`## The engine
+
+\`@hackbuild/engine\` is the build half of a bench. It carries the kernel a page runs: geom, mesh, inlay, the checks, the profile data and the 3MF writer. A page that loads it writes a chase and a build function and gets geometry, check results and 3MF, STL and card exports, with no bake step and no mesh kernel of its own.
+
+\`createPageBuild({ chase, module, facts })\` returns a page build. \`module\` is an object holding the build function under the name \`chase.build.fn\` names. \`pageBench(page)\` from \`@hackbuild/bench\` turns the page build into the \`build\` and \`writers\` options of \`createBench\`.
+
+${fence("ts", [declOf(pageTypes, "PageInput"), declOf(pageTypes, "PageBuild"), declOf(pageTypes, "PageResult")].join("\n\n"))}
+\`factsFor(chase, source)\` computes in the page what tools/bake/design-facts.mjs computes in node: the profile tables, the check seed, the kernel and manifold versions, the constraint versions, the epoch (315532800 unless given) and a defHash. Every field but defHash is equal to the bake's for a design without draft kinds. defHash covers the chase and the sha256 of the source text the page passes, where the bake hashes the design's files on disk, so a page's build hash differs from the golden of the same design. Mesh hashes and volumes are equal. When a page passes the files core's source closure names (\`{ "build.ts": text, "chase.ts": text }\`) defHash is equal too. A chase that names a machine or material the profile lacks is refused with E_REF and the closest id.
+
+${fence("ts", [declOf(engineFacts, "FactsOptions"), declOf(engineFacts, "PageSource"), declOf(engineFacts, "factsFor")].join("\n\n"))}
+\`defaultKinds\` is the feature kinds a chase gets from the kernels it lists in \`meta.kernels\` (\`kernelKindsOf(chase.meta.kernels)\`): ${"`"}${Object.keys((await import(pathToFileURL(join(root, "packages/pipeline/dist/kinds.js")).href)).PACKAGE_KINDS).sort().join("`, `")}${"`"} register kinds.
+
+One manifold instance serves the page. \`manifold-3d\` ${installed(root, "manifold-3d")} is a peer: the import map names it (\`manifold-3d\` above) and the engine reads the wasm beside it. The classic script form carries the glue and takes the wasm bytes through \`HackbuildEngine.configureManifold({ wasmBinary })\` before the first build; "save offline" writes that call with the wasm inlined. Every library that bundles geom (bench-core does) reads one shared state on the page, so \`adoptManifold\` through one library and a build through another act on one instance.
+
+Load order of the classic scripts for a page that builds, derived from the sidecars: ${buildOrder.map((l) => `\`${l}\``).join(", ")}.
+`);
+  h(`## Writing a build
+
+A build is a function from the params to a part draft: \`defineBuild(chase, (p, k) => part)\`. \`p\` is the params object the chase declares, typed from the chase; \`k\` is the author. The function is plain data in, plain data out and runs in the page. A chase declares and never computes; conditionals and loops belong in the build.
+
+${fence("ts", [declOf(chaseTypes, "defineBuild"), declOf(buildTypes, "BuildFn")].join("\n\n"))}
+### The author calls
+
+Every call on \`k\`, with its signature and doc comment as the types give them. \`k.ring.offset\` throws E_KERNEL in a page build, since it is not in this kernel build.
+
+${authorCalls.map((m) => fence("ts", `${m.doc === "" ? "" : `/** ${m.doc.replace(/\n/g, "\n * ")} */\n`}k.${m.name}: ${m.decl.replace(/^(?:readonly )?\w+/, "").replace(/^: /, "")}`.replace(/^(\/\*\*[\s\S]*?\*\/\n)?k\.(\S+): ([(<])/, "$1k.$2$3"))).join("\n")}
+### A page that builds
+
+The shape of a skill page: an import map to the release urls, then one module script. tools/fixtures/skill-page/index.html in the repo is a complete page of this shape (the art-layers chase and build below).
+
+${fence("js", buildScript)}
+The script carries a \`data-hbf-page\` attribute so it can read its own text. "Save offline" rewrites the module script into a classic script that reads the libraries from their globals, inlines the wasm, and writes one file that opens from file://; the saved script keeps the attribute, and its mesh hashes equal the online page's.
+
+### Worked build 1: coin-inlay
+
+A 44 mm coin with two faces of art in three slots. The chase and the build, verbatim from reference/cosmetic/coin-inlay.
+
+${worked("coin-inlay").map((t) => fence("ts", t)).join("\n")}
+### Worked build 2: art-layers
+
+A plate with all 13 layer kinds on both faces. The chase and the build, verbatim from reference/cosmetic/art-layers.
+
+${worked("art-layers").map((t) => fence("ts", t)).join("\n")}`);
   h(`## createBench
 
 \`createBench(options)\` from \`@hackbuild/bench\` returns a controller. \`controller.mount(el)\` draws the shell; \`controller.core\` is the headless bench core. Effects outside the mount element are opt-in and default off.
 
 ${fence("ts", [declOf(benchTypes, "BenchOptions"), declOf(benchTypes, "CreateBenchOptions"), declOf(benchTypes, "BenchWriter")].join("\n\n"))}
-The \`build\` option is \`(state) => Promise<{ part: ViewPart, report, buildHash, warnings? }>\`. A page with no build opens with its rail, undo and design files working and an empty stage. A design's build comes from its page build (\`npm run build:design\` or \`hbf adopt\`), never from a mesh kernel typed into the page.
+The \`build\` option is \`(state) => Promise<{ part: ViewPart, report, buildHash, warnings? }>\`. A page with no build opens with its rail, undo and design files working and an empty stage. A page gets its build from \`createPageBuild\` and \`factsFor\` in \`@hackbuild/engine\` (sections "The engine" and "Writing a build"), never from a mesh kernel typed into the page. A baked design page gets the same build from \`npm run build:design\` or \`hbf adopt\`.
 `);
   h(`## The BENCH hook
 

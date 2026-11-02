@@ -33,6 +33,9 @@ export function installConsumer(dir, name = "hbf-pack-consumer") {
   writeFileSync(join(dir, "package.json"), JSON.stringify({ name, version: "0.0.0", private: true, author: "Moheeb Zara <hackbuildvideo@gmail.com>", type: "module" }, null, 2) + "\n");
   const ui = readdirSync(join(ROOT, "tools/vendor")).filter((f) => /^hackbuild-ui-0\.3\.0-.*\.tgz$/.test(f));
   if (ui.length !== 1) throw new Error(`tools/vendor holds ${ui.length} hackbuild-ui 0.3.0 tarballs, legal 1`);
-  const specs = [...tarballs().map((t) => t.file), join(ROOT, "tools/vendor", ui[0]), ...Object.entries(pins()).map(([n, v]) => `${n}@${v}`)];
+  // The engine's npm form imports hackbuild-3mf, which is not on npm yet, so its vendored tarball installs beside it.
+  const writer = readdirSync(join(ROOT, "tools/vendor")).filter((f) => /^hackbuild-3mf-\d+\.\d+\.\d+-.*\.tgz$/.test(f));
+  if (writer.length !== 1) throw new Error(`tools/vendor holds ${writer.length} hackbuild-3mf tarballs, legal 1`);
+  const specs = [...tarballs().map((t) => t.file), join(ROOT, "tools/vendor", ui[0]), join(ROOT, "tools/vendor", writer[0]), ...Object.entries(pins()).map(([n, v]) => `${n}@${v}`)];
   return spawnSync("npm", ["install", "--no-audit", "--no-fund", "--save-exact", "--loglevel=error", ...specs], { cwd: dir, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
 }

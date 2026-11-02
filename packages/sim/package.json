@@ -33,7 +33,7 @@
   "dependencies": {
     "@dimforge/rapier3d-deterministic-compat": "0.21.0",
     "@hackbuild/mesh": "0.0.0",
-    "@hackbuild/spec": "0.1.0"
+    "@hackbuild/spec": "0.2.0"
   },
   "devDependencies": {
     "@hackbuild/profile": "0.0.0"

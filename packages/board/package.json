@@ -17,7 +17,7 @@
     "test": "vitest run --exclude \"seed/**\""
   },
   "dependencies": {
-    "@hackbuild/spec": "0.1.0",
+    "@hackbuild/spec": "0.2.0",
     "@tscircuit/props": "0.0.698",
     "circuit-json": "0.0.525",
     "kicadts": "0.0.58",

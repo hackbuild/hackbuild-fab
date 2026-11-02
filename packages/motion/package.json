@@ -22,6 +22,6 @@
     "@hackbuild/catalog": "0.0.0",
     "@hackbuild/geom": "0.0.0",
     "@hackbuild/profile": "0.0.0",
-    "@hackbuild/spec": "0.1.0"
+    "@hackbuild/spec": "0.2.0"
   }
 }

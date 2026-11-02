@@ -3,6 +3,8 @@
   "bytes": {
     "spec/dist/cdn/spec.js": 27729,
     "spec/dist/iife/spec.js": 21767,
+    "packages/engine/dist/cdn/engine.js": 2732669,
+    "packages/engine/dist/iife/engine.js": 2873534,
     "packages/viewer/dist/cdn/viewer.js": 22074,
     "packages/viewer/dist/iife/viewer.js": 16086,
     "packages/bench-core/dist/cdn/bench-core.js": 659784,

@@ -44,7 +44,7 @@
     "@hackbuild/project": "0.0.0",
     "@hackbuild/registry-loader": "0.0.0",
     "@hackbuild/sim": "0.0.0",
-    "@hackbuild/spec": "0.1.0",
+    "@hackbuild/spec": "0.2.0",
     "@hackbuild/wiring": "0.0.0",
     "@modelcontextprotocol/core": "2.3.0",
     "@modelcontextprotocol/server": "2.3.0",

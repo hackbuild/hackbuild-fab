@@ -32,20 +32,27 @@ export const PEER_FILES = {
 
 export const PACKAGES = [
   { short: "spec", name: "@hackbuild/spec", dir: "spec", entry: "index.ts", global: "HackbuildSpec", peers: [], vue: false },
+  // The build half (plan v11.2 3.7). manifold-3d is a peer of the npm and cdn forms (an import map names it); the iife form carries its
+  // glue and takes the wasm through configureManifold. `lazy` packages load by dynamic import on paths a page never runs.
+  { short: "engine", name: "@hackbuild/engine", dir: "packages/engine", entry: "src/index.ts", global: "HackbuildEngine", peers: ["manifold-3d"], iifeInline: ["manifold-3d"], lazy: ["eecircuit-engine", "@dimforge/rapier3d-deterministic-compat"], vue: false },
   { short: "viewer", name: "@hackbuild/viewer", dir: "packages/viewer", entry: "src/index.ts", global: "HackbuildViewer", peers: ["three"], vue: false },
   { short: "bench-core", name: "@hackbuild/bench-core", dir: "packages/bench-core", entry: "src/index.ts", global: "HackbuildBenchCore", peers: [], vue: false },
   { short: "bench", name: "@hackbuild/bench", dir: "packages/bench", entry: "src/index.ts", global: "HackbuildBench", peers: ["vue", "pinia", "three"], vue: true, attwSkip: ["style.css", "entry"], publintAllow: [{ code: "LOCAL_DEPENDENCY", path: "dependencies.@virgilvox/hackbuild-ui", why: "hackbuild-ui 0.3.0 is not on npm yet (PLAN.md 3.2); the package stays private until it is published and D-037 is answered" }] },
 ];
 
-/** Names the package leaves as bare imports: its peers and the other published packages. */
-export function externalsOf(pkg) {
-  return [...pkg.peers, ...PACKAGES.filter((p) => p.name !== pkg.name).map((p) => p.name)];
+/**
+ * Names the package leaves as bare imports: its peers, its lazy packages and the other published packages.
+ * The iife form bundles the peers in `iifeInline`, since a classic script has no import map.
+ */
+export function externalsOf(pkg, format = "es") {
+  const peers = format === "iife" ? pkg.peers.filter((p) => !(pkg.iifeInline ?? []).includes(p)) : pkg.peers;
+  return [...peers, ...(pkg.lazy ?? []), ...PACKAGES.filter((p) => p.name !== pkg.name).map((p) => p.name)];
 }
 
 /** Global name per external, for the IIFE. */
 export function globalsOf(pkg) {
   const g = {};
-  for (const p of pkg.peers) g[p] = PEER_GLOBALS[p];
+  for (const p of pkg.peers) if (PEER_GLOBALS[p] !== undefined) g[p] = PEER_GLOBALS[p];
   for (const o of PACKAGES) if (o.name !== pkg.name) g[o.name] = o.global;
   return g;
 }

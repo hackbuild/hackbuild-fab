@@ -39,8 +39,8 @@ const { build } = await import("vite");
 const { default: vue } = await import("@vitejs/plugin-vue");
 
 async function bundle(pkg, format) {
-  const external = externalsOf(pkg);
   const iife = format === "iife";
+  const external = externalsOf(pkg, iife ? "iife" : "es");
   await build({
     root: join(ROOT, pkg.dir),
     configFile: false,

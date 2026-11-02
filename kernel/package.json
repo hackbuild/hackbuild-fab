@@ -13,7 +13,8 @@
     "./author": {
       "types": "./dist/author/index.d.ts",
       "import": "./dist/author/index.js"
-    }
+    },
+    "./package.json": "./package.json"
   },
   "scripts": {
     "build": "tsc -b",

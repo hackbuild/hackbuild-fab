@@ -1,6 +1,6 @@
 {
   "name": "@hackbuild/viewer",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "description": "The stage viewer: three scene, orbit controls and the hb-viewer element. No Vue.",
@@ -22,7 +22,7 @@
     "pretest": "tsc -b"
   },
   "dependencies": {
-    "@hackbuild/spec": "0.1.0"
+    "@hackbuild/spec": "0.2.0"
   },
   "peerDependencies": {
     "three": "0.186.1"

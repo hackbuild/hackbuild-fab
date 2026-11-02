@@ -182,4 +182,16 @@ describe("staged tarballs install and work", () => {
     }
     assert.deepEqual(problems, []);
   });
+  it("6. the installed engine imports in node and factsFor returns the page facts", () => {
+    const chase = { meta: { id: "probe", machines: ["ffc5p"] }, materials: [{ slot: 1, material: "petg" }], build: { module: "./build.ts", fn: "build" }, params: [] };
+    const code = `import("@hackbuild/engine").then((e) => { const f = e.factsFor(${JSON.stringify(chase)}, "x"); console.log(JSON.stringify({ fields: Object.keys(f).sort(), manifold: f.versions.manifold, epoch: f.epoch, create: typeof e.createPageBuild, kinds: Object.keys(e.defaultKinds).sort() })); });`;
+    const r = run(process.execPath, ["--input-type=module", "-e", code]);
+    assert.equal(r.status, 0, r.stderr);
+    const out = JSON.parse(r.stdout);
+    assert.deepEqual(out.fields, ["checksSeed", "constraints", "defHash", "epoch", "name", "tables", "versions"]);
+    assert.equal(out.manifold, JSON.parse(readFileSync(join(tmp, "node_modules", "manifold-3d", "package.json"), "utf8")).version);
+    assert.equal(out.epoch, 315532800);
+    assert.equal(out.create, "function");
+    assert.deepEqual(out.kinds, ["circuit", "inlay", "mesh", "nest"]);
+  });
 });

@@ -19,6 +19,6 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@hackbuild/spec": "0.1.0"
+    "@hackbuild/spec": "0.2.0"
   }
 }

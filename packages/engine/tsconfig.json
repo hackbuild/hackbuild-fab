@@ -1,0 +1,21 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": "src",
+    "resolveJsonModule": true,
+    "skipLibCheck": true
+  },
+  "include": [
+    "src"
+  ],
+  "references": [
+    { "path": "../../spec" },
+    { "path": "../profile" },
+    { "path": "../geom" },
+    { "path": "../checks" },
+    { "path": "../pipeline" },
+    { "path": "../registry-loader" },
+    { "path": "../../kernel" }
+  ]
+}

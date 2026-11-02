@@ -1,0 +1,38 @@
+{
+  "name": "@hackbuild/engine",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "description": "The build half of a bench: createPageBuild, the default feature kinds, factsFor, and the kernel pieces a page runs (geom, mesh, inlay, checks, the 3MF writer). Headless.",
+  "license": "MIT",
+  "author": "Moheeb Zara <hackbuildvideo@gmail.com>",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -b",
+    "pretest": "tsc -b",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@hackbuild/checks": "0.0.0",
+    "@hackbuild/geom": "0.0.0",
+    "@hackbuild/kernel": "0.0.0",
+    "@hackbuild/pipeline": "0.0.0",
+    "@hackbuild/profile": "0.0.0",
+    "@hackbuild/registry-loader": "0.0.0",
+    "@hackbuild/spec": "0.2.0"
+  },
+  "peerDependencies": {
+    "manifold-3d": "3.5.4"
+  },
+  "unpkg": "./dist/iife/engine.js",
+  "jsdelivr": "./dist/iife/engine.js"
+}

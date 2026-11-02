@@ -92,6 +92,9 @@
       "path": "kernel"
     },
     {
+      "path": "packages/engine"
+    },
+    {
       "path": "core"
     },
     {
