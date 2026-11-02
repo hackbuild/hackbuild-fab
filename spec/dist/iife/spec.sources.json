@@ -1,0 +1,28 @@
+{
+ "iife": "spec.js",
+ "sha256": "1d23231c152a21d7b039dfcad7b1786429ee101143b2b9773b65ace781b3ca95",
+ "reads": [],
+ "own": {
+  "spec/art.ts": "db37a1019936def0581a32f89c278404f0dd73a954e70d95534731bebc38ddb0",
+  "spec/bench.ts": "ec86dc4ec0ea1c8914e419e673aca5411d8a12e8ba1a29463dd25d3e26e4f904",
+  "spec/board-features.ts": "6af513269a3a8b1e1bf7730cdebefa6eb0c782d0f74a014c462db0a4fdbb8403",
+  "spec/build.ts": "60311b324a53cf6d3e592b28fe7ffe8443795104bdb1db8cf8e9ad32ba44962c",
+  "spec/capabilities.ts": "0f7df341d0096824ff1d1455b806a518df800f10ee3172c5c0e6473672bc9a5b",
+  "spec/chase.ts": "72c048505759fb9f98a3830164f1e878ac192bc3ff48bb26d7a3c4dd2a1bd840",
+  "spec/checks.ts": "74cb88623fb849a85ad9b49fa31972977842640fdcaf0c4e1bc6f8099ab295fe",
+  "spec/commands.ts": "feb117eb0256b1e78e260f33ff448b9361008374b6cda34e27ba0c02af405dca",
+  "spec/constraints.ts": "4d8871af49496a42c5fbdeff2313312bee6543b7abc849aa586278dc3da12820",
+  "spec/draft.ts": "96f0d3892c0bae1fb94e74dc2b41a37dbca7dfe5b7d537ca5d0ef0c8db5a65f3",
+  "spec/errors.ts": "b5b038f74d4f1dc73ee62dfa5c646536104088a5c92cfe339b961905b0466744",
+  "spec/features.ts": "e480f4a6abab196e9614880353b22c107ba2fa8b094dee9cfe066d0653385b14",
+  "spec/hook.ts": "7df3fd8da45053920d62d7732830620aa6b7bb1621bcabff63660a2139adbfbe",
+  "spec/ids.ts": "06c96a52e158a803a6d8102ee96994ed7d3555a16eceb47cef1cfe6c8a23366c",
+  "spec/index.ts": "0a4035f4a9545233332135b5b24d53df63737ce9948acdd04bf2e7c6ee58bd10",
+  "spec/jcs.ts": "7a49422080d95ce57d267aac3a31a89d6320b39bbdc806005a16ee6c43106587",
+  "spec/part-ir.ts": "848d813290d681a531f662b7edfd8d2fd29d17c2b3925bc2160ce3c890da181e",
+  "spec/profile.ts": "b04585de32da59d58ef3df648a3172698a8e5e3c6e7093a472b8cbae62627f67",
+  "spec/registry.ts": "4768ffd76028ca8d4557afa08a4b3a9d8ba2696c1355d50196e7b48dfd65f00e",
+  "spec/widgets.ts": "7b7f1e95dbd2a19621a94bba1782ef818f082f53790f226389a974736ac389c8"
+ },
+ "packages": []
+}

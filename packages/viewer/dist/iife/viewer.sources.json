@@ -1,0 +1,17 @@
+{
+ "iife": "viewer.js",
+ "sha256": "315b702ac655824cb1dd7d448fe99a8b4ef7a2799be1d332c60a780605061730",
+ "reads": [
+  "three"
+ ],
+ "own": {
+  "packages/viewer/src/bake-stage.ts": "8183b1746cadc9bd2888f4150242c27a45118d61ce77aa6eab58ae738d1d34f9",
+  "packages/viewer/src/controls.ts": "5f47f2e555a548b33cf19e0eb3ad6d6ac7e25adae7d80329d0910bbc3c78f4bc",
+  "packages/viewer/src/dispose.ts": "de2bfc396035b34971d90d9d599ba190d9be18687ec8c42bad1a21e315e70fa2",
+  "packages/viewer/src/hb-viewer.ts": "6c3aeaac75f451c3a619c70ddc040a0f8c27807675efaf437720a9118897fef5",
+  "packages/viewer/src/index.ts": "67a1986dba3f196b00e1a4c8e652adab9cd9a773fbe280845af68a68d410e893",
+  "packages/viewer/src/part-refs.ts": "9147660fc74843a483811c82c7ccea4cbeabce1b1ad7782699322e4dabcc2585",
+  "packages/viewer/src/scene.ts": "be2c0baa4181d40be204a52bcf451822e28274d385e6ca9e38c98e5f6fcacff4"
+ },
+ "packages": []
+}
