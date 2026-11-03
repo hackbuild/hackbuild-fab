@@ -195,14 +195,10 @@ export const build = defineBuild(chase, (p, k) => {
   // ---- the clasp numbers (claspGeom, bail.html 1685 to 1697)
   const faceDown = p.orient === "down";
   let clasp: string = p.clasp;
-  if (clasp === "buried") {
-    // A channel inside the host needs a void the inlay host (a prism from the bed) cannot hold, and the bore kind has no generator in this build.
-    if (!faceDown) throw commandError({ code: "E_KERNEL", path: "/clasp", got: "buried at front face up", expected: "bridge, pad or buried at front face down", record: "kernels/art-inlay", hint: "set the print pose to front face down, or pick the store back recess" });
-    clasp = "bridge";
-    k.warn("BURIED_AS_BRIDGE", "buried channels need a void inside the inlay host, which this kernel build cannot cut. built as twin printed bridges with the same spacing and channel", { param: "/clasp" });
-  }
+  // Printed bridges stand on the back face, so they need it on top; with the front up BAIL builds buried channels instead (line 1689).
   if (!faceDown && clasp === "bridge") {
-    throw commandError({ code: "E_KERNEL", path: "/clasp", got: "bridge at front face up", expected: "bridges need the back face up", record: "kernels/art-inlay", hint: "set the print pose to front face down, or pick the store back recess" });
+    clasp = "buried";
+    k.warn("BRIDGE_AS_BURIED", "printed bridges need the front face down, so they are built as buried channels with the same spacing and channel (bail.html line 1689). set the print pose to front face down for bridges", { param: "/clasp" });
   }
   const single = p.pair === "single";
   const cw = single ? 2 * p.cord + p.clr : p.cord + p.clr;
@@ -213,8 +209,36 @@ export const build = defineBuild(chase, (p, k) => {
   const roof = snapUp(p.roof);
   if (p.clr < 0.25 && clasp !== "pad") k.warn("CLEARANCE", `cord clearance ${p.clr} mm, legal from 0.25, constraint braided cord binds in the channel, origin bail.html line 1794`, { param: "/clr" });
 
-  // ---- the outline of the blank (blankPath, bail.html 1508 to 1529); Math.sin and Math.cos points snap to the 1/1024 mm grid in the kernel
   const doc: ArtDocument | null = p.art?.doc ?? null;
+  // ---- buried channels (buildSlide, 1720 to 1723): the slide holds the front colour, two solid layers, the channel and the back skin.
+  // The channel runs from z0 to z1 on layer tops; the back skin is under it when the front is up and over it when the front is down.
+  let z0 = 0, z1 = 0;
+  if (clasp === "buried") {
+    let skin = snapUp(p.skin);
+    // The inlay kind carves the colour after the channel is cut, so a channel may not reach into the back art.
+    if ((doc?.faces.back ?? []).some((L) => !L.mute) && skin < p.inlayDepth) {
+      k.warn(
+        "CLAMP",
+        `back skin ${skin} mm moved up to the colour depth ${p.inlayDepth} mm (computed), legal from ${p.inlayDepth} mm, constraint a buried channel may not cut into the back art, which the inlay kind carves after the channel, origin the inlay kind (kernels/art-inlay). set the back skin to ${p.inlayDepth} mm`,
+        { param: "/skin", bound: limit(p.inlayDepth, "lo", `back colour depth ${p.inlayDepth} mm over the channel`, "kernels/art-inlay", COMPUTED) },
+      );
+      skin = p.inlayDepth;
+    }
+    const floor = faceDown ? 0 : r4(m.layer(skin));
+    const need = r4(faceDown ? m.layer(p.inlayDepth + 2 * lh + ch + skin) : m.layer(floor + ch + 2 * lh + p.inlayDepth));
+    if (thk < need - 1e-6) {
+      k.warn(
+        "CLAMP",
+        `thickness ${thk.toFixed(2)} mm raised to ${need.toFixed(2)} mm (computed) to bury the channels, legal from ${need.toFixed(2)} mm, constraint the slide holds the ${p.inlayDepth} mm front colour, two solid layers, the ${ch} mm channel and the ${skin} mm back skin, origin bail.html line 1722. set the thickness to ${need.toFixed(2)} mm`,
+        { param: "/thk", bound: limit(need, "lo", `colour ${p.inlayDepth} mm, two ${lh} mm layers, channel ${ch} mm and skin ${skin} mm on ${m.id}`, "bail.html line 1722", COMPUTED) },
+      );
+      thk = need;
+    }
+    z0 = faceDown ? r4(thk - skin - ch) : floor;
+    z1 = r4(z0 + ch);
+  }
+
+  // ---- the outline of the blank (blankPath, bail.html 1508 to 1529); Math.sin and Math.cos points snap to the 1/1024 mm grid in the kernel
   const w = p.w, h = p.shape === "round" || p.shape === "concho" ? p.w : p.h;
   const outline = ((): Ring => {
     switch (p.shape) {
@@ -370,23 +394,49 @@ export const build = defineBuild(chase, (p, k) => {
     }
   }
   const spanMax = k.profile.constant("bridge.maxMm").value;
-  if (clasp === "bridge") {
+  const channels = clasp === "bridge" || clasp === "buried";
+  // The fin body role follows the profile: a material whose handling needs a flexible feed path is flex, any other is a rigid body.
+  const gripMat = channels && p.grip ? k.profile.material(slotMaterial(p.gripSlot)) : null;
+  const gripFlex = gripMat?.handling?.flexible === true;
+  const finBody = (i: number, ribs: readonly ShapeDecl[], clip: ShapeDecl): BodyDraft => k.body(`fins${i + 1}`, {
+    role: gripFlex ? "flex" : "body", slot: p.gripSlot, material: slotMaterial(p.gripSlot),
+    base: { route: "csg", op: "intersection", of: [{ route: "csg", op: "union", of: ribs }, clip] },
+  });
+  if (channels) {
     const between = single ? Infinity : p.spacing - cw;
     if (between < 0.8) throw commandError({ code: "E_SCHEMA", path: "/spacing", got: p.spacing, expected: `at least ${(cw + 0.8).toFixed(1)} mm`, hint: `the two channels are ${Math.max(0, between).toFixed(2)} mm apart` });
-  }
-  if (clasp === "bridge") {
     const finsOn = p.grip;
     metrics.push({
       id: "bail.channel.clearWidth", value: r4(cw - (finsOn ? 2 * finP : 0)), unit: "mm", ...INFERRED_INPUTS,
       note: `${single ? "one channel for both strands" : "one channel per strand"}: cord ${p.cord} mm plus clearance ${p.clr} mm${finsOn ? `, less ${r4(2 * finP)} mm of grip fin projection at the fin tips` : ""}; the cord passes when this is above the cord (cord and clearance inferred)`,
       drivenBy: ["/cord", "/clr", "/pair", ...(finsOn ? ["/gripP"] : [])], gate: "informational", group: "bail",
     });
-    if (cw > spanMax) k.warn("SPAN", `bridge span ${cw.toFixed(2)} mm, legal to ${spanMax} mm (profile bridge.maxMm, inferred), constraint a layer bridging more sags`, { param: "/cord" });
+    if (cw > spanMax) k.warn("SPAN", `${clasp === "bridge" ? "bridge" : "channel roof"} span ${cw.toFixed(2)} mm, legal to ${spanMax} mm (profile bridge.maxMm, inferred), constraint a layer bridging more sags`, { param: "/cord" });
+    if (clasp === "buried") {
+      // Each strand's channel runs the whole slide, top edge to bottom edge (1749 to 1762, 1820), cut as a flat roofed window through
+      // the slide and the rim band. In the window's face y is minus part z (v = normal x u). Fins stand on the channel walls, phased from y 0.
+      const hosts = rimBody ? [slide.id, "rim"] : [slide.id];
+      xs.forEach((xc, i) => {
+        for (const host of hosts) {
+          features.push({
+            kind: "window", id: `window.channel${i + 1}${host === slide.id ? "" : "-rim"}`, body: host, roof: "flat",
+            outline: rect(-cw / 2, -z1, cw / 2, -z0), face: { origin: [xc, 0, 0], normal: [0, 1, 0], u: [1, 0, 0] }, note: "buried cord channel",
+          });
+        }
+        if (!p.grip) return;
+        const ribs: ShapeDecl[] = [];
+        for (let n = Math.floor((ext.y0 - ribW) / p.gripPitch); n * p.gripPitch < ext.y1; n++) {
+          const ya = r4(n * p.gripPitch), yb = r4(ya + ribW);
+          ribs.push({ route: "prism", outline: [rect(xc - cw / 2, ya, xc - cw / 2 + finP, yb)], z: [z0, z1] });
+          ribs.push({ route: "prism", outline: [rect(xc + cw / 2 - finP, ya, xc + cw / 2, yb)], z: [z0, z1] });
+        }
+        bodies.push(finBody(i, ribs, slideShape(r4(z0 - 1), r4(z1 + 1))));
+      });
+    }
+  }
+  if (clasp === "bridge") {
     const y0 = p.tunY - p.len / 2, y1 = p.tunY + p.len / 2;
     const claspMat = slotMaterial(p.claspSlot);
-    // The fin body role follows the profile: a material whose handling needs a flexible feed path is flex, any other is a rigid body.
-    const gripMat = p.grip ? k.profile.material(slotMaterial(p.gripSlot)) : null;
-    const gripFlex = gripMat?.handling?.flexible === true;
     // BAIL's trimmed bridge count (buildSlide, 1771 and 1788): footprint cells outside the blank or within 0.6 mm of its edge. This build clips at the outline only.
     const px = 1 / p.cells;
     let footprint = 0, hanging = 0;
@@ -427,26 +477,23 @@ export const build = defineBuild(chase, (p, k) => {
           ribs.push({ route: "prism", outline: [rect(xc - cw / 2, ya, xc - cw / 2 + finP, yb)], z: [thk, r4(thk + ch)] });
           ribs.push({ route: "prism", outline: [rect(xc + cw / 2 - finP, ya, xc + cw / 2, yb)], z: [thk, r4(thk + ch)] });
         }
-        bodies.push(k.body(`fins${i + 1}`, {
-          role: gripFlex ? "flex" : "body", slot: p.gripSlot, material: slotMaterial(p.gripSlot),
-          base: { route: "csg", op: "intersection", of: [{ route: "csg", op: "union", of: ribs }, outlinePrism(r4(thk + ch + 1))] },
-        }));
+        bodies.push(finBody(i, ribs, outlinePrism(r4(thk + ch + 1))));
       }
     });
-    // Grip fins on a slot whose material is not flexible in the profile: the cord did not pass in the owner's print (PRINT-NOTES.md).
-    if (gripMat !== null && !gripFlex) {
-      const squeeze = 2 * p.gripP;
-      const handling = gripMat.handling;
-      const flexNote = handling === undefined ? "no handling row" : `handling.flexible false, tier ${handling.provenance.tier}`;
-      k.warn(
-        "GRIP_RIGID",
-        `grip fins squeeze the ${p.cord} mm cord by ${squeeze.toFixed(2)} mm (computed) in slot ${p.gripSlot}, ${gripMat.id} at ${gripMat.modulusMPa ?? "unknown"} MPa (profile); legal: no squeeze for a rigid fin; constraint: the material of slot ${p.gripSlot} is not flexible in the profile (${flexNote}); origin: owner print note, ${PRINT_NOTE}, braided cord did not pass fins printed in PETG. set the grip slot to the TPU slot or turn the fins off`,
-        {
-          param: "/gripSlot",
-          bound: limit(0, "hi", `fin squeeze ${squeeze.toFixed(2)} mm on ${gripMat.id}, ${flexNote}`, PRINT_NOTE, handling === undefined ? qualify([null]) : qualifyRow(handling.provenance.tier)),
-        },
-      );
-    }
+  }
+  // Grip fins on a slot whose material is not flexible in the profile: the cord did not pass in the owner's print (PRINT-NOTES.md).
+  if (gripMat !== null && !gripFlex) {
+    const squeeze = 2 * p.gripP;
+    const handling = gripMat.handling;
+    const flexNote = handling === undefined ? "no handling row" : `handling.flexible false, tier ${handling.provenance.tier}`;
+    k.warn(
+      "GRIP_RIGID",
+      `grip fins squeeze the ${p.cord} mm cord by ${squeeze.toFixed(2)} mm (computed) in slot ${p.gripSlot}, ${gripMat.id} at ${gripMat.modulusMPa ?? "unknown"} MPa (profile); legal: no squeeze for a rigid fin; constraint: the material of slot ${p.gripSlot} is not flexible in the profile (${flexNote}); origin: owner print note, ${PRINT_NOTE}, braided cord did not pass fins printed in PETG. set the grip slot to the TPU slot or turn the fins off`,
+      {
+        param: "/gripSlot",
+        bound: limit(0, "hi", `fin squeeze ${squeeze.toFixed(2)} mm on ${gripMat.id}, ${flexNote}`, PRINT_NOTE, handling === undefined ? qualify([null]) : qualifyRow(handling.provenance.tier)),
+      },
+    );
   }
   // ---- the tips (buildTip, bail.html 1966 to 2018), revolved bodies standing on their open end, banded across the slots
   const gap = 6;

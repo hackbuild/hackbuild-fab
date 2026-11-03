@@ -5,7 +5,7 @@ The owner's bolo tie bench (record `knowledge/designs/bail.md`, original `fab-kn
 | file | what it holds |
 |---|---|
 | `chase.ts` | slide, rim, clasp, ends, inlay controls and the `art` param of kind layers; 9 presets as values, each with its art document; 4 filament slots, slot 4 TPU95 as flex |
-| `build.ts` | the blank outline, the rim ring, the inlay features from the art document, the store back recess with its peg, twin printed bridges in the clasp slot, grip fins, revolved tips on the plate, the rigid fin warning and the ported BAIL checks |
+| `build.ts` | the blank outline, the rim ring, the inlay features from the art document, the store back recess with its peg, twin printed bridges in the clasp slot, buried channels cut as windows, grip fins, revolved tips on the plate, the rigid fin warning and the ported BAIL checks |
 | `bench.ts`, `bench.entry.ts`, `page-build.ts`, `page-facts.d.ts`, `bake.json` | the bench and its bake inputs; `node tools/bake/bake.mjs designs/bail/bake.json` writes `dist/bench/bail.html` |
 | `expected/` | parity goldens, written by `SOURCE_DATE_EPOCH=315532800 hbf parity designs/bail --accept` |
 | `test/` | `build.test.ts` the chase, the art uris and each of the 9 preset builds through the CLI; `draft.test.ts` the draft numbers, the rim, the slots and the warnings in process; `catalog.test.ts` the copies of the hardware rows; `bench.test.ts` the bench |
@@ -46,9 +46,9 @@ The `hslcut` preset ports `hslcut` (bail.html 1153 to 1163). The HeatSync mark i
 
 ## Bridges and clasp slot
 
-The bridges print in `claspSlot` (BAIL `clasp.slot`, default 1, line 1840), and the hackbuild preset uses 1. The trace preset is 1 and the monogram preset 3, as in BAIL. Face up with bridges throws E_KERNEL, as does buried face up: BAIL turns a face up bridge into a buried channel, and this kernel cannot cut one.
+The bridges print in `claspSlot` (BAIL `clasp.slot`, default 1, line 1840), and the hackbuild preset uses 1. Face up with bridges builds buried channels with a `BRIDGE_AS_BURIED` warning, as BAIL does (line 1689).
 
-Buried channels build as twin printed bridges. The trace and monogram presets keep thickness 7.45 (BAIL 7.44, a layer top) and the bridges stand on top of it, 5.76 mm proud (computed: channel 4.56 plus roof 1.2), where BAIL buries the channel inside the slide.
+Buried channels (buildSlide, lines 1720 to 1789) run the whole slide from the top edge to the bottom edge, one per strand, each cut as a flat roofed `window` feature (packages/mesh kinds/window.ts) through the slide and, when there is one, the rim band. The slide grows to hold the front colour, two solid layers, the channel and the back skin (`skin`, BAIL `clasp.skin`, default 1.2) with a CLAMP warning, as line 1722 does. On the trace preset the channels are 4.5 wide and run from z 1.69 to 6.25 under a 1.2 mm skin (computed). With the front up the skin is the floor, on the layer top at or over it. The back skin is held at or over the colour depth when the back carries art, because the inlay kind carves the colour after the channel is cut; BAIL lets a channel cut into the back art. Grip fins stand on the channel walls through the channel height, phased from y 0 (line 1760).
 
 ## Rigid grip fins
 
@@ -74,7 +74,6 @@ The `SLOPE` and both `CLAMP` warnings (thickness to a layer top, tip bore depth)
 |---|---|
 | die cut tracing of text, shape and logo layers | the outline traces front path layers only (see Die cut); other kinds raise `OUTLINE_ART_SKIPPED` |
 | concho outline detail | the concho samples 360 points; BAIL samples 1440 (line 1523). the chord error of the outline is 0.0009 mm against BAIL's 0.00005 mm at the 23 mm radius of the 46 mm blank (computed) |
-| buried channels | a void inside the inlay host cannot be cut (the host must be a prism from the bed, and the `bore` kind has no generator in this build); `buried` builds twin bridges with a warning |
 | cabochon pocket and the setting preset | the inlay kind refuses `cut` pocket and `cut` through |
 | relief cameo | no painter yet |
 | image layers | a PNG image layer lowers by tracing (packages/inlay art-lower imageToPaths): mono and silhouette in the layer slot, palette to the nearest of slots 1 to 3, one path layer per slot. BAIL counts the TPU grip slot on the hackbuild preset (line 1165); here it is left out so no face pixel prints in TPU. an SVG image layer is not decoded, only PNG data uris |
@@ -90,11 +89,11 @@ The build writes three informational metrics, qualifier computed on an inferred 
 
 | metric | claim fn | band, mm | built when |
 |---|---|---|---|
-| `bail.channel.clearWidth` | `bail.channelClear` | 4.25 to 5, nominal 4.5 | twin bridge clasp; net of the fin tips when grip fins are on |
+| `bail.channel.clearWidth` | `bail.channelClear` | 4.25 to 5, nominal 4.5 | bridge and buried clasps; net of the fin tips when grip fins are on |
 | `bail.tip.bore` | `bail.tipBore` | 4 to 4.8, nominal 4.3 | any tips; the kit bore for store bought tips |
 | `bail.clip.recessClearance` | `bail.clipFit` | 0.2 to 0.6, nominal 0.4 | store back recess, front face down |
 
-The default build is the store back recess with printed tips, so the channel claim reads no metric there and is E_PARAM_MISSING until the clasp is set to bridges.
+The default build is the store back recess with printed tips, so the channel claim reads no metric there and is E_PARAM_MISSING until the clasp is set to bridges or buried channels.
 
 ## Numbers awaiting profile rows
 

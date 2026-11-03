@@ -12,7 +12,7 @@ import type { AnyCheckDef, AnyFeatureKindDef, FeatureKind, FeatureOf, KernelCtx,
 import type { RasterMask } from "@hackbuild/mesh";
 import { inlayKind, inlayMasks } from "@hackbuild/inlay";
 import { conductorKind, contactKind, padKind, portKind } from "@hackbuild/circuit";
-import { pocketKind, springKind } from "@hackbuild/mesh";
+import { pocketKind, springKind, windowKind } from "@hackbuild/mesh";
 import { conductorPackageChecks, inlayChecks } from "@hackbuild/checks";
 import { SHEET_KINDS } from "@hackbuild/mechanisms";
 
@@ -52,10 +52,11 @@ export const PACKAGE_KINDS: Partial<Readonly<Record<KernelId, KernelKinds>>> = {
     checks: () => [],
   },
   // pocket and spring (mesh owns them, PACKAGES.md), registered at M06-T08
-  // for the PIP button archetypes; checks run from the registry by level.
+  // for the PIP button archetypes, and window for BAIL's buried channels;
+  // checks run from the registry by level.
   mesh: {
     kinds: [],
-    onUse: [pocketKind, springKind],
+    onUse: [pocketKind, springKind, windowKind],
     checks: () => [],
   },
   inlay: {

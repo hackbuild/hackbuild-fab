@@ -101,9 +101,39 @@ describe("the hackbuild preset: the numbers BAIL computes", () => {
     expect(block.z[1] - block.z[0]).toBeCloseTo(5.76, 6);
   });
 
-  test("the clasp slot of the buried presets is BAIL's: trace 1, monogram 3", async () => {
-    expect(body(await run("trace"), "bridge1").slot).toBe(1);
-    expect(body(await run("monogram"), "bridge1").slot).toBe(3);
+  test("the buried presets cut flat roofed windows through the slide, and the rim band when there is one, and print no bridges", async () => {
+    const windows = (r: Run) => r.draft.features.filter((f) => f.kind === "window") as unknown as { id: string; body: string; roof: string; outline: Ring; face: { origin: number[] } }[];
+    const trace = await run("trace");
+    expect(trace.draft.bodies.some((b) => b.id.startsWith("bridge"))).toBe(false);
+    const w = windows(trace);
+    expect(w.map((f) => [f.id, f.body, f.roof, f.face.origin[0]])).toEqual([["window.channel1", "slide", "flat", -6], ["window.channel2", "slide", "flat", 6]]);
+    // thickness 7.45, back skin 1.2, channel snapUp(4 + 0.5) = 4.56 tall and 4.5 wide: z 1.69 to 6.25, two layers over the 1.2 mm front colour (computed)
+    for (const f of w) expect(f.outline).toEqual([[-2.25, -6.25], [2.25, -6.25], [2.25, -1.69], [-2.25, -1.69]]);
+    expect(windows(await run("monogram")).map((f) => f.body)).toEqual(["slide", "rim", "slide", "rim"]);
+  });
+
+  test("a thin slide grows to bury the channels; with the front up the skin is the floor; bridges with the front up are built buried", async () => {
+    const thin = await run("trace", { thk: 5.05 });
+    const grew = thin.warnings.find((x) => x.code === "CLAMP" && x.param === "/thk");
+    structured(grew);
+    expect(grew?.text).toMatch(/raised to 7\.45 mm/);
+    expect(prism(body(thin, "slide").base).z).toEqual([0, 7.45]);
+    const up = await run("trace", { orient: "up" });
+    // the floor is the layer top at or over the 1.2 mm skin, 1.21 on a 0.25 first layer (computed)
+    expect((up.draft.features.find((f) => f.kind === "window") as unknown as { outline: Ring }).outline).toEqual([[-2.25, -5.77], [2.25, -5.77], [2.25, -1.21], [-2.25, -1.21]]);
+    const bridged = await run("trace", { clasp: "bridge", orient: "up" });
+    expect(bridged.warnings.map((x) => x.code)).toContain("BRIDGE_AS_BURIED");
+    expect(bridged.draft.features.filter((f) => f.kind === "window")).toHaveLength(2);
+  });
+
+  test("buried grip fins stand on the channel walls through the channel height, in the flex slot", async () => {
+    const r = await run("trace", { grip: true });
+    const fins = body(r, "fins1");
+    expect([fins.role, fins.slot]).toEqual(["flex", 4]);
+    const ribs = csg(csg(fins.base).of[0]!).of.map(prism);
+    expect(new Set(ribs.map((q) => q.z.join(" ")))).toEqual(new Set(["1.69 6.25"]));
+    // BAIL's fins phase from y 0 (bail.html:1760): one rib starts at y 0
+    expect(ribs.some((q) => q.outline[0]![0]![1] === 0)).toBe(true);
   });
 });
 

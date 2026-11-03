@@ -75,7 +75,7 @@ export const chase = defineChase({
     ] },
     { id: "clasprow", label: "CLASP", live: "commit", fields: [
       { id: "clasp", type: "enum", label: "clasp", default: "pad", options: [
-        { value: "pad", label: "store back recess" }, { value: "bridge", label: "twin printed bridges" }, { value: "buried", label: "buried channels (built as bridges)" },
+        { value: "pad", label: "store back recess" }, { value: "bridge", label: "twin printed bridges" }, { value: "buried", label: "buried channels" },
       ] },
       { id: "cord", type: "mm", label: "cord diameter", range: [2, 6], step: 0.5, default: 4,
         help: "catalog row bail-cord-saintrygo4, Saintrygo braided leather 4 mm, inferred, read off the photo" },
@@ -92,11 +92,13 @@ export const chase = defineChase({
         { value: "twin", label: "two channels" }, { value: "single", label: "one channel for both strands" },
       ], showWhen: { field: "clasp", in: ["bridge", "buried"] } },
       { id: "spacing", type: "mm", label: "channel spacing", range: [8, 24], step: 0.5, default: 12, showWhen: { field: "clasp", in: ["bridge", "buried"] } },
-      { id: "wall", type: "mm", label: "bridge wall", range: [0.8, 3], step: 0.2, default: 1.6, showWhen: { field: "clasp", in: ["bridge", "buried"] } },
-      { id: "roof", type: "mm", label: "bridge roof", range: [0.48, 2.4], step: 0.24, default: 1.2, showWhen: { field: "clasp", in: ["bridge", "buried"] } },
-      { id: "len", type: "mm", label: "bridge length", range: [6, 30], step: 1, default: 18, showWhen: { field: "clasp", in: ["bridge", "buried"] } },
-      { id: "tunY", type: "mm", label: "bridge offset", range: [-10, 10], step: 0.5, default: 2, showWhen: { field: "clasp", in: ["bridge", "buried"] } },
-      { id: "claspSlot", type: "slot", label: "bridge slot", default: 1, showWhen: { field: "clasp", in: ["bridge", "buried"] },
+      { id: "wall", type: "mm", label: "bridge wall", range: [0.8, 3], step: 0.2, default: 1.6, showWhen: { field: "clasp", in: ["bridge"] } },
+      { id: "roof", type: "mm", label: "bridge roof", range: [0.48, 2.4], step: 0.24, default: 1.2, showWhen: { field: "clasp", in: ["bridge"] } },
+      { id: "skin", type: "mm", label: "back skin", range: [0.72, 3], step: 0.24, default: 1.2, showWhen: { field: "clasp", in: ["buried"] },
+        help: "solid layers between the buried channels and the back face; BAIL's clasp.skin, default 1.2" },
+      { id: "len", type: "mm", label: "bridge length", range: [6, 30], step: 1, default: 18, showWhen: { field: "clasp", in: ["bridge"] } },
+      { id: "tunY", type: "mm", label: "bridge offset", range: [-10, 10], step: 0.5, default: 2, showWhen: { field: "clasp", in: ["bridge"] } },
+      { id: "claspSlot", type: "slot", label: "bridge slot", default: 1, showWhen: { field: "clasp", in: ["bridge"] },
         help: "the slot the printed bridges print in; BAIL's clasp.slot, default 1" },
       { id: "grip", type: "bool", label: "grip fins", default: false, showWhen: { field: "clasp", in: ["bridge", "buried"] } },
       { id: "gripSlot", type: "slot", label: "grip slot", default: 4, showWhen: { field: "grip", in: [true] } },
@@ -447,7 +449,7 @@ export const chase = defineChase({
     {
       id: "trace",
       label: "trace pcb shield",
-      note: "BAIL trace. a 40 by 48 shield in solder mask green with seeded copper traces and buried cord channels, built as bridges here. colour depth 1.2 mm because the body slot is the dark ink (CHK-INL-03 light over dark). palette in BAIL: mask #1E5631, copper #C8803A, silk #F4F1EA.",
+      note: "BAIL trace. a 40 by 48 shield in solder mask green with seeded copper traces and buried cord channels. colour depth 1.2 mm because the body slot is the dark ink (CHK-INL-03 light over dark). palette in BAIL: mask #1E5631, copper #C8803A, silk #F4F1EA.",
       params: {
         shape: "shield",
         w: 40,
@@ -794,7 +796,7 @@ export const chase = defineChase({
     {
       id: "monogram",
       label: "monogram octagon",
-      note: "BAIL monogram. a 40 mm octagon with a rotated frame, 25 mm here (BAIL's is 30 mm) so it stays inside the rim ring at the flats, and the initials MZ (set in Plex bold), buried channels built as bridges and hex tips.",
+      note: "BAIL monogram. a 40 mm octagon with a rotated frame, 25 mm here (BAIL's is 30 mm) so it stays inside the rim ring at the flats, and the initials MZ (set in Plex bold), buried channels and hex tips.",
       params: {
         shape: "octagon",
         w: 40,

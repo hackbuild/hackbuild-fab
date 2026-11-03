@@ -140,7 +140,8 @@
     "source": "fab-knowledge:originals/bail/files/bail.html",
     "sha256": "4accb6428d31b3e687340ed8e35c2fb5f0edc19307d4090bd37d066474e86ccd",
     "fixes": [
-      "blank outlines (blankPath 1508 to 1529), clasp numbers (claspGeom 1685 to 1697, buildSlide 1717 to 1795), store back from the hardware row (applyBackHw 1112 to 1120), tip profiles and bands (tipProfile and buildTip 1879 to 2018) and the plate layout (2072 to 2094), written as author calls on bodies and features; grip fins in a rigid slot raise a build warning from the owner print note (evidence/PRINT-NOTES.md); buried channels build as bridges, text faces other than IBM Plex Mono set in Plex bold, the rim is an even-odd ring scaled on each axis"
+      "blank outlines (blankPath 1508 to 1529), clasp numbers (claspGeom 1685 to 1697, buildSlide 1717 to 1795), store back from the hardware row (applyBackHw 1112 to 1120), tip profiles and bands (tipProfile and buildTip 1879 to 2018) and the plate layout (2072 to 2094), written as author calls on bodies and features; grip fins in a rigid slot raise a build warning from the owner print note (evidence/PRINT-NOTES.md); text faces other than IBM Plex Mono set in Plex bold, the rim is an even-odd ring scaled on each axis",
+      "buried channels (buildSlide 1720 to 1723, 1749 to 1762, 1820) as flat roofed window features through the slide and the rim band, the slide grown for the channel and back skin, fins phased from y 0, and a face up bridge built buried (claspGeom 1689); the back skin is held at or over the colour depth when the back carries art"
     ],
     "dest": "designs/bail/build.ts"
   },

@@ -44,4 +44,5 @@ import { pitchCeiling } from "./constraints/pitch-ceiling.js";
 /** The ConstraintDefs this package owns, collected by core at load (D-044, M01 package placement). */
 export const constraintDefs: readonly ConstraintDef[] = [pitchCeiling];
 export { POCKET_CHECK_IDS, POCKET_KIND_VERSION, POCKET_REFERENCE, pocketKind } from "./kinds/pocket.js";
+export { WINDOW_CHECK_IDS, WINDOW_KIND_VERSION, WINDOW_REFERENCE, windowCutter, windowKind } from "./kinds/window.js";
 export { SPRING_CHECK_IDS, SPRING_KIND_VERSION, SPRING_REFERENCE, springKind } from "./kinds/spring.js";
