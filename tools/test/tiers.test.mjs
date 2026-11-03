@@ -292,6 +292,14 @@ test('a module path ending in -window.js is not DOM use', () => {
   assert.equal(r.status, 0, r.stdout);
 });
 
+test('a string opening with window. is not DOM use, and window.document still is', () => {
+  const root = scratch();
+  put(root, 'packages/geom/src/x.ts', 'export const ids = [`window.channel${1}`, "window.c", \'document.x\'];\n');
+  assert.equal(run(root).status, 0);
+  put(root, 'packages/geom/src/x.ts', 'export const d = () => window.document;\n');
+  assert.equal(run(root).status, 1);
+});
+
 test('Math.random under packages/sim/src fails, in code or in a comment (M02-T01 step 6)', () => {
   for (const text of ['export const r = () => Math.random();\n', '// never Math.random here\nexport {};\n', 'export const r = Math["random"];\n']) {
     const root = scratch();

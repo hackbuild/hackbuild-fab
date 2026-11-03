@@ -95,8 +95,9 @@ const hackbuildTarget = (spec) => {
 };
 // document or window used as an object, directly, through globalThis or self,
 // or an HTML*Element type. The bare form excludes a name inside a module
-// path or after a member dot ("./click-spring-window.js", "a.window.b").
-const DOM = /\b(?:globalThis|self)\s*(?:\?\.|\.)\s*(?:document|window)\b|\b(?:globalThis|self)\s*\[\s*['"`](?:document|window)['"`]|(?<![\w$./-])(?:document|window)\s*(?:\?\.|\.|\[)|\bHTML\w*Element\b/;
+// path, after a member dot, or opening a string ("./click-spring-window.js",
+// "a.window.b", the window kind's feature id "window.channel1").
+const DOM = /\b(?:globalThis|self)\s*(?:\?\.|\.)\s*(?:document|window)\b|\b(?:globalThis|self)\s*\[\s*['"`](?:document|window)['"`]|(?<![\w$./'"`-])(?:document|window)\s*(?:\?\.|\.|\[)|\bHTML\w*Element\b/;
 const isVue = (spec) => spec === 'vue' || spec.startsWith('vue/');
 
 function checkEdge(src, targetName, where) {
