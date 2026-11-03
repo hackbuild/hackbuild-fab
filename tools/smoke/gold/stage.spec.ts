@@ -5,7 +5,7 @@
 
 import { expect, type Page } from "@playwright/test";
 import JSZip from "jszip";
-import { chaseBound, hook, hookSettled, legacyRead, notRun, numericFields, openGold, rule, writeField } from "./gold.ts";
+import { chaseBound, hook, hookSettled, legacyRead, notRun, numericFields, openGold, rule, viewerStep, writeField } from "./gold.ts";
 import type { StageObject } from "../../hook/legacy-adapters.ts";
 
 interface Inspect { bodies: { id: string; role: string; opacity: number }[]; screen: [number, number, number, number] | null; width: number; height: number }
@@ -136,6 +136,8 @@ rule("G-15", "after each liveness edit the model lies inside the stage; a double
       await inside(`${f.key} = ${v}`);
     }
   }
+  // The edits above read the rail fields of the step the bench booted on; the double click needs a step whose stage shows the viewer.
+  await viewerStep(page, bench);
   await page.locator("hb-viewer").dblclick();
   await inside("after a double click");
   expect(off, off.join("\n")).toEqual([]);
@@ -156,6 +158,7 @@ rule("G-16", "ghost and xray fade structural bodies only", async ({ page, bench 
 rule("G-17", "view toggles combine and the strip's pressed state equals viewer state after orbit and focus", async ({ page, bench }) => {
   await openGold(page, bench);
   if (bench.origin === "legacy") notRun(`${bench.id}: the legacy viewer state is not readable through the adapter`);
+  await viewerStep(page, bench);
   const modes = await page.locator('[data-hb="mode"]').evaluateAll((els) => els.map((e) => e.getAttribute("data-mode") ?? ""));
   const stale: string[] = [];
   const compare = async (where: string): Promise<void> => {
@@ -202,7 +205,9 @@ rule("G-17", "view toggles combine and the strip's pressed state equals viewer s
 rule("G-18", "in plate view the bed chip agrees with CHK-PRT-16 and every plate object", async ({ page, bench }) => {
   await openGold(page, bench);
   if (bench.origin === "legacy") notRun(`${bench.id}: the legacy page runs no CHK-PRT-16`);
+  await viewerStep(page, bench, { mode: "plate" });
   const plate = page.locator('[data-hb="mode"][data-mode="plate"]');
+  await expect(plate, "the plate mode button on a step whose stage shows the viewer").toBeVisible({ timeout: 2000 });
   if ((await plate.getAttribute("aria-pressed")) !== "true") await plate.click();
   const chip = page.locator('[data-hb="chip-bed"]');
   await expect(chip, "the bed chip in plate view").toBeVisible({ timeout: 2000 });

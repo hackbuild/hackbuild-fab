@@ -242,6 +242,43 @@ export async function openGold(page: Page, b: GoldBench, opts: { welcome?: boole
 export const hookSettled = (page: Page, ms = 120_000): Promise<void> =>
   page.evaluate((t) => (globalThis as unknown as Hooked).__hbfHook.settled(t), ms);
 
+/**
+ * Puts a fab bench on a step whose stage shows hb-viewer. A step whose
+ * params panels hold an art board gives the stage to the board (BenchShell
+ * artStage): the canvas covers the viewer and the cam and mode strips are
+ * not rendered, so a pointer action on the viewer or a read of the strip
+ * finds nothing to land on there. The step the bench is on stays when it
+ * qualifies; otherwise the steps are tried from the last, counting back,
+ * skipping `not`. With `mode` the step must also offer that mode's button;
+ * when none does, the bench stays on the last step that shows the viewer
+ * and the rule's own read of the button grades the fault. A legacy page has
+ * no art stage and is left where it is.
+ */
+export async function viewerStep(page: Page, b: GoldBench, opts: { mode?: string; not?: number } = {}): Promise<void> {
+  if (b.origin !== "fab") return;
+  const offers = (): Promise<{ viewer: boolean; mode: boolean }> =>
+    page.evaluate((m) => ({
+      viewer: document.querySelector("hb-viewer") !== null && document.querySelector('[data-hb="art-stage"]') === null,
+      mode: m === undefined || document.querySelector(`[data-hb="mode"][data-mode="${m}"]`) !== null,
+    }), opts.mode);
+  const here = await offers();
+  if (here.viewer && here.mode) return;
+  const steps = page.locator(b.dom.steps);
+  let fallback = -1;
+  for (let i = (await steps.count()) - 1; i >= 0; i -= 1) {
+    if (i === opts.not) continue;
+    await steps.nth(i).click();
+    await hookSettled(page);
+    const o = await offers();
+    if (o.viewer && o.mode) return;
+    if (o.viewer && fallback < 0) fallback = i;
+  }
+  if (fallback >= 0) {
+    await steps.nth(fallback).click();
+    await hookSettled(page);
+  }
+}
+
 /** Reads hook fields in the page. */
 export const hook = <T>(page: Page, fn: (h: BenchHook) => T): Promise<T> =>
   page.evaluate(`(${fn.toString()})(globalThis.__hbfHook)`) as Promise<T>;

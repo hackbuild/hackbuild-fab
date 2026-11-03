@@ -6,7 +6,7 @@
 import { expect } from "@playwright/test";
 import { HEIGHT, WIDTHS } from "../measure.ts";
 import { pinkMessage, pinkView } from "../pink.ts";
-import { hook, hookSettled, notRun, openGold, rule } from "./gold.ts";
+import { hook, hookSettled, notRun, openGold, rule, viewerStep } from "./gold.ts";
 
 rule("G-40", "four strips; the last step is print or make; done means no failing check; visited is separate", async ({ page, bench, oracle }) => {
   await openGold(page, bench);
@@ -99,6 +99,8 @@ rule("G-44", "a step with a declared cam or view leaves the viewer on it", async
     // Enter from another step, after an orbit, so a view or cam left over from boot cannot pass the row.
     await steps.nth(i === 0 ? 1 : 0).click();
     await hookSettled(page);
+    // An art step gives the stage to the board, which would take the orbit; orbit on a step that shows the viewer.
+    await viewerStep(page, bench, { not: i });
     const box = await page.locator("hb-viewer").boundingBox();
     if (box !== null) {
       await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);

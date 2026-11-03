@@ -27,7 +27,8 @@ export default defineConfig({
   // The static server for the fixture pages (cdn.spec.ts, vue-host.spec.ts), rooted at the repo.
   webServer: { command: `node ${SERVE} 4173`, url: "http://127.0.0.1:4173/tools/fixtures/serve.mjs", reuseExistingServer: true },
   // A project value of undefined does not clear a top-level one, so the chrome channel and GL flags sit on each chromium project.
-  use: { headless: true },
+  // Gold only: a locator waits 45 s, above the 36.7 s worst main-thread build seen (TESTING.md 8.5), instead of the whole test timeout.
+  use: { headless: true, ...(gold ? { actionTimeout: 45_000 } : {}) },
   projects: [
     {
       name: "desktop",
