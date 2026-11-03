@@ -998,7 +998,7 @@ export const chase = defineChase({
     }
   ],
   build: { module: "./build.ts", fn: "build" },
-  exports: [{ kind: "3mf", machine: "ffc5p", pose: "print" }, { kind: "stl" }, { kind: "card" }],
+  exports: [{ kind: "3mf", machine: "ffc5p", pose: "print" }, { kind: "stl" }, { kind: "card" }, { kind: "json" }],
   assertions: [],
 });
 
