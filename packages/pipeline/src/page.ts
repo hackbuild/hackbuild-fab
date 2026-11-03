@@ -22,6 +22,7 @@ import { createProfileLookup, type ProfileTables } from "@hackbuild/profile";
 import { loadManifold, liveCount, type RasterMask } from "@hackbuild/mesh";
 import { DEFAULT_MATERIALS, DEFAULT_TEMPLATE, build as build3mf, clampEpoch, threeMfEntries, zipEntries } from "@hackbuild/3mf";
 import { mcuPinRow } from "@hackbuild/catalog";
+import { loadGeom } from "@hackbuild/geom";
 import { makeAuthor } from "./author.js";
 import {
   assembleBuild, export3mf, mergeWarnings, packageCheckIds, runAllChecks, threeMfConfig,
@@ -143,7 +144,7 @@ export async function runDraft(design: Design, module: Readonly<Record<string, u
   const profile = createProfileLookup(design.ws.tables);
   const warnings: BuildWarning[] = [];
   const derived: Metric[] = [];
-  const k = makeAuthor(chase, profile, warnings, derived);
+  const k = makeAuthor(chase, profile, warnings, derived, await loadGeom());
   const draft: unknown = await (fn as (v: unknown, k: unknown) => unknown)(structuredClone(values), k);
   const maskFn = module["masks"];
   const masks: unknown = design.stages && typeof maskFn === "function" ? (maskFn as (v: unknown) => unknown)(structuredClone(values)) : undefined;

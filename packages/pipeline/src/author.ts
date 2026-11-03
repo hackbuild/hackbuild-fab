@@ -9,7 +9,7 @@
 
 import { qualify, type Author, type BuildWarning, type Chase, type FitClassId, type MachineView, type Metric, type ParamField, type Ring, type Vec2 } from "@hackbuild/spec";
 import { layerIndex, layerTop, snapLayer, type SkeletonLookup } from "@hackbuild/profile";
-import { circleRing, rrect, rrectRing, snapRing } from "@hackbuild/geom";
+import { circleRing, rrect, rrectRing, snapRing, type Geom } from "@hackbuild/geom";
 import { commandError as cmdError, didYouMean } from "@hackbuild/spec";
 import { archetypes, placeArchetype } from "@hackbuild/archetypes";
 import { mechApply } from "./mech-apply.js";
@@ -51,6 +51,22 @@ function outsideSlice(name: string): () => never {
   };
 }
 
+/**
+ * Author.ring.offset: rings offset by d mm, outward positive, through geom's
+ * CrossSection (every wasm object freed before return). A lone ring is
+ * reoriented as an outline; several rings read as outer counter-clockwise
+ * and holes clockwise. Output is outer counter-clockwise, holes clockwise,
+ * snapped to 1/1024 mm, in manifold's deterministic order. A ring the offset
+ * erases is absent from the result.
+ */
+function offsetWith(geom: Geom): Author["ring"]["offset"] {
+  return (rings, d, join = "round") => {
+    if (rings.length === 0) return [];
+    const src = rings.length === 1 ? geom.fromOutline(rings[0] as Ring) : geom.fromRings(rings);
+    return src.offset(d, { join: join === "miter" ? "Miter" : "Round" }).toRings();
+  };
+}
+
 /** A field k.derive may fill: a derived field by its fn, or an auto field by its auto.fn. */
 interface DeriveTarget {
   /** Metric id stem, "derived.<field id>" (the StatusChip derived.<field>, P-09), list items add ".<list id>". */
@@ -84,7 +100,7 @@ export function deriveTargets(chase: Chase): ReadonlyMap<string, DeriveTarget> {
  * values go to `derived` as informational metrics (D-049, D-075), which the
  * parent appends to Part.metrics so they hash and reach the HUD.
  */
-export function makeAuthor(chase: Chase, profile: SkeletonLookup, warnings: BuildWarning[], derived: Metric[] = []): Author {
+export function makeAuthor(chase: Chase, profile: SkeletonLookup, warnings: BuildWarning[], derived: Metric[] = [], geom?: Geom): Author {
   const defaultMachine = chase.meta.machines?.[0] ?? "ffc5p";
   const targets = deriveTargets(chase);
   const calls = new Map<string, number>();
@@ -93,7 +109,7 @@ export function makeAuthor(chase: Chase, profile: SkeletonLookup, warnings: Buil
   return {
     profile,
     machine: (id) => machineView(profile, id ?? defaultMachine),
-    ring: { roundRect, circle, offset: outsideSlice("ring.offset") },
+    ring: { roundRect, circle, offset: geom === undefined ? outsideSlice("ring.offset") : offsetWith(geom) },
     body: (id, o) => ({
       id, role: o.role, slot: o.slot, base: o.base,
       material: o.material ?? chase.materials.find((m) => m.slot === o.slot)?.material ?? "",

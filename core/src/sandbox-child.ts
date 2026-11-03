@@ -206,6 +206,8 @@ async function run(req: Request): Promise<void> {
   const spec = await import("@hackbuild/spec");
   const { createProfileLookup } = await import("@hackbuild/profile");
   const { makeAuthor } = await import("./author.js");
+  const { loadGeom } = await import("@hackbuild/geom");
+  const geom = await loadGeom();
   type Tables = Parameters<typeof createProfileLookup>[0];
 
   policy = { designDir: req.designDir, trusted: req.trusted, allowed: new Map(Object.entries(req.allowed)) };
@@ -229,7 +231,7 @@ async function run(req: Request): Promise<void> {
     const profile = createProfileLookup(req.tables as Tables);
     const warnings: { code: string; text: string }[] = [];
     const derived: Parameters<typeof makeAuthor>[3] = [];
-    const k = makeAuthor(req.chase as Parameters<typeof makeAuthor>[0], profile, warnings, derived);
+    const k = makeAuthor(req.chase as Parameters<typeof makeAuthor>[0], profile, warnings, derived, geom);
     const draft: unknown = await (fn as (v: unknown, k: unknown) => unknown)(req.values, k);
     const maskFn = mod["masks"];
     const masks: unknown = req.masks && typeof maskFn === "function" ? (maskFn as (v: unknown) => unknown)(req.values) : undefined;
