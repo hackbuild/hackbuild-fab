@@ -85,6 +85,7 @@ const INFORMATIONAL: readonly { readonly pattern: RegExp; readonly why: string }
   { pattern: /^stack\.(l1|l2)\.(bottom|top)$|^stack\.(pads\.bottom|floor|iso|overL2|traceWidth)$/, why: "the buried stack z as built from the profile stack rows (PROFILE.md 6.1); the rows carry the provenance and no failure on record sets a bound on the built z" },
   { pattern: /^print\.smallestFeature$/, why: "least of trace width, split and cone wall; build.ts warns FIT, no registered check reads it yet (owner question in the card)" },
   { pattern: /^spring\.riseMm$/, why: "arch rise h = Q t, a geometry readout; the spring verdict is CHK-KEY-04 on the sim curve" },
+  { pattern: /^bail\.(channel\.clearWidth|tip\.bore|clip\.recessClearance)$/, why: "bail print readouts that chase.ts claims hold to a band (CHK-CLAIM-01 with a person's evidence rows); no registered check gates them and the bands are inferred" },
   { pattern: /^sprue\.(thickness|layers|inlayDepth)$/, why: "layer snap readouts of the SPRUE blank set by the layer grid; no failure on record sets a bound" },
   { pattern: /^board\.(nets|pads|holes|vias|npth|tightest)$/, why: "counts read off the BoardRecord and the generator DRC's tightest clearance (packages/board boardMetrics); the CHK-BRD checks measure the record and the reparsed fab zip themselves" },
   { pattern: /^[a-z0-9-]+\.\d+\.host\.top$/, why: "the host top an archetype was placed under, its need snapped up a layer or the top asked for; a placement readout, no failure on record sets a bound" },

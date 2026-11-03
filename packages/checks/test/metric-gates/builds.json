@@ -4,7 +4,16 @@
     {
       "build": "designs/bail",
       "part": "bail",
-      "metrics": []
+      "metrics": [
+        {
+          "id": "bail.clip.recessClearance",
+          "gate": "informational"
+        },
+        {
+          "id": "bail.tip.bore",
+          "gate": "informational"
+        }
+      ]
     },
     {
       "build": "designs/blocks",
