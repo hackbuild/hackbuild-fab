@@ -7,11 +7,10 @@
 // posture), so it is not part of this command.
 
 import { spawnSync } from "node:child_process";
-import { createHash } from "node:crypto";
 import { existsSync, mkdtempSync, readdirSync, readFileSync, statSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import type { CommandInput, CommandOutput, Hash } from "@hackbuild/spec";
+import { sha256Hex, type CommandInput, type CommandOutput, type Hash } from "@hackbuild/spec";
 import type { CoreCtx } from "../ctx.js";
 import { cmdError } from "../errors.js";
 import type { CommandOut } from "../result.js";
@@ -67,7 +66,7 @@ export async function runFirmwareBuild(input: CommandInput<"firmware.build">, ct
   const images = existsSync(out)
     ? readdirSync(out).filter((f) => IMAGE_EXT.has(path.extname(f))).sort().map((f) => {
       const bytes = readFileSync(path.join(out, f));
-      return { path: path.join(out, f), bytes: bytes.length, sha256: createHash("sha256").update(bytes).digest("hex") as Hash };
+      return { path: path.join(out, f), bytes: bytes.length, sha256: sha256Hex(new Uint8Array(bytes)) as Hash };
     })
     : [];
   const built = r.status === 0 && j.success === true && images.length > 0;
