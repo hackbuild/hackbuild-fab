@@ -23,6 +23,9 @@ use `npx --no-install hbf`: the bin runs the compiled `core/dist`, which is
 gitignored, and a fresh clone has none.
 
 Before you open a PR, run the tests your change touches, one workspace at a
-time: `npm test -w packages/mesh`. `npm run check` runs every gate and the
-full suite and takes minutes; run it before a PR when you can. A harness that
-did not run is reported as not run.
+time: `npm test -w packages/mesh`. `npm run test:fast` runs every test file
+outside the slow tier in `tools/test-tiers.json` (files measured above the slow
+threshold, regenerated with `node tools/test-tiers.mjs`) and names the slow files it did
+not run. `npm run check` runs every gate and the full suite and takes minutes;
+run it before a PR when you can. A harness that did not run is reported as not
+run.

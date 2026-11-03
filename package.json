@@ -20,6 +20,7 @@
     "typecheck": "tsc -b && tsc -p spec/tsconfig.fixtures.json && tsc -p tools/tsconfig.json && tsc -p tsconfig.tests.json && node tools/vue-check.mjs",
     "pretest": "tsc -b",
     "test": "vitest run && node --test tools/test/*.test.mjs packages/*/seed/test/*.test.mjs knowledge/test/*.test.mjs",
+    "test:fast": "node tools/test-tiers.mjs fast",
     "registries": "node tools/gen/registries.mjs",
     "derived": "node tools/gen/registries.mjs --check",
     "derived:counts": "node tools/counts.mjs && git diff --exit-code -- tools/reports/counts.json docs/plan/PLAN.md",

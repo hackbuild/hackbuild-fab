@@ -28,6 +28,14 @@ Release 1 work after the M10 landing.
 - The orca-family slicer driver for virtual slices.
 - Catalog rows fetched from the KiCad library and the Seeed OPL.
 - Agent hooks: quiet-output, touched-typecheck and stop-acceptance.
+- `npm run test:fast` and `tools/test-tiers.mjs`: a fast test tier that skips
+  the files measured above the slow threshold, listed in
+  `tools/test-tiers.json`. The stop hook runs the tests that import the
+  touched files, skips the related files measured above the hook threshold
+  (`measured.hookThresholdS`, higher than the fast tier's) and names them as
+  left to CI, and blocks on a touched source file vite cannot transform. A
+  module the session never touched that vite cannot transform, or a module
+  graph that cannot be read, runs the touched workspaces whole instead.
 - The hbf Claude Code plugin package.
 - `USE.md` and `SECURITY.md`.
 
