@@ -24,6 +24,16 @@ import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { basename, dirname, join, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { BakeManifest } from "./manifest.ts";
+import { DESIGN_FILES } from "@hackbuild/chase";
+
+/** The design file a bake directory holds, chase.ts before design.ts. */
+export const designFileOf = (abs: string): string | undefined => DESIGN_FILES.find((f) => existsSync(join(abs, f)));
+
+/** A design.ts has no chase export: the entries lower the module with designToChase, which is pure data. */
+const forDesign = (src: string): string => src
+  .replace('import { chase } from "./chase";', 'import { designToChase } from "@hackbuild/chase";\nimport { designModule } from "./design";')
+  .replace("mountBench({ chase,", "const chase = designToChase(designModule);\nmountBench({ chase,")
+  .replace("export const page = ", "const chase = designToChase(designModule);\n\nexport const page = ");
 
 export const REPO = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..");
 
@@ -135,7 +145,8 @@ export const PAGE_BUILD = [
 /** Write bake.json, bench.entry.ts (with its package.json devDependency) and page-build.ts into `dir` where absent; returns the manifest path and the files written. */
 export function ensureManifest(dir: string): { manifest: string; wrote: string[] } {
   const abs = resolve(dir);
-  if (!existsSync(join(abs, "chase.ts"))) throw new Error(`no chase.ts in ${abs}`);
+  const designFile = designFileOf(abs);
+  if (designFile === undefined) throw new Error(`no chase.ts or design.ts in ${abs}`);
   const wrote: string[] = [];
   const put = (name: string, text: () => string): void => {
     const p = join(abs, name);
@@ -144,7 +155,7 @@ export function ensureManifest(dir: string): { manifest: string; wrote: string[]
     wrote.push(name);
   };
   put("bake.json", () => `${JSON.stringify(manifestFor(abs), null, 2)}\n`);
-  put("bench.entry.ts", () => entrySource());
+  put("bench.entry.ts", () => (designFile === "design.ts" ? forDesign(entrySource()) : entrySource()));
   if (wrote.includes("bench.entry.ts")) {
     const pjPath = join(abs, "package.json");
     const pj = packageWithUi(abs, existsSync(pjPath) ? readFileSync(pjPath, "utf8") : null);
@@ -153,7 +164,7 @@ export function ensureManifest(dir: string): { manifest: string; wrote: string[]
       wrote.push("package.json");
     }
   }
-  put("page-build.ts", () => PAGE_BUILD);
+  put("page-build.ts", () => (designFile === "design.ts" ? forDesign(PAGE_BUILD) : PAGE_BUILD));
   return { manifest: join(abs, "bake.json"), wrote };
 }
 

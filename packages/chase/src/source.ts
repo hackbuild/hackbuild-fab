@@ -17,6 +17,7 @@ import {
   CHASE_ID_PATTERN, CHASE_SOURCE_LIMITS, commandError, sha256Hex,
   type Chase, type ChaseSourceRead, type ChaseSourceRule, type ChaseSourceSpan, type CommandError, type Hash, type ThrownCommandError,
 } from "@hackbuild/spec";
+import { OPAQUE_BUILD, chaseSpans, designToChase, isDesignSource } from "./design.js";
 
 /** Modules a chase.ts may import from; the value import is defineChase only. */
 export const CHASE_IMPORT_MODULES = ["@hackbuild/kernel/author", "@hackbuild/spec"] as const;
@@ -28,14 +29,17 @@ export const CHASE_IMPORT_MODULES = ["@hackbuild/kernel/author", "@hackbuild/spe
  * parser, so neither is ever executed (D-178).
  */
 interface SourceForm {
-  readonly name: "chase" | "bench";
-  readonly call: "defineChase" | "defineBench";
+  readonly name: "chase" | "bench" | "designModule";
+  readonly call: "defineChase" | "defineBench" | "design";
+  /** A top-level member whose value may be a function expression, skipped as an opaque span. */
+  readonly opaque?: string;
   /** The identifier passed before the literal, imported from one of localModules. */
   readonly lead?: "chase";
   readonly localModules: readonly string[];
 }
 
 const CHASE_FORM: SourceForm = { name: "chase", call: "defineChase", localModules: [] };
+const DESIGN_FORM: SourceForm = { name: "designModule", call: "design", localModules: [], opaque: "build" };
 const BENCH_FORM: SourceForm = { name: "bench", call: "defineBench", lead: "chase", localModules: ["./chase", "./chase.ts", "./chase.js"] };
 
 /** Object keys the reader refuses: assigning one would set a prototype instead of a key. */
@@ -476,6 +480,29 @@ class Parser {
     return v;
   }
 
+  /**
+   * An inline build: tokens up to the next comma or closing bracket at depth
+   * 0, recorded as one span and never evaluated. Only the sandbox runs it.
+   */
+  private opaqueValue(pointer: string): string {
+    // this.i is past the colon, so the first token is the first of the function.
+    const first = this.peek();
+    if (first === undefined) throw new SourceError("literal", this.src.length, pointer, "end of file", "a function expression", "write build as a function");
+    let depth = 0;
+    for (;;) {
+      const t = this.peek();
+      if (t === undefined) throw new SourceError("literal", this.src.length, pointer, "end of file", "a closed function", "close the build function");
+      if (t.kind === "punct" && "([{".includes(t.text)) depth += 1;
+      else if (t.kind === "punct" && ")]}".includes(t.text)) {
+        if (depth === 0) break;
+        depth -= 1;
+      } else if (depth === 0 && t.kind === "punct" && t.text === ",") break;
+      this.i += 1;
+    }
+    this.spans.push({ pointer, start: first.start, end: this.toks[this.i - 1]!.end });
+    return OPAQUE_BUILD;
+  }
+
   private number(pointer: string): number {
     const t = this.next()!;
     if (t.text.endsWith("n")) throw new SourceError("literal", t.start, pointer, t.text, "a number", "write a number, not a bigint");
@@ -530,7 +557,7 @@ class Parser {
       const p = `${pointer}/${escapePointer(key)}`;
       if (FORBIDDEN_KEYS.has(key)) throw new SourceError("keys", k.start, p, key, "a key other than __proto__", "rename the key; __proto__ sets a prototype");
       if (Object.prototype.hasOwnProperty.call(out, key)) throw new SourceError("keys", k.start, p, key, "each key once", `remove the second ${key}`);
-      out[key] = this.value(p, depth + 1);
+      out[key] = this.form.opaque === key && pointer === "" && !this.is("{") ? this.opaqueValue(p) : this.value(p, depth + 1);
       if (this.is(",")) this.i += 1;
       else if (!this.is("}")) throw new SourceError("literal", this.at(), pointer, this.peek()?.text ?? "end of file", ", or }", "separate members with commas");
     }
@@ -564,6 +591,16 @@ export function buildPathProblem(module: string): string | undefined {
   return undefined;
 }
 
+/** The design() members the lowering needs: id, slots, params and build. */
+function designShapeProblem(d: unknown): { readonly path: string; readonly expected: string } | undefined {
+  if (!isRecord(d)) return { path: "/", expected: "an object" };
+  if (typeof d["id"] !== "string" || d["id"] === "") return { path: "/id", expected: "a design id string" };
+  if (!Array.isArray(d["slots"])) return { path: "/slots", expected: "an array of material slots" };
+  if (!Array.isArray(d["params"])) return { path: "/params", expected: "an array of param groups" };
+  if (d["build"] === undefined) return { path: "/build", expected: "{ module, fn } or a build function" };
+  return undefined;
+}
+
 /** The fields part.build reads, until the derived chase schema lands (M10, D-131). */
 function shapeProblem(c: unknown): { readonly path: string; readonly expected: string } | undefined {
   if (!isRecord(c)) return { path: "/", expected: "an object" };
@@ -585,6 +622,15 @@ function shapeProblem(c: unknown): { readonly path: string; readonly expected: s
  * "chase-source/<rule>" and the JSON pointer of the offending value.
  */
 export function readChaseSource(source: string, file: string): ChaseSourceRead {
+  return readChaseForm(source, file, isDesignSource(source) ? DESIGN_FORM : CHASE_FORM);
+}
+
+/**
+ * One reader for chase.ts and design.ts. A design.ts is lowered by
+ * designToChase after parsing and its spans are re-keyed to the chase's
+ * pointers, so chase.patch and every other caller see one document.
+ */
+function readChaseForm(source: string, file: string, form: SourceForm): ChaseSourceRead {
   const bytes = byteOffsets(source);
   const size = bytes[source.length]!;
   const fail = (rule: ChaseSourceRule, at: number, pointer: string, got: unknown, expected: string, hint: string): never => {
@@ -599,14 +645,22 @@ export function readChaseSource(source: string, file: string): ChaseSourceRead {
   let chase: unknown;
   let charSpans: readonly ChaseSourceSpan[] = [];
   try {
-    const p = new Parser(source, tokenize(source));
+    const p = new Parser(source, tokenize(source), form);
     chase = p.parse();
     charSpans = p.spans;
   } catch (e) {
     if (e instanceof SourceError) fail(e.rule, e.at, e.pointer, e.got, e.expected, e.message);
     throw e;
   }
-  const spans = charSpans.map((s) => ({ pointer: s.pointer, start: bytes[s.start]!, end: bytes[s.end]! }));
+  let spans: readonly ChaseSourceSpan[] = charSpans.map((s) => ({ pointer: s.pointer, start: bytes[s.start]!, end: bytes[s.end]! }));
+  if (form === DESIGN_FORM) {
+    const bad = designShapeProblem(chase);
+    if (bad !== undefined) {
+      throw thrown({ code: "E_SCHEMA", path: bad.path, expected: bad.expected, hint: `${file}: the design is missing a member part.build reads`, record: "chase-source/literal" });
+    }
+    chase = designToChase(chase as Record<string, unknown>);
+    spans = chaseSpans(spans);
+  }
   const shape = shapeProblem(chase);
   if (shape !== undefined) {
     throw thrown({ code: "E_SCHEMA", path: shape.path, expected: shape.expected, hint: `${file}: the chase is missing a field part.build reads`, record: "chase-source/literal" });

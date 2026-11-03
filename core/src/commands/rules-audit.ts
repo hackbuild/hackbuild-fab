@@ -10,6 +10,7 @@
 // then it reports skip with its reason. Exit 0 when no block fail, 1
 // otherwise (EXIT_CODES).
 
+import { designFileIn, hasDesignFile, readDesignDir } from "../design-file.js";
 import { execFileSync } from "node:child_process";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import path from "node:path";
@@ -127,14 +128,13 @@ export async function storedArtifacts(ctx: CoreCtx, chase?: string): Promise<{ r
 /** The design directories a --chase value names: a directory holding chase.ts, or a chase meta.id. */
 function chaseDirs(root: string, cwd: string, chase: string): { readonly dirs: string[]; readonly id: string } {
   const abs = path.resolve(cwd, chase);
-  const file = path.join(abs, "chase.ts");
-  if (existsSync(file)) {
+  if (hasDesignFile(abs)) {
     const rel = path.relative(root, abs).split(path.sep).join("/");
     let id: string;
     try {
-      id = readChaseSource(readFileSync(file, "utf8"), `${rel}/chase.ts`).chase.meta.id;
+      id = readDesignDir(abs, rel).chase.meta.id;
     } catch {
-      throw cmdError({ code: "E_SCHEMA", path: "/chase", got: `${rel}/chase.ts`, hint: "the chase source does not read; part.build names the field that fails" });
+      throw cmdError({ code: "E_SCHEMA", path: "/chase", got: `${rel}/${designFileIn(abs)}`, hint: "the chase source does not read; part.build names the field that fails" });
     }
     return { dirs: [rel], id };
   }

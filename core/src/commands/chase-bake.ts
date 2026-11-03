@@ -16,6 +16,7 @@
 // page carries its sources, shows the banner and marks every export. A
 // draft bakes only as a draft and a design never does (E_DRAFT, E_SCHEMA).
 
+import { readDesignDir } from "../design-file.js";
 import { spawn } from "node:child_process";
 import { readFileSync } from "node:fs";
 import path from "node:path";
@@ -81,7 +82,7 @@ export async function runChaseBake(input: CommandInput<"chase.bake">, ctx: CoreC
     throw cmdError({ code: "E_SCHEMA", path: "/mode", got: "draft", expected: "page", hint: `${input.chase} holds no draft.json, so it is no hbf draft; bake it without --mode draft, or start a draft with hbf draft --from` });
   }
   // The chase must read as data (D-178) before anything is generated from it; a breach throws E_SCHEMA.
-  readChaseSource(readFileSync(path.join(dir, "chase.ts"), "utf8"), posix(path.relative(root, path.join(dir, "chase.ts"))));
+  readDesignDir(dir, posix(path.relative(root, dir)));
   ctx.signal.throwIfAborted();
   if (draft) await writeDraftBlock(dir, ctx.cwd, draftOrigin(dir));
   ctx.signal.throwIfAborted();

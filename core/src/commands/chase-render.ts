@@ -11,6 +11,7 @@
 // It feeds the review artifact of D-154 and never ticks it: a person
 // still looks at the bench at both widths.
 
+import { readDesignDir } from "../design-file.js";
 import { mkdtempSync, readFileSync, rmSync, existsSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
@@ -54,7 +55,7 @@ const empty = { url: "", shots: [], views: [], consoleErrors: [], network: [] };
 export async function runChaseRender(input: CommandInput<"chase.render">, ctx: CoreCtx): Promise<CommandOut<Output>> {
   const root = workspaceRoot(ctx.cwd);
   const dir = chaseDir(root, ctx.cwd, input.chase);
-  readChaseSource(readFileSync(path.join(dir, "chase.ts"), "utf8"), posix(path.relative(root, path.join(dir, "chase.ts"))));
+  readDesignDir(dir, posix(path.relative(root, dir)));
   const manifest = path.join(dir, "bake.json");
   if (!existsSync(manifest)) {
     throw cmdError({ code: "E_REF", path: "/chase", got: input.chase, expected: "a bake.json beside chase.ts", hint: `run hbf chase.bake ${input.chase} once; it writes bake.json, and chase.render writes nothing to the repo` });

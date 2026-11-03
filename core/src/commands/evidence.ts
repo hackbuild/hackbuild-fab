@@ -8,6 +8,7 @@
 // says who added it: person when the add ran at a terminal, agent otherwise;
 // a coupon result an agent relays is recorded as the agent's.
 
+import { hasDesignFile, readDesignDir } from "../design-file.js";
 import { appendFileSync, copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { readChaseSource } from "@hackbuild/chase";
@@ -51,7 +52,7 @@ const SLICER = new Set([".3mf", ".gcode", ".bgcode"]);
 
 /** designs/<id> or reference/<area>/<id> when dir holds a chase.ts, else null. */
 function labelOf(dir: string): string | null {
-  if (!existsSync(path.join(dir, "chase.ts"))) return null;
+  if (!hasDesignFile(dir)) return null;
   const parent = path.dirname(dir);
   if (path.basename(parent) === "designs") return `designs/${path.basename(dir)}`;
   if (path.basename(path.dirname(parent)) === "reference") return `reference/${path.basename(parent)}/${path.basename(dir)}`;
@@ -120,7 +121,7 @@ export function evidenceDesign(arg: string, cwd: string): { readonly dir: string
 }
 
 function claimsOf(dir: string, label: string): readonly ClaimDecl[] {
-  const read = readChaseSource(readFileSync(path.join(dir, "chase.ts"), "utf8"), `${label}/chase.ts`);
+  const read = readDesignDir(dir, label);
   return (read.chase as { claims?: readonly ClaimDecl[] }).claims ?? [];
 }
 

@@ -30,6 +30,7 @@ import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, statS
 import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { DESIGN_FILES } from "@hackbuild/chase";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -212,7 +213,7 @@ async function main(argv) {
       sh("npm", ["ci", "--ignore-scripts", "--no-audit", "--no-fund", "--prefer-offline"], clone, { timeout: 20 * 60 * 1000 });
       sh("npx", ["--no-install", "tsc", "-b"], clone, { timeout: 20 * 60 * 1000 });
       for (const ref of refs) {
-        if (!existsSync(path.join(clone, ref, "chase.ts"))) { ok = false; say(`${ref} cold fail: absent from the exported tree`); continue; }
+        if (!DESIGN_FILES.some((f) => existsSync(path.join(clone, ref, f)))) { ok = false; say(`${ref} cold fail: absent from the exported tree`); continue; }
         if (boards.has(ref)) {
           const c = parityLine(ref, "cold", rebuildBoard(clone, ref, runEnv({ ...FOREIGN, HOME: home }, boardExpectedOf(path.join(ROOT, ref)).sourceDateEpoch)));
           ok &&= c.ok;

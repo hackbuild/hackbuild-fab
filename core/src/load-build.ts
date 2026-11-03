@@ -6,6 +6,7 @@
 // This file resolves a target given as a chase id and writes the build to
 // the store.
 
+import { hasDesignFile, readDesignDir } from "./design-file.js";
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import path from "node:path";
 import type { Chase } from "@hackbuild/spec";
@@ -33,13 +34,13 @@ function chaseDirs(root: string): string[] {
   const sub = (d: string): string[] => (existsSync(d) ? readdirSync(d).sort().map((x) => path.join(d, x)).filter((x) => statSync(x).isDirectory()) : []);
   for (const area of sub(path.join(root, "reference"))) out.push(...sub(area));
   out.push(...sub(path.join(root, "designs")));
-  return out.filter((d) => existsSync(path.join(d, "chase.ts")));
+  return out.filter((d) => hasDesignFile(d));
 }
 
 /** The chase id and aliases a chase.ts declares, read as data; a chase the reader refuses names none. */
 function chaseNamesOf(dir: string): { readonly id?: string; readonly aliases: readonly string[] } {
   try {
-    const { chase } = readChaseSource(readFileSync(path.join(dir, "chase.ts"), "utf8"), path.join(dir, "chase.ts"));
+    const { chase } = readDesignDir(dir, dir);
     return { id: chase.meta.id, aliases: Array.isArray(chase.meta.aliases) ? chase.meta.aliases.filter((a): a is string => typeof a === "string") : [] };
   } catch {
     return { aliases: [] };

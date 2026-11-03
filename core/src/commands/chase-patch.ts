@@ -15,6 +15,7 @@
 // Not done here: param edits (spec PatchEdit param), which wait on the
 // ParamPointer resolver; they are E_SCHEMA naming the pointer form.
 
+import { designFileIn, hasDesignFile } from "../design-file.js";
 import { execFileSync } from "node:child_process";
 import { appendFileSync, existsSync, mkdirSync, readFileSync, realpathSync, statSync, writeFileSync } from "node:fs";
 import path from "node:path";
@@ -114,19 +115,20 @@ export async function writeChasePatch(ctx: CoreCtx, dir: string, file: "chase.ts
     return refuse({ code: "E_REF", path: "/file", got: dir, expected: "a chase.ts or build.ts under designs/<name> in a git work tree", hint: `${target.reason}; chase.patch writes designs only, copy a reference with chase.scaffold --from` });
   }
   const { top, rel } = target;
-  const chaseFile = path.join(dir, "chase.ts");
-  const id = readChaseSource(readFileSync(chaseFile, "utf8"), `${rel}/chase.ts`).chase.meta.id;
+  const designName = designFileIn(dir) ?? "chase.ts";
+  const chaseFile = path.join(dir, designName);
+  const id = readChaseSource(readFileSync(chaseFile, "utf8"), `${rel}/${designName}`).chase.meta.id;
   // The work tree may be shared with a person or another agent, so the patch lands on the branch it is on.
   const branch = tryGit(top, ["symbolic-ref", "--short", "-q", "HEAD"]) ?? "HEAD";
   const chaseText = readFileSync(chaseFile, "utf8");
-  const chaseBefore = readChaseSource(chaseText, `${rel}/chase.ts`).chase;
+  const chaseBefore = readChaseSource(chaseText, `${rel}/${designName}`).chase;
   const defHashBefore = designDefHash(dir, chaseBefore);
-  const filePath = path.join(dir, file);
+  const filePath = path.join(dir, file === "chase.ts" ? designName : file);
   let next: string;
   let inverse: (defHashAfter: Hash) => readonly PatchEdit[];
   if (file === "chase.ts") {
     const validate = await chaseSourceErrors(ctx, dir);
-    const out = patchChaseSource(chaseText, `${rel}/chase.ts`, edits, { validate, ...(opts.addMembers === true ? { addMembers: true } : {}) });
+    const out = patchChaseSource(chaseText, `${rel}/${designName}`, edits, { validate, ...(opts.addMembers === true ? { addMembers: true } : {}) });
     if (!out.ok) return { errors: out.errors };
     next = out.plan.source;
     const back: readonly SourceEdit[] = out.plan.inverse;
@@ -145,7 +147,7 @@ export async function writeChasePatch(ctx: CoreCtx, dir: string, file: "chase.ts
   }
   writeFileSync(filePath, next);
   git(top, ["add", "--", path.relative(top, realpathSync(filePath))]);
-  const defHash = designDefHash(dir, readChaseSource(readFileSync(chaseFile, "utf8"), `${rel}/chase.ts`).chase);
+  const defHash = designDefHash(dir, readChaseSource(readFileSync(chaseFile, "utf8"), `${rel}/${designName}`).chase);
   const line = appendLog(top, { chase: id, file: `${rel}/${file}`, edits, inverse: inverse(defHash), defHashBefore, defHashAfter: defHash });
   return { edits: edits.length, branch, defHashBefore, defHash, line };
 }
@@ -166,9 +168,9 @@ function appendLog(top: string, entry: Omit<PatchLogLine, "id" | "revert">): Pat
 /** The design directory and file a chase.patch `file` names: a chase.ts, a build.ts, or a directory holding chase.ts. */
 function fileOf(cwd: string, file: string): { readonly dir: string; readonly name: "chase.ts" | "build.ts" } {
   const abs = path.resolve(cwd, file);
-  if (existsSync(abs) && statSync(abs).isDirectory() && existsSync(path.join(abs, "chase.ts"))) return { dir: abs, name: "chase.ts" };
+  if (existsSync(abs) && statSync(abs).isDirectory() && hasDesignFile(abs)) return { dir: abs, name: "chase.ts" };
   const base = path.basename(abs);
-  if ((base === "chase.ts" || base === "build.ts") && existsSync(path.join(path.dirname(abs), "chase.ts"))) return { dir: path.dirname(abs), name: base };
+  if ((base === "chase.ts" || base === "design.ts" || base === "build.ts") && hasDesignFile(path.dirname(abs))) return { dir: path.dirname(abs), name: base === "build.ts" ? "build.ts" : "chase.ts" };
   throw cmdError({ code: "E_REF", path: "/file", got: file, expected: "a chase.ts or build.ts beside a chase.ts, or a design directory", hint: "name designs/<name>/chase.ts or designs/<name>/build.ts" });
 }
 

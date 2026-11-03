@@ -10,6 +10,7 @@
 // needs tsc, and the slot registry rule (step 2), which waits on the
 // widget registry.
 
+import { designFileIn, designFileOfPath, readDesignDir } from "../design-file.js";
 import { existsSync, readFileSync, statSync } from "node:fs";
 import path from "node:path";
 import {
@@ -35,8 +36,8 @@ export const FABRICATION_EXPORTS: readonly string[] = [
 /** The design directory a chase argument names: a directory holding chase.ts, a chase.ts path, or a chase meta.id. */
 export function chaseDir(root: string, cwd: string, chase: string): string {
   const abs = path.resolve(cwd, chase);
-  if (existsSync(path.join(abs, "chase.ts"))) return abs;
-  if (path.basename(abs) === "chase.ts" && existsSync(abs)) return path.dirname(abs);
+  const named = designFileOfPath(abs);
+  if (named !== undefined) return named.dir;
   const dirs = designsByChaseId(root, chase);
   if (dirs.length === 1) return path.join(root, dirs[0]!);
   throw cmdError({
@@ -107,7 +108,7 @@ function validateDir(dir: string, label: string, text: string, registries: Chase
       throw e;
     }
   };
-  const source = read(() => readChaseSource(text, `${label}/chase.ts`));
+  const source = read(() => readChaseSource(text, `${label}/${designFileIn(dir) ?? "chase.ts"}`));
   if ("code" in source) return { errors: [source] };
   const benchFile = path.join(dir, "bench.ts");
   let bench: unknown;
@@ -131,7 +132,7 @@ export async function runChaseValidate(input: CommandInput<"chase.validate">, ct
   const dir = chaseDir(root, ctx.cwd, input.chase);
   const ws = await loadWorkspace(root);
   const registries = chaseRegistries(ws.checksSeed);
-  const r = validateDir(dir, rel(root, dir), readFileSync(path.join(dir, "chase.ts"), "utf8"), registries, createProfileLookup(ws.tables));
+  const r = validateDir(dir, rel(root, dir), readDesignDir(dir, rel(root, dir)).text, registries, createProfileLookup(ws.tables));
   if ("errors" in r) return failed(ctx, r.errors);
   const v = r.validation;
   return {

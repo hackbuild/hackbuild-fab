@@ -10,6 +10,7 @@
 
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import path from "node:path";
+import { designFileIn } from "../design-file.js";
 import { sha256Hex, type CommandInput, type ProfileRead, type ProjectGraph as SpecGraph } from "@hackbuild/spec";
 import {
   assembleGraph, defHash, downstream, foldLines, goldenLine, ids, itemId, legacyLine, parseItemId, parseSums, profileRowHash,
@@ -157,7 +158,7 @@ async function currentItems(root: string, made: readonly MadeLine[]): Promise<It
     if (p === undefined) continue;
     if (p.kind === "chase" || p.kind === "buildScript") {
       const d = await design(p.key);
-      if (d !== null) out.push({ id, kind: p.kind, uri: `${p.key}/${p.kind === "chase" ? "chase.ts" : posix(path.relative(d.dir, d.buildFile))}`, hash: defParts(d)[p.kind] });
+      if (d !== null) out.push({ id, kind: p.kind, uri: `${p.key}/${p.kind === "chase" ? (designFileIn(d.dir) ?? "chase.ts") : posix(path.relative(d.dir, d.buildFile))}`, hash: defParts(d)[p.kind] });
     } else if (p.kind === "profileRow") {
       const seedSlice = p.key.startsWith("seed/");
       const key = seedSlice ? p.key.slice(5) : p.key;

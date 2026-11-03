@@ -76,6 +76,8 @@ export function kindRuleErrors(chase: Chase, bench?: unknown): CommandError[] {
 export function buildExports(source: string): string[] {
   const out = new Set<string>();
   for (const m of source.matchAll(/^\s*export\s+(?:async\s+)?(?:function\s*\*?|const|let)\s+([A-Za-z_$][\w$]*)/gm)) out.add(m[1]!);
+  // A design.ts exports its build inside designModule; the sandbox resolves it there.
+  if (/^export\s+const\s+designModule\b/m.test(source) && /^\s{2}build:\s*(?!\{)/m.test(source)) out.add("build");
   for (const m of source.matchAll(/^\s*export\s*\{([^}]*)\}/gm)) {
     for (const part of m[1]!.split(",")) {
       const name = part.trim().split(/\s+as\s+/).pop()?.trim();

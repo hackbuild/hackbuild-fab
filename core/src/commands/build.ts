@@ -14,6 +14,7 @@
 // (DRAFT_KIND_DIRS) until the kinds move to their packages (M03, M05). MCU
 // pin rows come from the catalog (M05-T02, D-076).
 
+import { designFileIn, hasDesignFile } from "../design-file.js";
 import { existsSync, readFileSync, realpathSync, statSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
@@ -62,7 +63,7 @@ function packageJson(dir: string): { workspaces?: unknown; dependencies?: Record
 
 /** A package.json hbf init wrote: no workspaces, @hackbuild/kernel among its dependencies, chase.ts beside it. */
 const isMakerDir = (dir: string, pj: ReturnType<typeof packageJson>): boolean =>
-  pj !== undefined && pj.workspaces === undefined && pj.dependencies?.["@hackbuild/kernel"] !== undefined && existsSync(path.join(dir, "chase.ts"));
+  pj !== undefined && pj.workspaces === undefined && pj.dependencies?.["@hackbuild/kernel"] !== undefined && hasDesignFile(dir);
 
 /**
  * The maker folder holding `from` (hbf init, D-568): the nearest folder
@@ -258,9 +259,10 @@ export async function loadDesign(target: string, cwd: string, opts: { readonly c
   // Targets, labels and store records name the design from its project: a maker folder is ".".
   const base = projectRoot(dir);
   const named = path.relative(base, dir) || ".";
-  const chaseFile = path.join(dir, "chase.ts");
-  if (opts.chase === undefined && !existsSync(chaseFile)) {
-    throw cmdError({ code: "E_REF", path: "/chase", got: target, expected: "chase.ts in the directory", hint: "add chase.ts to the directory, or start one with chase.scaffold" });
+  const chaseName = designFileIn(dir);
+  const chaseFile = path.join(dir, chaseName ?? "chase.ts");
+  if (opts.chase === undefined && chaseName === undefined) {
+    throw cmdError({ code: "E_REF", path: "/chase", got: target, expected: "chase.ts or design.ts in the directory", hint: "add chase.ts or design.ts to the directory, or start one with chase.scaffold" });
   }
   // Read as data: nothing in chase.ts runs (D-178).
   const chase = opts.chase ?? readChaseSource(readFileSync(chaseFile, "utf8"), posix(path.relative(base, chaseFile))).chase;

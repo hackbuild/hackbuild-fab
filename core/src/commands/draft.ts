@@ -18,6 +18,7 @@
 // is copied out with a package.json pinning the workspace packages, and the
 // page hash is read back from there.
 
+import { hasDesignFile, readDesignDir } from "../design-file.js";
 import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, realpathSync, rmSync, statSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { readChaseSource } from "@hackbuild/chase";
@@ -85,7 +86,7 @@ interface Candidate {
 function candidates(root: string): Candidate[] {
   const defs = archetypes.entries.map((e) => e.def);
   return capabilities(root).functions.flatMap((f) => f.references)
-    .filter((r) => existsSync(path.join(root, r.path, "chase.ts")))
+    .filter((r) => hasDesignFile(path.join(root, r.path)))
     .map((r) => {
       const rel = r.path.slice("reference/".length);
       const readme = readmeParts(readFileSync(path.join(root, r.path, "README.md"), "utf8"));
@@ -167,7 +168,7 @@ export async function runDraft(input: CommandInput<"draft">, ctx: CoreCtx): Prom
   const match = input.from === undefined ? goalMatch(goal, root) : undefined;
   const from = match?.from ?? fromForm(input.from!, root, top, ctx.cwd);
   const src = resolveFrom(from, root, top, ctx.cwd);
-  const kind: ChaseKind = readChaseSource(readFileSync(path.join(src.dir, "chase.ts"), "utf8"), `${src.label}/chase.ts`).chase.meta.kind;
+  const kind: ChaseKind = readDesignDir(src.dir, src.label).chase.meta.kind;
   const p = await plan(ctx, { kind, name, from }, root, top, name);
   if ("errors" in p) return refused(ctx, p.errors);
   const pkg = makerPackage(name, p.files, root);

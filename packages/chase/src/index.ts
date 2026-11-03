@@ -1,3 +1,6 @@
+export {
+  DESIGN_EXPORT, DESIGN_FILES, INLINE_BUILD, chasePointer, chaseSpans, designToChase, designWidgets, isDesignSource, type DesignFile,
+} from "./design.js";
 export { CHASE_IMPORT_MODULES, buildPathProblem, readBenchSource, readChaseSource } from "./source.js";
 export { defineBuild, defineChase, type BuildFn, type CheckedChase } from "./define.js";
 export type { ParamIdOf, ParamsOf } from "./params-of.js";

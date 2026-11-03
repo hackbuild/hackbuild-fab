@@ -15,6 +15,7 @@
 // new one would report verdicts no commit ever had. That call is E_STALE
 // naming the moved files; without build it diffs as usual.
 
+import { designFileIn } from "../design-file.js";
 import { execFileSync } from "node:child_process";
 import { existsSync, readFileSync, realpathSync, statSync } from "node:fs";
 import path from "node:path";
@@ -47,7 +48,7 @@ interface Side {
 }
 
 async function fileSide(abs: string, root: string, cwd: string, chaseDirAbs: string): Promise<Side> {
-  const file = statSync(abs).isDirectory() ? path.join(abs, "chase.ts") : abs;
+  const file = statSync(abs).isDirectory() ? path.join(abs, designFileIn(abs) ?? "chase.ts") : abs;
   if (!existsSync(file)) {
     throw cmdError({ code: "E_REF", path: "/against", got: posix(path.relative(root, abs)), expected: "a chase.ts, a directory holding one, or a git ref", hint: "name the chase file to compare with, or a commit such as HEAD~1" });
   }

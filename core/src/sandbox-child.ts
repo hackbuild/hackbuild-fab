@@ -221,7 +221,9 @@ async function run(req: Request): Promise<void> {
   const max = req.maxResultBytes;
   try {
     const mod = (await import(pathToFileURL(req.buildFile).href)) as Record<string, unknown>;
-    const fn = mod[req.fn];
+    // A design.ts holds its inline build as the build member of designModule.
+    const inDesign = (mod["designModule"] as Record<string, unknown> | undefined)?.[req.fn];
+    const fn = mod[req.fn] ?? inDesign;
     if (typeof fn !== "function") {
       const fns = Object.keys(mod).filter((k) => typeof mod[k] === "function");
       const near = spec.didYouMean(req.fn, fns);

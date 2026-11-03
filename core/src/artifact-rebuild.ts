@@ -6,6 +6,7 @@
 // the one directory under reference/ or designs/ whose chase.ts meta.id is
 // the stated chase, built at its defaults. chase.ts is read as data (D-178).
 
+import { hasDesignFile, readDesignDir } from "./design-file.js";
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import path from "node:path";
 import { readChaseSource } from "@hackbuild/chase";
@@ -28,7 +29,7 @@ export function designDirs(root: string): string[] {
   const walk = (rel: string, depth: number): void => {
     const abs = path.join(root, rel);
     if (!existsSync(abs) || !statSync(abs).isDirectory()) return;
-    if (existsSync(path.join(abs, "chase.ts"))) out.push(rel);
+    if (hasDesignFile(abs)) out.push(rel);
     if (depth === 0) return;
     for (const name of readdirSync(abs).sort()) if (!name.startsWith(".")) walk(path.join(rel, name), depth - 1);
   };
@@ -40,9 +41,8 @@ export function designDirs(root: string): string[] {
 /** Every design directory whose chase meta.id is `id`. */
 export function designsByChaseId(root: string, id: string): string[] {
   return designDirs(root).filter((rel) => {
-    const file = path.join(root, rel, "chase.ts");
     try {
-      return readChaseSource(readFileSync(file, "utf8"), `${rel}/chase.ts`).chase.meta.id === id;
+      return readDesignDir(path.join(root, rel), rel).chase.meta.id === id;
     } catch {
       return false;
     }

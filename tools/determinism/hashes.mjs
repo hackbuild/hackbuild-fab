@@ -31,6 +31,7 @@ import { register } from "node:module";
 import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import path from "node:path";
+import { DESIGN_FILES } from "@hackbuild/chase";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 export const EPOCH = 1791072000;
@@ -50,7 +51,7 @@ export function references() {
     const ad = path.join(base, area);
     if (!statSync(ad).isDirectory()) continue;
     for (const id of readdirSync(ad).sort()) {
-      if (existsSync(path.join(ad, id, "chase.ts"))) out.push(`reference/${area}/${id}`);
+      if (DESIGN_FILES.some((f) => existsSync(path.join(ad, id, f)))) out.push(`reference/${area}/${id}`);
     }
   }
   return out;

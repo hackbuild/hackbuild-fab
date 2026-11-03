@@ -15,6 +15,7 @@
 // hbf/<name> is checked out first, a new one is created from HEAD once
 // the files validate. The files are staged, never committed.
 
+import { hasDesignFile } from "../design-file.js";
 import { existsSync, mkdirSync, mkdtempSync, readFileSync, realpathSync, rmSync, statSync, writeFileSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -45,7 +46,7 @@ export interface Source {
   readonly buildHash: string | undefined;
 }
 
-const hasChase = (dir: string): boolean => existsSync(path.join(dir, "chase.ts")) && statSync(path.join(dir, "chase.ts")).isFile();
+const hasChase = (dir: string): boolean => hasDesignFile(dir);
 
 /** buildHash of dir/expected/build.json, the golden parity writes; undefined when there is none. */
 function goldenHash(dir: string): string | undefined {

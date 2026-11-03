@@ -31,6 +31,7 @@ import type { ConstraintDim } from "./constraints.js";
 import type { ReadModel } from "./circuit.js";
 import type { CheckId } from "./checks.js";
 import type { ClaimDecl } from "./claims.js";
+import type { WidgetDecl } from "./widgets.js";
 
 /**
  * Six fixed kinds (D-126). A seventh needs a measured layout sharing nothing
@@ -905,5 +906,64 @@ export function defineChase<const C extends Chase>(c: C & NoInfer<CheckedChase<C
 
 /** Ties a build function's params to its chase. Identity at runtime. */
 export function defineBuild<const C extends Chase>(_chase: C, fn: BuildFn<ParamsOf<C>>): BuildFn<ParamsOf<C>> {
+  return fn;
+}
+
+// ---- design module (plan v11.2 section 4.1) ----
+
+/**
+ * One design module, designs/<id>/design.ts: `export const designModule =
+ * design({...})`. packages/chase designToChase lowers it to a Chase, so
+ * the pipeline, checks, goldens and bake read the same document. Every
+ * member except an inline `build` is a literal read as data (D-178);
+ * `build` is either the literal { module, fn } of a build.ts or a function
+ * expression, an opaque span the sandbox runs from this file.
+ */
+export interface Design {
+  /** Becomes meta.id. */
+  readonly id: string;
+  /** The rest of meta: kind, name, version, chase, kernels, machines, license and kin. */
+  readonly meta: Omit<ChaseMeta, "id">;
+  /** Becomes materials. */
+  readonly slots: readonly MaterialSlot[];
+  readonly params: readonly ParamGroup[];
+  readonly presets?: readonly Preset[];
+  readonly expect?: readonly ExpectDecl[];
+  readonly waive?: readonly WaiverDecl[];
+  readonly hookup?: readonly HookupDecl[];
+  /** Declarative widget list; the bench layer reads it, the Chase carries none. */
+  readonly widgets?: readonly WidgetDecl[];
+  readonly build: { readonly module: string; readonly fn: string } | ((...args: never[]) => unknown);
+  /** Default [] when absent. */
+  readonly exports?: readonly ExportDecl[];
+  /** Default [] when absent. */
+  readonly assertions?: readonly Assertion[];
+  readonly applied?: Chase["applied"];
+  readonly stack?: Chase["stack"];
+  readonly motion?: Chase["motion"];
+  readonly items?: Chase["items"];
+  readonly scene?: Chase["scene"];
+  readonly coupon?: Chase["coupon"];
+  readonly claims?: Chase["claims"];
+}
+
+/** The Chase a Design lowers to, at the type level; ParamsOf reads it. */
+export type DesignChase<D extends Design> = {
+  readonly meta: D["meta"] & { readonly id: D["id"] };
+  readonly materials: D["slots"];
+  readonly params: D["params"];
+  readonly presets: D["presets"];
+  readonly build: { readonly module: string; readonly fn: string };
+  readonly exports: NonNullable<D["exports"]>;
+  readonly assertions: NonNullable<D["assertions"]>;
+};
+
+/** Identity that keeps literal types; the module's reader lowers it and nothing here runs it. */
+export function design<const D extends Design>(d: D): D {
+  return d;
+}
+
+/** Ties a build function's params to its design module. Identity at runtime. */
+export function defineDesignBuild<const D extends Design>(_design: D, fn: BuildFn<ParamsOf<DesignChase<D> & Chase>>): BuildFn<ParamsOf<DesignChase<D> & Chase>> {
   return fn;
 }

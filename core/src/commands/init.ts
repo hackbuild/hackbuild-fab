@@ -14,6 +14,7 @@
 // the maker folder has no node_modules. The page is written into the maker
 // folder only after the bake passes, and its hash is read back from there.
 
+import { readDesignDir } from "../design-file.js";
 import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, realpathSync, rmSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { readChaseSource } from "@hackbuild/chase";
@@ -104,8 +105,8 @@ export async function runInit(input: CommandInput<"init">, ctx: CoreCtx): Promis
   if (input.from !== undefined) {
     from = fromForm(initFrom(input.from), root, top, ctx.cwd);
     const src = resolveFrom(from, root, top, ctx.cwd);
-    const text = readFileSync(path.join(src.dir, "chase.ts"), "utf8");
-    kind = readChaseSource(text, `${src.label}/chase.ts`).chase.meta.kind;
+    const { text, chase: read } = readDesignDir(src.dir, src.label);
+    kind = read.meta.kind;
     const open = (await chaseSourceErrors(ctx, src.dir))(text);
     if (open.length > 0) return refused(ctx, open);
   }
