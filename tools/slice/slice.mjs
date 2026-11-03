@@ -222,7 +222,7 @@ export async function slice({ input, outDir: outArg, slicer = DEFAULT_SLICER, ap
     slots = d.slots;
     source = { design: input.design, preset: input.preset, sourceDateEpoch: CARD_EPOCH, artifactHash: d.artifactHash, warnings: d.warnings, model: d.model, checks: d.checks, writer: "core export3mf, packages/3mf write3mf (no export gate, not a fabrication export)" };
   }
-  const stem = input.file !== undefined ? path.basename(input.file, ".3mf") : `${path.basename(input.design)}-${input.preset}`;
+  const stem = input.file !== undefined ? path.basename(input.file, ".3mf") : `${path.basename(input.design)}-${input.preset ?? "defaults"}`;
   const original = path.join(outDir, `${stem}.3mf`);
   if (input.file === undefined || path.resolve(input.file) !== original) writeFileSync(original, bytes);
   if (source.model !== undefined) writeFileSync(path.join(outDir, `${stem}.model.json`), `${JSON.stringify(source.model, null, 2)}\n`);

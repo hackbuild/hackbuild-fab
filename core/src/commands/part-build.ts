@@ -89,10 +89,12 @@ export async function runPartBuild(input: CommandInput<"part.build">, ctx: CoreC
   const verdict = worst(checked.results);
   const base = baseArgs(params, input.preset);
   // A passing part proposes the 3mf only where the machine slices; a sheet part has no single-part exporter before M10.
+  const counts = countsOf(checked.results);
+  const summary = `${counts.fail} fail, ${counts.warn} warn`;
   const next: NextCall[] = verdict === "fail"
     ? fixCalls("part.build", input.chase, checked.results, base)
     : machineOf(built).slices
-      ? [{ command: "export.run", args: { chase: input.chase, kind: "3mf", ...base }, why: "every check passes; a person approves the 3mf at a terminal" }]
+      ? [{ command: "export.run", args: { chase: input.chase, kind: "3mf", ...base }, why: `${summary}; a person approves the 3mf at a terminal` }]
       : [];
   return {
     verdict, stage: stageOf(verdict), buildHash: built.part.buildHash, inputsHash: ctx.inputsHash,

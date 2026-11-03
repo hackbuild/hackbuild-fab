@@ -45,15 +45,16 @@ describe("chase.patch (M10-T05)", () => {
     here = git(ROOT, "rev-parse", "HEAD");
   });
 
-  it("the 8.6 pointer edit: exit 0, one edit staged on hbf/keys-flex-pair, one literal changed, no commit", async () => {
+  it("the 8.6 pointer edit: exit 0, one edit staged on the branch HEAD is on, one literal changed, no commit", async () => {
     const { top, dir } = repo("reference/keys/flex-pair", "flex-pair");
     const before = readFileSync(path.join(dir, "chase.ts"), "utf8");
     const { code, r } = await json("chase.patch", path.join(dir, "chase.ts"), "--pointer", GAP, "--set", "1.44");
     expect(code, JSON.stringify(r.errors)).toBe(0);
     const res = r.result as { edits: number; branch: string; defHashBefore: string; defHash: string };
     expect(res.edits).toBe(1);
-    expect(res.branch).toBe("hbf/keys-flex-pair");
-    expect(git(top, "symbolic-ref", "--short", "HEAD")).toBe("hbf/keys-flex-pair");
+    expect(res.branch).toBe("main");
+    expect(git(top, "symbolic-ref", "--short", "HEAD")).toBe("main");
+    expect(git(top, "branch", "--list", "hbf/*")).toBe("");
     expect(git(top, "rev-list", "--count", "HEAD")).toBe("1");
     expect(git(top, "diff", "--cached", "--numstat")).toBe("1\t1\tdesigns/flex-pair/chase.ts");
     const after = readFileSync(path.join(dir, "chase.ts"), "utf8");

@@ -11,7 +11,7 @@ export const spec: CommandSpec<"fits.table"> = {
     "Every row is a CHK-FIT-01 result: verdict fail and exit 1 when any row is out of band.",
     "Do not use it to change a fit; edit the param the row reads and rebuild.",
   ].join(" "),
-  input: inputOf<"fits.table">(z.object({ build: z.string().min(1).describe("design or reference directory, or a chase id") }).strict()),
+  input: inputOf<"fits.table">(z.object({ build: z.string().min(1).describe("design or reference directory, a chase id, or hbf://build/<buildHash>") }).strict()),
   output: outputOf<"fits.table">(),
   examples: [{ input: { build: "reference/fit/ogee16-r16p" }, note: "the ogee r16-p fits table, 18 rows" }],
   writes: "nothing",

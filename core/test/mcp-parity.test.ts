@@ -86,6 +86,22 @@ describe("hbf mcp over stdio", () => {
     expect(createHash("sha256").update(bytes).digest("hex")).toBe(art.hash);
   }, 120_000);
 
+  it("view_render takes a number as a square, and fits.table takes hbf://build/<hash>", async () => {
+    const built = await client.callTool({ name: "part_build", arguments: { op: "build", chase: REF } });
+    const build = (built.structuredContent?.result as { build: string }).build;
+    const view = await client.callTool({ name: "view_render", arguments: { target: build, mode: "iso", size: 64 } });
+    expect(view.isError ?? false).toBe(false);
+    expect(view.structuredContent!.errors).toEqual([]);
+    const fits = await client.callTool({ name: "check_run", arguments: { report: "fits", build } });
+    expect(fits.structuredContent!.errors[0]?.code).not.toBe("E_HANDLE");
+  }, 120_000);
+
+  it("lists slice_run as a read-only tool", async () => {
+    const { tools } = await client.listTools();
+    const t = tools.find((x) => x.name === "slice_run");
+    expect(t?.annotations).toMatchObject({ readOnlyHint: true, destructiveHint: false });
+  }, 60_000);
+
   it("server/discover carries the protocol and the facts hbf doctor --json prints", async () => {
     const d = await client.discover();
     expect(d.supportedVersions).toContain("2026-07-28");

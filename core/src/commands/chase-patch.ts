@@ -1,8 +1,9 @@
 // chase.patch (M10-T05 steps 2 to 4, D-115, D-006; group author). Edits a
 // design's chase.ts through anchors and pointers (packages/chase patch.ts),
-// or replaces its build.ts whole under an ifDefHash guard, on branch
-// hbf/<chase>. The writer checks out the branch, or creates it from HEAD
-// once the patch validates, writes, stages the file and appends one line to
+// or replaces its build.ts whole under an ifDefHash guard. The writer runs
+// no checkout: the work tree may be shared, so the patch lands on the branch
+// HEAD is on (chase.scaffold and adopt create hbf/<name>). Once the patch
+// validates it writes, stages the file and appends one line to
 // .hbf/patches.jsonl at the repository top with the inverse edits and the
 // defHash before and after. It never commits; the owner asks for commits.
 //
@@ -102,9 +103,9 @@ export function checkoutBranch(top: string, branch: string, args: readonly strin
 }
 
 /**
- * Apply edits to the chase.ts or build.ts in dir on branch hbf/<chase>.
+ * Apply edits to the chase.ts or build.ts in dir on the branch HEAD is on.
  * An edit that cannot apply throws its CommandError; a refusal to write
- * (no work tree, not a design, a branch git cannot check out, an error the
+ * (no work tree, not a design, an error the
  * patch adds) comes back as PatchRefusal with nothing written.
  */
 export async function writeChasePatch(ctx: CoreCtx, dir: string, file: "chase.ts" | "build.ts", edits: readonly PatchEdit[], opts: { readonly addMembers?: boolean } = {}): Promise<PatchWrite | PatchRefusal> {
@@ -115,15 +116,8 @@ export async function writeChasePatch(ctx: CoreCtx, dir: string, file: "chase.ts
   const { top, rel } = target;
   const chaseFile = path.join(dir, "chase.ts");
   const id = readChaseSource(readFileSync(chaseFile, "utf8"), `${rel}/chase.ts`).chase.meta.id;
-  const branch = `hbf/${id}`;
-  const current = tryGit(top, ["symbolic-ref", "--short", "-q", "HEAD"]);
-  const exists = tryGit(top, ["rev-parse", "--verify", "-q", `refs/heads/${branch}`]) !== undefined;
-  const checkout = (args: readonly string[]): PatchRefusal | undefined => checkoutBranch(top, branch, args);
-  // An existing branch holds the text the edits apply to, so switch first.
-  if (exists && current !== branch) {
-    const r = checkout([branch]);
-    if (r !== undefined) return r;
-  }
+  // The work tree may be shared with a person or another agent, so the patch lands on the branch it is on.
+  const branch = tryGit(top, ["symbolic-ref", "--short", "-q", "HEAD"]) ?? "HEAD";
   const chaseText = readFileSync(chaseFile, "utf8");
   const chaseBefore = readChaseSource(chaseText, `${rel}/chase.ts`).chase;
   const defHashBefore = designDefHash(dir, chaseBefore);
@@ -148,10 +142,6 @@ export async function writeChasePatch(ctx: CoreCtx, dir: string, file: "chase.ts
     const was = existsSync(filePath) ? readFileSync(filePath, "utf8") : "";
     next = e.replaceWhole;
     inverse = (after) => [{ replaceWhole: was, ifDefHash: after }];
-  }
-  if (!exists) {
-    const r = checkout(["-b", branch]);
-    if (r !== undefined) return r;
   }
   writeFileSync(filePath, next);
   git(top, ["add", "--", path.relative(top, realpathSync(filePath))]);

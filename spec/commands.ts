@@ -4,9 +4,9 @@
  * M-S runs this file first; exit B freezes the parts that table names, and
  * the rest stays draft until the milestone it names.
  */
-// One command surface, three transports (CLI, MCP, HTTP). 30 CLI commands
-// in six groups (D-106) and 19 MCP tools with underscore names in a fixed
-// order (D-107, D-193). Every command returns CommandResult: evidence with a
+// One command surface, three transports (CLI, MCP, HTTP). The CLI commands
+// are in six groups (D-106) and the MCP tools have underscore names in a
+// fixed order (D-107, D-193); tools/counts.mjs counts both. Every command returns CommandResult: evidence with a
 // verdict, errors, artifacts and the next call. The core loop is one call:
 // part.build runs every applicable check and returns its findings, so a
 // caller needs check.run only for a subset, an exported file or a later
@@ -73,6 +73,7 @@ import type { ReferenceListIO } from "./command-io/reference.list.js";
 import type { RulesAuditIO } from "./command-io/rules.audit.js";
 import type { SimRunIO } from "./command-io/sim.run.js";
 import type { SimSweepIO } from "./command-io/sim.sweep.js";
+import type { SliceIO } from "./command-io/slice.js";
 import type { ViewRenderIO } from "./command-io/view.render.js";
 // end gen:command-io imports
 
@@ -100,8 +101,8 @@ export const COMMAND_NAMES = [
   "check.run", "fits.table", "sim.run", "sim.sweep", "circuit.solve", "motion.run", "rules.audit",
   // look (3)
   "view.render", "chase.render", "project.graph",
-  // make (5)
-  "chase.bake", "nest.pack", "export.run", "draft", "adopt",
+  // make (6)
+  "chase.bake", "nest.pack", "export.run", "draft", "adopt", "slice",
 ] as const;
 export type CommandName = (typeof COMMAND_NAMES)[number];
 
@@ -116,6 +117,7 @@ export const COMMAND_GROUP = {
   "circuit.solve": "prove", "motion.run": "prove", "rules.audit": "prove",
   "view.render": "look", "chase.render": "look", "project.graph": "look",
   "chase.bake": "make", "nest.pack": "make", "export.run": "make", "draft": "make", "adopt": "make",
+  "slice": "make",
 } as const satisfies Record<CommandName, Group>;
 
 /** CLI-only commands, marked cli only in their spec/command-io file; project.graph is also served as a resource (hbf://project/graph), the rest wait on the MCP projection decision (engine brief finding F4). */
@@ -131,7 +133,7 @@ export const MCP_TOOL_NAMES = [
   "constraints_query", "catalog_search", "canon_search", "mech_derive", "knowledge_search",
   "chase_scaffold", "chase_validate", "chase_patch", "arch_apply", "part_build",
   "part_probe", "layout_solve", "check_run", "sim_run", "circuit_solve",
-  "motion_run", "view_render", "chase_bake", "export_run",
+  "motion_run", "view_render", "chase_bake", "export_run", "slice_run",
 ] as const;
 export type McpToolName = (typeof MCP_TOOL_NAMES)[number];
 
@@ -495,6 +497,7 @@ export interface CommandIO {
   "export.run": ExportRunIO;
   "draft": DraftIO;
   "adopt": AdoptIO;
+  "slice": SliceIO;
 // end gen:command-io io
 }
 
@@ -684,6 +687,7 @@ export const MCP_TOOLS = [
   { name: "view_render", covers: ["view.render"], selector: null, annotations: READ, task: "never", gated: false, profiles: ["sweep"] },
   { name: "chase_bake", covers: ["chase.bake", "chase.render"], selector: "mode", annotations: BUILD, task: "always", gated: false, profiles: [] },
   { name: "export_run", covers: ["export.run"], selector: null, annotations: EXPORT, task: "always", gated: true, requires: ["print.3mf", "cut.svg"], profiles: ["sweep"] },
+  { name: "slice_run", covers: ["slice"], selector: null, annotations: READ, task: "always", gated: false, profiles: [] },
 ] as const satisfies readonly McpToolDef[];
 
 // MCP tool inputs, derived from CommandIO. StrictArgs turns every optional
@@ -768,6 +772,8 @@ export interface McpToolIO {
   chase_bake: Flat<{ mode: "bake" | "render" } & Merge<BakeArgs, In<"chase.render">>>;
   /** export.run alone, gated when the exporter has fabrication true (D-109, D-193). */
   export_run: In<"export.run">;
+  /** slice alone: a virtual print in a temporary folder, never the export gate. */
+  slice_run: In<"slice">;
 }
 
 export type McpToolInput<T extends McpToolName> = McpToolIO[T];

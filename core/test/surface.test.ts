@@ -24,6 +24,8 @@ const mentioned = (cell: string, names: readonly string[]): string[] =>
 /** Release 1 utility verbs (plan v9 sections 2, 3.1 and 3.4): hbf evidence add and list landed with R1-engine-26, hbf capabilities with R1-designs-reach-15. */
 const R1_VERBS: readonly string[] = ["evidence", "capabilities"];
 
+/** Commands added in build mode (D-667) that no row of the MILESTONES.md table lists yet. */
+const BUILD_MODE_ADDED: readonly string[] = ["slice"];
 /** M01 commands not registered yet; fits.table landed with M01-T09. */
 const M01_PENDING: readonly string[] = [];
 /** M04 commands not registered yet; project.graph landed with M04-T09 and rules.audit with M04-T13. */
@@ -46,7 +48,7 @@ describe("registered surface (M00-T13 step 1, M01-T05 step 7, M02-T11 step 9, M0
   const r1 = surfaceRows(["R1"]).flatMap(([, cell]) => mentioned(cell, COMMAND_NAMES));
 
   it("registers exactly the commands of the M-S, M00, M01, M02, M04, M05, M06, M07, M08, M10 and R1 rows, less the pending M01, M04, M06 and M10 ones", () => {
-    const all = new Set([...rows.flatMap(([, cell]) => mentioned(cell, COMMAND_NAMES)), ...m04, ...m05, ...m06, ...m07, ...m08, ...m10, ...r1]);
+    const all = new Set([...rows.flatMap(([, cell]) => mentioned(cell, COMMAND_NAMES)), ...m04, ...m05, ...m06, ...m07, ...m08, ...m10, ...r1, ...BUILD_MODE_ADDED]);
     const want = [...all].filter((n) => !M01_PENDING.includes(n) && !M04_PENDING.includes(n) && !M06_PENDING.includes(n) && !M10_PENDING.includes(n));
     expect(COMMANDS.map((c) => c.name).sort()).toEqual(want.sort());
     expect(COMMANDS.length).toBe(want.length);

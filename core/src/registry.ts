@@ -22,6 +22,7 @@ import { runAsmSolve, type AsmSolveInput } from "./commands/asm.solve.js";
 import { runPartProbe, type PartProbeInput } from "./commands/part.probe.js";
 import { runProjectGraph, type ProjectGraphInput } from "./commands/project-graph.js";
 import { runRulesAudit } from "./commands/rules-audit.js";
+import { runSlice } from "./commands/slice.js";
 import { runCircuitSolve } from "./commands/circuit-solve.js";
 import { runNestPack, type NestPackInput } from "./commands/nest.pack.js";
 import { PROGRAM_IDS, runMotionRun, type MotionRunInput } from "./commands/motion.run.js";
@@ -85,6 +86,7 @@ export const RUNS: Runs = {
   "chase.render": (i, ctx) => runChaseRender(i, ctx as CoreCtx),
   draft: (i, ctx) => runDraft(i, ctx as CoreCtx),
   adopt: (i, ctx) => runAdopt(i, ctx as CoreCtx),
+  slice: (i, ctx) => runSlice(i, ctx as CoreCtx),
   init: (i, ctx) => runInit(i, ctx as CoreCtx),
 };
 

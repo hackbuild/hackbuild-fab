@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "hbf": {
+      "command": "node",
+      "args": ["core/bin/hbf.mjs", "mcp", "--workspace", "."]
+    }
+  }
+}

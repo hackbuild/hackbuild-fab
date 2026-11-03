@@ -16,6 +16,7 @@ import { FileNonceLedger } from "../gate-ledger.js";
 import { GATE_FORM, GATE_INPUT_KEY, handle, imageBlocks, type McpEnv } from "./handlers.js";
 import { COMMAND_RESULT_JSON, servedTools, standardOf, toolInputJson, type ServedTool } from "./schema.js";
 import { MCP_RESOURCES, mcpFacts } from "./discover.js";
+import { registerLiveResources } from "./resources.js";
 import { workspaceRoot } from "../commands/build.js";
 
 export interface McpServerOptions {
@@ -87,6 +88,7 @@ export function createHbfServer(o: McpServerOptions): McpServer {
       contents: [{ uri: uri.href, mimeType: r.mimeType, text: r.text(install) }],
     }));
   }
+  registerLiveResources(server, install);
   // server/discover keeps the SDK's answer and adds the facts a host caches by (M12-T09 step 1).
   // The serving entry reinstalls the discover handler on connect and calls the
   // instance's _ondiscover, so that method is the seam (SDK 2.3.0, pinned).

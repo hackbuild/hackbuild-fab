@@ -17,21 +17,21 @@ import { EXPORT_ALIASES } from "../hook";
 import { FEATURE_KINDS, FEATURE_KIND_ADMISSION, FEATURE_KIND_ALIASES, KIND_MILESTONES, MOVED_FEATURE_KINDS } from "../features";
 
 describe("command surface", () => {
-  test("CommandName has 33 members in six groups; draft (R1-engine-24) and adopt (R1-engine-25) are in make, init (R1-engine-23) in author, all CLI only", () => {
-    expect(COMMAND_NAMES).toHaveLength(33);
-    expect(new Set(COMMAND_NAMES).size).toBe(33);
+  test("CommandName has 34 members in six groups; draft (R1-engine-24) and adopt (R1-engine-25) are in make, init (R1-engine-23) in author, all CLI only", () => {
+    expect(COMMAND_NAMES).toHaveLength(34);
+    expect(new Set(COMMAND_NAMES).size).toBe(34);
     for (const n of COMMAND_NAMES) expect(GROUPS).toContain(COMMAND_GROUP[n]);
     const perGroup = Object.fromEntries(GROUPS.map((g) => [g, COMMAND_NAMES.filter((n) => COMMAND_GROUP[n] === g).length]));
-    expect(perGroup).toEqual({ query: 8, author: 6, build: 4, prove: 7, look: 3, make: 5 });
+    expect(perGroup).toEqual({ query: 8, author: 6, build: 4, prove: 7, look: 3, make: 6 });
     expect(CLI_ONLY).toContain("draft");
     expect(CLI_ONLY).toContain("adopt");
     expect(CLI_ONLY).toContain("init");
     expect(COMMAND_GROUP.init).toBe("author");
   });
 
-  test("McpToolName has 19 members, legal for the Claude API, in fixed order", () => {
-    expect(MCP_TOOL_NAMES).toHaveLength(19);
-    expect(new Set(MCP_TOOL_NAMES).size).toBe(19);
+  test("McpToolName has 20 members, legal for the Claude API, in fixed order", () => {
+    expect(MCP_TOOL_NAMES).toHaveLength(20);
+    expect(new Set(MCP_TOOL_NAMES).size).toBe(20);
     for (const n of MCP_TOOL_NAMES) {
       expect(n).toMatch(TOOL_NAME_PATTERN);
       expect(n).not.toContain(".");
@@ -48,8 +48,8 @@ describe("command surface", () => {
     }
   });
 
-  test("toolset profiles hold 19, 10 and 6 tools", () => {
-    expect(TOOLSET_PROFILES.all).toHaveLength(19);
+  test("toolset profiles hold 20, 10 and 6 tools", () => {
+    expect(TOOLSET_PROFILES.all).toHaveLength(20);
     expect(TOOLSET_PROFILES["query,prove"]).toHaveLength(10);
     expect(TOOLSET_PROFILES.sweep).toHaveLength(6);
   });

@@ -22,6 +22,7 @@ import { countsOf, findingsOf, worst, type CommandOut } from "../result.js";
 import { decimalsOf, fixed } from "../text/fmt.js";
 import type { CoreCtx } from "../ctx.js";
 import { constraintRegistry } from "./constraints-query.js";
+import { fromStore } from "./check-run.js";
 import { buildTarget } from "./part-build.js";
 
 const CHECK = "CHK-FIT-01";
@@ -45,7 +46,7 @@ export interface FitsTableRow extends FitRow {
 }
 
 export async function runFitsTable(input: CommandInput<"fits.table">, ctx: CoreCtx): Promise<CommandOut<CommandOutput<"fits.table">>> {
-  const built = await buildTarget(input.build, ctx, undefined, undefined, "/build");
+  const built = input.build.startsWith("hbf://") ? await fromStore(input.build, ctx) : await buildTarget(input.build, ctx, undefined, undefined, "/build");
   const part = built.part;
   const profile = createProfileLookup(fullProfile());
   const seed = seedRows(built.design.ws.checksSeed).get(CHECK);

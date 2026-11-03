@@ -26,8 +26,6 @@ tools/corpus/inlay/vtracer/07-user-art-reference.png
 
 # persona designs, local only
 .scratch/
-# a host config copied from .mcp.json.example
-.mcp.json
 
 # Legacy copies held out of git (D-286): the folder's SHA256SUMS is the
 # record and the bytes live in fab-knowledge:originals. tools/legacy/held.mjs

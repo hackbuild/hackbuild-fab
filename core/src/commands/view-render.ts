@@ -33,7 +33,8 @@ export async function runViewRender(input: CommandInput<"view.render">, ctx: Cor
     return { positions: m.positions, triangles: m.triangles, colour: colourOf.get(b.slot) ?? [128, 128, 128] };
   });
   const view = MODE_VIEW[mode];
-  const [w, h] = input.size ?? (view === undefined ? DEFAULT_SIZE.sheet : DEFAULT_SIZE.single);
+  const size = input.size ?? (view === undefined ? DEFAULT_SIZE.sheet : DEFAULT_SIZE.single);
+  const [w, h] = typeof size === "number" ? [size, size] : size;
   const rgb = view === undefined ? renderSheet(meshes, w, h) : renderView(meshes, view, w, h);
   const png = encodePng(w, h, rgb);
   const hash = sha256Hex(png) as unknown as ArtifactHash;

@@ -20,7 +20,10 @@ export const spec: CommandSpec<"view.render"> = {
   input: inputOf<"view.render">(z.object({
     target: z.string().min(1).describe("hbf://build/<buildHash> or a design directory"),
     mode: z.string().min(1).describe(`view mode: ${VIEW_MODES.join(", ")}`),
-    size: z.tuple([z.number().int().min(16).max(4096), z.number().int().min(16).max(4096)]).exactOptional().describe("width and height, px"),
+    size: z.union([
+      z.tuple([z.number().int().min(16).max(4096), z.number().int().min(16).max(4096)]),
+      z.number().int().min(16).max(4096),
+    ]).exactOptional().describe("width and height, px; a number is a square of that side"),
   }).strict()),
   output: outputOf<"view.render">(),
   examples: [

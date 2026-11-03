@@ -32,6 +32,7 @@ import { spec as projectGraph } from "./project-graph.js";
 import { spec as rulesAudit } from "./rules-audit.js";
 import { spec as simRun } from "./sim-run.js";
 import { spec as simSweep } from "./sim-sweep.js";
+import { spec as slice } from "./slice.js";
 import { spec as viewRender } from "./view-render.js";
 
 /** Every command spec, one per def file. */
@@ -66,5 +67,6 @@ export const SPECS: readonly AnySpec[] = [
   rulesAudit,
   simRun,
   simSweep,
+  slice,
   viewRender,
 ];

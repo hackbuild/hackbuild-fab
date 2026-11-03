@@ -9,8 +9,8 @@ export interface ViewRenderIO {
   input: {
     target: string;
     mode: ViewMode;
-    /** Image width and height, px. */
-    size?: readonly [number, number];
+    /** Image width and height, px; a number is a square of that side. */
+    size?: readonly [number, number] | number;
   };
   output: { artifact: ArtifactUri };
 }

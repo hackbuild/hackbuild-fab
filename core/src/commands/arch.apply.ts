@@ -45,7 +45,7 @@ export function appliedEdits(chase: Chase, applied: AppliedArchetype, slotsAdded
 }
 
 /** Write the placement through chase.patch; written false with the reason when the writer refuses. */
-async function write(ctx: CoreCtx, dir: string, edits: readonly PatchEdit[]): Promise<{ readonly written: boolean; readonly notWritten?: string }> {
+async function write(ctx: CoreCtx, dir: string, edits: readonly PatchEdit[]): Promise<{ readonly written: boolean; readonly notWritten?: string; readonly branch?: string }> {
   let w: Awaited<ReturnType<typeof writeChasePatch>>;
   try {
     w = await writeChasePatch(ctx, dir, "chase.ts", edits, { addMembers: true });
@@ -53,9 +53,9 @@ async function write(ctx: CoreCtx, dir: string, edits: readonly PatchEdit[]): Pr
     if (!isThrownCommandError(e)) throw e;
     w = { errors: [e.hbf] };
   }
-  if (!("errors" in w)) return { written: true };
+  if (!("errors" in w)) return { written: true, branch: w.branch };
   const why = w.errors.map((e) => `${e.code}${e.path === undefined ? "" : ` ${e.path}`} ${e.hint}`).join("; ");
-  return { written: false, notWritten: `not written, chase.patch refused the patch for hbf/<chase> (D-115): ${why}` };
+  return { written: false, notWritten: `not written, chase.patch refused the patch (D-115): ${why}` };
 }
 
 const TOL = 1e-9;
