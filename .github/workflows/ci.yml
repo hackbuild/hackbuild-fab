@@ -337,7 +337,7 @@ jobs:
           status=0
           failed=""
           for d in reference/*/*/ designs/*/; do
-            test -f "${d}chase.ts" || test -f "${d}chase.surface.ts" || continue
+            test -f "${d}chase.ts" || test -f "${d}design.ts" || test -f "${d}chase.surface.ts" || continue
             case "$d" in designs/*) test -f "${d}expected/build.json" || continue ;; esac
             if ! npx --no-install hbf parity "${d%/}"; then
               echo "parity failed: ${d%/}"

@@ -16,19 +16,19 @@ import { ROOT } from "./hbf.js";
 
 const reg = chaseRegistries(JSON.parse(readFileSync(path.join(ROOT, "packages", "checks", "seed", "checks.seed.json"), "utf8")));
 
-/** reference/<area>/<id>/chase.ts and designs/<id>/chase.ts, listed from disk. */
+/** reference/<area>/<id> and designs/<id>, each by its chase.ts or design.ts, listed from disk. */
 function chaseFiles(): string[] {
   const out: string[] = [];
   for (const area of readdirSync(path.join(ROOT, "reference"), { withFileTypes: true })) {
     if (!area.isDirectory()) continue;
     for (const id of readdirSync(path.join(ROOT, "reference", area.name), { withFileTypes: true })) {
-      const f = path.join("reference", area.name, id.name, "chase.ts");
-      if (id.isDirectory() && existsSync(path.join(ROOT, f))) out.push(f);
+      const f = ["chase.ts", "design.ts"].map((n) => path.join("reference", area.name, id.name, n)).find((p) => existsSync(path.join(ROOT, p)));
+      if (id.isDirectory() && f !== undefined) out.push(f);
     }
   }
   for (const id of readdirSync(path.join(ROOT, "designs"), { withFileTypes: true })) {
-    const f = path.join("designs", id.name, "chase.ts");
-    if (id.isDirectory() && existsSync(path.join(ROOT, f))) out.push(f);
+    const f = ["chase.ts", "design.ts"].map((n) => path.join("designs", id.name, n)).find((p) => existsSync(path.join(ROOT, p)));
+    if (id.isDirectory() && f !== undefined) out.push(f);
   }
   return out.sort();
 }
