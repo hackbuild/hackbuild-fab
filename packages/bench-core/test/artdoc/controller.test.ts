@@ -229,7 +229,7 @@ describe("draw notes", () => {
       fillPath: () => {},
       drawImage: () => {},
       readAlpha: () => new Uint8Array(grid.w * grid.h),
-      readRgba: () => ({ w: grid.w, h: grid.h, data: new Uint8ClampedArray(grid.w * grid.h * 4) }),
+      readRgba: () => ({ width: grid.w, height: grid.h, data: new Uint8ClampedArray(grid.w * grid.h * 4) }),
       clear: () => {},
     });
     let v: unknown = null;
