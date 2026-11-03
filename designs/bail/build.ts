@@ -16,7 +16,7 @@
 // inside it, as BAIL labels the rim band on every layer (composeFace, 1635).
 
 import {
-  canonicalize, commandError, defineBuild, qualify, qualifyRow, sha256Hex,
+  artPalette, canonicalize, commandError, defineBuild, qualify, qualifyRow, sha256Hex,
   type ArtDocument, type ArtLayer, type Bound, type BodyDraft, type FaceFrame, type Feature, type Metric, type Qualification, type Ring, type ShapeDecl, type Vec2,
 } from "@hackbuild/spec";
 import { chase } from "./chase";
@@ -28,16 +28,10 @@ const PRINT_NOTE = "fab-knowledge:originals/bail/evidence/PRINT-NOTES.md, entere
  * The art lowering policy of the node build. The node text route carries IBM Plex Mono, Permanent Marker, Special Elite
  * and VT323 (geom TEXT_FACES), so every BAIL font key sets in its own face; a key the route lacked would set in Plex bold
  * with a FONT_SWAP warning. Cut and relief layers are skipped with LAYER_SKIPPED where the inlay kind would refuse them.
- * A palette image sends each pixel to the nearest of the slots before the first flex slot, the art and body filaments
- * (slots 1 to 3 here): BAIL's hackbuild preset also counts the TPU grip slot (bail.html:1165), which would print the
- * darkest pixels of the face in TPU.
+ * A palette image sends each pixel to the nearest of the slots before the first flex slot (spec artPalette): slots 1 to 3 here.
  */
+const LOWER_POLICY = { fonts: "node", unsupported: "skip", palette: artPalette(chase.materials) } as const;
 const SLOTS = [...chase.materials].sort((a, b) => a.slot - b.slot);
-const FIRST_FLEX = SLOTS.findIndex((s) => s.role === "flex");
-const LOWER_POLICY = {
-  fonts: "node", unsupported: "skip",
-  palette: (FIRST_FLEX < 0 ? SLOTS : SLOTS.slice(0, FIRST_FLEX)).map((s) => s.preview),
-} as const;
 
 /**
  * BAIL's own limits, read from the bench and not yet profile rows (README, "numbers awaiting profile rows").

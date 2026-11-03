@@ -147,6 +147,23 @@ export interface ArtPathLayer extends ArtLayerBase<"path"> {
   readonly w: Mm;
 }
 
+/** The grey a slot with no material or no preview colour takes in a palette. */
+export const ART_PALETTE_GREY = "#808080";
+
+/**
+ * The slot colours a palette image may take, slot 1 first: each material's
+ * preview up to the first flex slot, so no face pixel prints in a flexible
+ * filament (BAIL's hackbuild preset counts its TPU grip slot, bail.html:1165).
+ * A slot with no material or no preview is ART_PALETTE_GREY. The node build
+ * and the bench preview both read this, so they map a pixel alike.
+ */
+export function artPalette(materials: readonly { readonly slot: number; readonly role: string; readonly preview?: string }[]): string[] {
+  const sorted = [...materials].sort((a, b) => a.slot - b.slot);
+  const flex = sorted.find((m) => m.role === "flex" || m.role === "flex-conductor");
+  const last = flex === undefined ? Math.max(0, ...sorted.map((m) => m.slot)) : flex.slot - 1;
+  return Array.from({ length: Math.max(0, last) }, (_, i) => sorted.find((m) => m.slot === i + 1)?.preview ?? ART_PALETTE_GREY);
+}
+
 /** A raster or vector image, w mm across. src is a data uri or an hbf:// uri the host resolves. mono and silhouette paint slot; palette sends each pixel to the nearest filament slot. */
 export interface ArtImageLayer extends ArtLayerBase<"image"> {
   readonly src: string;

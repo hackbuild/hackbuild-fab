@@ -6,7 +6,7 @@
 import { deflateSync } from "node:zlib";
 import { describe, expect, test } from "vitest";
 import { flattenSvgPath, ringArea2 } from "@hackbuild/geom";
-import { artLayer, type ArtLayer } from "@hackbuild/spec";
+import { artLayer, artPalette, type ArtLayer } from "@hackbuild/spec";
 import { imageToPaths, lowerArtLayer, lowerArtLayersWith, lowerArtLayerWith } from "../src/art-lower.js";
 import { dataUriBytes, decodePng } from "../src/png.js";
 
@@ -106,6 +106,19 @@ describe("a palette image", () => {
     const one = imageLayer(uri(png(4, 4, () => [200, 30, 110, 255])), { mode: "palette" });
     expect(imageToPaths(one as never, PALETTE).paths.map((q) => q.slot)).toEqual([2]);
     expect(lowerArtLayer(one, "", { palette: PALETTE })).toMatchObject({ kind: "path", slot: 2 });
+  });
+
+  test("a pixel paints when its alpha is over 40, as BAIL's (bail.html:1484), and a clear image lowers to no layer", () => {
+    const soft = (a: number) => imageLayer(uri(png(4, 4, (x) => (x < 2 ? [20, 20, 20, a] : [0, 0, 0, 0]))), { mode: "palette" });
+    expect(imageToPaths(soft(41) as never, PALETTE).paths.map((q) => area(q.d))).toEqual([[8]]);
+    expect(imageToPaths(soft(40) as never, PALETTE).paths).toEqual([]);
+    expect(lowerArtLayerWith(soft(0), "", { palette: PALETTE })).toEqual({ layers: [], warnings: [] });
+  });
+
+  test("artPalette takes the previews up to the first flex slot, grey for a missing slot", () => {
+    const m = (slot: number, role: string, preview?: string) => ({ slot, role, ...(preview === undefined ? {} : { preview }) });
+    expect(artPalette([m(4, "flex", "#2B2B2B"), m(1, "art", "#1A1A1A"), m(3, "body", "#F5F0E6"), m(2, "art", "#FE0386")])).toEqual(["#1A1A1A", "#FE0386", "#F5F0E6"]);
+    expect(artPalette([m(1, "art", "#111111"), m(3, "body")])).toEqual(["#111111", "#808080", "#808080"]);
   });
 
   test("without slot colours it is refused with a fix, and skipped with a warning under the skip policy; one slot per call of lowerArtLayer", () => {

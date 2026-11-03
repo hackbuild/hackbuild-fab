@@ -142,6 +142,9 @@ export function lowerArtLayerWith(L: ArtLayer, path = "", policy: LowerPolicy = 
   }
 }
 
+/** BAIL paints an image pixel whose alpha is over this, 0 to 255 (bail.html:1484). */
+export const BAIL_ALPHA_OVER = 40;
+
 /** An image layer traced to SVG path data per slot, pixel units, y down. */
 export interface ImagePaths {
   /** One entry per slot the image hits, slot ascending; mono and silhouette always give one entry, d empty when nothing hits. */
@@ -151,9 +154,9 @@ export interface ImagePaths {
 }
 
 /**
- * An image layer's PNG traced per slot. The PNG quantizes as the inlay image
- * painter does (quantize.ts, COLLAR's colour modes; pixels under alpha 120
- * stay empty): mono hits luminance at or under thr (at or over with invert)
+ * An image layer's PNG traced per slot. The PNG quantizes through the inlay
+ * image painter's quantizer (quantize.ts, COLLAR's colour modes) at BAIL's
+ * alpha floor, a pixel painted when its alpha is over 40 (bail.html:1484): mono hits luminance at or under thr (at or over with invert)
  * in the layer's slot, silhouette takes alpha alone in that slot, and palette
  * sends each pixel to the nearest of `slots` (slot 1 first), the body colour
  * included, as BAIL paints a palette image (bail.html:1480 to 1486). Each
@@ -163,12 +166,13 @@ export interface ImagePaths {
 export function imageToPaths(L: ArtImageLayer, slots: readonly string[] = []): ImagePaths {
   const img = decodePng(dataUriBytes(L.src));
   const { width: w, height: h } = img;
+  const alphaMin = BAIL_ALPHA_OVER + 1;
   const labels = L.mode === "palette"
     // body 0 matches no slot, so a pixel nearest the body colour keeps its slot and paints over the art under it
-    ? quantize(img, "palette", { res: 1, slots, body: 0 }).labels
+    ? quantize(img, "palette", { res: 1, slots, body: 0, alphaMin }).labels
     : L.mode === "mono"
-      ? quantize(img, "mono", { res: 1, slot: L.slot, thr: L.thr * 255, invert: L.invert }).labels
-      : quantize(img, "alpha", { res: 1, slot: L.slot }).labels;
+      ? quantize(img, "mono", { res: 1, slot: L.slot, thr: L.thr * 255, invert: L.invert, alphaMin }).labels
+      : quantize(img, "alpha", { res: 1, slot: L.slot, alphaMin }).labels;
   const hit = L.mode === "palette" ? [...new Set(labels)].filter((v) => v !== 0).sort((a, b) => a - b) : [L.slot];
   const paths = hit.map((slot) => {
     const mask = new Uint8Array(w * h);

@@ -24,18 +24,18 @@ Every url is versioned and has an sha384 integrity value. Nothing points at a mo
 
 | file | url | integrity |
 |---|---|---|
-| `spec/dist/cdn/spec.js` | https://cdn.jsdelivr.net/gh/hackbuild/hackbuild-fab@lib-v0.3.0/spec/dist/cdn/spec.js | `sha384-ALKOGeg3zK7ye0Min0tN2F0MWuC2m+9xLFXF75N+8Fu/2G2FtgPdFGHoFrB2TJUr` |
-| `spec/dist/iife/spec.js` | https://cdn.jsdelivr.net/gh/hackbuild/hackbuild-fab@lib-v0.3.0/spec/dist/iife/spec.js | `sha384-YmHU+R0FWc3dHTL7EHUXafa5G5vQFL1hIuWadtqO/MnP1SzHZAlnZraMZhBuXZ2a` |
-| `spec/dist/iife/spec.sources.json` | https://cdn.jsdelivr.net/gh/hackbuild/hackbuild-fab@lib-v0.3.0/spec/dist/iife/spec.sources.json | `sha384-xgly6dE+2KQGAybca+2JWPosdfCE5ZCRBfl8PdGmHm6wzk8nmfNa6SNFF5phFz5a` |
-| `packages/engine/dist/cdn/engine.js` | https://cdn.jsdelivr.net/gh/hackbuild/hackbuild-fab@lib-v0.3.0/packages/engine/dist/cdn/engine.js | `sha384-sODuEnu6iarV6zNaF3BSfxFtKBz0OB2pqcpPhFCnNPtFo4kcsMLR0t5gn73DJTXJ` |
-| `packages/engine/dist/iife/engine.js` | https://cdn.jsdelivr.net/gh/hackbuild/hackbuild-fab@lib-v0.3.0/packages/engine/dist/iife/engine.js | `sha384-E15pWtUFyECvBGgPZ13tlNJRVJLI61iM+fFC7qui+4oSsLDeiCFgwLH9IK9mL9v4` |
-| `packages/engine/dist/iife/engine.sources.json` | https://cdn.jsdelivr.net/gh/hackbuild/hackbuild-fab@lib-v0.3.0/packages/engine/dist/iife/engine.sources.json | `sha384-2+pmGoynlaPO0bULRNblLmHZhZqugcEWZUncC9K3dAmSuX8cjI2yCZ8UX6CqsQn1` |
+| `spec/dist/cdn/spec.js` | https://cdn.jsdelivr.net/gh/hackbuild/hackbuild-fab@lib-v0.3.0/spec/dist/cdn/spec.js | `sha384-cn75pjosRfxzrQEQC4/aOFdD4poHzt5RpnVk82zavJ/O3A1CAtKeM1z5gs12ev9F` |
+| `spec/dist/iife/spec.js` | https://cdn.jsdelivr.net/gh/hackbuild/hackbuild-fab@lib-v0.3.0/spec/dist/iife/spec.js | `sha384-TJCbjerUrgjhSDsYppCDbcgN3dO11nlevWEnK4bcaeuGP3xqADVmp1vEK/Nvnha7` |
+| `spec/dist/iife/spec.sources.json` | https://cdn.jsdelivr.net/gh/hackbuild/hackbuild-fab@lib-v0.3.0/spec/dist/iife/spec.sources.json | `sha384-IyAkA8TqN5hnv8f27NRgyWpQzfwMNnurKQArlbk+oq2AvdAfJuLoPIsXCS5s7lrb` |
+| `packages/engine/dist/cdn/engine.js` | https://cdn.jsdelivr.net/gh/hackbuild/hackbuild-fab@lib-v0.3.0/packages/engine/dist/cdn/engine.js | `sha384-sf5LZoolqD8wxZ9SRUICijYNVqW653s4MkD8iPu0pSifc8f7Y2vItiN6fFQIjx9Q` |
+| `packages/engine/dist/iife/engine.js` | https://cdn.jsdelivr.net/gh/hackbuild/hackbuild-fab@lib-v0.3.0/packages/engine/dist/iife/engine.js | `sha384-cnf5fwzmmi6CBank/aQjAyt+ynsQQYmkgzJ534DUM7jSzSj0gYkR2ORIKdeqJ3Ou` |
+| `packages/engine/dist/iife/engine.sources.json` | https://cdn.jsdelivr.net/gh/hackbuild/hackbuild-fab@lib-v0.3.0/packages/engine/dist/iife/engine.sources.json | `sha384-6c0Ijktx7dMXJ08fOjjJvP9ycTfSJrNWj3zWGlnRKoy7DoKqn9UFB2JrLOhF/x34` |
 | `packages/viewer/dist/cdn/viewer.js` | https://cdn.jsdelivr.net/gh/hackbuild/hackbuild-fab@lib-v0.3.0/packages/viewer/dist/cdn/viewer.js | `sha384-dAnBuJJCg6Jv/mxcEPTil7GFyHW/EzmhV4gvNsApoqzQMhI8jv0Oa8R+jaTE7rRi` |
 | `packages/viewer/dist/iife/viewer.js` | https://cdn.jsdelivr.net/gh/hackbuild/hackbuild-fab@lib-v0.3.0/packages/viewer/dist/iife/viewer.js | `sha384-jJI5o5hZyAnm4UIc6hnIcYEvdf69YSQ45jJSSb3l0Nsa4w6K7h+VZU23RnYlde3v` |
 | `packages/viewer/dist/iife/viewer.sources.json` | https://cdn.jsdelivr.net/gh/hackbuild/hackbuild-fab@lib-v0.3.0/packages/viewer/dist/iife/viewer.sources.json | `sha384-v77eGIHLfdaf1lkM3tfR15svRo3CPZLRlaTst1GROu5QZ6lxbLMDrLjKdpy+DUsS` |
-| `packages/bench-core/dist/cdn/bench-core.js` | https://cdn.jsdelivr.net/gh/hackbuild/hackbuild-fab@lib-v0.3.0/packages/bench-core/dist/cdn/bench-core.js | `sha384-QNba4z1wV+IP4hxqDLjKk+ypXXr/Q+P6X0eRqG1gwVJtIwFO/Oqm4LeIt3605cmC` |
-| `packages/bench-core/dist/iife/bench-core.js` | https://cdn.jsdelivr.net/gh/hackbuild/hackbuild-fab@lib-v0.3.0/packages/bench-core/dist/iife/bench-core.js | `sha384-6fQQniLinNBWt5hAp3qW9/PQ3DpBsGrk+uWCDYBOK7jHtgFKqqTVMDaZG1NkJ2Di` |
-| `packages/bench-core/dist/iife/bench-core.sources.json` | https://cdn.jsdelivr.net/gh/hackbuild/hackbuild-fab@lib-v0.3.0/packages/bench-core/dist/iife/bench-core.sources.json | `sha384-GNbBza5dQ74hmOgn/tV3/8UPOoL3IBEG/Cc2HPvPOA8OO0tybHqerOdeeOeHClWE` |
+| `packages/bench-core/dist/cdn/bench-core.js` | https://cdn.jsdelivr.net/gh/hackbuild/hackbuild-fab@lib-v0.3.0/packages/bench-core/dist/cdn/bench-core.js | `sha384-amxLqyaWjFb60w5lmX8hKMK/qCPYebsOMDJATKsvb81neZD2xtk0X819ftu4LwNr` |
+| `packages/bench-core/dist/iife/bench-core.js` | https://cdn.jsdelivr.net/gh/hackbuild/hackbuild-fab@lib-v0.3.0/packages/bench-core/dist/iife/bench-core.js | `sha384-Vwa2EtPQlanSXmCR1wcaC3jJu6q+AjSqhNjG0pIi4XsLs4OD2b4Yl2hjuJBJDKiN` |
+| `packages/bench-core/dist/iife/bench-core.sources.json` | https://cdn.jsdelivr.net/gh/hackbuild/hackbuild-fab@lib-v0.3.0/packages/bench-core/dist/iife/bench-core.sources.json | `sha384-fOf37TojpUtQvikes6zGe0eHLunxjDPZTcL3CXiN3N5B1EOU3YrJwxx/6Jvx8SgR` |
 | `packages/bench/dist/cdn/bench.js` | https://cdn.jsdelivr.net/gh/hackbuild/hackbuild-fab@lib-v0.3.0/packages/bench/dist/cdn/bench.js | `sha384-BcxzYFAbLsCVYQ9pjzga0lyl1HQW11FoUR09REsivm4WyMJIUM3QXuhi/iHzS/MS` |
 | `packages/bench/dist/iife/bench.js` | https://cdn.jsdelivr.net/gh/hackbuild/hackbuild-fab@lib-v0.3.0/packages/bench/dist/iife/bench.js | `sha384-LleoIVYEjPcbaifpQdceyEAazuMyW01g6bM9RudAcl2pEo7+JJ4G8+z4/SXn0OpJ` |
 | `packages/bench/dist/iife/bench.sources.json` | https://cdn.jsdelivr.net/gh/hackbuild/hackbuild-fab@lib-v0.3.0/packages/bench/dist/iife/bench.sources.json | `sha384-kA+tY04pCnUpuyETh1fJz6Eji8r9NpPO4qKUFa4UAmsgP0uBy7jj24rvDL3h6S66` |
@@ -73,10 +73,10 @@ The stylesheet `tools/vendor/hackbuild-ui/hackbuild.css` is the installed `@virg
     "https://cdn.jsdelivr.net/npm/nostics@1.3.0/dist/index.mjs": "sha384-I3o4r/h+a5MU80YjPO1WsHlH2zMkEvyAeAP6BaeK8MHqwQTyaP486pf+Ersnckia",
     "https://cdn.jsdelivr.net/npm/@vue/devtools-api@8.2.1/dist/vue-devtools-api.esm-browser.js": "sha384-y/V3ebUa0bnQhgVZVcXoFRVgHKHQKDN0lmd6jRBYL9LwFJRRyik/53cmuhNFjYpN",
     "https://cdn.jsdelivr.net/npm/manifold-3d@3.5.4/manifold.js": "sha384-EOsX2khT48LC7b2eu/O0+bqGUQLkJOEKF4hEN0VViSLPW7vZzAjlfczpBJmVQoSx",
-    "https://cdn.jsdelivr.net/gh/hackbuild/hackbuild-fab@lib-v0.3.0/spec/dist/cdn/spec.js": "sha384-ALKOGeg3zK7ye0Min0tN2F0MWuC2m+9xLFXF75N+8Fu/2G2FtgPdFGHoFrB2TJUr",
-    "https://cdn.jsdelivr.net/gh/hackbuild/hackbuild-fab@lib-v0.3.0/packages/engine/dist/cdn/engine.js": "sha384-sODuEnu6iarV6zNaF3BSfxFtKBz0OB2pqcpPhFCnNPtFo4kcsMLR0t5gn73DJTXJ",
+    "https://cdn.jsdelivr.net/gh/hackbuild/hackbuild-fab@lib-v0.3.0/spec/dist/cdn/spec.js": "sha384-cn75pjosRfxzrQEQC4/aOFdD4poHzt5RpnVk82zavJ/O3A1CAtKeM1z5gs12ev9F",
+    "https://cdn.jsdelivr.net/gh/hackbuild/hackbuild-fab@lib-v0.3.0/packages/engine/dist/cdn/engine.js": "sha384-sf5LZoolqD8wxZ9SRUICijYNVqW653s4MkD8iPu0pSifc8f7Y2vItiN6fFQIjx9Q",
     "https://cdn.jsdelivr.net/gh/hackbuild/hackbuild-fab@lib-v0.3.0/packages/viewer/dist/cdn/viewer.js": "sha384-dAnBuJJCg6Jv/mxcEPTil7GFyHW/EzmhV4gvNsApoqzQMhI8jv0Oa8R+jaTE7rRi",
-    "https://cdn.jsdelivr.net/gh/hackbuild/hackbuild-fab@lib-v0.3.0/packages/bench-core/dist/cdn/bench-core.js": "sha384-QNba4z1wV+IP4hxqDLjKk+ypXXr/Q+P6X0eRqG1gwVJtIwFO/Oqm4LeIt3605cmC",
+    "https://cdn.jsdelivr.net/gh/hackbuild/hackbuild-fab@lib-v0.3.0/packages/bench-core/dist/cdn/bench-core.js": "sha384-amxLqyaWjFb60w5lmX8hKMK/qCPYebsOMDJATKsvb81neZD2xtk0X819ftu4LwNr",
     "https://cdn.jsdelivr.net/gh/hackbuild/hackbuild-fab@lib-v0.3.0/packages/bench/dist/cdn/bench.js": "sha384-BcxzYFAbLsCVYQ9pjzga0lyl1HQW11FoUR09REsivm4WyMJIUM3QXuhi/iHzS/MS"
   }
 }
@@ -952,10 +952,10 @@ Opens over http or from a host that serves modules. Loads the libraries at 0.3.0
     "https://cdn.jsdelivr.net/npm/nostics@1.3.0/dist/index.mjs": "sha384-I3o4r/h+a5MU80YjPO1WsHlH2zMkEvyAeAP6BaeK8MHqwQTyaP486pf+Ersnckia",
     "https://cdn.jsdelivr.net/npm/@vue/devtools-api@8.2.1/dist/vue-devtools-api.esm-browser.js": "sha384-y/V3ebUa0bnQhgVZVcXoFRVgHKHQKDN0lmd6jRBYL9LwFJRRyik/53cmuhNFjYpN",
     "https://cdn.jsdelivr.net/npm/manifold-3d@3.5.4/manifold.js": "sha384-EOsX2khT48LC7b2eu/O0+bqGUQLkJOEKF4hEN0VViSLPW7vZzAjlfczpBJmVQoSx",
-    "https://cdn.jsdelivr.net/gh/hackbuild/hackbuild-fab@lib-v0.3.0/spec/dist/cdn/spec.js": "sha384-ALKOGeg3zK7ye0Min0tN2F0MWuC2m+9xLFXF75N+8Fu/2G2FtgPdFGHoFrB2TJUr",
-    "https://cdn.jsdelivr.net/gh/hackbuild/hackbuild-fab@lib-v0.3.0/packages/engine/dist/cdn/engine.js": "sha384-sODuEnu6iarV6zNaF3BSfxFtKBz0OB2pqcpPhFCnNPtFo4kcsMLR0t5gn73DJTXJ",
+    "https://cdn.jsdelivr.net/gh/hackbuild/hackbuild-fab@lib-v0.3.0/spec/dist/cdn/spec.js": "sha384-cn75pjosRfxzrQEQC4/aOFdD4poHzt5RpnVk82zavJ/O3A1CAtKeM1z5gs12ev9F",
+    "https://cdn.jsdelivr.net/gh/hackbuild/hackbuild-fab@lib-v0.3.0/packages/engine/dist/cdn/engine.js": "sha384-sf5LZoolqD8wxZ9SRUICijYNVqW653s4MkD8iPu0pSifc8f7Y2vItiN6fFQIjx9Q",
     "https://cdn.jsdelivr.net/gh/hackbuild/hackbuild-fab@lib-v0.3.0/packages/viewer/dist/cdn/viewer.js": "sha384-dAnBuJJCg6Jv/mxcEPTil7GFyHW/EzmhV4gvNsApoqzQMhI8jv0Oa8R+jaTE7rRi",
-    "https://cdn.jsdelivr.net/gh/hackbuild/hackbuild-fab@lib-v0.3.0/packages/bench-core/dist/cdn/bench-core.js": "sha384-QNba4z1wV+IP4hxqDLjKk+ypXXr/Q+P6X0eRqG1gwVJtIwFO/Oqm4LeIt3605cmC",
+    "https://cdn.jsdelivr.net/gh/hackbuild/hackbuild-fab@lib-v0.3.0/packages/bench-core/dist/cdn/bench-core.js": "sha384-amxLqyaWjFb60w5lmX8hKMK/qCPYebsOMDJATKsvb81neZD2xtk0X819ftu4LwNr",
     "https://cdn.jsdelivr.net/gh/hackbuild/hackbuild-fab@lib-v0.3.0/packages/bench/dist/cdn/bench.js": "sha384-BcxzYFAbLsCVYQ9pjzga0lyl1HQW11FoUR09REsivm4WyMJIUM3QXuhi/iHzS/MS"
   }
 }
@@ -1015,9 +1015,9 @@ The same bench as classic scripts. Open it over http, then use "save offline" to
 <script src="https://cdn.jsdelivr.net/npm/vue@3.5.43/dist/vue.runtime.global.prod.js" integrity="sha384-Ck8okeSaHVDjh93NRPQvRjw03+9zcOufrj79l1HuuU0tIOQhfMZ939nU2zyaDs5m" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/pinia@4.0.3/dist/pinia.iife.prod.js" integrity="sha384-qsyvwhoXtRHCK4l8xWLvM5a8bzMe8l6fuUUndWzxHR3w2dADU6bJwMsE1a5bgx1B" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/gh/hackbuild/hackbuild-fab@lib-v0.3.0/tools/vendor/three/dist/three.js" integrity="sha384-dDLjGSa68kjXk5eAL/3g850NRtWIvf3yYPnVVHJ6n22THVDtrQIpH3dq9fjazqJu" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/gh/hackbuild/hackbuild-fab@lib-v0.3.0/spec/dist/iife/spec.js" integrity="sha384-YmHU+R0FWc3dHTL7EHUXafa5G5vQFL1hIuWadtqO/MnP1SzHZAlnZraMZhBuXZ2a" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/gh/hackbuild/hackbuild-fab@lib-v0.3.0/spec/dist/iife/spec.js" integrity="sha384-TJCbjerUrgjhSDsYppCDbcgN3dO11nlevWEnK4bcaeuGP3xqADVmp1vEK/Nvnha7" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/gh/hackbuild/hackbuild-fab@lib-v0.3.0/packages/viewer/dist/iife/viewer.js" integrity="sha384-jJI5o5hZyAnm4UIc6hnIcYEvdf69YSQ45jJSSb3l0Nsa4w6K7h+VZU23RnYlde3v" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/gh/hackbuild/hackbuild-fab@lib-v0.3.0/packages/bench-core/dist/iife/bench-core.js" integrity="sha384-6fQQniLinNBWt5hAp3qW9/PQ3DpBsGrk+uWCDYBOK7jHtgFKqqTVMDaZG1NkJ2Di" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/gh/hackbuild/hackbuild-fab@lib-v0.3.0/packages/bench-core/dist/iife/bench-core.js" integrity="sha384-Vwa2EtPQlanSXmCR1wcaC3jJu6q+AjSqhNjG0pIi4XsLs4OD2b4Yl2hjuJBJDKiN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/gh/hackbuild/hackbuild-fab@lib-v0.3.0/packages/bench/dist/iife/bench.js" integrity="sha384-LleoIVYEjPcbaifpQdceyEAazuMyW01g6bM9RudAcl2pEo7+JJ4G8+z4/SXn0OpJ" crossorigin="anonymous"></script>
 <script>
 const { defineBench, defineChase } = HackbuildSpec;

@@ -278,11 +278,10 @@ export function createArtDoc(opts: ArtDocOptions): ArtDocController {
   }
   const hit = (x: number, y: number) => hitTest(layers().filter((L) => !L.mute).map((L) => L.id), sel, handlesOf, x, y);
 
-  // The slot colours give palette images their slots unless the host's policy names its own.
-  const policy: LowerPolicy = { ...(opts.slots === undefined ? {} : { palette: opts.slots }), ...opts.lower };
+  // A layer the policy skipped throws its warnings, so the face notes say why; a palette image that hits no slot lowers to nothing.
   const lowerOne = (L: ArtLayer): readonly PaintLayer[] => {
-    const r = lowerArtLayerWith(L, "", policy);
-    if (r.layers.length === 0) throw new Error(r.warnings.map((w) => w.text).join("; "));
+    const r = lowerArtLayerWith(L, "", opts.lower);
+    if (r.layers.length === 0 && r.warnings.length > 0) throw new Error(r.warnings.map((w) => w.text).join("; "));
     return r.layers;
   };
 

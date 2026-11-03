@@ -15,6 +15,8 @@ export type QuantizeMode = "palette" | "mono" | "alpha";
 interface GridOptions {
   /** cells per mm of the grid the image was read on */
   readonly res: number;
+  /** Least alpha a pixel needs to be painted, 0 to 255; default ALPHA_HIT (120, COLLAR). */
+  readonly alphaMin?: number;
 }
 
 export interface PaletteOptions extends GridOptions {
@@ -73,9 +75,10 @@ function checkSlot(slot: number, path: string): void {
 function palette(d: Uint8ClampedArray, n: number, o: PaletteOptions): Uint8Array {
   const pal = o.slots.map((c, q) => ({ slot: q + 1, rgb: hexToRgb(c) }));
   const map = new Uint8Array(n);
+  const floor = o.alphaMin ?? ALPHA_HIT;
   for (let p = 0; p < n; p++) {
     const k = p * 4;
-    if (d[k + 3]! < ALPHA_HIT) continue;
+    if (d[k + 3]! < floor) continue;
     let best = 0, bd = 1e9;
     for (const s of pal) {
       const dr = d[k]! - s.rgb[0], dg = d[k + 1]! - s.rgb[1], db = d[k + 2]! - s.rgb[2];
@@ -87,12 +90,12 @@ function palette(d: Uint8ClampedArray, n: number, o: PaletteOptions): Uint8Array
   return map;
 }
 
-function threshold(d: Uint8ClampedArray, n: number, slot: number, mono: MonoOptions | null): Uint8Array {
+function threshold(d: Uint8ClampedArray, n: number, slot: number, mono: MonoOptions | null, floor: number): Uint8Array {
   const map = new Uint8Array(n);
   const thr = mono?.thr ?? MONO_THRESHOLD, inv = !!mono?.invert;
   for (let p = 0; p < n; p++) {
     const k = p * 4;
-    if (d[k + 3]! < ALPHA_HIT) continue;
+    if (d[k + 3]! < floor) continue;
     let hit: boolean;
     if (mono === null) hit = true;
     else {
@@ -125,7 +128,7 @@ export function quantize<M extends QuantizeMode>(img: RgbaImage, mode: M, opts: 
   } else if (mode === "mono" || mode === "alpha") {
     const o = opts as MonoOptions | AlphaOptions;
     checkSlot(o.slot, "/slot");
-    labels = threshold(img.data, n, o.slot, mode === "mono" ? (o as MonoOptions) : null);
+    labels = threshold(img.data, n, o.slot, mode === "mono" ? (o as MonoOptions) : null, o.alphaMin ?? ALPHA_HIT);
   } else {
     throw commandError({ code: "E_SCHEMA", path: "/mode", got: mode, expected: "palette, mono or alpha", hint: "pick a colour mode: palette, mono or alpha" });
   }

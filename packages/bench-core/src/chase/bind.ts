@@ -15,7 +15,7 @@
 // a refusal at a range end writes one log line naming field, value and range.
 
 import {
-  type Bench, type Chase, type CheckResult, type ContactFn, type Metric, type ParamGroup, type RailStep, type StatusChip, type WidgetRecord,
+  ART_PALETTE_GREY, artPalette, type Bench, type Chase, type CheckResult, type ContactFn, type Metric, type ParamGroup, type RailStep, type StatusChip, type WidgetRecord,
 } from "@hackbuild/spec";
 import { isChaseDocument, nonFiniteError, normaliseParams, normalisedWarnings, shareOptions, storedParams } from "@hackbuild/chase";
 import { createBenchCore, type BenchCore, type BuildOutput, type BuildResult, type CoreEvent } from "../bench/core.js";
@@ -337,10 +337,9 @@ export function bindChase<R extends ChaseReport = ChaseReport>(opts: BindOptions
   const artFields = chase.params.flatMap((g) => g.fields).filter((f): f is Extract<typeof f, { type: "art" }> => f.type === "art");
   const artIds = artFields.map((f) => f.id);
   const arts = new Map<string, ArtDocController>();
-  const slotColours = [...chase.materials].sort((a, b) => a.slot - b.slot).reduce<string[]>((out, m) => {
-    out[m.slot - 1] = m.preview ?? "#808080";
-    return out;
-  }, []).map((c) => c ?? "#808080");
+  const slotColours = Array.from({ length: Math.max(0, ...chase.materials.map((m) => m.slot)) }, (_, i) => chase.materials.find((m) => m.slot === i + 1)?.preview ?? ART_PALETTE_GREY);
+  // The preview lowers a palette image to the slots the node build does (spec artPalette).
+  const palette = artPalette(chase.materials);
   const art = (id: string): ArtDocController | null => {
     const f = artFields.find((x) => x.id === id);
     if (f === undefined) return null;
@@ -354,6 +353,7 @@ export function bindChase<R extends ChaseReport = ChaseReport>(opts: BindOptions
         },
         frame: f.frame === undefined ? DOC_FRAME : { w: f.frame[0], h: f.frame[1] },
         slots: slotColours,
+        lower: { palette },
         ...(opts.artSurfaces === undefined ? {} : { surface: opts.artSurfaces(() => created.invalidate()) }),
       });
       c = created;
