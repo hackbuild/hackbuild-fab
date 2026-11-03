@@ -46,6 +46,10 @@ LICENSE and NOTICE files. Regenerate it; never edit it by hand.
   licence: MIT
   copyright: Copyright (c) 2018-present, Yuxi (Evan) You
 
+fflate 0.8.3
+  licence: MIT
+  copyright: Copyright (c) 2026 Arjun Barrett
+
 jszip 3.10.1
   licence: MIT
   copyright: no copyright line in the package licence file
