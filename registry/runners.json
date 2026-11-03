@@ -7,12 +7,23 @@
       "kind": "slicer",
       "licence": "AGPL-3.0-only",
       "link": "process",
-      "detect": { "app": "/Applications/Flash Studio.app/Contents/MacOS/Flash Studio", "plist": "../Info.plist" },
-      "tested": { "version": "1.7.14", "on": "2026-11-03", "qualifier": "measured" },
+      "detect": {
+        "app": "/Applications/Flash Studio.app/Contents/MacOS/Flash Studio",
+        "plist": "../Info.plist"
+      },
+      "tested": {
+        "version": "1.7.14",
+        "on": "2026-11-03",
+        "qualifier": "measured"
+      },
       "network": "none",
       "keys": [],
       "install": "Flashforge's Flash Studio installer for macOS (the slicer the Creator 5 Pro ships with)",
-      "usedBy": ["hbf slice", "hbf adopt --slice", "tools/slice/slice.mjs"],
+      "usedBy": [
+        "hbf slice",
+        "hbf adopt --slice",
+        "tools/slice/slice.mjs"
+      ],
       "source": "https://www.flashforge.com/"
     },
     {
@@ -21,12 +32,17 @@
       "kind": "slicer",
       "licence": "AGPL-3.0-only",
       "link": "process",
-      "detect": { "app": "/Applications/OrcaSlicer.app/Contents/MacOS/OrcaSlicer", "plist": "../Info.plist" },
+      "detect": {
+        "app": "/Applications/OrcaSlicer.app/Contents/MacOS/OrcaSlicer",
+        "plist": "../Info.plist"
+      },
       "tested": null,
       "network": "none",
       "keys": [],
       "install": "brew install --cask orcaslicer (2.4.x stable; 2.5.0 adds result.json --strict)",
-      "usedBy": ["hbf slice --slicer orcaslicer"],
+      "usedBy": [
+        "hbf slice --slicer orcaslicer"
+      ],
       "source": "https://github.com/OrcaSlicer/OrcaSlicer"
     },
     {
@@ -35,12 +51,17 @@
       "kind": "slicer",
       "licence": "AGPL-3.0-only",
       "link": "process",
-      "detect": { "app": "/Applications/BambuStudio.app/Contents/MacOS/BambuStudio", "plist": "../Info.plist" },
+      "detect": {
+        "app": "/Applications/BambuStudio.app/Contents/MacOS/BambuStudio",
+        "plist": "../Info.plist"
+      },
       "tested": null,
       "network": "none",
       "keys": [],
       "install": "brew install --cask bambu-studio (2.8.2 or later for --datadir)",
-      "usedBy": ["hbf slice --slicer bambu-studio"],
+      "usedBy": [
+        "hbf slice --slicer bambu-studio"
+      ],
       "source": "https://github.com/bambulab/BambuStudio"
     },
     {
@@ -49,12 +70,17 @@
       "kind": "slicer",
       "licence": "AGPL-3.0-only",
       "link": "process",
-      "detect": { "app": "/Applications/Snapmaker Orca.app/Contents/MacOS/Snapmaker Orca", "plist": "../Info.plist" },
+      "detect": {
+        "app": "/Applications/Snapmaker Orca.app/Contents/MacOS/Snapmaker Orca",
+        "plist": "../Info.plist"
+      },
       "tested": null,
       "network": "none",
       "keys": [],
       "install": "Snapmaker Orca installer for macOS",
-      "usedBy": ["hbf slice --slicer snapmaker-orca"],
+      "usedBy": [
+        "hbf slice --slicer snapmaker-orca"
+      ],
       "source": "https://github.com/Snapmaker/OrcaSlicer"
     },
     {
@@ -63,12 +89,23 @@
       "kind": "eda",
       "licence": "GPL-3.0-or-later",
       "link": "process",
-      "detect": { "command": "kicad-cli", "paths": ["/Applications/KiCad/KiCad.app/Contents/MacOS/kicad-cli"], "versionArgs": ["version"], "versionRe": "^(\\d+\\.\\d+\\.\\d+)" },
+      "detect": {
+        "command": "kicad-cli",
+        "paths": [
+          "/Applications/KiCad/KiCad.app/Contents/MacOS/kicad-cli"
+        ],
+        "versionArgs": [
+          "version"
+        ],
+        "versionRe": "^(\\d+\\.\\d+\\.\\d+)"
+      },
       "tested": null,
       "network": "none",
       "keys": [],
       "install": "brew install --cask kicad (KiCad 10.0.x)",
-      "usedBy": ["board ERC, DRC, gerbers and STEP (plan section 5 item 1)"],
+      "usedBy": [
+        "board ERC, DRC, gerbers and STEP (plan section 5 item 1)"
+      ],
       "source": "https://docs.kicad.org/10.0/en/cli/cli.html"
     },
     {
@@ -77,12 +114,24 @@
       "kind": "firmware",
       "licence": "GPL-3.0-only",
       "link": "process",
-      "detect": { "command": "arduino-cli", "versionArgs": ["version"], "versionRe": "Version: (\\S+)" },
-      "tested": { "version": "1.5.1", "on": "2026-11-03", "qualifier": "measured" },
+      "detect": {
+        "command": "arduino-cli",
+        "versionArgs": [
+          "version"
+        ],
+        "versionRe": "Version: (\\S+)"
+      },
+      "tested": {
+        "version": "1.5.1",
+        "on": "2026-11-03",
+        "qualifier": "measured"
+      },
       "network": "fetch",
       "keys": [],
       "install": "brew install arduino-cli",
-      "usedBy": ["firmware compile and upload (plan section 5 item 9)"],
+      "usedBy": [
+        "firmware compile and upload (plan section 5 item 9)"
+      ],
       "source": "https://github.com/arduino/arduino-cli"
     },
     {
@@ -91,13 +140,48 @@
       "kind": "firmware",
       "licence": "Apache-2.0",
       "link": "process",
-      "detect": { "command": "pio", "versionArgs": ["--version"], "versionRe": "version (\\S+)" },
-      "tested": { "version": "6.2.0", "on": "2026-11-03", "qualifier": "measured" },
+      "detect": {
+        "command": "pio",
+        "versionArgs": [
+          "--version"
+        ],
+        "versionRe": "version (\\S+)"
+      },
+      "tested": {
+        "version": "6.2.0",
+        "on": "2026-11-03",
+        "qualifier": "measured"
+      },
       "network": "fetch",
       "keys": [],
       "install": "brew install platformio",
-      "usedBy": ["firmware compile and upload (plan section 5 item 9)"],
+      "usedBy": [
+        "firmware compile and upload (plan section 5 item 9)"
+      ],
       "source": "https://github.com/platformio/platformio-core"
+    },
+    {
+      "id": "occt-import-js",
+      "label": "occt-import-js (OCCT in wasm)",
+      "kind": "intake",
+      "licence": "LGPL-2.1-only",
+      "link": "process",
+      "detect": {
+        "module": "occt-import-js"
+      },
+      "tested": {
+        "version": "0.0.23",
+        "on": "2026-11-03",
+        "qualifier": "measured"
+      },
+      "network": "none",
+      "keys": [],
+      "install": "npm install (an exact root devDependency)",
+      "usedBy": [
+        "part.build import format step (tools/step/step-mesh.mjs)",
+        "packages/board/seed/step2mesh.mjs"
+      ],
+      "source": "https://github.com/kovacsv/occt-import-js"
     }
   ]
 }

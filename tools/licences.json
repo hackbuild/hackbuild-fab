@@ -4108,13 +4108,13 @@
       "published": "LGPL-2.1",
       "audited": "LGPL-2.1-only",
       "evidence": "npm view occt-import-js@0.0.23 license, 2026-10-09",
-      "use": "packages/board/seed/step2mesh.mjs STEP import",
+      "use": "STEP import: tools/step/step-mesh.mjs (part.build import, Z-up binary STL) and packages/board/seed/step2mesh.mjs (board viewer JSON, Y-up)",
       "load": "lazy-separate-file",
       "status": "adopted",
       "decision": [
         "D-043"
       ],
-      "note": "not in package-lock.json; step2mesh.mjs requires it at run time from the working directory (createRequire, line 26) and never bundles it into an MIT package"
+      "note": "an exact root devDependency since 2026-11-03; core part.build runs tools/step/step-mesh.mjs in a child node process, and step2mesh.mjs requires it at run time from the working directory, so it loads as a separate file and is never bundled into an MIT package or a bake"
     },
     {
       "ecosystem": "pypi",

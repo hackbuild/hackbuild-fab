@@ -3,7 +3,7 @@
 // and its report, and return the parts with findings fail first.
 
 import { spawnSync } from "node:child_process";
-import { existsSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
+import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import type {
@@ -113,7 +113,7 @@ export async function runPartBuild(input: CommandInput<"part.build">, ctx: CoreC
 // ---- import for audit (M04-T14, D-102, D-146, D-160) ----
 
 /** Formats the imported route reads at M04; step and wrl arrive with M14-T02. */
-const READS_AT_M04: ReadonlySet<ImportSpec["format"]> = new Set(["stl", "glb", "scad"]);
+const READS_AT_M04: ReadonlySet<ImportSpec["format"]> = new Set(["stl", "glb", "scad", "step"]);
 /** ImportSpec.units absent: m for GLB (glTF states metres), mm for the rest (spec/commands.ts ImportSpec). */
 const defaultUnit = (format: ImportSpec["format"]): keyof typeof MM_PER_UNIT => (format === "glb" ? "m" : "mm");
 
@@ -175,6 +175,44 @@ export function renderScad(file: string, at: string, bin = "openscad"): { readon
   }
 }
 
+/**
+ * Mesh a STEP file to STL with tools/step/step-mesh.mjs in a child node
+ * process, so occt-import-js (LGPL-2.1) loads as a separate file and never
+ * in core (D-043). The converter writes millimetres whatever unit the file
+ * declares. A workspace without the script or the module is E_KERNEL naming
+ * the install.
+ */
+export function renderStep(file: string, at: string, root: string, bytes?: Uint8Array): { readonly stl: Uint8Array; readonly version: string } {
+  const script = path.join(root, "tools", "step", "step-mesh.mjs");
+  const missing = !existsSync(script) ? script : !existsSync(path.join(root, "node_modules", "occt-import-js", "package.json")) ? "node_modules/occt-import-js" : undefined;
+  if (missing !== undefined) {
+    throw cmdError({
+      code: "E_KERNEL", path: at, got: missing, expected: "tools/step/step-mesh.mjs and the occt-import-js module",
+      hint: `${file} cannot mesh here: ${missing} is absent; run npm install in the hackbuild-fab workspace, or export the model as stl`, record: "mesh-kernel",
+    });
+  }
+  const dir = mkdtempSync(path.join(tmpdir(), "hbf-step-"));
+  try {
+    let input = file;
+    if (bytes !== undefined) {
+      input = path.join(dir, "in.step");
+      writeFileSync(input, bytes);
+    }
+    const out = path.join(dir, "mesh.stl");
+    const r = spawnSync(process.execPath, [script, input, out], { cwd: root, encoding: "utf8", timeout: 300_000 });
+    if (r.status !== 0 || !existsSync(out)) {
+      throw cmdError({
+        code: "E_KERNEL", path: at, got: r.status, expected: "step-mesh exit 0 with an stl written",
+        hint: `${file}: ${(r.stderr ?? "").trim().split("\n").slice(-1)[0] || "the converter wrote no stl"}; export it again as AP214 or AP242 STEP, or as stl`, record: "mesh-kernel",
+      });
+    }
+    const summary = JSON.parse((r.stdout ?? "").trim().split("\n").slice(-1)[0] ?? "{}") as { converter?: string };
+    return { stl: new Uint8Array(readFileSync(out)), version: summary.converter ?? "occt-import-js" };
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+}
+
 /** The bytes an ImportSpec names: a store source uri, or a path relative to the workspace. */
 function importBytes(spec: ImportSpec, i: number, ctx: CoreCtx): { readonly bytes: Uint8Array; readonly file: string } {
   if (spec.path.startsWith("hbf://")) return { bytes: ctx.store.source(spec.path, `/import/${i}/path`), file: spec.path };
@@ -195,12 +233,20 @@ function readImport(spec: ImportSpec, i: number, ctx: CoreCtx): ReadImport {
     });
   }
   if (!READS_AT_M04.has(spec.format)) {
-    throw cmdError({ code: "E_KERNEL", path: `${at}/format`, got: spec.format, expected: "stl, glb or scad", hint: `${spec.format} import arrives with M14-T02; export ${spec.path} as stl or glb`, record: "mesh-kernel" });
+    throw cmdError({ code: "E_KERNEL", path: `${at}/format`, got: spec.format, expected: "stl, glb, scad or step", hint: `${spec.format} import arrives with M14-T02; export ${spec.path} as stl or glb`, record: "mesh-kernel" });
   }
   const { bytes, file } = importBytes(spec, i, ctx);
   const source = ctx.store.putSource(bytes);
   const unit = spec.units ?? defaultUnit(spec.format);
   const mmPerUnit = MM_PER_UNIT[unit];
+  if (spec.format === "step") {
+    if (spec.units !== undefined && spec.units !== "mm") {
+      throw cmdError({ code: "E_SCHEMA", path: `${at}/units`, got: spec.units, expected: "mm or absent", hint: "a STEP file carries its own unit and the converter writes millimetres; drop units" });
+    }
+    const r = renderStep(file, `${at}/path`, workspaceRoot(ctx.workspace), file.startsWith("hbf://") ? bytes : undefined);
+    const meshUri = ctx.store.putSource(r.stl);
+    return { spec, source, meshUri, meshFormat: "stl", mmPerUnit: 1, read: importStl(r.stl, spec.path, 1), renderer: r.version };
+  }
   if (spec.format === "scad") {
     const r = renderScad(file, `${at}/path`);
     const meshUri = ctx.store.putSource(r.stl);

@@ -24,6 +24,8 @@ import { Store } from "../src/store.js";
 import { json, ROOT } from "./hbf.js";
 
 const CORPUS = "tools/corpus/import";
+/** The 10 x 10 x 10 mm cube occt-import-js ships with its tests (its source.txt names the origin). */
+const STEP_CUBE = "node_modules/occt-import-js/test/testfiles/cube-10x10mm/Cube 10x10.stp";
 const read = (p: string) => JSON.parse(readFileSync(path.join(ROOT, p), "utf8")) as unknown;
 const golden = read("core/test/goldens/part-build-import.json") as {
   cases: { file: string; exit: number; verdict: string; stage: string; error?: { code: string; path: string; got: number }; volumeMm3?: number; triangles?: number; counts?: Record<string, number>; fail?: string[]; checks?: Record<string, { verdict: string; measured: number | string }> }[];
@@ -144,6 +146,13 @@ describe("part.build import in process", () => {
     expect(r.findings.find((f) => f.id === "CHK-PRT-01")?.verdict).toBe("fail");
   }, 120_000);
 
+  it("meshes a STEP file through occt-import-js in a child process: the 10 mm cube is 1000 mm3", async () => {
+    const r = await run({ import: [{ path: STEP_CUBE, format: "step", as: "body" }], detail: "full" });
+    const ir = r.ir as unknown as { source: { kind: string; format: string } };
+    expect(ir.source).toMatchObject({ kind: "imported", format: "step" });
+    expect(r.parts[0]!.volumeMm3).toBeCloseTo(1000, 3);
+  }, 120_000);
+
   it("skips every check that reads features with the reason, and runs the mesh checks", async () => {
     const a = await importAudit([{ path: `${CORPUS}/locket-r2.glb`, format: "glb", as: "body" }], ctx());
     const by = new Map(a.results.map((x) => [x.id as string, x]));
@@ -168,7 +177,8 @@ describe("part.build import in process", () => {
     expect(await refusal({ import: [lug], preset: "x" })).toMatchObject({ code: "E_SCHEMA", path: "/preset" });
     expect(await refusal({ import: [] })).toMatchObject({ code: "E_SCHEMA", path: "/import" });
     expect(await refusal({ import: [{ ...lug, as: "bought" }] })).toMatchObject({ code: "E_SCHEMA", path: "/import/0/as" });
-    expect(await refusal({ import: [{ ...lug, format: "step" }] })).toMatchObject({ code: "E_KERNEL", path: "/import/0/format", got: "step" });
+    expect(await refusal({ import: [{ ...lug, format: "wrl" }] })).toMatchObject({ code: "E_KERNEL", path: "/import/0/format", got: "wrl" });
+    expect(await refusal({ import: [{ path: STEP_CUBE, format: "step", units: "in", as: "body" }] })).toMatchObject({ code: "E_SCHEMA", path: "/import/0/units" });
     expect(await refusal({ import: [{ ...lug, path: `${CORPUS}/missing.glb` }] })).toMatchObject({ code: "E_REF", path: "/import/0/path" });
     expect(await refusal({ import: [{ ...lug, material: "no-such-material" }] })).toMatchObject({ code: "E_REF", path: "/import/0/material" });
   }, 120_000);

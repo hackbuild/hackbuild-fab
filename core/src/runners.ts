@@ -22,6 +22,8 @@ export interface RunnerDetect {
   readonly versionArgs?: readonly string[];
   /** The first group is the version, read from the command's output. */
   readonly versionRe?: string;
+  /** An npm package in the workspace's node_modules, run in a child process; its version is its package.json version. */
+  readonly module?: string;
 }
 
 export interface RunnerRow {
@@ -53,7 +55,7 @@ export function runnerIssues(r: Partial<RunnerRow>): string[] {
   if (r.network !== "none" && r.network !== "fetch") out.push(`${id}: network ${String(r.network)} is not none or fetch`);
   if (!Array.isArray(r.keys) || !Array.isArray(r.usedBy) || r.usedBy.length === 0) out.push(`${id}: keys and usedBy must be arrays, usedBy non-empty`);
   const d = r.detect;
-  if (d === undefined || (d.app === undefined) === (d.command === undefined)) out.push(`${id}: detect names exactly one of app or command`);
+  if (d === undefined || [d.app, d.command, d.module].filter((x) => x !== undefined).length !== 1) out.push(`${id}: detect names exactly one of app, command or module`);
   else if (d.command !== undefined && (d.versionArgs === undefined || d.versionRe === undefined)) out.push(`${id}: a command detect needs versionArgs and versionRe`);
   if (r.tested !== null && (r.tested === undefined || typeof r.tested.version !== "string" || r.tested.qualifier !== "measured")) out.push(`${id}: tested is null or a measured version`);
   return out;
@@ -77,7 +79,7 @@ export interface RunnerFound {
 }
 
 /** Looks a runner up on this machine; a version that cannot be read is undefined, the runner still present. */
-export type RunnerProbe = (r: RunnerRow) => RunnerFound;
+export type RunnerProbe = (r: RunnerRow, workspace: string) => RunnerFound;
 
 const quiet = (cmd: string, args: readonly string[]): string | undefined => {
   try {
@@ -89,8 +91,14 @@ const quiet = (cmd: string, args: readonly string[]): string | undefined => {
 
 const isFile = (p: string): boolean => existsSync(p) && statSync(p).isFile();
 
-export const probeRunner: RunnerProbe = (r) => {
+export const probeRunner: RunnerProbe = (r, workspace) => {
   const d = r.detect;
+  if (d.module !== undefined) {
+    const pj = path.join(workspace, "node_modules", d.module, "package.json");
+    if (!isFile(pj)) return { present: false };
+    const version = (JSON.parse(readFileSync(pj, "utf8")) as { version?: string }).version;
+    return { present: true, at: path.dirname(pj), ...(version === undefined ? {} : { version }) };
+  }
   if (d.app !== undefined) {
     if (!isFile(d.app)) return { present: false };
     const plist = path.resolve(path.dirname(d.app), d.plist ?? "../Info.plist");
@@ -105,9 +113,9 @@ export const probeRunner: RunnerProbe = (r) => {
 };
 
 /** One doctor line per runner: ok at the tested version, warn at another or an unread one, not run when absent. */
-export function runnerLines(rows: readonly RunnerRow[], probe: RunnerProbe = probeRunner): DoctorLine[] {
+export function runnerLines(rows: readonly RunnerRow[], workspace: string, probe: RunnerProbe = probeRunner): DoctorLine[] {
   return rows.map((r) => {
-    const f = probe(r);
+    const f = probe(r, workspace);
     const item = `runner ${r.id}`;
     if (!f.present) return { item, status: "not run", detail: `${r.label} not found (${r.licence}, process); install: ${r.install}` };
     if (f.version === undefined) return { item, status: "warn", detail: `${r.label} at ${f.at ?? "?"}, version not read` };

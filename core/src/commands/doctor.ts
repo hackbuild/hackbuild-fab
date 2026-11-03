@@ -120,7 +120,7 @@ export function doctor(workspace: string, board: BoardDoctor = boardDoctor(works
   lines.push(...boardLines(board));
   if (existsSync(runnersFile(workspace))) {
     try {
-      lines.push(...runnerLines(loadRunners(workspace), findRunner));
+      lines.push(...runnerLines(loadRunners(workspace), workspace, findRunner));
     } catch (err) {
       lines.push({ item: "runners", status: "fail", detail: err instanceof Error ? err.message : String(err) });
     }

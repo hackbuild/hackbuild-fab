@@ -23,7 +23,7 @@ describe("the runner manifest", () => {
     const base = row("arduino-cli");
     expect(runnerIssues({ ...base, link: "library" as never }).join(" ")).toMatch(/separate process \(D-043\)/);
     expect(runnerIssues({ ...base, install: "" }).join(" ")).toMatch(/install is not a non-empty string/);
-    expect(runnerIssues({ ...base, detect: {} }).join(" ")).toMatch(/exactly one of app or command/);
+    expect(runnerIssues({ ...base, detect: {} }).join(" ")).toMatch(/exactly one of app, command or module/);
   });
 
   it("holds a slicer row for every id the Orca-family driver knows, and no other", async () => {
@@ -38,15 +38,15 @@ describe("the doctor lines", () => {
   const r = row("arduino-cli");
   const untested = { ...r, tested: null };
   it("say not run with the install line when the runner is absent", () => {
-    const [l] = runnerLines([r], () => ({ present: false }));
+    const [l] = runnerLines([r], ROOT, () => ({ present: false }));
     expect(l?.status).toBe("not run");
     expect(l?.detail).toContain(r.install);
   });
   it("say ok at the measured version and warn at another, an unread one or none on record", () => {
     const tested = r.tested?.version ?? "";
-    expect(runnerLines([r], () => ({ present: true, at: "/x", version: tested }))[0]?.status).toBe("ok");
-    expect(runnerLines([r], () => ({ present: true, at: "/x", version: "0.0.1" }))[0]?.status).toBe("warn");
-    expect(runnerLines([r], () => ({ present: true, at: "/x" }))[0]?.status).toBe("warn");
-    expect(runnerLines([untested], () => ({ present: true, at: "/x", version: "9" }))[0]?.status).toBe("warn");
+    expect(runnerLines([r], ROOT, () => ({ present: true, at: "/x", version: tested }))[0]?.status).toBe("ok");
+    expect(runnerLines([r], ROOT, () => ({ present: true, at: "/x", version: "0.0.1" }))[0]?.status).toBe("warn");
+    expect(runnerLines([r], ROOT, () => ({ present: true, at: "/x" }))[0]?.status).toBe("warn");
+    expect(runnerLines([untested], ROOT, () => ({ present: true, at: "/x", version: "9" }))[0]?.status).toBe("warn");
   });
 });
