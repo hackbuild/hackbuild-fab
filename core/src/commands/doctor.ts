@@ -7,6 +7,7 @@ import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node
 import path from "node:path";
 import { sourceDateEpoch } from "../epoch.js";
 import { oneLine } from "../text/safe.js";
+import { loadRunners, probeRunner, runnerLines, runnersFile, type RunnerProbe } from "../runners.js";
 
 export type DoctorStatus = "ok" | "warn" | "fail" | "not run";
 
@@ -58,7 +59,7 @@ const PY_PROBE = [
   "print('; '.join(out))",
 ].join("\n");
 
-export function doctor(workspace: string, board: BoardDoctor = boardDoctor(workspace)): DoctorLine[] {
+export function doctor(workspace: string, board: BoardDoctor = boardDoctor(workspace), findRunner: RunnerProbe = probeRunner): DoctorLine[] {
   const lines: DoctorLine[] = [];
   const pj = readJson(path.join(workspace, "package.json"));
   const engines = ((pj["engines"] as Record<string, string> | undefined) ?? {})["node"] ?? "";
@@ -117,6 +118,13 @@ export function doctor(workspace: string, board: BoardDoctor = boardDoctor(works
     detail: hooks === undefined ? "unset; run npm install, whose prepare script sets it" : hooks,
   });
   lines.push(...boardLines(board));
+  if (existsSync(runnersFile(workspace))) {
+    try {
+      lines.push(...runnerLines(loadRunners(workspace), findRunner));
+    } catch (err) {
+      lines.push({ item: "runners", status: "fail", detail: err instanceof Error ? err.message : String(err) });
+    }
+  } else lines.push({ item: "runners", status: "not run", detail: "no registry/runners.json in this workspace" });
   return lines;
 }
 
@@ -204,5 +212,6 @@ function boardLines(b: BoardDoctor): DoctorLine[] {
 }
 
 export function renderDoctor(lines: readonly DoctorLine[]): string {
-  return lines.map((l) => oneLine(`${l.status.padEnd(8)}${l.item.padEnd(19)}${l.detail}`)).join("\n");
+  const w = Math.max(19, ...lines.map((l) => l.item.length + 1));
+  return lines.map((l) => oneLine(`${l.status.padEnd(8)}${l.item.padEnd(w)}${l.detail}`)).join("\n");
 }

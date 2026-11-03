@@ -34,6 +34,14 @@ export const PROJECT = "Metadata/project_settings.config";
 /** Preset bookkeeping keys that name a preset, never a print setting. */
 const PRESET_META = new Set(["name", "inherits", "type", "from", "instantiation", "setting_id", "filament_id", "compatible_printers", "compatible_printers_condition", "compatible_prints", "compatible_prints_condition", "description", "renamed_from", "version", "is_custom_defined"]);
 
+/** A slicer row's detect block in registry/runners.json, the one place its app and plist paths are held. */
+const RUNNERS = JSON.parse(readFileSync(path.join(ROOT, "registry", "runners.json"), "utf8")).runners;
+function runnerDetect(id) {
+  const d = RUNNERS.find((r) => r.id === id)?.detect;
+  if (d?.app === undefined) throw new Error(`registry/runners.json holds no app for slicer "${id}"`);
+  return d;
+}
+
 /**
  * The Orca-family slicers by id. app is the default macOS executable;
  * resources and plist are relative to the executable's folder; versionRe
@@ -44,9 +52,9 @@ const PRESET_META = new Set(["name", "inherits", "type", "from", "instantiation"
 export const SLICERS = Object.freeze({
   "flash-studio": Object.freeze({
     label: "Flash Studio",
-    app: "/Applications/Flash Studio.app/Contents/MacOS/Flash Studio",
+    app: runnerDetect("flash-studio").app,
     resources: "../Resources",
-    plist: "../Info.plist",
+    plist: runnerDetect("flash-studio").plist,
     // measured 2026-10-07 on CLI 2.3.2
     versionRe: /Current Orca-Flashforge Version (\S+)/,
     extraArgs: () => [],
@@ -54,9 +62,9 @@ export const SLICERS = Object.freeze({
   }),
   orcaslicer: Object.freeze({
     label: "OrcaSlicer",
-    app: "/Applications/OrcaSlicer.app/Contents/MacOS/OrcaSlicer",
+    app: runnerDetect("orcaslicer").app,
     resources: "../Resources",
-    plist: "../Info.plist",
+    plist: runnerDetect("orcaslicer").plist,
     // inferred from the Flash Studio line: "Current <app name> Version <v>"
     versionRe: /Current OrcaSlicer Version (\S+)/,
     extraArgs: () => [],
@@ -64,9 +72,9 @@ export const SLICERS = Object.freeze({
   }),
   "bambu-studio": Object.freeze({
     label: "Bambu Studio",
-    app: "/Applications/BambuStudio.app/Contents/MacOS/BambuStudio",
+    app: runnerDetect("bambu-studio").app,
     resources: "../Resources",
-    plist: "../Info.plist",
+    plist: runnerDetect("bambu-studio").plist,
     versionRe: /Current BambuStudio Version (\S+)/,
     // vendor-doc, unverified here (slicers.md, read 2026-10-18; Bambu Studio
     // wiki Command-Line-Usage): --mstpp caps slicing seconds per plate, set to
@@ -77,9 +85,9 @@ export const SLICERS = Object.freeze({
   }),
   "snapmaker-orca": Object.freeze({
     label: "Snapmaker Orca",
-    app: "/Applications/Snapmaker Orca.app/Contents/MacOS/Snapmaker Orca",
+    app: runnerDetect("snapmaker-orca").app,
     resources: "../Resources",
-    plist: "../Info.plist",
+    plist: runnerDetect("snapmaker-orca").plist,
     versionRe: /Current Snapmaker[_ ]Orca Version (\S+)/,
     extraArgs: () => [],
     profileDirs: ["Snapmaker_Orca", "Snapmaker Orca"],
