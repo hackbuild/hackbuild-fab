@@ -168,8 +168,16 @@ for (const width of [390, 1280] as const) test.describe(`at ${width}`, () => {
           done.push("drive key held by touch");
         }
 
-        // Pinch zoom, then a two-finger pan, on the stage.
-        const c = await freePoint(page, [...PINCH.from, ...PINCH.to, ...PAN.from, ...PAN.to]);
+        // Pinch zoom, then a two-finger pan, on the stage. A step may hold the
+        // stage for another view (the art board on an art step), so the glides
+        // run on the last step, counting back, whose stage shows the viewer.
+        const glides = [...PINCH.from, ...PINCH.to, ...PAN.from, ...PAN.to];
+        let c: Pt | null = null;
+        for (let i = n - 1; i >= 0 && c === null; i -= 1) {
+          await steps.nth(i).tap();
+          c = await freePoint(page, glides).catch(() => null);
+        }
+        if (c === null) c = await freePoint(page, glides);
         const c0 = await cam(page);
         await glide(cdp, at(c, PINCH.from), at(c, PINCH.to));
         const c1 = await cam(page);

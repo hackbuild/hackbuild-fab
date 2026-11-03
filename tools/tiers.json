@@ -115,7 +115,7 @@
   "placement": {
     "home": ["packages/motion/src/kinematics"],
     "trig": "\\b(?:atan2|asin|hypot)\\s*\\(",
-    "skip": ["node_modules", "dist", ".git", "legacy", "out", ".hbf", ".hbf-notes", ".venv", "knowledge", "docs"],
+    "skip": ["node_modules", "dist", ".git", ".claude", "legacy", "out", ".hbf", ".hbf-notes", ".venv", "knowledge", "docs"],
     "machines": [
       { "machine": "ogee16", "parts": "\\b(?:rocker|link3|pinState|pin_state|crankPhi|crank_phi|lCrankPhi|latchPhi|CROWN_OFF|CROWN_R|CRANK_SW|LCRANK_SW)\\b" },
       { "machine": "davit", "parts": "\\b(?:jaw_drive|jaw_idle|pincap|davitChain|crank_dz|elb_dz|palm_dz)\\b" },

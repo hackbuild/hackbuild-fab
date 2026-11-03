@@ -49,7 +49,7 @@ for (const { id, page: pageFile, golden, bake } of BENCHES) {
     page.on("pageerror", (e) => errors.push(String(e)));
     const t0 = Date.now();
     await page.goto(pathToFileURL(file).href);
-    await page.waitForFunction(() => (globalThis as unknown as { BENCH?: Hook }).BENCH !== undefined, undefined, { timeout: 60_000 });
+    await page.waitForFunction(() => (globalThis as unknown as { BENCH?: Hook }).BENCH !== undefined, undefined, { timeout: 120_000 });
     await page.evaluate(() => (globalThis as unknown as { BENCH: Hook }).BENCH.settled(120_000));
     const ms = Date.now() - t0;
     expect(await page.evaluate(() => document.documentElement.dataset["kernel"])).toBe("ready");

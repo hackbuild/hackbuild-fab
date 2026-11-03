@@ -19,7 +19,9 @@ export const SHOTS = process.env["SHOTS_DIR"] ?? path.join(OUT, "shots");
 /** The three widths of the overflow law (RULES.md design law, UI.md section 11). */
 export const WIDTHS = [390, 768, 1280] as const;
 export const HEIGHT = 844;
-const READY_MS = 60_000;
+// pip took over 60 s to its hook on a hosted runner (run 41562309579); the gold
+// specs give it 120 s (tools/smoke/gold/gold.ts).
+const READY_MS = 120_000;
 const SETTLE_MS = 120_000;
 
 const htmlIn = (dir: string): string[] =>
