@@ -68,7 +68,8 @@ function testAuthor(view: MachineView = machine): { k: Author; warnings: BuildWa
   const k: Author = {
     profile,
     machine: () => view,
-    ring: { roundRect, circle: circlePts, offset: unused("ring.offset") },
+    ring: { roundRect, circle: circlePts, offset: unused("ring.offset"), contains: unused("ring.contains"), area2: unused("ring.area2") },
+    path: { flatten: unused("path.flatten") }, art: { lowerLayer: unused("art.lowerLayer"), lowerLayers: unused("art.lowerLayers"), lowerDocument: unused("art.lowerDocument") },
     body: (id, o) => ({ id, role: o.role, slot: o.slot, base: o.base, material: o.material ?? chase.materials.find((m) => m.slot === o.slot)?.material ?? "" }),
     part: (o) => ({ ...o, frame: { originOnAxis: false, carriesOffset: false, pose: "print", ...o.frame } }) as ReturnType<Author["part"]>,
     fit: (id) => id as FitClassId,
