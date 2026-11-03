@@ -1,7 +1,7 @@
 export { mountBakeStage } from "./bake-stage.js";
 export type { BakeStage } from "./bake-stage.js";
-export { defineHbViewer, HB_VIEWER_TAG, MAX_PIXEL_RATIO, PLATE_CAM } from "./hb-viewer.js";
-export type { CamChangeDetail, HbViewer, PickDetail, ViewInspect, ViewState } from "./hb-viewer.js";
+export { defineHbViewer, HB_VIEWER_TAG, MAX_PIXEL_RATIO, NO_WEBGL_LINE, PLATE_CAM, webglUnavailable } from "./hb-viewer.js";
+export type { CamChangeDetail, GlUnavailableDetail, HbViewer, PickDetail, ViewInspect, ViewState } from "./hb-viewer.js";
 export { createStageScene, BED_MARGIN, BED_OPACITY, EXPLODE_FRACTION, EXPLODE_MIN_MM, LEGACY_LIGHT_SCALE, LIGHTS, OUTLINE_DEG, XRAY_GHOST } from "./scene.js";
 export type { Palette, StageScene, ViewMesh, ViewModes, ViewPart } from "./scene.js";
 export { bindControls, boundsMoved, CAM_NAMES, CAMS, DIST_RANGE, FIT_FACTOR, FIT_MARGIN, REFIT_FRACTION, ORBIT_RAD_PER_PX, PAN_PER_PX, PHI_LIMIT, PICK_SLOP_PX, WHEEL_STEP, eye, fit, pan, rotate, setCam, zoom } from "./controls.js";

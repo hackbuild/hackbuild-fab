@@ -5,7 +5,7 @@
 import { computed, inject } from "vue";
 import { HbParamRow } from "@virgilvox/hackbuild-ui";
 import type { ParamPointer } from "@hackbuild/spec";
-import { bandSpan, stepOf, unitOf, type NumericField } from "../model.js";
+import { bandSpan, numChars, stepOf, unitOf, type NumericField } from "../model.js";
 import { RAIL, describe, fieldBand, settleKind, type CommitKind } from "../context.js";
 
 interface Props {
@@ -23,11 +23,13 @@ const band = computed(() => fieldBand(ctx, props.field, props.pointer));
 const tip = computed(() => describe(props.field, band.value));
 const span = computed(() => (band.value === null ? null : bandSpan(band.value, props.field)));
 const helpId = computed(() => `hbf-help-${props.path.replace(/\W/g, "-")}`);
+const chars = computed(() => numChars(props.field, props.value));
 </script>
 
 <template>
   <div
     class="hbf-row"
+    :style="{ '--hbf-num-ch': chars }"
     data-hb="param"
     :data-field="field.id"
     :data-path="path"

@@ -74,3 +74,31 @@ describe("bench touch rules at 390", () => {
     expect(rule(css, ".hbf-pad-dock")).toMatch(/grid-column:\s*1\s*\/\s*-1/);
   });
 });
+
+describe("bench rules held without a browser, status strip and number boxes", () => {
+  it("under 640 the chips join the strip's wrap and the row gap drops below the column gap, two rows at 390", () => {
+    const body = media("(max-width:640px)");
+    expect(rule(body, ".hbf-status-chips")).toMatch(/display:\s*contents/);
+    expect(rule(body, ".hbf-bench .hb-statusbar")).toMatch(/gap:\s*var\(--hb-s1\)\s+var\(--hb-s3\)/);
+  });
+
+  it("under 480 the part size yields, and the mesh chip, build time and warning count are never hidden", () => {
+    const body = media("(max-width:480px)");
+    expect(rule(body, '.hbf-bench .hb-statusbar [data-hb="dims"]')).toMatch(/display:\s*none/);
+    for (const hook of ["chip-mesh", "chip-warn", "build-ms", "chip-bed", "log-toggle", "legend-chips"]) expect(css, hook).not.toMatch(new RegExp(`\\[data-hb="${hook}"\\][^{]*\\{[^}]*display:\\s*none`));
+  });
+
+  it("the number box takes its width from the field's character count and hides the spin buttons", () => {
+    expect(rule(css, ".hbf-row")).toMatch(/--hbf-num-w:\s*max\(var\(--hbf-prow-num\),\s*calc\(var\(--hbf-num-ch,\s*0\)\s*\*\s*var\(--hbf-prow-char\)/);
+    expect(rule(css, ".hbf-bench .hb-prow-num.hb-input")).toMatch(/width:\s*var\(--hbf-num-w,/);
+    expect(rule(css, ".hbf-bench .hb-prow-num.hb-input")).toMatch(/appearance:\s*textfield/);
+    expect(css).toMatch(/::-webkit-inner-spin-button[^{]*\{[^}]*-webkit-appearance:\s*none/);
+    expect(rule(css, ".hbf-band")).toMatch(/var\(--hbf-num-w,/);
+  });
+
+  it("under 820 the narrow rail lowers the column floor and leaves the box width to the character count", () => {
+    const body = media("(max-width:820px)");
+    expect(rule(body, ".hbf-bench .hb-rail")).toMatch(/--hbf-prow-num:\s*var\(--hbf-prow-num-narrow\)/);
+    expect(body).not.toMatch(/\.hb-prow-num\.hb-input\{\s*width:/);
+  });
+});

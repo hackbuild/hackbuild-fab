@@ -10,10 +10,12 @@
    a candidate for the hackbuild-ui 0.3.0 bench layer (D-116); the rules
    below read only tokens. Widths are the D-126 single-kind columns, PIP's
    rail under 820 and pad caps (bench/part1.html lines 124 to 140), and
-   hackbuild-ui's own .hb-prow columns (96 px label, 64 px number). */
+   hackbuild-ui's own .hb-prow columns (96 px label, 64 px number).
+   --hbf-prow-char is one character of the number box: IBM Plex Mono at
+   13 px advances 7.8 px (computed), rounded up. */
 :root{
   --hbf-rail-design:330px; --hbf-rail-readouts:300px; --hbf-rail-narrow:290px;
-  --hbf-prow-label:96px; --hbf-prow-num:64px; --hbf-prow-reset:22px;
+  --hbf-prow-label:96px; --hbf-prow-num:64px; --hbf-prow-reset:22px; --hbf-prow-char:8px;
   --hbf-prow-label-narrow:72px; --hbf-prow-num-narrow:56px;
   --hbf-pad-max:340px; --hbf-pad-keys:300px; --hbf-pad-keys-narrow:220px; --hbf-pad-read-min:18px;
   --hbf-touch:44px; --hbf-hair:1px; --hbf-knob-half:7px;
@@ -116,8 +118,14 @@
    0.3.0 colours both pink. */
 .hb-welcome-steps b,.hbf-fit-value{ color:var(--hb-ink) }
 
-/* Rail rows. */
-.hbf-row{ position:relative }
+/* Rail rows. The number box takes the width of the longest value its field
+   can show (numChars in rail/model.ts sets --hbf-num-ch), never below the
+   column floor, and the browser's spin buttons are hidden so the digits own
+   the whole box: with them 19.05 showed 19.0 and 0.55 showed 0.5. The legal
+   band below the track reads the same width. */
+.hbf-row{ position:relative; --hbf-num-w:max(var(--hbf-prow-num), calc(var(--hbf-num-ch, 0) * var(--hbf-prow-char) + 2 * var(--hb-border) + 2 * var(--hb-s1))) }
+.hbf-bench .hb-prow-num.hb-input{ width:var(--hbf-num-w, var(--hbf-prow-num)); -moz-appearance:textfield; appearance:textfield }
+.hbf-bench .hb-prow-num.hb-input::-webkit-inner-spin-button,.hbf-bench .hb-prow-num.hb-input::-webkit-outer-spin-button{ -webkit-appearance:none; margin:0 }
 /* The art board in a rail row: the label above, then face chips, the void canvas, the add row, the layer list and the selected layer's fields. */
 .hbf-art-row{ display:flex; flex-direction:column; gap:var(--hb-s1); min-width:0 }
 .hbf-art{ display:flex; flex-direction:column; gap:var(--hb-s2); min-width:0 }
@@ -141,7 +149,7 @@
 .hbf-art-label{ font-family:var(--hb-utility); font-size:var(--hbf-fs-label); text-transform:uppercase; letter-spacing:.1em }
 .hbf-art-prop input,.hbf-art-prop select{ min-width:0; width:100% }
 .hbf-chips{ flex:1 1 0; min-width:0; display:flex; flex-wrap:wrap; gap:var(--hb-s1) }
-.hbf-band{ position:relative; height:var(--hb-border-hd); margin:0 calc(var(--hbf-prow-num) + var(--hbf-prow-reset) + 2 * var(--hb-s2)) var(--hb-s1) calc(var(--hbf-prow-label) + var(--hb-s2)) }
+.hbf-band{ position:relative; height:var(--hb-border-hd); margin:0 calc(var(--hbf-num-w, var(--hbf-prow-num)) + var(--hbf-prow-reset) + 2 * var(--hb-s2)) var(--hb-s1) calc(var(--hbf-prow-label) + var(--hb-s2)) }
 .hbf-band::after{
   content:""; position:absolute; top:0; bottom:0; background:var(--hb-slime);
   left:calc(var(--hbf-band-from) * 100%); width:calc((var(--hbf-band-to) - var(--hbf-band-from)) * 100%);
@@ -167,14 +175,26 @@
   .hbf-bench.hb-app{ --hb-rail:var(--hbf-rail-narrow) }
   /* hackbuild-ui's 96 px label and 64 px number wrap a row in a 290 px rail. */
   .hbf-bench .hb-rail .hb-prow-label{ flex-basis:var(--hbf-prow-label-narrow) }
-  .hbf-bench .hb-rail .hb-prow-num.hb-input{ width:var(--hbf-prow-num-narrow) }
+  .hbf-bench .hb-rail{ --hbf-prow-num:var(--hbf-prow-num-narrow) }
 }
 @media(max-width:640px){
   /* The legend moves to the status strip under 640, so the strip may span the stage. */
   .hbf-bench .hbf-stage .hb-ov-tl{ max-width:none }
+  /* Status strip at 390: hackbuild-ui's s4 gap is a row gap too, and the chips span was one wrapped item,
+     so the strip took four lines, 148 px of a 844 px frame (measured, midi-pad). The chips join the
+     strip's own wrap and the row gap drops to s1: two rows, the 44 px log toggle on the first. */
+  .hbf-bench .hb-statusbar{ gap:var(--hb-s1) var(--hb-s3) }
+  .hbf-status-chips{ display:contents }
   .hbf-bench.hb-app > .hb-work{ grid-template-columns:minmax(0,1fr); grid-template-rows:minmax(0,1fr) 46%; padding:0; gap:0 }
   .hbf-bench.hb-app .hb-rail{ border-left:0; border-top:var(--hb-border-hd) solid var(--hb-ink); padding:var(--hb-s2) }
   .hbf-bench .hbf-stage.hb-stage{ box-shadow:none }
+}
+@media(max-width:480px){
+  /* The part size is the one status readout that yields when two rows cannot hold every item: at 481
+     to 640 px all of them fit in two rows, at 480 and below they do not (measured, midi-pad and
+     access-switch). The mesh state, the build time, the warning count, the bed fit and the legend
+     slots stay. */
+  .hbf-bench .hb-statusbar [data-hb="dims"]{ display:none }
 }
 @media(pointer:coarse),(max-width:640px){
   .hbf-cam{ min-height:var(--hbf-touch); min-width:var(--hbf-touch) }

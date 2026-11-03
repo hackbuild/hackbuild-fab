@@ -14,7 +14,7 @@ import {
   applyFix, chaseStarts, exportClosedLine, padDocks, refusalLine, targetOfBody, type BenchCore, type Located, type Pad, type Welcome,
 } from "@hackbuild/bench-core";
 import {
-  CAM_NAMES, mountBakeStage, type BakeStage, type CamChangeDetail, type CamName, type PickDetail, type ViewPart,
+  CAM_NAMES, mountBakeStage, type BakeStage, type CamChangeDetail, type CamName, type GlUnavailableDetail, type PickDetail, type ViewPart,
 } from "@hackbuild/viewer";
 import Rail from "./Rail.vue";
 import Legend from "./Legend.vue";
@@ -273,8 +273,14 @@ function tagHooks(): void {
 
 let tagger: MutationObserver | null = null;
 
+// The viewer fires this from its connectedCallback, inside mountBakeStage, so the listener sits first.
+function onNoWebgl(e: Event): void {
+  props.core.appendLog(`3d view off, no webgl in this browser (${(e as CustomEvent<GlUnavailableDetail>).detail.reason}). build, checks and exports still run.`);
+}
+
 onMounted(() => {
   if (host.value !== null && props.stage) {
+    host.value.addEventListener("glunavailable", onNoWebgl);
     try {
       stage = mountBakeStage(host.value);
     } catch (e) {
@@ -300,6 +306,7 @@ onMounted(() => {
 });
 
 onBeforeUnmount(() => {
+  host.value?.removeEventListener("glunavailable", onNoWebgl);
   host.value?.removeEventListener("pick", onPick);
   host.value?.removeEventListener("camchange", onCamChange);
   window.removeEventListener("keydown", onKey);
@@ -534,7 +541,7 @@ const dims = computed(() => {
         <span class="hbf-status-chips">
           <span v-if="bed !== null" class="hbf-chip" :class="bed ? 'is-good' : 'is-bad'" data-hb="chip-bed">{{ bed ? "fits bed" : "over bed" }}</span>
           <span class="hbf-chip" :class="shell.current ? 'is-good' : 'is-bad'" data-hb="chip-mesh">{{ shell.current ? "mesh current" : "mesh stale" }}</span>
-          <span class="hbf-chip" :class="shell.findings === 0 ? 'is-good' : 'is-bad'" data-hb="chip-warn">{{ shell.findings === 0 ? "no warnings" : `${shell.findings} warnings` }}</span>
+          <span class="hbf-chip" :class="shell.findings === 0 ? 'is-good' : 'is-bad'" data-hb="chip-warn">{{ shell.findings === 0 ? "no warnings" : `${shell.findings} ${shell.findings === 1 ? "warning" : "warnings"}` }}</span>
           <Legend :materials="chase.materials" where="status" />
         </span>
       </HbStatusBar>

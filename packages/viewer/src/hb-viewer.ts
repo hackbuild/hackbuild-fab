@@ -10,6 +10,11 @@
 // canvas with an explicit z-index (bible 9: overlays vanished behind the
 // canvas).
 //
+// A host with no WebGL 2 context (three 0.186 asks for webgl2 only) never gets
+// a renderer: the element marks `data-webgl="none"`, fires `glunavailable`
+// and draws one line on the void naming the failure and what still works. The
+// build, the checks and the exports belong to the shell and do not need it.
+//
 // The class is created inside defineHbViewer so importing the viewer under node
 // (tests, the bake) never touches HTMLElement.
 
@@ -26,6 +31,30 @@ export const HB_VIEWER_TAG = "hb-viewer";
 export const PLATE_CAM = { theta: -Math.PI / 2 + 0.25, phi: 1.05, distPerExtent: 2.1 } as const;
 /** Pixel ratio cap (PIP part3.js line 11). */
 export const MAX_PIXEL_RATIO = 2;
+/** The stage line on a host with no WebGL: the failure, then what still works. */
+export const NO_WEBGL_LINE = "no webgl in this browser, so the 3d view is off. build, checks and exports still run.";
+
+/** Detail of the `glunavailable` event: why no renderer was made. */
+export interface GlUnavailableDetail {
+  readonly reason: string;
+}
+
+/**
+ * Why a renderer cannot be made here, or null when a WebGL 2 context can.
+ * The probe asks a detached canvas and frees the context at once, so a page
+ * with no GL driver (a hosted runner, a blocklisted GPU) learns it without
+ * three logging or throwing. A throw from getContext counts as none.
+ */
+export function webglUnavailable(doc: Document = document): string | null {
+  try {
+    const gl = doc.createElement("canvas").getContext("webgl2");
+    if (gl === null || gl === undefined) return "webgl2 context is null";
+    gl.getExtension("WEBGL_lose_context")?.loseContext();
+    return null;
+  } catch (e) {
+    return `webgl2 context threw ${e instanceof Error ? e.message : String(e)}`;
+  }
+}
 
 export interface ViewState {
   readonly focus: readonly string[];
@@ -93,6 +122,8 @@ export interface HbViewer extends HTMLElement {
   readonly memory: { readonly geometries: number; readonly textures: number };
   /** Frames rendered since connect, count. */
   readonly renders: number;
+  /** False when the host gave no WebGL 2 context: no renderer exists and the stage shows its one line. */
+  readonly webgl: boolean;
   readonly revision: string;
 }
 
@@ -140,7 +171,9 @@ export function defineHbViewer(): void {
     readonly #orbit: Orbit = { theta: CAMS.iso[0], phi: CAMS.iso[1], dist: 260, target: [0, 0, 6] };
     readonly #owner = createOwner();
     readonly #canvas: HTMLCanvasElement;
+    readonly #line: HTMLParagraphElement;
     #renderer: WebGLRenderer | null = null;
+    #webgl = true;
     #stage: ReturnType<typeof createStageScene> | null = null;
     #unbind: (() => void) | null = null;
     #ro: ResizeObserver | null = null;
@@ -154,18 +187,41 @@ export function defineHbViewer(): void {
         "canvas{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:0;touch-action:none}",
         ".ov{position:absolute;inset:0;z-index:1;pointer-events:none}",
         "::slotted(*){pointer-events:auto}",
+        ".none{position:absolute;inset:0;z-index:0;margin:0;padding:var(--hb-s4);display:flex;align-items:center;justify-content:center;text-align:center;",
+        "font-family:var(--hb-utility);color:var(--hb-lit-label);pointer-events:none}",
+        ".none[hidden]{display:none}",
       ].join("");
       this.#canvas = document.createElement("canvas");
+      this.#line = document.createElement("p");
+      this.#line.className = "none";
+      this.#line.hidden = true;
+      this.#line.setAttribute("role", "status");
+      this.#line.setAttribute("data-hb", "no-webgl");
+      this.#line.textContent = NO_WEBGL_LINE;
       const ov = document.createElement("div");
       ov.className = "ov";
       ov.append(document.createElement("slot"));
-      root.append(style, this.#canvas, ov);
+      root.append(style, this.#canvas, this.#line, ov);
     }
 
     connectedCallback(): void {
       this.classList.add("hb-graph");
       if (this.#renderer !== null) return;
-      const r = new WebGLRenderer({ canvas: this.#canvas, antialias: true, alpha: true, preserveDrawingBuffer: true });
+      const none = webglUnavailable();
+      if (none !== null) {
+        this.#noWebgl(none);
+        return;
+      }
+      let r: WebGLRenderer;
+      try {
+        r = new WebGLRenderer({ canvas: this.#canvas, antialias: true, alpha: true, preserveDrawingBuffer: true });
+      } catch (e) {
+        this.#noWebgl(`renderer failed ${e instanceof Error ? e.message : String(e)}`);
+        return;
+      }
+      this.#webgl = true;
+      this.#line.hidden = true;
+      this.dataset["webgl"] = "ready";
       r.localClippingEnabled = true;
       r.setClearColor(0x000000, 0);
       this.#renderer = r;
@@ -304,6 +360,9 @@ export function defineHbViewer(): void {
     get renders(): number {
       return this.#renders;
     }
+    get webgl(): boolean {
+      return this.#webgl;
+    }
     get revision(): string {
       return REVISION;
     }
@@ -375,6 +434,14 @@ export function defineHbViewer(): void {
       const w = this.clientWidth;
       const h = this.clientHeight;
       return cam === undefined || w <= 0 || h <= 0 ? undefined : { fovDeg: cam.fov, aspect: w / h };
+    }
+
+    /** No renderer is made: mark the element, show the line, tell the shell once per connect. */
+    #noWebgl(reason: string): void {
+      this.#webgl = false;
+      this.#line.hidden = false;
+      this.dataset["webgl"] = "none";
+      this.dispatchEvent(new CustomEvent<GlUnavailableDetail>("glunavailable", { detail: { reason }, bubbles: true, composed: true }));
     }
 
     #leavePreset(): void {

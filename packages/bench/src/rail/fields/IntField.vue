@@ -4,7 +4,7 @@
 import { computed, inject } from "vue";
 import { HbIcon, HbParamRow } from "@virgilvox/hackbuild-ui";
 import type { ParamPointer } from "@hackbuild/spec";
-import { INT_RANGE_SPAN, type NumericField } from "../model.js";
+import { INT_RANGE_SPAN, numChars, type NumericField } from "../model.js";
 import { RAIL, describe, fieldBand, settleKind, type CommitKind } from "../context.js";
 
 interface Props {
@@ -21,6 +21,7 @@ const ctx = inject(RAIL, undefined);
 const ranged = computed(() => props.field.range[1] - props.field.range[0] < INT_RANGE_SPAN);
 const tip = computed(() => describe(props.field, fieldBand(ctx, props.field, props.pointer)));
 const helpId = computed(() => `hbf-help-${props.path.replace(/\W/g, "-")}`);
+const chars = computed(() => numChars(props.field, props.value));
 const changed = computed(() => props.value !== props.field.default);
 
 function onNumber(e: Event): void {
@@ -37,7 +38,7 @@ function onNumber(e: Event): void {
 </script>
 
 <template>
-  <div class="hbf-row" data-hb="param" :data-field="field.id" :data-path="path" :title="tip || undefined" :aria-describedby="tip ? helpId : undefined">
+  <div class="hbf-row" :style="{ '--hbf-num-ch': chars }" data-hb="param" :data-field="field.id" :data-path="path" :title="tip || undefined" :aria-describedby="tip ? helpId : undefined">
     <HbParamRow
       v-if="ranged"
       type="range"

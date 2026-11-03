@@ -14,7 +14,7 @@ import { describe, expect, it, vi } from "vitest";
 import { createApp, defineComponent, h, nextTick, ref } from "vue";
 import type { ParamEnvelope, ParamGroup } from "@hackbuild/spec";
 import ParamRail from "../src/rail/ParamRail.vue";
-import { defaultsOf, legalLine, bandOf, legalOptions, type EnumField } from "../src/rail/model.js";
+import { defaultsOf, legalLine, bandOf, legalOptions, numChars, NUM_CH_MAX, type EnumField, type NumericField } from "../src/rail/model.js";
 import { shows } from "../src/rail/showWhen.js";
 import { PIP_LAYOUT, PIP_LAYOUT_VALUES } from "./fixtures/pip-layout.js";
 import { chase as flexChase } from "../../../reference/keys/flex-pair/chase.js";
@@ -342,5 +342,31 @@ describe("rail model", () => {
       hiBy: { value: 2, side: "hi", kernel: "mechanisms", reason: "r", source: "CHK-KEY-01", qualifier: "computed", basis: null } } as const;
     expect(legalLine(b as never, "contact.gap")).toBe("legal 1 to 2, set by CHK-KEY-01");
     expect(legalLine({ ...b, unsat: true } as never, "contact.gap")).toBe("no legal value, contact.gap floors exceed its ceilings");
+  });
+});
+
+describe("number box width", () => {
+  const mm = (range: [number, number], step: number | undefined, def = range[0]): NumericField =>
+    ({ id: "x", label: "x", type: "mm", range, default: def, ...(step === undefined ? {} : { step }) }) as NumericField;
+
+  it("holds the integer digits of the wider bound plus the step's decimals and their point", () => {
+    expect(numChars(mm([10, 40], 0.05), 19.05)).toBe(5);
+    expect(numChars(mm([0.3, 1.2], 0.05), 0.55)).toBe(4);
+    expect(numChars(mm([0, 200], undefined), 7)).toBe(6);
+    expect(numChars(mm([0, 100], 1), 7)).toBe(3);
+  });
+
+  it("adds a sign when a bound is below zero", () => {
+    expect(numChars(mm([-45, 45], 0.1), 0)).toBe(5);
+    expect(numChars(mm([0, 45], 0.1), 0)).toBe(4);
+  });
+
+  it("grows to a value longer than the step allows, up to NUM_CH_MAX", () => {
+    expect(numChars(mm([0, 10], 0.1), 1.234)).toBe(5);
+    expect(numChars(mm([0, 10], 0.1), 0.30000000000000004)).toBe(NUM_CH_MAX);
+  });
+
+  it("reads a step written in exponent form", () => {
+    expect(numChars(mm([0, 1], 1e-7), 0)).toBe(9);
   });
 });

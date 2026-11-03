@@ -63,6 +63,33 @@ export function stepOf(f: NumericField): number {
   return f.step ?? (f.type === "int" ? 1 : 0.01);
 }
 
+/** Longest number the box is sized for, characters; a value past it scrolls in its box. */
+export const NUM_CH_MAX = 10;
+
+/** Digits after the point in a step, `0.05` giving 2 and `1e-7` giving 7. */
+function decimalsOf(step: number): number {
+  const s = String(step);
+  const e = /e-(\d+)$/.exec(s);
+  if (e !== null) return Number(e[1]);
+  const i = s.indexOf(".");
+  return i < 0 ? 0 : s.length - i - 1;
+}
+
+/**
+ * Characters the number box of `f` must show: a sign when a bound is below
+ * zero, the integer digits of the wider bound and the step's decimals with
+ * their point, or the length of the value when that is longer, up to
+ * NUM_CH_MAX. bench.css sizes the box from this (`--hbf-num-ch`), so a
+ * value such as 19.05 or 0.55 shows whole at 390 and at 1280.
+ */
+export function numChars(f: NumericField, value: number): number {
+  const [lo, hi] = f.range;
+  const dec = decimalsOf(stepOf(f));
+  const int = Math.max(String(Math.trunc(Math.abs(lo))).length, String(Math.trunc(Math.abs(hi))).length);
+  const worst = (lo < 0 ? 1 : 0) + int + (dec > 0 ? 1 + dec : 0);
+  return Math.min(NUM_CH_MAX, Math.max(worst, String(value).length));
+}
+
 /** Effective [floor, ceiling] and the binding bound on each side, or null when the envelope has no interval for the pointer. */
 export interface Band {
   readonly lo: number | null;
