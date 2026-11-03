@@ -174,4 +174,31 @@ describe("hbf adopt (R1-engine-25)", () => {
     expect(r.errors[0]!.expected).toContain("not an hbf draft");
     expect(existsSync(path.join(top, "designs"))).toBe(false);
   }, 60_000);
+
+  const SKILL_PAGE = path.join(ROOT, "tools/fixtures/skill-page/index.html");
+
+  it("adopts a library page (data-hbf-page) into a design that builds", async () => {
+    const top = repo();
+    const { code, r } = await adopt(top, SKILL_PAGE, "--out", scratch("adopt-out-"));
+    expect(r.errors).toEqual([]);
+    expect(code).toBeLessThanOrEqual(1);
+    expect(r.result!.design).toBe("designs/art-layers");
+    expect(existsSync(path.join(top, "designs/art-layers/chase.ts"))).toBe(true);
+    expect(existsSync(path.join(top, "designs/art-layers/build.ts"))).toBe(true);
+    expect(r.result!.golden.diff).toEqual([]);
+    expect(git(top, "rev-list", "--count", "HEAD"), "adopt never commits").toBe("1");
+  }, 240_000);
+
+  it("refuses a library page that check-page fails, with its findings as E_SCHEMA rows", async () => {
+    const top = repo();
+    const bad = readFileSync(SKILL_PAGE, "utf8").replace(/hackbuild-fab@[^/"'\s]+/g, "hackbuild-fab@main");
+    const file = path.join(scratch("adopt-page-"), "bad.html");
+    writeFileSync(file, bad);
+    const { code, r } = await adopt(top, file);
+    expect(code).toBe(2);
+    expect(r.errors.length).toBeGreaterThan(0);
+    expect(r.errors.every((e) => e.code === "E_SCHEMA")).toBe(true);
+    expect(r.errors[0]!.path).toContain("check-page");
+    expect(existsSync(path.join(top, "designs"))).toBe(false);
+  }, 60_000);
 });

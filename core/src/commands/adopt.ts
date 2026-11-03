@@ -1,9 +1,11 @@
 // hbf adopt (plan v9 3.1 second bullet, R1-engine-25; group make, CLI only
 // until the F4 decision). Lifts an hbf draft into a design: the sources come
 // from the application/hbf-draft+json block of a DRAFT page, or from a
-// draft directory's draft.json and files. A page without the block is
-// refused (E_SCHEMA "not an hbf draft"); old print-forge benches are
-// adopted by the designs area's ports, not here.
+// draft directory's draft.json and files. A page written on the libraries
+// (a data-hbf-page script) is checked by tools/skill-kit/check-page.mjs
+// first and its chase and build sections become the sources. A page with
+// neither is refused (E_SCHEMA "not an hbf draft"); old print-forge benches
+// are adopted by the designs area's ports, not here.
 //
 // Order: chase.validate on the draft first, so an error blocks with nothing
 // written; chase.scaffold from draft: on branch hbf/<name> into
@@ -36,6 +38,7 @@ import { runChaseBake, runNode } from "./chase-bake.js";
 import { git, tryGit, writeChasePatch } from "./chase-patch.js";
 import { runChaseScaffold } from "./chase-scaffold.js";
 import { runChaseValidate } from "./chase-validate.js";
+import { blockOfLibraryPage, checkLibraryPage, pageSourceOf } from "./adopt-page.js";
 import { runCheckRun } from "./check-run.js";
 import { runPartBuild } from "./part-build.js";
 
@@ -245,7 +248,9 @@ function readDraft(input: CommandInput<"adopt">, cwd: string, top: string): { bl
     if (!existsSync(file)) return notDraft(input.draft, `${input.draft} holds no ${DRAFT_BLOCK_FILE}; adopt reads drafts hbf draft wrote`);
     return { block: blockOf(readFileSync(file, "utf8"), input.draft), src: abs };
   }
-  const block = blockOfPage(readFileSync(abs, "utf8"), input.draft);
+  const html = readFileSync(abs, "utf8");
+  const librarySource = html.includes(`<script type="${DRAFT_BLOCK_TYPE}">`) ? undefined : pageSourceOf(html);
+  const block = librarySource === undefined ? blockOfPage(html, input.draft) : blockOfLibraryPage(librarySource, input.draft);
   mkdirSync(path.join(top, ".hbf"), { recursive: true });
   const scratch = mkdtempSync(path.join(top, ".hbf", "adopt-"));
   materialize(block, scratch, input.draft);
@@ -274,6 +279,14 @@ export async function runAdopt(input: CommandInput<"adopt">, ctx: CoreCtx): Prom
   }
   const top = realpathSync(found);
   const root = workspaceRoot(ctx.workspace);
+  const pageFile = path.resolve(ctx.cwd, input.draft);
+  if (existsSync(pageFile) && statSync(pageFile).isFile()) {
+    const html = readFileSync(pageFile, "utf8");
+    if (!html.includes(`<script type="${DRAFT_BLOCK_TYPE}">`) && pageSourceOf(html) !== undefined) {
+      const rows = await checkLibraryPage(html, root, input.draft);
+      if (rows.length > 0) return refused(ctx, rows);
+    }
+  }
   const { block, src, scratch } = readDraft(input, ctx.cwd, top);
   try {
     const chase = readChaseSource(block.chase, `${input.draft}/chase.ts`).chase;
