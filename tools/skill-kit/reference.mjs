@@ -318,7 +318,9 @@ A build is a function from the params to a part draft: \`defineBuild(chase, (p, 
 ${fence("ts", [declOf(chaseTypes, "defineBuild"), declOf(buildTypes, "BuildFn")].join("\n\n"))}
 ### The author calls
 
-Every call on \`k\`, with its signature and doc comment as the types give them. \`k.ring.offset\` throws E_KERNEL in a page build, since it is not in this kernel build.
+Every call on \`k\`, with its signature and doc comment as the types give them. The page build and the hbf CLI run the same calls: \`k.ring.offset\` through geom's CrossSection, \`k.art\` through the inlay lowering, \`k.path.flatten\` and the \`k.ring\` tests through geom. A page lowering art for an export passes \`{ fonts: "node", unsupported: "skip" }\` to match what the hbf CLI builds, and shows the warnings it returns.
+
+A page writes \`defineChase\` and \`defineBuild\`. The repo also takes a design module, \`design({...})\` in design.ts, which \`hbf adopt\` and packages/chase lower to the same chase; no library on the CDN lowers it, so a page keeps the two calls.
 
 ${authorCalls.map((m) => fence("ts", `${m.doc === "" ? "" : `/** ${m.doc.replace(/\n/g, "\n * ")} */\n`}k.${m.name}: ${m.decl.replace(/^(?:readonly )?\w+/, "").replace(/^: /, "")}`.replace(/^(\/\*\*[\s\S]*?\*\/\n)?k\.(\S+): ([(<])/, "$1k.$2$3"))).join("\n")}
 ### A page that builds

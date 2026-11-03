@@ -1,6 +1,8 @@
 // release.mjs in a throwaway repo: the tag commit has HEAD as parent, holds
-// the tracked tree plus the force-added built files, leaves the branch, the
-// main index and the working tree alone, and refuses a second run and a dirty tree.
+// only the built files, the reference, LICENSE and a README naming the
+// parent (no sources, so the tree stays under jsDelivr's size limit), leaves
+// the branch, the main index and the working tree alone, refuses a second
+// run and a dirty tree, and makes no tag on a dry run.
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
@@ -9,7 +11,7 @@ import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { PACKAGES } from "../../lib/outputs.mjs";
 import { releaseFiles, REFERENCE_PATH } from "../family.mjs";
-import { release } from "../release.mjs";
+import { release, releaseReadme } from "../release.mjs";
 
 const git = (cwd, ...a) => { const r = spawnSync("git", a, { cwd, encoding: "utf8" }); assert.equal(r.status, 0, `git ${a.join(" ")}: ${r.stderr}`); return r.stdout.trim(); };
 const put = (root, path, text) => { mkdirSync(dirname(join(root, path)), { recursive: true }); writeFileSync(join(root, path), text); };
@@ -22,6 +24,8 @@ function fixture() {
   for (const p of PACKAGES) put(root, `${p.dir}/package.json`, JSON.stringify({ name: p.name, version: "0.1.0" }));
   put(root, ".gitignore", "dist/\ntools/vendor/three/dist/\nnode_modules/\n");
   put(root, "README.md", "tracked\n");
+  put(root, "LICENSE", "MIT\n");
+  put(root, "src/source.ts", "export {};\n");
   git(root, "add", "-A");
   git(root, "commit", "-q", "-m", "seed");
   for (const f of releaseFiles()) put(root, f.from, `built ${f.from}\n`);
@@ -43,10 +47,24 @@ test("release makes an off-branch tag commit and leaves the branch and index alo
     const held = git(root, "ls-tree", "-r", "--name-only", r.commit).split("\n");
     for (const f of releaseFiles()) assert.ok(held.includes(f.path), f.path);
     assert.ok(held.includes(REFERENCE_PATH));
-    assert.ok(held.includes("README.md"));
-    assert.equal(held.length, 2 + PACKAGES.length + releaseFiles().length + 1, "tracked files, built files, reference");
+    assert.ok(held.includes("LICENSE"));
+    assert.ok(!held.includes("src/source.ts"), "sources stay out of the release tree");
+    assert.ok(!held.some((p) => p.endsWith("package.json")), "no package.json either");
+    assert.equal(held.length, releaseFiles().length + 3, "built files, reference, LICENSE, README");
+    assert.equal(git(root, "show", `${r.commit}:README.md`), releaseReadme("0.1.0", head).trim());
+    assert.ok(r.bytes > 0 && lines.some((l) => l.includes(`${r.bytes} bytes`)), "reports the tree size");
     assert.ok(lines.some((l) => l.includes("git push origin lib-v0.1.0")), "prints the push command");
     await assert.rejects(release({ root, build: false, referenceText: "reference\n", log() {} }), /tag lib-v0.1.0 exists/);
+  } finally { rmSync(root, { recursive: true, force: true }); }
+});
+
+test("a dry run writes the commit and makes no tag", async () => {
+  const root = fixture();
+  try {
+    const r = await release({ root, build: false, referenceText: "reference\n", dryRun: true, log() {} });
+    assert.equal(r.tag, null);
+    assert.equal(git(root, "tag", "--list"), "");
+    assert.equal(git(root, "cat-file", "-t", r.commit), "commit");
   } finally { rmSync(root, { recursive: true, force: true }); }
 });
 

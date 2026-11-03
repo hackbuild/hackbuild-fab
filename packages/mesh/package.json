@@ -21,7 +21,7 @@
   "dependencies": {
     "@hackbuild/geom": "0.0.0",
     "@hackbuild/profile": "0.0.0",
-    "@hackbuild/spec": "0.2.0",
+    "@hackbuild/spec": "0.3.0",
     "manifold-3d": "3.5.4"
   }
 }
