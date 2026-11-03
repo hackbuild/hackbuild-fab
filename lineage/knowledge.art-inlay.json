@@ -11,9 +11,10 @@
     "id": "knowledge.art-inlay/repo",
     "kind": "canonical",
     "source": "knowledge/kernels/art-inlay.md",
-    "sha256": "b0a985e7738a769a658f35049e4ba5c29c1a239bc298a1cb34cf3e720e2946d1",
+    "sha256": "04bacfe5d0c0d533f02dfb87929bc9c28a6db14ff98a384f40753a926c5e3c11",
     "fixes": [
-      "line 104 restated in house voice, same requirement: the harness draws the handles and drives them (RULES.md Language)"
+      "line 104 restated in house voice, same requirement: the harness draws the handles and drives them (RULES.md Language)",
+      "2026-11-03: the Text section names the node build route's glyph tables (Plex, Permanent Marker, Special Elite, VT323), where it said only canvas fillText"
     ],
     "dest": "knowledge/kernels/art-inlay.md"
   }

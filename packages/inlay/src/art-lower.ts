@@ -28,7 +28,7 @@ export const ART_FONT_FACES: Readonly<Record<ArtFont, { readonly family: string;
 
 /** How a lowering treats what the node route cannot paint. */
 export interface LowerPolicy {
-  /** "face" (default) names each font as the art doc asks. "node" sets a face the node text route lacks in IBM Plex Mono bold and returns a FONT_SWAP warning, as geom's route carries only Plex (packages/geom/src/text/outline.ts TEXT_FACES). */
+  /** "face" (default) names each font as the art doc asks. "node" sets a face the node text route lacks (packages/geom/src/text/outline.ts TEXT_FACES) in IBM Plex Mono bold and returns a FONT_SWAP warning. */
   readonly fonts?: "face" | "node";
   /** "refuse" (default) throws E_KERNEL for a cut pocket, image or relief layer. "skip" drops a cut, image or relief layer and returns a LAYER_SKIPPED warning. */
   readonly unsupported?: "refuse" | "skip";
@@ -45,8 +45,12 @@ export interface LoweredLayer {
   readonly warnings: readonly LowerWarning[];
 }
 
-/** Faces the node text route sets: Plex regular and bold only. A key outside it falls to Plex bold under the "node" font policy. */
-export const NODE_ART_FONTS: ReadonlySet<ArtFont> = new Set<ArtFont>(["plex", "plexb"]);
+/**
+ * Font keys whose face the node text route carries. A key outside it falls to Plex bold under the "node" font policy.
+ * A list, so the art lowering a page bundles never pulls geom's glyph tables; test/art-lower.test.ts holds it equal to
+ * geom TEXT_FACES.
+ */
+export const NODE_ART_FONTS: ReadonlySet<ArtFont> = new Set<ArtFont>(["plex", "plexb", "marker", "elite", "vt"]);
 
 function refuse(path: string, got: unknown, expected: string, hint: string): never {
   throw commandError({ code: "E_KERNEL", path, got, expected, record: "kernels/art-inlay", hint });
@@ -81,7 +85,7 @@ export function lowerArtLayerWith(L: ArtLayer, path = "", policy: LowerPolicy = 
     case "text": {
       const swap = policy.fonts === "node" && !NODE_ART_FONTS.has(L.font);
       const font = swap ? ART_FONT_FACES.plexb : ART_FONT_FACES[L.font];
-      if (swap) warnings.push({ code: "FONT_SWAP", text: `layer ${L.id} asks for ${ART_FONT_FACES[L.font].family}; the node text route sets only IBM Plex Mono, so it is set in Plex bold` });
+      if (swap) warnings.push({ code: "FONT_SWAP", text: `layer ${L.id} asks for ${ART_FONT_FACES[L.font].family}; the node text route lacks that face, so it is set in Plex bold` });
       const arc = L.arc !== 0;
       const t: TextLayer = {
         kind: "text", text: L.text, slot: L.slot,

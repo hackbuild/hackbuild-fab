@@ -27,16 +27,34 @@
     },
     {
       "glob": [
-        "packages/geom/assets/fonts/*.woff2",
+        "packages/geom/assets/fonts/ibm-plex-mono-*.woff2",
+        "packages/geom/assets/fonts/vt323-*.woff2",
         "packages/geom/assets/fonts/OFL-1.1.txt",
-        "packages/geom/src/text/plex-mono.table.ts"
+        "packages/geom/assets/fonts/OFL-1.1-vt323.txt",
+        "packages/geom/src/text/plex-mono.table.ts",
+        "packages/geom/src/text/vt323.table.ts"
       ],
       "licence": "OFL-1.1",
-      "note": "IBM Plex Mono 400 and 700 woff2 from @fontsource/ibm-plex-mono 5.3.0, byte equal to reference/copper/_inputs (sha256 measured 2026-10-14), and the glyph table packages/geom/scripts/fonts.mjs writes from them, a format conversion of the Font Software; the package LICENSE sits beside the woff2 as packages/geom/assets/fonts/OFL-1.1.txt. The node text route sets inlay text from the table (OK-01)",
+      "note": "IBM Plex Mono 400 and 700 and VT323 400 woff2 from @fontsource/ibm-plex-mono 5.3.0 and @fontsource/vt323 5.3.0, the Plex files byte equal to reference/copper/_inputs (sha256 measured 2026-10-14), and the glyph table packages/geom/scripts/fonts.mjs writes from them, a format conversion of the Font Software; the package LICENSE sits beside the woff2 as packages/geom/assets/fonts/OFL-1.1.txt. The node text route sets inlay text from the table (OK-01)",
       "decision": [
         "D-121"
       ],
       "text": "LICENSES/OFL-1.1.txt"
+    },
+    {
+      "glob": [
+        "packages/geom/assets/fonts/permanent-marker-*.woff2",
+        "packages/geom/assets/fonts/special-elite-*.woff2",
+        "packages/geom/assets/fonts/APACHE-2.0-*.txt",
+        "packages/geom/src/text/permanent-marker.table.ts",
+        "packages/geom/src/text/special-elite.table.ts"
+      ],
+      "licence": "Apache-2.0",
+      "note": "Permanent Marker and Special Elite woff2 from @fontsource/permanent-marker 5.3.0 and @fontsource/special-elite 5.3.0 (sha256 measured, in packages/geom/assets/fonts/README.md), each package LICENSE beside them as APACHE-2.0-<face>.txt, and the glyph tables packages/geom/scripts/fonts.mjs writes from them, a format conversion of the Font Software. The node text route sets art-layer text from the tables",
+      "decision": [
+        "D-043"
+      ],
+      "text": "packages/geom/assets/fonts/APACHE-2.0-permanent-marker.txt"
     },
     {
       "glob": [

@@ -49,16 +49,20 @@ describe("bail art lowering", () => {
     expect(JSON.parse(JSON.stringify(down ? built.bed : built.top))).toEqual(JSON.parse(JSON.stringify(down ? front : back)));
   });
 
-  test("the marker, elite and vt faces set in Plex bold with a FONT_SWAP warning, and a cut layer is skipped", async () => {
+  test("the marker, elite and vt faces set in their own node faces with no FONT_SWAP, and a cut layer is skipped", async () => {
     const warnings: BuildWarning[] = [];
     const params = resolveParams(chase, {}, "hackbuild") as unknown as BailParams;
     await build(params, makeAuthor(chase, profile, warnings, [], await loadGeom()));
     const codes = new Set(warnings.map((w) => w.code));
     expect([...codes].every((x) => typeof x === "string")).toBe(true);
     const k = makeAuthor(chase, profile, [], [], await loadGeom());
-    const out = k.art.lowerLayer({ id: "t", kind: "text", text: "ab", font: "marker", slot: 1, slot2: 1, size: 4, ls: 0, arc: 0, splitGap: 0, dx: 0, dy: 0, rot: 0, mute: false, cut: "none" } as never, POLICY);
-    expect(out.layer).toMatchObject({ kind: "text", font: "IBM Plex Mono", bold: true });
-    expect(out.warnings.map((w) => w.code)).toEqual(["FONT_SWAP"]);
+    const face = { marker: "Permanent Marker", elite: "Special Elite", vt: "VT323" } as const;
+    for (const [font, family] of Object.entries(face)) {
+      const out = k.art.lowerLayer({ id: "t", kind: "text", text: "ab", font, slot: 1, slot2: 1, size: 4, ls: 0, arc: 0, splitGap: 0, dx: 0, dy: 0, rot: 0, mute: false, cut: "none" } as never, POLICY);
+      expect(out.layer).toMatchObject({ kind: "text", font: family });
+      expect((out.layer as { bold?: boolean }).bold ?? false).toBe(false);
+      expect(out.warnings).toEqual([]);
+    }
     const cut = k.art.lowerLayer({ id: "c", kind: "shape", shape: "ring", w: 5, h: 5, t: 1, n: 3, slot: 1, dx: 0, dy: 0, rot: 0, mute: false, cut: "through" } as never, POLICY);
     expect(cut.layer).toBeNull();
     expect(cut.warnings.map((w) => w.code)).toEqual(["LAYER_SKIPPED"]);

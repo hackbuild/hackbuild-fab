@@ -79,7 +79,6 @@ The `SLOPE` and both `CLAMP` warnings (thickness to a layer top, tip bore depth)
 | relief cameo, image layer | no painter yet |
 | separate back colour depth, chamfers | the inlay feature takes one depth; chamfers are not applied to an inlay host |
 | per preset palettes | a preset keeps the filament slots; the preset note names BAIL's palette |
-| Permanent Marker, VT323, Special Elite | the node text route sets only IBM Plex Mono, so those layers set in Plex bold with a `FONT_SWAP` warning |
 | hex tip phase, preset art sizes | the revolve route has no phase; mesa, monogram and heatsync art are smaller than BAIL's so they stay inside the rim ring |
 | hardware loop height check | the loop height is not a chase param |
 | wear pose, extra exports | plan step (d) |

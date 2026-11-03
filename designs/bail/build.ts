@@ -25,9 +25,9 @@ import { chase } from "./chase";
 const PRINT_NOTE = "fab-knowledge:originals/bail/evidence/PRINT-NOTES.md, entered 2026-11-02";
 
 /**
- * The art lowering policy of the node build. The node text route carries only IBM Plex Mono (kernels/art-inlay), so marker,
- * elite and vt set in Plex bold with a FONT_SWAP warning, and cut, image and relief layers are skipped with LAYER_SKIPPED
- * where the inlay kind would refuse them. The faces return when the route carries them.
+ * The art lowering policy of the node build. The node text route carries IBM Plex Mono, Permanent Marker, Special Elite
+ * and VT323 (geom TEXT_FACES), so every BAIL font key sets in its own face; a key the route lacked would set in Plex bold
+ * with a FONT_SWAP warning. Cut, image and relief layers are skipped with LAYER_SKIPPED where the inlay kind would refuse them.
  */
 const LOWER_POLICY = { fonts: "node", unsupported: "skip" } as const;
 

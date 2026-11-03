@@ -10,7 +10,7 @@ import { readFileSync } from "node:fs";
 import { brotliDecompressSync } from "node:zlib";
 import { describe, expect, test } from "vitest";
 import { isThrownCommandError } from "@hackbuild/spec";
-import { TEXT_FACES, contourRing, measureText, parseWoff2, textFace, textRings, vectorSurface, type RasterGrid } from "../src/index.js";
+import { TEXT_FACES, contourRing, glyphOutline, measureText, parseWoff2, textFace, textRings, vectorSurface, type RasterGrid } from "../src/index.js";
 
 const repo = new URL("../../../", import.meta.url);
 const sha = (b: Uint8Array | string): string => createHash("sha256").update(b).digest("hex");
@@ -24,7 +24,7 @@ function hbfOf(f: () => unknown): Record<string, unknown> | undefined {
   return undefined;
 }
 
-describe("the Plex Mono glyph table equals the vendored woff2", () => {
+describe("each glyph table equals the vendored woff2", () => {
   for (const face of TEXT_FACES) {
     test(`${face.family} ${face.weight}: source hash, metrics, every glyph`, () => {
       const bytes = new Uint8Array(readFileSync(new URL(face.source.file, repo)));
@@ -37,25 +37,27 @@ describe("the Plex Mono glyph table equals the vendored woff2", () => {
       for (const cp of cps) {
         const g = f.glyph(f.glyphId(cp)!);
         const want = [g.advance, g.contours.map((c) => c.flatMap((p) => [p.x, p.y, p.on ? 1 : 0]))];
-        expect(face.glyphs[cp], `U+${cp.toString(16)}`).toEqual(want);
+        expect(glyphOutline(face, cp), `U+${cp.toString(16)}`).toEqual(want);
       }
     });
   }
 
-  test("the table script prints the committed file byte for byte, twice", () => {
-    const run = (): string => {
-      const r = spawnSync(process.execPath, ["packages/geom/scripts/fonts.mjs"], { cwd: repo, encoding: "utf8", maxBuffer: 1 << 24 });
+  test("the table script prints every committed file byte for byte, twice", () => {
+    const run = (out: string): string => {
+      const r = spawnSync(process.execPath, ["packages/geom/scripts/fonts.mjs", "--out", out], { cwd: repo, encoding: "utf8", maxBuffer: 1 << 24 });
       expect(r.status, r.stderr).toBe(0);
       return r.stdout;
     };
-    const committed = readFileSync(new URL("packages/geom/src/text/plex-mono.table.ts", repo), "utf8");
-    const first = run();
-    expect(sha(first)).toBe(sha(committed));
-    expect(run()).toBe(first);
+    for (const out of ["plex-mono.table.ts", "permanent-marker.table.ts", "special-elite.table.ts", "vt323.table.ts"]) {
+      const committed = readFileSync(new URL(`packages/geom/src/text/${out}`, repo), "utf8");
+      const first = run(out);
+      expect(sha(first), out).toBe(sha(committed));
+      expect(run(out), out).toBe(first);
+    }
   });
 
   test("composite glyphs keep their components (the double quote draws two marks)", () => {
-    expect(textFace("700 IBM Plex Mono").glyphs[0x22]![1]).toHaveLength(2);
+    expect(glyphOutline(textFace("700 IBM Plex Mono"), 0x22)![1]).toHaveLength(2);
     expect(textRings("\"", "700 IBM Plex Mono", 10, 0, 0, 0)[0]).toHaveLength(2);
   });
 });
@@ -119,8 +121,14 @@ describe("placement follows the canvas calls", () => {
 
 describe("refusals", () => {
   test("a face the table does not carry is E_KERNEL naming the faces it does", () => {
-    expect(hbfOf(() => textFace("Permanent Marker"))).toMatchObject({ code: "E_KERNEL", path: "/font", expected: "one of IBM Plex Mono, 700 IBM Plex Mono" });
+    expect(hbfOf(() => textFace("Comic Sans"))).toMatchObject({
+      code: "E_KERNEL", path: "/font", record: "kernels/art-inlay",
+      expected: "one of IBM Plex Mono, 700 IBM Plex Mono, Permanent Marker, Special Elite, VT323",
+    });
+    expect(String(hbfOf(() => textFace("Comic Sans"))?.["hint"])).toMatch(/Permanent Marker.*VT323/);
     expect(hbfOf(() => textFace("600 IBM Plex Mono"))).toMatchObject({ code: "E_KERNEL" });
+    // No synthetic bold: a family vendored at 400 only refuses weight 700.
+    expect(hbfOf(() => textFace("700 VT323"))).toMatchObject({ code: "E_KERNEL" });
   });
 
   test("a character without a glyph is E_SCHEMA naming it", () => {
@@ -129,3 +137,51 @@ describe("refusals", () => {
     expect(String(e?.["hint"])).toMatch(/U\+0416/);
   });
 });
+
+// Point in ring by even-odd crossing count; nesting is decided by containment, never by winding.
+function inside(p: readonly [number, number], ring: readonly (readonly [number, number])[]): boolean {
+  let c = false;
+  for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+    const [xi, yi] = ring[i]!, [xj, yj] = ring[j]!;
+    if (yi > p[1] !== yj > p[1] && p[0] < ((xj - xi) * (p[1] - yi)) / (yj - yi) + xi) c = !c;
+  }
+  return c;
+}
+
+describe("every art face sets text", () => {
+  const FACES = ["Permanent Marker", "VT323", "Special Elite", "IBM Plex Mono", "700 IBM Plex Mono"];
+  for (const font of FACES) {
+    test(`${font}: two runs give equal rings, a hole nests inside its outer by containment`, () => {
+      const a = textRings("hackbuild o", font, 8, 1, 2, 0.3);
+      expect(a.length).toBeGreaterThan(0);
+      expect(JSON.stringify(textRings("hackbuild o", font, 8, 1, 2, 0.3))).toBe(JSON.stringify(a));
+      const o = textRings("o", font, 100, 0, 0, 0)[0]!;
+      expect(o, "an o has an outer ring and one counter").toHaveLength(2);
+      const [outer, hole] = [...o].sort((p, q) => Math.abs(area(q)) - Math.abs(area(p)));
+      expect(hole!.every((pt) => inside(pt, outer!))).toBe(true);
+      expect(outer!.some((pt) => inside(pt, hole!))).toBe(false);
+    });
+
+    test(`${font}: advances equal the font hmtx widths`, () => {
+      const face = textFace(font);
+      const f = parseWoff2(new Uint8Array(readFileSync(new URL(face.source.file, repo))), (b) => new Uint8Array(brotliDecompressSync(b)));
+      for (const ch of "AHWi.o") {
+        const adv = f.glyph(f.glyphId(ch.codePointAt(0)!)!).advance;
+        expect(measureText(ch, font, face.unitsPerEm), ch).toBe(adv);
+      }
+    });
+  }
+
+  test("a B carries an outer ring and two counters in every face", () => {
+    for (const font of FACES) expect(textRings("B", font, 100, 0, 0, 0)[0]!, font).toHaveLength(3);
+  });
+});
+
+function area(r: readonly (readonly [number, number])[]): number {
+  let a = 0;
+  for (let i = 0; i < r.length; i++) {
+    const [x1, y1] = r[i]!, [x2, y2] = r[(i + 1) % r.length]!;
+    a += x1 * y2 - x2 * y1;
+  }
+  return a / 2;
+}

@@ -4,7 +4,8 @@
 
 import { artLayer, emptyArtDocument, type ArtDocument } from "@hackbuild/spec";
 import { describe, expect, test } from "vitest";
-import { lowerArtDocument, lowerArtFace, lowerArtLayer } from "../src/art-lower.js";
+import { TEXT_FACES } from "@hackbuild/geom";
+import { ART_FONT_FACES, NODE_ART_FONTS, lowerArtDocument, lowerArtFace, lowerArtLayer } from "../src/art-lower.js";
 import { artFaces, artUri, type InlayArt } from "../src/kind.js";
 
 const doc = (front: ArtDocument["faces"]["front"], back: ArtDocument["faces"]["back"] = []): ArtDocument => ({ ...emptyArtDocument(), faces: { front, back } });
@@ -87,5 +88,14 @@ describe("lowerArtDocument", () => {
     expect(new Set(faces.top.art.labels)).toEqual(new Set([0, 2, 3]));
     expect(new Set(faces.bed.art.labels)).toEqual(new Set([0, 2]));
     expect(artUri(art)).toBe(artUri(JSON.parse(JSON.stringify(art)) as InlayArt));
+  });
+});
+
+describe("the node font set", () => {
+  test("holds exactly the font keys whose face geom's node text route carries", () => {
+    const carried = Object.entries(ART_FONT_FACES)
+      .filter(([, f]) => TEXT_FACES.some((t) => t.family === f.family && t.weight === (f.bold ? "700" : "400")))
+      .map(([k]) => k);
+    expect([...NODE_ART_FONTS].sort()).toEqual(carried.sort());
   });
 });

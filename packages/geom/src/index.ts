@@ -27,7 +27,8 @@ export { FACE_FRAME_TOL, cross, faceBasis, horizontalFrame, placeOnFace } from "
 export type { FaceBasis, HorizontalFrame, HorizontalOptions } from "./face-frame.js";
 export { parseWoff2 } from "./text/woff2.js";
 export type { BrotliDecompress, Font, FontPoint, Glyph } from "./text/woff2.js";
-export { GLYPH_QUAD_POINTS, TEXT_FACES, contourRing, measureText, textFace, textRings } from "./text/outline.js";
+export { GLYPH_QUAD_POINTS, TEXT_FACES, contourRing, glyphOutline, measureText, textFace, textRings } from "./text/outline.js";
+export { unpackContours } from "./text/packed.js";
 export type { FaceTable, TextPlacement } from "./text/outline.js";
 export { EDGE_PROFILES, edgeExtent, edgeInset, edgeMaxInset, profileInset } from "./edge.js";
 export type { EdgeKind, EdgeProfile, EdgeSpec } from "./edge.js";

@@ -53,7 +53,11 @@ per-layer too-thin and losing-detail flags.
 
 ## Text
 
-Text is live canvas fillText, NOT traced, for the benches. A pipe splits a
+Text is live canvas fillText, NOT traced, in a bench preview. The node build
+route (hbf CLI and the page build) sets text from the glyph tables in
+packages/geom/src/text (IBM Plex Mono 400 and 700, Permanent Marker, Special
+Elite, VT323, from the vendored woff2 files), so a preview and an export set the
+same face. A pipe splits a
 string into two colours (`hack|.build` puts the tail in the accent slot) and a
 split-gap slider adds real air at the break. That gap is the fix for the
 period-kerning problem.

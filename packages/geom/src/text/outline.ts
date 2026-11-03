@@ -2,7 +2,7 @@
 // vector surface lacked. COLLAR sets inlay text with canvas fillText over
 // fonts loaded from Google Fonts (collar.html:9, 1010 to 1072); node has no
 // canvas, so the faces are read from the vendored woff2 files once, by
-// scripts/fonts.mjs, into the committed table plex-mono.table.ts, and set
+// scripts/fonts.mjs, into the committed per-family *.table.ts files, and set
 // here from that table with no font file, no DOM and no clock. One string,
 // font and size give the same rings on every machine.
 //
@@ -17,7 +17,11 @@
 // applies, changes nothing for precomposed Latin-1 text.
 
 import { commandError, type Ring } from "@hackbuild/spec";
+import { unpackContours } from "./packed.js";
+import { PERMANENT_MARKER_400 } from "./permanent-marker.table.js";
 import { PLEX_MONO_400, PLEX_MONO_700 } from "./plex-mono.table.js";
+import { SPECIAL_ELITE_400 } from "./special-elite.table.js";
+import { VT323_400 } from "./vt323.table.js";
 
 /**
  * One face as the table stores it. Contours are TrueType points flattened
@@ -27,7 +31,7 @@ import { PLEX_MONO_400, PLEX_MONO_700 } from "./plex-mono.table.js";
 export interface FaceTable {
   /** CSS family name the layer's `font` names. */
   readonly family: string;
-  /** CSS weight, "400" or "700". */
+  /** CSS weight: "400", or "700" for IBM Plex Mono bold. */
   readonly weight: string;
   /** Where the outlines came from: file and sha256 of the vendored woff2. */
   readonly source: { readonly file: string; readonly sha256: string };
@@ -35,12 +39,27 @@ export interface FaceTable {
   readonly ascender: number;
   readonly descender: number;
   readonly capHeight: number;
-  /** Code point to [advance, contours]. */
-  readonly glyphs: Readonly<Record<number, readonly [number, readonly (readonly number[])[]]>>;
+  /** Code point to [advance, contours packed by packed.ts]; glyphOutline unpacks one. */
+  readonly glyphs: Readonly<Record<number, readonly [number, string]>>;
+}
+
+const UNPACKED = new WeakMap<FaceTable, Map<number, readonly [number, readonly (readonly number[])[]]>>();
+
+/** One glyph's advance and flat contours in font units, unpacked once per face and code point; undefined when the face lacks it. */
+export function glyphOutline(face: FaceTable, cp: number): readonly [number, readonly (readonly number[])[]] | undefined {
+  let seen = UNPACKED.get(face);
+  if (seen === undefined) UNPACKED.set(face, (seen = new Map()));
+  const hit = seen.get(cp);
+  if (hit !== undefined) return hit;
+  const g = face.glyphs[cp];
+  if (g === undefined) return undefined;
+  const out = [g[0], unpackContours(g[1])] as const;
+  seen.set(cp, out);
+  return out;
 }
 
 /** Faces the node surface can set, in table order. */
-export const TEXT_FACES: readonly FaceTable[] = [PLEX_MONO_400, PLEX_MONO_700];
+export const TEXT_FACES: readonly FaceTable[] = [PLEX_MONO_400, PLEX_MONO_700, PERMANENT_MARKER_400, SPECIAL_ELITE_400, VT323_400];
 
 /**
  * Points per quadratic segment: the path layer's quadratic count
@@ -64,7 +83,7 @@ function noFace(font: string): Error {
   const have = TEXT_FACES.map((f) => (f.weight === "400" ? f.family : `${f.weight} ${f.family}`));
   return commandError({
     code: "E_KERNEL", path: "/font", got: font, expected: `one of ${have.join(", ")}`, record: "kernels/art-inlay",
-    hint: `node sets text only in the vendored faces; set font to ${TEXT_FACES[0]!.family} (bold for weight 700)`,
+    hint: `node sets text only in the vendored faces (${have.join(", ")}); a face is never substituted, so set font to one of them`,
   });
 }
 
@@ -80,7 +99,7 @@ export function textFace(font: string): FaceTable {
 }
 
 function glyphOf(face: FaceTable, ch: string, text: string): readonly [number, readonly (readonly number[])[]] {
-  const g = face.glyphs[ch.codePointAt(0)!];
+  const g = glyphOutline(face, ch.codePointAt(0)!);
   if (g === undefined) {
     throw commandError({
       code: "E_SCHEMA", path: "/text", got: text, expected: `characters ${face.family} ${face.weight} carries (printable ASCII and Latin-1)`,
