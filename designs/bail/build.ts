@@ -164,6 +164,67 @@ function clipChain(pts: readonly Vec2[], z0: number, z1: number): Vec2[] {
   return out;
 }
 
+/** Twice the signed area of a ring: positive counter-clockwise. */
+const area2 = (ring: Ring): number => ring.reduce((a, [x, y], i) => { const [nx, ny] = ring[(i + 1) % ring.length]!; return a + x * ny - nx * y; }, 0);
+
+/** The ring of largest absolute area, or undefined for none. */
+const largest = (rings: readonly Ring[]): Ring | undefined => rings.reduce<Ring | undefined>((best, r) => (best === undefined || Math.abs(area2(r)) > Math.abs(area2(best)) ? r : best), undefined);
+
+/** Points per cubic segment when a path layer is flattened for the die cut silhouette; the silhouette grows by the margin, so the chord error stays under the margin. */
+const CUBIC_STEPS = 12;
+
+/**
+ * One ring per subpath of SVG path data, mapped by the matrix [a, b, c, d, e, f] (x' = a x + c y + e). Takes M m L l H h V v C c Z z, which is every command the HeatSync mark uses; any other command is refused.
+ */
+function flattenPath(d: string, m: readonly number[]): Ring[] {
+  const tokens = d.match(/[A-Za-z]|[-+]?(?:\d+\.?\d*|\.\d+)(?:[eE][-+]?\d+)?/g) ?? [];
+  const arity: Record<string, number> = { m: 2, l: 2, h: 1, v: 1, c: 6, z: 0 };
+  const [a, b, c, dd, e, f] = m as [number, number, number, number, number, number];
+  const rings: Ring[] = [];
+  let cur: Vec2[] = [];
+  let x = 0, y = 0, sx = 0, sy = 0, cmd = "", i = 0;
+  const put = (): void => { cur.push([a * x + c * y + e, b * x + dd * y + f]); };
+  const close = (): void => { if (cur.length >= 3) rings.push(cur); cur = []; };
+  while (i < tokens.length) {
+    const t = tokens[i]!;
+    if (/[A-Za-z]/.test(t)) {
+      cmd = t; i++;
+      if (t === "z" || t === "Z") { close(); x = sx; y = sy; continue; }
+    } else if (cmd === "") {
+      throw commandError({ code: "E_SCHEMA", path: "/art/d", got: t, expected: "a path command first", hint: "start the path data with M" });
+    }
+    const lower = cmd.toLowerCase(), rel = cmd === lower, n = arity[lower];
+    if (n === undefined) throw commandError({ code: "E_SCHEMA", path: "/art/d", got: cmd, expected: "one of M m L l H h V v C c Z z", hint: "the die cut outline flattens lines and cubics only; convert arcs to curves" });
+    const v = tokens.slice(i, i + n).map(Number);
+    if (v.length < n || v.some((q) => !Number.isFinite(q))) throw commandError({ code: "E_SCHEMA", path: "/art/d", got: tokens.slice(i, i + n).join(" "), expected: `${n} numbers after ${cmd}`, hint: "complete the path data" });
+    i += n;
+    const ox = rel ? x : 0, oy = rel ? y : 0;
+    if (lower === "m") {
+      close(); x = ox + v[0]!; y = oy + v[1]!; sx = x; sy = y; put();
+      cmd = rel ? "l" : "L";
+    } else if (lower === "l") { x = ox + v[0]!; y = oy + v[1]!; put(); }
+    else if (lower === "h") { x = ox + v[0]!; put(); }
+    else if (lower === "v") { y = oy + v[0]!; put(); }
+    else {
+      const x0 = x, y0 = y, p1x = ox + v[0]!, p1y = oy + v[1]!, p2x = ox + v[2]!, p2y = oy + v[3]!, p3x = ox + v[4]!, p3y = oy + v[5]!;
+      for (let s = 1; s <= CUBIC_STEPS; s++) {
+        const q = s / CUBIC_STEPS, u = 1 - q;
+        x = u ** 3 * x0 + 3 * u * u * q * p1x + 3 * u * q * q * p2x + q ** 3 * p3x;
+        y = u ** 3 * y0 + 3 * u * u * q * p1y + 3 * u * q * q * p2y + q ** 3 * p3y;
+        put();
+      }
+    }
+  }
+  close();
+  return rings;
+}
+
+/** Path units to model mm for a path layer, SVG matrix order (bail.html paintLayer scales by w / bw about the centre of the bounds, y up). */
+function pathMatrix(L: { readonly w: number; readonly bw: number; readonly bx: number; readonly by: number; readonly bh: number; readonly rot: number; readonly dx: number; readonly dy: number }): [number, number, number, number, number, number] {
+  const s = L.w / L.bw, cx = L.bx + L.bw / 2, cy = L.by + L.bh / 2, r = L.rot * Math.PI / 180, sn = s * Math.sin(r), cs = s * Math.cos(r);
+  return [cs, sn, sn, -cs, L.dx - (cs * cx + sn * cy), L.dy - (sn * cx + -cs * cy)];
+}
+
 export const build = defineBuild(chase, (p, k) => {
   const m = k.machine("ffc5p");
   const lh = m.layerHeight;
@@ -210,12 +271,29 @@ export const build = defineBuild(chase, (p, k) => {
   if (p.clr < 0.25 && clasp !== "pad") k.warn("CLEARANCE", `cord clearance ${p.clr} mm, legal from 0.25, constraint braided cord binds in the channel, origin bail.html line 1794`, { param: "/clr" });
 
   // ---- the outline of the blank (blankPath, bail.html 1508 to 1529); Math.sin and Math.cos points snap to the 1/1024 mm grid in the kernel
+  const doc: ArtDocument | null = p.art?.doc ?? null;
   const w = p.w, h = p.shape === "round" || p.shape === "concho" ? p.w : p.h;
   const outline = ((): Ring => {
     switch (p.shape) {
       case "round": return k.ring.circle(w / 2, [0, 0], 128);
       case "oval": return k.ring.circle(1, [0, 0], 128).map(([x, y]): Vec2 => [x * w / 2, y * h / 2]);
       case "rect": return k.ring.roundRect(w, h, Math.min(p.r, w / 2, h / 2));
+      case "outline": {
+        // Die cut (composeBlank, bail.html 1560 to 1583): the front art grown by the margin, the largest island, holes filled. Every ring is turned counter-clockwise so the union fills the holes of the marks, and the offset joins round as the distance field does. Only path layers have outlines here; BAIL also traces text, shapes and the other painters.
+        const front = (doc?.faces.front ?? []).filter((L) => !L.mute && L.cut === "none");
+        const skipped = front.filter((L) => L.kind !== "path");
+        if (skipped.length > 0) k.warn("OUTLINE_ART_SKIPPED", `die cut outline traces path layers only; ${skipped.map((L) => `${L.id} (${L.kind})`).join(", ")} not traced, so the slide does not follow them`, { param: "/shape" });
+        // The face on the bed is read in hand and held against the outline mirrored in x (inlay kind, splitBodies), so the outline of a face down front is the mirror of its art.
+        const flip = faceDown ? -1 : 1;
+        const art = front.flatMap((L) => (L.kind === "path" ? flattenPath(L.d, pathMatrix(L)) : [])).map((r): Ring => r.map(([x, y]): Vec2 => [flip * x, y])).map((r): Ring => (area2(r) < 0 ? [...r].reverse() : r));
+        const grown = art.length === 0 ? [] : k.ring.offset(art, p.outline, "round").filter((r) => area2(r) > 0);
+        const island = largest(grown);
+        if (island === undefined) {
+          k.warn("OUTLINE_NO_ART", `die cut outline found no front path art, so the blank is a ${w} mm disc as in bail.html line 1578`, { param: "/shape" });
+          return k.ring.circle(w / 2, [0, 0], 128);
+        }
+        return island;
+      }
       case "shield": {
         const pts: Vec2[] = [];
         const quad = (a: Vec2, c: Vec2, b: Vec2, n: number): void => { for (let i = 0; i <= n; i++) { const t = i / n; pts.push([(1 - t) ** 2 * a[0] + 2 * (1 - t) * t * c[0] + t * t * b[0], (1 - t) ** 2 * a[1] + 2 * (1 - t) * t * c[1] + t * t * b[1]]); } };
@@ -243,7 +321,6 @@ export const build = defineBuild(chase, (p, k) => {
   const slideShape = (z0: number, z1: number): ShapeDecl => ({ route: "prism", outline: [outline], z: [z0, z1] });
 
   // ---- the art document lowered to painter layers (bail.html partsOf and paintLayer, 1282 to 1496)
-  const doc: ArtDocument | null = p.art?.doc ?? null;
   const lowerLayer = (L: ArtLayer): Paint | null => {
     if (L.cut !== "none") { k.warn("LAYER_SKIPPED", `layer ${L.id} cuts the slide (${L.cut}); the inlay kind carves no cut yet, so it is skipped`); return null; }
     const flags = L.mute ? { off: true } : {};
@@ -267,8 +344,7 @@ export const build = defineBuild(chase, (p, k) => {
       case "scope": return { kind: "scope", a: L.a, b: L.b, phase: L.phase, w: L.w, h: L.h, t: L.t, ...place, slot: L.slot, ...flags };
       case "circuit": return { kind: "circuit", seed: L.seed, w: L.w, h: L.h, pitch: L.pitch, tw: L.tw, pad: L.pad, drill: L.drill, density: L.density, clip: L.clip, ...place, slot: L.slot, slot2: L.slot2, ...flags };
       case "path": {
-        const s = L.w / L.bw, cx = L.bx + L.bw / 2, cy = L.by + L.bh / 2, r = L.rot * Math.PI / 180, sn = s * Math.sin(r), cs = s * Math.cos(r);
-        return { kind: "path", d: L.d, transform: [cs, sn, sn, -cs, L.dx - (cs * cx + sn * cy), L.dy - (sn * cx + -cs * cy)], slot: L.slot, ...flags };
+        return { kind: "path", d: L.d, transform: pathMatrix(L), slot: L.slot, ...flags };
       }
       default:
         k.warn("LAYER_SKIPPED", `layer ${L.id} is an ${L.kind} layer; the image and relief painters are not built, so it is skipped`);
@@ -276,11 +352,18 @@ export const build = defineBuild(chase, (p, k) => {
     }
   };
 
-  // The rim band. BAIL labels it on every layer (composeFace, 1635; buildSlide, 1714), so it is a ring prism through the whole thickness in the rim slot and the slide prism stands inside it. BAIL measures an exact distance field and k.ring.offset is not in this kernel build, so the inner edge is the outline scaled on each axis. Art that runs into the band is refused by the inlay kind, where BAIL clips it at the band.
+  // The rim band. BAIL labels it on every layer (composeFace, 1635; buildSlide, 1714), so it is a ring prism through the whole thickness in the rim slot and the slide prism stands inside it. The inner edge is the outline offset inward by the rim width, BAIL's distance field cut at rimW. Art that runs into the band is refused by the inlay kind, where BAIL clips it at the band.
   const rimBody = p.rimOn && p.rim !== p.body;
   const rimInner: Ring = ((): Ring => {
-    const sx = Math.max(0.05, (w - 2 * p.rimW) / w), sy = Math.max(0.05, (h - 2 * p.rimW) / h);
-    return outline.map(([x, y]): Vec2 => [x * sx, y * sy]);
+    if (!rimBody) return outline;
+    const inner = largest(k.ring.offset([outline], -p.rimW, "round"));
+    if (inner === undefined) {
+      throw commandError({
+        code: "E_SCHEMA", path: "/rimW", got: `rim ${p.rimW} mm leaves no slide inside the outline (computed)`, expected: "a rim narrower than the blank half width",
+        hint: "narrow the rim band (rim width) or make the slide bigger",
+      });
+    }
+    return area2(inner) > 0 === area2(outline) > 0 ? inner : [...inner].reverse();
   })();
   const lowered = (face: readonly ArtLayer[]): Paint[] => face.map(lowerLayer).filter((x): x is Paint => x !== null);
   const front = doc === null ? [] : lowered(doc.faces.front);

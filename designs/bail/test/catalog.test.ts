@@ -11,6 +11,7 @@ import { fileURLToPath } from "node:url";
 import { describe, expect, test } from "vitest";
 import type { BuildWarning, PartDraft } from "@hackbuild/spec";
 import { createProfileLookup, loadProfile } from "@hackbuild/profile";
+import { loadGeom } from "@hackbuild/geom";
 import { makeAuthor, resolveParams } from "@hackbuild/pipeline";
 import { build } from "../build";
 import { chase, type BailParams } from "../chase";
@@ -54,7 +55,7 @@ describe("the chase defaults equal the catalog rows they copy", () => {
     const kit = row("bail-tips-kit32");
     const warnings: BuildWarning[] = [];
     const values = resolveParams(chase, undefined, "custom") as unknown as BailParams;
-    (await build(values, makeAuthor(chase, createProfileLookup(loadProfile()), warnings))) as PartDraft;
+    (await build(values, makeAuthor(chase, createProfileLookup(loadProfile()), warnings, [], await loadGeom()))) as PartDraft;
     const text = warnings.find((w) => w.code === "KIT_TIPS")?.text ?? "";
     const m = /catalog row (\S+) \(([\d.]+) x ([\d.]+) mm, ([\d.]+) mm bore/.exec(text);
     expect(m, text).not.toBeNull();

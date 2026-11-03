@@ -10,19 +10,20 @@
 import { describe, expect, test } from "vitest";
 import { isThrownCommandError, type BodyDraft, type BuildWarning, type CommandError, type PartDraft, type Ring, type ShapeDecl } from "@hackbuild/spec";
 import { createProfileLookup, loadProfile } from "@hackbuild/profile";
+import { loadGeom } from "@hackbuild/geom";
 import { makeAuthor, resolveParams } from "@hackbuild/pipeline";
 import { build } from "../build";
 import { chase, type BailParams } from "../chase";
 
 const profile = createProfileLookup(loadProfile());
-const PRESETS = ["heatsync", "hackbuild", "scope", "trace", "mesa", "concho", "monogram", "custom"] as const;
+const PRESETS = ["heatsync", "hackbuild", "scope", "trace", "mesa", "concho", "monogram", "hslcut", "custom"] as const;
 
 interface Run { readonly draft: PartDraft; readonly warnings: readonly BuildWarning[]; readonly params: BailParams }
 
 async function run(preset: string, params: Record<string, unknown> = {}): Promise<Run> {
   const warnings: BuildWarning[] = [];
   const values = resolveParams(chase, params, preset) as unknown as BailParams;
-  const draft = (await build(values, makeAuthor(chase, profile, warnings))) as PartDraft;
+  const draft = (await build(values, makeAuthor(chase, profile, warnings, [], await loadGeom()))) as PartDraft;
   return { draft, warnings, params: values };
 }
 
@@ -118,6 +119,39 @@ describe("the rim is a body through the whole thickness", () => {
     expect(span(rim.outline[0]!, 0)).toBeCloseTo(46, 2);
     expect(span(rim.outline[1]!, 0)).toBeCloseTo(46 - 2 * 1.6, 2);
     expect(slide.outline[0]).toEqual(rim.outline[1]);
+  });
+
+  test("the inner edge sits one rim width inside the outline all round, on a concho and on the die cut", async () => {
+    for (const id of ["concho", "hslcut"]) {
+      const r = await run(id);
+      const rim = prism(body(r, "rim").base), w = r.params.rimW;
+      const [outer, inner] = [rim.outline[0]!, rim.outline[1]!];
+      const edge = (x: number, y: number): number => outer.reduce((best, [ax, ay], i) => {
+        const [bx, by] = outer[(i + 1) % outer.length]!, dx = bx - ax, dy = by - ay, l2 = dx * dx + dy * dy;
+        const t = l2 === 0 ? 0 : Math.max(0, Math.min(1, ((x - ax) * dx + (y - ay) * dy) / l2));
+        return Math.min(best, Math.hypot(x - ax - t * dx, y - ay - t * dy));
+      }, Infinity);
+      const least = Math.min(...inner.map(([x, y]) => edge(x, y)));
+      expect(least, id).toBeGreaterThan(w - 0.01);
+    }
+  });
+
+  test("the die cut follows the mark: not a disc, grown 2 mm past the art, no warning", async () => {
+    const r = await run("hslcut");
+    const slide = prism(body(r, "slide").base);
+    expect(r.warnings.map((x) => x.code)).not.toContain("OUTLINE_NO_ART");
+    const rim = prism(body(r, "rim").base);
+    const o = rim.outline[0]!;
+    const w = span(o, 0), h = span(o, 1);
+    expect(w).toBeGreaterThan(44);
+    expect(Math.abs(w - h)).toBeGreaterThan(0.5);
+    expect(slide.outline[0]).toEqual(rim.outline[1]);
+  });
+
+  test("a die cut with no front path art falls back to a disc of the slide width", async () => {
+    const r = await run("hslcut", { art: { uri: "hbf://art/x", kind: "layers", doc: { schema: "hbf.art", version: 1, faces: { front: [], back: [] } } } });
+    expect(code(r, "OUTLINE_NO_ART")).toBeDefined();
+    expect(span(prism(body(r, "rim").base).outline[0]!, 0)).toBeCloseTo(44, 1);
   });
 
   test("no rim body when the band is off or shares the body slot", async () => {

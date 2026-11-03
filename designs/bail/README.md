@@ -4,11 +4,11 @@ The owner's bolo tie bench (record `knowledge/designs/bail.md`, original `fab-kn
 
 | file | what it holds |
 |---|---|
-| `chase.ts` | slide, rim, clasp, ends, inlay controls and the `art` param of kind layers; 8 presets as values, each with its art document; 4 filament slots, slot 4 TPU95 as flex |
+| `chase.ts` | slide, rim, clasp, ends, inlay controls and the `art` param of kind layers; 9 presets as values, each with its art document; 4 filament slots, slot 4 TPU95 as flex |
 | `build.ts` | the blank outline, the rim ring, the inlay features from the art document, the store back recess with its peg, twin printed bridges in the clasp slot, grip fins, revolved tips on the plate, the rigid fin warning and the ported BAIL checks |
 | `bench.ts`, `bench.entry.ts`, `page-build.ts`, `page-facts.d.ts`, `bake.json` | the bench and its bake inputs; `node tools/bake/bake.mjs designs/bail/bake.json` writes `dist/bench/bail.html` |
 | `expected/` | parity goldens, written by `SOURCE_DATE_EPOCH=315532800 hbf parity designs/bail --accept` |
-| `test/` | `build.test.ts` the chase, the art uris and each of the 8 preset builds through the CLI; `draft.test.ts` the draft numbers, the rim, the slots and the warnings in process; `catalog.test.ts` the copies of the hardware rows; `bench.test.ts` the bench |
+| `test/` | `build.test.ts` the chase, the art uris and each of the 9 preset builds through the CLI; `draft.test.ts` the draft numbers, the rim, the slots and the warnings in process; `catalog.test.ts` the copies of the hardware rows; `bench.test.ts` the bench |
 
 ## Hardware
 
@@ -31,12 +31,18 @@ Slot 4 is TPU95 here (role flex), the grip slot. BAIL puts rigid PETG on slot 4 
 
 ## Rim
 
-BAIL labels the rim band on every layer (`composeFace` line 1635, `buildSlide` line 1714), so the side wall prints in the rim colour. Here the rim is a ring prism through the whole thickness in the `rim` slot, and the slide prism stands inside it. Two limits remain.
+BAIL labels the rim band on every layer (`composeFace` line 1635, `buildSlide` line 1714), so the side wall prints in the rim colour. Here the rim is a ring prism through the whole thickness in the `rim` slot, and the slide prism stands inside it. One limit remains.
 
-- BAIL measures an exact distance field. `k.ring.offset` throws in this kernel build, so the inner edge is the outline scaled on each axis, which is exact for a round slide and uneven in width for the other shapes.
+- The inner edge is `k.ring.offset(outline, -rimW)` with round joins, BAIL's distance field cut at the rim width (computed). A rim wider than the blank half width raises E_SCHEMA at `/rimW`.
 - BAIL clips art at the band (`writable`, lines 1636 and 1637). The inlay kind refuses art cells outside the host outline, so art may not cross into the band. Three presets shrank for it: heatsync logo 34 mm (BAIL 36), mesa skyline 27 mm wide (BAIL 46 on a 46 mm blank, 30 before the ring), monogram frame 25 mm (BAIL 30).
 
 The rim body is absent when the rim is off or shares the body slot.
+
+## Die cut
+
+`shape: outline` ports `composeBlank` (bail.html 1560 to 1583): the front art grown by the `outline` margin (field at 237), the largest island kept, holes filled. `build.ts` flattens the front path layers (M m L l H h V v C c Z z, 12 points per cubic), turns every ring counter-clockwise so the union fills holes, and calls `k.ring.offset(rings, outline, "round")`; the largest counter-clockwise ring is the blank. A front face down build mirrors the art in x first, because the bed face is read in hand and held against the outline mirrored. With no front path art the blank is a disc of `w` mm (bail.html 1578) and the build warns `OUTLINE_NO_ART`.
+
+The `hslcut` preset ports `hslcut` (bail.html 1153 to 1163). The HeatSync mark is two path layers, sun disc then flames, with the `d` strings of `packages/inlay/src/marks.ts` and the bounds that reproduce the logo layer placement (span 985, centre minus the part offset). BAIL paints the mark as a logo layer; the path layers paint the same shapes and give the outline something to trace. The flames take slot 1 and the sun disc slot 2 (pink), where BAIL's disc is amber. Chamfers are not applied (see Not carried).
 
 ## Bridges and clasp slot
 
@@ -66,8 +72,7 @@ The `SLOPE` and both `CLAMP` warnings (thickness to a layer top, tip bore depth)
 
 | item | why |
 |---|---|
-| die cut outline shape and the HSL die cut preset | needs `k.ring.offset`, which throws E_KERNEL in this kernel build |
-| exact rim band | see Rim |
+| die cut tracing of text, shape and logo layers | the outline traces front path layers only (see Die cut); other kinds raise `OUTLINE_ART_SKIPPED` |
 | concho outline detail | the concho samples 360 points; BAIL samples 1440 (line 1523). the chord error of the outline is 0.0009 mm against BAIL's 0.00005 mm at the 23 mm radius of the 46 mm blank (computed) |
 | buried channels | a void inside the inlay host cannot be cut (the host must be a prism from the bed, and the `bore` kind has no generator in this build); `buried` builds twin bridges with a warning |
 | cabochon pocket and the setting preset | the inlay kind refuses `cut` pocket and `cut` through |

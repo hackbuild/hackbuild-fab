@@ -1,5 +1,5 @@
 // designs/bail: the chase read the way every command reads it, and each of
-// the 8 presets built through the hbf CLI (core/bin/hbf.mjs part.build: the
+// the 9 presets built through the hbf CLI (core/bin/hbf.mjs part.build: the
 // sandbox, the stage runner and every registered check). A design may not
 // import core (tools/tiers.json), so the build runs are the commands
 // themselves. The draft numbers, the warnings and the catalog rows are held
@@ -18,7 +18,7 @@ const DESIGN = "designs/bail";
 const HBF = path.join(ROOT, "core", "bin", "hbf.mjs");
 const read = (...p: string[]): string => readFileSync(path.join(ROOT, ...p), "utf8");
 const { chase } = readChaseSource(read(DESIGN, "chase.ts"), `${DESIGN}/chase.ts`);
-const PRESETS = ["heatsync", "hackbuild", "scope", "trace", "mesa", "concho", "monogram", "custom"] as const;
+const PRESETS = ["heatsync", "hackbuild", "scope", "trace", "mesa", "concho", "monogram", "hslcut", "custom"] as const;
 
 interface Finding { readonly id: string; readonly verdict: string; readonly measured?: unknown }
 interface BuildOut {
@@ -43,7 +43,7 @@ describe("bail chase", () => {
   });
 
   test("presets are values: each carries an art document addressed by its own uri, and the slot 4 material is TPU", () => {
-    expect(PRESETS).toEqual(["heatsync", "hackbuild", "scope", "trace", "mesa", "concho", "monogram", "custom"]);
+    expect(PRESETS).toEqual(["heatsync", "hackbuild", "scope", "trace", "mesa", "concho", "monogram", "hslcut", "custom"]);
     expect(chase.materials.find((m) => m.slot === 4)?.material).toBe("tpu95");
     for (const pr of chase.presets ?? []) {
       const art = pr.params["art"] as { readonly uri: string; readonly doc: Parameters<typeof artDocumentUri>[0] };

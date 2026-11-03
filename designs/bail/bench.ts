@@ -25,7 +25,7 @@ export const bench = defineBench(chase, {
   ],
   welcome: {
     tagline: "multimaterial bolo ties. make things. break things. repeat.",
-    presets: ["heatsync", "hackbuild", "scope", "trace", "mesa", "concho", "monogram", "custom"],
+    presets: ["heatsync", "hackbuild", "scope", "trace", "mesa", "concho", "monogram", "hslcut", "custom"],
     starts: [
       { preset: "hackbuild", intent: "a round slide with the hack.build mark, bridges and TPU grip fins", process: "fdm, four filaments" },
       { preset: "heatsync", intent: "a scalloped concho with the HeatSync mark and a store back", process: "fdm, four filaments" },
