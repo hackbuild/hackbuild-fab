@@ -153,18 +153,21 @@ export function meshHash(mesh: MeshData): MeshHash {
  * appears once and its reverse appears once.
  */
 export function isWatertight(mesh: MeshData): boolean {
-  const { tris } = canonical(mesh);
+  const { verts, tris } = canonical(mesh);
   if (tris.length === 0) return false;
-  const edges = new Map<string, number>();
+  // Canonical indices are below nv, so a * nv + b names the directed edge a to b exactly.
+  const nv = verts.length / 3;
+  const edges = new Map<number, number>();
   for (let t = 0; t < tris.length; t += 3) {
     for (let e = 0; e < 3; e += 1) {
-      const key = `${tris[t + e]!},${tris[t + ((e + 1) % 3)]!}`;
+      const key = tris[t + e]! * nv + tris[t + ((e + 1) % 3)]!;
       edges.set(key, (edges.get(key) ?? 0) + 1);
     }
   }
   for (const [key, n] of edges) {
-    const [a, b] = key.split(",");
-    if (n !== 1 || edges.get(`${b},${a}`) !== 1) return false;
+    const b = key % nv;
+    const a = (key - b) / nv;
+    if (n !== 1 || edges.get(b * nv + a) !== 1) return false;
   }
   return true;
 }

@@ -15,8 +15,8 @@ import type { BodyRole, Finding, Part, PocketFeature, Ring } from "@hackbuild/sp
 import { defineCheck } from "../../registry.js";
 import { inPrintPose, boundsOf } from "../../solid/mesh.js";
 import { longestBridge } from "../../solid/layers.js";
-import { gridOver, sliceMask } from "../../solid/slice.js";
-import { fillRings } from "../../solid/plan.js";
+import { gridOver, sliceMaskIn, windowAround, windowH, windowW } from "../../solid/slice.js";
+import { fillRingsIn } from "../../solid/plan.js";
 import { toPart } from "../../skeleton/plan.js";
 import { bodyMeshes, fmt, intervalFinding, isReason, featureTarget, presetOf, skip } from "../common.js";
 
@@ -54,15 +54,24 @@ export const check = defineCheck<"feature", "pocket">({
     const zTop = f.face.origin[2] + dz;
     const box = boundsOf(meshes);
     const g = gridOver(box, CELL_MM);
-    const cur = sliceMask(meshes, zTop + p.layer / 2, g);
-    const prev = sliceMask(meshes, zTop - p.layer / 2, g);
-    const inside = fillRings([ring], g);
+    // Window: an unsupported cell (in cur, not in prev) lies inside the ring,
+    // so its centre is within the ring's bounds; a bridge run is made of such
+    // cells and its two anchors are the cells one step past its ends, in x,
+    // y or a diagonal. Two cells of margin hold the runs and anchors with a
+    // cell to spare, and cells past the window read as unsupported air that
+    // no run reaches, as in the whole grid.
+    const xs = ring.map((q) => q[0]), ys = ring.map((q) => q[1]);
+    const win = windowAround(g, Math.min(...xs), Math.max(...xs), Math.min(...ys), Math.max(...ys), 2);
+    const wg = { x0: g.x0 + win.i0 * g.h, y0: g.y0 + win.j0 * g.h, h: g.h, nx: windowW(win), ny: windowH(win) };
+    const cur = sliceMaskIn(meshes, zTop + p.layer / 2, g, win);
+    const prev = sliceMaskIn(meshes, zTop - p.layer / 2, g, win);
+    const inside = fillRingsIn([ring], g, win);
     for (let c = 0; c < prev.length; c++) if (inside[c] !== 1) prev[c] = 1;
-    const b = longestBridge(cur, prev, g);
+    const b = longestBridge(cur, prev, wg);
     const span = b === null ? 0 : Number(b.spanMm.toFixed(3));
     if (b !== null) {
       const flex = got.meshes.flatMap((_, i) => (FLEX_ROLES.has(t.part.bodies[i]!.role) ? [meshes[i]!] : []));
-      const capped = flex.length > 0 && sliceMask(flex, zTop + p.layer / 2, g).some((v, c) => v === 1 && inside[c] === 1);
+      const capped = flex.length > 0 && sliceMaskIn(flex, zTop + p.layer / 2, g, win).some((v, c) => v === 1 && inside[c] === 1);
       if (!capped) {
         const over = coverOf(t.part, ring, f.face.origin[2], p.layer);
         return [skip(at, "not a flex cap",

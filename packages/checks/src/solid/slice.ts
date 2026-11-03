@@ -29,9 +29,45 @@ export function gridOver(box: Pick<Box3, "min" | "max">, h: number, pad = 2): Gr
 export const cellX = (g: Grid, i: number): number => g.x0 + (i + 0.5) * g.h;
 export const cellY = (g: Grid, j: number): number => g.y0 + (j + 0.5) * g.h;
 
+/** An inclusive cell window of a grid: columns i0 to i1, rows j0 to j1. */
+export interface Window {
+  readonly i0: number;
+  readonly i1: number;
+  readonly j0: number;
+  readonly j1: number;
+}
+
+/** Window width in cells; 0 when the window lies outside the grid. */
+export const windowW = (w: Window): number => Math.max(0, w.i1 - w.i0 + 1);
+/** Window height in cells; 0 when the window lies outside the grid. */
+export const windowH = (w: Window): number => Math.max(0, w.j1 - w.j0 + 1);
+
+/**
+ * The cells whose centres can lie within [xa, xb] x [ya, yb] mm, plus `margin`
+ * cells each side, clamped to the grid. The index maths reads the parent
+ * grid, so a window cell holds the value the whole-grid raster holds there.
+ */
+export function windowAround(g: Grid, xa: number, xb: number, ya: number, yb: number, margin: number): Window {
+  return {
+    i0: Math.max(0, Math.floor((xa - g.x0) / g.h) - margin),
+    i1: Math.min(g.nx - 1, Math.ceil((xb - g.x0) / g.h) + margin),
+    j0: Math.max(0, Math.floor((ya - g.y0) / g.h) - margin),
+    j1: Math.min(g.ny - 1, Math.ceil((yb - g.y0) / g.h) + margin),
+  };
+}
+
 /** Cells whose centre lies inside the union of the meshes at height z: 1 inside, 0 outside; row j holds cells j * nx to j * nx + nx - 1. */
 export function sliceMask(meshes: readonly MeshData[], z: number, g: Grid): Uint8Array {
-  const rows: number[][] = Array.from({ length: g.ny }, () => []);
+  return sliceMaskIn(meshes, z, g, { i0: 0, i1: g.nx - 1, j0: 0, j1: g.ny - 1 });
+}
+
+/**
+ * sliceMask over a window of the grid: the same per-cell values, in an array
+ * of windowW x windowH cells, cell (i, j) at (j - j0) * windowW + (i - i0).
+ */
+export function sliceMaskIn(meshes: readonly MeshData[], z: number, g: Grid, win: Window): Uint8Array {
+  const wn = windowW(win);
+  const rows: number[][] = Array.from({ length: windowH(win) }, () => []);
   for (const m of meshes) {
     const p = m.positions;
     const t = m.triangles;
@@ -58,19 +94,19 @@ export function sliceMask(meshes: readonly MeshData[], z: number, g: Grid): Uint
       if (y1 === y2) continue;
       const up = y2 > y1;
       const ylo = up ? y1 : y2, yhi = up ? y2 : y1;
-      const j0 = Math.max(0, Math.ceil((ylo - g.y0) / g.h - 0.5));
-      const j1 = Math.min(g.ny - 1, Math.ceil((yhi - g.y0) / g.h - 0.5) - 1);
+      const j0 = Math.max(win.j0, Math.ceil((ylo - g.y0) / g.h - 0.5));
+      const j1 = Math.min(win.j1, Math.ceil((yhi - g.y0) / g.h - 0.5) - 1);
       // A downward segment opens the inside to its right, an upward one closes it.
       const w = up ? -1 : 1;
       for (let j = j0; j <= j1; j++) {
         const y = cellY(g, j);
-        rows[j]!.push(x1 + ((y - y1) / (y2 - y1)) * (x2 - x1), w);
+        rows[j - win.j0]!.push(x1 + ((y - y1) / (y2 - y1)) * (x2 - x1), w);
       }
     }
   }
-  const out = new Uint8Array(g.nx * g.ny);
-  for (let j = 0; j < g.ny; j++) {
-    const r = rows[j]!;
+  const out = new Uint8Array(wn * rows.length);
+  for (let j = win.j0; j <= win.j1; j++) {
+    const r = rows[j - win.j0]!;
     if (r.length === 0) continue;
     const idx = Array.from({ length: r.length / 2 }, (_, i) => i).sort((a, b) => r[a * 2]! - r[b * 2]!);
     let wind = 0;
@@ -78,9 +114,9 @@ export function sliceMask(meshes: readonly MeshData[], z: number, g: Grid): Uint
       wind += r[idx[q]! * 2 + 1]!;
       if (wind === 0 || q + 1 >= idx.length) continue;
       const xa = r[idx[q]! * 2]!, xb = r[idx[q + 1]! * 2]!;
-      const i0 = Math.max(0, Math.ceil((xa - g.x0) / g.h - 0.5));
-      const i1 = Math.min(g.nx - 1, Math.ceil((xb - g.x0) / g.h - 0.5) - 1);
-      for (let i = i0; i <= i1; i++) out[j * g.nx + i] = 1;
+      const i0 = Math.max(win.i0, Math.ceil((xa - g.x0) / g.h - 0.5));
+      const i1 = Math.min(win.i1, Math.ceil((xb - g.x0) / g.h - 0.5) - 1);
+      for (let i = i0; i <= i1; i++) out[(j - win.j0) * wn + (i - win.i0)] = 1;
     }
   }
   return out;

@@ -94,41 +94,40 @@ const DIRS = [[1, 0], [0, 1], [1, 1], [1, -1]] as const;
  * reads 15.4 and a 17 mm comb rail between posts reads 17 (SLATE).
  */
 export function longestBridge(cur: Uint8Array, prev: Uint8Array, g: Grid): Bridge | null {
-  const n = g.nx * g.ny;
+  const nx = g.nx, ny = g.ny;
+  const n = nx * ny;
   const best = new Float64Array(n).fill(Infinity);
-  const state = (i: number, j: number): 0 | 1 | 2 => {
-    if (i < 0 || j < 0 || i >= g.nx || j >= g.ny) return 0;
-    const c = j * g.nx + i;
-    if (cur[c] !== 1) return 0;
-    return prev[c] === 1 ? 2 : 1;
-  };
-  for (const [dx, dy] of DIRS) {
+  // A run never holds more cells than the longest line of the grid.
+  const run = new Int32Array(Math.max(nx, ny) + 1);
+  for (let d = 0; d < 4; d++) {
+    const dx = DIRS[d]![0], dy = DIRS[d]![1];
     const step = g.h * Math.hypot(dx, dy);
-    for (let j0 = 0; j0 < g.ny; j0++) {
-      for (let i0 = 0; i0 < g.nx; i0++) {
+    for (let j0 = 0; j0 < ny; j0++) {
+      for (let i0 = 0; i0 < nx; i0++) {
         // Walk only from the first cell of each line.
         const pi = i0 - dx, pj = j0 - dy;
-        if (pi >= 0 && pj >= 0 && pi < g.nx && pj < g.ny) continue;
+        if (pi >= 0 && pj >= 0 && pi < nx && pj < ny) continue;
         let i = i0, j = j0;
-        let runStart = -1;
-        let before: 0 | 1 | 2 = 0;
-        const run: number[] = [];
-        let last: 0 | 1 | 2 = 0;
-        while (i >= 0 && j >= 0 && i < g.nx && j < g.ny) {
-          const s = state(i, j);
+        let inRun = false;
+        let before = 0;
+        let runLen = 0;
+        let last = 0;
+        while (i >= 0 && j >= 0 && i < nx && j < ny) {
+          const c = j * nx + i;
+          const s = cur[c] !== 1 ? 0 : prev[c] === 1 ? 2 : 1;
           if (s === 1) {
-            if (runStart < 0) {
-              runStart = 1;
+            if (!inRun) {
+              inRun = true;
               before = last;
-              run.length = 0;
+              runLen = 0;
             }
-            run.push(j * g.nx + i);
-          } else if (runStart > 0) {
+            run[runLen++] = c;
+          } else if (inRun) {
             if (before === 2 && s === 2) {
-              const span = run.length * step;
-              for (const c of run) if (span < best[c]!) best[c] = span;
+              const span = runLen * step;
+              for (let k = 0; k < runLen; k++) if (span < best[run[k]!]!) best[run[k]!] = span;
             }
-            runStart = -1;
+            inRun = false;
           }
           last = s;
           i += dx;

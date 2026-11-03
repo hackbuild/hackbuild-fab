@@ -225,21 +225,42 @@ for (let d = 0; d < 360; d += 5) PSI_ALL.push(d * D2R);
 
 type Tags = Readonly<Record<string, boolean>> | null;
 
+/** cos and sin of phi + each psi, by phi: the same Math.cos and Math.sin values every call recomputed. */
+const PSI_TRIG = new Map<readonly number[], Map<number, { readonly c: Float64Array; readonly s: Float64Array }>>();
+function psiTrig(psis: readonly number[], phi: number): { readonly c: Float64Array; readonly s: Float64Array } {
+  let byPhi = PSI_TRIG.get(psis);
+  if (byPhi === undefined) PSI_TRIG.set(psis, (byPhi = new Map()));
+  let t = byPhi.get(phi);
+  if (t === undefined) {
+    const c = new Float64Array(psis.length), s = new Float64Array(psis.length);
+    for (let q = 0; q < psis.length; q++) { const ps = phi + (psis[q] as number); c[q] = Math.cos(ps); s[q] = Math.sin(ps); }
+    byPhi.set(phi, (t = { c, s }));
+  }
+  return t;
+}
+
 /** part2b.js hits: does any sample enter the body at tilt theta toward phi (Rodrigues about the tilt axis). */
 function hits(G: ToggleG, P: Samples, tags: Tags, phi: number, thetaDeg: number, dil: number, ignoreWall: boolean): boolean {
   const th = thetaDeg * D2R, c = Math.cos(th), s = Math.sin(th), omc = 1 - c;
   const ux = -Math.sin(phi), uy = Math.cos(phi);
   const psis = thetaDeg === 0 ? PSI_ALL : PSI_NEAR;
+  const trig = psiTrig(psis, phi);
+  // The tag filter is the same for every psi; apply it once. The answer is any-of, so order does not matter.
+  const pr: number[] = [], ph: number[] = [];
+  for (let i = 0; i < P.r.length; i++) {
+    if (tags && !tags[P.tag[i] as string]) continue;
+    pr.push(P.r[i] as number); ph.push(P.h[i] as number);
+  }
+  const zp = G.zp;
   for (let q = 0; q < psis.length; q++) {
-    const ps = phi + (psis[q] as number), cp = Math.cos(ps), sp = Math.sin(ps);
-    for (let i = 0; i < P.r.length; i++) {
-      if (tags && !tags[P.tag[i] as string]) continue;
-      const x = (P.r[i] as number) * cp, y = (P.r[i] as number) * sp, h = P.h[i] as number;
+    const cp = trig.c[q] as number, sp = trig.s[q] as number;
+    for (let i = 0; i < pr.length; i++) {
+      const x = (pr[i] as number) * cp, y = (pr[i] as number) * sp, h = ph[i] as number;
       const cx = uy * h, cy = -ux * h, cz = ux * y - uy * x;
       const d = ux * x + uy * y;
       const X = x * c + cx * s + ux * d * omc;
       const Y = y * c + cy * s + uy * d * omc;
-      const Z = h * c + cz * s + G.zp;
+      const Z = h * c + cz * s + zp;
       if (occ(G, X, Y, Z, 0, ignoreWall)) return true;
       if (dil > 0) {
         const rr = Math.hypot(X, Y) || 1, ex = X / rr, ey = Y / rr;

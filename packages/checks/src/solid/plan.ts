@@ -7,7 +7,7 @@
 import type { Ring, Vec2 } from "@hackbuild/spec";
 import { fillPolygonEvenOdd } from "@hackbuild/geom";
 import { longestBridge } from "./layers.js";
-import type { Grid } from "./slice.js";
+import { windowH, windowW, type Grid, type Window } from "./slice.js";
 import { closestEdges, inside, ringEdges } from "../skeleton/plan.js";
 
 /** A grid over rings with pad empty cells each side. */
@@ -27,6 +27,43 @@ export function fillRings(rings: readonly Ring[], g: Grid): Uint8Array {
   const cx = g.x0 + (g.nx * g.h) / 2, cy = g.y0 + (g.ny * g.h) / 2;
   const moved = rings.map((r) => r.map(([x, y]) => [x - cx, y - cy] as const));
   return fillPolygonEvenOdd({ w: g.nx, h: g.ny, res: 1 / g.h }, moved, "bottom");
+}
+
+/**
+ * fillRings over a window of the grid, in windowW x windowH cells. It repeats
+ * fillPolygonEvenOdd's arithmetic with the whole grid's centre, resolution
+ * and row order, so each window cell equals the whole-grid fill there.
+ */
+export function fillRingsIn(rings: readonly Ring[], g: Grid, win: Window): Uint8Array {
+  const cx = g.x0 + (g.nx * g.h) / 2, cy = g.y0 + (g.ny * g.h) / 2;
+  const moved = rings.map((r) => r.map(([x, y]) => [x - cx, y - cy] as const));
+  const ppm = 1 / g.h;
+  const gcx = g.nx / 2, gcy = g.ny / 2;
+  const wn = windowW(win);
+  const o = new Uint8Array(wn * windowH(win));
+  for (let row = win.j0; row <= win.j1; row++) {
+    // Bottom row order: grid row `row` is scan line py = ny - 1 - row.
+    const py = g.ny - 1 - row;
+    const ymm = (gcy - (py + 0.5)) / ppm;
+    const xs: number[] = [];
+    for (const poly of moved) {
+      const n = poly.length;
+      for (let i = 0; i < n; i++) {
+        const a = poly[i]!, b = poly[(i + 1) % n]!;
+        if ((a[1] <= ymm && b[1] > ymm) || (b[1] <= ymm && a[1] > ymm)) {
+          const t = (ymm - a[1]) / (b[1] - a[1]);
+          xs.push(a[0] + t * (b[0] - a[0]));
+        }
+      }
+    }
+    xs.sort((p, q) => p - q);
+    for (let k = 0; k + 1 < xs.length; k += 2) {
+      const x0 = Math.max(win.i0, Math.ceil(xs[k]! * ppm + gcx - 0.5));
+      const x1 = Math.min(win.i1, Math.floor(xs[k + 1]! * ppm + gcx - 0.5));
+      for (let x = x0; x <= x1; x++) o[(row - win.j0) * wn + (x - win.i0)] = 1;
+    }
+  }
+  return o;
 }
 
 /**
