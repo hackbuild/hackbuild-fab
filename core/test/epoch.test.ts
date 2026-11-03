@@ -3,11 +3,12 @@
 // never the clock.
 
 import { execFileSync } from "node:child_process";
-import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { afterAll, describe, expect, it } from "vitest";
 import { DEFAULT_EPOCH, sourceDateEpoch } from "../src/epoch.js";
+import { ROOT } from "./hbf.js";
 
 const tmp = mkdtempSync(path.join(tmpdir(), "hbf-epoch-"));
 afterAll(() => rmSync(tmp, { recursive: true, force: true }));
@@ -52,5 +53,21 @@ describe("sourceDateEpoch", () => {
     git(repo, "add", "f.txt");
     git(repo, "-c", "user.name=fixture", "-c", "user.email=fixture@example.invalid", "-c", "core.hooksPath=/dev/null", "commit", "-q", "-m", "fixture");
     expect(sourceDateEpoch(repo, {})).toEqual({ value: COMMIT_S, source: "git" });
+  });
+});
+
+// A bake writes its page at DEFAULT_EPOCH (tools/bake/design-facts.mjs), so a
+// golden accepted at a commit time can never equal its own page's buildHash:
+// designs/bail was accepted at its HEAD time and its file:// spec failed.
+describe("goldens on disk", () => {
+  it("record DEFAULT_EPOCH wherever they record an epoch", () => {
+    const dirs = (p: string): string[] => readdirSync(path.join(ROOT, p), { withFileTypes: true }).filter((d) => d.isDirectory()).map((d) => path.join(p, d.name));
+    const goldens = [...dirs("reference").flatMap(dirs), ...dirs("designs")].map((d) => path.join(d, "expected", "build.json")).filter((f) => existsSync(path.join(ROOT, f)));
+    const off = goldens.flatMap((f) => {
+      const e = (JSON.parse(readFileSync(path.join(ROOT, f), "utf8")) as { inputs?: { sourceDateEpoch?: number } }).inputs?.sourceDateEpoch;
+      return e === undefined || e === DEFAULT_EPOCH ? [] : [`${f} ${e}`];
+    });
+    expect(goldens.length).toBeGreaterThan(40);
+    expect(off, "accept with SOURCE_DATE_EPOCH=315532800").toEqual([]);
   });
 });

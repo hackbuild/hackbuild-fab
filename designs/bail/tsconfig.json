@@ -1,0 +1,32 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "incremental": true,
+    "composite": false,
+    "declaration": false,
+    "types": [
+      "node"
+    ]
+  },
+  "include": [
+    "*.ts",
+    "src/*.ts",
+    "test/*.ts"
+  ],
+  "references": [
+    {
+      "path": "../../spec"
+    },
+    {
+      "path": "../../packages/geom"
+    },
+    {
+      "path": "../../packages/profile"
+    }
+  ],
+  "exclude": [
+    "vitest.config.ts",
+    "bench.entry.ts"
+  ]
+}

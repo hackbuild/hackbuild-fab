@@ -150,5 +150,15 @@
       "the face canvas with handles and the layer panel (bail.html:2899 to 3111) as ArtBoard.vue on hackbuild-ui components and tokens; add buttons for text, shape, logo, scope, circuit and image, the front and back toggle, and the selected layer's fields"
     ],
     "dest": "packages/bench/src/art/ArtBoard.vue"
+  },
+  {
+    "id": "bail.bench/design-build",
+    "kind": "copy",
+    "source": "fab-knowledge:originals/bail/files/bail.html",
+    "sha256": "4accb6428d31b3e687340ed8e35c2fb5f0edc19307d4090bd37d066474e86ccd",
+    "fixes": [
+      "blank outlines (blankPath 1508 to 1529), clasp numbers (claspGeom 1685 to 1697, buildSlide 1717 to 1795), store back from the hardware row (applyBackHw 1112 to 1120), tip profiles and bands (tipProfile and buildTip 1879 to 2018) and the plate layout (2072 to 2094), written as author calls on bodies and features; grip fins in a rigid slot raise a build warning from the owner print note (evidence/PRINT-NOTES.md); buried channels build as bridges, text faces other than IBM Plex Mono set in Plex bold, the rim is an even-odd ring scaled on each axis"
+    ],
+    "dest": "designs/bail/build.ts"
   }
 ]

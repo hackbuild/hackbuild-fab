@@ -36,6 +36,9 @@ Release 1 work after the M10 landing.
   left to CI, and blocks on a touched source file vite cannot transform. A
   module the session never touched that vite cannot transform, or a module
   graph that cannot be read, runs the touched workspaces whole instead.
+- designs/bail: the owner's BAIL bolo tie bench on the engine, 8 of 11 presets,
+  store back with peg, twin bridges in the clasp slot, TPU grip fins with a
+  rigid fin warning, 7 tip kinds and four hardware catalog rows (inferred).
 - The hbf Claude Code plugin package.
 - `USE.md` and `SECURITY.md`.
 

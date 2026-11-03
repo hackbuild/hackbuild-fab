@@ -1,0 +1,68 @@
+{
+  "id": "bail-back-flap",
+  "name": "locking flap back 19.6 x 16.3 mm",
+  "kind": "fastener",
+  "note": "BAIL store back with no square hole, so no locating peg.",
+  "fields": {
+    "dims.width": {
+      "value": 19.6,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-11-02",
+        "source": "read off the photo of the owner's parts: bail.html HW table lines 1098 to 1111 (fab-knowledge:originals/bail/files/bail.html, knowledge/designs/bail.md section 4.10). The owner measures one of each and a person enters it."
+      }
+    },
+    "dims.length": {
+      "value": 16.3,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-11-02",
+        "source": "read off the photo of the owner's parts: bail.html HW table lines 1098 to 1111 (fab-knowledge:originals/bail/files/bail.html, knowledge/designs/bail.md section 4.10). The owner measures one of each and a person enters it."
+      }
+    },
+    "dims.plateT": {
+      "value": 0.8,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-11-02",
+        "source": "read off the photo of the owner's parts: bail.html HW table lines 1098 to 1111 (fab-knowledge:originals/bail/files/bail.html, knowledge/designs/bail.md section 4.10). The owner measures one of each and a person enters it."
+      }
+    },
+    "dims.loopH": {
+      "value": 4,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-11-02",
+        "source": "read off the photo of the owner's parts: bail.html HW table lines 1098 to 1111 (fab-knowledge:originals/bail/files/bail.html, knowledge/designs/bail.md section 4.10). The owner measures one of each and a person enters it."
+      }
+    },
+    "dims.total": {
+      "value": 4,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-11-02",
+        "source": "read off the photo of the owner's parts: bail.html HW table lines 1098 to 1111 (fab-knowledge:originals/bail/files/bail.html, knowledge/designs/bail.md section 4.10). The owner measures one of each and a person enters it."
+      }
+    },
+    "dims.hole": {
+      "value": 0,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-11-02",
+        "source": "read off the photo of the owner's parts: bail.html HW table lines 1098 to 1111 (fab-knowledge:originals/bail/files/bail.html, knowledge/designs/bail.md section 4.10). The owner measures one of each and a person enters it."
+      }
+    }
+  }
+}

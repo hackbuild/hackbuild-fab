@@ -1,0 +1,38 @@
+{
+  "id": "bail-tips-kit32",
+  "name": "cone tips 32 x 8.8 mm, 4 mm bore (the owner's kit)",
+  "kind": "other",
+  "note": "BAIL store bought tips; the cord glues into the bore.",
+  "fields": {
+    "dims.length": {
+      "value": 32,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-11-02",
+        "source": "read off the photo of the owner's parts: bail.html HW table lines 1098 to 1111 (fab-knowledge:originals/bail/files/bail.html, knowledge/designs/bail.md section 4.10). The owner measures one of each and a person enters it."
+      }
+    },
+    "dims.diameter": {
+      "value": 8.8,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-11-02",
+        "source": "read off the photo of the owner's parts: bail.html HW table lines 1098 to 1111 (fab-knowledge:originals/bail/files/bail.html, knowledge/designs/bail.md section 4.10). The owner measures one of each and a person enters it."
+      }
+    },
+    "dims.bore": {
+      "value": 4,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-11-02",
+        "source": "read off the photo of the owner's parts: bail.html HW table lines 1098 to 1111 (fab-knowledge:originals/bail/files/bail.html, knowledge/designs/bail.md section 4.10). The owner measures one of each and a person enters it."
+      }
+    }
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "id": "bail-back-uclip",
+  "name": "U slide clip 17 x 7 mm, 2 loops (the owner's kit)",
+  "kind": "fastener",
+  "note": "BAIL store back. W runs across the plate, L along the cord; the band length along the cord (8 mm) and the square hole (2.4 mm) are read off the photo, measure one clip and correct them.",
+  "fields": {
+    "dims.width": {
+      "value": 17,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-11-02",
+        "source": "read off the photo of the owner's parts: bail.html HW table lines 1098 to 1111 (fab-knowledge:originals/bail/files/bail.html, knowledge/designs/bail.md section 4.10). The owner measures one of each and a person enters it."
+      }
+    },
+    "dims.length": {
+      "value": 8,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-11-02",
+        "source": "read off the photo of the owner's parts: bail.html HW table lines 1098 to 1111 (fab-knowledge:originals/bail/files/bail.html, knowledge/designs/bail.md section 4.10). The owner measures one of each and a person enters it."
+      }
+    },
+    "dims.plateT": {
+      "value": 0.6,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-11-02",
+        "source": "read off the photo of the owner's parts: bail.html HW table lines 1098 to 1111 (fab-knowledge:originals/bail/files/bail.html, knowledge/designs/bail.md section 4.10). The owner measures one of each and a person enters it."
+      }
+    },
+    "dims.loopH": {
+      "value": 5,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-11-02",
+        "source": "read off the photo of the owner's parts: bail.html HW table lines 1098 to 1111 (fab-knowledge:originals/bail/files/bail.html, knowledge/designs/bail.md section 4.10). The owner measures one of each and a person enters it."
+      }
+    },
+    "dims.total": {
+      "value": 7,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-11-02",
+        "source": "read off the photo of the owner's parts: bail.html HW table lines 1098 to 1111 (fab-knowledge:originals/bail/files/bail.html, knowledge/designs/bail.md section 4.10). The owner measures one of each and a person enters it."
+      }
+    },
+    "dims.hole": {
+      "value": 2.4,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-11-02",
+        "source": "read off the photo of the owner's parts: bail.html HW table lines 1098 to 1111 (fab-knowledge:originals/bail/files/bail.html, knowledge/designs/bail.md section 4.10). The owner measures one of each and a person enters it."
+      }
+    }
+  }
+}

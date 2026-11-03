@@ -2,6 +2,11 @@
   "note": "recorded by core/test/metric-record.test.ts from part metrics at default params; read by metric-gates.test.ts",
   "builds": [
     {
+      "build": "designs/bail",
+      "part": "bail",
+      "metrics": []
+    },
+    {
       "build": "designs/blocks",
       "part": "wire",
       "metrics": [

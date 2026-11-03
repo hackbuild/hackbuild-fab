@@ -1,0 +1,18 @@
+{
+  "id": "bail-cord-saintrygo4",
+  "name": "Saintrygo braided leather cord 4 mm (the owner's)",
+  "kind": "other",
+  "note": "BAIL cord row. The diameter is read off the photo.",
+  "fields": {
+    "dims.diameter": {
+      "value": 4,
+      "unit": "mm",
+      "provenance": {
+        "tier": "inferred",
+        "method": "derived",
+        "date": "2026-11-02",
+        "source": "read off the photo of the owner's parts: bail.html HW table lines 1098 to 1111 (fab-knowledge:originals/bail/files/bail.html, knowledge/designs/bail.md section 4.10). The owner measures one of each and a person enters it."
+      }
+    }
+  }
+}
