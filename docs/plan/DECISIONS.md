@@ -721,6 +721,7 @@ Section 22 of v3 PLAN.md is the list of 20 open decisions; "v3 open decision N" 
 | D-664 | BLOCKS waives CHK-PRT-16 on the wire under D-629 | decided | designs/blocks |
 | D-665 | touch pass runs 1280 inside the touch-390 project | decided | tools/smoke |
 | D-666 | declared overlays read from bench.ts beside bake.json | decided | tools/smoke |
+| D-667 | Build mode: finish the plan's tools and designs first, test them deeply after | decided | process |
 
 ## House rules and process
 
@@ -8082,6 +8083,17 @@ Status: decided (delegated). The lead closed four reds from the wave 4 health ru
 | Rationale | The brief says to read the bench's declared widgets. The bake manifest carries no overlay list and the BENCH hook exposes none, so the spec imports the bench declaration itself. |
 | Evidence | blocks annotates 'drive key skipped: blocks declares no drive overlay'; mutant showPad=false on flex-pair fails with 'flex-pair declares a drive pad' |
 | Supersedes | new |
+| Milestone | none |
+
+### D-667 Build mode: finish the plan's tools and designs first, test them deeply after
+
+| field | value |
+|---|---|
+| Status | decided |
+| Decision | Owner, 2026-11-03: "move towards building more of the whole plan so we finish up the actual implementation of everything and all the tools then we go back thru and test things out further in the semantic and like actual printing sense", with "commit and push to main" and "record it". Until the build-out is done, every change keeps typecheck, the voice lint, the unit tests of the packages it touches, geometry parity on the designs it touches, `validate_3mf.py --overlap` when a solid moves, the export gate and the attribution rules. Deferred to the testing pass: gold rows as a gate (nightly and report-only), a reference for each new kind, check, archetype, mechanism or export in the same milestone, README verified lines, hash copies in prose and fixtures, and evaluation or adversarial review rounds; an Opus review stays on cross-package diffs. Adopt or wrap an existing library or CLI before writing one. Reviewed items are committed and pushed to main. |
+| Rationale | The evaluation of 2026-11-02 (fab-knowledge audit/EVAL-2026-11-02.md) found main red 18 days on gold UI rows, 63 percent of stored check results skips, 19 of 25 design dirs without a chase, and a three line claim change that moved hashes in eight files that hold no geometry; verification grew faster than the product. The project exists so the skill has the tools, the adopted libraries and a repertoire of designs ready. |
+| Evidence | fab-knowledge audit/EVAL-2026-11-02.md, PLAN-v12-proposal-2026-11-02.md; HANDOFF version 23. |
+| Supersedes | reverses, for the build-out only, the CLAUDE.md "Order of work" rule that a milestone admits each kind with its reference in the same milestone and is green only when the house-rules, derived and tiers jobs and reference conformance pass |
 | Milestone | none |
 
 ## Owner queue

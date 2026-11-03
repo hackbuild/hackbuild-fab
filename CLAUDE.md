@@ -98,6 +98,22 @@ Never read whole: `DECISIONS.md`, `PLAN.md`, the `milestones/` directory, `_arch
 
 Empty dirs hold a README naming their milestone (D-026); see PACKAGES.md.
 
+## Build mode (owner, 2026-11-03, D-667)
+
+In force until the build-out is done; where it and the sections below disagree, this wins.
+
+- Goal: finish the plan's tools, adopted libraries and designs so the skill has them ready; test
+  semantically and by printing afterwards.
+- Every change keeps: typecheck, `node tools/lint-voice.mjs`, the unit tests of the packages it
+  touches, `hbf parity` on the designs it touches (never accept a moved mesh or volume),
+  `validate_3mf.py --overlap` when a solid moves, the export gate, the attribution rules.
+- Deferred to the testing pass: gold rows as a gate (CI runs them nightly, report-only), a
+  reference for each new kind, check, archetype, mechanism or export, README verified lines, hash
+  copies in prose and fixtures, evaluation and adversarial review rounds. An Opus review stays on
+  cross-package diffs.
+- Adopt or wrap an existing library or CLI before writing one; check its licence (D-043).
+- Reviewed items are committed and pushed to main.
+
 ## Order of work
 
 - M-1 lands first: rules, hook, lint-voice, settings, CI, spec, seeds with conformance, counts and
