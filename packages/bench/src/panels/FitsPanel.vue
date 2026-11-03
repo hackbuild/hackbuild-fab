@@ -52,7 +52,7 @@ function pick(row: Row): void {
 
 <template>
   <HbPanel heading="fits" head="instrument" data-hb="fits">
-    <p v-if="metrics.length === 0">no fits yet. the first build measures them.</p>
+    <p v-if="metrics.length === 0" data-hb="fits-empty">no fits yet. the first build measures them.</p>
     <div v-for="[group, rows] in groups" :key="group" class="hb-list" :data-group="group">
       <div class="hb-row" style="cursor: default">
         <span class="hb-label">{{ group }}</span>
