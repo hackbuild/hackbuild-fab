@@ -422,6 +422,24 @@ export interface PartSummary {
   readonly volumeMm3: number;
   /** Triangle count. */
   readonly triangles: number;
+  /**
+   * Per filament slot: the material, the summed body volume and the grams it
+   * weighs at the material's profile density (computed; the density's tier
+   * names how far to trust it). Absent on an import audit; massG is null when
+   * the material has no density row.
+   */
+  readonly slots?: readonly SlotMass[];
+}
+
+export interface SlotMass {
+  readonly slot: number;
+  readonly material: string;
+  /** Sum of the slot's body volumes, mm3 (computed). */
+  readonly volumeMm3: number;
+  /** volumeMm3 x densityGcm3 / 1000, g (computed). */
+  readonly massG: number | null;
+  readonly densityGcm3: number | null;
+  readonly densityTier: string | null;
 }
 
 // Inputs and outputs per command. Optional arguments are optional fields

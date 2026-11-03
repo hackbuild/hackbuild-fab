@@ -7,7 +7,7 @@ import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "no
 import { tmpdir } from "node:os";
 import path from "node:path";
 import type {
-  BodyDraft, BuildHash, BuildInputs, CheckResult, CommandInput, CommandOutput, ImportSpec, NextCall, Part, PartDraft, PartSummary, Verdict,
+  BodyDraft, BuildHash, BuildInputs, CheckResult, CommandInput, CommandOutput, ImportSpec, NextCall, Part, PartDraft, PartSummary, SlotMass, Verdict,
 } from "@hackbuild/spec";
 import { DEFAULT_PIECES, IMPORT_PATH_CHECKS, OVERLAP_CEILING_MM3, PRT03_CONSTRAINT, prt18Finding, prt19Finding, skeletonChecks } from "@hackbuild/checks";
 import { MM_PER_UNIT, assemblePart, importGlb, importStl, stageImported, type ImportedBody, type ImportedStageOutput } from "@hackbuild/mesh";
@@ -46,12 +46,35 @@ export function baseArgs(params: Values | undefined, preset: string | undefined)
   return { ...(params === undefined ? {} : { params }), ...(preset === undefined ? {} : { preset }) };
 }
 
+const r3 = (v: number): number => Math.round(v * 1000) / 1000;
+
+/** Grams per filament slot: body volumes summed per slot times the slot material's profile density. */
+export function slotMasses(built: Built): SlotMass[] {
+  const bySlot = new Map<number, { material: string; volumeMm3: number }>();
+  for (const b of built.part.bodies) {
+    const material = b.material !== "" ? b.material : built.design.chase.materials.find((m) => m.slot === b.slot)?.material ?? "";
+    const at = bySlot.get(b.slot) ?? { material, volumeMm3: 0 };
+    at.volumeMm3 += b.mesh.volumeMm3;
+    bySlot.set(b.slot, at);
+  }
+  return [...bySlot.entries()].sort((a, b) => a[0] - b[0]).map(([slot, s]) => {
+    const row = built.design.ws.tables.materials.find((m) => m.id === s.material);
+    const density = row?.densityGcm3 ?? null;
+    return {
+      slot, material: s.material, volumeMm3: r3(s.volumeMm3),
+      massG: density === null ? null : r3((s.volumeMm3 / 1000) * density),
+      densityGcm3: density, densityTier: density === null ? null : row?.provenance.tier ?? null,
+    };
+  });
+}
+
 export function summaries(built: Built): PartSummary[] {
   return [{
     id: built.part.id,
     bodies: built.part.bodies.map((b) => ({ id: b.id, role: b.role, slot: b.slot, material: b.material })),
     volumeMm3: built.part.solid.volumeMm3,
     triangles: built.part.solid.triangles,
+    slots: slotMasses(built),
   }];
 }
 
