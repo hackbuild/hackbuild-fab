@@ -32,7 +32,7 @@ const done = (ctx: CoreCtx, verdict: "pass" | "fail" | "skip", result: Output): 
 export async function runSlice(input: CommandInput<"slice">, ctx: CoreCtx): Promise<CommandOut<Output>> {
   const root = workspaceRoot(ctx.workspace);
   const driver = path.join(root, "tools", "slice", "slice.mjs");
-  const notRun = (reason: string): CommandOut<Output> => done(ctx, "skip", { status: "not run", reason, outDir: "", gcode: null, profileChecks: [] });
+  const notRun = (reason: string): CommandOut<Output> => done(ctx, "skip", { status: "not run", reason, outDir: "", gcode: null, profileChecks: [], print: null });
   if (!existsSync(driver)) return notRun("no tools/slice/slice.mjs in this workspace");
   const target = path.resolve(ctx.cwd, input.target);
   if (!existsSync(target)) {
@@ -41,13 +41,14 @@ export async function runSlice(input: CommandInput<"slice">, ctx: CoreCtx): Prom
   const isFile = target.endsWith(".3mf");
   const out = mkdtempSync(path.join(os.tmpdir(), "hbf-slice-"));
   const args = [driver, ...(isFile ? [target] : ["--design", target, ...(input.preset === undefined ? [] : ["--preset", input.preset])]), out,
-    "--time-limit", String(input.timeLimitS ?? DEFAULT_LIMIT_S), ...(input.slicer === undefined ? [] : ["--slicer", input.slicer])];
+    "--time-limit", String(input.timeLimitS ?? DEFAULT_LIMIT_S), ...(input.slicer === undefined ? [] : ["--slicer", input.slicer]),
+    ...(input.analyze === false ? [] : ["--analyze"])];
   const r = await runNode(ctx, root, args);
   if (r.code === 3) return notRun(first(r.out) || "the slicer is absent");
 
   const runFile = path.join(out, "slice-run.json");
   const run = existsSync(runFile)
-    ? JSON.parse(readFileSync(runFile, "utf8")) as { status?: string; gcode?: { path: string; bytes: number; sha256: string } | null; profileChecks?: Output["profileChecks"] }
+    ? JSON.parse(readFileSync(runFile, "utf8")) as { status?: string; gcode?: { path: string; bytes: number; sha256: string } | null; profileChecks?: Output["profileChecks"]; print?: Output["print"] }
     : undefined;
   const profileChecks = run?.profileChecks ?? [];
   const sliced = run?.status === "sliced" && r.code === 0;
@@ -57,5 +58,6 @@ export async function runSlice(input: CommandInput<"slice">, ctx: CoreCtx): Prom
     outDir: out,
     gcode: run?.gcode == null ? null : { path: run.gcode.path, bytes: run.gcode.bytes, sha256: run.gcode.sha256 as Hash },
     profileChecks,
+    print: run?.print ?? null,
   });
 }

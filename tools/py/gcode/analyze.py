@@ -989,7 +989,7 @@ def analyze(gcode_path: Path, threemf: Path, model_json: Path | None, run_json: 
     result = {
         "qualifier": "computed: a simulated print read from slicer G-code; no figure here is measured from a part",
         "inputs": {"gcode": str(gcode_path), "3mf": str(threemf), "model_json": str(model_json) if model_json else None},
-        "slice_run": run and {k: run.get(k) for k in ("command", "exitCode", "signal", "wallMs", "wallQualifier", "slicer", "status", "gcode", "input3mf", "completed3mf")},
+        "slice_run": run and {k: run.get(k) for k in ("command", "exitCode", "signal", "wallMs", "wallQualifier", "slicer", "status", "gcode", "input3mf", "completed3mf", "source")},
         "grid": {"res_mm": RES, "x0": _r(grid.x0), "y0": _r(grid.y0), "nx": grid.nx, "ny": grid.ny},
         "header": parsed.header,
         "config": parsed.config,
@@ -1079,7 +1079,11 @@ def report_md(r: dict) -> str:
     L = []
     w = L.append
     run = r.get("slice_run") or {}
-    w("# Virtual print, slicer half: keys flex-pair preset two")
+    src = run.get("source") or {}
+    what = src.get("design") or (r.get("inputs") or {}).get("3mf") or "a 3MF"
+    if Path(what).is_absolute() and len(Path(what).parts) > 2:
+        what = "/".join(Path(what).parts[-2:])
+    w(f"# Virtual print, slicer half: {what} preset {src.get('preset') or 'defaults'}")
     w("")
     w("Every figure below is computed from the slicer's G-code and the 3MF meshes")
     w("(a simulated print), unless it says measured. Nothing was printed. Written by")
@@ -1124,13 +1128,16 @@ def report_md(r: dict) -> str:
     air = r["a_missing"]["air"]
     largest = f", largest {max(x['area_mm2'] for x in air)} mm2" if air else ""
     w(f"- deposits in model air, more than {EDGE_MM} mm from every body, prime tower left out: {len(air)}{largest} (computed)")
-    bridges = sum(len(x["bridges"]) for x in r["c_nets"]["layers"])
-    shorts = r["d_connectivity"].get("shorts", [])
-    w(f"- deposited cPLA components joining two nets, in a layer or across layers: {len(shorts)}{'; ' + '; '.join(', '.join(c['nets']) + ' (layers ' + str(c['layers'][0]) + ' to ' + str(c['layers'][1]) + ')' for c in shorts) if shorts else ''} (computed)")
-    w(f"- deposited cPLA regions touching two nets within one layer: {bridges} (computed)")
-    leads = r["d_connectivity"].get("leads", [])
-    ok = all(t["reached"] for ld in leads for t in ld["column_tops"])
-    w(f"- every lead reaches its column tops through deposited cPLA: {'yes' if ok and leads else 'no'} (computed)")
+    if (r.get("tools") or {}).get("conductor") is None:
+        w("- nets: the 3MF holds no conductor slot, so the net rows are not computed")
+    else:
+        bridges = sum(len(x["bridges"]) for x in r["c_nets"]["layers"])
+        shorts = r["d_connectivity"].get("shorts", [])
+        w(f"- deposited cPLA components joining two nets, in a layer or across layers: {len(shorts)}{'; ' + '; '.join(', '.join(c['nets']) + ' (layers ' + str(c['layers'][0]) + ' to ' + str(c['layers'][1]) + ')' for c in shorts) if shorts else ''} (computed)")
+        w(f"- deposited cPLA regions touching two nets within one layer: {bridges} (computed)")
+        leads = r["d_connectivity"].get("leads", [])
+        ok = all(t["reached"] for ld in leads for t in ld["column_tops"])
+        w(f"- every lead reaches its column tops through deposited cPLA: {'yes' if ok and leads else 'no'} (computed)")
     caps = [u for u in r["b_unsupported"] if u["body"] and "cap" in u["body"]]
     if caps:
         w(f"- cTPU cap first layer: widest unsupported span {max(u['span_mm'] for u in caps)} mm, bridge role share {max(u['bridge_role_frac'] for u in caps)} (computed)")

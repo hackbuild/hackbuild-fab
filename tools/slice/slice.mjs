@@ -43,8 +43,12 @@
 // SLC-BED, SLC-SLOTS, SLC-FOREIGN) into slice-run.json as profileChecks and
 // exits 1 when any row fails. --analysis <slice.json> grades SLC-FOREIGN
 // from a tools/py/gcode/analyze.py result; without it that row is "not run".
+// --analyze runs analyze.py on this run's G-code (uv run --project tools/py,
+// no PNGs), grades SLC-FOREIGN from it and adds a print summary (layers,
+// slicer time and grams per slot, tool changes, unsupported regions) to the
+// record; every figure in it is computed from G-code, never measured.
 
-import { spawn } from "node:child_process";
+import { spawn, spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, realpathSync, writeFileSync } from "node:fs";
 import os from "node:os";
@@ -200,7 +204,42 @@ function runCapped(cmd, args, logFile, limitS) {
  * Slices plate 1. Returns the run record also written to <outDir>/slice-run.json.
  * input: { file } or { design, preset }.
  */
-export async function slice({ input, outDir: outArg, slicer = DEFAULT_SLICER, app, datadirRoot = DEFAULT_DATADIR_ROOT, filamentMap = {}, timeLimitS = 600, allowFailing = false, analysis }) {
+/** The virtual print summary of an analyze.py result: every figure computed from the slicer's G-code. */
+export function printSummary(j, report) {
+  const f = j.f_toolchanges ?? {};
+  const ft = f.footer ?? {};
+  const unsupported = Array.isArray(j.b_unsupported) ? j.b_unsupported : [];
+  const features = Array.isArray(j.a_missing?.features) ? j.a_missing.features : [];
+  return {
+    status: "analyzed",
+    qualifier: "computed",
+    layers: Array.isArray(j.layers) ? j.layers.length : null,
+    maxZMm: j.header?.max_z_height ?? null,
+    time: ft.time_normal ?? null,
+    firstLayerTime: ft.time_first_layer ?? null,
+    filamentG: ft.filament_g ?? [],
+    totalG: ft.total_filament_g ?? null,
+    toolChanges: f.tool_changes ?? null,
+    unsupportedRegions: unsupported.length,
+    widestUnsupportedMm: unsupported.length === 0 ? 0 : Math.max(...unsupported.map((u) => u.span_mm ?? 0)),
+    featuresDropped: features.filter((x) => x.kind === "feature dropped").length,
+    report,
+  };
+}
+
+function runAnalysis(record, outDir, stem) {
+  const out = path.join(outDir, "analysis");
+  const modelJson = path.join(outDir, `${stem}.model.json`);
+  const args = ["run", "--project", path.join(ROOT, "tools", "py"), path.join(ROOT, "tools", "py", "gcode", "analyze.py"),
+    "--gcode", record.gcode.path, "--3mf", record.input3mf.path, "--run-json", path.join(outDir, "slice-run.json"), "--out", out, "--no-png",
+    ...(existsSync(modelJson) ? ["--model-json", modelJson] : [])];
+  const r = spawnSync("uv", args, { cwd: ROOT, encoding: "utf8", timeout: 300_000 });
+  const json = path.join(out, "slice.json");
+  if (r.status !== 0 || !existsSync(json)) return { file: null, summary: { status: "not run", reason: `analyze.py ${r.error ? r.error.message : `exit ${r.status}`}: ${(r.stderr || r.stdout || "").trim().split("\n").at(-1) ?? ""}` } };
+  return { file: json, summary: printSummary(JSON.parse(readFileSync(json, "utf8")), path.join(out, "report-slice.md")) };
+}
+
+export async function slice({ input, outDir: outArg, slicer = DEFAULT_SLICER, app, datadirRoot = DEFAULT_DATADIR_ROOT, filamentMap = {}, timeLimitS = 600, allowFailing = false, analysis, analyze = false }) {
   // absolute from here on, so no path the slicer receives can read as an option
   const outDir = path.resolve(outArg);
   assertOutDir(outDir);
@@ -266,8 +305,18 @@ export async function slice({ input, outDir: outArg, slicer = DEFAULT_SLICER, ap
     status: gcode !== undefined && run.code === 0 ? "sliced" : "failed",
     profileChecks: checks,
     analysis: analysis === undefined ? null : path.resolve(analysis),
+    print: null,
   };
   writeFileSync(path.join(outDir, "slice-run.json"), `${JSON.stringify(record, null, 2)}\n`);
+  if (analyze && record.status === "sliced") {
+    const a = runAnalysis(record, outDir, stem);
+    record.print = a.summary;
+    if (a.file !== null) {
+      record.analysis = a.file;
+      record.profileChecks = profileChecks({ completed: done.config, presets: done.presets, substitutions: done.substitutions, analysis: JSON.parse(readFileSync(a.file, "utf8")), slots });
+    }
+    writeFileSync(path.join(outDir, "slice-run.json"), `${JSON.stringify(record, null, 2)}\n`);
+  }
   return record;
 }
 
@@ -288,6 +337,7 @@ function parseArgs(argv) {
     else if (a === "--slicer") o.slicer = next();
     else if (a === "--allow-failing") o.allowFailing = true;
     else if (a === "--analysis") o.analysis = next();
+    else if (a === "--analyze") o.analyze = true;
     else if (a === "--filament-map") {
       const [k, v] = next().split("=");
       if (!k || !v) throw new Error("--filament-map takes \"<name in 3mf>=<bundled name>\"");
@@ -311,10 +361,12 @@ async function main() {
     process.stdout.write(`not run: no ${entry.label} executable at ${o.app ?? entry.app}\n`);
     process.exit(3);
   }
-  const r = await slice({ input, outDir, slicer, app: o.app, datadirRoot: o.datadirRoot, filamentMap: o.filamentMap, timeLimitS: o.timeLimitS, allowFailing: o.allowFailing, analysis: o.analysis });
+  const r = await slice({ input, outDir, slicer, app: o.app, datadirRoot: o.datadirRoot, filamentMap: o.filamentMap, timeLimitS: o.timeLimitS, allowFailing: o.allowFailing, analysis: o.analysis, analyze: o.analyze === true });
   process.stdout.write(`${r.status}: exit ${r.exitCode}${r.signal ? ` signal ${r.signal}` : ""}, ${r.wallMs} ms wall (measured), ${entry.label} CLI ${r.slicer.cliVersion}\n`);
   if (r.gcode) process.stdout.write(`gcode ${r.gcode.path}, ${r.gcode.bytes} bytes, sha256 ${r.gcode.sha256}\n`);
   for (const c of r.profileChecks) process.stdout.write(`${c.id} ${c.verdict} (${c.qualifier}): ${c.reason}\n`);
+  if (r.print?.status === "analyzed") process.stdout.write(`print (computed from G-code): ${r.print.layers} layers, ${r.print.time}, ${r.print.totalG} g, ${r.print.toolChanges} tool changes, ${r.print.unsupportedRegions} unsupported regions\n`);
+  else if (r.print !== null) process.stdout.write(`print not run: ${r.print.reason}\n`);
   process.exit(r.status === "sliced" && !anyFail(r.profileChecks) ? 0 : 1);
 }
 
