@@ -13,11 +13,17 @@ const UNIT_OF: Readonly<Record<string, string>> = { mm: "mm", deg: "deg", int: "
 
 const inputFields = (fields: readonly ParamField[]): ParamField[] => fields.filter((f) => f.type !== "derived");
 
+// A field with no declared default takes the value packages/chase normalise
+// gives it (art null, part ""), since a page's state comes from normalise and
+// these values are what the page hashes; core/test/param-defaults.test.ts
+// holds the two equal for every chase in the repo.
 function fieldDefault(f: ParamField): unknown {
   if (f.type === "list") {
     const item = itemDefaults(f.item);
     return Array.from({ length: f.min }, () => ({ ...item }));
   }
+  if (f.type === "art") return null;
+  if (f.type === "part") return f.default ?? "";
   return "default" in f ? f.default : undefined;
 }
 
