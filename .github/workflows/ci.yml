@@ -764,6 +764,11 @@ jobs:
             !**/node_modules/**
           key: tsc-${{ hashFiles('package-lock.json', 'tsconfig*.json', '**/tsconfig.json') }}-${{ github.sha }}
           restore-keys: tsc-${{ hashFiles('package-lock.json', 'tsconfig*.json', '**/tsconfig.json') }}-
+      # skill-page.spec.ts validates its downloaded 3MF with tools/py/validate_3mf.py
+      - uses: astral-sh/setup-uv@v10.2.0
+        with:
+          enable-cache: true
+          cache-dependency-glob: tools/py/uv.lock
       - uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc

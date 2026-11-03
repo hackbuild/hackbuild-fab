@@ -5,7 +5,9 @@ import { describe, expect, it } from "vitest";
 // query string gives each import its own module instance, as two bundles have.
 type Copy = typeof import("../src/manifold.js");
 const FILE = fileURLToPath(new URL("../src/manifold.ts", import.meta.url));
-const copy = (tag: string): Promise<Copy> => import(/* @vite-ignore */ `${FILE}?copy=${tag}`) as Promise<Copy>;
+/** A second module instance of manifold.ts: a distinct query string makes vite load the file again. */
+const specifier = (tag: string): string => `${FILE}?copy=${tag}`;
+const copy = (tag: string): Promise<Copy> => import(/* @vite-ignore */ specifier(tag)) as Promise<Copy>;
 
 describe("manifold state shared by two copies of geom", () => {
   it("loads one instance through either copy", async () => {

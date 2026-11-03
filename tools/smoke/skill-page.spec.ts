@@ -88,6 +88,7 @@ test("a skill-style page builds, checks, exports and saves offline", async ({ pa
   await dl3.saveAs(threeMf);
   expect(dl3.suggestedFilename()).toBe("art-layers.3mf");
   const valid = spawnSync("uv", ["run", "--project", "tools/py", "tools/py/validate_3mf.py", "--overlap", threeMf], { cwd: ROOT, encoding: "utf8" });
+  expect(valid.error, "uv runs tools/py; install it (CI: astral-sh/setup-uv)").toBeUndefined();
   expect(valid.status, `${valid.stdout}${valid.stderr}`).toBe(0);
 
   // save offline: one file, no script src, no import map, same meshes from file://
