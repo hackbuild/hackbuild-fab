@@ -44,10 +44,10 @@ describe("lowerArtLayer", () => {
     expect("cut" in plain).toBe(false);
   });
 
-  test("a pocket, an image and a relief are refused with E_KERNEL and a fix", () => {
+  test("a pocket and a relief are refused with E_KERNEL and a fix, and an image with no PNG data uri with E_SCHEMA", () => {
     const pocket = () => lowerArtLayer(artLayer("shape", "p", { cut: "pocket", depth: 2.4 }), "/faces/front/0");
     expect(pocket).toThrow(/E_KERNEL \/faces\/front\/0\/cut/);
-    expect(() => lowerArtLayer(artLayer("image", "i"))).toThrow(/image layers have no inlay painter yet/);
+    expect(() => lowerArtLayer(artLayer("image", "i"))).toThrow(/E_SCHEMA \/src/);
     expect(() => lowerArtLayer(artLayer("relief", "r"))).toThrow(/relief layers have no inlay painter yet/);
   });
 });
@@ -65,9 +65,9 @@ describe("lowerArtDocument", () => {
     expect(front[2]).toMatchObject({ off: true });
   });
 
-  test("a muted image or relief is skipped, a live one refused", () => {
+  test("a muted image or relief is skipped, a live relief refused", () => {
     expect(lowerArtFace(doc([artLayer("image", "i", { mute: true }), artLayer("shape", "s")]), "front").map((L) => L.kind)).toEqual(["shape"]);
-    expect(() => lowerArtFace(doc([artLayer("image", "i")]), "front")).toThrow(/E_KERNEL/);
+    expect(() => lowerArtFace(doc([artLayer("relief", "r")]), "front")).toThrow(/E_KERNEL/);
   });
 
   test("a document that fails validation throws E_SCHEMA naming the problems", () => {

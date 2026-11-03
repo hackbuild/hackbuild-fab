@@ -4,17 +4,22 @@
 // 1282 to 1296, and paintLayer, 1408 to 1496), kept in one place so a design
 // reads the art doc and not the painters. Lineage bail.bench/inlay-art-doc.
 //
-// What lowers: text, shape, logo, scope, circuit and path. A muted layer lowers
-// with off set and stays in the list, so the content address of the lowered
-// art still names every layer. cut "through" lowers to a cut layer, which
-// the inlay kind refuses today (kind.ts artFaces). cut "pocket" and the
-// image and relief kinds have no inlay route yet and are refused with a fix.
+// What lowers: text, shape, logo, scope, circuit, path, and an image in mono
+// or silhouette mode, which decodes its PNG data uri, thresholds it and traces
+// it into a path layer (imageToPath), so node and a page paint it alike. A
+// muted layer lowers with off set and stays in the list, so the content
+// address of the lowered art still names every layer. cut "through" lowers to
+// a cut layer, which the inlay kind refuses today (kind.ts artFaces). cut
+// "pocket", a palette image (it needs the slot colours) and the relief kind
+// have no inlay route yet and are refused with a fix.
 
 import {
   artDocumentIssues, commandError,
-  type ArtDocument, type ArtFace, type ArtFont, type ArtLayer,
+  type ArtDocument, type ArtFace, type ArtFont, type ArtImageLayer, type ArtLayer,
 } from "@hackbuild/spec";
+import { TRACE_TOLERANCE_PX, simplifyLoop, trace } from "@hackbuild/geom";
 import type { PaintLayer } from "./face.js";
+import { dataUriBytes, decodePng } from "./png.js";
 import type { TextLayer } from "./layers/text.js";
 
 /** The CSS family and weight a BAIL font key sets (bail.html FONTS and FONTW, 1068 and 1069). BAIL sets plexb at weight 600; the node face table holds 400 and 700, so plexb lowers to 700. */
@@ -72,8 +77,8 @@ export function lowerArtLayerWith(L: ArtLayer, path = "", policy: LowerPolicy = 
     warnings.push({ code: "LAYER_SKIPPED", text: `layer ${L.id} cuts the slide (${L.cut}); the inlay kind carves no cut yet, so it is skipped` });
     return done(null);
   }
-  if (skip && (L.kind === "image" || L.kind === "relief")) {
-    warnings.push({ code: "LAYER_SKIPPED", text: `layer ${L.id} is an ${L.kind} layer; the image and relief painters are not built, so it is skipped` });
+  if (skip && (L.kind === "relief" || (L.kind === "image" && L.mode === "palette"))) {
+    warnings.push({ code: "LAYER_SKIPPED", text: L.kind === "relief" ? `layer ${L.id} is a relief layer; the relief painter is not built, so it is skipped` : `layer ${L.id} is a palette image; palette lowering needs the slot colours and is not built, so it is skipped` });
     return done(null);
   }
   if (L.cut === "pocket") {
@@ -115,10 +120,47 @@ export function lowerArtLayerWith(L: ArtLayer, path = "", policy: LowerPolicy = 
       const a = c, b = s, cc = s, d = -c;
       return done({ kind: "path", d: L.d, transform: [a, b, cc, d, L.dx - (a * cx + cc * cy), L.dy - (b * cx + d * cy)], slot: L.slot, ...flags });
     }
-    case "image":
+    case "image": {
+      if (L.mode === "palette") return refuse(`${path}/mode`, "palette", "mono or silhouette", `layer ${L.id}: palette images need the slot colours and do not lower yet; set mode to mono or silhouette`);
+      const t = imageToPath(L);
+      const k = L.w / t.width, cx = t.width / 2, cy = t.height / 2;
+      const r = L.rot * Math.PI / 180, s = k * Math.sin(r), c = k * Math.cos(r);
+      const a = c, b = s, cc = s, d = -c;
+      return done({ kind: "path", d: t.d, transform: [a, b, cc, d, L.dx - (a * cx + cc * cy), L.dy - (b * cx + d * cy)], slot: L.slot, ...flags });
+    }
     case "relief":
-      return refuse(`${path}/kind`, L.kind, "text, shape, logo, scope or circuit", `layer ${L.id}: ${L.kind} layers have no inlay painter yet; remove the layer or mute it`);
+      return refuse(`${path}/kind`, L.kind, "text, shape, logo, scope, circuit, path or image", `layer ${L.id}: relief layers have no inlay painter yet; remove the layer or mute it`);
   }
+}
+
+/**
+ * An image layer's PNG as SVG path data in pixel units, y down: a pixel is a
+ * hit when its alpha is at least half and, in mono mode, its luminance is at
+ * or under thr (at or over with invert); silhouette takes alpha alone (invert
+ * flips it). The hits trace along pixel edges and simplify at geom's trace
+ * tolerance; the path fills even-odd, so holes need no winding.
+ */
+export function imageToPath(L: ArtImageLayer): { readonly d: string; readonly width: number; readonly height: number } {
+  const img = decodePng(dataUriBytes(L.src));
+  const { width: w, height: h, data } = img;
+  const mask = new Uint8Array(w * h);
+  for (let i = 0; i < w * h; i += 1) {
+    const al = data[i * 4 + 3]! / 255;
+    let hit: boolean;
+    if (L.mode === "silhouette") hit = al >= 0.5;
+    else {
+      const lum = (0.299 * data[i * 4]! + 0.587 * data[i * 4 + 1]! + 0.114 * data[i * 4 + 2]!) / 255;
+      hit = al >= 0.5 && lum <= L.thr;
+    }
+    mask[i] = (L.invert ? !hit && al >= 0.5 : hit) ? 1 : 0;
+  }
+  const parts: string[] = [];
+  for (const loop of trace({ w, h, d: mask })) {
+    const s = simplifyLoop(loop, TRACE_TOLERANCE_PX);
+    if (s === null) continue;
+    parts.push(`M${s.map((p) => `${p[0]} ${p[1]}`).join(" L")} Z`);
+  }
+  return { d: parts.join(" "), width: w, height: h };
 }
 
 /** One face's layers in paint order. Muted image and relief layers are skipped; every other muted layer lowers with off set. */

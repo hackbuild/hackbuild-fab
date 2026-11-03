@@ -20,6 +20,7 @@
     "@hackbuild/geom": "0.0.0",
     "@hackbuild/mesh": "0.0.0",
     "@hackbuild/profile": "0.0.0",
-    "@hackbuild/spec": "0.3.0"
+    "@hackbuild/spec": "0.3.0",
+    "fflate": "0.8.3"
   }
 }

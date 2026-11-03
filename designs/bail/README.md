@@ -76,7 +76,7 @@ The `SLOPE` and both `CLAMP` warnings (thickness to a layer top, tip bore depth)
 | concho outline detail | the concho samples 360 points; BAIL samples 1440 (line 1523). the chord error of the outline is 0.0009 mm against BAIL's 0.00005 mm at the 23 mm radius of the 46 mm blank (computed) |
 | buried channels | a void inside the inlay host cannot be cut (the host must be a prism from the bed, and the `bore` kind has no generator in this build); `buried` builds twin bridges with a warning |
 | cabochon pocket and the setting preset | the inlay kind refuses `cut` pocket and `cut` through |
-| relief cameo, image layer | no painter yet |
+| relief cameo, palette image | no painter yet; a mono or silhouette PNG image layer lowers by tracing (packages/inlay art-lower imageToPath) |
 | separate back colour depth, chamfers | the inlay feature takes one depth; chamfers are not applied to an inlay host |
 | per preset palettes | a preset keeps the filament slots; the preset note names BAIL's palette |
 | hex tip phase, preset art sizes | the revolve route has no phase; mesa, monogram and heatsync art are smaller than BAIL's so they stay inside the rim ring |

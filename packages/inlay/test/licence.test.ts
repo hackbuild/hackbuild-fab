@@ -111,11 +111,19 @@ const pkg = readJson("packages/inlay/package.json");
 describe("inlay licence closure (D-043)", () => {
   const members = closure(lock.packages, "packages/inlay");
 
-  test("package.json is private MIT with the four workspace dependencies of tools/tiers.json", () => {
+  test("package.json is private MIT; its workspace dependencies are the tools/tiers.json edges and every other one is an audited permissive row", () => {
     expect(pkg.private).toBe(true);
     expect(pkg.license).toBe("MIT");
     const edges = readJson("tools/tiers.json").edges.inlay as string[];
-    expect(Object.keys(pkg.dependencies).sort()).toEqual(edges.map((e) => `@hackbuild/${e}`).sort());
+    const deps = Object.keys(pkg.dependencies);
+    expect(deps.filter((d) => d.startsWith("@hackbuild/")).sort()).toEqual(edges.map((e) => `@hackbuild/${e}`).sort());
+    const rows = readJson("tools/licences.json").dependencies as { ecosystem: string; name: string; audited: string; load: string }[];
+    for (const d of deps.filter((x) => !x.startsWith("@hackbuild/"))) {
+      const row = rows.find((r) => r.ecosystem === "npm" && r.name === d);
+      expect(row, `${d} has a tools/licences.json row`).toBeDefined();
+      expect(row!.audited, d).not.toMatch(COPYLEFT);
+      expect(row!.audited, d).not.toMatch(LESSER);
+    }
   });
 
   test("the lockfile entry carries the package.json dependencies, so the walk starts from them", () => {
