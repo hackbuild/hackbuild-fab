@@ -25,6 +25,7 @@ import { isWiringDesign } from "../src/exporters/wiring.js";
 import { hashOf } from "../src/jcs.js";
 import { fullProfile } from "../src/load-build.js";
 import { ROOT } from "./hbf.js";
+import { hasDesignFile } from "../src/design-file.js";
 import { OGEE, build, cleanTmps, freshStore, golden, tmp } from "./support/project-graph.js";
 
 vi.mock("../src/commands/build.js", async (importOriginal) => (await import("./support/build-cache.js")).withBuildCache(await importOriginal()));
@@ -36,7 +37,7 @@ function references(): string[] {
   const out: string[] = [];
   const dirs = (p: string): string[] => readdirSync(p, { withFileTypes: true }).filter((e) => e.isDirectory()).map((e) => e.name).sort();
   for (const area of dirs(path.join(ROOT, "reference"))) {
-    for (const id of dirs(path.join(ROOT, "reference", area))) if (existsSync(path.join(ROOT, "reference", area, id, "chase.ts"))) out.push(`reference/${area}/${id}`);
+    for (const id of dirs(path.join(ROOT, "reference", area))) if (hasDesignFile(path.join(ROOT, "reference", area, id))) out.push(`reference/${area}/${id}`);
   }
   return out;
 }

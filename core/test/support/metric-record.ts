@@ -9,6 +9,7 @@ import { existsSync, readdirSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { buildPart, loadDesign, resolveParams } from "../../src/commands/build.js";
+import { hasDesignFile } from "../../src/design-file.js";
 import { buildBoard, isBoardDesign } from "../../src/board.js";
 import { isWiringDesign } from "../../src/exporters/wiring.js";
 import { ROOT } from "../hbf.js";
@@ -37,7 +38,7 @@ export const BUILD_PENDING: readonly string[] = [];
 export function chases(): string[] {
   const refs = dirs(path.join(ROOT, "reference")).flatMap((a) => dirs(path.join(ROOT, "reference", a)).map((id) => `reference/${a}/${id}`));
   const designs = dirs(path.join(ROOT, "designs")).map((id) => `designs/${id}`);
-  return [...designs, ...refs].filter((rel) => existsSync(path.join(ROOT, rel, "chase.ts")) && !BUILD_PENDING.includes(rel)).sort();
+  return [...designs, ...refs].filter((rel) => hasDesignFile(path.join(ROOT, rel)) && !BUILD_PENDING.includes(rel)).sort();
 }
 
 /** A fresh entry: rel built at its default params through the one build path. */
