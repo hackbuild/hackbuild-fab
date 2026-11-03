@@ -130,7 +130,7 @@ function chases(): string[] {
   const dirs = (p: string): string[] => readdirSync(p, { withFileTypes: true }).filter((e) => e.isDirectory()).map((e) => e.name).sort();
   const refs = dirs(path.join(ROOT, "reference")).flatMap((a) => dirs(path.join(ROOT, "reference", a)).map((id) => `reference/${a}/${id}`));
   return [...dirs(path.join(ROOT, "designs")).map((id) => `designs/${id}`), ...refs]
-    .filter((rel) => existsSync(path.join(ROOT, rel, "chase.ts")) && (rel.startsWith("reference/") || existsSync(path.join(ROOT, rel, "build.ts")))).sort();
+    .filter((rel) => (existsSync(path.join(ROOT, rel, "chase.ts")) || existsSync(path.join(ROOT, rel, "design.ts"))) && (rel.startsWith("reference/") || existsSync(path.join(ROOT, rel, "build.ts")))).sort();
 }
 
 describe(`metric gates over ${path.relative(ROOT, RECORD_FILE)}`, () => {

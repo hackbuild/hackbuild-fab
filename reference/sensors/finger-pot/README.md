@@ -39,6 +39,10 @@ render yet.
 
 ### Verified on this machine
 
+- 2026-11-03: `npx --no-install hbf parity reference/sensors/finger-pot` exits 0
+  at build 042712..ca against the goldens re-accepted when chase.ts moved
+  into design.ts and defHash moved; every mesh hash and volume is
+  unchanged and the report does not move (computed).
 - 2026-10-21 (R1-score-02): `npx --no-install hbf parity reference/sensors/finger-pot`
   exits 0 at build 68b855..31 against the goldens re-accepted when the
   key/flex-gap constraint def registered contact.gap and moved

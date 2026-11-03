@@ -16,11 +16,11 @@ const HERE = path.dirname(fileURLToPath(import.meta.url));
 const REF = path.resolve(HERE, "..");
 const ROOT = path.resolve(REF, "..");
 
-/** reference/<group>/<name> for every directory holding a chase.ts. */
+/** reference/<group>/<name> for every directory holding a chase.ts or design.ts. */
 const REFERENCES: string[] = readdirSync(REF, { withFileTypes: true })
   .filter((g) => g.isDirectory() && g.name !== "test")
   .flatMap((g) => readdirSync(path.join(REF, g.name), { withFileTypes: true })
-    .filter((d) => d.isDirectory() && existsSync(path.join(REF, g.name, d.name, "chase.ts")))
+    .filter((d) => d.isDirectory() && (existsSync(path.join(REF, g.name, d.name, "chase.ts")) || existsSync(path.join(REF, g.name, d.name, "design.ts"))))
     .map((d) => `reference/${g.name}/${d.name}`))
   .sort();
 

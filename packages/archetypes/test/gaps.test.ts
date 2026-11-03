@@ -15,7 +15,8 @@ describe("references and gaps", () => {
     for (const e of archetypes.entries) {
       if (e.def.status !== "proven") continue;
       for (const ref of e.def.reference) {
-        for (const f of ["chase.ts", "build.ts", "README.md", "expected/build.json", "expected/report.json", "expected/edit.json", "expected/artifacts.json"]) {
+        const decl = existsSync(new URL(`reference/${ref}/design.ts`, ROOT)) ? "design.ts" : "chase.ts";
+        for (const f of [decl, "build.ts", "README.md", "expected/build.json", "expected/report.json", "expected/edit.json", "expected/artifacts.json"]) {
           expect(existsSync(new URL(`reference/${ref}/${f}`, ROOT)), `${e.id}: reference/${ref}/${f}`).toBe(true);
         }
       }
