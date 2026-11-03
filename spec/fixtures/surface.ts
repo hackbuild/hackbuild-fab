@@ -1,5 +1,5 @@
 // spec/fixtures/surface.ts
-// Compile-time assertions on the command surface: 34 CLI commands, 20 MCP
+// Compile-time assertions on the command surface: 35 CLI commands, 21 MCP
 // tools, no duplicates, every command covered by exactly one MCP tool or
 // declared CLI-only, every closed vocabulary matching its union. The runtime
 // twin is spec/test/surface.test.ts.
@@ -42,11 +42,11 @@ type LeakedCliOnlyFields = {
 };
 
 export type SurfaceAssertions = [
-  Expect<Equal<(typeof COMMAND_NAMES)["length"], 34>>,
+  Expect<Equal<(typeof COMMAND_NAMES)["length"], 35>>,
   Expect<Equal<HasDuplicates<typeof COMMAND_NAMES>, false>>,
-  Expect<Equal<(typeof MCP_TOOL_NAMES)["length"], 20>>,
+  Expect<Equal<(typeof MCP_TOOL_NAMES)["length"], 21>>,
   Expect<Equal<HasDuplicates<typeof MCP_TOOL_NAMES>, false>>,
-  Expect<Equal<(typeof MCP_TOOLS)["length"], 20>>,
+  Expect<Equal<(typeof MCP_TOOLS)["length"], 21>>,
   Expect<Equal<keyof CommandIO, CommandName>>,
   Expect<Equal<keyof McpToolIO, McpToolName>>,
   Expect<Equal<SelectorsResolve[McpToolName], true>>,

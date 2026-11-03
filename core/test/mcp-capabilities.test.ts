@@ -2,7 +2,7 @@
 // the SDK client over stdio through tools/mcp/client.mjs, lists one
 // resource whose body equals hbf capabilities --json, and server/discover
 // reports it with the sha256 of that body. The resource adds no tool: the
-// list stays the served tools (spec MCP_TOOL_NAMES declares 20; a tool whose
+// list stays the served tools (spec MCP_TOOL_NAMES declares 21; a tool whose
 // commands have no CommandDef yet is unserved, so the count is computed).
 
 import { createHash } from "node:crypto";
@@ -65,9 +65,9 @@ describe("hbf://capabilities over stdio", () => {
     expect(d._meta?.["resources"]).toEqual([{ uri: "hbf://capabilities", mimeType: "application/json", sha256: sha }]);
   }, 120_000);
 
-  it("adds no tool: the list is the served tools, declared 20 less the unserved", async () => {
+  it("adds no tool: the list is the served tools, declared 21 less the unserved", async () => {
     const { tools } = await client.listTools();
-    expect(MCP_TOOL_NAMES).toHaveLength(20);
+    expect(MCP_TOOL_NAMES).toHaveLength(21);
     expect(tools.map((t) => t.name)).toEqual(servedTools("all").map((t) => t.def.name));
     expect(tools).toHaveLength(MCP_TOOL_NAMES.length - unservedTools("all").length);
     expect(tools.map((t) => t.name)).not.toContain("capabilities");

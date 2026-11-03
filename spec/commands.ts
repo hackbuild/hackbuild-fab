@@ -58,6 +58,7 @@ import type { CircuitSolveIO } from "./command-io/circuit.solve.js";
 import type { ConstraintsQueryIO } from "./command-io/constraints.query.js";
 import type { DraftIO } from "./command-io/draft.js";
 import type { ExportRunIO } from "./command-io/export.run.js";
+import type { FirmwareBuildIO } from "./command-io/firmware.build.js";
 import type { FitsTableIO } from "./command-io/fits.table.js";
 import type { InitIO } from "./command-io/init.js";
 import type { KnowledgeSearchIO } from "./command-io/knowledge.search.js";
@@ -101,8 +102,8 @@ export const COMMAND_NAMES = [
   "check.run", "fits.table", "sim.run", "sim.sweep", "circuit.solve", "motion.run", "rules.audit",
   // look (3)
   "view.render", "chase.render", "project.graph",
-  // make (6)
-  "chase.bake", "nest.pack", "export.run", "draft", "adopt", "slice",
+  // make (7)
+  "chase.bake", "nest.pack", "export.run", "draft", "adopt", "firmware.build", "slice",
 ] as const;
 export type CommandName = (typeof COMMAND_NAMES)[number];
 
@@ -117,7 +118,7 @@ export const COMMAND_GROUP = {
   "circuit.solve": "prove", "motion.run": "prove", "rules.audit": "prove",
   "view.render": "look", "chase.render": "look", "project.graph": "look",
   "chase.bake": "make", "nest.pack": "make", "export.run": "make", "draft": "make", "adopt": "make",
-  "slice": "make",
+  "firmware.build": "make", "slice": "make",
 } as const satisfies Record<CommandName, Group>;
 
 /** CLI-only commands, marked cli only in their spec/command-io file; project.graph is also served as a resource (hbf://project/graph), the rest wait on the MCP projection decision (engine brief finding F4). */
@@ -128,12 +129,12 @@ export const CLI_ONLY = ["init", "project.graph", "draft", "adopt"] as const sat
 export const UTILITY_VERBS = ["mcp", "doctor", "explain", "gc", "parity", "counts", "evidence", "capabilities"] as const;
 export type UtilityVerb = (typeof UTILITY_VERBS)[number];
 
-/** The 19 MCP tools, in the fixed order servers return them (D-107; position 12 is layout_solve, D-193). Names match ^[a-zA-Z0-9_-]{1,128}$. */
+/** The MCP tools, in the fixed order servers return them (tools/counts.mjs counts them) (D-107; position 12 is layout_solve, D-193). Names match ^[a-zA-Z0-9_-]{1,128}$. */
 export const MCP_TOOL_NAMES = [
   "constraints_query", "catalog_search", "canon_search", "mech_derive", "knowledge_search",
   "chase_scaffold", "chase_validate", "chase_patch", "arch_apply", "part_build",
   "part_probe", "layout_solve", "check_run", "sim_run", "circuit_solve",
-  "motion_run", "view_render", "chase_bake", "export_run", "slice_run",
+  "motion_run", "view_render", "chase_bake", "export_run", "slice_run", "firmware_build",
 ] as const;
 export type McpToolName = (typeof MCP_TOOL_NAMES)[number];
 
@@ -497,6 +498,7 @@ export interface CommandIO {
   "export.run": ExportRunIO;
   "draft": DraftIO;
   "adopt": AdoptIO;
+  "firmware.build": FirmwareBuildIO;
   "slice": SliceIO;
 // end gen:command-io io
 }
@@ -688,6 +690,7 @@ export const MCP_TOOLS = [
   { name: "chase_bake", covers: ["chase.bake", "chase.render"], selector: "mode", annotations: BUILD, task: "always", gated: false, profiles: [] },
   { name: "export_run", covers: ["export.run"], selector: null, annotations: EXPORT, task: "always", gated: true, requires: ["print.3mf", "cut.svg"], profiles: ["sweep"] },
   { name: "slice_run", covers: ["slice"], selector: null, annotations: READ, task: "always", gated: false, profiles: [] },
+  { name: "firmware_build", covers: ["firmware.build"], selector: null, annotations: READ, task: "always", gated: false, profiles: [] },
 ] as const satisfies readonly McpToolDef[];
 
 // MCP tool inputs, derived from CommandIO. StrictArgs turns every optional
@@ -774,6 +777,8 @@ export interface McpToolIO {
   export_run: In<"export.run">;
   /** slice alone: a virtual print in a temporary folder, never the export gate. */
   slice_run: In<"slice">;
+  /** firmware.build alone: a compile in a temporary folder, never an upload. */
+  firmware_build: In<"firmware.build">;
 }
 
 export type McpToolInput<T extends McpToolName> = McpToolIO[T];

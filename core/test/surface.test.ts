@@ -25,7 +25,7 @@ const mentioned = (cell: string, names: readonly string[]): string[] =>
 const R1_VERBS: readonly string[] = ["evidence", "capabilities"];
 
 /** Commands added in build mode (D-667) that no row of the MILESTONES.md table lists yet. */
-const BUILD_MODE_ADDED: readonly string[] = ["slice"];
+const BUILD_MODE_ADDED: readonly string[] = ["slice", "firmware.build"];
 /** M01 commands not registered yet; fits.table landed with M01-T09. */
 const M01_PENDING: readonly string[] = [];
 /** M04 commands not registered yet; project.graph landed with M04-T09 and rules.audit with M04-T13. */
