@@ -187,6 +187,18 @@ describe("paths, reads and fonts", () => {
     expect(() => s.measure("a", "700 Permanent Marker", 7.5)).toThrow(/E_KERNEL/);
   });
 
+  test("a missing face does not stop the fonts after it loading; the rejection names every missing face", async () => {
+    let cleared = 0;
+    const s = canvasSurface({ w: 4, h: 4, res: 1 }, {
+      context: () => new RecCtx(4, 4),
+      fonts: { load: async (spec) => (spec.includes("Missing") ? [] : [{}]) },
+      onFontsLoaded: () => cleared++,
+    });
+    await expect(s.fontsReady(["Missing Face", "Permanent Marker", "Missing Other"])).rejects.toThrow(/no face for Missing Face, Missing Other/);
+    expect(cleared).toBe(1);
+    expect(s.measure("ab", "Permanent Marker", 7.5)).toBeGreaterThan(0);
+  });
+
   test("cssFont builds COLLAR's font string", () => {
     expect(cssFont("Permanent Marker", 7.5)).toBe("7.5px Permanent Marker");
     expect(cssFont("700 Permanent Marker", 4.2)).toBe("700 4.2px Permanent Marker");

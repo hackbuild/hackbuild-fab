@@ -216,3 +216,31 @@ describe("layer fields", () => {
     expect(layerFields("shape").find((f) => f.key === "shape")?.options).toContain("saguaro");
   });
 });
+
+describe("draw notes", () => {
+  test("a font that loads after the first paint clears its note on the repaint invalidate brings", () => {
+    let loaded = false;
+    const refuse = (font: string): void => {
+      if (!loaded) throw new Error(`font ${font} is not loaded`);
+    };
+    const surface = (grid: { w: number; h: number }) => ({
+      measure: (_t: string, font: string) => (refuse(font), 1),
+      fillText: (_t: string, font: string) => refuse(font),
+      fillPath: () => {},
+      drawImage: () => {},
+      readAlpha: () => new Uint8Array(grid.w * grid.h),
+      readRgba: () => ({ w: grid.w, h: grid.h, data: new Uint8ClampedArray(grid.w * grid.h * 4) }),
+      clear: () => {},
+    });
+    let v: unknown = null;
+    const c = createArtDoc({ read: () => v, write: (n) => { v = n; }, surface });
+    c.resize(400, 256);
+    c.add("text", { text: "ab" });
+    c.raster();
+    expect(c.notes().join(" ")).toMatch(/not loaded/);
+    loaded = true;
+    c.invalidate();
+    c.raster();
+    expect(c.notes()).toEqual([]);
+  });
+});

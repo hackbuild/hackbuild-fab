@@ -182,6 +182,11 @@ export function createArtDoc(opts: ArtDocOptions): ArtDocController {
   let cw = 400, ch = 400, zoom = 1, panX = 0, panY = 0;
   let work: ArtDocument | null = null;
   let notes: string[] = [];
+  // Draw failures live apart from drop notes: a font that loads after the first
+  // paint must clear its line on the repaint invalidate() brings.
+  let faceNotes: string[] = [];
+  const layerNotes = new Map<string, string>();
+  const allNotes = (): readonly string[] => [...new Set([...notes, ...faceNotes, ...layerNotes.values()])];
   let preview: { key: string; face: ComposedFace } | null = null;
   let readSeen: unknown;
   let readDoc: ArtDocument = emptyArtDocument();
@@ -247,9 +252,11 @@ export function createArtDoc(opts: ArtDocOptions): ArtDocController {
     const local = { ...L, dx: 0, dy: 0, rot: 0, mute: false, cut: "none" } as ArtLayer;
     return bboxCache.get(local, () => {
       try {
-        return maskBounds(renderLayer(lowerArtLayer(local), ctx(bboxGrid, NEEDS_SURFACE.has(local.kind))), bboxGrid, "bottom");
+        const bb = maskBounds(renderLayer(lowerArtLayer(local), ctx(bboxGrid, NEEDS_SURFACE.has(local.kind))), bboxGrid, "bottom");
+        layerNotes.delete(L.id);
+        return bb;
       } catch (e) {
-        notes = [`layer ${L.id} not drawn: ${e instanceof Error ? e.message : String(e)}`];
+        layerNotes.set(L.id, `layer ${L.id} not drawn: ${e instanceof Error ? e.message : String(e)}`);
         return null;
       }
     });
@@ -270,20 +277,21 @@ export function createArtDoc(opts: ArtDocOptions): ArtDocController {
     const d = doc();
     const key = `${face}:${canonicalize(listOf(d, face))}`;
     if (preview === null || preview.key !== key) {
+      faceNotes = [];
       const out = [];
       for (const L of listOf(d, face)) {
         if (!paintable(L) || (L.mute && (L.kind === "image" || L.kind === "relief"))) continue;
         try {
           out.push(lowerArtLayer(L));
         } catch (e) {
-          notes = [`layer ${L.id} not drawn: ${e instanceof Error ? e.message : String(e)}`];
+          faceNotes.push(`layer ${L.id} not drawn: ${e instanceof Error ? e.message : String(e)}`);
         }
       }
       let composed: ComposedFace;
       try {
         composed = composeFace(out, ctx(previewGrid, out.some((p) => NEEDS_SURFACE.has(p.kind))));
       } catch (e) {
-        notes = [`face not drawn: ${e instanceof Error ? e.message : String(e)}`];
+        faceNotes.push(`face not drawn: ${e instanceof Error ? e.message : String(e)}`);
         composed = { art: { ...previewGrid, labels: new Uint8Array(previewGrid.w * previewGrid.h) } as unknown as ComposedFace["art"], holes: null };
       }
       preview = { key, face: composed };
@@ -447,7 +455,7 @@ export function createArtDoc(opts: ArtDocOptions): ArtDocController {
       emit("change");
       return null;
     },
-    notes: () => notes,
+    notes: allNotes,
 
     pointerDown(e) {
       const v = view();
@@ -536,7 +544,7 @@ export function createArtDoc(opts: ArtDocOptions): ArtDocController {
     raster,
     slots: () => opts.slots ?? [],
     grids: () => [bboxGrid, previewGrid],
-    invalidate() { bboxCache.clear(); preview = null; emit("change"); },
+    invalidate() { bboxCache.clear(); layerNotes.clear(); preview = null; emit("change"); },
     refresh() {
       work = null;
       drag = null;
@@ -553,7 +561,7 @@ export function createArtDoc(opts: ArtDocOptions): ArtDocController {
         layers: layers().map((L) => ({ id: L.id, kind: L.kind, mute: L.mute, dx: L.dx, dy: L.dy, rot: L.rot })),
         counts: { front: d.faces.front.length, back: d.faces.back.length },
         view: { zoom: v.zoom, panX: v.panX, panY: v.panY, w: v.w, h: v.h },
-        drag: drag === null ? null : drag.mode, notes,
+        drag: drag === null ? null : drag.mode, notes: allNotes(),
         handles: (() => {
           const h = sel === null ? null : handlesOf(sel);
           return h === null ? null : { corners: h.corners, dot: h.dot, centre: h.centre };

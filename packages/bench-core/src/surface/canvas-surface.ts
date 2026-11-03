@@ -150,15 +150,19 @@ export function canvasSurface(grid: RasterGrid, opts: CanvasSurfaceOptions = {})
     async fontsReady(fonts) {
       const loader = opts.fonts ?? G.document?.fonts;
       if (loader === undefined) throw noBrowser("a FontFaceSet");
+      // Every font is tried before a missing one is reported, so one absent face
+      // leaves the others usable.
+      const missing: string[] = [];
       for (const font of fonts) {
         const m = /^(\d{3} )?(.+)$/.exec(font)!;
         const faces = await loader.load(`${m[1] ?? ""}16px "${m[2]}"`);
-        if (faces.length === 0) {
-          throw commandError({ code: "E_KERNEL", path: "/font", got: font, record: "kernels/art-inlay", hint: `no face for ${font}; embed it as an @font-face before painting text` });
-        }
-        loaded.add(font);
+        if (faces.length === 0) missing.push(font);
+        else loaded.add(font);
       }
-      opts.onFontsLoaded?.();
+      if (missing.length < fonts.length) opts.onFontsLoaded?.();
+      if (missing.length > 0) {
+        throw commandError({ code: "E_KERNEL", path: "/font", got: missing.join(", "), record: "kernels/art-inlay", hint: `no face for ${missing.join(", ")}; embed each as an @font-face before painting text` });
+      }
     },
     measure(text, font, sizeMm) {
       ready(font);
