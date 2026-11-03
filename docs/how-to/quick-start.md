@@ -118,6 +118,12 @@ first") and writes nothing. `npx --no-install hbf evidence list
 designs/collar` prints `0 evidence rows`. Keep your save and readings
 until the coin declares a claim.
 
+A reference, `reference/<area>/<id>`, takes rows the same way, by path or
+by id, and keeps them in its own `evidence/evidence.jsonl`:
+
+    npx --no-install hbf evidence add reference/keys/flex-pair --claim <claim id> --value <reading> --unit mm
+    npx --no-install hbf evidence list reference/keys/flex-pair
+
 ## Where next
 
 - [Connect an MCP host](connect-an-mcp-host.md) to drive the same

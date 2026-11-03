@@ -63,6 +63,17 @@ registerClaimFn("spring.contactTravel", {
   fn: (metrics, args) => metricNum(metrics, metricId(args, "spring.cg"), "the build carries no contact travel; place a click spring"),
 });
 
+// The travel of one flex key as sliced, mm: the metric keys.<n>.printedTravel
+// that reference/keys/flex-pair/build.ts writes (cap underside to the last
+// sliced column layer). `at` is the key prefix, for example keys.1; a build
+// without that key has no such metric and the claim is E_PARAM_MISSING.
+registerClaimFn("key.printedTravel", {
+  inputs: { at: { type: "string", optional: true, help: "metric prefix of the key, for example keys.1" } },
+  unit: "mm",
+  reads: ["printedTravel"],
+  fn: (metrics, args) => metricNum(metrics, metricId(args, "printedTravel"), "the build carries no printed travel for this key; build a preset that places it"),
+});
+
 registerClaimFn("contact.at", {
   inputs: {
     target: { type: "string", help: "drive target the contact function reads" },
@@ -84,4 +95,30 @@ registerClaimFn("contact.at", {
     }
     return f;
   },
+});
+
+// The three numbers a person checks on a printed bail with calipers and the
+// cord: designs/bail/build.ts writes each as a metric (computed from inferred
+// params). The channel metric exists only for twin printed bridges and the
+// recess metric only for the store back recess, so a claim on the other
+// clasp is E_PARAM_MISSING.
+registerClaimFn("bail.channelClear", {
+  inputs: {},
+  unit: "mm",
+  reads: ["bail.channel.clearWidth"],
+  fn: (metrics, args) => metricNum(metrics, metricId(args, "bail.channel.clearWidth"), "the build carries no cord channel; set the clasp to twin printed bridges"),
+});
+
+registerClaimFn("bail.tipBore", {
+  inputs: {},
+  unit: "mm",
+  reads: ["bail.tip.bore"],
+  fn: (metrics, args) => metricNum(metrics, metricId(args, "bail.tip.bore"), "the build carries no tip bore; build a bail with tips"),
+});
+
+registerClaimFn("bail.clipFit", {
+  inputs: {},
+  unit: "mm",
+  reads: ["bail.clip.recessClearance"],
+  fn: (metrics, args) => metricNum(metrics, metricId(args, "bail.clip.recessClearance"), "the build carries no store back recess; set the clasp to the store back recess, front face down"),
 });

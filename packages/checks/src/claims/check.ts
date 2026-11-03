@@ -21,7 +21,7 @@ import "./fns.js";
 export interface ClaimRun extends ClaimCtx {
   /** Evidence attached to each claim, by ClaimDecl.id. */
   readonly evidence?: Readonly<Record<string, readonly EvidenceRef[]>>;
-  /** The design's evidence rows, every claim's, in file order (designs/<id>/evidence/evidence.jsonl). */
+  /** The design's evidence rows, every claim's, in file order (<dir>/evidence/evidence.jsonl, dir designs/<id> or reference/<area>/<id>). */
   readonly rows?: readonly EvidenceRow[];
 }
 

@@ -17,7 +17,7 @@
 
 import {
   canonicalize, commandError, defineBuild, qualify, qualifyRow, sha256Hex,
-  type ArtDocument, type ArtLayer, type Bound, type BodyDraft, type FaceFrame, type Feature, type Qualification, type Ring, type ShapeDecl, type Vec2,
+  type ArtDocument, type ArtLayer, type Bound, type BodyDraft, type FaceFrame, type Feature, type Metric, type Qualification, type Ring, type ShapeDecl, type Vec2,
 } from "@hackbuild/spec";
 import { chase } from "./chase";
 
@@ -230,6 +230,9 @@ export const build = defineBuild(chase, (p, k) => {
   const lh = m.layerHeight;
   const snapUp = (v: number): number => r4(Math.ceil(v / lh - 1e-6) * lh);
   const snapL = (v: number): number => r4(Math.max(0, Math.round(v / lh)) * lh);
+  // Metrics a person checks with calipers and the cord (claims in chase.ts). Every input is a typed or inferred param, so the qualifier is computed on an inferred basis.
+  const metrics: Metric[] = [];
+  const INFERRED_INPUTS = qualify(["inferred"]);
   const slotMaterial = (slot: number): string => chase.materials.find((s) => s.slot === slot)?.material ?? "petg";
 
   // ---- the slide: thickness on a layer top, colour depth in whole layers
@@ -405,6 +408,11 @@ export const build = defineBuild(chase, (p, k) => {
       k.warn("POSE_NOTE", "front face up: no recess, glue the store back flat to the back face", { param: "/orient" });
     } else {
       const padW = r4(p.hwW + 0.4), padH = r4(p.hwL + 0.4), padR = 0.6;
+      metrics.push({
+        id: "bail.clip.recessClearance", value: r4(padW - p.hwW), unit: "mm", ...INFERRED_INPUTS,
+        note: `store back recess width ${padW} mm over the plate width ${p.hwW} mm (catalog row bail-back-uclip, inferred), 0.2 mm drawn per side`,
+        drivenBy: ["/hwW"], gate: "informational", group: "bail",
+      });
       const padDepth = Math.max(2 * lh, snapL(Math.ceil((p.plateT + 0.1) / lh) * lh));
       const ring = k.ring.roundRect(padW, padH, Math.min(padR, padW / 2, padH / 2), [0, p.padY]);
       // BAIL's padMin (buildSlide, 1770 to 1776): the least distance from the recess to the blank edge, -1 when a recess cell is outside the blank. An edge of the recess holds the least distance because a distance to the outline has no minimum inside it.
@@ -441,6 +449,12 @@ export const build = defineBuild(chase, (p, k) => {
     if (between < 0.8) throw commandError({ code: "E_SCHEMA", path: "/spacing", got: p.spacing, expected: `at least ${(cw + 0.8).toFixed(1)} mm`, hint: `the two channels are ${Math.max(0, between).toFixed(2)} mm apart` });
   }
   if (clasp === "bridge") {
+    const finsOn = p.grip;
+    metrics.push({
+      id: "bail.channel.clearWidth", value: r4(cw - (finsOn ? 2 * finP : 0)), unit: "mm", ...INFERRED_INPUTS,
+      note: `${single ? "one channel for both strands" : "one channel per strand"}: cord ${p.cord} mm plus clearance ${p.clr} mm${finsOn ? `, less ${r4(2 * finP)} mm of grip fin projection at the fin tips` : ""}; the cord passes when this is above the cord (cord and clearance inferred)`,
+      drivenBy: ["/cord", "/clr", "/pair", ...(finsOn ? ["/gripP"] : [])], gate: "informational", group: "bail",
+    });
     if (cw > spanMax) k.warn("SPAN", `bridge span ${cw.toFixed(2)} mm, legal to ${spanMax} mm (profile bridge.maxMm, inferred), constraint a layer bridging more sags`, { param: "/cord" });
     const y0 = p.tunY - p.len / 2, y1 = p.tunY + p.len / 2;
     const claspMat = slotMaterial(p.claspSlot);
@@ -522,6 +536,11 @@ export const build = defineBuild(chase, (p, k) => {
       }
       return bd + rb < L - 1;
     };
+    metrics.push({
+      id: "bail.tip.bore", value: r4(2 * rbRaw), unit: "mm", ...INFERRED_INPUTS,
+      note: `printed tip bore: cord ${p.cord} mm plus bore clearance ${p.tipClr} mm (cord and clearance inferred)`,
+      drivenBy: ["/cord", "/tipClr"], gate: "informational", group: "bail",
+    });
     let bd = p.bore;
     if (!wallOK(bd)) {
       let b = bd;
@@ -577,6 +596,11 @@ export const build = defineBuild(chase, (p, k) => {
         hint: `use a cord of ${KIT_TIP.boreMm} mm or less, or set tips to a printed kind`,
       });
     }
+    metrics.push({
+      id: "bail.tip.bore", value: KIT_TIP.boreMm, unit: "mm", ...INFERRED_INPUTS,
+      note: `kit tip bore, catalog row ${KIT_TIP.row} (inferred, read off the photo); the cord is ${p.cord} mm and the build refuses a cord over ${r4(KIT_TIP.boreMm + KIT_BORE_TOL_MM)} mm`,
+      drivenBy: ["/cord", "/tips"], gate: "informational", group: "bail",
+    });
     k.warn("KIT_TIPS", `store bought kit tips, catalog row ${KIT_TIP.row} (${KIT_TIP.lengthMm} x ${KIT_TIP.diameterMm} mm, ${KIT_TIP.boreMm} mm bore, inferred, read off the photo); the cord is ${p.cord} mm (legal to ${r4(KIT_TIP.boreMm + KIT_BORE_TOL_MM)} mm, inferred, bail.html line 1977) and glues in, no tip is printed`, { param: "/tips" });
   }
 
@@ -584,6 +608,7 @@ export const build = defineBuild(chase, (p, k) => {
     id: "bail", name: "bail", process: "fdm", machine: "ffc5p",
     bodies,
     features,
+    metrics,
     faces: [k.face("slide.top", top)],
   });
 });

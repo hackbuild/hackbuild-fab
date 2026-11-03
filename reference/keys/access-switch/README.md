@@ -183,6 +183,10 @@ the circuit.solve figure is not a T to S value.
 
 ### Verified on this machine
 
+- 2026-11-02: `npx --no-install hbf parity reference/keys/access-switch`
+  exits 0 at build 43df78..f9 against the goldens re-accepted when chase.ts
+  declared the press.peak claim and moved defHash; every mesh hash and
+  volume is unchanged (23 of 23) and the report does not move (computed).
 - 2026-10-21 (R1-score-02): `npx --no-install hbf parity reference/keys/access-switch`
   exits 0 at build 7f1878..79 against the goldens re-accepted when the
   key/flex-gap constraint def registered contact.gap and moved
@@ -264,10 +268,10 @@ and the build disagree. Nothing in it was measured, and no export was run.
 <!-- generated: print card; rewrite with HBF_ACCEPT=1 npx vitest run reference/keys/access-switch -->
 
 - design: keys-access-switch, preset default, machine ffc5p
-- file: out/access-switch-default.3mf, 60910 bytes, sha256 6bd16ed6f733afefd2c60dd727e3b62c9feefe09c153dce3949b5d6163dc0966 (computed from the writer bytes in process; no export was run)
-- artifact hash (hbf): d8fc0bc75c349f75d77a90b2ba1795be1586fb21782ea2448ce619a3ea6424b5
+- file: out/access-switch-default.3mf, 60910 bytes, sha256 cb5e06e70b753ff6c6f9799dd66b862fb6bc8ba5692ea9cc198e9629cd9f05d7 (computed from the writer bytes in process; no export was run)
+- artifact hash (hbf): 6356680750b76cb30ce2941986e3167a4323187f94593653dae6f1a78c296e65
 - write it, a person at the export gate: `SOURCE_DATE_EPOCH=315532800 npx --no-install hbf export.run reference/keys/access-switch --kind 3mf --preset default --out reference/keys/access-switch/out/access-switch-default.3mf` (the epoch is pinned; unset, it follows the HEAD commit time and the bytes move)
-- build: 7f1878f485260102c54bf45cf06296cad38de388f0aef2c1120c723ebd500b79
+- build: 43df7893d5f7533eee38c30eda5f8998ecd4ee518176ae718ae133c09dee23f9
 - slicer: Flashforge Creator 5 Pro 0.4 nozzle, process 0.24mm Standard @FF C5
 - plate: Textured PEI Plate
 - layer grid: ffc5p_20260819, first layer 0.25 mm, then 0.24 mm (profile)

@@ -1,11 +1,12 @@
 // Claim evidence rows (R1-engine-26, plan v9 section 3.1: slicer saves,
 // caliper numbers, photos and notes attach to a claim through hbf evidence
-// add). One row per line of designs/<id>/evidence/evidence.jsonl, appended
-// by core and never rewritten. CHK-CLAIM-01 reads the rows: the last
-// measured value of a claim, converted to the claim's unit, replaces the
-// computed one and passes or fails as measured; a note with a direction
-// moves an in-band claim to warn and never sets a number. Files and notes
-// without a direction are listed and move no verdict.
+// add). One row per line of <dir>/evidence/evidence.jsonl, where dir is
+// designs/<id> or reference/<area>/<id>, appended by core and never
+// rewritten. CHK-CLAIM-01 reads the rows: the last measured value of a
+// claim, converted to the claim's unit, replaces the computed one and
+// passes or fails as measured; a note with a direction moves an in-band
+// claim to warn and never sets a number. Files and notes without a
+// direction are listed and move no verdict.
 
 import { commandError, type ClaimDecl, type EvidenceRef } from "@hackbuild/spec";
 

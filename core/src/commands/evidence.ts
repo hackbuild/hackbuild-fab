@@ -1,13 +1,14 @@
 // hbf evidence add and list (R1-engine-26, plan v9 section 3.1): a slicer
 // save, a reading, a photo or a note attached to one claim of a design.
-// add appends one row to designs/<id>/evidence/evidence.jsonl and copies a
-// file under evidence/files/ named by its sha256; it never rewrites a row,
+// A design is designs/<id> or a reference, reference/<area>/<id>, each with
+// a chase.ts. add appends one row to <dir>/evidence/evidence.jsonl and copies
+// a file under evidence/files/ named by its sha256; it never rewrites a row,
 // never touches profile and never commits. CHK-CLAIM-01 reads the rows
-// (packages/checks claims/evidence.ts). The row says who added it: person
-// when the add ran at a terminal, agent otherwise; a coupon result an
-// agent relays is recorded as the agent's.
+// (packages/checks claims/evidence.ts), the same way for both homes. The row
+// says who added it: person when the add ran at a terminal, agent otherwise;
+// a coupon result an agent relays is recorded as the agent's.
 
-import { appendFileSync, copyFileSync, existsSync, mkdirSync, readFileSync } from "node:fs";
+import { appendFileSync, copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { readChaseSource } from "@hackbuild/chase";
 import {
@@ -20,7 +21,7 @@ import { designDirs } from "../artifact-rebuild.js";
 import { workspaceRoot } from "./build.js";
 
 export interface EvidenceAddIn {
-  /** A design id under designs/, or a path to the design directory. */
+  /** A design or reference directory name, area/id of a reference, or a path to the directory. */
   readonly design: string;
   readonly claim: string;
   readonly value?: number;
@@ -32,7 +33,7 @@ export interface EvidenceAddIn {
 }
 
 export interface EvidenceAddOut {
-  /** The design directory, relative to the directory above designs/. */
+  /** The design directory, designs/<id> or reference/<area>/<id>, relative to the workspace root. */
   readonly design: string;
   /** The jsonl the row was appended to, same base. */
   readonly log: string;
@@ -48,28 +49,73 @@ const LOG = path.join("evidence", "evidence.jsonl");
 const PHOTO = new Set([".png", ".jpg", ".jpeg", ".heic", ".webp"]);
 const SLICER = new Set([".3mf", ".gcode", ".bgcode"]);
 
-/** The design directory an argument names: a path ending in designs/<id>, or an id found under designs/ from cwd upward. */
+/** designs/<id> or reference/<area>/<id> when dir holds a chase.ts, else null. */
+function labelOf(dir: string): string | null {
+  if (!existsSync(path.join(dir, "chase.ts"))) return null;
+  const parent = path.dirname(dir);
+  if (path.basename(parent) === "designs") return `designs/${path.basename(dir)}`;
+  if (path.basename(path.dirname(parent)) === "reference") return `reference/${path.basename(parent)}/${path.basename(dir)}`;
+  return null;
+}
+
+/** Subdirectories of dir, sorted; empty when dir is not readable. */
+function subdirs(dir: string): string[] {
+  try {
+    return readdirSync(dir, { withFileTypes: true }).filter((e) => e.isDirectory() && !e.name.startsWith(".")).map((e) => e.name).sort();
+  } catch {
+    return [];
+  }
+}
+
+/**
+ * The design directory an argument names. A path (it has a separator) is
+ * cwd-relative, or relative to a directory above cwd, with reference/
+ * optional in front of area/id. A bare id is searched from cwd upward in
+ * designs/<id> and reference/<area>/<id>; an id found in more than one
+ * place is refused, since the row would land in whichever came first.
+ */
 export function evidenceDesign(arg: string, cwd: string): { readonly dir: string; readonly label: string } {
-  const hasChase = (d: string): boolean => existsSync(path.join(d, "chase.ts"));
+  const here = path.resolve(cwd);
+  const found: { dir: string; label: string }[] = [];
+  const push = (dir: string): void => {
+    const label = labelOf(dir);
+    if (label !== null && !found.some((f) => f.label === label)) found.push({ dir, label });
+  };
   if (arg.includes("/") || arg.includes(path.sep)) {
-    const dir = path.resolve(cwd, arg);
-    if (hasChase(dir) && path.basename(path.dirname(dir)) === "designs") return { dir, label: `designs/${path.basename(dir)}` };
+    push(path.resolve(here, arg));
+    if (found.length === 0 && !path.isAbsolute(arg)) {
+      for (let d = here; ; d = path.dirname(d)) {
+        push(path.join(d, arg));
+        push(path.join(d, "reference", arg));
+        if (found.length > 0 || path.dirname(d) === d) break;
+      }
+    }
   } else {
-    for (let d = path.resolve(cwd); ; d = path.dirname(d)) {
-      const dir = path.join(d, "designs", arg);
-      if (hasChase(dir)) return { dir, label: `designs/${arg}` };
-      if (path.dirname(d) === d) break;
+    for (let d = here; ; d = path.dirname(d)) {
+      push(path.join(d, "designs", arg));
+      for (const area of subdirs(path.join(d, "reference"))) push(path.join(d, "reference", area, arg));
+      if (found.length > 0 || path.dirname(d) === d) break;
     }
   }
-  let ids: string[] = [];
-  try {
-    ids = designDirs(workspaceRoot(cwd)).filter((r) => r.startsWith("designs/")).map((r) => r.slice("designs/".length));
-  } catch {
-    ids = [];
+  if (found.length === 1) return found[0]!;
+  if (found.length > 1) {
+    const labels = found.map((f) => f.label);
+    throw cmdError({
+      code: "E_REF", path: "/design", got: arg, expected: `one design, not ${labels.join(" and ")}`, didYouMean: labels,
+      hint: "the id names more than one design; give the path, for example reference/keys/flex-pair",
+    });
   }
+  let labels: string[] = [];
+  try {
+    labels = designDirs(workspaceRoot(cwd));
+  } catch {
+    labels = [];
+  }
+  const pathLike = arg.includes("/") || arg.includes(path.sep);
   throw cmdError({
-    code: "E_REF", path: "/design", got: arg, expected: "a design under designs/ with a chase.ts", didYouMean: didYouMean(arg, ids),
-    hint: "evidence attaches to a design under designs/; adopt or scaffold one first",
+    code: "E_REF", path: "/design", got: arg, expected: "a design under designs/ or a reference under reference/<area>/, with a chase.ts",
+    didYouMean: didYouMean(arg, pathLike ? labels : labels.map((l) => path.posix.basename(l))),
+    hint: "evidence attaches to designs/<id> or reference/<area>/<id>; name one by id or path, or adopt or scaffold one first",
   });
 }
 

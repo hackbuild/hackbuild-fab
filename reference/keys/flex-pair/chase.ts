@@ -83,6 +83,14 @@ export const chase = defineChase({
   assertions: [
     { type: "volumeParity", part: "pad" },
   ],
+  // Key 1 only: preset one has no key 2, and a claim on a key the build
+  // does not place is E_PARAM_MISSING. The band is CHK-KEY-01's for the
+  // built 4.08 mm cone; a caliper reading of the printed travel backs it.
+  claims: [
+    { id: "key1-travel", fn: "key.printedTravel", args: { at: "keys.1" },
+      want: { nominal: 1.84, lo: 1.428, hi: 2.04, unit: "mm" },
+      why: "35 to 50 percent of the 4.08 mm built cone, 1.428 to 2.04 mm (computed from profile key.flexGapFracMin 0.35 and key.flexGapFracMax 0.5, both inferred, PIP bench/part1.html lines 233 and 238); nominal 1.84 mm is the travel param, 45 percent of the cone (computed); no coupon or caliper reading recorded" },
+  ],
 });
 
 /** The params type a build function sees. */

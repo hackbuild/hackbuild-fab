@@ -84,6 +84,18 @@ The `SLOPE` and both `CLAMP` warnings (thickness to a layer top, tip bore depth)
 | hardware loop height check | the loop height is not a chase param |
 | wear pose, extra exports | plan step (d) |
 
+## Metrics and claims
+
+The build writes three informational metrics, qualifier computed on an inferred basis, and the chase declares one claim per metric (claim functions in `packages/checks/src/claims/fns.ts`). A person measures each with calipers and the cord and enters it with `hbf evidence add`; no row is written here.
+
+| metric | claim fn | band, mm | built when |
+|---|---|---|---|
+| `bail.channel.clearWidth` | `bail.channelClear` | 4.25 to 5, nominal 4.5 | twin bridge clasp; net of the fin tips when grip fins are on |
+| `bail.tip.bore` | `bail.tipBore` | 4 to 4.8, nominal 4.3 | any tips; the kit bore for store bought tips |
+| `bail.clip.recessClearance` | `bail.clipFit` | 0.2 to 0.6, nominal 0.4 | store back recess, front face down |
+
+The default build is the store back recess with printed tips, so the channel claim reads no metric there and is E_PARAM_MISSING until the clasp is set to bridges.
+
 ## Numbers awaiting profile rows
 
 Typed in `build.ts` or `chase.ts` from BAIL, each read from the bench and not yet a profile row (qualifier inferred in the warnings). A person or the owner enters the rows; nothing here promotes them.

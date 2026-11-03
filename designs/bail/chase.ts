@@ -1000,6 +1000,18 @@ export const chase = defineChase({
   build: { module: "./build.ts", fn: "build" },
   exports: [{ kind: "3mf", machine: "ffc5p", pose: "print" }, { kind: "stl" }, { kind: "card" }, { kind: "json" }],
   assertions: [],
+  // Numbers a person checks with calipers and the cord; every input is an inferred param or catalog row, no profile row is written. The channel claim reads the twin bridge builds (the hackbuild preset) and the clip claim the store back recess builds.
+  claims: [
+    { id: "channel-clear", fn: "bail.channelClear", args: {},
+      want: { nominal: 4.5, lo: 4.25, hi: 5, unit: "mm" },
+      why: "cord 4 mm (catalog row bail-cord-saintrygo4, inferred) plus cord clearance 0.5 mm (chase param clr, inferred); lo is the cord plus the 0.25 mm clearance floor of build.ts CLEARANCE (bail.html line 1794, inferred), hi is the cord plus the 1 mm top of the clr range (computed); the owner's PETG print needed a wider channel (print note), no caliper reading recorded" },
+    { id: "tip-bore", fn: "bail.tipBore", args: {},
+      want: { nominal: 4.3, lo: 4, hi: 4.8, unit: "mm" },
+      why: "cord 4 mm (inferred) plus bore clearance 0.3 mm (chase param tipClr, inferred) for a printed tip; lo is the bare cord, hi the cord plus the 0.8 mm top of the tipClr range (computed); a kit tip carries the 4 mm bore of catalog row bail-tips-kit32 plus the 0.05 mm KIT_BORE_TOL_MM (bail.html line 1977, inferred); no caliper reading recorded" },
+    { id: "clip-fit", fn: "bail.clipFit", args: {},
+      want: { nominal: 0.4, lo: 0.2, hi: 0.6, unit: "mm" },
+      why: "recess width over the 17 mm back plate (catalog row bail-back-uclip, inferred): build.ts draws 0.2 mm per side, 0.4 mm total (computed); lo and hi are 0.1 mm per side either way, a typed band (inferred); no fit coupon or caliper reading recorded" },
+  ],
 });
 
 /** The params type a build function sees. */

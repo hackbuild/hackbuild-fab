@@ -67,7 +67,7 @@ async function runClaims(decls?: readonly ClaimDecl[], ms: readonly Metric[] = m
 
 describe("claim function registry", () => {
   test("the first functions are registered and an unknown id is E_REF", () => {
-    expect(claimFnIds()).toEqual(["contact.at", "spring.contactTravel", "spring.forceAt", "spring.peak"]);
+    expect(claimFnIds()).toEqual(["bail.channelClear", "bail.clipFit", "bail.tipBore", "contact.at", "key.printedTravel", "spring.contactTravel", "spring.forceAt", "spring.peak"]);
     expect(() => claimFn("spring.peek")).toThrow(/E_REF \/fn/);
     expect(() => registerClaimFn("spring.peak", claimFn("spring.peak"))).toThrow(/registered twice/);
   });
@@ -88,6 +88,34 @@ describe("claim function registry", () => {
     expect(forceAt(curve, (a.x + b.x) / 2)).toBeCloseTo((a.y + b.y) / 2, 12);
     expect(() => forceAt(curve, curve[SAMPLES - 1]!.x + 0.01)).toThrow(/E_SCHEMA \/args\/travelMm/);
     expect(() => checkClaim(claim("spring.forceAt", 0, 10, "N", { travelMm: 0.5 }), metricsAt(0))).toThrow(/E_PARAM_MISSING \/metrics\/spring\.curve\.n/);
+  });
+
+  test("key.printedTravel reads keys.<n>.printedTravel under at and refuses a key the build does not place", () => {
+    // Values from the reference/keys/flex-pair default build (computed): key 1 travel 1.84 mm, printed 1.92 mm.
+    const keyMetric = (id: string, value: number): Metric => ({ id, value, unit: "mm", note: "test", gate: "informational", qualifier: "computed", basis: null });
+    const ms = [keyMetric("keys.1.travel", 1.84), keyMetric("keys.1.printedTravel", 1.92), keyMetric("keys.2.printedTravel", 1.9)];
+    const d = (at: string, lo: number, hi: number): ClaimDecl => ({ id: "travel", fn: "key.printedTravel", args: { at }, want: { nominal: 1.84, lo, hi, unit: "mm" }, why: "the key band" });
+    const one = checkClaim(d("keys.1", 1.428, 2.04), ms);
+    expect([one.value, one.verdict, one.qualification]).toEqual([1.92, "pass", { qualifier: "computed", basis: null }]);
+    expect(checkClaim(d("keys.2", 1.428, 2.04), ms).value).toBe(1.9);
+    expect(checkClaim(d("keys.1", 1.428, 1.9), ms).verdict).toBe("fail");
+    expect(() => checkClaim(d("keys.3", 1.428, 2.04), ms)).toThrow(/E_PARAM_MISSING \/metrics\/keys\.3\.printedTravel/);
+    expect(() => checkClaim({ ...d("keys.1", 1, 3), want: { nominal: 2, lo: 1, hi: 3, unit: "N" } }, ms)).toThrow(/E_SCHEMA \/claims\/0\/want\/unit/);
+  });
+
+  test("the bail claims read the bail.* metrics and refuse a build that lacks them", () => {
+    // Values from the designs/bail twin bridge defaults (computed from inferred params): cord 4 mm, clearance 0.5 mm, bore clearance 0.3 mm, recess 0.4 mm over the plate.
+    const bm = (id: string, value: number): Metric => ({ id, value, unit: "mm", note: "test", gate: "informational", qualifier: "computed", basis: "inferred" });
+    const ms = [bm("bail.channel.clearWidth", 4.5), bm("bail.tip.bore", 4.3), bm("bail.clip.recessClearance", 0.4)];
+    const d = (fn: string, nominal: number, lo: number, hi: number): ClaimDecl => ({ id: "bail", fn, args: {}, want: { nominal, lo, hi, unit: "mm" }, why: "test band" });
+    const ch = checkClaim(d("bail.channelClear", 4.5, 4.25, 5), ms);
+    // An inferred basis reads inferred and a band hit on it is a warn, not a pass.
+    expect([ch.value, ch.verdict, ch.qualification]).toEqual([4.5, "warn", { qualifier: "inferred", basis: "inferred" }]);
+    expect(checkClaim(d("bail.tipBore", 4.3, 4, 4.8), ms).value).toBe(4.3);
+    expect(checkClaim(d("bail.clipFit", 0.4, 0.2, 0.6), ms).value).toBe(0.4);
+    expect(checkClaim(d("bail.tipBore", 4.3, 4.4, 4.8), ms).verdict).toBe("fail");
+    expect(() => checkClaim(d("bail.channelClear", 4.5, 4.25, 5), [ms[1]!])).toThrow(/E_PARAM_MISSING \/metrics\/bail\.channel\.clearWidth/);
+    expect(() => checkClaim(d("bail.clipFit", 0.4, 0.2, 0.6), [ms[0]!])).toThrow(/E_PARAM_MISSING \/metrics\/bail\.clip\.recessClearance/);
   });
 
   test("contact.at returns the design contact function's force and refuses without one", () => {

@@ -55,6 +55,14 @@ export const chase = defineChase({
   assertions: [
     { type: "apart", nets: ["KEY", "GND"] },
   ],
+  // The band is the claim.ts press band; the drawn peak is computed and the
+  // coupon ladder (coupon/) is where a person reads the felt force.
+  claims: [
+    { id: "press.peak", fn: "spring.peak", args: { at: "click-spring-key.0" },
+      want: { nominal: 1.47, lo: 1.176, hi: 1.764, unit: "N" },
+      coupon: "keys-access-switch-coupon",
+      why: "profile access.pressTargetN 1.47 N (150 g owner design target, inferred) plus or minus access.pressBandPct 20 percent (inferred), edges 1.176 and 1.764 N (computed); the drawn peak is computed by SNAPFE on an inferred PETG modulus; no coupon recorded" },
+  ],
 });
 
 export type AccessSwitchParams = ParamsOf<typeof chase>;

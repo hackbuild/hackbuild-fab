@@ -130,10 +130,10 @@ and the chase; never edit between the markers.
 <!-- generated: print card; rewrite with HBF_ACCEPT=1 npx vitest run reference/keys/flex-pair -->
 
 - design: keys-flex-pair, preset two, machine ffc5p
-- file: out/flex-pair-two.3mf, 65703 bytes, sha256 f082ad09b854f271f13cb961cd41a9243bc9a4e8f5d616c2b41170d7a4ded36c
-- artifact hash (hbf): d6ba18f53200f9a01f535d73612397bf8818f08c1f702be1a464b45910fdb0ea
+- file: out/flex-pair-two.3mf, 65702 bytes, sha256 794ba4e3dddb41ddc0458df50da96075c594607f3061ed2287b43eac908a5f94
+- artifact hash (hbf): 8ef1b925c439141d790875226f7b6201b193157045bb709dfeb13177e073c6e1
 - write it: `SOURCE_DATE_EPOCH=315532800 npx --no-install hbf export.run reference/keys/flex-pair --kind 3mf --preset two --out reference/keys/flex-pair/out/flex-pair-two.3mf` (the epoch is pinned; unset, it follows the HEAD commit time and the bytes move)
-- build: 06dd9557ae764f871d9c17f4ca020f0d5d964a327d3fc3bc9c979c88ac7f8b4d
+- build: 113dc681b187ef9b7c43fdaf9fbf703bb0a6c78b6e44fb2b6cd6685cde27b8bc
 - slicer: Flashforge Creator 5 Pro 0.4 nozzle, process 0.24mm Standard @FF C5
 - plate: Textured PEI Plate
 - layer grid: ffc5p_20260819, first layer 0.25 mm, then 0.24 mm (profile)
@@ -170,6 +170,10 @@ on GP3, as the hookup in `chase.ts` names them.
 
 ### Verified on this machine
 
+- 2026-11-02: `npx --no-install hbf parity reference/keys/flex-pair` exits 0
+  at build ab8bcc..b7 against the goldens re-accepted when chase.ts
+  declared the key1-travel claim and moved defHash; every mesh hash and
+  volume is unchanged (9 of 9) and the report does not move (computed).
 - 2026-10-21 (R1-score-02): `npx --no-install hbf parity reference/keys/flex-pair`
   exits 0 at build c1629d..d3 against the goldens re-accepted when the
   key/flex-gap constraint def registered contact.gap and moved
@@ -428,6 +432,11 @@ printed body, and none meets M-S-T10. Full record:
   build 06dd95..4d), the key/flex-gap constraint def moving registryHash,
   every mesh hash and volume unchanged: writer 3MF 65703 bytes, sha256
   f082ad09...d36c (computed in process, no export run). The slicer and
+  validate_3mf.py were not run on it.
+- Rerun 2026-11-02 on build ab8bcc..b7 (preset "two" build 113dc6..bc),
+  the key1-travel claim moving defHash, every mesh hash and volume
+  unchanged (9 of 9, computed): writer 3MF 65702 bytes, sha256
+  794ba4e3...5f94 (computed in process, no export run). The slicer and
   validate_3mf.py were not run on it.
 - Analyzer missing areas (at least 0.02 mm2 after a 0.10 mm opening): 78
   (computed). The largest are on both key tops (cones top1 and top2, T2)
