@@ -1,6 +1,6 @@
 # Originals: the sample set index
 
-Written 2026-10-05; BUCK added 2026-10-06; BAIL added 2026-10-30. This is the sample set a builder copies from: every design below is one of the owner's original benches, prints or boards, curated with its own record. The generated mockups at `fab-knowledge:mockups/` are quarantined and are not part of this set; nothing here cites or copies them.
+Written 2026-10-05; BUCK added 2026-10-06; BAIL added 2026-10-30; EMBER added 2026-11-02. This is the sample set a builder copies from: every design below is one of the owner's original benches, prints or boards, curated with its own record. The generated mockups at `fab-knowledge:mockups/` are quarantined and are not part of this set; nothing here cites or copies them.
 
 The owner's originals are the bar. Every design is a full lit 3D bench or a real artifact (board, print, slicer save), and each record says how it was made so a new thing is made the same way. The cross index from every mechanism to these designs is `MECHANISMS.md` beside this file.
 
@@ -23,7 +23,7 @@ Tiers used in the last column:
 - lineage: kept for its techniques and failure lessons; a newer original supersedes it or it is broken as shipped
 - evidence: owner prints, slicer saves or printed artwork; read, never port as code
 
-Count: 81 designs in 13 families (computed from this table, 2026-10-30; BUCK added to robots on 2026-10-06, BAIL added to coins-inlay on 2026-10-30).
+Count: 82 designs in 13 families (computed from this table, 2026-11-02; BUCK added to robots on 2026-10-06, BAIL added to coins-inlay on 2026-10-30, EMBER added to boards on 2026-11-02).
 
 ## pip-buttons
 
@@ -170,6 +170,7 @@ Count: 81 designs in 13 families (computed from this table, 2026-10-30; BUCK add
 | **escutcheon** | escutcheon-viewer.html R5, 2026-08-07; file `files/escutcheon-viewer.html` | `9700d867ec6762d51a83a23d4a74254e8e462560a049c43af4eda75584c8cdaf` | Printed badge for electroplating: traced outline, recessed emblem, stepped chamfer, magnet backer, finish shader | `fab-knowledge:originals/escutcheon/shots/e04-assembly-open-badge-backer-magnets.png` | `fab-knowledge:originals/escutcheon/RECORD.md`, repo `knowledge/designs/escutcheon.md` | bar |
 | **tracelab** | TraceLab_Explorer.html, 2026-08-10 18:33; file `files/TraceLab_Explorer.html` | `ed2dad77d3b05a862f9976faf798ee6d72c193431538799e709c074eb61c1844` | Library of printed trace templates with parametric generators (wheels, sliders, coils, combs, grids) | `fab-knowledge:originals/tracelab/shots/t01-library-wheel-6ch-selected.png` | `fab-knowledge:originals/tracelab/RECORD.md`, repo `knowledge/designs/tracelab.md` | evidence |
 | **board-viewers** | cross-design record; adds trunnion-layers-3d.html 2026-08-01; file `files/trunnion-layers-3d.html` | `61d9e562378d6ffe0480ff71730b0952e3c1c1382d3c58873e4d5cc92a2c24c1` | The family's viewers: circuit JSON geometry, assembly stand-ins, layer stacks, KiCad live parse, WebGL2 finishes | `fab-knowledge:originals/board-viewers/shots/v06-kicad-live-parse-iso.png` | `fab-knowledge:originals/board-viewers/RECORD.md`, repo `knowledge/designs/board-viewers.md` | bar |
+| **ember** | ember.html with its generator, fab files and firmware, EMBER.zip 2026-10-30 05:01; file `files/ember.html` | `98d60e28ab4d76d1a326cfce396b52455249f1dab2934cbcabe3b9ab471b0376` | Backlit HeatSync flame SAO: the logo as the board outline, ENIG sun, masked arrow, bare FR4 flames lit by 9 reverse mount LEDs through routed slots, ATtiny1614 flame firmware with a pin map generated from the board, gates for light and copper inside the generator; not ordered | `fab-knowledge:originals/ember/shots/e02-render-front-lit.png` | `fab-knowledge:originals/ember/RECORD.md`, repo `knowledge/designs/ember.md` | lineage |
 
 ## Reading order for a builder
 

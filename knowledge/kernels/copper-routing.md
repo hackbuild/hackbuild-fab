@@ -176,3 +176,23 @@ COLUMN without three parallel bars in a 4.6 mm corridor.
 - The ESP32-C3 has NO touch peripheral.
 - A slider that also reads as 8 discrete zones turns 12 channels into 6 pads
   plus 24 virtual buttons.
+
+## Placement that carries routing (EMBER)
+
+From `knowledge/designs/ember.md` (one routable layer, 9 LEDs round a disc):
+
+- A placement test that only checks fit places parts that cannot be wired.
+  EMBER's LED test refuses a spot unless each pad has its own free path past
+  the body to the routing area, a ground via spot is within 3.5 mm, a 0.9 mm
+  lane separates it from its neighbours, and it lies tangential to the disc
+  so both pads face inward. Those last two made the board route; the LED
+  count fell from 17 to 9 on the way.
+- Planar by construction: assign channels by angle round the art, put the
+  resistors in pin order, so pin order, resistor order and load order are one
+  rotation and nothing crosses. About a dozen placements failed before this,
+  and no router tuning fixed any of them.
+- Give ground its own layer through vias even when that layer is decorative:
+  EMBER's ground is the front gold sun, 11 vias, hidden under the masked
+  arrow where they can be.
+- A cost map steers the router off the art: 8x under a lit window, 3x on the
+  rim kept for ground stubs. A router will not rescue a bad placement.

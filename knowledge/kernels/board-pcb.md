@@ -186,3 +186,33 @@ box.
   PSRAM) and N8R2 (quad) are interchangeable in one layout
 - DRV8833 abs max is 11.8 V, which makes a raw-VIN jumper position a real
   footgun that must be labelled loudly
+
+## Backlit art boards (EMBER)
+
+From `knowledge/designs/ember.md`, the owner's HeatSync flame SAO, made
+with board-forge on 2026-10-30. Not ordered, so these are the
+generator's reported results, not fab results.
+
+- On a backlit board copper is ink. The stack is the art: exposed ENIG for a
+  gold area, copper under white mask for an opaque white area, bare FR4
+  under mask with no copper on either side for an area that glows. A board's
+  look is an art document whose layers map to stackup materials.
+- Light becomes checks with evidence: no front copper inside a window, back
+  copper under the windows as a share of window area against a budget (9
+  percent, 6.0 percent reported), copper to a routed slot 0.25 mm.
+- Reverse mount LEDs sit on the back with the lens in a slot milled on the
+  outline layer (2.0 x 2.6 mm stadium on EMBER). The land pattern there was
+  never checked against the maker's drawing; check it before ordering.
+- A logo outline needs a morphological close (0.6 mm on EMBER) so no
+  concave radius is under the router bit, and tethers (1.3 mm) to join
+  floating islands into one polygon. Assert one polygon.
+- All SMT on one side keeps an order on JLC economic assembly; every distinct
+  extended part adds a loading fee (vendor, 2026 snapshot).
+- Back side parts: mirror x before rotating, and JLC's bottom preview often
+  needs a rotation fix. The review lists anode, cathode and pin 1 positions
+  in front view so a person can check the preview.
+- The firmware pin map is generated from the board placement
+  (`ember_channels.h`), which is the GPIO-map versus netlist gate made
+  impossible to fail.
+- pygerber's clear colour hit EMBER's verifier too, plus a 1 to 2 pixel
+  canvas offset that needs a small registration search before an IoU compare.
