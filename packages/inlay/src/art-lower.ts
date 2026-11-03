@@ -26,12 +26,52 @@ export const ART_FONT_FACES: Readonly<Record<ArtFont, { readonly family: string;
   vt: { family: "VT323", bold: false },
 };
 
+/** How a lowering treats what the node route cannot paint. */
+export interface LowerPolicy {
+  /** "face" (default) names each font as the art doc asks. "node" sets a face the node text route lacks in IBM Plex Mono bold and returns a FONT_SWAP warning, as geom's route carries only Plex (packages/geom/src/text/outline.ts TEXT_FACES). */
+  readonly fonts?: "face" | "node";
+  /** "refuse" (default) throws E_KERNEL for a cut pocket, image or relief layer. "skip" drops a cut, image or relief layer and returns a LAYER_SKIPPED warning. */
+  readonly unsupported?: "refuse" | "skip";
+}
+
+export interface LowerWarning {
+  readonly code: "FONT_SWAP" | "LAYER_SKIPPED";
+  readonly text: string;
+}
+
+/** One layer lowered under a policy: the painter layer, or null when skipped, and the warnings it raised. */
+export interface LoweredLayer {
+  readonly layer: PaintLayer | null;
+  readonly warnings: readonly LowerWarning[];
+}
+
+/** Faces the node text route sets: Plex regular and bold only. A key outside it falls to Plex bold under the "node" font policy. */
+export const NODE_ART_FONTS: ReadonlySet<ArtFont> = new Set<ArtFont>(["plex", "plexb"]);
+
 function refuse(path: string, got: unknown, expected: string, hint: string): never {
   throw commandError({ code: "E_KERNEL", path, got, expected, record: "kernels/art-inlay", hint });
 }
 
-/** One layer to its painter layer. `path` is the layer's place in the art doc, for the error. */
-export function lowerArtLayer(L: ArtLayer, path = ""): PaintLayer {
+/** One layer to its painter layer. `path` is the layer's place in the art doc, for the error. The default policy refuses what has no painter; see LowerPolicy. */
+export function lowerArtLayer(L: ArtLayer, path = "", policy: LowerPolicy = {}): PaintLayer {
+  const out = lowerArtLayerWith(L, path, policy).layer;
+  if (out === null) refuse(`${path}/kind`, L.kind, "a layer the policy lowers", `layer ${L.id}: skipped`);
+  return out;
+}
+
+/** One layer under a policy, with the warnings the policy raised. */
+export function lowerArtLayerWith(L: ArtLayer, path = "", policy: LowerPolicy = {}): LoweredLayer {
+  const skip = policy.unsupported === "skip";
+  const warnings: LowerWarning[] = [];
+  const done = (layer: PaintLayer | null): LoweredLayer => ({ layer, warnings });
+  if (skip && L.cut !== "none") {
+    warnings.push({ code: "LAYER_SKIPPED", text: `layer ${L.id} cuts the slide (${L.cut}); the inlay kind carves no cut yet, so it is skipped` });
+    return done(null);
+  }
+  if (skip && (L.kind === "image" || L.kind === "relief")) {
+    warnings.push({ code: "LAYER_SKIPPED", text: `layer ${L.id} is an ${L.kind} layer; the image and relief painters are not built, so it is skipped` });
+    return done(null);
+  }
   if (L.cut === "pocket") {
     refuse(`${path}/cut`, "pocket", "none or through", `layer ${L.id}: the inlay kind carves no pocket yet; set cut to none, or through if the layer should cut the part`);
   }
@@ -39,7 +79,9 @@ export function lowerArtLayer(L: ArtLayer, path = ""): PaintLayer {
   const place = { dx: L.dx, dy: L.dy, rot: L.rot };
   switch (L.kind) {
     case "text": {
-      const font = ART_FONT_FACES[L.font];
+      const swap = policy.fonts === "node" && !NODE_ART_FONTS.has(L.font);
+      const font = swap ? ART_FONT_FACES.plexb : ART_FONT_FACES[L.font];
+      if (swap) warnings.push({ code: "FONT_SWAP", text: `layer ${L.id} asks for ${ART_FONT_FACES[L.font].family}; the node text route sets only IBM Plex Mono, so it is set in Plex bold` });
       const arc = L.arc !== 0;
       const t: TextLayer = {
         kind: "text", text: L.text, slot: L.slot,
@@ -49,25 +91,25 @@ export function lowerArtLayer(L: ArtLayer, path = ""): PaintLayer {
         mode: arc ? "arc" : "straight", ...(arc ? { arcR: Math.abs(L.arc), arcDeg: L.arc > 0 ? 90 : -90, flip: L.arc < 0, anchored: true } : {}),
         ...place, baseline: "middle", ls: L.ls, ...flags,
       };
-      return t;
+      return done(t);
     }
     case "shape":
-      return { kind: "shape", shape: L.shape, w: L.w, h: L.h, t: L.t, n: L.n, ...place, slot: L.slot, ...flags };
+      return done({ kind: "shape", shape: L.shape, w: L.w, h: L.h, t: L.t, n: L.n, ...place, slot: L.slot, ...flags });
     case "logo":
-      return { kind: "logo", brand: L.brand, w: L.w, ...place, slot: L.slot, slot2: L.slot2, ...flags };
+      return done({ kind: "logo", brand: L.brand, w: L.w, ...place, slot: L.slot, slot2: L.slot2, ...flags });
     case "scope":
-      return { kind: "scope", a: L.a, b: L.b, phase: L.phase, w: L.w, h: L.h, t: L.t, ...place, slot: L.slot, ...flags };
+      return done({ kind: "scope", a: L.a, b: L.b, phase: L.phase, w: L.w, h: L.h, t: L.t, ...place, slot: L.slot, ...flags });
     case "circuit":
-      return {
+      return done({
         kind: "circuit", seed: L.seed, w: L.w, h: L.h, pitch: L.pitch, tw: L.tw, pad: L.pad, drill: L.drill, density: L.density, clip: L.clip,
         ...place, slot: L.slot, slot2: L.slot2, ...flags,
-      };
+      });
     case "path": {
       // Units to mm about the centre of the bounds, y flipped (the file is y down), then turned and placed.
       const k = L.w / L.bw, cx = L.bx + L.bw / 2, cy = L.by + L.bh / 2;
       const r = L.rot * Math.PI / 180, s = k * Math.sin(r), c = k * Math.cos(r);
       const a = c, b = s, cc = s, d = -c;
-      return { kind: "path", d: L.d, transform: [a, b, cc, d, L.dx - (a * cx + cc * cy), L.dy - (b * cx + d * cy)], slot: L.slot, ...flags };
+      return done({ kind: "path", d: L.d, transform: [a, b, cc, d, L.dx - (a * cx + cc * cy), L.dy - (b * cx + d * cy)], slot: L.slot, ...flags });
     }
     case "image":
     case "relief":
@@ -76,17 +118,30 @@ export function lowerArtLayer(L: ArtLayer, path = ""): PaintLayer {
 }
 
 /** One face's layers in paint order. Muted image and relief layers are skipped; every other muted layer lowers with off set. */
-export function lowerArtFace(doc: ArtDocument, face: ArtFace): PaintLayer[] {
+export function lowerArtFace(doc: ArtDocument, face: ArtFace, policy: LowerPolicy = {}): PaintLayer[] {
+  return lowerArtFaceWith(doc, face, policy).layers;
+}
+
+/** A list of layers under a policy: painter layers in paint order and the warnings in layer order. A skip policy drops muted image and relief layers with their warning too. `base` is the list's path in the art doc, for errors. */
+export function lowerArtLayersWith(layers: readonly ArtLayer[], base = "", policy: LowerPolicy = {}): { readonly layers: PaintLayer[]; readonly warnings: LowerWarning[] } {
   const out: PaintLayer[] = [];
-  doc.faces[face].forEach((L, i) => {
-    if (L.mute && (L.kind === "image" || L.kind === "relief")) return;
-    out.push(lowerArtLayer(L, `/faces/${face}/${i}`));
+  const warnings: LowerWarning[] = [];
+  layers.forEach((L, i) => {
+    if (policy.unsupported !== "skip" && L.mute && (L.kind === "image" || L.kind === "relief")) return;
+    const r = lowerArtLayerWith(L, `${base}/${i}`, policy);
+    warnings.push(...r.warnings);
+    if (r.layer !== null) out.push(r.layer);
   });
-  return out;
+  return { layers: out, warnings };
+}
+
+/** One face under a policy; see lowerArtLayersWith. */
+export function lowerArtFaceWith(doc: ArtDocument, face: ArtFace, policy: LowerPolicy = {}): { readonly layers: PaintLayer[]; readonly warnings: LowerWarning[] } {
+  return lowerArtLayersWith(doc.faces[face], `/faces/${face}`, policy);
 }
 
 /** Both faces, front and back, after the art doc is checked: a bad one throws E_SCHEMA naming the first problems. */
-export function lowerArtDocument(doc: ArtDocument): { readonly front: PaintLayer[]; readonly back: PaintLayer[] } {
+export function lowerArtDocument(doc: ArtDocument, policy: LowerPolicy = {}): { readonly front: PaintLayer[]; readonly back: PaintLayer[] } {
   const issues = artDocumentIssues(doc);
   if (issues.length > 0) {
     throw commandError({
@@ -94,5 +149,5 @@ export function lowerArtDocument(doc: ArtDocument): { readonly front: PaintLayer
       record: "kernels/art-inlay", hint: issues.slice(0, 3).map((i) => `${(i.path ?? []).map(String).join("/")}: ${i.message}`).join("; "),
     });
   }
-  return { front: lowerArtFace(doc, "front"), back: lowerArtFace(doc, "back") };
+  return { front: lowerArtFace(doc, "front", policy), back: lowerArtFace(doc, "back", policy) };
 }

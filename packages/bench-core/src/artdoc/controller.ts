@@ -20,7 +20,7 @@ import {
   ART_FACES, ART_LAYER_KINDS, artDocumentIssues, artDocumentUri, artLayer, canonicalize, emptyArtDocument,
   type ArtDocument, type ArtFace, type ArtLayer, type ArtLayerKind, type ArtValue,
 } from "@hackbuild/spec";
-import { composeFace, lowerArtLayer, renderLayer, type ComposedFace, type FaceContext, type RasterGrid, type Surface } from "@hackbuild/inlay";
+import { composeFace, lowerArtLayerWith, renderLayer, type ComposedFace, type FaceContext, type LowerPolicy, type PaintLayer, type RasterGrid, type Surface } from "@hackbuild/inlay";
 import { BBoxCache, maskBounds } from "../artboard/bbox-cache.js";
 import { hitTest, layerHandles, px2mm, snapMove, snapRotation, type BBox, type Handles, type Mods, type View } from "../artboard/hit.js";
 import { keyAction, type BoardKey } from "../artboard/keys.js";
@@ -62,6 +62,8 @@ export interface ArtDocOptions {
   readonly slots?: readonly string[];
   /** Palette for composing, FaceContext.palette. */
   readonly palette?: FaceContext["palette"];
+  /** Art lowering policy of the preview and the bounds. A node build sets {fonts: "node", unsupported: "skip"} so the preview shows the layers the build paints (inlay art-lower.ts LowerPolicy). */
+  readonly lower?: LowerPolicy;
   /** Alt is not needed to turn the snap off when this is false. Default true. */
   readonly snap?: boolean;
 }
@@ -129,6 +131,8 @@ export interface ArtDocController {
   bbox(L: ArtLayer): BBox | null;
   drag(): { readonly mode: DragMode; readonly snapped: { readonly x: boolean; readonly y: boolean } | null } | null;
   raster(): Raster;
+  /** The painter layers of the current face as the preview lowers them, in paint order. */
+  lowered(): readonly PaintLayer[];
   slots(): readonly string[];
   grids(): readonly RasterGrid[];
   /** Fonts arrived: drop cached bounds and the preview. */
@@ -252,7 +256,7 @@ export function createArtDoc(opts: ArtDocOptions): ArtDocController {
     const local = { ...L, dx: 0, dy: 0, rot: 0, mute: false, cut: "none" } as ArtLayer;
     return bboxCache.get(local, () => {
       try {
-        const bb = maskBounds(renderLayer(lowerArtLayer(local), ctx(bboxGrid, NEEDS_SURFACE.has(local.kind))), bboxGrid, "bottom");
+        const bb = maskBounds(renderLayer(lowerOne(local), ctx(bboxGrid, NEEDS_SURFACE.has(local.kind))), bboxGrid, "bottom");
         layerNotes.delete(L.id);
         return bb;
       } catch (e) {
@@ -273,20 +277,34 @@ export function createArtDoc(opts: ArtDocOptions): ArtDocController {
   }
   const hit = (x: number, y: number) => hitTest(layers().filter((L) => !L.mute).map((L) => L.id), sel, handlesOf, x, y);
 
+  const lowerOne = (L: ArtLayer): PaintLayer => {
+    const r = lowerArtLayerWith(L, "", opts.lower);
+    if (r.layer === null) throw new Error(r.warnings.map((w) => w.text).join("; "));
+    return r.layer;
+  };
+
+  /** The current face's painter layers, and a line for each layer the policy or a painter refused. */
+  function lowerFace(): { out: PaintLayer[]; notes: string[] } {
+    const out: PaintLayer[] = [];
+    const notes: string[] = [];
+    for (const L of listOf(doc(), face)) {
+      if (!paintable(L) || (L.mute && (L.kind === "image" || L.kind === "relief"))) continue;
+      try {
+        out.push(lowerOne(L));
+      } catch (e) {
+        notes.push(`layer ${L.id} not drawn: ${e instanceof Error ? e.message : String(e)}`);
+      }
+    }
+    return { out, notes };
+  }
+
   function raster(): Raster {
     const d = doc();
     const key = `${face}:${canonicalize(listOf(d, face))}`;
     if (preview === null || preview.key !== key) {
-      faceNotes = [];
-      const out = [];
-      for (const L of listOf(d, face)) {
-        if (!paintable(L) || (L.mute && (L.kind === "image" || L.kind === "relief"))) continue;
-        try {
-          out.push(lowerArtLayer(L));
-        } catch (e) {
-          faceNotes.push(`layer ${L.id} not drawn: ${e instanceof Error ? e.message : String(e)}`);
-        }
-      }
+      const lf = lowerFace();
+      faceNotes = lf.notes;
+      const out = lf.out;
       let composed: ComposedFace;
       try {
         composed = composeFace(out, ctx(previewGrid, out.some((p) => NEEDS_SURFACE.has(p.kind))));
@@ -542,6 +560,7 @@ export function createArtDoc(opts: ArtDocOptions): ArtDocController {
     bbox,
     drag: () => (drag === null ? null : { mode: drag.mode, snapped: drag.snapped }),
     raster,
+    lowered: () => lowerFace().out,
     slots: () => opts.slots ?? [],
     grids: () => [bboxGrid, previewGrid],
     invalidate() { bboxCache.clear(); layerNotes.clear(); preview = null; emit("change"); },

@@ -9,7 +9,8 @@
 
 import { qualify, type Author, type BuildWarning, type Chase, type FitClassId, type MachineView, type Metric, type ParamField, type Ring, type Vec2 } from "@hackbuild/spec";
 import { layerIndex, layerTop, snapLayer, type SkeletonLookup } from "@hackbuild/profile";
-import { circleRing, rrect, rrectRing, snapRing, type Geom } from "@hackbuild/geom";
+import { IDENTITY, circleRing, flattenSvgPath, pointInLoop, ringArea2, rrect, rrectRing, snapRing, type Geom } from "@hackbuild/geom";
+import { lowerArtDocument, lowerArtLayerWith, lowerArtLayersWith } from "@hackbuild/inlay";
 import { commandError as cmdError, didYouMean } from "@hackbuild/spec";
 import { archetypes, placeArchetype } from "@hackbuild/archetypes";
 import { mechApply } from "./mech-apply.js";
@@ -109,7 +110,17 @@ export function makeAuthor(chase: Chase, profile: SkeletonLookup, warnings: Buil
   return {
     profile,
     machine: (id) => machineView(profile, id ?? defaultMachine),
-    ring: { roundRect, circle, offset: geom === undefined ? outsideSlice("ring.offset") : offsetWith(geom) },
+    ring: {
+      roundRect, circle, offset: geom === undefined ? outsideSlice("ring.offset") : offsetWith(geom),
+      contains: (x, y, ring) => pointInLoop([x, y], ring),
+      area2: ringArea2,
+    },
+    path: { flatten: (d, matrix = IDENTITY, o) => flattenSvgPath(d, matrix, o) },
+    art: {
+      lowerLayer: (L, policy) => lowerArtLayerWith(L, "", policy) as ReturnType<Author["art"]["lowerLayer"]>,
+      lowerLayers: (layers, policy) => lowerArtLayersWith(layers, "", policy) as unknown as ReturnType<Author["art"]["lowerLayers"]>,
+      lowerDocument: (doc, policy) => lowerArtDocument(doc, policy) as unknown as ReturnType<Author["art"]["lowerDocument"]>,
+    },
     body: (id, o) => ({
       id, role: o.role, slot: o.slot, base: o.base,
       material: o.material ?? chase.materials.find((m) => m.slot === o.slot)?.material ?? "",

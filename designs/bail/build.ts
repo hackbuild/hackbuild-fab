@@ -25,14 +25,11 @@ import { chase } from "./chase";
 const PRINT_NOTE = "fab-knowledge:originals/bail/evidence/PRINT-NOTES.md, entered 2026-11-02";
 
 /**
- * The family and weight of BAIL's font keys (bail.html FONTS and FONTW, 1068 and 1069); plexb lowers to 700.
- * The node text route carries only IBM Plex Mono (kernels/art-inlay), so marker, elite and vt set in Plex bold
- * and the build says so; the faces return when the route carries them.
+ * The art lowering policy of the node build. The node text route carries only IBM Plex Mono (kernels/art-inlay), so marker,
+ * elite and vt set in Plex bold with a FONT_SWAP warning, and cut, image and relief layers are skipped with LAYER_SKIPPED
+ * where the inlay kind would refuse them. The faces return when the route carries them.
  */
-const FONT = {
-  marker: { family: "IBM Plex Mono", bold: true, swap: "Permanent Marker" }, plexb: { family: "IBM Plex Mono", bold: true }, plex: { family: "IBM Plex Mono", bold: false },
-  elite: { family: "IBM Plex Mono", bold: true, swap: "Special Elite" }, vt: { family: "IBM Plex Mono", bold: true, swap: "VT323" },
-} as const satisfies Record<string, { family: string; bold: boolean; swap?: string }>;
+const LOWER_POLICY = { fonts: "node", unsupported: "skip" } as const;
 
 /**
  * BAIL's own limits, read from the bench and not yet profile rows (README, "numbers awaiting profile rows").
@@ -58,16 +55,6 @@ const limit = (value: number, side: "lo" | "hi", reason: string, source: string,
 const OWNER_RULE = qualifyRow("inferred");
 /** An equation over params and geometry, no profile row read. */
 const COMPUTED = qualify([]);
-
-/** Even-odd containment of a point in a ring. */
-function inRing(x: number, y: number, ring: Ring): boolean {
-  let inside = false;
-  for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
-    const [xi, yi] = ring[i]!, [xj, yj] = ring[j]!;
-    if ((yi > y) !== (yj > y) && x < (xj - xi) * (y - yi) / (yj - yi) + xi) inside = !inside;
-  }
-  return inside;
-}
 
 /** Distance from a point to the nearest edge of a ring, mm. */
 function edgeDist(x: number, y: number, ring: Ring): number {
@@ -164,68 +151,13 @@ function clipChain(pts: readonly Vec2[], z0: number, z1: number): Vec2[] {
   return out;
 }
 
-/** Twice the signed area of a ring: positive counter-clockwise. */
-const area2 = (ring: Ring): number => ring.reduce((a, [x, y], i) => { const [nx, ny] = ring[(i + 1) % ring.length]!; return a + x * ny - nx * y; }, 0);
-
-/** The ring of largest absolute area, or undefined for none. */
-const largest = (rings: readonly Ring[]): Ring | undefined => rings.reduce<Ring | undefined>((best, r) => (best === undefined || Math.abs(area2(r)) > Math.abs(area2(best)) ? r : best), undefined);
-
-/** Points per cubic segment when a path layer is flattened for the die cut silhouette; the silhouette grows by the margin, so the chord error stays under the margin. */
-const CUBIC_STEPS = 12;
-
-/**
- * One ring per subpath of SVG path data, mapped by the matrix [a, b, c, d, e, f] (x' = a x + c y + e). Takes M m L l H h V v C c Z z, which is every command the HeatSync mark uses; any other command is refused.
- */
-function flattenPath(d: string, m: readonly number[]): Ring[] {
-  const tokens = d.match(/[A-Za-z]|[-+]?(?:\d+\.?\d*|\.\d+)(?:[eE][-+]?\d+)?/g) ?? [];
-  const arity: Record<string, number> = { m: 2, l: 2, h: 1, v: 1, c: 6, z: 0 };
-  const [a, b, c, dd, e, f] = m as [number, number, number, number, number, number];
-  const rings: Ring[] = [];
-  let cur: Vec2[] = [];
-  let x = 0, y = 0, sx = 0, sy = 0, cmd = "", i = 0;
-  const put = (): void => { cur.push([a * x + c * y + e, b * x + dd * y + f]); };
-  const close = (): void => { if (cur.length >= 3) rings.push(cur); cur = []; };
-  while (i < tokens.length) {
-    const t = tokens[i]!;
-    if (/[A-Za-z]/.test(t)) {
-      cmd = t; i++;
-      if (t === "z" || t === "Z") { close(); x = sx; y = sy; continue; }
-    } else if (cmd === "") {
-      throw commandError({ code: "E_SCHEMA", path: "/art/d", got: t, expected: "a path command first", hint: "start the path data with M" });
-    }
-    const lower = cmd.toLowerCase(), rel = cmd === lower, n = arity[lower];
-    if (n === undefined) throw commandError({ code: "E_SCHEMA", path: "/art/d", got: cmd, expected: "one of M m L l H h V v C c Z z", hint: "the die cut outline flattens lines and cubics only; convert arcs to curves" });
-    const v = tokens.slice(i, i + n).map(Number);
-    if (v.length < n || v.some((q) => !Number.isFinite(q))) throw commandError({ code: "E_SCHEMA", path: "/art/d", got: tokens.slice(i, i + n).join(" "), expected: `${n} numbers after ${cmd}`, hint: "complete the path data" });
-    i += n;
-    const ox = rel ? x : 0, oy = rel ? y : 0;
-    if (lower === "m") {
-      close(); x = ox + v[0]!; y = oy + v[1]!; sx = x; sy = y; put();
-      cmd = rel ? "l" : "L";
-    } else if (lower === "l") { x = ox + v[0]!; y = oy + v[1]!; put(); }
-    else if (lower === "h") { x = ox + v[0]!; put(); }
-    else if (lower === "v") { y = oy + v[0]!; put(); }
-    else {
-      const x0 = x, y0 = y, p1x = ox + v[0]!, p1y = oy + v[1]!, p2x = ox + v[2]!, p2y = oy + v[3]!, p3x = ox + v[4]!, p3y = oy + v[5]!;
-      for (let s = 1; s <= CUBIC_STEPS; s++) {
-        const q = s / CUBIC_STEPS, u = 1 - q;
-        x = u ** 3 * x0 + 3 * u * u * q * p1x + 3 * u * q * q * p2x + q ** 3 * p3x;
-        y = u ** 3 * y0 + 3 * u * u * q * p1y + 3 * u * q * q * p2y + q ** 3 * p3y;
-        put();
-      }
-    }
-  }
-  close();
-  return rings;
-}
-
-/** Path units to model mm for a path layer, SVG matrix order (bail.html paintLayer scales by w / bw about the centre of the bounds, y up). */
-function pathMatrix(L: { readonly w: number; readonly bw: number; readonly bx: number; readonly by: number; readonly bh: number; readonly rot: number; readonly dx: number; readonly dy: number }): [number, number, number, number, number, number] {
-  const s = L.w / L.bw, cx = L.bx + L.bw / 2, cy = L.by + L.bh / 2, r = L.rot * Math.PI / 180, sn = s * Math.sin(r), cs = s * Math.cos(r);
-  return [cs, sn, sn, -cs, L.dx - (cs * cx + sn * cy), L.dy - (sn * cx + -cs * cy)];
-}
+/** Points per cubic and per quadratic segment when a path layer is flattened for the die cut silhouette; the silhouette grows by the margin, so the chord error stays under the margin. */
+const FLATTEN = { curves: { cubic: 12, quad: 10 }, minPoints: 3 } as const;
 
 export const build = defineBuild(chase, (p, k) => {
+  const area2 = k.ring.area2;
+  /** The ring of largest absolute area, or undefined for none. */
+  const largest = (rings: readonly Ring[]): Ring | undefined => rings.reduce<Ring | undefined>((best, r) => (best === undefined || Math.abs(area2(r)) > Math.abs(area2(best)) ? r : best), undefined);
   const m = k.machine("ffc5p");
   const lh = m.layerHeight;
   const snapUp = (v: number): number => r4(Math.ceil(v / lh - 1e-6) * lh);
@@ -288,7 +220,10 @@ export const build = defineBuild(chase, (p, k) => {
         if (skipped.length > 0) k.warn("OUTLINE_ART_SKIPPED", `die cut outline traces path layers only; ${skipped.map((L) => `${L.id} (${L.kind})`).join(", ")} not traced, so the slide does not follow them`, { param: "/shape" });
         // The face on the bed is read in hand and held against the outline mirrored in x (inlay kind, splitBodies), so the outline of a face down front is the mirror of its art.
         const flip = faceDown ? -1 : 1;
-        const art = front.flatMap((L) => (L.kind === "path" ? flattenPath(L.d, pathMatrix(L)) : [])).map((r): Ring => r.map(([x, y]): Vec2 => [flip * x, y])).map((r): Ring => (area2(r) < 0 ? [...r].reverse() : r));
+        const art = front.flatMap((L) => {
+          const lowered = L.kind === "path" ? (k.art.lowerLayer(L, LOWER_POLICY).layer as { readonly d: string; readonly transform: readonly [number, number, number, number, number, number] } | null) : null;
+          return lowered === null ? [] : k.path.flatten(lowered.d, lowered.transform, FLATTEN);
+        }).map((r): Ring => r.map(([x, y]): Vec2 => [flip * x, y])).map((r): Ring => (area2(r) < 0 ? [...r].reverse() : r));
         const grown = art.length === 0 ? [] : k.ring.offset(art, p.outline, "round").filter((r) => area2(r) > 0);
         const island = largest(grown);
         if (island === undefined) {
@@ -324,34 +259,12 @@ export const build = defineBuild(chase, (p, k) => {
   const slideShape = (z0: number, z1: number): ShapeDecl => ({ route: "prism", outline: [outline], z: [z0, z1] });
 
   // ---- the art document lowered to painter layers (bail.html partsOf and paintLayer, 1282 to 1496)
-  const lowerLayer = (L: ArtLayer): Paint | null => {
-    if (L.cut !== "none") { k.warn("LAYER_SKIPPED", `layer ${L.id} cuts the slide (${L.cut}); the inlay kind carves no cut yet, so it is skipped`); return null; }
-    const flags = L.mute ? { off: true } : {};
-    const place = { dx: L.dx, dy: L.dy, rot: L.rot };
-    switch (L.kind) {
-      case "text": {
-        const f = FONT[L.font], arc = L.arc !== 0;
-        if ("swap" in f) k.warn("FONT_SWAP", `layer ${L.id} asks for ${f.swap}; the node text route sets only IBM Plex Mono, so it is set in Plex bold`);
-        return {
-          kind: "text", text: L.text, slot: L.slot, ...(!arc && L.text.includes("|") ? { accent: L.slot2 } : {}), font: f.family, ...(f.bold ? { bold: true } : {}), size: L.size,
-          runGap: arc ? 0 : L.splitGap, mode: arc ? "arc" : "straight", ...(arc ? { arcR: Math.abs(L.arc), arcDeg: L.arc > 0 ? 90 : -90, flip: L.arc < 0, anchored: true } : {}),
-          ...place, baseline: "middle", ls: L.ls, ...flags,
-        };
-      }
-      case "shape": return { kind: "shape", shape: L.shape, w: L.w, h: L.h, t: L.t, n: L.n, ...place, slot: L.slot, ...flags };
-      case "logo": {
-        if (L.brand === "hsl" && L.slot === L.slot2) throw commandError({ code: "E_SCHEMA", path: `/art/${L.id}/slot2`, got: L.slot2, expected: "a slot other than slot", hint: "the HeatSync mark is two pieces: the sun disc and the flames need different slots" });
-        if (L.brand === "hsl" && L.slot === p.body) k.warn("LOGO_ON_BODY", "the HeatSync flames are on the body slot, so only the disc will show", { param: "/body" });
-        return { kind: "logo", brand: L.brand, w: L.w, ...place, slot: L.slot, slot2: L.slot2, ...flags };
-      }
-      case "scope": return { kind: "scope", a: L.a, b: L.b, phase: L.phase, w: L.w, h: L.h, t: L.t, ...place, slot: L.slot, ...flags };
-      case "circuit": return { kind: "circuit", seed: L.seed, w: L.w, h: L.h, pitch: L.pitch, tw: L.tw, pad: L.pad, drill: L.drill, density: L.density, clip: L.clip, ...place, slot: L.slot, slot2: L.slot2, ...flags };
-      case "path": {
-        return { kind: "path", d: L.d, transform: pathMatrix(L), slot: L.slot, ...flags };
-      }
-      default:
-        k.warn("LAYER_SKIPPED", `layer ${L.id} is an ${L.kind} layer; the image and relief painters are not built, so it is skipped`);
-        return null;
+  // The HeatSync mark is two pieces; its slot rules are this design's, the lowering is the library's.
+  const heatSyncRules = (face: readonly ArtLayer[]): void => {
+    for (const L of face) {
+      if (L.kind !== "logo" || L.brand !== "hsl" || L.cut !== "none") continue;
+      if (L.slot === L.slot2) throw commandError({ code: "E_SCHEMA", path: `/art/${L.id}/slot2`, got: L.slot2, expected: "a slot other than slot", hint: "the HeatSync mark is two pieces: the sun disc and the flames need different slots" });
+      if (L.slot === p.body) k.warn("LOGO_ON_BODY", "the HeatSync flames are on the body slot, so only the disc will show", { param: "/body" });
     }
   };
 
@@ -368,7 +281,12 @@ export const build = defineBuild(chase, (p, k) => {
     }
     return area2(inner) > 0 === area2(outline) > 0 ? inner : [...inner].reverse();
   })();
-  const lowered = (face: readonly ArtLayer[]): Paint[] => face.map(lowerLayer).filter((x): x is Paint => x !== null);
+  const lowered = (face: readonly ArtLayer[]): Paint[] => {
+    heatSyncRules(face);
+    const out = k.art.lowerLayers(face, LOWER_POLICY);
+    for (const w of out.warnings) k.warn(w.code, w.text);
+    return out.layers as Paint[];
+  };
   const front = doc === null ? [] : lowered(doc.faces.front);
   const back = doc === null ? [] : lowered(doc.faces.back);
   // The front prints on the bed when the pose is face down.
@@ -416,7 +334,7 @@ export const build = defineBuild(chase, (p, k) => {
       const padDepth = Math.max(2 * lh, snapL(Math.ceil((p.plateT + 0.1) / lh) * lh));
       const ring = k.ring.roundRect(padW, padH, Math.min(padR, padW / 2, padH / 2), [0, p.padY]);
       // BAIL's padMin (buildSlide, 1770 to 1776): the least distance from the recess to the blank edge, -1 when a recess cell is outside the blank. An edge of the recess holds the least distance because a distance to the outline has no minimum inside it.
-      const padMin = along(ring, 0.1).reduce((least, [x, y]) => Math.min(least, inRing(x, y, outline) ? edgeDist(x, y, outline) : -1), Infinity);
+      const padMin = along(ring, 0.1).reduce((least, [x, y]) => Math.min(least, k.ring.contains(x, y, outline) ? edgeDist(x, y, outline) : -1), Infinity);
       if (padMin < 0) {
         throw commandError({
           code: "E_SCHEMA", path: "/padY", got: `recess leaves the blank, ${padW} x ${padH} mm at offset ${p.padY} mm (computed)`,
@@ -469,7 +387,7 @@ export const build = defineBuild(chase, (p, k) => {
       for (let gx = x0 + px / 2; gx < x1; gx += px) {
         for (let gy = y0 + px / 2; gy < y1; gy += px) {
           footprint++;
-          if (!inRing(gx, gy, outline) || edgeDist(gx, gy, outline) < BRIDGE_EDGE_MM) hanging++;
+          if (!k.ring.contains(gx, gy, outline) || edgeDist(gx, gy, outline) < BRIDGE_EDGE_MM) hanging++;
         }
       }
     }

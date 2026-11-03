@@ -4,6 +4,7 @@
     "noEmit": true,
     "incremental": true,
     "composite": false,
+    "skipLibCheck": true,
     "declaration": false,
     "types": [
       "node"

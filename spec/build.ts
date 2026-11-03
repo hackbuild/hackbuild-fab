@@ -22,6 +22,7 @@ import type {
   Assertion, BodyRole, BoughtBody, BuildWarning, Connection, FrameDecl, JointDecl, Metric, Pose, StackDecl,
 } from "./part-ir.js";
 import type { ProfileLookup } from "./profile.js";
+import type { ArtDocument, ArtLayer } from "./art.js";
 
 /** Base shape of a body, one variant per mesh route (D-053). */
 export type ShapeDecl =
@@ -244,6 +245,25 @@ export interface MachineView {
   line(n: number): Mm;
 }
 
+/** A painter layer of the inlay kind (packages/inlay face.ts), plain data. */
+export type ArtPaintLayer = { readonly kind: string };
+
+/** Art lowering policy. fonts "node" sets a face the node text route lacks (all but IBM Plex Mono) in Plex bold with a FONT_SWAP warning. unsupported "skip" drops cut, image and relief layers with a LAYER_SKIPPED warning where "refuse" throws E_KERNEL. */
+export interface ArtLowerPolicy {
+  readonly fonts?: "face" | "node";
+  readonly unsupported?: "refuse" | "skip";
+}
+
+export interface ArtLowerWarning {
+  readonly code: "FONT_SWAP" | "LAYER_SKIPPED";
+  readonly text: string;
+}
+
+export interface ArtLowered {
+  readonly layer: ArtPaintLayer | null;
+  readonly warnings: readonly ArtLowerWarning[];
+}
+
 /**
  * The authoring surface handed to a build function (@hackbuild/kernel/author),
  * typed at milestone M so part() admits only the kinds FeatureAt<M> allows.
@@ -264,6 +284,30 @@ export interface Author<M extends KindMilestone = "M16"> {
     circle(r: Mm, at?: Vec2, segments?: number): Ring;
     /** Offset by d in mm through manifold CrossSection (D-163). */
     offset(rings: readonly Ring[], d: Mm, join?: "round" | "miter"): readonly Ring[];
+    /** Even-odd containment of the point (x, y), mm, in the ring. */
+    contains(x: Mm, y: Mm, ring: Ring): boolean;
+    /** Twice the signed area of the ring, mm2; positive when counter-clockwise. */
+    area2(ring: Ring): number;
+  };
+  /** SVG path data to rings. */
+  readonly path: {
+    /**
+     * One ring per subpath, each point mapped by the matrix [a, b, c, d, e, f]
+     * (x' = a x + c y + e, y' = b x + d y + f). Subpaths close implicitly.
+     * Lines and, with `curves`, cubics (C c S s) and quadratics (Q q T t) at
+     * a fixed point count per segment; arcs are refused. `minPoints` is the
+     * fewest points a kept ring holds, default 2.
+     */
+    flatten(d: string, matrix?: readonly [number, number, number, number, number, number], o?: { readonly curves?: { readonly cubic: number; readonly quad: number }; readonly minPoints?: number }): Ring[];
+  };
+  /** The art doc (spec/art.ts) lowered to the painter layers an inlay feature takes. */
+  readonly art: {
+    /** One layer under a policy; layer is null when the policy skipped it. */
+    lowerLayer(L: ArtLayer, policy?: ArtLowerPolicy): ArtLowered;
+    /** A list of layers in paint order under a policy; skipped layers are absent. */
+    lowerLayers(layers: readonly ArtLayer[], policy?: ArtLowerPolicy): { readonly layers: ArtPaintLayer[]; readonly warnings: readonly ArtLowerWarning[] };
+    /** Both faces of a checked art doc; a bad doc throws E_SCHEMA. */
+    lowerDocument(doc: ArtDocument, policy?: ArtLowerPolicy): { readonly front: ArtPaintLayer[]; readonly back: ArtPaintLayer[] };
   };
   body(id: string, o: { readonly role: BodyRole; readonly slot: number; readonly base: ShapeDecl; readonly material?: string }): BodyDraft;
   part(o: Omit<PartDraftAt<M>, "frame"> & { readonly frame?: Partial<FrameDecl> }): PartDraftAt<M>;
