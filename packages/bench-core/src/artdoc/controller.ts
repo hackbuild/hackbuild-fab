@@ -256,7 +256,8 @@ export function createArtDoc(opts: ArtDocOptions): ArtDocController {
     const local = { ...L, dx: 0, dy: 0, rot: 0, mute: false, cut: "none" } as ArtLayer;
     return bboxCache.get(local, () => {
       try {
-        const bb = maskBounds(renderLayer(lowerOne(local), ctx(bboxGrid, NEEDS_SURFACE.has(local.kind))), bboxGrid, "bottom");
+        const c = ctx(bboxGrid, NEEDS_SURFACE.has(local.kind));
+        const bb = maskBounds(lowerOne(local).flatMap((p) => renderLayer(p, c)), bboxGrid, "bottom");
         layerNotes.delete(L.id);
         return bb;
       } catch (e) {
@@ -277,10 +278,12 @@ export function createArtDoc(opts: ArtDocOptions): ArtDocController {
   }
   const hit = (x: number, y: number) => hitTest(layers().filter((L) => !L.mute).map((L) => L.id), sel, handlesOf, x, y);
 
-  const lowerOne = (L: ArtLayer): PaintLayer => {
-    const r = lowerArtLayerWith(L, "", opts.lower);
-    if (r.layer === null) throw new Error(r.warnings.map((w) => w.text).join("; "));
-    return r.layer;
+  // The slot colours give palette images their slots unless the host's policy names its own.
+  const policy: LowerPolicy = { ...(opts.slots === undefined ? {} : { palette: opts.slots }), ...opts.lower };
+  const lowerOne = (L: ArtLayer): readonly PaintLayer[] => {
+    const r = lowerArtLayerWith(L, "", policy);
+    if (r.layers.length === 0) throw new Error(r.warnings.map((w) => w.text).join("; "));
+    return r.layers;
   };
 
   /** The current face's painter layers, and a line for each layer the policy or a painter refused. */
@@ -290,7 +293,7 @@ export function createArtDoc(opts: ArtDocOptions): ArtDocController {
     for (const L of listOf(doc(), face)) {
       if (!paintable(L) || (L.mute && (L.kind === "image" || L.kind === "relief"))) continue;
       try {
-        out.push(lowerOne(L));
+        out.push(...lowerOne(L));
       } catch (e) {
         notes.push(`layer ${L.id} not drawn: ${e instanceof Error ? e.message : String(e)}`);
       }

@@ -150,7 +150,8 @@
     "source": "fab-knowledge:originals/bail/files/bail.html",
     "sha256": "4accb6428d31b3e687340ed8e35c2fb5f0edc19307d4090bd37d066474e86ccd",
     "fixes": [
-      "BAIL's partsOf and slotFor (bail.html:1282 to 1296) and paintLayer branches as one lowering from an art layer to a painter layer; muted layers keep their place, pocket cuts, image and relief layers refused"
+      "BAIL's partsOf and slotFor (bail.html:1282 to 1296) and paintLayer branches as one lowering from an art layer to a painter layer; muted layers keep their place, pocket cuts and relief layers refused",
+      "the palette image branch (bail.html:1480 to 1486): each pixel to its nearest slot colour, the body colour included, one traced path layer per slot, through the COLLAR quantizer"
     ],
     "dest": "packages/inlay/src/art-lower.ts"
   },

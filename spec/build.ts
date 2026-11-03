@@ -248,10 +248,11 @@ export interface MachineView {
 /** A painter layer of the inlay kind (packages/inlay face.ts), plain data. */
 export type ArtPaintLayer = { readonly kind: string };
 
-/** Art lowering policy. fonts "node" sets a face the node text route lacks (all but IBM Plex Mono) in Plex bold with a FONT_SWAP warning. unsupported "skip" drops cut, image and relief layers with a LAYER_SKIPPED warning where "refuse" throws E_KERNEL. */
+/** Art lowering policy. fonts "node" sets a face the node text route lacks in Plex bold with a FONT_SWAP warning. unsupported "skip" drops cut and relief layers, and a palette image when palette is absent, with a LAYER_SKIPPED warning where "refuse" throws E_KERNEL. palette is the slot colours as #rrggbb, slot 1 first; a palette image sends each pixel to the nearest. */
 export interface ArtLowerPolicy {
   readonly fonts?: "face" | "node";
   readonly unsupported?: "refuse" | "skip";
+  readonly palette?: readonly string[];
 }
 
 export interface ArtLowerWarning {
@@ -259,8 +260,9 @@ export interface ArtLowerWarning {
   readonly text: string;
 }
 
+/** One art layer lowered: its painter layers (none when skipped, one per slot hit for a palette image, one otherwise). */
 export interface ArtLowered {
-  readonly layer: ArtPaintLayer | null;
+  readonly layers: readonly ArtPaintLayer[];
   readonly warnings: readonly ArtLowerWarning[];
 }
 
@@ -302,7 +304,7 @@ export interface Author<M extends KindMilestone = "M16"> {
   };
   /** The art doc (spec/art.ts) lowered to the painter layers an inlay feature takes. */
   readonly art: {
-    /** One layer under a policy; layer is null when the policy skipped it. */
+    /** One layer under a policy; layers is empty when the policy skipped it. */
     lowerLayer(L: ArtLayer, policy?: ArtLowerPolicy): ArtLowered;
     /** A list of layers in paint order under a policy; skipped layers are absent. */
     lowerLayers(layers: readonly ArtLayer[], policy?: ArtLowerPolicy): { readonly layers: ArtPaintLayer[]; readonly warnings: readonly ArtLowerWarning[] };

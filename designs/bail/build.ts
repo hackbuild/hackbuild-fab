@@ -27,9 +27,17 @@ const PRINT_NOTE = "fab-knowledge:originals/bail/evidence/PRINT-NOTES.md, entere
 /**
  * The art lowering policy of the node build. The node text route carries IBM Plex Mono, Permanent Marker, Special Elite
  * and VT323 (geom TEXT_FACES), so every BAIL font key sets in its own face; a key the route lacked would set in Plex bold
- * with a FONT_SWAP warning. Cut, image and relief layers are skipped with LAYER_SKIPPED where the inlay kind would refuse them.
+ * with a FONT_SWAP warning. Cut and relief layers are skipped with LAYER_SKIPPED where the inlay kind would refuse them.
+ * A palette image sends each pixel to the nearest of the slots before the first flex slot, the art and body filaments
+ * (slots 1 to 3 here): BAIL's hackbuild preset also counts the TPU grip slot (bail.html:1165), which would print the
+ * darkest pixels of the face in TPU.
  */
-const LOWER_POLICY = { fonts: "node", unsupported: "skip" } as const;
+const SLOTS = [...chase.materials].sort((a, b) => a.slot - b.slot);
+const FIRST_FLEX = SLOTS.findIndex((s) => s.role === "flex");
+const LOWER_POLICY = {
+  fonts: "node", unsupported: "skip",
+  palette: (FIRST_FLEX < 0 ? SLOTS : SLOTS.slice(0, FIRST_FLEX)).map((s) => s.preview),
+} as const;
 
 /**
  * BAIL's own limits, read from the bench and not yet profile rows (README, "numbers awaiting profile rows").
@@ -221,8 +229,8 @@ export const build = defineBuild(chase, (p, k) => {
         // The face on the bed is read in hand and held against the outline mirrored in x (inlay kind, splitBodies), so the outline of a face down front is the mirror of its art.
         const flip = faceDown ? -1 : 1;
         const art = front.flatMap((L) => {
-          const lowered = L.kind === "path" ? (k.art.lowerLayer(L, LOWER_POLICY).layer as { readonly d: string; readonly transform: readonly [number, number, number, number, number, number] } | null) : null;
-          return lowered === null ? [] : k.path.flatten(lowered.d, lowered.transform, FLATTEN);
+          const lowered = L.kind === "path" ? (k.art.lowerLayer(L, LOWER_POLICY).layers as unknown as readonly { readonly d: string; readonly transform: readonly [number, number, number, number, number, number] }[]) : [];
+          return lowered.flatMap((q) => k.path.flatten(q.d, q.transform, FLATTEN));
         }).map((r): Ring => r.map(([x, y]): Vec2 => [flip * x, y])).map((r): Ring => (area2(r) < 0 ? [...r].reverse() : r));
         const grown = art.length === 0 ? [] : k.ring.offset(art, p.outline, "round").filter((r) => area2(r) > 0);
         const island = largest(grown);
@@ -295,7 +303,7 @@ export const build = defineBuild(chase, (p, k) => {
   // ---- the host and the inlay features
   const slide = k.body("slide", { role: "body", slot: p.body, material: slotMaterial(p.body), base: { route: "prism", outline: [rimBody ? rimInner : outline], z: [0, thk] } });
   const top: FaceFrame = { origin: [0, 0, thk], normal: [0, 0, 1], u: [1, 0, 0] };
-  const palette = [...chase.materials].sort((a, b) => a.slot - b.slot).map((s) => s.preview);
+  const palette = SLOTS.map((s) => s.preview);
   const used = new Set<number>();
   for (const l of [...front, ...back]) {
     if (l["off"] === true) continue;

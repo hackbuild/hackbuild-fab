@@ -59,12 +59,13 @@ describe("bail art lowering", () => {
     const face = { marker: "Permanent Marker", elite: "Special Elite", vt: "VT323" } as const;
     for (const [font, family] of Object.entries(face)) {
       const out = k.art.lowerLayer({ id: "t", kind: "text", text: "ab", font, slot: 1, slot2: 1, size: 4, ls: 0, arc: 0, splitGap: 0, dx: 0, dy: 0, rot: 0, mute: false, cut: "none" } as never, POLICY);
-      expect(out.layer).toMatchObject({ kind: "text", font: family });
-      expect((out.layer as { bold?: boolean }).bold ?? false).toBe(false);
+      expect(out.layers).toHaveLength(1);
+      expect(out.layers[0]).toMatchObject({ kind: "text", font: family });
+      expect((out.layers[0] as { bold?: boolean }).bold ?? false).toBe(false);
       expect(out.warnings).toEqual([]);
     }
     const cut = k.art.lowerLayer({ id: "c", kind: "shape", shape: "ring", w: 5, h: 5, t: 1, n: 3, slot: 1, dx: 0, dy: 0, rot: 0, mute: false, cut: "through" } as never, POLICY);
-    expect(cut.layer).toBeNull();
+    expect(cut.layers).toEqual([]);
     expect(cut.warnings.map((w) => w.code)).toEqual(["LAYER_SKIPPED"]);
   });
 });

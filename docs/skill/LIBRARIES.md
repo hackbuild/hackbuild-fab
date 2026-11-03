@@ -248,7 +248,7 @@ k.path.flatten(d: string, matrix?: readonly [number, number, number, number, num
 ```
 
 ```ts
-/** One layer under a policy; layer is null when the policy skipped it. */
+/** One layer under a policy; layers is empty when the policy skipped it. */
 k.art.lowerLayer(L: ArtLayer, policy?: ArtLowerPolicy): ArtLowered
 ```
 
