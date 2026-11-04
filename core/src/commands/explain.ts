@@ -80,16 +80,19 @@ function knowledgeIds(root: string): string[] {
   return out.sort();
 }
 
-/** The registered feature kinds: every package kind (core/src/kinds.ts) and the draft kinds of DRAFT_KIND_DIRS. */
+/**
+ * The registered feature kinds: every package kind (core/src/kinds.ts), those a design registers on use included,
+ * then the draft kinds of DRAFT_KIND_DIRS that no package kind names. One entry per kind; the package kind wins.
+ */
 async function featureKinds(root: string): Promise<AnyFeatureKindDef[]> {
-  const kinds: AnyFeatureKindDef[] = Object.values(PACKAGE_KINDS).flatMap((e) => [...(e?.kinds ?? [])]);
+  const kinds: AnyFeatureKindDef[] = Object.values(PACKAGE_KINDS).flatMap((e) => [...(e?.kinds ?? []), ...(e?.onUse ?? [])]);
   for (const dir of DRAFT_KIND_DIRS) {
     const file = path.join(root, dir, "skeleton-kinds.ts");
     if (!existsSync(file)) continue;
     const mod = (await import(pathToFileURL(file).href)) as { SKELETON_KINDS: Record<string, AnyFeatureKindDef> };
     kinds.push(...Object.values(mod.SKELETON_KINDS));
   }
-  return kinds;
+  return kinds.filter((k, i) => kinds.findIndex((x) => x.kind === k.kind) === i);
 }
 
 /** What the resolver reads in a workspace: its store, check seed, kinds, profile and knowledge records. */
