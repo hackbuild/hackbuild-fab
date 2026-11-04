@@ -13,6 +13,12 @@
 // stays with the PIP design (M10); only their squeeze is a fits row here.
 // Wire mode and its cups are not ported: the cup claim is retired (D-096)
 // and GUDGEON's header cups are the candidate seats/rp2040-zero-header-cups.
+//
+// The seated board is a SeatBoard: the RP2040-Zero, whose pads come from
+// zeroPads and the seat params as PIP draws them, or the Raspberry Pi Pico
+// (pico-seat, D-667), whose pads are the catalog row's resolved KiCad
+// footprint (packages/catalog/data/modules/pico/pins.json), two columns of
+// 20 castellations. The press mechanism is the same for both.
 
 import { z } from "zod";
 import { commandError, type ApplyIn, type ApplyOut, type DerivedValue, type PortTap, type ProfileLookup, type SchemaLike, type Vec2 } from "@hackbuild/spec";
@@ -22,8 +28,9 @@ import {
 } from "./common.js";
 import { Emit } from "./emit.js";
 import zeroRow from "@hackbuild/catalog/data/modules/rp2040-zero.json" with { type: "json" };
+import picoPins from "@hackbuild/catalog/data/modules/pico/pins.json" with { type: "json" };
 
-/** The seated board's catalog row id, its MCU, and its pin centres (row frame: top view, USB toward +y, origin at the board centre). */
+/** The RP2040-Zero's catalog row id and its MCU (row frame: top view, USB toward +y, origin at the board centre). */
 export const SEAT_BOARD = { id: zeroRow.id, mcu: zeroRow.mcu } as const;
 
 /** The pin centre of `name` from the catalog row, mm; E_REF when the row has no such pin. */
@@ -103,7 +110,71 @@ export type SeatParams = z.infer<typeof seatParams>;
 export const SEAT_PARAMS = seatParams as unknown as SchemaLike<unknown, SeatParams>;
 export const SEAT_DEFAULTS: SeatParams = seatParams.parse({});
 
+// The pico-seat params (defs/pico-seat.ts): the board 21 by 51 by 1 mm (vendor, Pico datasheet section 2, BOSS parts.js line 18).
+/** Pico defaults over the PIP seat params. usbH and usbOver are inferred (see the file header). */
+export const picoSeatParams = seatParams.extend({
+  L: z.number().positive().default(51),
+  W: z.number().positive().default(21),
+  T: z.number().positive().default(1),
+  // Castellation centres 1.61 in from the long edges: (21 - 17.78) / 2 (computed from the footprint). Sets the back window; the pads come from the footprint.
+  inset: z.number().positive().default(1.61),
+  // A micro-B receptacle on the board top; 3.0 errs tall so the pocket clears it (inferred, not read from a Pico drawing).
+  usbH: z.number().positive().default(3.0),
+  // The receptacle past the board's USB end (inferred, not read from a Pico drawing).
+  usbOver: z.number().nonnegative().default(1.0),
+  // Ground, the 3.3 V rail and four keys on the first GPIOs of the left column.
+  nets: z.record(z.string().min(1), z.string().min(1)).default({ GND: "GND", "3V3": "3V3", K0: "GPIO2", K1: "GPIO3", K2: "GPIO4", K3: "GPIO5" }),
+});
+export type PicoSeatParams = z.infer<typeof picoSeatParams>;
+
+/** The params the seat reads when nothing is set. */
+export const PICO_SEAT_DEFAULTS: PicoSeatParams = picoSeatParams.parse({});
+
+/** The warning every Pico seat build carries until usbH and usbOver are measured. */
+export const PICO_USB_INFERRED = "pico seat: micro-USB height and overhang are inferred (usbH 3.0, usbOver 1.0 mm), not read from a Pico drawing or STEP; measure one board and set them";
+
 export interface ZeroPad { readonly name: string; readonly x: number; readonly y: number; readonly edge: "L" | "T" | "R"; readonly num: number }
+
+/** A pad the seat can land a contact on: name unique on the board, the catalog pin name the port carries, centre in the seat frame (USB toward +y), edge and vendor number. */
+export interface SeatPad extends ZeroPad { readonly pin: string }
+
+/** The board a seat holds: catalog row, MCU, its pads under the params, and where a pad's pin lands for the port tap. */
+export interface SeatBoard {
+  readonly id: string;
+  readonly mcu: string;
+  /** What a pad is, for an error: "an RP2040-Zero castellation". */
+  readonly padLabel: string;
+  pads(S: Pick<SeatParams, "W" | "L" | "inset" | "pitch">): SeatPad[];
+  pin(pad: SeatPad): Vec2;
+}
+
+/** The RP2040-Zero: PIP's pads, the catalog row's pin centres for the taps. */
+export const ZERO_BOARD: SeatBoard = {
+  id: zeroRow.id, mcu: zeroRow.mcu, padLabel: "an RP2040-Zero castellation",
+  pads: (S) => zeroPads(S).map((p) => ({ ...p, pin: p.name })),
+  pin: (pad) => boardPin(pad.name),
+};
+
+/**
+ * The Raspberry Pi Pico from its resolved footprint: pad n of the left column
+ * (x under 0) or the right. A pin name the board repeats (GND, 7 pads) names
+ * its lowest numbered pad; the others are named name.n, GND.8 for pad 8.
+ */
+export function picoPads(): SeatPad[] {
+  const seen = new Set<string>();
+  return [...picoPins.pins].sort((a, b) => a.n - b.n).map((q): SeatPad => {
+    const name = seen.has(q.name) ? `${q.name}.${q.n}` : q.name;
+    seen.add(q.name);
+    return { name, pin: q.name, x: q.at[0] as number, y: q.at[1] as number, edge: (q.at[0] as number) < 0 ? "L" : "R", num: q.n };
+  });
+}
+
+/** The Pico; its pads and taps are the footprint's, whatever the board params say. */
+export const PICO_BOARD: SeatBoard = {
+  id: picoPins.id, mcu: picoPins.mcu, padLabel: "a Raspberry Pi Pico castellation",
+  pads: () => picoPads(),
+  pin: (pad) => [pad.x, pad.y],
+};
 
 /** zeroPads, layout.js lines 10 to 21: 23 castellations, top view, USB toward +y, origin at the board centre. */
 export function zeroPads(B: Pick<SeatParams, "W" | "L" | "inset" | "pitch">): ZeroPad[] {
@@ -120,12 +191,12 @@ export function zeroPads(B: Pick<SeatParams, "W" | "L" | "inset" | "pitch">): Ze
 }
 
 /** The used pads in pad order, each with its net (layout.js lines 393 to 417); an unknown pad or a pad named twice is E_SCHEMA. */
-export function usedPads(S: SeatParams): { pad: ZeroPad; net: string }[] {
-  const pads = zeroPads(S);
+export function usedPads(S: SeatParams, board: SeatBoard = ZERO_BOARD): { pad: SeatPad; net: string }[] {
+  const pads = board.pads(S);
   const byName = new Map(pads.map((p) => [p.name, p] as const));
   const seen = new Map<string, string>();
   for (const [net, pad] of Object.entries(S.nets)) {
-    if (!byName.has(pad)) throw commandError({ code: "E_SCHEMA", path: `/params/nets/${net}`, got: pad, didYouMean: [...byName.keys()], expected: "an RP2040-Zero castellation", hint: `assign ${net} to one of the 23 castellations` });
+    if (!byName.has(pad)) throw commandError({ code: "E_SCHEMA", path: `/params/nets/${net}`, got: pad, didYouMean: [...byName.keys()], expected: board.padLabel, hint: `assign ${net} to one of the ${pads.length} castellations` });
     if (seen.has(pad)) throw commandError({ code: "E_SCHEMA", path: `/params/nets/${net}`, got: pad, expected: "each pad once", hint: `${pad} is assigned to both ${seen.get(pad) ?? ""} and ${net}; give one of them another pad` });
     seen.set(pad, net);
   }
@@ -178,7 +249,7 @@ export function seatFits(S: SeatParams, s: PipStack): FitRow[] {
   return rows;
 }
 
-export function seatDerive(S: SeatParams, profile: ProfileLookup, machine = "ffc5p"): Record<string, DerivedValue> {
+export function seatDerive(S: SeatParams, profile: ProfileLookup, machine = "ffc5p", board: SeatBoard = ZERO_BOARD): Record<string, DerivedValue> {
   const s = pipStack(profile, machine, { body: "petg", trace: "cpla" });
   const zz = seatZ(S, s);
   const out: Record<string, DerivedValue> = {
@@ -186,13 +257,13 @@ export function seatDerive(S: SeatParams, profile: ProfileLookup, machine = "ffc
     pocketNeed: dv(zz.pocketNeed, "mm", "floor + stand + T + usbH + clr", s.tiers),
     top: dv(zz.top, "mm", "snapUp(max(pocket need, floor + 1.44), layer) unless top is set", s.tiers),
     boardTop: dv(zz.boardTop, "mm", "floor + stand + T", s.tiers),
-    usedPads: dv(usedPads(S).length, "count", "pads with a net", []),
+    usedPads: dv(usedPads(S, board).length, "count", "pads with a net", []),
   };
   for (const r of seatFits(S, s)) if (r.n !== null) out[`fits.${r.name}`] = dv(r.n, r.unit ?? "mm", `${r.group}: ${r.name}`, []);
   return out;
 }
 
-export function seatApply(input: ApplyIn<SeatParams>, id: string): ApplyOut {
+export function seatApply(input: ApplyIn<SeatParams>, id: string, board: SeatBoard = ZERO_BOARD): ApplyOut {
   const S = input.params;
   const s = pipStack(input.profile, input.draft.machine, { body: "petg", trace: "cpla" });
   const f = frameOf(input.face, id);
@@ -211,8 +282,8 @@ export function seatApply(input: ApplyIn<SeatParams>, id: string): ApplyOut {
   const loc = locateFit(input.profile);
   // Pocket, back window and USB notch, cut down from the host top (model.js lines 189 to 198).
   e.pocket("pocket.board", rect(pk.x0, pk.y0, pk.x1, pk.y1), top, top - zz.pocketFloor, loc, S.clr);
-  const used = usedPads(S);
-  const pads = zeroPads(S);
+  const used = usedPads(S, board);
+  const pads = board.pads(S);
   const rowX = hw - S.inset;
   if (S.window && !zz.socket) {
     const yT = Math.min(...pads.map((p) => p.y));
@@ -235,10 +306,10 @@ export function seatApply(input: ApplyIn<SeatParams>, id: string): ApplyOut {
     // The port is the net tap where the board pin lands: the catalog row's pin
     // centre, placed by the seat frame, on the contact face (the bump top the
     // board stands on, or the socket bore floor the header pin reaches).
-    const pin = place(f, [boardPin(pad.name)])[0] as Vec2;
+    const pin = place(f, [board.pin(pad)])[0] as Vec2;
     const tap: PortTap = zz.socket
-      ? { conductor: `conductor.socket${pad.name}`, at: [pin[0], pin[1], floor + 0.72], board: SEAT_BOARD.id, mcu: SEAT_BOARD.mcu, pin: pad.name, contact: "socket", pressMm: S.pinLen }
-      : { conductor: `conductor.bump${pad.name}`, at: [pin[0], pin[1], zz.boardZ], board: SEAT_BOARD.id, mcu: SEAT_BOARD.mcu, pin: pad.name, contact: "bump", pressMm: S.press };
+      ? { conductor: `conductor.socket${pad.name}`, at: [pin[0], pin[1], floor + 0.72], board: board.id, mcu: board.mcu, pin: pad.pin, contact: "socket", pressMm: S.pinLen }
+      : { conductor: `conductor.bump${pad.name}`, at: [pin[0], pin[1], zz.boardZ], board: board.id, mcu: board.mcu, pin: pad.pin, contact: "bump", pressMm: S.press };
     e.feature({ kind: "port", id: `port.${pad.name}`, net, type: net === "GND" ? "gnd" : net === "3V3" || net === "5V" ? "power" : "signal", interface: "digital", tap });
   }
 
@@ -247,7 +318,7 @@ export function seatApply(input: ApplyIn<SeatParams>, id: string): ApplyOut {
   for (const side of ["L", "T", "R"] as const) {
     const list = pads.filter((p) => p.edge === side).sort((a, b) => a.num - b.num);
     for (let i = 0; i + 1 < list.length; i++) {
-      const a1 = list[i] as ZeroPad, a2 = list[i + 1] as ZeroPad;
+      const a1 = list[i] as SeatPad, a2 = list[i + 1] as SeatPad;
       if (!usedNames.has(a1.name) || !usedNames.has(a2.name)) continue;
       const mx = (a1.x + a2.x) / 2, my = (a1.y + a2.y) / 2;
       const along = side === "T";

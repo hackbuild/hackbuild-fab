@@ -155,6 +155,9 @@
       "path": "reference/fit/window-channel"
     },
     {
+      "path": "reference/seats/pico-pressfit"
+    },
+    {
       "path": "reference/cosmetic/art-layers"
     },
     {

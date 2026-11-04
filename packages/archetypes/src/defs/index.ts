@@ -30,6 +30,7 @@ import { membraneSliderThinpot } from "./membrane-slider-thinpot.js";
 import { membraneSliderWall } from "./membrane-slider-wall.js";
 import { mosfetLowSideGate } from "./mosfet-low-side-gate.js";
 import { piHatCarrier } from "./pi-hat-carrier.js";
+import { picoSeat } from "./pico-seat.js";
 import { printedPullupMeander } from "./printed-pullup-meander.js";
 import { printedRotaryPot } from "./printed-rotary-pot.js";
 import { resolverDial } from "./resolver-dial.js";
@@ -68,6 +69,7 @@ export const ARCHETYPE_DEFS: readonly ArchetypeDef[] = [
   membraneSliderWall,
   mosfetLowSideGate,
   piHatCarrier,
+  picoSeat,
   printedPullupMeander,
   printedRotaryPot,
   resolverDial,

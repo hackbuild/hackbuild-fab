@@ -1936,7 +1936,7 @@ fails on drift. Until then each row names the method that produced it.
 | seeded mechanisms | 24 (11 with no inputs, governs or derived; 5 with only id, family and provenance) | `packages/mechanisms/seed/mechanisms.seed.yaml` |
 | seeded archetypes | 29 | `packages/archetypes/seed/archetypes.seed.yaml` |
 | registered mechanisms | 107 (candidate 88, typed 19) | def files under `packages/mechanisms/src/defs/` by their `status` |
-| registered archetypes | 109 (candidate 97, proven 11, unproven 1), plus 2 seed ids resolved by alias | def files under `packages/archetypes/src/defs/` by their `status`; alias rows of `packages/archetypes/src/aliases.ts` |
+| registered archetypes | 110 (candidate 97, proven 12, unproven 1), plus 2 seed ids resolved by alias | def files under `packages/archetypes/src/defs/` by their `status`; alias rows of `packages/archetypes/src/aliases.ts` |
 | spec commands, MCP tools | 35, 21 | string-literal members of `CommandName` and `McpToolName` in `spec/commands.ts` |
 | knowledge files | 113, with 432,950 words | tracked files under `knowledge/` outside `knowledge/references/`; words as `wc -w` splits them |
 | reference words | 17,277 | tracked files under `knowledge/references/`; words as `wc -w` splits them |

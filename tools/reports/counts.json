@@ -5,10 +5,10 @@
       "aliases": 2,
       "byStatus": {
         "candidate": 97,
-        "proven": 11,
+        "proven": 12,
         "unproven": 1
       },
-      "registered": 109
+      "registered": 110
     },
     "mechanisms": {
       "byStatus": {

@@ -2844,6 +2844,60 @@
       "metrics": []
     },
     {
+      "build": "reference/seats/pico-pressfit",
+      "part": "body",
+      "metrics": [
+        {
+          "id": "pico-seat.0.host.top",
+          "gate": "informational"
+        },
+        {
+          "id": "pico-seat.0.seat.boardZ",
+          "gate": "informational"
+        },
+        {
+          "id": "pico-seat.0.seat.boardTop",
+          "gate": "informational"
+        },
+        {
+          "id": "pico-seat.0.seat.cableEdge",
+          "gate": "informational"
+        },
+        {
+          "id": "pico-seat.0.seat.fits.pocket-around-the-board",
+          "gate": "informational"
+        },
+        {
+          "id": "pico-seat.0.seat.fits.bump-height",
+          "gate": "informational"
+        },
+        {
+          "id": "pico-seat.0.seat.fits.bezel-squeeze-on-the-board",
+          "gate": "informational"
+        },
+        {
+          "id": "pico-seat.0.seat.fits.bump-to-bump",
+          "gate": "informational"
+        },
+        {
+          "id": "pico-seat.0.seat.fits.clearance-under-the-board",
+          "gate": "informational"
+        },
+        {
+          "id": "pico-seat.0.seat.fits.opening",
+          "gate": "informational"
+        },
+        {
+          "id": "pico-seat.0.seat.fits.opening-height",
+          "gate": "informational"
+        },
+        {
+          "id": "pico-seat.0.seat.fits.datum-corner",
+          "gate": "informational"
+        }
+      ]
+    },
+    {
       "build": "reference/seats/rp2040-zero-pressfit",
       "part": "body",
       "metrics": [
