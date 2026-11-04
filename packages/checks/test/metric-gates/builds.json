@@ -1983,6 +1983,11 @@
       ]
     },
     {
+      "build": "reference/fit/window-channel",
+      "part": "window-channel",
+      "metrics": []
+    },
+    {
       "build": "reference/joints/balance-beam",
       "part": "balance-beam",
       "metrics": []

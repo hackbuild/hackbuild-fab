@@ -1,0 +1,1 @@
+{"expect":{"changed":["block"],"metricDelta":{},"unchanged":[],"verdicts":[{"from":"pass","id":"CHK-SHP-03","legal":{"kind":"boolean","must":true},"measured":false,"target":{"feature":"window.channel","level":"feature","part":"window-channel"},"to":"fail"}]},"from":4.5,"pointer":"/chanW","to":9.5}
