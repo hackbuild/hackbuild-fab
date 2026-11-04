@@ -32,7 +32,7 @@ export const check = defineCheck<"feature", "window">({
       const span = roof ?? openingSpan([f.outline], CELL_MM)?.spanMm ?? 0;
       return [boolFinding(at, span < FLAT_MAX_MM,
         `a flat window roof bridges its opening; under ${fmt(FLAT_MAX_MM)} mm it carries itself`,
-        roof === null ? { roof: "flat", spanMm: Number(span.toFixed(3)), gridMm: CELL_MM } : { roof: "flat", spanMm: Number(span.toFixed(3)), face: "vertical" })];
+        roof === null ? { roof: "flat", spanMm: Number(span.toFixed(3)), flatMaxMm: FLAT_MAX_MM, gridMm: CELL_MM } : { roof: "flat", spanMm: Number(span.toFixed(3)), flatMaxMm: FLAT_MAX_MM, face: "vertical" })];
     }
     const angle = need(f.roofAngleDeg, `/features/${f.id}/roofAngleDeg`, `a ${f.roof} roof states its angle from horizontal`);
     const limit = overhangLimit(ctx.profile);
