@@ -1,15 +1,17 @@
 # seats pico-pressfit
 
 The reference for the `pico-seat` archetype (D-667): PIP's press seat with
-bump contacts (pip.md 5.7, the same code as `rp2040-zero-seat`, src/pip/seat.ts)
-holding a Raspberry Pi Pico. The board sits component side up on conductive
-PLA bumps under its used castellations, USB toward the notch in the cable edge;
-every other castellation lands on bare PETG. The pads are the catalog row's
-KiCad footprint (`packages/catalog/data/modules/pico/pins.json`, resolved from
-`RaspberryPi_Pico_Common_THT` by `tools/catalog/resolve-pins.mjs`), two
-columns of 20 at 17.78 mm. The body is 32 by 62 mm of PETG with the PIP buried
-stack; its top is left to the seat (9.6 mm, the pocket need snapped up a
-layer, computed).
+bump contacts holding a Raspberry Pi Pico, in a PETG body with the PIP buried
+stack.
+
+The seat is the same code as `rp2040-zero-seat` (pip.md 5.7, src/pip/seat.ts).
+The board sits component side up over conductive PLA bumps under its used
+castellations, USB toward the notch in the cable edge; every other castellation
+lands on bare PETG. The pads are the catalog row's KiCad footprint
+(`packages/catalog/data/modules/pico/pins.json`, resolved from
+`RaspberryPi_Pico_Common_THT` by `tools/catalog/resolve-pins.mjs`), 20 a
+column at 17.78 mm. The body is 32 by 62 mm; its top is left to the seat
+(9.6 mm, the pocket need snapped up a layer, computed).
 
 covers: ['archetype:pico-seat']
 
@@ -51,15 +53,15 @@ Nothing. The seat has not been printed and no Pico has been pressed into it.
 - The pad centres equal the KiCad footprint's
   (`packages/catalog/test/resolved-pins.test.ts`); pad 1 at (-8.89, 24.13) and
   pad 40 at (8.89, 24.13) mm, USB toward +y.
-- A top and an iso render read by an agent: five bumps on the left column,
+- A top and an iso render looked at by an agent: five bumps on the left column,
   one on the right level with pad 5, the notch at the USB end. That is an
-  agent read, not a person's look (D-154).
+  agent's look, not a person's (D-154).
 
 ### Not verified by anything
 
 - The micro-USB height and overhang, which set the pocket depth and the cable
   edge: inferred, with no Pico drawing or STEP in the repo. Measure one board.
-- Whether the castellations of a Pico seat on 0.48 mm bumps and read through
-  the cPLA path: the RP2040-Zero seat's read path is the evidence, not this
+- Whether a Pico's castellations seat on 0.48 mm bumps and conduct through
+  the cPLA path: the RP2040-Zero seat's path is the evidence, not this
   board.
 - A slice, a print and a person looking at the render.
