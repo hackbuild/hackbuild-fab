@@ -158,6 +158,9 @@
       "path": "reference/seats/pico-pressfit"
     },
     {
+      "path": "reference/keys/key-bed"
+    },
+    {
       "path": "reference/cosmetic/art-layers"
     },
     {

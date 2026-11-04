@@ -39,8 +39,10 @@ covers: ['archetype:pico-seat']
 ### Verified on this machine
 
 - 2026-11-03: `npx --no-install hbf parity reference/seats/pico-pressfit`
-  exits 0 at build 15334c..27 against the goldens written that day (the first
-  goldens of this reference). The RP2040-Zero seat's references hold parity
+  exits 0 at build d76902..1a against the goldens re-accepted that day after the
+  build stopped repeating the seat's warnings (Author.arch passes them on);
+  defHash only, all 29 mesh hashes and volumes equal (computed). The first
+  goldens were build 15334c..27. The RP2040-Zero seat's references hold parity
   after the seat took a board descriptor (rp2040-zero-pressfit f88493..61,
   midi-pad 23ed1b..45, computed).
 

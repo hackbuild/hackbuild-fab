@@ -4,7 +4,8 @@
 // board centre and reports the cable edge (seat.cableEdge) and the host top
 // it used (host.top); the body's +y edge stands on the first and the body
 // rises to the second. Each bump stands on a routed terminal, so every used
-// castellation is one net piece. Conditionals live here (D-178).
+// castellation is one net piece. Author.arch passes the seat's warnings on.
+// Conditionals live here (D-178).
 
 import { defineBuild } from "@hackbuild/spec";
 import { chase } from "./chase";
@@ -22,7 +23,6 @@ export const build = defineBuild(chase, (p, k) => {
   };
   const edge = metric("seat.cableEdge"), top = metric("host.top");
   const body = k.body("body", { role: "body", slot: 1, base: { route: "prism", outline: [[[-p.W / 2, edge - p.H], [p.W / 2, edge - p.H], [p.W / 2, edge], [-p.W / 2, edge]]], z: [0, top] } });
-  for (const w of out.warnings ?? []) k.warn(w.code, w.text, w.param === undefined ? {} : { param: w.param });
   return k.part({
     id: "body", name: "PICO PRESS SEAT", process: "fdm", machine: "ffc5p",
     frame: { originOnAxis: false, carriesOffset: false, pose: "print" },

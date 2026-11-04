@@ -2409,6 +2409,524 @@
       ]
     },
     {
+      "build": "reference/keys/key-bed",
+      "part": "bed",
+      "metrics": [
+        {
+          "id": "pico-seat.0.host.top",
+          "gate": "informational"
+        },
+        {
+          "id": "pico-seat.0.seat.boardZ",
+          "gate": "informational"
+        },
+        {
+          "id": "pico-seat.0.seat.boardTop",
+          "gate": "informational"
+        },
+        {
+          "id": "pico-seat.0.seat.cableEdge",
+          "gate": "informational"
+        },
+        {
+          "id": "pico-seat.0.seat.fits.pocket-around-the-board",
+          "gate": "informational"
+        },
+        {
+          "id": "pico-seat.0.seat.fits.bump-height",
+          "gate": "informational"
+        },
+        {
+          "id": "pico-seat.0.seat.fits.bezel-squeeze-on-the-board",
+          "gate": "informational"
+        },
+        {
+          "id": "pico-seat.0.seat.fits.bump-to-bump",
+          "gate": "informational"
+        },
+        {
+          "id": "pico-seat.0.seat.fits.clearance-under-the-board",
+          "gate": "informational"
+        },
+        {
+          "id": "pico-seat.0.seat.fits.opening",
+          "gate": "informational"
+        },
+        {
+          "id": "pico-seat.0.seat.fits.opening-height",
+          "gate": "informational"
+        },
+        {
+          "id": "pico-seat.0.seat.fits.datum-corner",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.0.host.top",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.0.key.travel",
+          "gate": "CHK-KEY-01"
+        },
+        {
+          "id": "flex-cone-key.0.key.height",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.0.key.rsb",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.0.key.wallH",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.0.key.feel",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.0.key.R.switch",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.0.key.fits.contact-gap",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.0.key.fits.cap-bridge",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.0.key.fits.split-between-halves",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.0.key.fits.column-to-cone-wall",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.0.key.fits.face-through-bezel-hole",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.0.key.fits.stands-proud-of-the-bezel",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.1.host.top",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.1.key.travel",
+          "gate": "CHK-KEY-01"
+        },
+        {
+          "id": "flex-cone-key.1.key.height",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.1.key.rsb",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.1.key.wallH",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.1.key.feel",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.1.key.R.switch",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.1.key.fits.contact-gap",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.1.key.fits.cap-bridge",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.1.key.fits.split-between-halves",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.1.key.fits.column-to-cone-wall",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.1.key.fits.face-through-bezel-hole",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.1.key.fits.stands-proud-of-the-bezel",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.2.host.top",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.2.key.travel",
+          "gate": "CHK-KEY-01"
+        },
+        {
+          "id": "flex-cone-key.2.key.height",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.2.key.rsb",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.2.key.wallH",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.2.key.feel",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.2.key.R.switch",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.2.key.fits.contact-gap",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.2.key.fits.cap-bridge",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.2.key.fits.split-between-halves",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.2.key.fits.column-to-cone-wall",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.2.key.fits.face-through-bezel-hole",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.2.key.fits.stands-proud-of-the-bezel",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.3.host.top",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.3.key.travel",
+          "gate": "CHK-KEY-01"
+        },
+        {
+          "id": "flex-cone-key.3.key.height",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.3.key.rsb",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.3.key.wallH",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.3.key.feel",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.3.key.R.switch",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.3.key.fits.contact-gap",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.3.key.fits.cap-bridge",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.3.key.fits.split-between-halves",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.3.key.fits.column-to-cone-wall",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.3.key.fits.face-through-bezel-hole",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.3.key.fits.stands-proud-of-the-bezel",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.4.host.top",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.4.key.travel",
+          "gate": "CHK-KEY-01"
+        },
+        {
+          "id": "flex-cone-key.4.key.height",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.4.key.rsb",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.4.key.wallH",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.4.key.feel",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.4.key.R.switch",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.4.key.fits.contact-gap",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.4.key.fits.cap-bridge",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.4.key.fits.split-between-halves",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.4.key.fits.column-to-cone-wall",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.4.key.fits.face-through-bezel-hole",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.4.key.fits.stands-proud-of-the-bezel",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.5.host.top",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.5.key.travel",
+          "gate": "CHK-KEY-01"
+        },
+        {
+          "id": "flex-cone-key.5.key.height",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.5.key.rsb",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.5.key.wallH",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.5.key.feel",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.5.key.R.switch",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.5.key.fits.contact-gap",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.5.key.fits.cap-bridge",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.5.key.fits.split-between-halves",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.5.key.fits.column-to-cone-wall",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.5.key.fits.face-through-bezel-hole",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.5.key.fits.stands-proud-of-the-bezel",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.6.host.top",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.6.key.travel",
+          "gate": "CHK-KEY-01"
+        },
+        {
+          "id": "flex-cone-key.6.key.height",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.6.key.rsb",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.6.key.wallH",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.6.key.feel",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.6.key.R.switch",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.6.key.fits.contact-gap",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.6.key.fits.cap-bridge",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.6.key.fits.split-between-halves",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.6.key.fits.column-to-cone-wall",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.6.key.fits.face-through-bezel-hole",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.6.key.fits.stands-proud-of-the-bezel",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.7.host.top",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.7.key.travel",
+          "gate": "CHK-KEY-01"
+        },
+        {
+          "id": "flex-cone-key.7.key.height",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.7.key.rsb",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.7.key.wallH",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.7.key.feel",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.7.key.R.switch",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.7.key.fits.contact-gap",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.7.key.fits.cap-bridge",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.7.key.fits.split-between-halves",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.7.key.fits.column-to-cone-wall",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.7.key.fits.face-through-bezel-hole",
+          "gate": "informational"
+        },
+        {
+          "id": "flex-cone-key.7.key.fits.stands-proud-of-the-bezel",
+          "gate": "informational"
+        },
+        {
+          "id": "layout.width",
+          "gate": "informational"
+        },
+        {
+          "id": "layout.depth",
+          "gate": "informational"
+        },
+        {
+          "id": "layout.top",
+          "gate": "informational"
+        },
+        {
+          "id": "layout.lanes",
+          "gate": "informational"
+        },
+        {
+          "id": "keys.1.travel",
+          "gate": "informational"
+        },
+        {
+          "id": "keys.2.travel",
+          "gate": "informational"
+        },
+        {
+          "id": "keys.3.travel",
+          "gate": "informational"
+        },
+        {
+          "id": "keys.4.travel",
+          "gate": "informational"
+        },
+        {
+          "id": "keys.5.travel",
+          "gate": "informational"
+        },
+        {
+          "id": "keys.6.travel",
+          "gate": "informational"
+        },
+        {
+          "id": "keys.7.travel",
+          "gate": "informational"
+        },
+        {
+          "id": "keys.8.travel",
+          "gate": "informational"
+        }
+      ]
+    },
+    {
       "build": "reference/keys/midi-pad",
       "part": "pad",
       "metrics": [
