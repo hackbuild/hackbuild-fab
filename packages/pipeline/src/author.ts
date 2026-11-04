@@ -12,7 +12,7 @@ import { layerIndex, layerTop, snapLayer, type SkeletonLookup } from "@hackbuild
 import { IDENTITY, circleRing, flattenSvgPath, pointInLoop, ringArea2, rrect, rrectRing, snapRing, type Geom } from "@hackbuild/geom";
 import { lowerArtDocument, lowerArtLayerWith, lowerArtLayersWith } from "@hackbuild/inlay";
 import { commandError as cmdError, didYouMean } from "@hackbuild/spec";
-import { archetypes, placeArchetype } from "@hackbuild/archetypes";
+import { archetypes, deriveArchetype, placeArchetype } from "@hackbuild/archetypes";
 import { mechApply } from "./mech-apply.js";
 import { resolveFace } from "./face-frame.js";
 
@@ -166,6 +166,7 @@ export function makeAuthor(chase: Chase, profile: SkeletonLookup, warnings: Buil
       if (out.warnings !== undefined) warnings.push(...out.warnings);
       return out;
     },
+    archDerive: (id, params) => deriveArchetype(archetypes, id, params, profile),
     mech: (id, face, params, draft) => mechApply(id, face, params, draft, { chase, profile, warnings, machine: defaultMachine, calls: mechCalls }),
   };
 }

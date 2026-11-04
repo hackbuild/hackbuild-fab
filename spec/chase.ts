@@ -32,6 +32,7 @@ import type { ReadModel } from "./circuit.js";
 import type { CheckId } from "./checks.js";
 import type { ClaimDecl } from "./claims.js";
 import type { WidgetDecl } from "./widgets.js";
+import { commandError } from "./errors.js";
 
 /**
  * Six fixed kinds (D-126). A seventh needs a measured layout sharing nothing
@@ -617,6 +618,23 @@ export interface HookupDecl {
   readonly read: ReadModel;
   /** Assembly instance holding the port; absent for a single part. */
   readonly instance?: string;
+}
+
+/**
+ * The hookup a build is read through: chase.hookup, then the entries the
+ * build emitted (PartDraft.hookup, Part.hookup). A port listed twice is
+ * E_SCHEMA, so a build cannot shadow a chase entry.
+ */
+export function hookupOf(chase: { readonly hookup?: readonly HookupDecl[] }, built?: { readonly hookup?: readonly HookupDecl[] }): readonly HookupDecl[] {
+  const all = [...(chase.hookup ?? []), ...(built?.hookup ?? [])];
+  const seen = new Set<string>();
+  for (const [k, h] of all.entries()) {
+    if (seen.has(h.port)) {
+      throw commandError({ code: "E_SCHEMA", path: `/hookup/${k}/port`, got: h.port, expected: "each port once across chase.hookup and the build's hookup", hint: `port ${h.port} is listed twice; keep one entry` });
+    }
+    seen.add(h.port);
+  }
+  return all;
 }
 
 export interface Chase {

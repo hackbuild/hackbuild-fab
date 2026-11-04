@@ -16,8 +16,8 @@
 
 import type { Axis, FaceFrame, FaceRef, FitClassId, Mm, MeshRoute, Process, Ring, Tier, Vec2, Vec3 } from "./ids.js";
 import type { Feature, FeatureAt, KindMilestone } from "./features.js";
-import type { AppliedArchetype } from "./chase.js";
-import type { ApplyOut, MechanismApplyOut } from "./canon.js";
+import type { AppliedArchetype, HookupDecl } from "./chase.js";
+import type { ApplyOut, DerivedValue, MechanismApplyOut } from "./canon.js";
 import type {
   Assertion, BodyRole, BoughtBody, BuildWarning, Connection, FrameDecl, JointDecl, Metric, Pose, StackDecl,
 } from "./part-ir.js";
@@ -191,6 +191,12 @@ export interface PartDraft {
    * feature named here that the build did not produce is E_REF.
    */
   readonly assertions?: readonly Assertion[];
+  /**
+   * Hookup entries the build computes from its params, one per key of a key
+   * count a chase cannot list. Read after chase.hookup (spec hookupOf); a
+   * port named in both, or twice, is E_SCHEMA.
+   */
+  readonly hookup?: readonly HookupDecl[];
 }
 
 /** An assembly whose parts carry only the kinds admitted at milestone M (D-058). */
@@ -348,6 +354,8 @@ export interface Author<M extends KindMilestone = "M16"> {
    * build.ts computes it from params on every build.
    */
   arch(id: string, face: FaceFrame | FaceRef, params: Readonly<Record<string, unknown>>, draft?: PartDraft): ApplyOut;
+  /** An archetype's derived values at params, placing nothing and taking no instance number: a size the layout reads before arch places it. */
+  archDerive(id: string, params: Readonly<Record<string, unknown>>): Readonly<Record<string, DerivedValue>>;
   /**
    * Run a mechanism's apply() (D-177): primitive features, gated metrics
    * and assertions for a mechanism with a governing identity, for example

@@ -45,7 +45,7 @@ function testAuthor(): Author {
     body: (id, o) => ({ id, role: o.role, slot: o.slot, base: o.base, material: o.material ?? chase.materials.find((m) => m.slot === o.slot)?.material ?? "" }),
     part: (o) => ({ ...o, frame: { originOnAxis: false, carriesOffset: false, pose: "print", ...o.frame } }) as ReturnType<Author["part"]>,
     fit: (id) => id as FitClassId, derive: (_id, value) => value, bind: (f) => f, warn: () => undefined,
-    face: (id, frame) => ({ id, frame }), applied: () => [], arch: unused("arch"), mech: unused("mech"),
+    face: (id, frame) => ({ id, frame }), applied: () => [], arch: unused("arch"), archDerive: unused("archDerive"), mech: unused("mech"),
   };
 }
 

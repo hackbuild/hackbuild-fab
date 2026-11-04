@@ -9,7 +9,7 @@
 // constraint versions and SOURCE_DATE_EPOCH.
 
 import {
-  commandError as cmdError, didYouMean,
+  commandError as cmdError, didYouMean, hookupOf,
   type AnyCheckDef, type ArtifactBytes, type ArtifactHash, type BodyDraft, type BuildHash, type BuildInputs, type BuildSandboxReason, type BuildWarning, type Chase, type CheckResult,
   type FeatureKind, type FeatureOf, type GeneratedGeometry, type Hash, type HookupDecl, type InferredRead, type KernelCtx,
   type MachineView, type McuPinSpec, type MeshRef, type MeshRoute, type Metric, type Net, type Part, type PartDraft, type ProfileRead, type SchemaLike, type Tier, type Vec3,
@@ -431,7 +431,8 @@ export async function runChecks(built: Built, artifacts: readonly ArtifactBytes[
   const results: CheckResult[] = [];
   const inferred = new Map<string, Set<string>>();
   const netLookup = createProfileLookup(design.ws.tables);
-  skeletonNets(built.draft, (design.chase.hookup ?? []) as readonly HookupDecl[], netLookup, design.ws.mcu);
+  const hookup = hookupOf(design.chase, built.draft);
+  skeletonNets(built.draft, hookup, netLookup, design.ws.mcu);
   const netReads = new Set(netLookup.reads().map((r) => `${r.table}/${r.id}`));
   let nets: readonly Net[] = [];
   const warnings: BuildWarning[] = [];
@@ -439,7 +440,7 @@ export async function runChecks(built: Built, artifacts: readonly ArtifactBytes[
     const lookup = createProfileLookup(design.ws.tables);
     const report = await runSkeleton([def], {
       part: built.part, draft: built.draft, profile: lookup, machine: built.draft.machine,
-      hookup: (design.chase.hookup ?? []) as readonly HookupDecl[], mcu: design.ws.mcu, artifacts,
+      hookup, mcu: design.ws.mcu, artifacts,
       params: design.chase.params, values: built.values,
       rebuild: async (v) => {
         const again = await rebuild(resolveParams(design.chase, v as Values, undefined));

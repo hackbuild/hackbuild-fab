@@ -6,7 +6,7 @@
 
 import {
   commandError,
-  type ApplyOut, type FaceFrame, type Feature, type MaterialSlot, type PartDraft, type ProfileLookup,
+  type ApplyOut, type DerivedValue, type FaceFrame, type Feature, type MaterialSlot, type PartDraft, type ProfileLookup,
 } from "@hackbuild/spec";
 import type { ArchetypeRegistry } from "./registry.js";
 import { candidateBuildApply } from "./def.js";
@@ -47,19 +47,32 @@ export function prefixApplyOut(out: ApplyOut, prefix: string): ApplyOut {
   };
 }
 
-export function placeArchetype(reg: ArchetypeRegistry, a: PlaceArgs): ApplyOut {
-  const e = reg.resolve(a.id);
+/** The resolved entry and its validated, default-filled params; a stub or unproven entry is E_REF, bad params E_SCHEMA. */
+function validated(reg: ArchetypeRegistry, id: string, params: unknown) {
+  const e = reg.resolve(id);
   const def = e.def;
   if (def.status === "stub" || def.status === "unproven") {
-    throw commandError({ code: "E_REF", path: "/id", got: a.id, expected: "a proven or candidate archetype", hint: `archetype ${e.id} is ${def.status}: ${def.statusReason ?? ""}` });
+    throw commandError({ code: "E_REF", path: "/id", got: id, expected: "a proven or candidate archetype", hint: `archetype ${e.id} is ${def.status}: ${def.statusReason ?? ""}` });
   }
-  const r = def.params["~standard"].validate(a.params);
+  const r = def.params["~standard"].validate(params);
   if (r instanceof Promise) throw commandError({ code: "E_KERNEL", path: "/params", got: e.id, expected: "a synchronous params schema", hint: `archetype ${e.id} declares an async params schema; make it synchronous`, record: "agent-capability" });
   if (r.issues !== undefined) {
     const issue = r.issues[0];
     const at = (issue?.path ?? []).map((k) => String(typeof k === "object" && k !== null ? (k as { key: PropertyKey }).key : k)).join("/");
-    throw commandError({ code: "E_SCHEMA", path: `/params${at === "" ? "" : `/${at}`}`, got: a.id, expected: issue?.message ?? "params the archetype declares", hint: `fix the params for ${e.id}: ${issue?.message ?? "invalid"}` });
+    throw commandError({ code: "E_SCHEMA", path: `/params${at === "" ? "" : `/${at}`}`, got: id, expected: issue?.message ?? "params the archetype declares", hint: `fix the params for ${e.id}: ${issue?.message ?? "invalid"}` });
   }
+  return { e, def, value: r.value as Readonly<Record<string, unknown>> };
+}
+
+/** An archetype's derived values at params, placing nothing: a build reads a size before it lays out the part (Author.archDerive). */
+export function deriveArchetype(reg: ArchetypeRegistry, id: string, params: unknown, profile: ProfileLookup): Readonly<Record<string, DerivedValue>> {
+  const { def, value } = validated(reg, id, params);
+  return def.derive(value, profile);
+}
+
+export function placeArchetype(reg: ArchetypeRegistry, a: PlaceArgs): ApplyOut {
+  const { e, def, value } = validated(reg, a.id, a.params);
+  const r = { value };
   // a candidate with a build apply builds here; its def.apply refuses every other caller
   const apply = def.status === "candidate" ? candidateBuildApply(e.id) ?? def.apply : def.apply;
   const out = apply({ draft: a.draft, face: a.face, params: r.value as Readonly<Record<string, unknown>>, profile: a.profile });

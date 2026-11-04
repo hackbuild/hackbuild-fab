@@ -24,7 +24,7 @@ import type {
   BuildInputs, BuildWarning, CheckResult, CommandInput, CommandOutput, DriveSceneDecl, HookupDecl, LegacySceneDecl, McuPinSpec, MeshRef, Net, OperatingPoint, Part,
   PortFeature, SeriesSceneDecl, Spdx, Tier,
 } from "@hackbuild/spec";
-import { lowestTier } from "@hackbuild/spec";
+import { hookupOf, lowestTier } from "@hackbuild/spec";
 import { createProfileLookup } from "@hackbuild/profile";
 import { bossLegacyRow, mcuPinRow } from "@hackbuild/catalog";
 import {
@@ -146,7 +146,7 @@ export async function solveBuilt(built: Built, input: CircuitSolveInput, ctx: Co
   const drive = built.design.chase.scene?.drive;
   if (drive !== undefined) return solveDrive(built, drive, input, ctx);
   const { design, part } = built;
-  const hookup = stimulated((design.chase.hookup ?? []) as readonly HookupDecl[], input.stimulus);
+  const hookup = stimulated(hookupOf(design.chase, part), input.stimulus);
   const effective = input.mcu === undefined ? hookup : hookup.map((h) => ({ ...h, mcu: input.mcu! }));
   const profile = createProfileLookup(design.ws.tables);
   const meshes = new Map(built.meshed.bodies.map((b) => [b.ref.hash, b.mesh] as const));
@@ -415,7 +415,7 @@ async function solveDrive(built: Built, decl: DriveSceneDecl, input: CircuitSolv
   if (input.pullup !== undefined) {
     throw cmdError({ code: "E_SCHEMA", path: "/pullup", got: input.pullup, expected: "no pullup", hint: "a drive key is read by charge-release with no pull; omit pullup" });
   }
-  const hookup = stimulated((design.chase.hookup ?? []) as readonly HookupDecl[], input.stimulus);
+  const hookup = stimulated(hookupOf(design.chase, part), input.stimulus);
   const effective = input.mcu === undefined ? hookup : hookup.map((h) => ({ ...h, mcu: input.mcu! }));
   const profile = createProfileLookup(design.ws.tables);
   const mcuOf = (id: string, at: `/${string}`): McuPinSpec => mcuPinRow(id, input.mcu === undefined ? at : "/mcu");

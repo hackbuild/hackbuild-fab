@@ -19,7 +19,7 @@ import {
   Group, LineBasicMaterial, LineSegments, Mesh, MeshBasicMaterial, MeshStandardMaterial, PerspectiveCamera, Plane,
   PlaneGeometry, Raycaster, Scene, Vector2, Vector3, type Object3D,
 } from "three";
-import type { Body, Part } from "@hackbuild/spec";
+import type { Body, HookupDecl, Part } from "@hackbuild/spec";
 import type { Owner } from "./dispose.js";
 import { bodyNets } from "./part-refs.js";
 
@@ -31,7 +31,7 @@ export interface ViewMesh {
 
 /** Part IR with its meshes resolved by body id. */
 export interface ViewPart {
-  readonly part: Pick<Part, "id" | "bodies"> & { readonly features?: Part["features"] };
+  readonly part: Pick<Part, "id" | "bodies"> & { readonly features?: Part["features"]; readonly hookup?: readonly HookupDecl[] };
   readonly meshes: Readonly<Record<string, ViewMesh>>;
 }
 

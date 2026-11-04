@@ -15,7 +15,7 @@
 // a refusal at a range end writes one log line naming field, value and range.
 
 import {
-  ART_PALETTE_GREY, artPalette, type Bench, type Chase, type CheckResult, type ContactFn, type Metric, type ParamGroup, type RailStep, type StatusChip, type WidgetRecord,
+  ART_PALETTE_GREY, artPalette, hookupOf, type Bench, type Chase, type CheckResult, type ContactFn, type Metric, type ParamGroup, type RailStep, type StatusChip, type WidgetRecord,
 } from "@hackbuild/spec";
 import { isChaseDocument, nonFiniteError, normaliseParams, normalisedWarnings, shareOptions, storedParams } from "@hackbuild/chase";
 import { createBenchCore, type BenchCore, type BuildOutput, type BuildResult, type CoreEvent } from "../bench/core.js";
@@ -131,7 +131,7 @@ export function driveModel(chase: Chase, bench: Bench, contact: ContactFn | null
   const decl = bench.views.drive;
   if (decl === undefined || !bench.views.overlays.includes("drive")) return null;
   return padModel({
-    decl, hookup: chase.hookup ?? [], features: src.part?.part.features ?? [],
+    decl, hookup: hookupOf(chase, src.part?.part), features: src.part?.part.features ?? [],
     metrics: src.report.metrics ?? [], results: src.report.results ?? [], contact,
   });
 }
@@ -153,7 +153,7 @@ export function widgetsModel(chase: Chase, bench: Bench, contact: ContactFn | nu
   const drive = bench.views.drive;
   return widgetRecords(decls, {
     features: src.part?.part.features ?? [], metrics: src.report.metrics ?? [], results: src.report.results ?? [],
-    hookup: chase.hookup ?? [],
+    hookup: hookupOf(chase, src.part?.part),
     contacts: drive !== undefined && contact !== null ? { [drive.contact]: contact } : {},
     ...(drive === undefined ? {} : { drive }),
     ...(chase.claims === undefined ? {} : { claims: chase.claims }),

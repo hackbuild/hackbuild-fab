@@ -17,6 +17,7 @@ import type { Feature } from "./features.js";
 import type { BoardRecord, RecordRead } from "./board-features.js";
 import type { Bound } from "./constraints.js";
 import type { CheckId } from "./checks.js";
+import type { HookupDecl } from "./chase.js";
 
 /** Content-addressed mesh handle. Bytes live in the store; IR holds the uri (D-050). */
 export interface MeshRef {
@@ -217,6 +218,8 @@ export interface Part {
   readonly warnings: readonly BuildWarning[];
   /** chase.assertions merged with PartDraft.assertions; what the checks prove. */
   readonly assertions: readonly Assertion[];
+  /** PartDraft.hookup as the build emitted it; absent when the build emitted none. Read with chase.hookup through hookupOf. */
+  readonly hookup?: readonly HookupDecl[];
   /** sha256 over the RFC 8785 canonical BuildInputs (spec/ids.ts BuildHash, D-051); assigned only by core. */
   readonly buildHash: BuildHash;
 }

@@ -79,6 +79,7 @@ function testAuthor(view: MachineView = machine): { k: Author; warnings: BuildWa
     face: (id, frame) => ({ id, frame }),
     applied: () => [],
     arch: unused("arch"),
+    archDerive: unused("archDerive"),
     mech: unused("mech"),
   };
   return { k, warnings };

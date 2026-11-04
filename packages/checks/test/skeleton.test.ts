@@ -74,6 +74,7 @@ function testAuthor(): Author {
     face: (id, frame) => ({ id, frame }),
     applied: () => [],
     arch: unused("arch"),
+    archDerive: unused("archDerive"),
     mech: unused("mech"),
   };
 }

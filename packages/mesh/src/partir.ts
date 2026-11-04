@@ -77,6 +77,7 @@ export function assemblePart(draft: PartDraft, staged: StageOutput): BuiltPart {
     metrics: draft.metrics ?? [],
     warnings,
     assertions: draft.assertions ?? [],
+    ...(draft.hookup === undefined ? {} : { hookup: draft.hookup }),
   };
   return { part, contentHash: partContentHashOf(part, staged.itemTransform), itemTransform: staged.itemTransform, stages: staged.stages };
 }
