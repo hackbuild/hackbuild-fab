@@ -39,6 +39,8 @@ export interface QuestionFacts {
   readonly resistivity?: Readonly<Record<string, RowInForce>>;
   /** Exporter ids whose ExporterDef.fabrication is true. */
   readonly fabricationExports?: readonly string[];
+  /** True when the build module emits PartDraft.hookup (a key count a chase cannot list), so no chase hookup is no unread port. */
+  readonly buildHookup?: boolean;
 }
 
 /** Material roles that carry current, so their resistivity row sets a verdict. */
@@ -55,8 +57,8 @@ const RULES: Readonly<Record<QuestionRule, Rule>> = {
     ? [{ id: "Q-MOTION", path: "/motion", question: "which motion program drives this machine? name a registered program in motion" }]
     : []),
   // D-078: a port is read through a model; the circuit kernel without hookup leaves every port unread.
-  "Q-READ-MODEL": (c) => (c.meta.kernels.includes("circuit") && (c.hookup ?? []).length === 0
-    ? [{ id: "Q-READ-MODEL", path: "/hookup", question: "how is each port read? add a hookup entry with a read model per port; circuit.solve reports the ports as unread" }]
+  "Q-READ-MODEL": (c, f) => (c.meta.kernels.includes("circuit") && (c.hookup ?? []).length === 0 && f.buildHookup !== true
+    ? [{ id: "Q-READ-MODEL", path: "/hookup", question: "how is each port read? add a hookup entry with a read model per port, in the chase or emitted by build.ts; circuit.solve reports the ports as unread" }]
     : []),
   "Q-FAB-MACHINE": (c, f) => {
     const fab = new Set(f.fabricationExports ?? []);

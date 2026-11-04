@@ -62,6 +62,8 @@ describe("each rule", () => {
     const { hookup: _h, ...bare } = base;
     expect(only(bare, "Q-READ-MODEL").map((q) => q.path)).toEqual(["/hookup"]);
     expect(only(base, "Q-READ-MODEL")).toEqual([]);
+    // a build that emits its hookup leaves the chase without one and no port unread
+    expect(chaseQuestions(bare as Chase, { ...facts, buildHookup: true }).filter((q) => q.id === "Q-READ-MODEL")).toEqual([]);
   });
   it("Q-FAB-MACHINE per fabrication export with no machine, default the first meta.machines entry", () => {
     const c = { ...base, exports: [{ kind: "3mf" }, { kind: "stl" }, { kind: "dxf", machine: "laser1" }] };

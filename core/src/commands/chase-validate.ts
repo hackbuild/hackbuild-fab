@@ -118,12 +118,14 @@ function validateDir(dir: string, label: string, text: string, registries: Chase
     bench = b.bench;
   }
   const chase = source.chase;
-  const facts: QuestionFacts = { resistivity: rowsInForce(chase, profile), fabricationExports: FABRICATION_EXPORTS };
   let build: Pick<ValidateInputs, "buildSource"> = {};
   if (buildPathProblem(chase.build.module) === undefined) {
     const file = path.join(dir, chase.build.module);
     build = { buildSource: existsSync(file) && statSync(file).isFile() ? readFileSync(file, "utf8") : undefined };
   }
+  // A build that passes hookup to k.part emits its read models (PartDraft.hookup); read from its text, since validate does not build.
+  const buildHookup = typeof build.buildSource === "string" && /\bhookup\b/.test(build.buildSource);
+  const facts: QuestionFacts = { resistivity: rowsInForce(chase, profile), fabricationExports: FABRICATION_EXPORTS, buildHookup };
   return { validation: validateDocument({ chase, ...(bench === undefined ? {} : { bench }), ...build, registries, facts }) };
 }
 
