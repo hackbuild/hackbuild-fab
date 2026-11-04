@@ -284,6 +284,11 @@ export function seatApply(input: ApplyIn<SeatParams>, id: string, board: SeatBoa
   e.pocket("pocket.board", rect(pk.x0, pk.y0, pk.x1, pk.y1), top, top - zz.pocketFloor, loc, S.clr);
   const used = usedPads(S, board);
   const pads = board.pads(S);
+  // A footprint board's pads do not follow W and L, so a board drawn smaller than its pads is refused.
+  const off = pads.find((p) => Math.abs(p.x) > hw + EZ || Math.abs(p.y) > hl + EZ);
+  if (off !== undefined) {
+    throw commandError({ code: "E_SCHEMA", path: Math.abs(off.x) > hw + EZ ? "/params/W" : "/params/L", got: Math.abs(off.x) > hw + EZ ? S.W : S.L, expected: `a board holding pad ${off.name} at (${off.x}, ${off.y}) mm`, hint: `the ${board.id} footprint puts its pads there; set W and L to the board's size` });
+  }
   const rowX = hw - S.inset;
   if (S.window && !zz.socket) {
     const yT = Math.min(...pads.map((p) => p.y));

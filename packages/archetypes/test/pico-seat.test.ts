@@ -29,4 +29,16 @@ describe("pico seat pads", () => {
     try { usedPads({ ...PICO_SEAT_DEFAULTS, nets: { K: "GP29" } }, PICO_BOARD); } catch (e) { if (isThrownCommandError(e)) expected = String(e.hbf.expected); }
     expect(expected).toBe("a Raspberry Pi Pico castellation");
   });
+
+  test("a board drawn smaller than the footprint is refused at W", async () => {
+    const { seatApply } = await import("../src/pip/seat.js");
+    const { createProfileLookup, loadProfile } = await import("@hackbuild/profile");
+    const profile = createProfileLookup(loadProfile());
+    const c = (id: string): number => profile.constant(id).value;
+    const floor = c("stack.skin") + c("stack.trace") + c("stack.iso") + c("stack.trace") + c("stack.overL2");
+    const input = { draft: { machine: "ffc5p" }, face: { origin: [0, 0, floor], normal: [0, 0, 1], u: [1, 0, 0] }, params: { ...PICO_SEAT_DEFAULTS, W: 17 }, profile } as never;
+    let path = "";
+    try { seatApply(input, "pico-seat", PICO_BOARD); } catch (e) { if (isThrownCommandError(e)) path = String(e.hbf.path); }
+    expect(path).toBe("/params/W");
+  });
 });
